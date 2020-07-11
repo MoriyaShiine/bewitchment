@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "bewitchment",
+  "version": "${version}",
+  "name": "Bewitchment",
+  "description": "generic witchery clone lol",
+  "authors": [
+    "MoriyaShiine",
+    "Sunconure11",
+    "cybercat5555"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/bewitchment",
+    "sources": "https://github.com/Um-Mitternacht/Bewitchment"
+  },
+  "license": "MIT",
+  "icon": "assets/bewitchment/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "moriyashiine.bewitchment.Bewitchment"
+    ]
+  },
+  "mixins": [
+    "bewitchment.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x",
+    "cotton-config": "1.0.0-rc.1"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}

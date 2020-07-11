@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "carpet",
+  "pattern": [
+    "TTT",
+    "NIN",
+    " I "
+  ],
+  "key": {
+    "T": {
+      "item": "minecraft:torch"
+    },
+    "N": {
+      "tag": "forge:nuggets/gold"
+    },
+    "I": {
+      "tag": "forge:ingots/gold"
+    }
+  },
+  "result": {
+    "item": "bewitchment:golden_candelabra"
+  }
+}

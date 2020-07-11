@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "bewitchment:block/elder_log",
+    "side": "bewitchment:block/elder_log"
+  }
+}

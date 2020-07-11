@@ -1,0 +1,20 @@
+{
+  "type": "bewitchment:spinning",
+  "ingredients": [
+    {
+      "item": "bewitchment:witchs_stitches"
+    },
+    {
+      "item": "bewitchment:witchs_stitches"
+    },
+    {
+      "item": "bewitchment:cleansing_balm"
+    },
+    {
+      "tag": "forge:nuggets/silver"
+    }
+  ],
+  "result": {
+    "item": "bewitchment:pure_filament"
+  }
+}

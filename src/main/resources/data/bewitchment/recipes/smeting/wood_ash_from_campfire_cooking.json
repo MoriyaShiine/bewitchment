@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "tag": "bewitchment:bark"
+  },
+  "result": "bewitchment:wood_ash",
+  "experience": 0.35,
+  "cookingtime": 600
+}

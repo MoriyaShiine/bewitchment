@@ -1,0 +1,18 @@
+{
+  "type": "bewitchment:ritual",
+  "function": "bewitchment:make_day",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/gold"
+    },
+    {
+      "item": "minecraft:dandelion"
+    },
+    {
+      "item": "bewitchment:cleansing_balm"
+    }
+  ],
+  "inner": "chalk",
+  "cost": 100,
+  "time": 50
+}

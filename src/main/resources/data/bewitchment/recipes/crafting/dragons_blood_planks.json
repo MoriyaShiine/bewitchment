@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "bewitchment:dragons_blood_logs"
+    }
+  ],
+  "result": {
+    "item": "bewitchment:dragons_blood_planks",
+    "count": 4
+  }
+}

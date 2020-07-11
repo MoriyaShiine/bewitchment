@@ -1,0 +1,7 @@
+{
+  "parent": "block/carpet",
+  "textures": {
+    "particle": "bewitchment:block/besmirched_wool",
+    "wool": "bewitchment:block/besmirched_wool"
+  }
+}

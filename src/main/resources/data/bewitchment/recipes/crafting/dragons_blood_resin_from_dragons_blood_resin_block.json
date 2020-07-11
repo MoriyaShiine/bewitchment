@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "silver_ingot",
+  "ingredients": [
+    {
+      "item": "bewitchment:dragons_blood_resin_block"
+    }
+  ],
+  "result": {
+    "item": "bewitchment:dragons_blood_resin",
+    "count": 9
+  }
+}

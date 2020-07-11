@@ -1,0 +1,21 @@
+{
+  "type": "bewitchment:spinning",
+  "ingredients": [
+    {
+      "item": "minecraft:black_wool"
+    },
+    {
+      "item": "bewitchment:sanguine_fabric"
+    },
+    {
+      "item": "bewitchment:golden_thread"
+    },
+    {
+      "item": "bewitchment:golden_thread"
+    }
+  ],
+  "result": {
+    "item": "bewitchment:besmirched_wool",
+    "count": 2
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "block/door_bottom",
+  "textures": {
+    "bottom": "bewitchment:block/cypress_door_bottom",
+    "top": "bewitchment:block/cypress_door_top"
+  }
+}

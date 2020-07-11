@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WBW",
+    "WCW",
+    "WCW"
+  ],
+  "key": {
+    "W": {
+      "item": "bewitchment:wood_ash"
+    },
+    "B": {
+      "item": "bewitchment:birch_bark"
+    },
+    "C": {
+      "tag": "forge:cobblestone"
+    }
+  },
+  "result": {
+    "item": "bewitchment:chalk"
+  }
+}

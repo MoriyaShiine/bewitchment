@@ -1,0 +1,20 @@
+{
+  "type": "bewitchment:spinning",
+  "ingredients": [
+    {
+      "item": "bewitchment:witchs_stitches"
+    },
+    {
+      "item": "bewitchment:witchs_stitches"
+    },
+    {
+      "tag": "forge:crops/wheat"
+    },
+    {
+      "tag": "forge:nuggets/gold"
+    }
+  ],
+  "result": {
+    "item": "bewitchment:golden_thread"
+  }
+}

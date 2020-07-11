@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "bewitchment:elder_log",
+    "bewitchment:elder_wood",
+    "bewitchment:stripped_elder_log",
+    "bewitchment:stripped_elder_wood"
+  ]
+}

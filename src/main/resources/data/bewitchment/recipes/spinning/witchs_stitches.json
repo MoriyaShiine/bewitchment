@@ -1,0 +1,20 @@
+{
+  "type": "bewitchment:spinning",
+  "ingredients": [
+    {
+      "tag": "forge:string"
+    },
+    {
+      "tag": "forge:string"
+    },
+    {
+      "item": "bewitchment:juniper_bark"
+    },
+    {
+      "tag": "forge:crops/mandrake"
+    }
+  ],
+  "result": {
+    "item": "bewitchment:witchs_stitches"
+  }
+}

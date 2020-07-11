@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "bewitchment:block/elder_wood"
+    },
+    "axis=z": {
+      "model": "bewitchment:block/elder_wood",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "bewitchment:block/elder_wood",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

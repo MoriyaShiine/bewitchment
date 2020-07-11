@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "bewitchment:block/cypress_log"
+    },
+    "axis=z": {
+      "model": "bewitchment:block/cypress_log",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "bewitchment:block/cypress_log",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

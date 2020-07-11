@@ -1,0 +1,6 @@
+{
+  "parent": "bewitchment:block/chalk_0",
+  "textures": {
+    "particle": "bewitchment:block/chalk_1"
+  }
+}

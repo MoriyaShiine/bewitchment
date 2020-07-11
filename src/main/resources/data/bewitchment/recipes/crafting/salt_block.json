@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DDD",
+    "DDD",
+    "DDD"
+  ],
+  "key": {
+    "D": {
+      "item": "bewitchment:salt"
+    }
+  },
+  "result": {
+    "item": "bewitchment:salt_block"
+  }
+}

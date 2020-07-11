@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "N",
+    "R",
+    "F"
+  ],
+  "key": {
+    "N": {
+      "tag": "forge:nuggets/silver"
+    },
+    "R": {
+      "tag": "forge:rods/wooden"
+    },
+    "F": {
+      "item": "bewitchment:raven_feather"
+    }
+  },
+  "result": {
+    "item": "bewitchment:silver_arrow",
+    "count": 4
+  }
+}

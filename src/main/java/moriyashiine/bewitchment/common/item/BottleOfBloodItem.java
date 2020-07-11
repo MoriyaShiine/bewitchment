@@ -1,0 +1,51 @@
+package moriyashiine.bewitchment.common.item;
+
+import moriyashiine.bewitchment.common.misc.BWDataTrackers;
+import moriyashiine.bewitchment.common.misc.BWUtil;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.UseAction;
+import net.minecraft.world.World;
+
+public class BottleOfBloodItem extends Item {
+	public BottleOfBloodItem(Settings properties) {
+		super(properties);
+	}
+	
+	@Override
+	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+		return Items.POTION.use(world, user, hand);
+	}
+	
+	@Override
+	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+		if (!world.isClient) {
+			if (BWDataTrackers.hasBlood(user))
+			{
+				BWDataTrackers.fillBlood(user, 5, false);
+			}
+			if (!BWUtil.isVampire(user))
+			{
+				user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200, 1));
+			}
+		}
+		return Items.POTION.finishUsing(stack, world, user);
+	}
+	
+	@Override
+	public UseAction getUseAction(ItemStack stack) {
+		return Items.POTION.getUseAction(stack);
+	}
+	
+	@Override
+	public int getMaxUseTime(ItemStack stack) {
+		return Items.POTION.getMaxUseTime(stack);
+	}
+}

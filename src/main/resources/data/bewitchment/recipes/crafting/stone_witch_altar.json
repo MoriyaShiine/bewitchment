@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "carpet",
+  "pattern": [
+    "EME",
+    "MSM",
+    "MMM"
+  ],
+  "key": {
+    "E": {
+      "item": "bewitchment:elder_bark"
+    },
+    "M": {
+      "item": "minecraft:stone"
+    },
+    "S": {
+      "tag": "forge:ingots/silver"
+    }
+  },
+  "result": {
+    "item": "bewitchment:stone_witch_altar",
+    "count": 3
+  }
+}

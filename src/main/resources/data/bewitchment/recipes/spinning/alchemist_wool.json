@@ -1,0 +1,21 @@
+{
+  "type": "bewitchment:spinning",
+  "ingredients": [
+    {
+      "item": "minecraft:light_gray_wool"
+    },
+    {
+      "item": "minecraft:light_gray_wool"
+    },
+    {
+      "item": "bewitchment:witchs_stitches"
+    },
+    {
+      "item": "bewitchment:witchs_stitches"
+    }
+  ],
+  "result": {
+    "item": "bewitchment:alchemist_wool",
+    "count": 2
+  }
+}
