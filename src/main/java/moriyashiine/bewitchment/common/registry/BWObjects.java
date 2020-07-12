@@ -234,10 +234,12 @@ public class BWObjects {
 	public static final Block iron_candelabra = create("iron_candelabra", new CandelabraBlock(FabricBlockSettings.copy(Blocks.IRON_BLOCK).lightLevel(state -> state.get(Properties.LIT) ? 15 : 0)), true);
 	public static final Block golden_candelabra = create("golden_candelabra", new CandelabraBlock(FabricBlockSettings.copy(Blocks.GOLD_BLOCK).lightLevel(state -> state.get(Properties.LIT) ? 15 : 0)), true);
 	public static final Block silver_candelabra = create("silver_candelabra", new CandelabraBlock(FabricBlockSettings.copy(silver_block).lightLevel(state -> state.get(Properties.LIT) ? 15 : 0)), true);
+	public static final Block netherite_candelabra = create("netherite_candelabra", new CandelabraBlock(FabricBlockSettings.copy(Blocks.NETHERITE_BLOCK).lightLevel(state -> state.get(Properties.LIT) ? 15 : 0)), true);
 	//goblet
 	public static final Block iron_goblet = create("iron_goblet", new GobletBlock(FabricBlockSettings.copy(Blocks.IRON_BLOCK)), true);
 	public static final Block golden_goblet = create("golden_goblet", new GobletBlock(FabricBlockSettings.copy(Blocks.GOLD_BLOCK)), true);
 	public static final Block silver_goblet = create("silver_goblet", new GobletBlock(FabricBlockSettings.copy(silver_block)), true);
+	public static final Block netherite_goblet = create("netherite_goblet", new GobletBlock(FabricBlockSettings.copy(Blocks.NETHERITE_BLOCK)), true);
 	////tile
 	public static final Block[] stone_witch_altar = createWitchAltar("stone_witch_altar", Blocks.STONE);
 	public static final Block distillery = create("distillery", new DistilleryBlock(FabricBlockSettings.copy(Blocks.IRON_BLOCK).nonOpaque()), true);
