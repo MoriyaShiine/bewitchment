@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.client.render.entity.living;
 
-import moriyashiine.bewitchment.Bewitchment;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.client.model.entity.living.ToadEntityModel;
 import moriyashiine.bewitchment.common.entity.living.ToadEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWTameableEntity;

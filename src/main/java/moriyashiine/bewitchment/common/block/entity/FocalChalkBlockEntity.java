@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.block.entity;
 
-import moriyashiine.bewitchment.Bewitchment;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.client.network.message.SmokePuffMessage;
 import moriyashiine.bewitchment.client.network.message.SyncFocalChalkBlockEntityMessage;
 import moriyashiine.bewitchment.common.block.ChalkBlock;

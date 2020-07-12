@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.registry;
 
-import moriyashiine.bewitchment.Bewitchment;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.recipe.AthameDropRecipe;
 import moriyashiine.bewitchment.common.recipe.DistillingRecipe;
 import moriyashiine.bewitchment.common.recipe.Ritual;

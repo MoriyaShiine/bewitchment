@@ -2,15 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "N",
-    "R",
+    "S",
     "F"
   ],
   "key": {
     "N": {
-      "tag": "forge:nuggets/silver"
+      "item": "bewitchment:silver_nugget"
     },
-    "R": {
-      "tag": "forge:rods/wooden"
+    "S": {
+      "item": "minecraft:stick"
     },
     "F": {
       "item": "bewitchment:raven_feather"

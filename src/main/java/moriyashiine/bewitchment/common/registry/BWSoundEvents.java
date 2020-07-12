@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.registry;
 
-import moriyashiine.bewitchment.Bewitchment;
+import moriyashiine.bewitchment.common.Bewitchment;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;

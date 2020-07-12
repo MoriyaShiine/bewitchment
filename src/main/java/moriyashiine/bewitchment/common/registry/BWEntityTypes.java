@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.registry;
 
-import moriyashiine.bewitchment.Bewitchment;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.SilverArrowEntity;
 import moriyashiine.bewitchment.common.entity.living.OwlEntity;
 import moriyashiine.bewitchment.common.entity.living.RavenEntity;

@@ -6,7 +6,7 @@
   ],
   "key": {
     "I": {
-      "tag": "forge:ingots/silver"
+      "item": "bewitchment:silver_ingot"
     }
   },
   "result": {

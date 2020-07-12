@@ -11,10 +11,10 @@
       "item": "minecraft:torch"
     },
     "N": {
-      "tag": "forge:nuggets/iron"
+      "item": "minecraft:iron_nugget"
     },
     "I": {
-      "tag": "forge:ingots/iron"
+      "item": "minecraft:iron_ingot"
     }
   },
   "result": {

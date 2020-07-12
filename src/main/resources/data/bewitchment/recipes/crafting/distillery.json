@@ -7,10 +7,10 @@
   ],
   "key": {
     "G": {
-      "tag": "forge:glass"
+      "item": "minecraft:glass"
     },
     "S": {
-      "tag": "forge:ingots/silver"
+      "item": "bewitchment:silver_ingot"
     },
     "F": {
       "item": "minecraft:flint_and_steel"

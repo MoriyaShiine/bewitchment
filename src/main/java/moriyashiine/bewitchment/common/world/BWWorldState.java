@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.world;
 
-import moriyashiine.bewitchment.Bewitchment;
+import moriyashiine.bewitchment.common.Bewitchment;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.PersistentState;
 import net.minecraft.world.World;

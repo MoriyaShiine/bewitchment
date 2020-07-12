@@ -13,7 +13,7 @@
       "item": "bewitchment:birch_bark"
     },
     "C": {
-      "tag": "forge:cobblestone"
+      "item": "minecraft:cobblestone"
     }
   },
   "result": {

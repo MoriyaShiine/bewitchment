@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.mixin;
 
-import moriyashiine.bewitchment.Bewitchment;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.SilverArrowEntity;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import net.fabricmc.fabric.api.tag.TagRegistry;

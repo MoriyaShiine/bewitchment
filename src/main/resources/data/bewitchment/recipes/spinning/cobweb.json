@@ -2,16 +2,16 @@
   "type": "bewitchment:spinning",
   "ingredients": [
     {
-      "tag": "forge:string"
+       "item": "minecraft:string"
     },
     {
-      "tag": "forge:string"
+       "item": "minecraft:string"
     },
     {
-      "tag": "forge:string"
+       "item": "minecraft:string"
     },
     {
-      "tag": "forge:string"
+       "item": "minecraft:string"
     }
   ],
   "result": {

@@ -4,6 +4,7 @@
   "package": "moriyashiine.bewitchment.common.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "SupportBWSigns",
     "BWTrackers",
     "BWTrackers$Server",
     "TreeDecoratorTypeAccessor",

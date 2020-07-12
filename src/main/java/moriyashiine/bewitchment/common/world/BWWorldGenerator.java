@@ -2,7 +2,7 @@ package moriyashiine.bewitchment.common.world;
 
 import com.google.common.collect.ImmutableList;
 import moriyashiine.bewitchment.common.misc.BWConfig;
-import moriyashiine.bewitchment.Bewitchment;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.world.generator.decorator.LeaveSpanishMossTreeDecorator;

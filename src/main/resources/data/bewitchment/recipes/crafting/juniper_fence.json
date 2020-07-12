@@ -10,7 +10,7 @@
       "item": "bewitchment:juniper_planks"
     },
     "S": {
-      "tag": "forge:rods/wooden"
+      "item": "minecraft:stick"
     }
   },
   "result": {

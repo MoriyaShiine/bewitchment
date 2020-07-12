@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.client.network.message;
 
 import io.netty.buffer.Unpooled;
-import moriyashiine.bewitchment.Bewitchment;
+import moriyashiine.bewitchment.common.Bewitchment;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.minecraft.client.MinecraftClient;

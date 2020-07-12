@@ -18,11 +18,15 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "moriyashiine.bewitchment.Bewitchment"
+      "moriyashiine.bewitchment.common.Bewitchment"
+    ],
+    "client": [
+      "moriyashiine.bewitchment.client.BewitchmentClient"
     ]
   },
   "mixins": [
-    "bewitchment.mixins.json"
+    "bewitchment.mixins.json",
+    "bewitchment_client.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.7.4",

@@ -14,7 +14,7 @@
       "item": "minecraft:stone"
     },
     "S": {
-      "tag": "forge:ingots/silver"
+      "item": "bewitchment:silver_ingot"
     }
   },
   "result": {

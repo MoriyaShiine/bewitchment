@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.misc;
 
-import moriyashiine.bewitchment.Bewitchment;
+import moriyashiine.bewitchment.common.Bewitchment;
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

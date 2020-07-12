@@ -2,15 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "II",
-    " R",
-    " R"
+    " S",
+    " S"
   ],
   "key": {
     "I": {
-      "tag": "forge:ingots/silver"
+      "item": "bewitchment:silver_ingot"
     },
-    "R": {
-      "tag": "forge:rods/wooden"
+    "S": {
+      "item": "minecraft:stick"
     }
   },
   "result": {

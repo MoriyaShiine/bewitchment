@@ -8,10 +8,10 @@
       "item": "bewitchment:witchs_stitches"
     },
     {
-      "tag": "forge:crops/wheat"
+      "item": "minecraft:wheat"
     },
     {
-      "tag": "forge:nuggets/gold"
+      "item": "minecraft:gold_nugget"
     }
   ],
   "result": {

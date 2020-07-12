@@ -2,7 +2,7 @@ package moriyashiine.bewitchment.common.misc;
 
 import blue.endless.jankson.Comment;
 import io.github.cottonmc.cotton.config.annotations.ConfigFile;
-import moriyashiine.bewitchment.Bewitchment;
+import moriyashiine.bewitchment.common.Bewitchment;
 import net.minecraft.world.biome.Biome;
 
 import java.util.Arrays;

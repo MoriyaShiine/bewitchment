@@ -6,7 +6,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
-import moriyashiine.bewitchment.Bewitchment;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.client.integration.jei.category.AthameDropCategory;
 import moriyashiine.bewitchment.client.integration.jei.category.DistillingCategory;
 import moriyashiine.bewitchment.client.integration.jei.category.RitualCategory;

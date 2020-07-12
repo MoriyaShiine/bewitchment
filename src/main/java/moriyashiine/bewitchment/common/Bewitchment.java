@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment;
+package moriyashiine.bewitchment.common;
 
 import io.github.cottonmc.cotton.config.ConfigManager;
 import moriyashiine.bewitchment.common.misc.BWConfig;

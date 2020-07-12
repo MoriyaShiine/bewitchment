@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.client.network.message;
 
 import io.netty.buffer.Unpooled;
-import moriyashiine.bewitchment.Bewitchment;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.SpinningWheelBlockEntity;
 import moriyashiine.bewitchment.common.recipe.SpinningRecipe;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;

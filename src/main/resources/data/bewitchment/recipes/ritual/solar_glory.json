@@ -3,7 +3,7 @@
   "function": "bewitchment:make_day",
   "ingredients": [
     {
-      "tag": "forge:ingots/gold"
+      "item": "minecraft:gold_ingot"
     },
     {
       "item": "minecraft:dandelion"

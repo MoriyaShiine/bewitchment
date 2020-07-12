@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.registry;
 
-import moriyashiine.bewitchment.Bewitchment;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.registry.entry.RitualFunction;
 import moriyashiine.bewitchment.common.ritualfunction.MakeDayRitualFunction;
 import moriyashiine.bewitchment.common.ritualfunction.MakeNightRitualFunction;

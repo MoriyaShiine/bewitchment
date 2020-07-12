@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.client.render.entity;
 
-import moriyashiine.bewitchment.Bewitchment;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.SilverArrowEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

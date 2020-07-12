@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.registry;
 
-import moriyashiine.bewitchment.Bewitchment;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.DistilleryBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.FocalChalkBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.SpinningWheelBlockEntity;

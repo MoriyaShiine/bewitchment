@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.client.screen;
 
-import moriyashiine.bewitchment.Bewitchment;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.container.DistilleryScreenHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
