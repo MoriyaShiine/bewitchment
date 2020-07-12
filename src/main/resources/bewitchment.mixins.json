@@ -5,9 +5,9 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "SupportBWSigns",
+    "TreeDecoratorTypeAccessor",
     "BWTrackers",
     "BWTrackers$Server",
-    "TreeDecoratorTypeAccessor",
     "BloodHandler",
     "SilverHandler",
     "AthameHandler"
