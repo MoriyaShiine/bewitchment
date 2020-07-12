@@ -303,7 +303,6 @@ public class BWObjects {
 	public static final Item mandrake_seeds = create("mandrake_seeds", new AliasedBlockItem(mandrake_crops, gen()));
 	//mob_drop
 	public static final Item owl_wing = create("owl_wing", new Item(gen()));
-	public static final Item raven_feather = create("raven_feather", new Item(gen()));
 	public static final Item snake_tongue = create("snake_tongue", new Item(gen()));
 	public static final Item toad_foot = create("toad_foot", new Item(gen()));
 	public static final Item ectoplasm = create("ectoplasm", new Item(gen()));
