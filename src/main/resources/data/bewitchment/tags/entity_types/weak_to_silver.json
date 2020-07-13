@@ -1,17 +1,17 @@
 {
   "replace": false,
   "values": [
-    "minecraft:zombie",
-    "minecraft:husk",
-    "minecraft:skeleton",
-    "minecraft:stray",
-    "minecraft:wither_skeleton",
-    "minecraft:zombie_pigman",
-    "minecraft:zombie_villager",
-    "minecraft:zombie_horse",
-    "minecraft:skeleton_horse",
-    "minecraft:phantom",
-    "minecraft:zombified_piglin",
-    "minecraft:zoglin"
+	"minecraft:zombie",
+	"minecraft:husk",
+	"minecraft:skeleton",
+	"minecraft:stray",
+	"minecraft:wither_skeleton",
+	"minecraft:zombie_pigman",
+	"minecraft:zombie_villager",
+	"minecraft:zombie_horse",
+	"minecraft:skeleton_horse",
+	"minecraft:phantom",
+	"minecraft:zombified_piglin",
+	"minecraft:zoglin"
   ]
 }

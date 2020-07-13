@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "bewitchment:block/lime_stone_witch_altar"
-    }
+	"": {
+	  "model": "bewitchment:block/lime_stone_witch_altar"
+	}
   }
 }

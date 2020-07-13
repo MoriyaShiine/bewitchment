@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "I",
-    "I",
-    "S"
+	"I",
+	"I",
+	"S"
   ],
   "key": {
-    "I": {
-      "item": "bewitchment:silver_ingot"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+	"I": {
+	  "item": "bewitchment:silver_ingot"
+	},
+	"S": {
+	  "item": "minecraft:stick"
+	}
   },
   "result": {
-    "item": "bewitchment:silver_sword"
+	"item": "bewitchment:silver_sword"
   }
 }

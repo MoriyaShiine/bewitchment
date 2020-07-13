@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "bewitchment:block/dragons_blood_sapling"
-    }
+	"": {
+	  "model": "bewitchment:block/dragons_blood_sapling"
+	}
   }
 }

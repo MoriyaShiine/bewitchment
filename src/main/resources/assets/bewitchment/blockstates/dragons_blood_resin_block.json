@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "bewitchment:block/dragons_blood_resin_block"
-    }
+	"": {
+	  "model": "bewitchment:block/dragons_blood_resin_block"
+	}
   }
 }

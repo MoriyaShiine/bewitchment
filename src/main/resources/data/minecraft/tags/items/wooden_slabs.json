@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "bewitchment:juniper_slab",
-    "bewitchment:cypress_slab",
-    "bewitchment:elder_slab",
-    "bewitchment:dragons_blood_slab"
+	"bewitchment:juniper_slab",
+	"bewitchment:cypress_slab",
+	"bewitchment:elder_slab",
+	"bewitchment:dragons_blood_slab"
   ]
 }

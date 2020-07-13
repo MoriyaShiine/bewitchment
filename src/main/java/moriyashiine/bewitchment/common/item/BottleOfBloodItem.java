@@ -27,12 +27,10 @@ public class BottleOfBloodItem extends Item {
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (!world.isClient) {
-			if (BWDataTrackers.hasBlood(user))
-			{
+			if (BWDataTrackers.hasBlood(user)) {
 				BWDataTrackers.fillBlood(user, 5, false);
 			}
-			if (!BWUtil.isVampire(user))
-			{
+			if (!BWUtil.isVampire(user)) {
 				user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200, 1));
 			}
 		}

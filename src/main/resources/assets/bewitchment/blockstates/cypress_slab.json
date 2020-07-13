@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=bottom": {
-      "model": "bewitchment:block/cypress_slab"
-    },
-    "type=top": {
-      "model": "bewitchment:block/cypress_slab_top"
-    },
-    "type=double": {
-      "model": "bewitchment:block/cypress_planks"
-    }
+	"type=bottom": {
+	  "model": "bewitchment:block/cypress_slab"
+	},
+	"type=top": {
+	  "model": "bewitchment:block/cypress_slab_top"
+	},
+	"type=double": {
+	  "model": "bewitchment:block/cypress_planks"
+	}
   }
 }

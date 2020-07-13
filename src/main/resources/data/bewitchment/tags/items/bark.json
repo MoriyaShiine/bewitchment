@@ -1,11 +1,11 @@
 {
   "replace": false,
   "values": [
-    "bewitchment:oak_bark",
-    "bewitchment:spruce_bark",
-    "bewitchment:birch_bark",
-    "bewitchment:juniper_bark",
-    "bewitchment:cypress_bark",
-    "bewitchment:elder_bark"
+	"bewitchment:oak_bark",
+	"bewitchment:spruce_bark",
+	"bewitchment:birch_bark",
+	"bewitchment:juniper_bark",
+	"bewitchment:cypress_bark",
+	"bewitchment:elder_bark"
   ]
 }

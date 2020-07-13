@@ -5,35 +5,35 @@
   "name": "Bewitchment",
   "description": "generic witchery clone lol",
   "authors": [
-    "MoriyaShiine",
-    "cybercat5555"
+	"MoriyaShiine",
+	"cybercat5555"
   ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/bewitchment-fabric",
-    "sources": "https://github.com/MoriyaShiine/bewitchment"
+	"homepage": "https://www.curseforge.com/minecraft/mc-mods/bewitchment-fabric",
+	"sources": "https://github.com/MoriyaShiine/bewitchment"
   },
   "license": "MIT",
   "icon": "assets/bewitchment/icon.png",
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "moriyashiine.bewitchment.common.Bewitchment"
-    ],
-    "client": [
-      "moriyashiine.bewitchment.client.BewitchmentClient"
-    ]
+	"main": [
+	  "moriyashiine.bewitchment.common.Bewitchment"
+	],
+	"client": [
+	  "moriyashiine.bewitchment.client.BewitchmentClient"
+	]
   },
   "mixins": [
-    "bewitchment.mixins.json",
-    "bewitchment_client.mixins.json"
+	"bewitchment.mixins.json",
+	"bewitchment_client.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.7.4",
-    "fabric": "*",
-    "minecraft": "1.16.x",
-    "cotton-config": "1.0.0-rc.1"
+	"fabricloader": ">=0.7.4",
+	"fabric": "*",
+	"minecraft": "1.16.x",
+	"cotton-config": "1.0.0-rc.1"
   },
   "suggests": {
-    "flamingo": "*"
+	"flamingo": "*"
   }
 }

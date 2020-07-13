@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "bewitchment:block/juniper_planks"
-    }
+	"": {
+	  "model": "bewitchment:block/juniper_planks"
+	}
   }
 }

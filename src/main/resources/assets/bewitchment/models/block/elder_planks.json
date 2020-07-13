@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "bewitchment:block/elder_planks"
+	"all": "bewitchment:block/elder_planks"
   }
 }

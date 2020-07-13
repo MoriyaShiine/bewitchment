@@ -1,6 +1,6 @@
 {
   "parent": "block/fence_inventory",
   "textures": {
-    "texture": "bewitchment:block/elder_planks"
+	"texture": "bewitchment:block/elder_planks"
   }
 }

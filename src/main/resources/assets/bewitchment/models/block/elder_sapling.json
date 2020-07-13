@@ -1,6 +1,6 @@
 {
   "parent": "block/cross",
   "textures": {
-    "cross": "bewitchment:block/elder_sapling"
+	"cross": "bewitchment:block/elder_sapling"
   }
 }

@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "bewitchment:block/elder_sign"
-    }
+	"": {
+	  "model": "bewitchment:block/elder_sign"
+	}
   }
 }

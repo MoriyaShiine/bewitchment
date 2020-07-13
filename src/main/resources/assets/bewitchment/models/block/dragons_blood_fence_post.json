@@ -1,6 +1,6 @@
 {
   "parent": "block/fence_post",
   "textures": {
-    "texture": "bewitchment:block/dragons_blood_planks"
+	"texture": "bewitchment:block/dragons_blood_planks"
   }
 }

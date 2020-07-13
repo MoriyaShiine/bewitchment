@@ -1,22 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "TTT",
-    "BIB",
-    " I "
+	"TTT",
+	"BIB",
+	" I "
   ],
   "key": {
-    "T": {
-      "item": "minecraft:torch"
-    },
-    "B": {
-      "item": "minecraft:nether_brick"
-    },
-    "I": {
-      "item": "minecraft:netherite_ingot"
-    }
+	"T": {
+	  "item": "minecraft:torch"
+	},
+	"B": {
+	  "item": "minecraft:nether_brick"
+	},
+	"I": {
+	  "item": "minecraft:netherite_ingot"
+	}
   },
   "result": {
-    "item": "bewitchment:silver_candelabra"
+	"item": "bewitchment:silver_candelabra"
   }
 }

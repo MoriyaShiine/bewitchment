@@ -2,17 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "group": "wooden_stairs",
   "pattern": [
-    "P  ",
-    "PP ",
-    "PPP"
+	"P  ",
+	"PP ",
+	"PPP"
   ],
   "key": {
-    "P": {
-      "item": "bewitchment:dragons_blood_planks"
-    }
+	"P": {
+	  "item": "bewitchment:dragons_blood_planks"
+	}
   },
   "result": {
-    "item": "bewitchment:dragons_blood_stairs",
-    "count": 4
+	"item": "bewitchment:dragons_blood_stairs",
+	"count": 4
   }
 }

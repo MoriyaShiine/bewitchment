@@ -1,6 +1,6 @@
 {
   "parent": "block/crop",
   "textures": {
-    "crop": "bewitchment:block/garlic_crops_stage_3"
+	"crop": "bewitchment:block/garlic_crops_stage_3"
   }
 }

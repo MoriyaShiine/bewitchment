@@ -1,8 +1,8 @@
 {
   "parent": "block/slab",
   "textures": {
-    "bottom": "bewitchment:block/dragons_blood_planks",
-    "top": "bewitchment:block/dragons_blood_planks",
-    "side": "bewitchment:block/dragons_blood_planks"
+	"bottom": "bewitchment:block/dragons_blood_planks",
+	"top": "bewitchment:block/dragons_blood_planks",
+	"side": "bewitchment:block/dragons_blood_planks"
   }
 }

@@ -2,17 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "group": "wooden_stairs",
   "pattern": [
-    "P  ",
-    "PP ",
-    "PPP"
+	"P  ",
+	"PP ",
+	"PPP"
   ],
   "key": {
-    "P": {
-      "item": "bewitchment:cypress_planks"
-    }
+	"P": {
+	  "item": "bewitchment:cypress_planks"
+	}
   },
   "result": {
-    "item": "bewitchment:cypress_stairs",
-    "count": 4
+	"item": "bewitchment:cypress_stairs",
+	"count": 4
   }
 }

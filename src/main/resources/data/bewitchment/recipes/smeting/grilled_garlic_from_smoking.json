@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smoking",
   "ingredient": [
-    {
-      "item": "bewitchment:garlic"
-    }
+	{
+	  "item": "bewitchment:garlic"
+	}
   ],
   "result": "bewitchment:grilled_garlic",
   "experience": 0.35,

@@ -4,15 +4,15 @@
   "package": "moriyashiine.bewitchment.common.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "SupportBWSigns",
-    "TreeDecoratorTypeAccessor",
-    "BWTrackers",
-    "BWTrackers$Server",
-    "BloodHandler",
-    "SilverHandler",
-    "AthameHandler"
+	"SupportBWSigns",
+	"TreeDecoratorTypeAccessor",
+	"BWTrackers",
+	"BWTrackers$Server",
+	"BloodHandler",
+	"SilverHandler",
+	"AthameHandler"
   ],
   "injectors": {
-    "defaultRequire": 1
+	"defaultRequire": 1
   }
 }

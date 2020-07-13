@@ -2,17 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "group": "wooden_stairs",
   "pattern": [
-    "P  ",
-    "PP ",
-    "PPP"
+	"P  ",
+	"PP ",
+	"PPP"
   ],
   "key": {
-    "P": {
-      "item": "bewitchment:juniper_planks"
-    }
+	"P": {
+	  "item": "bewitchment:juniper_planks"
+	}
   },
   "result": {
-    "item": "bewitchment:juniper_stairs",
-    "count": 4
+	"item": "bewitchment:juniper_stairs",
+	"count": 4
   }
 }

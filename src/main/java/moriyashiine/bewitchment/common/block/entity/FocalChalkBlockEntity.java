@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.common.block.entity;
 
-import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.client.network.message.SmokePuffMessage;
 import moriyashiine.bewitchment.client.network.message.SyncFocalChalkBlockEntityMessage;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.ChalkBlock;
 import moriyashiine.bewitchment.common.recipe.Ritual;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
@@ -239,10 +239,8 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 	
 	@Override
 	public boolean isEmpty() {
-		for (ItemStack stack : inventory)
-		{
-			if (!stack.isEmpty())
-			{
+		for (ItemStack stack : inventory) {
+			if (!stack.isEmpty()) {
 				return false;
 			}
 		}
@@ -276,12 +274,9 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 	
 	@Override
 	public void setStack(int slot, ItemStack stack) {
-		if (slot < 0)
-		{
-			for (int i = 0; i < size(); i++)
-			{
-				if (getStack(i).isEmpty())
-				{
+		if (slot < 0) {
+			for (int i = 0; i < size(); i++) {
+				if (getStack(i).isEmpty()) {
 					slot = i;
 					break;
 				}
@@ -300,10 +295,8 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 		return (world == null || world.getBlockEntity(pos) == this) && player.squaredDistanceTo(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) <= 74;
 	}
 	
-	private void syncToClientAndMarkDirty()
-	{
-		if (world != null)
-		{
+	private void syncToClientAndMarkDirty() {
+		if (world != null) {
 			markDirty();
 			PlayerStream.around(world, pos, 32).forEach(player -> SyncFocalChalkBlockEntityMessage.send(player, pos, getRitual(), time));
 		}

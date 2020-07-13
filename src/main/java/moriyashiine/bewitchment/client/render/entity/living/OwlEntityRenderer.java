@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.client.render.entity.living;
 
-import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.client.model.entity.living.OwlEntityModel;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.OwlEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWTameableEntity;
 import net.fabricmc.api.EnvType;

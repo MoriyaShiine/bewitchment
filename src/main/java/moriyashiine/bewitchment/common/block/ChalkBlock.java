@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.block;
 
-import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.block.entity.FocalChalkBlockEntity;
+import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
@@ -54,11 +54,9 @@ public class ChalkBlock extends BlockWithEntity {
 	@SuppressWarnings("deprecation")
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		if (state.getBlock() == BWObjects.focal_chalk_block)
-		{
+		if (state.getBlock() == BWObjects.focal_chalk_block) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof FocalChalkBlockEntity)
-			{
+			if (blockEntity instanceof FocalChalkBlockEntity) {
 				((FocalChalkBlockEntity) blockEntity).onUse(player, hand);
 				return ActionResult.success(world.isClient);
 			}
@@ -81,8 +79,7 @@ public class ChalkBlock extends BlockWithEntity {
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
 		BlockState state = super.getPlacementState(ctx);
-		if (state != null)
-		{
+		if (state != null) {
 			Random random = ctx.getWorld().random;
 			state = state.with(BWProperties.CHALK_VARIANT, random.nextInt(BWProperties.CHALK_VARIANT.getValues().size())).with(Properties.HORIZONTAL_FACING, Direction.Type.HORIZONTAL.random(random));
 		}
@@ -124,8 +121,7 @@ public class ChalkBlock extends BlockWithEntity {
 	@Environment(EnvType.CLIENT)
 	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
 		ParticleEffect particle = getParticle();
-		if (particle != null)
-		{
+		if (particle != null) {
 			world.addParticle(particle, pos.getX() + 0.5 + MathHelper.nextFloat(random, -0.4f, 0.4f), pos.getY() + 0.2, pos.getZ() + 0.5 + MathHelper.nextFloat(random, -0.4f, 0.4f), 0, 0, 0);
 		}
 	}

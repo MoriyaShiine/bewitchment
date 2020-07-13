@@ -2,15 +2,15 @@
   "type": "bewitchment:ritual",
   "function": "bewitchment:make_night",
   "ingredients": [
-    {
-      "item": "bewitchment:silver_ingot"
-    },
-    {
-      "item": "minecraft:poppy"
-    },
-    {
-      "item": "bewitchment:fell_essence"
-    }
+	{
+	  "item": "bewitchment:silver_ingot"
+	},
+	{
+	  "item": "minecraft:poppy"
+	},
+	{
+	  "item": "bewitchment:fell_essence"
+	}
   ],
   "inner": "chalk",
   "cost": 100,

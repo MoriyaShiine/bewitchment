@@ -1,36 +1,36 @@
 {
   "variants": {
-    "filled=false,facing=north": {
-      "model": "bewitchment:block/distillery",
-      "y": 90
-    },
-    "filled=true,facing=north": {
-      "model": "bewitchment:block/distillery_variant",
-      "y": 90
-    },
-    "filled=false,facing=south": {
-      "model": "bewitchment:block/distillery",
-      "y": 270
-    },
-    "filled=true,facing=south": {
-      "model": "bewitchment:block/distillery_variant",
-      "y": 270
-    },
-    "filled=false,facing=west": {
-      "model": "bewitchment:block/distillery",
-      "y": 0
-    },
-    "filled=true,facing=west": {
-      "model": "bewitchment:block/distillery_variant",
-      "y": 0
-    },
-    "filled=false,facing=east": {
-      "model": "bewitchment:block/distillery",
-      "y": 180
-    },
-    "filled=true,facing=east": {
-      "model": "bewitchment:block/distillery_variant",
-      "y": 180
-    }
+	"filled=false,facing=north": {
+	  "model": "bewitchment:block/distillery",
+	  "y": 90
+	},
+	"filled=true,facing=north": {
+	  "model": "bewitchment:block/distillery_variant",
+	  "y": 90
+	},
+	"filled=false,facing=south": {
+	  "model": "bewitchment:block/distillery",
+	  "y": 270
+	},
+	"filled=true,facing=south": {
+	  "model": "bewitchment:block/distillery_variant",
+	  "y": 270
+	},
+	"filled=false,facing=west": {
+	  "model": "bewitchment:block/distillery",
+	  "y": 0
+	},
+	"filled=true,facing=west": {
+	  "model": "bewitchment:block/distillery_variant",
+	  "y": 0
+	},
+	"filled=false,facing=east": {
+	  "model": "bewitchment:block/distillery",
+	  "y": 180
+	},
+	"filled=true,facing=east": {
+	  "model": "bewitchment:block/distillery_variant",
+	  "y": 180
+	}
   }
 }

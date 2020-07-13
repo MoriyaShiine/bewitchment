@@ -1,7 +1,7 @@
 {
   "parent": "block/carpet",
   "textures": {
-    "particle": "bewitchment:block/alchemist_wool",
-    "wool": "bewitchment:block/alchemist_wool"
+	"particle": "bewitchment:block/alchemist_wool",
+	"wool": "bewitchment:block/alchemist_wool"
   }
 }

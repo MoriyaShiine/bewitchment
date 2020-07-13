@@ -1,22 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "TTT",
-    "NIN",
-    " I "
+	"TTT",
+	"NIN",
+	" I "
   ],
   "key": {
-    "T": {
-      "item": "minecraft:torch"
-    },
-    "N": {
-      "item": "minecraft:gold_nugget"
-    },
-    "I": {
-      "item": "minecraft:gold_ingot"
-    }
+	"T": {
+	  "item": "minecraft:torch"
+	},
+	"N": {
+	  "item": "minecraft:gold_nugget"
+	},
+	"I": {
+	  "item": "minecraft:gold_ingot"
+	}
   },
   "result": {
-    "item": "bewitchment:golden_candelabra"
+	"item": "bewitchment:golden_candelabra"
   }
 }

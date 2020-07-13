@@ -1,23 +1,23 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "EME",
-    "MSM",
-    "MMM"
+	"EME",
+	"MSM",
+	"MMM"
   ],
   "key": {
-    "E": {
-      "item": "bewitchment:elder_bark"
-    },
-    "M": {
-      "item": "minecraft:stone"
-    },
-    "S": {
-      "item": "bewitchment:silver_ingot"
-    }
+	"E": {
+	  "item": "bewitchment:elder_bark"
+	},
+	"M": {
+	  "item": "minecraft:stone"
+	},
+	"S": {
+	  "item": "bewitchment:silver_ingot"
+	}
   },
   "result": {
-    "item": "bewitchment:stone_witch_altar",
-    "count": 3
+	"item": "bewitchment:stone_witch_altar",
+	"count": 3
   }
 }

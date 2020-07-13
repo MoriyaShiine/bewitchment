@@ -33,7 +33,7 @@ public class ChalkItem extends Item {
 		this.chalk_block = chalk_block;
 		this.chalk_block.chalk_item = this;
 	}
-
+	
 	@Override
 	public ActionResult useOnBlock(ItemUsageContext context) {
 		ItemPlacementContext itemPlacementContext = new ItemPlacementContext(context);

@@ -1,7 +1,7 @@
 {
   "parent": "block/door_bottom",
   "textures": {
-    "bottom": "bewitchment:block/elder_door_bottom",
-    "top": "bewitchment:block/elder_door_top"
+	"bottom": "bewitchment:block/elder_door_bottom",
+	"top": "bewitchment:block/elder_door_top"
   }
 }

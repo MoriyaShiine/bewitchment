@@ -1,18 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "I",
-    "F"
+	"I",
+	"F"
   ],
   "key": {
-    "I": {
-      "item": "bewitchment:silver_ingot"
-    },
-    "F": {
-      "item": "minecraft:flint"
-    }
+	"I": {
+	  "item": "bewitchment:silver_ingot"
+	},
+	"F": {
+	  "item": "minecraft:flint"
+	}
   },
   "result": {
-    "item": "bewitchment:athame"
+	"item": "bewitchment:athame"
   }
 }

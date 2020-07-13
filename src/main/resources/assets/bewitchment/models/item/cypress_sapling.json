@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "bewitchment:block/cypress_sapling"
+	"layer0": "bewitchment:block/cypress_sapling"
   }
 }

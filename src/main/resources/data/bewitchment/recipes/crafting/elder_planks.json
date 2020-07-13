@@ -2,12 +2,12 @@
   "type": "minecraft:crafting_shapeless",
   "group": "planks",
   "ingredients": [
-    {
-      "tag": "bewitchment:elder_logs"
-    }
+	{
+	  "tag": "bewitchment:elder_logs"
+	}
   ],
   "result": {
-    "item": "bewitchment:elder_planks",
-    "count": 4
+	"item": "bewitchment:elder_planks",
+	"count": 4
   }
 }

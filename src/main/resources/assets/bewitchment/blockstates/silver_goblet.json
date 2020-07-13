@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "bewitchment:block/silver_goblet"
-    }
+	"": {
+	  "model": "bewitchment:block/silver_goblet"
+	}
   }
 }

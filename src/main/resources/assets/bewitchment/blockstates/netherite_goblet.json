@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "bewitchment:block/netherite_goblet"
-    }
+	"": {
+	  "model": "bewitchment:block/netherite_goblet"
+	}
   }
 }

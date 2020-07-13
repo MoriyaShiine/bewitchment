@@ -1,16 +1,16 @@
 {
   "variants": {
-    "axis=y": {
-      "model": "bewitchment:block/dragons_blood_wood"
-    },
-    "axis=z": {
-      "model": "bewitchment:block/dragons_blood_wood",
-      "x": 90
-    },
-    "axis=x": {
-      "model": "bewitchment:block/dragons_blood_wood",
-      "x": 90,
-      "y": 90
-    }
+	"axis=y": {
+	  "model": "bewitchment:block/dragons_blood_wood"
+	},
+	"axis=z": {
+	  "model": "bewitchment:block/dragons_blood_wood",
+	  "x": 90
+	},
+	"axis=x": {
+	  "model": "bewitchment:block/dragons_blood_wood",
+	  "x": 90,
+	  "y": 90
+	}
   }
 }

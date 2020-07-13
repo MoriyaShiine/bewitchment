@@ -64,8 +64,7 @@ public class SpinningWheelBlock extends BlockWithEntity implements Waterloggable
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		boolean client = world.isClient;
-		if (!client)
-		{
+		if (!client) {
 			player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
 		}
 		return ActionResult.success(client);

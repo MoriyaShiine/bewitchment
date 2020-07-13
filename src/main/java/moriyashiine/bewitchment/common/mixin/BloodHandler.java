@@ -13,8 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
-public abstract class BloodHandler extends Entity
-{
+public abstract class BloodHandler extends Entity {
 	@Shadow
 	public abstract boolean isSleeping();
 	
@@ -23,10 +22,8 @@ public abstract class BloodHandler extends Entity
 	}
 	
 	@Inject(method = "tick", at = @At("TAIL"))
-	private void regenerateBlood(CallbackInfo callbackInfo)
-	{
-		if (BWDataTrackers.hasBlood(this) && !BWUtil.isVampire(this) && BWDataTrackers.getBlood(this) < BWDataTrackers.MAX_BLOOD && this.world.random.nextFloat() < (isSleeping() ? 1/20f : 1/200f))
-		{
+	private void regenerateBlood(CallbackInfo callbackInfo) {
+		if (BWDataTrackers.hasBlood(this) && !BWUtil.isVampire(this) && BWDataTrackers.getBlood(this) < BWDataTrackers.MAX_BLOOD && this.world.random.nextFloat() < (isSleeping() ? 1 / 20f : 1 / 200f)) {
 			BWDataTrackers.fillBlood(this, 1, false);
 		}
 	}

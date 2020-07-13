@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "bewitchment:juniper_door",
-    "bewitchment:cypress_door",
-    "bewitchment:elder_door",
-    "bewitchment:dragons_blood_door"
+	"bewitchment:juniper_door",
+	"bewitchment:cypress_door",
+	"bewitchment:elder_door",
+	"bewitchment:dragons_blood_door"
   ]
 }

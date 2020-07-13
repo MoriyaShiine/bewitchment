@@ -16,14 +16,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Mixin(SignBlockEntityRenderer.class)
-public class BWSignBlockEntityRenderer
-{
+public class BWSignBlockEntityRenderer {
 	private static Map<Block, SpriteIdentifier> TEXTURES;
 	
 	@Inject(method = "getModelTexture", at = @At("HEAD"), cancellable = true)
 	private static void getModelTexture(Block block, CallbackInfoReturnable<SpriteIdentifier> info) {
-		if (TEXTURES == null)
-		{
+		if (TEXTURES == null) {
 			TEXTURES = new HashMap<>();
 			registerSpriteIdentifier(BWObjects.juniper_standing_sign, BWObjects.juniper_wall_sign, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, new Identifier(Bewitchment.MODID, "block/juniper_sign")));
 			registerSpriteIdentifier(BWObjects.cypress_standing_sign, BWObjects.cypress_wall_sign, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, new Identifier(Bewitchment.MODID, "block/cypress_sign")));
@@ -31,14 +29,12 @@ public class BWSignBlockEntityRenderer
 			registerSpriteIdentifier(BWObjects.dragons_blood_standing_sign, BWObjects.dragons_blood_wall_sign, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, new Identifier(Bewitchment.MODID, "block/dragons_blood_sign")));
 		}
 		SpriteIdentifier texture = TEXTURES.get(block);
-		if (texture != null)
-		{
+		if (texture != null) {
 			info.setReturnValue(texture);
 		}
 	}
 	
-	private static void registerSpriteIdentifier(Block sign, Block wallSign, SpriteIdentifier spriteIdentifier)
-	{
+	private static void registerSpriteIdentifier(Block sign, Block wallSign, SpriteIdentifier spriteIdentifier) {
 		TEXTURES.put(sign, spriteIdentifier);
 		TEXTURES.put(wallSign, spriteIdentifier);
 	}

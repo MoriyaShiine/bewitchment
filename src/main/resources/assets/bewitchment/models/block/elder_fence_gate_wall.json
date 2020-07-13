@@ -1,6 +1,6 @@
 {
   "parent": "block/template_fence_gate_wall",
   "textures": {
-    "texture": "bewitchment:block/elder_planks"
+	"texture": "bewitchment:block/elder_planks"
   }
 }

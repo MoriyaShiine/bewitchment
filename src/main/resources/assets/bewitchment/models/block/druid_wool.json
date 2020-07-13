@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "bewitchment:block/druid_wool"
+	"all": "bewitchment:block/druid_wool"
   }
 }

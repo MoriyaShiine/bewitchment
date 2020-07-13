@@ -1,94 +1,94 @@
 {
   "variants": {
-    "chalk_variant=0,facing=north": {
-      "model": "bewitchment:block/chalk_0"
-    },
-    "chalk_variant=1,facing=north": {
-      "model": "bewitchment:block/chalk_1"
-    },
-    "chalk_variant=2,facing=north": {
-      "model": "bewitchment:block/chalk_2"
-    },
-    "chalk_variant=3,facing=north": {
-      "model": "bewitchment:block/chalk_3"
-    },
-    "chalk_variant=4,facing=north": {
-      "model": "bewitchment:block/chalk_4"
-    },
-    "chalk_variant=5,facing=north": {
-      "model": "bewitchment:block/chalk_5"
-    },
-    "chalk_variant=0,facing=south": {
-      "model": "bewitchment:block/chalk_0",
-      "y": 180
-    },
-    "chalk_variant=1,facing=south": {
-      "model": "bewitchment:block/chalk_1",
-      "y": 180
-    },
-    "chalk_variant=2,facing=south": {
-      "model": "bewitchment:block/chalk_2",
-      "y": 180
-    },
-    "chalk_variant=3,facing=south": {
-      "model": "bewitchment:block/chalk_3",
-      "y": 180
-    },
-    "chalk_variant=4,facing=south": {
-      "model": "bewitchment:block/chalk_4",
-      "y": 180
-    },
-    "chalk_variant=5,facing=south": {
-      "model": "bewitchment:block/chalk_5",
-      "y": 180
-    },
-    "chalk_variant=0,facing=west": {
-      "model": "bewitchment:block/chalk_0",
-      "y": 270
-    },
-    "chalk_variant=1,facing=west": {
-      "model": "bewitchment:block/chalk_1",
-      "y": 270
-    },
-    "chalk_variant=2,facing=west": {
-      "model": "bewitchment:block/chalk_2",
-      "y": 270
-    },
-    "chalk_variant=3,facing=west": {
-      "model": "bewitchment:block/chalk_3",
-      "y": 270
-    },
-    "chalk_variant=4,facing=west": {
-      "model": "bewitchment:block/chalk_4",
-      "y": 270
-    },
-    "chalk_variant=5,facing=west": {
-      "model": "bewitchment:block/chalk_5",
-      "y": 270
-    },
-    "chalk_variant=0,facing=east": {
-      "model": "bewitchment:block/chalk_0",
-      "y": 90
-    },
-    "chalk_variant=1,facing=east": {
-      "model": "bewitchment:block/chalk_1",
-      "y": 90
-    },
-    "chalk_variant=2,facing=east": {
-      "model": "bewitchment:block/chalk_2",
-      "y": 90
-    },
-    "chalk_variant=3,facing=east": {
-      "model": "bewitchment:block/chalk_3",
-      "y": 90
-    },
-    "chalk_variant=4,facing=east": {
-      "model": "bewitchment:block/chalk_4",
-      "y": 90
-    },
-    "chalk_variant=5,facing=east": {
-      "model": "bewitchment:block/chalk_5",
-      "y": 90
-    }
+	"chalk_variant=0,facing=north": {
+	  "model": "bewitchment:block/chalk_0"
+	},
+	"chalk_variant=1,facing=north": {
+	  "model": "bewitchment:block/chalk_1"
+	},
+	"chalk_variant=2,facing=north": {
+	  "model": "bewitchment:block/chalk_2"
+	},
+	"chalk_variant=3,facing=north": {
+	  "model": "bewitchment:block/chalk_3"
+	},
+	"chalk_variant=4,facing=north": {
+	  "model": "bewitchment:block/chalk_4"
+	},
+	"chalk_variant=5,facing=north": {
+	  "model": "bewitchment:block/chalk_5"
+	},
+	"chalk_variant=0,facing=south": {
+	  "model": "bewitchment:block/chalk_0",
+	  "y": 180
+	},
+	"chalk_variant=1,facing=south": {
+	  "model": "bewitchment:block/chalk_1",
+	  "y": 180
+	},
+	"chalk_variant=2,facing=south": {
+	  "model": "bewitchment:block/chalk_2",
+	  "y": 180
+	},
+	"chalk_variant=3,facing=south": {
+	  "model": "bewitchment:block/chalk_3",
+	  "y": 180
+	},
+	"chalk_variant=4,facing=south": {
+	  "model": "bewitchment:block/chalk_4",
+	  "y": 180
+	},
+	"chalk_variant=5,facing=south": {
+	  "model": "bewitchment:block/chalk_5",
+	  "y": 180
+	},
+	"chalk_variant=0,facing=west": {
+	  "model": "bewitchment:block/chalk_0",
+	  "y": 270
+	},
+	"chalk_variant=1,facing=west": {
+	  "model": "bewitchment:block/chalk_1",
+	  "y": 270
+	},
+	"chalk_variant=2,facing=west": {
+	  "model": "bewitchment:block/chalk_2",
+	  "y": 270
+	},
+	"chalk_variant=3,facing=west": {
+	  "model": "bewitchment:block/chalk_3",
+	  "y": 270
+	},
+	"chalk_variant=4,facing=west": {
+	  "model": "bewitchment:block/chalk_4",
+	  "y": 270
+	},
+	"chalk_variant=5,facing=west": {
+	  "model": "bewitchment:block/chalk_5",
+	  "y": 270
+	},
+	"chalk_variant=0,facing=east": {
+	  "model": "bewitchment:block/chalk_0",
+	  "y": 90
+	},
+	"chalk_variant=1,facing=east": {
+	  "model": "bewitchment:block/chalk_1",
+	  "y": 90
+	},
+	"chalk_variant=2,facing=east": {
+	  "model": "bewitchment:block/chalk_2",
+	  "y": 90
+	},
+	"chalk_variant=3,facing=east": {
+	  "model": "bewitchment:block/chalk_3",
+	  "y": 90
+	},
+	"chalk_variant=4,facing=east": {
+	  "model": "bewitchment:block/chalk_4",
+	  "y": 90
+	},
+	"chalk_variant=5,facing=east": {
+	  "model": "bewitchment:block/chalk_5",
+	  "y": 90
+	}
   }
 }

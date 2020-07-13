@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "bewitchment:block/druid_carpet"
-    }
+	"": {
+	  "model": "bewitchment:block/druid_carpet"
+	}
   }
 }

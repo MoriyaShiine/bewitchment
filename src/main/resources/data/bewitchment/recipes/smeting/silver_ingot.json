@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smelting",
   "ingredient": {
-    "item": "bewitchment:silver_ore"
+	"item": "bewitchment:silver_ore"
   },
   "result": "bewitchment:silver_ingot",
   "experience": 1.0,

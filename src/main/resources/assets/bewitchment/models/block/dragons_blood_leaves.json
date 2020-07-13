@@ -1,6 +1,6 @@
 {
   "parent": "block/leaves",
   "textures": {
-    "all": "bewitchment:block/dragons_blood_leaves"
+	"all": "bewitchment:block/dragons_blood_leaves"
   }
 }

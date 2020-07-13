@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "bewitchment:block/silver_ore"
-    }
+	"": {
+	  "model": "bewitchment:block/silver_ore"
+	}
   }
 }

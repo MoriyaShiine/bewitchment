@@ -1,6 +1,6 @@
 {
   "parent": "block/button_inventory",
   "textures": {
-    "texture": "bewitchment:block/dragons_blood_planks"
+	"texture": "bewitchment:block/dragons_blood_planks"
   }
 }

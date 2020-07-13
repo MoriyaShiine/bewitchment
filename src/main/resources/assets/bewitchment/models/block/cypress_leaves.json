@@ -1,6 +1,6 @@
 {
   "parent": "block/leaves",
   "textures": {
-    "all": "bewitchment:block/cypress_leaves"
+	"all": "bewitchment:block/cypress_leaves"
   }
 }

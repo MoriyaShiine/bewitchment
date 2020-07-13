@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "bewitchment:block/silver_ore"
+	"all": "bewitchment:block/silver_ore"
   }
 }

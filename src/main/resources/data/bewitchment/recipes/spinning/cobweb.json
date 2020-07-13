@@ -1,20 +1,20 @@
 {
   "type": "bewitchment:spinning",
   "ingredients": [
-    {
-       "item": "minecraft:string"
-    },
-    {
-       "item": "minecraft:string"
-    },
-    {
-       "item": "minecraft:string"
-    },
-    {
-       "item": "minecraft:string"
-    }
+	{
+	  "item": "minecraft:string"
+	},
+	{
+	  "item": "minecraft:string"
+	},
+	{
+	  "item": "minecraft:string"
+	},
+	{
+	  "item": "minecraft:string"
+	}
   ],
   "result": {
-    "item": "minecraft:cobweb"
+	"item": "minecraft:cobweb"
   }
 }

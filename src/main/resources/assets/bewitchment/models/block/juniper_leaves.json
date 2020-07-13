@@ -1,6 +1,6 @@
 {
   "parent": "block/leaves",
   "textures": {
-    "all": "bewitchment:block/juniper_leaves"
+	"all": "bewitchment:block/juniper_leaves"
   }
 }

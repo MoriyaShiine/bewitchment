@@ -1,22 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "GGG",
-    "G S",
-    "S F"
+	"GGG",
+	"G S",
+	"S F"
   ],
   "key": {
-    "G": {
-      "item": "minecraft:glass"
-    },
-    "S": {
-      "item": "bewitchment:silver_ingot"
-    },
-    "F": {
-      "item": "minecraft:flint_and_steel"
-    }
+	"G": {
+	  "item": "minecraft:glass"
+	},
+	"S": {
+	  "item": "bewitchment:silver_ingot"
+	},
+	"F": {
+	  "item": "minecraft:flint_and_steel"
+	}
   },
   "result": {
-    "item": "bewitchment:distillery"
+	"item": "bewitchment:distillery"
   }
 }

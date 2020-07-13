@@ -13,20 +13,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
-public class BWTrackers
-{
+public class BWTrackers {
 	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
 	public void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
 		Object obj = this;
 		if (obj instanceof LivingEntity) {
 			LivingEntity thisObj = (LivingEntity) obj;
 			boolean player = thisObj instanceof PlayerEntity;
-			if (player || BWDataTrackers.hasBlood(thisObj))
-			{
+			if (player || BWDataTrackers.hasBlood(thisObj)) {
 				BWDataTrackers.setBlood(thisObj, tag.getInt("Blood"));
 			}
-			if (player)
-			{
+			if (player) {
 				BWDataTrackers.setMagic(thisObj, tag.getInt("Magic"));
 			}
 		}
@@ -38,12 +35,10 @@ public class BWTrackers
 		if (obj instanceof LivingEntity) {
 			LivingEntity thisObj = (LivingEntity) obj;
 			boolean player = thisObj instanceof PlayerEntity;
-			if (player || BWDataTrackers.hasBlood(thisObj))
-			{
+			if (player || BWDataTrackers.hasBlood(thisObj)) {
 				tag.putInt("Blood", BWDataTrackers.getBlood(thisObj));
 			}
-			if (player)
-			{
+			if (player) {
 				tag.putInt("Magic", BWDataTrackers.getMagic(thisObj));
 			}
 		}
@@ -55,12 +50,10 @@ public class BWTrackers
 		if (obj instanceof LivingEntity) {
 			LivingEntity thisObj = (LivingEntity) obj;
 			boolean player = thisObj instanceof PlayerEntity;
-			if (player || BWDataTrackers.hasBlood(thisObj))
-			{
+			if (player || BWDataTrackers.hasBlood(thisObj)) {
 				thisObj.getDataTracker().startTracking(BWDataTrackers.BLOOD, BWDataTrackers.MAX_BLOOD);
 			}
-			if (player)
-			{
+			if (player) {
 				thisObj.getDataTracker().startTracking(BWDataTrackers.MAGIC, 0);
 			}
 		}

@@ -1,20 +1,20 @@
 {
   "type": "bewitchment:spinning",
   "ingredients": [
-    {
-      "item": "bewitchment:witchs_stitches"
-    },
-    {
-      "item": "bewitchment:witchs_stitches"
-    },
-    {
-      "item": "bewitchment:ectoplasm"
-    },
-    {
-      "item": "bewitchment:spanish_moss"
-    }
+	{
+	  "item": "bewitchment:witchs_stitches"
+	},
+	{
+	  "item": "bewitchment:witchs_stitches"
+	},
+	{
+	  "item": "bewitchment:ectoplasm"
+	},
+	{
+	  "item": "bewitchment:spanish_moss"
+	}
   ],
   "result": {
-    "item": "bewitchment:spirit_string"
+	"item": "bewitchment:spirit_string"
   }
 }

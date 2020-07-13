@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "bewitchment:block/silver_candelabra"
-    }
+	"": {
+	  "model": "bewitchment:block/silver_candelabra"
+	}
   }
 }

@@ -1,20 +1,20 @@
 {
   "type": "bewitchment:spinning",
   "ingredients": [
-    {
-      "item": "bewitchment:witchs_stitches"
-    },
-    {
-      "item": "bewitchment:witchs_stitches"
-    },
-    {
-      "item": "minecraft:wheat"
-    },
-    {
-      "item": "minecraft:gold_nugget"
-    }
+	{
+	  "item": "bewitchment:witchs_stitches"
+	},
+	{
+	  "item": "bewitchment:witchs_stitches"
+	},
+	{
+	  "item": "minecraft:wheat"
+	},
+	{
+	  "item": "minecraft:gold_nugget"
+	}
   ],
   "result": {
-    "item": "bewitchment:golden_thread"
+	"item": "bewitchment:golden_thread"
   }
 }

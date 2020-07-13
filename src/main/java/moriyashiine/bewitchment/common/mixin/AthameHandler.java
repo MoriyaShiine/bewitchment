@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.common.mixin;
 
-import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.item.tool.AthameItem;
 import moriyashiine.bewitchment.common.misc.BWDataTrackers;
+import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.recipe.AthameDropRecipe;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
@@ -27,17 +27,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
-public abstract class AthameHandler extends Entity
-{
+public abstract class AthameHandler extends Entity {
 	public AthameHandler(EntityType<?> type, World world) {
 		super(type, world);
 	}
 	
 	@Inject(method = "onKilledBy", at = @At("HEAD"))
-	private void dropBlood(LivingEntity adversary, CallbackInfo callbackInfo)
-	{
-		if (BWDataTrackers.hasBlood(this))
-		{
+	private void dropBlood(LivingEntity adversary, CallbackInfo callbackInfo) {
+		if (BWDataTrackers.hasBlood(this)) {
 			if (!world.isClient) {
 				if (adversary instanceof PlayerEntity) {
 					PlayerEntity playerAttacker = (PlayerEntity) adversary;
@@ -53,8 +50,7 @@ public abstract class AthameHandler extends Entity
 	}
 	
 	@Inject(method = "drop", at = @At("HEAD"))
-	private void dropLoot(DamageSource source, CallbackInfo callbackInfo)
-	{
+	private void dropLoot(DamageSource source, CallbackInfo callbackInfo) {
 		if (!world.isClient) {
 			Entity attacker = source.getSource();
 			if (attacker instanceof LivingEntity) {

@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "bewitchment:block/stone_witch_altar"
-    }
+	"": {
+	  "model": "bewitchment:block/stone_witch_altar"
+	}
   }
 }

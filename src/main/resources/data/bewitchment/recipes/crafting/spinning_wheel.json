@@ -1,22 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "I P",
-    "SPS",
-    "S S"
+	"I P",
+	"SPS",
+	"S S"
   ],
   "key": {
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "P": {
-      "tag": "minecraft:planks"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+	"I": {
+	  "item": "minecraft:iron_ingot"
+	},
+	"P": {
+	  "tag": "minecraft:planks"
+	},
+	"S": {
+	  "item": "minecraft:stick"
+	}
   },
   "result": {
-    "item": "bewitchment:spinning_wheel"
+	"item": "bewitchment:spinning_wheel"
   }
 }

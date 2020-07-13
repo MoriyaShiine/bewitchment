@@ -1,21 +1,21 @@
 {
   "type": "bewitchment:spinning",
   "ingredients": [
-    {
-      "item": "minecraft:blue_wool"
-    },
-    {
-      "item": "minecraft:vine"
-    },
-    {
-      "item": "bewitchment:pure_filament"
-    },
-    {
-      "item": "bewitchment:pure_filament"
-    }
+	{
+	  "item": "minecraft:blue_wool"
+	},
+	{
+	  "item": "minecraft:vine"
+	},
+	{
+	  "item": "bewitchment:pure_filament"
+	},
+	{
+	  "item": "bewitchment:pure_filament"
+	}
   ],
   "result": {
-    "item": "bewitchment:druid_wool",
-    "count": 2
+	"item": "bewitchment:druid_wool",
+	"count": 2
   }
 }

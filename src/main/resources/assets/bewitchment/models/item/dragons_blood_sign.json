@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "bewitchment:item/dragons_blood_sign"
+	"layer0": "bewitchment:item/dragons_blood_sign"
   }
 }

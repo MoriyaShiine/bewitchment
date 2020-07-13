@@ -1,7 +1,7 @@
 {
   "parent": "block/cube_column",
   "textures": {
-    "end": "bewitchment:block/cypress_log_top",
-    "side": "bewitchment:block/cypress_log"
+	"end": "bewitchment:block/cypress_log_top",
+	"side": "bewitchment:block/cypress_log"
   }
 }

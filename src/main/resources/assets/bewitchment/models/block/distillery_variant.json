@@ -1,6 +1,6 @@
 {
   "parent": "bewitchment:block/distillery",
   "textures": {
-    "particle": "bewitchment:block/distillery_variant"
+	"particle": "bewitchment:block/distillery_variant"
   }
 }

@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "bewitchment:juniper_sign",
-    "bewitchment:cypress_sign",
-    "bewitchment:elder_sign",
-    "bewitchment:dragons_blood_sign"
+	"bewitchment:juniper_sign",
+	"bewitchment:cypress_sign",
+	"bewitchment:elder_sign",
+	"bewitchment:dragons_blood_sign"
   ]
 }

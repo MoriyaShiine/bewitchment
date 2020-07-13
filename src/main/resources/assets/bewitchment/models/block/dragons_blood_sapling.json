@@ -1,6 +1,6 @@
 {
   "parent": "block/cross",
   "textures": {
-    "cross": "bewitchment:block/dragons_blood_sapling"
+	"cross": "bewitchment:block/dragons_blood_sapling"
   }
 }

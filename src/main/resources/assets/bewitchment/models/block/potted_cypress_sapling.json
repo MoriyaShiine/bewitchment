@@ -1,6 +1,6 @@
 {
   "parent": "block/flower_pot_cross",
   "textures": {
-    "plant": "bewitchment:block/cypress_sapling"
+	"plant": "bewitchment:block/cypress_sapling"
   }
 }

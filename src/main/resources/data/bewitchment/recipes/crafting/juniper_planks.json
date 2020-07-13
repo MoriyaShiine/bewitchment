@@ -2,12 +2,12 @@
   "type": "minecraft:crafting_shapeless",
   "group": "planks",
   "ingredients": [
-    {
-      "tag": "bewitchment:juniper_logs"
-    }
+	{
+	  "tag": "bewitchment:juniper_logs"
+	}
   ],
   "result": {
-    "item": "bewitchment:juniper_planks",
-    "count": 4
+	"item": "bewitchment:juniper_planks",
+	"count": 4
   }
 }

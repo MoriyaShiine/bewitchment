@@ -4,9 +4,9 @@
   "package": "moriyashiine.bewitchment.client.mixin",
   "compatibilityLevel": "JAVA_8",
   "client": [
-    "BWSignBlockEntityRenderer"
+	"BWSignBlockEntityRenderer"
   ],
   "injectors": {
-    "defaultRequire": 1
+	"defaultRequire": 1
   }
 }

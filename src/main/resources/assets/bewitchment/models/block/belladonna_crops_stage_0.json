@@ -1,6 +1,6 @@
 {
   "parent": "bewitchment:block/crop_cross",
   "textures": {
-    "cross": "bewitchment:block/belladonna_crops_stage_0"
+	"cross": "bewitchment:block/belladonna_crops_stage_0"
   }
 }

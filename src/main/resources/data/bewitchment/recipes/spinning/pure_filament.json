@@ -1,20 +1,20 @@
 {
   "type": "bewitchment:spinning",
   "ingredients": [
-    {
-      "item": "bewitchment:witchs_stitches"
-    },
-    {
-      "item": "bewitchment:witchs_stitches"
-    },
-    {
-      "item": "bewitchment:cleansing_balm"
-    },
-    {
-      "item": "bewitchment:silver_nugget"
-    }
+	{
+	  "item": "bewitchment:witchs_stitches"
+	},
+	{
+	  "item": "bewitchment:witchs_stitches"
+	},
+	{
+	  "item": "bewitchment:cleansing_balm"
+	},
+	{
+	  "item": "bewitchment:silver_nugget"
+	}
   ],
   "result": {
-    "item": "bewitchment:pure_filament"
+	"item": "bewitchment:pure_filament"
   }
 }

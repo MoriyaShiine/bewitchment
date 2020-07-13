@@ -23,8 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.function.Predicate;
 
 @Mixin(LivingEntity.class)
-public abstract class SilverHandler extends Entity
-{
+public abstract class SilverHandler extends Entity {
 	private static final Tag<EntityType<?>> WEAK_TO_SILVER = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "weak_to_silver"));
 	
 	private static final Tag<Item> SILVER_TOOLS = TagRegistry.item(new Identifier(Bewitchment.MODID, "silver_tools"));
@@ -35,11 +34,9 @@ public abstract class SilverHandler extends Entity
 	}
 	
 	@ModifyVariable(method = {"damage"}, at = @At("HEAD"))
-	private float modifyDamage(float amount, DamageSource source)
-	{
+	private float modifyDamage(float amount, DamageSource source) {
 		Entity attacker = source.getSource();
-		if (isWeakToSilver(this))
-		{
+		if (isWeakToSilver(this)) {
 			if (isHoldingSilver(attacker, Hand.MAIN_HAND, true) || attacker instanceof SilverArrowEntity) {
 				return amount * 1.5f;
 			}
@@ -53,8 +50,7 @@ public abstract class SilverHandler extends Entity
 	}
 	
 	@Inject(method = "tick", at = @At("HEAD"))
-	private void damageEntitiesWeakToSilver(CallbackInfo callbackInfo)
-	{
+	private void damageEntitiesWeakToSilver(CallbackInfo callbackInfo) {
 		if (!world.isClient && isWeakToSilver(this)) {
 			byte damage = getSilverArmor(this);
 			if (isHoldingSilver(this, Hand.MAIN_HAND, false)) {

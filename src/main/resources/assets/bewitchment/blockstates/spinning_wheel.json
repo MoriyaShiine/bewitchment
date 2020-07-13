@@ -1,20 +1,20 @@
 {
   "variants": {
-    "facing=north": {
-      "model": "bewitchment:block/spinning_wheel",
-      "y": 90
-    },
-    "facing=south": {
-      "model": "bewitchment:block/spinning_wheel",
-      "y": 270
-    },
-    "facing=west": {
-      "model": "bewitchment:block/spinning_wheel",
-      "y": 0
-    },
-    "facing=east": {
-      "model": "bewitchment:block/spinning_wheel",
-      "y": 180
-    }
+	"facing=north": {
+	  "model": "bewitchment:block/spinning_wheel",
+	  "y": 90
+	},
+	"facing=south": {
+	  "model": "bewitchment:block/spinning_wheel",
+	  "y": 270
+	},
+	"facing=west": {
+	  "model": "bewitchment:block/spinning_wheel",
+	  "y": 0
+	},
+	"facing=east": {
+	  "model": "bewitchment:block/spinning_wheel",
+	  "y": 180
+	}
   }
 }

@@ -1,7 +1,7 @@
 {
   "parent": "block/cube_column",
   "textures": {
-    "end": "bewitchment:block/juniper_log",
-    "side": "bewitchment:block/juniper_log"
+	"end": "bewitchment:block/juniper_log",
+	"side": "bewitchment:block/juniper_log"
   }
 }

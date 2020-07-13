@@ -1,12 +1,12 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "bewitchment:dragons_blood_resin_block"
-    }
+	{
+	  "item": "bewitchment:dragons_blood_resin_block"
+	}
   ],
   "result": {
-    "item": "bewitchment:dragons_blood_resin",
-    "count": 9
+	"item": "bewitchment:dragons_blood_resin",
+	"count": 9
   }
 }

@@ -2,19 +2,19 @@
   "type": "minecraft:crafting_shaped",
   "group": "wooden_fence",
   "pattern": [
-    "PSP",
-    "PSP"
+	"PSP",
+	"PSP"
   ],
   "key": {
-    "P": {
-      "item": "minecraft:stick"
-    },
-    "S": {
-      "tag": "forge:rods/wooden"
-    }
+	"P": {
+	  "item": "minecraft:stick"
+	},
+	"S": {
+	  "tag": "forge:rods/wooden"
+	}
   },
   "result": {
-    "item": "bewitchment:elder_fence",
-    "count": 3
+	"item": "bewitchment:elder_fence",
+	"count": 3
   }
 }

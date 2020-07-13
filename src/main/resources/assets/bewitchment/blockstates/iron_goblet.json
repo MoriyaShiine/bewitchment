@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "bewitchment:block/iron_goblet"
-    }
+	"": {
+	  "model": "bewitchment:block/iron_goblet"
+	}
   }
 }

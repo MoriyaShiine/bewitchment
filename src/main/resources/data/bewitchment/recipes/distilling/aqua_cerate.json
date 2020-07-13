@@ -1,20 +1,20 @@
 {
   "type": "bewitchment:distilling",
   "ingredients": [
-    {
-      "item": "minecraft:glass_bottle"
-    },
-    {
-      "item": "bewitchment:juniper_bark"
-    },
-    {
-      "item": "minecraft:kelp"
-    },
-    {
-      "item": "bewitchment:toad_foot"
-    }
+	{
+	  "item": "minecraft:glass_bottle"
+	},
+	{
+	  "item": "bewitchment:juniper_bark"
+	},
+	{
+	  "item": "minecraft:kelp"
+	},
+	{
+	  "item": "bewitchment:toad_foot"
+	}
   ],
   "result": {
-    "item": "bewitchment:aqua_cerate"
+	"item": "bewitchment:aqua_cerate"
   }
 }

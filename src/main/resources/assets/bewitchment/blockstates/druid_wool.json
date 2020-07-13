@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "bewitchment:block/druid_wool"
-    }
+	"": {
+	  "model": "bewitchment:block/druid_wool"
+	}
   }
 }

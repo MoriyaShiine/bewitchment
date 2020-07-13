@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "bewitchment:block/potted_elder_sapling"
-    }
+	"": {
+	  "model": "bewitchment:block/potted_elder_sapling"
+	}
   }
 }

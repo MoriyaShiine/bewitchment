@@ -2,15 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "group": "carpet",
   "pattern": [
-    "WW"
+	"WW"
   ],
   "key": {
-    "W": {
-      "item": "bewitchment:druid_wool"
-    }
+	"W": {
+	  "item": "bewitchment:druid_wool"
+	}
   },
   "result": {
-    "item": "bewitchment:druid_carpet",
-    "count": 3
+	"item": "bewitchment:druid_carpet",
+	"count": 3
   }
 }

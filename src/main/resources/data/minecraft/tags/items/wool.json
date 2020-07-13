@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "bewitchment:druid_wool",
-    "bewitchment:alchemist_wool",
-    "bewitchment:besmirched_wool"
+	"bewitchment:druid_wool",
+	"bewitchment:alchemist_wool",
+	"bewitchment:besmirched_wool"
   ]
 }

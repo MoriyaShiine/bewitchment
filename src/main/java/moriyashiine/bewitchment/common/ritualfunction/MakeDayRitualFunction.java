@@ -28,8 +28,7 @@ public class MakeDayRitualFunction extends RitualFunction {
 	
 	public void finish(Ritual ritual, World world, BlockPos pos) {
 		super.finish(ritual, world, pos);
-		if (world instanceof ServerWorld)
-		{
+		if (world instanceof ServerWorld) {
 			ServerWorld serverWorld = ((ServerWorld) world);
 			while (world.getTimeOfDay() % 24000 != 0) {
 				serverWorld.method_29199(world.getTimeOfDay() + 1);

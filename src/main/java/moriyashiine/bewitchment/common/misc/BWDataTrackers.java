@@ -11,8 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 
-public class BWDataTrackers
-{
+public class BWDataTrackers {
 	public static final TrackedData<Integer> BLOOD = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	public static final TrackedData<Integer> MAGIC = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	
@@ -21,18 +20,15 @@ public class BWDataTrackers
 	
 	private static final Tag<EntityType<?>> HAS_BLOOD = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "has_blood"));
 	
-	public static boolean hasBlood(LivingEntity livingEntity)
-	{
+	public static boolean hasBlood(LivingEntity livingEntity) {
 		return HAS_BLOOD.contains(livingEntity.getType());
 	}
 	
-	public static int getBlood(LivingEntity livingEntity)
-	{
+	public static int getBlood(LivingEntity livingEntity) {
 		return livingEntity.getDataTracker().get(BLOOD);
 	}
 	
-	public static void setBlood(LivingEntity livingEntity, int amount)
-	{
+	public static void setBlood(LivingEntity livingEntity, int amount) {
 		livingEntity.getDataTracker().set(BLOOD, amount);
 	}
 	
@@ -58,13 +54,11 @@ public class BWDataTrackers
 		return false;
 	}
 	
-	public static int getMagic(LivingEntity livingEntity)
-	{
+	public static int getMagic(LivingEntity livingEntity) {
 		return livingEntity.getDataTracker().get(MAGIC);
 	}
 	
-	public static void setMagic(LivingEntity livingEntity, int amount)
-	{
+	public static void setMagic(LivingEntity livingEntity, int amount) {
 		livingEntity.getDataTracker().set(MAGIC, amount);
 	}
 	

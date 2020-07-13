@@ -1,6 +1,6 @@
 {
   "parent": "block/pressure_plate_down",
   "textures": {
-    "texture": "bewitchment:block/elder_planks"
+	"texture": "bewitchment:block/elder_planks"
   }
 }

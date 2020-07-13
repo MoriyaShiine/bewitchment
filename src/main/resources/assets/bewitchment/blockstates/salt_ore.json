@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "bewitchment:block/salt_ore"
-    }
+	"": {
+	  "model": "bewitchment:block/salt_ore"
+	}
   }
 }

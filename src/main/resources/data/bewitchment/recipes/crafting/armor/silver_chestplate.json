@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "I I",
-    "III",
-    "III"
+	"I I",
+	"III",
+	"III"
   ],
   "key": {
-    "I": {
-      "item": "bewitchment:silver_ingot"
-    }
+	"I": {
+	  "item": "bewitchment:silver_ingot"
+	}
   },
   "result": {
-    "item": "bewitchment:silver_chestplate"
+	"item": "bewitchment:silver_chestplate"
   }
 }

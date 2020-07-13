@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.common.world;
 
 import com.google.common.collect.ImmutableList;
-import moriyashiine.bewitchment.common.misc.BWConfig;
 import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.misc.BWConfig;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.world.generator.decorator.LeaveSpanishMossTreeDecorator;
@@ -36,16 +36,13 @@ public class BWWorldGenerator {
 			if (BWConfig.INSTANCE.owlBiomeCategories.contains(category.getName())) {
 				addEntitySpawn(biome, BWEntityTypes.owl, BWConfig.INSTANCE.owlWeight, BWConfig.INSTANCE.owlMinGroupCount, BWConfig.INSTANCE.owlMaxGroupCount);
 			}
-			if (BWConfig.INSTANCE.ravenBiomeCategories.contains(category.getName()))
-			{
+			if (BWConfig.INSTANCE.ravenBiomeCategories.contains(category.getName())) {
 				addEntitySpawn(biome, BWEntityTypes.raven, BWConfig.INSTANCE.ravenWeight, BWConfig.INSTANCE.ravenMinGroupCount, BWConfig.INSTANCE.ravenMaxGroupCount);
 			}
-			if (BWConfig.INSTANCE.snakeBiomeCategories.contains(category.getName()))
-			{
+			if (BWConfig.INSTANCE.snakeBiomeCategories.contains(category.getName())) {
 				addEntitySpawn(biome, BWEntityTypes.snake, BWConfig.INSTANCE.snakeWeight, BWConfig.INSTANCE.snakeMinGroupCount, BWConfig.INSTANCE.snakeMaxGroupCount);
 			}
-			if (BWConfig.INSTANCE.toadBiomeCategories.contains(category.getName()))
-			{
+			if (BWConfig.INSTANCE.toadBiomeCategories.contains(category.getName())) {
 				addEntitySpawn(biome, BWEntityTypes.toad, BWConfig.INSTANCE.toadWeight, BWConfig.INSTANCE.toadMinGroupCount, BWConfig.INSTANCE.toadMaxGroupCount);
 			}
 			if (category == Biome.Category.SAVANNA) {
