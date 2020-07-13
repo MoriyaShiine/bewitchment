@@ -79,12 +79,12 @@ public class SnakeEntity extends BWTameableEntity {
 	
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
-		return stack.getItem() == Items.RABBIT;
+		return stack.getItem() == Items.CHICKEN;
 	}
 	
 	@Override
 	protected boolean isTamingItem(ItemStack stack) {
-		return stack.getItem() == Items.CHICKEN;
+		return stack.getItem() == Items.RABBIT;
 	}
 	
 	@Override

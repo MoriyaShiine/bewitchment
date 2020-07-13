@@ -10,7 +10,7 @@
 	  "item": "minecraft:glass"
 	},
 	"S": {
-	  "item": "bewitchment:silver_ingot"
+	  "tag": "c:silver_ingots"
 	},
 	"F": {
 	  "item": "minecraft:flint_and_steel"

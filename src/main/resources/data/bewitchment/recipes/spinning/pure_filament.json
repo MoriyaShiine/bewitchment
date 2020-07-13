@@ -11,7 +11,7 @@
 	  "item": "bewitchment:cleansing_balm"
 	},
 	{
-	  "item": "bewitchment:silver_nugget"
+	  "tag": "c:silver_nuggets"
 	}
   ],
   "result": {

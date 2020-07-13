@@ -13,10 +13,10 @@
 	  "item": "minecraft:nether_brick"
 	},
 	"I": {
-	  "item": "minecraft:netherite_ingot"
+	  "item": "minecraft:netherite_scrap"
 	}
   },
   "result": {
-	"item": "bewitchment:silver_candelabra"
+	"item": "bewitchment:netherite_candelabra"
   }
 }

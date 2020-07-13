@@ -10,10 +10,10 @@
 	  "item": "minecraft:torch"
 	},
 	"N": {
-	  "item": "bewitchment:silver_nugget"
+	  "tag": "c:silver_nuggets"
 	},
 	"I": {
-	  "item": "bewitchment:silver_ingot"
+	  "tag": "c:silver_ingots"
 	}
   },
   "result": {

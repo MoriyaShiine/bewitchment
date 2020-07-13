@@ -64,12 +64,12 @@ public class ToadEntity extends BWTameableEntity {
 	
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
-		return stack.getItem() == Items.FERMENTED_SPIDER_EYE;
+		return stack.getItem() == Items.SPIDER_EYE;
 	}
 	
 	@Override
 	protected boolean isTamingItem(ItemStack stack) {
-		return stack.getItem() == Items.SPIDER_EYE;
+		return stack.getItem() == Items.FERMENTED_SPIDER_EYE;
 	}
 	
 	@SuppressWarnings("ConstantConditions")

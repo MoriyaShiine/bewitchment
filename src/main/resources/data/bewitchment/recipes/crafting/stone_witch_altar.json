@@ -13,7 +13,7 @@
 	  "item": "minecraft:stone"
 	},
 	"S": {
-	  "item": "bewitchment:silver_ingot"
+	  "tag": "c:silver_ingots"
 	}
   },
   "result": {

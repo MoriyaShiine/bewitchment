@@ -3,7 +3,7 @@
   "function": "bewitchment:make_night",
   "ingredients": [
 	{
-	  "item": "bewitchment:silver_ingot"
+	  "tag": "c:silver_ingots"
 	},
 	{
 	  "item": "minecraft:poppy"
