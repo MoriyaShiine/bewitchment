@@ -1,7 +1,6 @@
 package moriyashiine.bewitchment.common.misc.interfaces;
 
-public interface MagicAccessor
-{
+public interface MagicAccessor {
 	int MAX_MAGIC = 100;
 	
 	int getMagic();

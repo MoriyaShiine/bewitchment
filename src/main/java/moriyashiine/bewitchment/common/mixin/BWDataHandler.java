@@ -77,7 +77,7 @@ public abstract class BWDataHandler extends Entity implements MagicAccessor, Blo
 		@Inject(method = "copyFrom", at = @At("TAIL"))
 		private void copyFrom(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo callbackInfo) {
 			setMagic(((MagicAccessor) oldPlayer).getMagic());
-			setBlood(BWUtil.isVampire(this) ? 30 :((BloodAccessor) oldPlayer).getBlood());
+			setBlood(BWUtil.isVampire(this) ? 30 : ((BloodAccessor) oldPlayer).getBlood());
 		}
 	}
 }
