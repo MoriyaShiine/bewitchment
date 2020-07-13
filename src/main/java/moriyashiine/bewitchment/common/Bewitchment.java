@@ -1,8 +1,7 @@
 package moriyashiine.bewitchment.common;
 
 import io.github.cottonmc.cotton.config.ConfigManager;
-import moriyashiine.bewitchment.common.misc.BWConfig;
-import moriyashiine.bewitchment.common.misc.BWUtil;
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.registry.*;
 import moriyashiine.bewitchment.common.world.BWWorldGenerator;
 import net.fabricmc.api.ModInitializer;
@@ -20,6 +19,6 @@ public class Bewitchment implements ModInitializer {
 		BWTreeDecoratorTypes.init();
 		BWRitualTypes.init();
 		BWWorldGenerator.init();
-		BWUtil.registerAdditionalSilverWeakness(livingEntity -> BWUtil.isVampire(livingEntity) || BWUtil.isWerewolf(livingEntity));
+		BewitchmentAPI.registerAdditionalSilverWeakness(livingEntity -> BewitchmentAPI.isVampire(livingEntity) || BewitchmentAPI.isWerewolf(livingEntity));
 	}
 }

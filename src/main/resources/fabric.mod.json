@@ -25,7 +25,7 @@
   },
   "mixins": [
 	"bewitchment.mixins.json",
-	"bewitchment_client.mixins.json"
+	"bewitchment.client_mixins.json"
   ],
   "depends": {
 	"fabricloader": ">=0.7.4",

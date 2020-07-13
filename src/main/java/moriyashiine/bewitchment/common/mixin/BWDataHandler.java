@@ -1,12 +1,15 @@
 package moriyashiine.bewitchment.common.mixin;
 
 import com.mojang.authlib.GameProfile;
-import moriyashiine.bewitchment.common.misc.BWUtil;
-import moriyashiine.bewitchment.common.misc.interfaces.BloodAccessor;
-import moriyashiine.bewitchment.common.misc.interfaces.MagicAccessor;
+import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.accessor.BloodAccessor;
+import moriyashiine.bewitchment.api.accessor.MagicAccessor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -20,7 +23,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
 public abstract class BWDataHandler extends Entity implements MagicAccessor, BloodAccessor {
-	private int magic = 0, blood = 100;
+	private static final TrackedData<Integer> MAGIC = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
+	private static final TrackedData<Integer> BLOOD = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	
 	public BWDataHandler(EntityType<?> type, World world) {
 		super(type, world);
@@ -28,22 +32,22 @@ public abstract class BWDataHandler extends Entity implements MagicAccessor, Blo
 	
 	@Override
 	public int getMagic() {
-		return magic;
+		return dataTracker.get(MAGIC);
 	}
 	
 	@Override
 	public void setMagic(int magic) {
-		this.magic = magic;
+		dataTracker.set(MAGIC, magic);
 	}
 	
 	@Override
 	public int getBlood() {
-		return blood;
+		return dataTracker.get(BLOOD);
 	}
 	
 	@Override
 	public void setBlood(int blood) {
-		this.blood = blood;
+		dataTracker.set(BLOOD, blood);
 	}
 	
 	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
@@ -68,6 +72,17 @@ public abstract class BWDataHandler extends Entity implements MagicAccessor, Blo
 		}
 	}
 	
+	@Inject(method = "initDataTracker", at = @At("TAIL"))
+	private void initDataTracker(CallbackInfo callbackInfo) {
+		Object obj = this;
+		if (obj instanceof PlayerEntity) {
+			dataTracker.startTracking(MAGIC, 0);
+		}
+		if (hasBlood(this)) {
+			dataTracker.startTracking(BLOOD, MAX_BLOOD);
+		}
+	}
+	
 	@Mixin(ServerPlayerEntity.class)
 	private static abstract class Server extends PlayerEntity implements MagicAccessor, BloodAccessor {
 		public Server(World world, BlockPos blockPos, GameProfile gameProfile) {
@@ -77,7 +92,7 @@ public abstract class BWDataHandler extends Entity implements MagicAccessor, Blo
 		@Inject(method = "copyFrom", at = @At("TAIL"))
 		private void copyFrom(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo callbackInfo) {
 			setMagic(((MagicAccessor) oldPlayer).getMagic());
-			setBlood(BWUtil.isVampire(this) ? 30 : ((BloodAccessor) oldPlayer).getBlood());
+			setBlood(BewitchmentAPI.isVampire(this) ? 30 : ((BloodAccessor) oldPlayer).getBlood());
 		}
 	}
 }

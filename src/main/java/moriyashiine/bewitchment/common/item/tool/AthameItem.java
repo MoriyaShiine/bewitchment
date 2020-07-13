@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.item.tool;
 
-import moriyashiine.bewitchment.common.misc.BWUtil;
+import moriyashiine.bewitchment.api.accessor.BWUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;

@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.common.mixin;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.SilverArrowEntity;
-import moriyashiine.bewitchment.common.misc.BWUtil;
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -75,7 +75,7 @@ public abstract class SilverHandler extends Entity {
 	
 	private boolean isWeakToSilver(Entity entity) {
 		if (entity instanceof LivingEntity) {
-			for (Predicate<LivingEntity> predicate : BWUtil.ADDITIONAL_SILVER_WEAKNESSES) {
+			for (Predicate<LivingEntity> predicate : BewitchmentAPI.ADDITIONAL_SILVER_WEAKNESSES) {
 				if (predicate.test((LivingEntity) entity)) {
 					return true;
 				}

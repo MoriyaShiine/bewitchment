@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.misc;
+package moriyashiine.bewitchment.api;
 
 import moriyashiine.bewitchment.common.block.UnformedWitchAltarBlock;
 import moriyashiine.bewitchment.common.item.tool.AthameItem;
@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 
-public class BWUtil {
+public class BewitchmentAPI {
 	public static final Set<Predicate<LivingEntity>> ADDITIONAL_SILVER_WEAKNESSES = new HashSet<>();
 	
 	/**

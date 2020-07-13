@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.item;
 
-import moriyashiine.bewitchment.common.misc.BWUtil;
-import moriyashiine.bewitchment.common.misc.interfaces.BloodAccessor;
+import moriyashiine.bewitchment.api.accessor.BWUtil;
+import moriyashiine.bewitchment.api.accessor.BloodAccessor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;

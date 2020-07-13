@@ -10,7 +10,7 @@ import moriyashiine.bewitchment.common.item.tool.SilverArrowItem;
 import moriyashiine.bewitchment.common.item.tool.misc.BWAxeItem;
 import moriyashiine.bewitchment.common.item.tool.misc.BWHoeItem;
 import moriyashiine.bewitchment.common.item.tool.misc.BWPickaxeItem;
-import moriyashiine.bewitchment.common.misc.BWUtil;
+import moriyashiine.bewitchment.api.accessor.BWUtil;
 import moriyashiine.bewitchment.common.world.generator.tree.CypressTree;
 import moriyashiine.bewitchment.common.world.generator.tree.DragonsBloodTree;
 import moriyashiine.bewitchment.common.world.generator.tree.ElderTree;

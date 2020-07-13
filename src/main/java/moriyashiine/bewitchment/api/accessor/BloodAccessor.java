@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.misc.interfaces;
+package moriyashiine.bewitchment.api.accessor;
 
 import moriyashiine.bewitchment.common.Bewitchment;
 import net.fabricmc.fabric.api.tag.TagRegistry;

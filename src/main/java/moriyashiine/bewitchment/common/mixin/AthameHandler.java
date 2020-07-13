@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.common.mixin;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.accessor.BloodAccessor;
 import moriyashiine.bewitchment.common.item.tool.AthameItem;
-import moriyashiine.bewitchment.common.misc.BWUtil;
-import moriyashiine.bewitchment.common.misc.interfaces.BloodAccessor;
 import moriyashiine.bewitchment.common.recipe.AthameDropRecipe;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
@@ -40,7 +40,7 @@ public abstract class AthameHandler extends Entity implements BloodAccessor {
 					PlayerEntity playerAttacker = (PlayerEntity) adversary;
 					ItemStack offhand = playerAttacker.getOffHandStack();
 					if (offhand.getItem() instanceof GlassBottleItem && playerAttacker.getMainHandStack().getItem() instanceof AthameItem && playerAttacker.preferredHand == Hand.MAIN_HAND && drainBlood(25, false)) {
-						BWUtil.giveStackToPlayer(playerAttacker, new ItemStack(BWObjects.bottle_of_blood));
+						BewitchmentAPI.giveStackToPlayer(playerAttacker, new ItemStack(BWObjects.bottle_of_blood));
 						world.playSound(null, playerAttacker.getBlockPos(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1, 1);
 						offhand.decrement(1);
 					}

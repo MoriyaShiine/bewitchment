@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.mixin;
 
-import moriyashiine.bewitchment.common.misc.BWUtil;
-import moriyashiine.bewitchment.common.misc.interfaces.BloodAccessor;
+import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.accessor.BloodAccessor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -23,7 +23,7 @@ public abstract class BloodHandler extends Entity implements BloodAccessor {
 	
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void regenerateBlood(CallbackInfo callbackInfo) {
-		if (hasBlood(this) && !BWUtil.isVampire(this) && getBlood() < MAX_BLOOD && world.random.nextFloat() < (isSleeping() ? 1 / 20f : 1 / 200f)) {
+		if (hasBlood(this) && !BewitchmentAPI.isVampire(this) && getBlood() < MAX_BLOOD && world.random.nextFloat() < (isSleeping() ? 1 / 20f : 1 / 200f)) {
 			fillBlood(1, false);
 		}
 	}
