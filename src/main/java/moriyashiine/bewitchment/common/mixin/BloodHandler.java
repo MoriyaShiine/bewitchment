@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.mixin;
 
-import moriyashiine.bewitchment.common.misc.BWDataTrackers;
 import moriyashiine.bewitchment.common.misc.BWUtil;
+import moriyashiine.bewitchment.common.misc.interfaces.BloodAccessor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
-public abstract class BloodHandler extends Entity {
+public abstract class BloodHandler extends Entity implements BloodAccessor {
 	@Shadow
 	public abstract boolean isSleeping();
 	
@@ -23,8 +23,8 @@ public abstract class BloodHandler extends Entity {
 	
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void regenerateBlood(CallbackInfo callbackInfo) {
-		if (BWDataTrackers.hasBlood(this) && !BWUtil.isVampire(this) && BWDataTrackers.getBlood(this) < BWDataTrackers.MAX_BLOOD && this.world.random.nextFloat() < (isSleeping() ? 1 / 20f : 1 / 200f)) {
-			BWDataTrackers.fillBlood(this, 1, false);
+		if (hasBlood(this) && !BWUtil.isVampire(this) && getBlood() < MAX_BLOOD && world.random.nextFloat() < (isSleeping() ? 1 / 20f : 1 / 200f)) {
+			fillBlood(1, false);
 		}
 	}
 }

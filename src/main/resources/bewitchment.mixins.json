@@ -6,8 +6,8 @@
   "mixins": [
 	"SupportBWSigns",
 	"TreeDecoratorTypeAccessor",
-	"BWTrackers",
-	"BWTrackers$Server",
+	"BWDataHandler",
+	"BWDataHandler$Server",
 	"BloodHandler",
 	"SilverHandler",
 	"AthameHandler"
