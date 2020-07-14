@@ -486,11 +486,12 @@ public class BWObjects {
 		
 		flammableRegistry.add(spanish_moss, 15, 100);
 		
-		BewitchmentAPI.registerLogToBark(Blocks.OAK_LOG, BWObjects.oak_bark);
-		BewitchmentAPI.registerLogToBark(Blocks.SPRUCE_LOG, BWObjects.spruce_bark);
-		BewitchmentAPI.registerLogToBark(Blocks.BIRCH_LOG, BWObjects.birch_bark);
-		BewitchmentAPI.registerLogToBark(BWObjects.juniper_log, BWObjects.juniper_bark);
-		BewitchmentAPI.registerLogToBark(BWObjects.cypress_log, BWObjects.cypress_bark);
-		BewitchmentAPI.registerLogToBark(BWObjects.elder_log, BWObjects.elder_bark);
+		BewitchmentAPI.registerLogToBark(Blocks.OAK_LOG, oak_bark);
+		BewitchmentAPI.registerLogToBark(Blocks.DARK_OAK_LOG, oak_bark);
+		BewitchmentAPI.registerLogToBark(Blocks.SPRUCE_LOG, spruce_bark);
+		BewitchmentAPI.registerLogToBark(Blocks.BIRCH_LOG, birch_bark);
+		BewitchmentAPI.registerLogToBark(juniper_log, juniper_bark);
+		BewitchmentAPI.registerLogToBark(cypress_log, cypress_bark);
+		BewitchmentAPI.registerLogToBark(elder_log, elder_bark);
 	}
 }
