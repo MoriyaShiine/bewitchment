@@ -20,19 +20,19 @@ public class BWRecipeTypes {
 	private static final Map<DummyRecipeType<?>, Identifier> RECIPE_TYPES = new HashMap<>();
 	
 	public static final RecipeSerializer<?> athame_drop_serializer = create("athame_drop", new AthameDropRecipe.Serializer());
-	public static final DummyRecipeType<?> athame_drop_type = create("athame_drop");
+	public static final DummyRecipeType<AthameDropRecipe> athame_drop_type = create("athame_drop");
 	
 	public static final RecipeSerializer<?> ritual_serializer = create("ritual", new Ritual.Serializer());
-	public static final DummyRecipeType<?> ritual_type = create("ritual");
+	public static final DummyRecipeType<Ritual> ritual_type = create("ritual");
 	
 	public static final RecipeSerializer<?> distilling_serializer = create("distilling", new DistillingRecipe.Serializer());
-	public static final DummyRecipeType<?> distilling_type = create("distilling");
+	public static final DummyRecipeType<DistillingRecipe> distilling_type = create("distilling");
 	
 	public static final RecipeSerializer<?> spinning_serializer = create("spinning", new SpinningRecipe.Serializer());
-	public static final DummyRecipeType<?> spinning_type = create("spinning");
+	public static final DummyRecipeType<SpinningRecipe> spinning_type = create("spinning");
 	
-	private static DummyRecipeType<?> create(String name) {
-		DummyRecipeType<?> type = new DummyRecipeType<>();
+	private static <T extends Recipe<?>> DummyRecipeType<T> create(String name) {
+		DummyRecipeType<T> type = new DummyRecipeType<>();
 		RECIPE_TYPES.put(type, new Identifier(Bewitchment.MODID, name));
 		return type;
 	}

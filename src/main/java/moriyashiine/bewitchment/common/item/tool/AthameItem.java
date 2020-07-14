@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.item.tool;
 
-import moriyashiine.bewitchment.api.accessor.BWUtil;
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
@@ -25,7 +25,7 @@ public class AthameItem extends SwordItem {
 		if (player != null && item != null && Items.WOODEN_AXE.useOnBlock(context).isAccepted()) {
 			boolean client = world.isClient;
 			if (!client) {
-				BWUtil.giveStackToPlayer(player, new ItemStack(item, world.random.nextInt(3) + 1));
+				BewitchmentAPI.giveStackToPlayer(player, new ItemStack(item, world.random.nextInt(3) + 1));
 			}
 			return ActionResult.success(client);
 		}

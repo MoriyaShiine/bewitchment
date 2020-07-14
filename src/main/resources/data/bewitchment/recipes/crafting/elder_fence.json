@@ -7,10 +7,10 @@
   ],
   "key": {
 	"P": {
-	  "item": "minecraft:stick"
+	  "item": "bewitchment:elder_planks"
 	},
 	"S": {
-	  "tag": "forge:rods/wooden"
+	  "item": "minecraft:stick"
 	}
   },
   "result": {

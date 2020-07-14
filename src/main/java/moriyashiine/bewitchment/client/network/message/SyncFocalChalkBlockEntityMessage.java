@@ -39,7 +39,7 @@ public class SyncFocalChalkBlockEntityMessage {
 					BlockEntity blockEntity = world.getBlockEntity(BlockPos.fromLong(longPos));
 					if (blockEntity instanceof FocalChalkBlockEntity) {
 						FocalChalkBlockEntity chalk = ((FocalChalkBlockEntity) blockEntity);
-						chalk.setRitual((Ritual) world.getRecipeManager().method_30027(BWRecipeTypes.ritual_type).stream().filter(ritual -> ritual.getId().toString().equals(recipeName)).findFirst().orElse(null));
+						chalk.setRitual(world.getRecipeManager().method_30027(BWRecipeTypes.ritual_type).stream().filter(ritual -> ritual.getId().toString().equals(recipeName)).findFirst().orElse(null));
 						chalk.time = time;
 					}
 				}

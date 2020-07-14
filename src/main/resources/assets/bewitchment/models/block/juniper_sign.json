@@ -1,5 +1,5 @@
 {
   "textures": {
-	"cross": "bewitchment:block/juniper_planks"
+	"particle": "bewitchment:block/juniper_planks"
   }
 }

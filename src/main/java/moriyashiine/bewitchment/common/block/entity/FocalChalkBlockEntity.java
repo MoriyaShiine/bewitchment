@@ -75,7 +75,7 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 	
 	@Override
 	public void fromTag(BlockState state, CompoundTag tag) {
-		lazyRitual = new Lazy<>(() -> (Ritual) Objects.requireNonNull(world).getRecipeManager().method_30027(BWRecipeTypes.ritual_type).stream().filter(ritual -> ritual.getId().toString().equals(tag.getString("Ritual"))).findFirst().orElse(null));
+		lazyRitual = new Lazy<>(() -> Objects.requireNonNull(world).getRecipeManager().method_30027(BWRecipeTypes.ritual_type).stream().filter(ritual -> ritual.getId().toString().equals(tag.getString("Ritual"))).findFirst().orElse(null));
 		Inventories.fromTag(tag, inventory);
 		time = tag.getInt("Time");
 		super.fromTag(state, tag);

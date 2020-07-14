@@ -42,13 +42,18 @@ public class ChalkBlock extends BlockWithEntity {
 	
 	@Override
 	public BlockEntity createBlockEntity(BlockView world) {
-		return new FocalChalkBlockEntity();
+		return this == BWObjects.focal_chalk_block ? new FocalChalkBlockEntity() : null;
 	}
 	
 	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		return SHAPE;
+	}
+	
+	@Override
+	public BlockRenderType getRenderType(BlockState state) {
+		return BlockRenderType.MODEL;
 	}
 	
 	@SuppressWarnings("deprecation")

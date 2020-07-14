@@ -36,7 +36,7 @@ public class SyncDistillingRecipeMessage {
 				if (world != null) {
 					BlockEntity blockEntity = world.getBlockEntity(BlockPos.fromLong(longPos));
 					if (blockEntity instanceof DistilleryBlockEntity) {
-						((DistilleryBlockEntity) blockEntity).setRecipe((DistillingRecipe) world.getRecipeManager().method_30027(BWRecipeTypes.distilling_type).stream().filter(recipe -> recipe.getId().toString().equals(recipeName)).findFirst().orElse(null));
+						((DistilleryBlockEntity) blockEntity).setRecipe(world.getRecipeManager().method_30027(BWRecipeTypes.distilling_type).stream().filter(recipe -> recipe.getId().toString().equals(recipeName)).findFirst().orElse(null));
 					}
 				}
 			}

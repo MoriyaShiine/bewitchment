@@ -36,7 +36,7 @@ public class SyncSpinningRecipeMessage {
 				if (world != null) {
 					BlockEntity blockEntity = world.getBlockEntity(BlockPos.fromLong(longPos));
 					if (blockEntity instanceof SpinningWheelBlockEntity) {
-						((SpinningWheelBlockEntity) blockEntity).setRecipe((SpinningRecipe) world.getRecipeManager().method_30027(BWRecipeTypes.spinning_type).stream().filter(recipe -> recipe.getId().toString().equals(recipeName)).findFirst().orElse(null));
+						((SpinningWheelBlockEntity) blockEntity).setRecipe(world.getRecipeManager().method_30027(BWRecipeTypes.spinning_type).stream().filter(recipe -> recipe.getId().toString().equals(recipeName)).findFirst().orElse(null));
 					}
 				}
 			}

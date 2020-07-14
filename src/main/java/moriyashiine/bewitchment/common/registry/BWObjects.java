@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.registry;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.*;
 import moriyashiine.bewitchment.common.block.util.*;
@@ -10,16 +11,12 @@ import moriyashiine.bewitchment.common.item.tool.SilverArrowItem;
 import moriyashiine.bewitchment.common.item.tool.misc.BWAxeItem;
 import moriyashiine.bewitchment.common.item.tool.misc.BWHoeItem;
 import moriyashiine.bewitchment.common.item.tool.misc.BWPickaxeItem;
-import moriyashiine.bewitchment.api.accessor.BWUtil;
-import moriyashiine.bewitchment.common.world.generator.tree.CypressTree;
-import moriyashiine.bewitchment.common.world.generator.tree.DragonsBloodTree;
-import moriyashiine.bewitchment.common.world.generator.tree.ElderTree;
-import moriyashiine.bewitchment.common.world.generator.tree.JuniperTree;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.*;
+import net.minecraft.block.sapling.OakSaplingGenerator;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.recipe.Ingredient;
@@ -31,13 +28,13 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.SignType;
 import net.minecraft.util.registry.Registry;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @SuppressWarnings("unused")
 public class BWObjects {
-	private static final Map<Block, Identifier> BLOCKS = new HashMap<>();
-	private static final Map<Item, Identifier> ITEMS = new HashMap<>();
+	private static final Map<Block, Identifier> BLOCKS = new LinkedHashMap<>();
+	private static final Map<Item, Identifier> ITEMS = new LinkedHashMap<>();
 	
 	public static final ItemGroup group = FabricItemGroupBuilder.build(new Identifier(Bewitchment.MODID, Bewitchment.MODID), () -> new ItemStack(BWObjects.athame));
 	
@@ -134,14 +131,13 @@ public class BWObjects {
 	public static final Block dragons_blood_door_block = create("dragons_blood_door", new BWDoorBlock(FabricBlockSettings.copy(juniper_door_block)), false);
 	//sign
 	public static final Block juniper_standing_sign = create("juniper_sign", new SignBlock(FabricBlockSettings.copyOf(Blocks.OAK_SIGN), SignType.OAK), false);
-	public static final Block juniper_wall_sign = create("juniper_wall_sign", new WallSignBlock(FabricBlockSettings.copyOf(Blocks.OAK_SIGN), SignType.OAK), false);
+	public static final Block juniper_wall_sign = create("juniper_wall_sign", new WallSignBlock(FabricBlockSettings.copyOf(Blocks.OAK_WALL_SIGN).dropsLike(juniper_standing_sign), SignType.OAK), false);
 	public static final Block cypress_standing_sign = create("cypress_sign", new SignBlock(FabricBlockSettings.copyOf(juniper_standing_sign), SignType.OAK), false);
-	public static final Block cypress_wall_sign = create("cypress_wall_sign", new WallSignBlock(FabricBlockSettings.copyOf(juniper_wall_sign), SignType.OAK), false);
+	public static final Block cypress_wall_sign = create("cypress_wall_sign", new WallSignBlock(FabricBlockSettings.copyOf(juniper_wall_sign).dropsLike(cypress_standing_sign), SignType.OAK), false);
 	public static final Block elder_standing_sign = create("elder_sign", new SignBlock(FabricBlockSettings.copyOf(juniper_standing_sign), SignType.OAK), false);
-	public static final Block elder_wall_sign = create("elder_wall_sign", new WallSignBlock(FabricBlockSettings.copyOf(juniper_wall_sign), SignType.OAK), false);
+	public static final Block elder_wall_sign = create("elder_wall_sign", new WallSignBlock(FabricBlockSettings.copyOf(juniper_wall_sign).dropsLike(elder_standing_sign), SignType.OAK), false);
 	public static final Block dragons_blood_standing_sign = create("dragons_blood_sign", new SignBlock(FabricBlockSettings.copyOf(juniper_standing_sign), SignType.OAK), false);
-	//todo: check if drops
-	public static final Block dragons_blood_wall_sign = create("dragons_blood_wall_sign", new WallSignBlock(FabricBlockSettings.copyOf(juniper_wall_sign), SignType.OAK), false);
+	public static final Block dragons_blood_wall_sign = create("dragons_blood_wall_sign", new WallSignBlock(FabricBlockSettings.copyOf(juniper_wall_sign).dropsLike(dragons_blood_standing_sign), SignType.OAK), false);
 	//chalk
 	public static final ChalkBlock focal_chalk_block = create("focal_chalk", new ChalkBlock(FabricBlockSettings.of(Material.SUPPORTED).strength(2, 0).breakByTool(FabricToolTags.PICKAXES).collidable(false).dropsNothing().sounds(BWSoundTypes.chalk)), false);
 	public static final ChalkBlock chalk_block = create("chalk", new ChalkBlock(FabricBlockSettings.copy(focal_chalk_block)), false);
@@ -154,7 +150,7 @@ public class BWObjects {
 	public static final Block juniper_wood = create("juniper_wood", new PillarBlock(FabricBlockSettings.copy(Blocks.OAK_WOOD)), true);
 	public static final Block stripped_juniper_wood = create("stripped_juniper_wood", new PillarBlock(FabricBlockSettings.copy(Blocks.STRIPPED_OAK_WOOD)), true);
 	public static final Block juniper_leaves = create("juniper_leaves", new LeavesBlock(FabricBlockSettings.copy(Blocks.OAK_LEAVES)), true);
-	public static final SaplingBlock juniper_sapling = create("juniper_sapling", new BWSaplingBlock(new JuniperTree(), FabricBlockSettings.copy(Blocks.OAK_SAPLING)), true);
+	public static final SaplingBlock juniper_sapling = create("juniper_sapling", new BWSaplingBlock(new OakSaplingGenerator(), FabricBlockSettings.copy(Blocks.OAK_SAPLING)), true);
 	public static final Block juniper_planks = create("juniper_planks", new Block(FabricBlockSettings.copy(Blocks.OAK_PLANKS)), true);
 	public static final Block juniper_stairs = create("juniper_stairs", new BWStairsBlock(juniper_planks.getDefaultState(), FabricBlockSettings.copy(Blocks.OAK_PLANKS)), true);
 	public static final Block juniper_slab = create("juniper_slab", new SlabBlock(FabricBlockSettings.copy(Blocks.OAK_SLAB)), true);
@@ -170,7 +166,7 @@ public class BWObjects {
 	public static final Block cypress_wood = create("cypress_wood", new PillarBlock(FabricBlockSettings.copy(juniper_wood)), true);
 	public static final Block stripped_cypress_wood = create("stripped_cypress_wood", new PillarBlock(FabricBlockSettings.copy(stripped_juniper_wood)), true);
 	public static final Block cypress_leaves = create("cypress_leaves", new LeavesBlock(FabricBlockSettings.copy(juniper_leaves)), true);
-	public static final SaplingBlock cypress_sapling = create("cypress_sapling", new BWSaplingBlock(new CypressTree(), FabricBlockSettings.copy(juniper_sapling)), true);
+	public static final SaplingBlock cypress_sapling = create("cypress_sapling", new BWSaplingBlock(new OakSaplingGenerator(), FabricBlockSettings.copy(juniper_sapling)), true);
 	public static final Block cypress_planks = create("cypress_planks", new Block(FabricBlockSettings.copy(juniper_planks)), true);
 	public static final Block cypress_stairs = create("cypress_stairs", new BWStairsBlock(cypress_planks.getDefaultState(), FabricBlockSettings.copy(cypress_planks)), true);
 	public static final Block cypress_slab = create("cypress_slab", new SlabBlock(FabricBlockSettings.copy(juniper_slab)), true);
@@ -186,7 +182,7 @@ public class BWObjects {
 	public static final Block elder_wood = create("elder_wood", new PillarBlock(FabricBlockSettings.copy(juniper_wood)), true);
 	public static final Block stripped_elder_wood = create("stripped_elder_wood", new PillarBlock(FabricBlockSettings.copy(stripped_juniper_wood)), true);
 	public static final Block elder_leaves = create("elder_leaves", new LeavesBlock(FabricBlockSettings.copy(juniper_leaves)), true);
-	public static final SaplingBlock elder_sapling = create("elder_sapling", new BWSaplingBlock(new ElderTree(), FabricBlockSettings.copy(juniper_sapling)), true);
+	public static final SaplingBlock elder_sapling = create("elder_sapling", new BWSaplingBlock(new OakSaplingGenerator(), FabricBlockSettings.copy(juniper_sapling)), true);
 	public static final Block elder_planks = create("elder_planks", new Block(FabricBlockSettings.copy(juniper_planks)), true);
 	public static final Block elder_stairs = create("elder_stairs", new BWStairsBlock(elder_planks.getDefaultState(), FabricBlockSettings.copy(elder_planks)), true);
 	public static final Block elder_slab = create("elder_slab", new SlabBlock(FabricBlockSettings.copy(juniper_slab)), true);
@@ -202,7 +198,7 @@ public class BWObjects {
 	public static final Block dragons_blood_wood = create("dragons_blood_wood", new PillarBlock(FabricBlockSettings.copy(juniper_wood)), true);
 	public static final Block stripped_dragons_blood_wood = create("stripped_dragons_blood_wood", new PillarBlock(FabricBlockSettings.copy(stripped_juniper_wood)), true);
 	public static final Block dragons_blood_leaves = create("dragons_blood_leaves", new LeavesBlock(FabricBlockSettings.copy(juniper_leaves)), true);
-	public static final SaplingBlock dragons_blood_sapling = create("dragons_blood_sapling", new BWSaplingBlock(new DragonsBloodTree(), FabricBlockSettings.copy(juniper_sapling)), true);
+	public static final SaplingBlock dragons_blood_sapling = create("dragons_blood_sapling", new BWSaplingBlock(new OakSaplingGenerator(), FabricBlockSettings.copy(juniper_sapling)), true);
 	public static final Block dragons_blood_planks = create("dragons_blood_planks", new Block(FabricBlockSettings.copy(juniper_planks)), true);
 	public static final Block dragons_blood_stairs = create("dragons_blood_stairs", new BWStairsBlock(dragons_blood_planks.getDefaultState(), FabricBlockSettings.copy(dragons_blood_planks)), true);
 	public static final Block dragons_blood_slab = create("dragons_blood_slab", new SlabBlock(FabricBlockSettings.copy(juniper_slab)), true);
@@ -225,11 +221,11 @@ public class BWObjects {
 	public static final Block salt_ore = create("salt_ore", new Block(FabricBlockSettings.copy(Blocks.COAL_ORE)), true);
 	//cloth
 	public static final Block druid_wool = create("druid_wool", new Block(FabricBlockSettings.copy(Blocks.WHITE_WOOL)), true);
-	public static final Block alchemist_wool = create("alchemist_wool", new Block(FabricBlockSettings.copy(Blocks.WHITE_WOOL)), true);
-	public static final Block besmirched_wool = create("besmirched_wool", new Block(FabricBlockSettings.copy(Blocks.WHITE_WOOL)), true);
+	public static final Block alchemist_wool = create("alchemist_wool", new Block(FabricBlockSettings.copy(druid_wool)), true);
+	public static final Block besmirched_wool = create("besmirched_wool", new Block(FabricBlockSettings.copy(druid_wool)), true);
 	public static final Block druid_carpet = create("druid_carpet", new BWCarpetBlock(DyeColor.GREEN, FabricBlockSettings.copy(Blocks.WHITE_CARPET)), true);
-	public static final Block alchemist_carpet = create("alchemist_carpet", new BWCarpetBlock(DyeColor.GRAY, FabricBlockSettings.copy(Blocks.WHITE_CARPET)), true);
-	public static final Block besmirched_carpet = create("besmirched_carpet", new BWCarpetBlock(DyeColor.BLACK, FabricBlockSettings.copy(Blocks.WHITE_CARPET)), true);
+	public static final Block alchemist_carpet = create("alchemist_carpet", new BWCarpetBlock(DyeColor.GRAY, FabricBlockSettings.copy(druid_carpet)), true);
+	public static final Block besmirched_carpet = create("besmirched_carpet", new BWCarpetBlock(DyeColor.BLACK, FabricBlockSettings.copy(druid_carpet)), true);
 	//candelabra
 	public static final Block iron_candelabra = create("iron_candelabra", new CandelabraBlock(FabricBlockSettings.copy(Blocks.IRON_BLOCK).lightLevel(state -> state.get(Properties.LIT) ? 15 : 0)), true);
 	public static final Block golden_candelabra = create("golden_candelabra", new CandelabraBlock(FabricBlockSettings.copy(Blocks.GOLD_BLOCK).lightLevel(state -> state.get(Properties.LIT) ? 15 : 0)), true);
@@ -242,8 +238,16 @@ public class BWObjects {
 	public static final Block netherite_goblet = create("netherite_goblet", new GobletBlock(FabricBlockSettings.copy(Blocks.NETHERITE_BLOCK)), true);
 	////tile
 	public static final Block[] stone_witch_altar = createWitchAltar("stone_witch_altar", Blocks.STONE);
+	public static final Block[] mossy_cobblestone_witch_altar = createWitchAltar("mossy_cobblestone_witch_altar", Blocks.MOSSY_COBBLESTONE);
+	public static final Block[] prismarine_witch_altar = createWitchAltar("prismarine_witch_altar", Blocks.PRISMARINE);
+	public static final Block[] blackstone_witch_altar = createWitchAltar("blackstone_witch_altar", Blocks.BLACKSTONE);
+	public static final Block[] nether_brick_witch_altar = createWitchAltar("nether_brick_witch_altar", Blocks.NETHER_BRICKS);
+	public static final Block[] golden_witch_altar = createWitchAltar("golden_witch_altar", Blocks.GOLD_BLOCK);
+	public static final Block[] end_stone_witch_altar = createWitchAltar("end_stone_witch_altar", Blocks.END_STONE);
+	public static final Block[] obsidian_witch_altar = createWitchAltar("obsidian_witch_altar", Blocks.OBSIDIAN);
+	public static final Block[] purpur_witch_altar = createWitchAltar("purpur_witch_altar", Blocks.PURPUR_BLOCK);
 	public static final Block distillery = create("distillery", new DistilleryBlock(FabricBlockSettings.copy(Blocks.IRON_BLOCK).nonOpaque()), true);
-	public static final Block spinning_wheel = create("spinning_wheel", new SpinningWheelBlock(FabricBlockSettings.copy(Blocks.OAK_LOG).nonOpaque()), true);
+	public static final Block spinning_wheel = create("spinning_wheel", new SpinningWheelBlock(FabricBlockSettings.copy(Blocks.CRAFTING_TABLE).nonOpaque()), true);
 	//////item
 	////door
 	public static final Item juniper_door_item = create("juniper_door", new TallBlockItem(juniper_door_block, gen()));
@@ -380,11 +384,11 @@ public class BWObjects {
 				default:
 					throw new IllegalStateException("Unexpected value: " + color);
 			}
-			BWUtil.registerAltarMap(unformed, altars[++id] = create(color.getName() + "_" + name, new FormedWitchAltarBlock(unformed, FabricBlockSettings.copy(base)), false), carpet);
+			BewitchmentAPI.registerAltarMap(unformed, altars[++id] = create(color.getName() + "_" + name, new FormedWitchAltarBlock(unformed, FabricBlockSettings.copy(base)), false), carpet);
 		}
-		BWUtil.registerAltarMap(unformed, altars[++id] = create("druid_" + name, new FormedWitchAltarBlock(unformed, FabricBlockSettings.copy(base)), false), druid_carpet);
-		BWUtil.registerAltarMap(unformed, altars[++id] = create("alchemist_" + name, new FormedWitchAltarBlock(unformed, FabricBlockSettings.copy(base)), false), alchemist_carpet);
-		BWUtil.registerAltarMap(unformed, altars[++id] = create("besmirched_" + name, new FormedWitchAltarBlock(unformed, FabricBlockSettings.copy(base)), false), besmirched_carpet);
+		BewitchmentAPI.registerAltarMap(unformed, altars[++id] = create("druid_" + name, new FormedWitchAltarBlock(unformed, FabricBlockSettings.copy(base)), false), druid_carpet);
+		BewitchmentAPI.registerAltarMap(unformed, altars[++id] = create("alchemist_" + name, new FormedWitchAltarBlock(unformed, FabricBlockSettings.copy(base)), false), alchemist_carpet);
+		BewitchmentAPI.registerAltarMap(unformed, altars[++id] = create("besmirched_" + name, new FormedWitchAltarBlock(unformed, FabricBlockSettings.copy(base)), false), besmirched_carpet);
 		return altars;
 	}
 	
@@ -409,15 +413,15 @@ public class BWObjects {
 		BLOCKS.keySet().forEach(block -> Registry.register(Registry.BLOCK, BLOCKS.get(block), block));
 		ITEMS.keySet().forEach(item -> Registry.register(Registry.ITEM, ITEMS.get(item), item));
 		
-		HashMap<Block, Block> MODIFIED_STRIPPED_BLOCKS = new HashMap<>(STRIPPED_BLOCKS);
-		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.juniper_log, BWObjects.stripped_juniper_log);
-		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.juniper_wood, BWObjects.stripped_juniper_wood);
-		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.cypress_log, BWObjects.stripped_cypress_log);
-		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.cypress_wood, BWObjects.stripped_cypress_wood);
-		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.elder_log, BWObjects.stripped_elder_log);
-		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.elder_wood, BWObjects.stripped_elder_wood);
-		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.dragons_blood_log, BWObjects.stripped_dragons_blood_log);
-		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.dragons_blood_wood, BWObjects.stripped_dragons_blood_wood);
+		//		HashMap<Block, Block> MODIFIED_STRIPPED_BLOCKS = new HashMap<>(STRIPPED_BLOCKS);
+		//		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.juniper_log, BWObjects.stripped_juniper_log);
+		//		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.juniper_wood, BWObjects.stripped_juniper_wood);
+		//		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.cypress_log, BWObjects.stripped_cypress_log);
+		//		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.cypress_wood, BWObjects.stripped_cypress_wood);
+		//		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.elder_log, BWObjects.stripped_elder_log);
+		//		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.elder_wood, BWObjects.stripped_elder_wood);
+		//		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.dragons_blood_log, BWObjects.stripped_dragons_blood_log);
+		//		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.dragons_blood_wood, BWObjects.stripped_dragons_blood_wood);
 		
 		ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(juniper_leaves, 0.3f);
 		ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(juniper_sapling, 0.3f);
@@ -481,11 +485,11 @@ public class BWObjects {
 		
 		flammableRegistry.add(spanish_moss, 15, 100);
 		
-		BWUtil.registerLogToBark(Blocks.OAK_LOG, BWObjects.oak_bark);
-		BWUtil.registerLogToBark(Blocks.SPRUCE_LOG, BWObjects.spruce_bark);
-		BWUtil.registerLogToBark(Blocks.BIRCH_LOG, BWObjects.birch_bark);
-		BWUtil.registerLogToBark(BWObjects.juniper_log, BWObjects.juniper_bark);
-		BWUtil.registerLogToBark(BWObjects.cypress_log, BWObjects.cypress_bark);
-		BWUtil.registerLogToBark(BWObjects.elder_log, BWObjects.elder_bark);
+		BewitchmentAPI.registerLogToBark(Blocks.OAK_LOG, BWObjects.oak_bark);
+		BewitchmentAPI.registerLogToBark(Blocks.SPRUCE_LOG, BWObjects.spruce_bark);
+		BewitchmentAPI.registerLogToBark(Blocks.BIRCH_LOG, BWObjects.birch_bark);
+		BewitchmentAPI.registerLogToBark(BWObjects.juniper_log, BWObjects.juniper_bark);
+		BewitchmentAPI.registerLogToBark(BWObjects.cypress_log, BWObjects.cypress_bark);
+		BewitchmentAPI.registerLogToBark(BWObjects.elder_log, BWObjects.elder_bark);
 	}
 }

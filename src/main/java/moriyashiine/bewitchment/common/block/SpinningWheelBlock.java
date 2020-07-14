@@ -2,18 +2,25 @@ package moriyashiine.bewitchment.common.block;
 
 import moriyashiine.bewitchment.common.block.entity.SpinningWheelBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.util.BWCraftingBlockEntity;
+import moriyashiine.bewitchment.common.container.SpinningWheelScreenHandler;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
@@ -60,12 +67,32 @@ public class SpinningWheelBlock extends BlockWithEntity implements Waterloggable
 		}
 	}
 	
+	@Override
+	public BlockRenderType getRenderType(BlockState state) {
+		return BlockRenderType.MODEL;
+	}
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		boolean client = world.isClient;
 		if (!client) {
-			player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
+			player.openHandledScreen(new ExtendedScreenHandlerFactory() {
+				@Override
+				public Text getDisplayName() {
+					return getName();
+				}
+				
+				@Override
+				public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
+					return new SpinningWheelScreenHandler(syncId, inv, pos);
+				}
+				
+				@Override
+				public void writeScreenOpeningData(ServerPlayerEntity serverPlayerEntity, PacketByteBuf packetByteBuf) {
+					packetByteBuf.writeBlockPos(pos);
+				}
+			});
 		}
 		return ActionResult.success(client);
 	}
@@ -78,7 +105,7 @@ public class SpinningWheelBlock extends BlockWithEntity implements Waterloggable
 	
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		return Objects.requireNonNull(super.getPlacementState(ctx)).with(Properties.HORIZONTAL_FACING, ctx.getPlayerLookDirection()).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);
+		return Objects.requireNonNull(super.getPlacementState(ctx)).with(Properties.HORIZONTAL_FACING, ctx.getPlayerFacing()).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);
 	}
 	
 	@SuppressWarnings("deprecation")

@@ -13,6 +13,7 @@ public class Bewitchment implements ModInitializer {
 	public void onInitialize() {
 		ConfigManager.loadConfig(BWConfig.class);
 		BWObjects.init();
+		BWBlockEntityTypes.init();
 		BWEntityTypes.init();
 		BWRecipeTypes.init();
 		BWSoundEvents.init();

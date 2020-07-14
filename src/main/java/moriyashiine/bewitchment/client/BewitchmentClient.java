@@ -61,6 +61,30 @@ public class BewitchmentClient implements ClientModInitializer {
 		for (Block block : BWObjects.stone_witch_altar) {
 			BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
 		}
+		for (Block block : BWObjects.mossy_cobblestone_witch_altar) {
+			BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
+		}
+		for (Block block : BWObjects.prismarine_witch_altar) {
+			BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
+		}
+		for (Block block : BWObjects.blackstone_witch_altar) {
+			BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
+		}
+		for (Block block : BWObjects.nether_brick_witch_altar) {
+			BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
+		}
+		for (Block block : BWObjects.golden_witch_altar) {
+			BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
+		}
+		for (Block block : BWObjects.end_stone_witch_altar) {
+			BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
+		}
+		for (Block block : BWObjects.obsidian_witch_altar) {
+			BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
+		}
+		for (Block block : BWObjects.purpur_witch_altar) {
+			BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
+		}
 		BlockRenderLayerMap.INSTANCE.putBlock(BWObjects.distillery, RenderLayer.getTranslucent());
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.silver_arrow, (entityRenderDispatcher, context) -> new SilverArrowEntityRenderer(entityRenderDispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.owl, (entityRenderDispatcher, context) -> new OwlEntityRenderer(entityRenderDispatcher));

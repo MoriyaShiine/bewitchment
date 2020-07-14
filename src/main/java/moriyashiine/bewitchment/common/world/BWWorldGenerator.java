@@ -1,18 +1,12 @@
 package moriyashiine.bewitchment.common.world;
 
 import com.google.common.collect.ImmutableList;
-import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.BWConfig;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.world.generator.decorator.LeaveSpanishMossTreeDecorator;
-import moriyashiine.bewitchment.common.world.generator.tree.CypressTree;
-import moriyashiine.bewitchment.common.world.generator.tree.ElderTree;
-import moriyashiine.bewitchment.common.world.generator.tree.JuniperTree;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTables;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
@@ -45,15 +39,15 @@ public class BWWorldGenerator {
 			if (BWConfig.INSTANCE.toadBiomeCategories.contains(category.getName())) {
 				addEntitySpawn(biome, BWEntityTypes.toad, BWConfig.INSTANCE.toadWeight, BWConfig.INSTANCE.toadMinGroupCount, BWConfig.INSTANCE.toadMaxGroupCount);
 			}
-			if (category == Biome.Category.SAVANNA) {
-				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, JuniperTree.FEATURE.createDecoratedFeature(Decorator.COUNT_EXTRA_HEIGHTMAP.configure(new CountExtraChanceDecoratorConfig(1, 0.05f, 1))));
-			}
-			if (category == Biome.Category.TAIGA || category == Biome.Category.SWAMP) {
-				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, CypressTree.FEATURE.createDecoratedFeature(Decorator.COUNT_EXTRA_HEIGHTMAP.configure(new CountExtraChanceDecoratorConfig(1, 0.05f, 1))));
-			}
-			if (category == Biome.Category.FOREST) {
-				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, ElderTree.FEATURE.createDecoratedFeature(Decorator.COUNT_EXTRA_HEIGHTMAP.configure(new CountExtraChanceDecoratorConfig(1, 0.05f, 1))));
-			}
+			//			if (category == Biome.Category.SAVANNA) {
+			//				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, JuniperTree.FEATURE.createDecoratedFeature(Decorator.COUNT_EXTRA_HEIGHTMAP.configure(new CountExtraChanceDecoratorConfig(1, 0.05f, 1))));
+			//			}
+			//			if (category == Biome.Category.TAIGA || category == Biome.Category.SWAMP) {
+			//				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, CypressTree.FEATURE.createDecoratedFeature(Decorator.COUNT_EXTRA_HEIGHTMAP.configure(new CountExtraChanceDecoratorConfig(1, 0.05f, 1))));
+			//			}
+			//			if (category == Biome.Category.FOREST) {
+			//				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, ElderTree.FEATURE.createDecoratedFeature(Decorator.COUNT_EXTRA_HEIGHTMAP.configure(new CountExtraChanceDecoratorConfig(1, 0.05f, 1))));
+			//			}
 			if (category == Biome.Category.SWAMP) {
 				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.TREE.configure(SWAMP_TREE_WITH_SPANISH_MOSS_CONFIG).createDecoratedFeature(Decorator.COUNT_EXTRA_HEIGHTMAP.configure(new CountExtraChanceDecoratorConfig(1, 0.05f, 1))));
 			}
@@ -70,13 +64,13 @@ public class BWWorldGenerator {
 		biome.addFeature(GenerationStep.Feature.UNDERGROUND_ORES, Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Target.NATURAL_STONE, BWObjects.salt_ore.getDefaultState(), BWConfig.INSTANCE.saltOreSize)).createDecoratedFeature(Decorator.COUNT_RANGE.configure(new RangeDecoratorConfig(BWConfig.INSTANCE.saltOreCount, 0, 0, BWConfig.INSTANCE.saltOreMaxHeight))));
 	}
 	
-	@SubscribeEvent
-	public void loadLootTables(LootTableLoadEvent event) {
-		if (event.getName().equals(Blocks.TALL_GRASS.getLootTable())) {
-			event.getTable().addPool(new LootPool.Builder().name(Bewitchment.MODID.toLowerCase() + "_inject").addEntry(TableLootEntry.builder(new ResourceLocation(Bewitchment.MODID, "inject/blocks/grass"))).build());
-		}
-		if (event.getName().equals(LootTables.CHESTS_NETHER_BRIDGE)) {
-			event.getTable().addPool(new LootPool.Builder().name(Bewitchment.MODID.toLowerCase() + "_inject").addEntry(TableLootEntry.builder(new ResourceLocation(Bewitchment.MODID, "inject/chest/nether_bridge"))).build());
-		}
-	}
+	//	@SubscribeEvent
+	//	public void loadLootTables(LootTableLoadEvent event) {
+	//		if (event.getName().equals(Blocks.TALL_GRASS.getLootTable())) {
+	//			event.getTable().addPool(new LootPool.Builder().name(Bewitchment.MODID.toLowerCase() + "_inject").addEntry(TableLootEntry.builder(new ResourceLocation(Bewitchment.MODID, "inject/blocks/grass"))).build());
+	//		}
+	//		if (event.getName().equals(LootTables.CHESTS_NETHER_BRIDGE)) {
+	//			event.getTable().addPool(new LootPool.Builder().name(Bewitchment.MODID.toLowerCase() + "_inject").addEntry(TableLootEntry.builder(new ResourceLocation(Bewitchment.MODID, "inject/chest/nether_bridge"))).build());
+	//		}
+	//	}
 }
