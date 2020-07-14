@@ -113,17 +113,12 @@ public class BWObjects {
 		}
 	};
 	//////block
-	////no_item
+	////no_item_p1
 	//crops
 	public static final CropBlock aconite_crops = create("aconite_crops", new BWCropBlock(BWObjects.aconite_seeds, FabricBlockSettings.copy(Blocks.WHEAT)), false);
 	public static final CropBlock belladonna_crops = create("belladonna_crops", new BWCropBlock(BWObjects.belladonna_seeds, FabricBlockSettings.copy(aconite_crops)), false);
 	public static final CropBlock garlic_crops = create("garlic_crops", new BWCropBlock(BWObjects.garlic, FabricBlockSettings.copy(aconite_crops)), false);
 	public static final CropBlock mandrake_crops = create("mandrake_crops", new BWCropBlock(BWObjects.mandrake_seeds, FabricBlockSettings.copy(aconite_crops)), false);
-	//flower_pot
-	public static final Block potted_juniper_sapling = create("potted_juniper_sapling", new FlowerPotBlock(BWObjects.juniper_sapling, FabricBlockSettings.copy(Blocks.POTTED_OAK_SAPLING)), false);
-	public static final Block potted_cypress_sapling = create("potted_cypress_sapling", new FlowerPotBlock(BWObjects.cypress_sapling, FabricBlockSettings.copy(potted_juniper_sapling)), false);
-	public static final Block potted_elder_sapling = create("potted_elder_sapling", new FlowerPotBlock(BWObjects.elder_sapling, FabricBlockSettings.copy(potted_juniper_sapling)), false);
-	public static final Block potted_dragons_blood_sapling = create("potted_dragons_blood_sapling", new FlowerPotBlock(BWObjects.dragons_blood_sapling, FabricBlockSettings.copy(potted_juniper_sapling)), false);
 	//door
 	public static final Block juniper_door_block = create("juniper_door", new BWDoorBlock(FabricBlockSettings.copy(Blocks.OAK_DOOR)), false);
 	public static final Block cypress_door_block = create("cypress_door", new BWDoorBlock(FabricBlockSettings.copy(juniper_door_block)), false);
@@ -138,11 +133,6 @@ public class BWObjects {
 	public static final Block elder_wall_sign = create("elder_wall_sign", new WallSignBlock(FabricBlockSettings.copyOf(juniper_wall_sign).dropsLike(elder_standing_sign), SignType.OAK), false);
 	public static final Block dragons_blood_standing_sign = create("dragons_blood_sign", new SignBlock(FabricBlockSettings.copyOf(juniper_standing_sign), SignType.OAK), false);
 	public static final Block dragons_blood_wall_sign = create("dragons_blood_wall_sign", new WallSignBlock(FabricBlockSettings.copyOf(juniper_wall_sign).dropsLike(dragons_blood_standing_sign), SignType.OAK), false);
-	//chalk
-	public static final ChalkBlock focal_chalk_block = create("focal_chalk", new ChalkBlock(FabricBlockSettings.of(Material.SUPPORTED).strength(2, 0).breakByTool(FabricToolTags.PICKAXES).collidable(false).dropsNothing().sounds(BWSoundTypes.chalk)), false);
-	public static final ChalkBlock chalk_block = create("chalk", new ChalkBlock(FabricBlockSettings.copy(focal_chalk_block)), false);
-	public static final ChalkBlock infernal_chalk_block = create("infernal_chalk", new ChalkBlock(FabricBlockSettings.copy(focal_chalk_block).lightLevel(state -> 4)), false);
-	public static final ChalkBlock eldritch_chalk_block = create("eldritch_chalk", new ChalkBlock(FabricBlockSettings.copy(focal_chalk_block).lightLevel(state -> 2)), false);
 	////wood
 	//juniper
 	public static final Block juniper_log = create("juniper_log", new PillarBlock(FabricBlockSettings.copy(Blocks.OAK_LOG)), true);
@@ -248,6 +238,17 @@ public class BWObjects {
 	public static final Block[] purpur_witch_altar = createWitchAltar("purpur_witch_altar", Blocks.PURPUR_BLOCK);
 	public static final Block distillery = create("distillery", new DistilleryBlock(FabricBlockSettings.copy(Blocks.IRON_BLOCK).nonOpaque()), true);
 	public static final Block spinning_wheel = create("spinning_wheel", new SpinningWheelBlock(FabricBlockSettings.copy(Blocks.CRAFTING_TABLE).nonOpaque()), true);
+	////no_item_p2
+	//flower_pot
+	public static final Block potted_juniper_sapling = create("potted_juniper_sapling", new FlowerPotBlock(BWObjects.juniper_sapling, FabricBlockSettings.copy(Blocks.POTTED_OAK_SAPLING)), false);
+	public static final Block potted_cypress_sapling = create("potted_cypress_sapling", new FlowerPotBlock(BWObjects.cypress_sapling, FabricBlockSettings.copy(potted_juniper_sapling)), false);
+	public static final Block potted_elder_sapling = create("potted_elder_sapling", new FlowerPotBlock(BWObjects.elder_sapling, FabricBlockSettings.copy(potted_juniper_sapling)), false);
+	public static final Block potted_dragons_blood_sapling = create("potted_dragons_blood_sapling", new FlowerPotBlock(BWObjects.dragons_blood_sapling, FabricBlockSettings.copy(potted_juniper_sapling)), false);
+	//chalk
+	public static final ChalkBlock focal_chalk_block = create("focal_chalk", new ChalkBlock(FabricBlockSettings.of(Material.SUPPORTED).strength(2, 0).breakByTool(FabricToolTags.PICKAXES).collidable(false).dropsNothing().sounds(BWSoundTypes.chalk)), false);
+	public static final ChalkBlock chalk_block = create("chalk", new ChalkBlock(FabricBlockSettings.copy(focal_chalk_block)), false);
+	public static final ChalkBlock infernal_chalk_block = create("infernal_chalk", new ChalkBlock(FabricBlockSettings.copy(focal_chalk_block).lightLevel(state -> 4)), false);
+	public static final ChalkBlock eldritch_chalk_block = create("eldritch_chalk", new ChalkBlock(FabricBlockSettings.copy(focal_chalk_block).lightLevel(state -> 2)), false);
 	//////item
 	////door
 	public static final Item juniper_door_item = create("juniper_door", new TallBlockItem(juniper_door_block, gen()));
