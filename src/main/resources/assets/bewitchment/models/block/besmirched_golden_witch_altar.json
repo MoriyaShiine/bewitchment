@@ -1,0 +1,10 @@
+{
+  "parent": "bewitchment:block/witch_altar",
+  "textures": {
+	"end": "bewitchment:block/golden_witch_altar_end",
+	"side": "bewitchment:block/golden_witch_altar_side",
+	"cloth_top": "bewitchment:block/besmirched_cloth_top",
+	"cloth_side": "bewitchment:block/besmirched_cloth_side",
+	"shadow": "bewitchment:block/golden_witch_altar_shadow"
+  }
+}

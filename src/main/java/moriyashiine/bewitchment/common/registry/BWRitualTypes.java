@@ -7,11 +7,11 @@ import moriyashiine.bewitchment.common.ritualfunction.MakeNightRitualFunction;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BWRitualTypes {
-	private static final Map<RitualFunction, Identifier> RITUAL_FUNCTIONS = new HashMap<>();
+	private static final Map<RitualFunction, Identifier> RITUAL_FUNCTIONS = new LinkedHashMap<>();
 	
 	public static final RitualFunction crafting = create("crafting", new RitualFunction());
 	public static final RitualFunction make_day = create("make_day", new MakeDayRitualFunction());

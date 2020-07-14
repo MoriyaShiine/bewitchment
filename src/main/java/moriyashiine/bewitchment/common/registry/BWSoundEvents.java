@@ -5,11 +5,11 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BWSoundEvents {
-	private static final Map<SoundEvent, Identifier> SOUND_EVENTS = new HashMap<>();
+	private static final Map<SoundEvent, Identifier> SOUND_EVENTS = new LinkedHashMap<>();
 	
 	//block
 	public static final SoundEvent chalk_scribble = create("chalk_scribble");

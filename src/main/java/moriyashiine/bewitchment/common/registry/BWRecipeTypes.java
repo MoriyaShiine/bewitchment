@@ -11,13 +11,13 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public class BWRecipeTypes {
-	private static final Map<RecipeSerializer<?>, Identifier> RECIPE_SERIALIZERS = new HashMap<>();
-	private static final Map<DummyRecipeType<?>, Identifier> RECIPE_TYPES = new HashMap<>();
+	private static final Map<RecipeSerializer<?>, Identifier> RECIPE_SERIALIZERS = new LinkedHashMap<>();
+	private static final Map<DummyRecipeType<?>, Identifier> RECIPE_TYPES = new LinkedHashMap<>();
 	
 	public static final RecipeSerializer<?> athame_drop_serializer = create("athame_drop", new AthameDropRecipe.Serializer());
 	public static final DummyRecipeType<AthameDropRecipe> athame_drop_type = create("athame_drop");

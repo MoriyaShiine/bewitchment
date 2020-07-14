@@ -11,14 +11,14 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class BWBlockEntityTypes {
-	private static final Map<BlockEntityType<?>, Identifier> BLOCK_ENTITY_TYPES = new HashMap<>();
+	private static final Map<BlockEntityType<?>, Identifier> BLOCK_ENTITY_TYPES = new LinkedHashMap<>();
 	
 	public static final BlockEntityType<FocalChalkBlockEntity> focal_chalk = create("focal_chalk", FocalChalkBlockEntity::new, BWObjects.focal_chalk_block);
 	public static final BlockEntityType<DistilleryBlockEntity> distillery = create("distillery", DistilleryBlockEntity::new, BWObjects.distillery);

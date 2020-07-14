@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"EME",
+	"MSM",
+	"MMM"
+  ],
+  "key": {
+	"E": {
+	  "item": "bewitchment:elder_bark"
+	},
+	"M": {
+	  "item": "minecraft:mossy_cobblestone"
+	},
+	"S": {
+	  "tag": "c:silver_ingots"
+	}
+  },
+  "result": {
+	"item": "bewitchment:mossy_cobblestone_witch_altar",
+	"count": 3
+  }
+}

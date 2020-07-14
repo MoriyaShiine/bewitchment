@@ -13,11 +13,11 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BWEntityTypes {
-	private static final Map<EntityType<?>, Identifier> ENTITY_TYPES = new HashMap<>();
+	private static final Map<EntityType<?>, Identifier> ENTITY_TYPES = new LinkedHashMap<>();
 	
 	//misc
 	public static final EntityType<SilverArrowEntity> silver_arrow = create("silver_arrow", FabricEntityTypeBuilder.create(SpawnGroup.MISC, SilverArrowEntity::new).dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());

@@ -1,0 +1,10 @@
+{
+  "parent": "bewitchment:block/witch_altar",
+  "textures": {
+	"end": "bewitchment:block/mossy_cobblestone_witch_altar_end",
+	"side": "bewitchment:block/mossy_cobblestone_witch_altar_side",
+	"cloth_top": "bewitchment:block/magenta_cloth_top",
+	"cloth_side": "bewitchment:block/magenta_cloth_side",
+	"shadow": "bewitchment:block/mossy_cobblestone_witch_altar_shadow"
+  }
+}

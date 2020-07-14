@@ -8,11 +8,11 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.decorator.TreeDecorator;
 import net.minecraft.world.gen.decorator.TreeDecoratorType;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BWTreeDecoratorTypes {
-	private static final Map<TreeDecoratorType<TreeDecorator>, Identifier> TREE_DECORATOR_TYPES = new HashMap<>();
+	private static final Map<TreeDecoratorType<TreeDecorator>, Identifier> TREE_DECORATOR_TYPES = new LinkedHashMap<>();
 	
 	public static final TreeDecoratorType<TreeDecorator> LEAVE_SPANISH_MOSS = create("leave_spanish_moss", TreeDecoratorTypeAccessor.createTreeDecoratorType(LeaveSpanishMossTreeDecorator.CODEC));
 	
