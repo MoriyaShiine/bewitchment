@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.common.registry;
 
 import moriyashiine.bewitchment.common.Bewitchment;
-import moriyashiine.bewitchment.common.container.DistilleryScreenHandler;
-import moriyashiine.bewitchment.common.container.SpinningWheelScreenHandler;
+import moriyashiine.bewitchment.common.screenhandler.DistilleryScreenHandler;
+import moriyashiine.bewitchment.common.screenhandler.SpinningWheelScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;

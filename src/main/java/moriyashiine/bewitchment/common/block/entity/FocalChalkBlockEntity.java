@@ -125,7 +125,7 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 							//todo: drain
 							for (ItemEntity itemEntity : itemsOnGround) {
 								world.playSound(null, itemEntity.getBlockPos(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1, 1);
-								PlayerStream.around(world, pos, 32).forEach(foundPlayer -> SmokePuffMessage.send(foundPlayer, itemEntity.getEntityId()));
+								PlayerStream.watching(this).forEach(foundPlayer -> SmokePuffMessage.send(foundPlayer, itemEntity.getEntityId()));
 								setStack(-1, itemEntity.getStack().split(1));
 							}
 							world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1, 1);
@@ -298,7 +298,7 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 	private void syncToClientAndMarkDirty() {
 		if (world != null) {
 			markDirty();
-			PlayerStream.around(world, pos, 32).forEach(player -> SyncFocalChalkBlockEntityMessage.send(player, pos, getRitual(), time));
+			PlayerStream.watching(this).forEach(player -> SyncFocalChalkBlockEntityMessage.send(player, pos, getRitual(), time));
 		}
 	}
 }

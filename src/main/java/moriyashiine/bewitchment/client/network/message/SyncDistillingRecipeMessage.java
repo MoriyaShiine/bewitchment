@@ -21,7 +21,7 @@ public class SyncDistillingRecipeMessage {
 	public static void send(PlayerEntity player, BlockPos pos, DistillingRecipe recipe) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		buf.writeLong(pos.asLong());
-		buf.writeString(recipe.getId().toString());
+		buf.writeString(recipe == null ? "" : recipe.getId().toString());
 		ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, ID, buf);
 	}
 	

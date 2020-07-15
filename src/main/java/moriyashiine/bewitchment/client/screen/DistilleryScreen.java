@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.client.screen;
 
 import moriyashiine.bewitchment.common.Bewitchment;
-import moriyashiine.bewitchment.common.container.DistilleryScreenHandler;
+import moriyashiine.bewitchment.common.screenhandler.DistilleryScreenHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -30,9 +30,9 @@ public class DistilleryScreen extends HandledScreen<DistilleryScreenHandler> {
 	@Override
 	protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
 		Objects.requireNonNull(client).getTextureManager().bindTexture(TEXTURE);
-		int posX = (width - x) / 2;
-		int posY = (height - y) / 2;
-		drawTexture(matrices, posX, posY, 0, 0, x, y);
+		int posX = (width - backgroundWidth) / 2;
+		int posY = (height - backgroundHeight) / 2;
+		drawTexture(matrices, posX, posY, 0, 0, backgroundWidth, backgroundHeight);
 		drawTexture(matrices, posX + 70, posY + 32, 176, 0, handler.time.get(0) * 39 / 200, 32);
 	}
 }

@@ -2,7 +2,7 @@ package moriyashiine.bewitchment.common.block;
 
 import moriyashiine.bewitchment.common.block.entity.DistilleryBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.util.BWCraftingBlockEntity;
-import moriyashiine.bewitchment.common.container.DistilleryScreenHandler;
+import moriyashiine.bewitchment.common.screenhandler.DistilleryScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;

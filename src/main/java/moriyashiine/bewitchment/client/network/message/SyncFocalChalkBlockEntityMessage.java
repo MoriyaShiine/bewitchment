@@ -21,7 +21,7 @@ public class SyncFocalChalkBlockEntityMessage {
 	public static void send(PlayerEntity player, BlockPos pos, Ritual ritual, int time) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		buf.writeLong(pos.asLong());
-		buf.writeString(ritual.getId().toString());
+		buf.writeString(ritual == null ? "" : ritual.getId().toString());
 		buf.writeInt(time);
 		ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, ID, buf);
 	}

@@ -2,11 +2,11 @@ package moriyashiine.bewitchment.common.block.entity;
 
 import moriyashiine.bewitchment.client.network.message.SyncSpinningRecipeMessage;
 import moriyashiine.bewitchment.common.block.entity.util.BWCraftingBlockEntity;
-import moriyashiine.bewitchment.common.container.SpinningWheelScreenHandler;
 import moriyashiine.bewitchment.common.recipe.SpinningRecipe;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
+import moriyashiine.bewitchment.common.screenhandler.SpinningWheelScreenHandler;
 import net.fabricmc.fabric.api.server.PlayerStream;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
@@ -82,7 +82,7 @@ public class SpinningWheelBlockEntity extends BWCraftingBlockEntity {
 			setRecipe(actualRecipe);
 			markDirty();
 			if (!world.isClient) {
-				PlayerStream.around(world, pos, 32).forEach(player -> SyncSpinningRecipeMessage.send(player, pos, getRecipe()));
+				PlayerStream.watching(this).forEach(player -> SyncSpinningRecipeMessage.send(player, pos, getRecipe()));
 			}
 		}
 	}
