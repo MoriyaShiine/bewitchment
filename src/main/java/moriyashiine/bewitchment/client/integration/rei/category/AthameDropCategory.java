@@ -21,7 +21,7 @@ import java.util.List;
 
 public class AthameDropCategory implements RecipeCategory<AthameDropCategory.Display> {
 	public static final Identifier ID = new Identifier(Bewitchment.MODID, "athame_drops");
-	private static final EntryStack LOGO = EntryStack.create(BWObjects.athame);
+	public static final EntryStack LOGO = EntryStack.create(BWObjects.athame);
 	
 	@Override
 	public Identifier getIdentifier() {
@@ -30,7 +30,7 @@ public class AthameDropCategory implements RecipeCategory<AthameDropCategory.Dis
 	
 	@Override
 	public String getCategoryName() {
-		return I18n.translate("jei." + ID.toString().replaceAll(":", "."));
+		return I18n.translate("rei." + ID.toString().replaceAll(":", "."));
 	}
 	
 	@Override
@@ -40,15 +40,19 @@ public class AthameDropCategory implements RecipeCategory<AthameDropCategory.Dis
 	
 	@Override
 	public int getDisplayHeight() {
-		return 32;
+		return 36;
 	}
 	
 	@Override
 	public List<Widget> setupDisplay(Display recipeDisplay, Rectangle bounds) {
 		Point startPoint = new Point(bounds.getCenterX() - 64, bounds.getCenterY() - 16);
+		Point outputPoint = new Point(startPoint.x + 84, startPoint.y + 8);
 		List<Widget> widgets = new ArrayList<>();
-		widgets.add(Widgets.createSlot(new Point(startPoint.x + 30, startPoint.y + 7)).entry(recipeDisplay.getInputEntries().get(0).get(0)).markInput());
-		widgets.add(Widgets.createSlot(new Point(startPoint.x + 80, startPoint.y + 7)).entry(recipeDisplay.getOutputEntries().get(0)).markOutput());
+		widgets.add(Widgets.createRecipeBase(bounds));
+		widgets.add(Widgets.createArrow(new Point(startPoint.x + 50, startPoint.y + 7)));
+		widgets.add(Widgets.createSlot(new Point(startPoint.x + 27, startPoint.y + 8)).entry(recipeDisplay.getInputEntries().get(0).get(0)).markInput());
+		widgets.add(Widgets.createResultSlotBackground(outputPoint));
+		widgets.add(Widgets.createSlot(outputPoint).entry(recipeDisplay.getOutputEntries().get(0)).disableBackground().markOutput());
 		return widgets;
 	}
 	

@@ -79,11 +79,11 @@ public class ChalkItem extends Item {
 				}
 				int cost = tag.getInt("cost");
 				int time = tag.getInt("time");
-				tooltip.add(new TranslatableText("jei.ritual.inner_circle", inner_circle));
-				tooltip.add(new TranslatableText("jei.ritual.middle_circle", middle_circle));
-				tooltip.add(new TranslatableText("jei.ritual.outer_circle", outer_circle));
-				tooltip.add(new TranslatableText("jei.ritual.cost", cost));
-				tooltip.add(new TranslatableText("jei.ritual.time", time / 20f));
+				tooltip.add(new TranslatableText("rei.ritual.inner_circle", inner_circle));
+				tooltip.add(new TranslatableText("rei.ritual.middle_circle", middle_circle));
+				tooltip.add(new TranslatableText("rei.ritual.outer_circle", outer_circle));
+				tooltip.add(new TranslatableText("rei.ritual.cost", cost));
+				tooltip.add(new TranslatableText("rei.ritual.time", time / 20f));
 			}
 		}
 	}

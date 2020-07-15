@@ -1,75 +1,106 @@
-//package moriyashiine.bewitchment.client.integration.rei.category;
-//
-//import mezz.jei.api.constants.VanillaTypes;
-//import mezz.jei.api.gui.IRecipeLayout;
-//import mezz.jei.api.gui.drawable.IDrawable;
-//import mezz.jei.api.helpers.IGuiHelper;
-//import mezz.jei.api.ingredients.IIngredients;
-//import mezz.jei.api.recipe.category.IRecipeCategory;
-//import moriyashiine.bewitchment.common.Bewitchment;
-//import moriyashiine.bewitchment.common.recipe.SpinningRecipe;
-//import moriyashiine.bewitchment.common.registry.BWObjects;
-//import net.minecraft.client.resources.I18n;
-//import net.minecraft.item.ItemStack;
-//import net.minecraft.util.ResourceLocation;
-//
-//import javax.annotation.Nonnull;
-//import java.util.List;
-//
-//public class SpinningCategory implements IRecipeCategory<SpinningRecipe> {
-//	public static final ResourceLocation ID = new ResourceLocation(Bewitchment.MODID, "spinning");
-//	private final IDrawable background, icon;
-//
-//	public SpinningCategory(IGuiHelper helper) {
-//		background = helper.createDrawable(new ResourceLocation(Bewitchment.MODID, "textures/gui/jei/distilling_and_spinning.png"), 0, 0, 96, 48);
-//		icon = helper.createDrawableIngredient(new ItemStack(BWObjects.spinning_wheel));
-//	}
-//
-//	@Override
-//	@Nonnull
-//	public ResourceLocation getUid() {
-//		return ID;
-//	}
-//
-//	@Override
-//	@Nonnull
-//	public Class<? extends SpinningRecipe> getRecipeClass() {
-//		return SpinningRecipe.class;
-//	}
-//
-//	@Override
-//	@Nonnull
-//	public String getTitle() {
-//		return I18n.format("jei." + ID.toString().replaceAll(":", "."));
-//	}
-//
-//	@Override
-//	@Nonnull
-//	public IDrawable getBackground() {
-//		return background;
-//	}
-//
-//	@Override
-//	@Nonnull
-//	public IDrawable getIcon() {
-//		return icon;
-//	}
-//
-//	@Override
-//	public void setIngredients(@Nonnull SpinningRecipe recipe, @Nonnull IIngredients ingredients) {
-//		ingredients.setInputIngredients(recipe.input);
-//		ingredients.setOutput(VanillaTypes.ITEM, recipe.output);
-//	}
-//
-//	@Override
-//	public void setRecipe(@Nonnull IRecipeLayout layout, @Nonnull SpinningRecipe recipe, @Nonnull IIngredients ingredients) {
-//		int index = 0;
-//		for (List<ItemStack> stacks : ingredients.getInputs(VanillaTypes.ITEM)) {
-//			layout.getItemStacks().init(index, true, 5 + (index % 2) * 18, 6 + (index / 2) * 18);
-//			layout.getItemStacks().set(index, stacks);
-//			index++;
-//		}
-//		layout.getItemStacks().init(index, false, 69, 15);
-//		layout.getItemStacks().set(index, ingredients.getOutputs(VanillaTypes.ITEM).get(0).get(0));
-//	}
-//}
+package moriyashiine.bewitchment.client.integration.rei.category;
+
+import me.shedaniel.math.Point;
+import me.shedaniel.math.Rectangle;
+import me.shedaniel.rei.api.EntryStack;
+import me.shedaniel.rei.api.RecipeCategory;
+import me.shedaniel.rei.api.RecipeDisplay;
+import me.shedaniel.rei.api.widgets.Widgets;
+import me.shedaniel.rei.gui.widget.Widget;
+import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.recipe.SpinningRecipe;
+import moriyashiine.bewitchment.common.registry.BWObjects;
+import net.minecraft.client.resource.language.I18n;
+import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.util.Identifier;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class SpinningCategory implements RecipeCategory<SpinningCategory.Display> {
+	public static final Identifier ID = new Identifier(Bewitchment.MODID, "spinning");
+	public static final EntryStack LOGO = EntryStack.create(BWObjects.spinning_wheel);
+	
+	@Override
+	public Identifier getIdentifier() {
+		return ID;
+	}
+	
+	@Override
+	public String getCategoryName() {
+		return I18n.translate("rei." + ID.toString().replaceAll(":", "."));
+	}
+	
+	@Override
+	public EntryStack getLogo() {
+		return LOGO;
+	}
+	
+	@Override
+	public int getDisplayHeight() {
+		return 49;
+	}
+	
+	@Override
+	public List<Widget> setupDisplay(Display recipeDisplay, Rectangle bounds) {
+		Point startPoint = new Point(bounds.getCenterX() - 64, bounds.getCenterY() - 16);
+		Point outputPoint = new Point(startPoint.x + 90, startPoint.y + 8);
+		List<Widget> widgets = new ArrayList<>();
+		widgets.add(Widgets.createRecipeBase(bounds));
+		widgets.add(Widgets.createArrow(new Point(startPoint.x + 53, startPoint.y + 8)));
+		List<List<EntryStack>> inputs = recipeDisplay.getInputEntries();
+		widgets.add(Widgets.createSlot(new Point(startPoint.x + 10, startPoint.y)).entries(inputs.get(0)).markInput());
+		if (inputs.size() > 1)
+		{
+			widgets.add(Widgets.createSlot(new Point(startPoint.x + 28, startPoint.y)).entries(inputs.get(1)).markInput());
+			if (inputs.size() > 2)
+			{
+				widgets.add(Widgets.createSlot(new Point(startPoint.x + 10, startPoint.y + 18)).entries(inputs.get(2)).markInput());
+				if (inputs.size() > 3)
+				{
+					widgets.add(Widgets.createSlot(new Point(startPoint.x + 28, startPoint.y + 18)).entries(inputs.get(3)).markInput());
+				}
+			}
+		}
+		widgets.add(Widgets.createResultSlotBackground(outputPoint));
+		widgets.add(Widgets.createSlot(outputPoint).entry(recipeDisplay.getOutputEntries().get(0)).disableBackground().markOutput());
+		return widgets;
+	}
+	
+	public static class Display implements RecipeDisplay {
+		private final List<List<EntryStack>> input;
+		private final List<EntryStack> output;
+		
+		public Display(SpinningRecipe recipe) {
+			List<List<EntryStack>> input = new ArrayList<>();
+			for (Ingredient ingredient : recipe.input)
+			{
+				List<EntryStack> entries = new ArrayList<>();
+				for (ItemStack stack : ingredient.getMatchingStacksClient())
+				{
+					entries.add(EntryStack.create(stack));
+				}
+				input.add(entries);
+			}
+			this.input = input;
+			output = Collections.singletonList(EntryStack.create(recipe.output));
+		}
+		
+		@Override
+		public List<List<EntryStack>> getInputEntries() {
+			return input;
+		}
+		
+		@Override
+		public List<EntryStack> getOutputEntries() {
+			return output;
+		}
+		
+		@Override
+		public Identifier getRecipeCategory() {
+			return ID;
+		}
+	}
+}
