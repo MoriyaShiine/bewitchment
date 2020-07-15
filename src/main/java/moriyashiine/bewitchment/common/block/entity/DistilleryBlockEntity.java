@@ -62,7 +62,7 @@ public class DistilleryBlockEntity extends BWCraftingBlockEntity {
 				if (recipe instanceof DistillingRecipe) {
 					DistillingRecipe foundRecipe = (DistillingRecipe) recipe;
 					List<ItemStack> items = new ArrayList<>();
-					for (int i = 0; i < size(); i++) {
+					for (int i = 0; i < INPUT_SLOTS.length; i++) {
 						ItemStack stackInSlot = getStack(i);
 						if (!stackInSlot.isEmpty()) {
 							items.add(stackInSlot);
