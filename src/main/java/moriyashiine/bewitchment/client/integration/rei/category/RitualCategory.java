@@ -51,20 +51,15 @@ public class RitualCategory implements RecipeCategory<RitualCategory.Display> {
 		widgets.add(Widgets.createArrow(new Point(startPoint.x + 60, startPoint.y + 7)));
 		List<List<EntryStack>> inputs = recipeDisplay.getInputEntries();
 		widgets.add(Widgets.createSlot(new Point(startPoint.x, startPoint.y - 1)).entries(inputs.get(0)).markInput());
-		if (inputs.size() > 1)
-		{
+		if (inputs.size() > 1) {
 			widgets.add(Widgets.createSlot(new Point(startPoint.x + 18, startPoint.y - 1)).entries(inputs.get(1)).markInput());
-			if (inputs.size() > 2)
-			{
+			if (inputs.size() > 2) {
 				widgets.add(Widgets.createSlot(new Point(startPoint.x + 36, startPoint.y - 1)).entries(inputs.get(2)).markInput());
-				if (inputs.size() > 3)
-				{
+				if (inputs.size() > 3) {
 					widgets.add(Widgets.createSlot(new Point(startPoint.x, startPoint.y + 17)).entries(inputs.get(3)).markInput());
-					if (inputs.size() > 4)
-					{
+					if (inputs.size() > 4) {
 						widgets.add(Widgets.createSlot(new Point(startPoint.x + 18, startPoint.y + 17)).entries(inputs.get(3)).markInput());
-						if (inputs.size() > 5)
-						{
+						if (inputs.size() > 5) {
 							widgets.add(Widgets.createSlot(new Point(startPoint.x + 36, startPoint.y + 17)).entries(inputs.get(3)).markInput());
 						}
 					}
@@ -72,14 +67,12 @@ public class RitualCategory implements RecipeCategory<RitualCategory.Display> {
 			}
 		}
 		List<EntryStack> outputs = recipeDisplay.getOutputEntries();
-		if (outputs.size() == 1)
-		{
+		if (outputs.size() == 1) {
 			Point outputPoint = new Point(startPoint.x + 96, startPoint.y + 7);
 			widgets.add(Widgets.createResultSlotBackground(outputPoint));
 			widgets.add(Widgets.createSlot(outputPoint).entry(outputs.get(0)).disableBackground().markOutput());
 		}
-		else
-		{
+		else {
 			Point outputPoint = new Point(startPoint.x + 96, startPoint.y - 2);
 			widgets.add(Widgets.createResultSlotBackground(outputPoint));
 			widgets.add(Widgets.createSlot(outputPoint).entry(outputs.get(0)).disableBackground().markOutput());
@@ -96,11 +89,9 @@ public class RitualCategory implements RecipeCategory<RitualCategory.Display> {
 		
 		public Display(Ritual ritual) {
 			List<List<EntryStack>> input = new ArrayList<>();
-			for (Ingredient ingredient : ritual.input)
-			{
+			for (Ingredient ingredient : ritual.input) {
 				List<EntryStack> entries = new ArrayList<>();
-				for (ItemStack stack : ingredient.getMatchingStacksClient())
-				{
+				for (ItemStack stack : ingredient.getMatchingStacksClient()) {
 					entries.add(EntryStack.create(stack));
 				}
 				input.add(entries);
@@ -119,8 +110,7 @@ public class RitualCategory implements RecipeCategory<RitualCategory.Display> {
 			if (output.getItem() != Ritual.Serializer.EMPTY) {
 				outputs.add(output);
 			}
-			for (ItemStack stack : outputs)
-			{
+			for (ItemStack stack : outputs) {
 				ritualOutput.add(EntryStack.create(stack));
 			}
 			this.output = ritualOutput;

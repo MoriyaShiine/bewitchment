@@ -52,14 +52,11 @@ public class DistillingCategory implements RecipeCategory<DistillingCategory.Dis
 		widgets.add(Widgets.createArrow(new Point(startPoint.x + 53, startPoint.y + 8)));
 		List<List<EntryStack>> inputs = recipeDisplay.getInputEntries();
 		widgets.add(Widgets.createSlot(new Point(startPoint.x + 10, startPoint.y)).entries(inputs.get(0)).markInput());
-		if (inputs.size() > 1)
-		{
+		if (inputs.size() > 1) {
 			widgets.add(Widgets.createSlot(new Point(startPoint.x + 28, startPoint.y)).entries(inputs.get(1)).markInput());
-			if (inputs.size() > 2)
-			{
+			if (inputs.size() > 2) {
 				widgets.add(Widgets.createSlot(new Point(startPoint.x + 10, startPoint.y + 18)).entries(inputs.get(2)).markInput());
-				if (inputs.size() > 3)
-				{
+				if (inputs.size() > 3) {
 					widgets.add(Widgets.createSlot(new Point(startPoint.x + 28, startPoint.y + 18)).entries(inputs.get(3)).markInput());
 				}
 			}
@@ -75,11 +72,9 @@ public class DistillingCategory implements RecipeCategory<DistillingCategory.Dis
 		
 		public Display(DistillingRecipe recipe) {
 			List<List<EntryStack>> input = new ArrayList<>();
-			for (Ingredient ingredient : recipe.input)
-			{
+			for (Ingredient ingredient : recipe.input) {
 				List<EntryStack> entries = new ArrayList<>();
-				for (ItemStack stack : ingredient.getMatchingStacksClient())
-				{
+				for (ItemStack stack : ingredient.getMatchingStacksClient()) {
 					entries.add(EntryStack.create(stack));
 				}
 				input.add(entries);
