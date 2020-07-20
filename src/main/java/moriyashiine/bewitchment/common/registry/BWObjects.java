@@ -28,7 +28,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.SignType;
 import net.minecraft.util.registry.Registry;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("unused")
@@ -42,12 +44,12 @@ public class BWObjects {
 	public static final ArmorMaterial SILVER_ARMOR = new ArmorMaterial() {
 		@Override
 		public int getDurability(EquipmentSlot slot) {
-			return (int) (ArmorMaterials.GOLD.getDurability(slot) * 1.5f);
+			return ArmorMaterials.IRON.getDurability(slot);
 		}
 		
 		@Override
 		public int getProtectionAmount(EquipmentSlot slot) {
-			return ArmorMaterials.CHAIN.getProtectionAmount(slot);
+			return ArmorMaterials.IRON.getProtectionAmount(slot);
 		}
 		
 		@Override
@@ -72,19 +74,19 @@ public class BWObjects {
 		
 		@Override
 		public float getToughness() {
-			return ArmorMaterials.CHAIN.getToughness();
+			return ArmorMaterials.IRON.getToughness();
 		}
 		
 		@Override
 		public float getKnockbackResistance() {
-			return ArmorMaterials.CHAIN.getKnockbackResistance();
+			return ArmorMaterials.IRON.getKnockbackResistance();
 		}
 	};
 	////tool_material
 	public static final ToolMaterial SILVER_TOOL = new ToolMaterial() {
 		@Override
 		public int getDurability() {
-			return ToolMaterials.STONE.getDurability();
+			return ToolMaterials.IRON.getDurability();
 		}
 		
 		@Override
@@ -94,12 +96,12 @@ public class BWObjects {
 		
 		@Override
 		public float getAttackDamage() {
-			return ToolMaterials.STONE.getAttackDamage();
+			return ToolMaterials.IRON.getAttackDamage();
 		}
 		
 		@Override
 		public int getMiningLevel() {
-			return ToolMaterials.STONE.getMiningLevel();
+			return ToolMaterials.IRON.getMiningLevel();
 		}
 		
 		@Override
@@ -227,15 +229,15 @@ public class BWObjects {
 	public static final Block silver_goblet = create("silver_goblet", new GobletBlock(FabricBlockSettings.copy(silver_block)), true);
 	public static final Block netherite_goblet = create("netherite_goblet", new GobletBlock(FabricBlockSettings.copy(Blocks.NETHERITE_BLOCK)), true);
 	////tile
-	public static final Block[] stone_witch_altar = createWitchAltar("stone_witch_altar", Blocks.STONE);
-	public static final Block[] mossy_cobblestone_witch_altar = createWitchAltar("mossy_cobblestone_witch_altar", Blocks.MOSSY_COBBLESTONE);
-	public static final Block[] prismarine_witch_altar = createWitchAltar("prismarine_witch_altar", Blocks.PRISMARINE);
-	public static final Block[] blackstone_witch_altar = createWitchAltar("blackstone_witch_altar", Blocks.BLACKSTONE);
-	public static final Block[] nether_brick_witch_altar = createWitchAltar("nether_brick_witch_altar", Blocks.NETHER_BRICKS);
-	public static final Block[] golden_witch_altar = createWitchAltar("golden_witch_altar", Blocks.GOLD_BLOCK);
-	public static final Block[] end_stone_witch_altar = createWitchAltar("end_stone_witch_altar", Blocks.END_STONE);
-	public static final Block[] obsidian_witch_altar = createWitchAltar("obsidian_witch_altar", Blocks.OBSIDIAN);
-	public static final Block[] purpur_witch_altar = createWitchAltar("purpur_witch_altar", Blocks.PURPUR_BLOCK);
+	public static final List<Block> stone_witch_altar = createWitchAltar("stone_witch_altar", Blocks.STONE);
+	public static final List<Block> mossy_cobblestone_witch_altar = createWitchAltar("mossy_cobblestone_witch_altar", Blocks.MOSSY_COBBLESTONE);
+	public static final List<Block> prismarine_witch_altar = createWitchAltar("prismarine_witch_altar", Blocks.PRISMARINE);
+	public static final List<Block> blackstone_witch_altar = createWitchAltar("blackstone_witch_altar", Blocks.BLACKSTONE);
+	public static final List<Block> nether_brick_witch_altar = createWitchAltar("nether_brick_witch_altar", Blocks.NETHER_BRICKS);
+	public static final List<Block> golden_witch_altar = createWitchAltar("golden_witch_altar", Blocks.GOLD_BLOCK);
+	public static final List<Block> end_stone_witch_altar = createWitchAltar("end_stone_witch_altar", Blocks.END_STONE);
+	public static final List<Block> obsidian_witch_altar = createWitchAltar("obsidian_witch_altar", Blocks.OBSIDIAN);
+	public static final List<Block> purpur_witch_altar = createWitchAltar("purpur_witch_altar", Blocks.PURPUR_BLOCK);
 	public static final Block distillery = create("distillery", new DistilleryBlock(FabricBlockSettings.copy(Blocks.IRON_BLOCK).nonOpaque()), true);
 	public static final Block spinning_wheel = create("spinning_wheel", new SpinningWheelBlock(FabricBlockSettings.copy(Blocks.CRAFTING_TABLE).nonOpaque()), true);
 	////no_item_p2
@@ -326,11 +328,11 @@ public class BWObjects {
 	public static final Item snake_spawn_egg = create("snake_spawn_egg", new SpawnEggItem(BWEntityTypes.snake, 0x7f3f00, 0x3f3f3f, gen()));
 	public static final Item toad_spawn_egg = create("toad_spawn_egg", new SpawnEggItem(BWEntityTypes.toad, 0x007f00, 0x7f3f00, gen()));
 	
-	private static Block[] createWitchAltar(String name, Block base) {
-		int id = -1;
-		Block[] altars = new Block[20];
-		Block unformed = create(name, new UnformedWitchAltarBlock(FabricBlockSettings.copy(base)), true);
-		altars[++id] = unformed;
+	private static List<Block> createWitchAltar(String name, Block base) {
+		List<Block> altars = new ArrayList<>();
+		FabricBlockSettings baseSettings = FabricBlockSettings.copyOf(base);
+		Block unformed = create(name, new UnformedWitchAltarBlock(baseSettings), true);
+		altars.add(unformed);
 		for (DyeColor color : DyeColor.values()) {
 			Block carpet;
 			switch (color) {
@@ -385,11 +387,27 @@ public class BWObjects {
 				default:
 					throw new IllegalStateException("Unexpected value: " + color);
 			}
-			BewitchmentAPI.registerAltarMap(unformed, altars[++id] = create(color.getName() + "_" + name, new FormedWitchAltarBlock(unformed, FabricBlockSettings.copy(base)), false), carpet);
+			Block formed = create(color.getName() + "_" + name, new FormedWitchAltarBlock(false, unformed, baseSettings), false);
+			Block core = create(color.getName() + "_" + name + "_core", new FormedWitchAltarBlock(true, unformed, baseSettings), false);
+			altars.add(formed);
+			altars.add(core);
+			BewitchmentAPI.registerAltarMap(unformed, formed, core, carpet);
 		}
-		BewitchmentAPI.registerAltarMap(unformed, altars[++id] = create("druid_" + name, new FormedWitchAltarBlock(unformed, FabricBlockSettings.copy(base)), false), druid_carpet);
-		BewitchmentAPI.registerAltarMap(unformed, altars[++id] = create("alchemist_" + name, new FormedWitchAltarBlock(unformed, FabricBlockSettings.copy(base)), false), alchemist_carpet);
-		BewitchmentAPI.registerAltarMap(unformed, altars[++id] = create("besmirched_" + name, new FormedWitchAltarBlock(unformed, FabricBlockSettings.copy(base)), false), besmirched_carpet);
+		Block formed_druid = create("druid_" + name, new FormedWitchAltarBlock(false, unformed, baseSettings), false);
+		Block core_druid = create("druid_" + name + "_core", new FormedWitchAltarBlock(true, unformed, baseSettings), false);
+		altars.add(formed_druid);
+		altars.add(core_druid);
+		BewitchmentAPI.registerAltarMap(unformed, formed_druid, core_druid, druid_carpet);
+		Block formed_alchemist = create("alchemist_" + name, new FormedWitchAltarBlock(false, unformed, baseSettings), false);
+		Block core_alchemist = create("alchemist_" + name + "_core", new FormedWitchAltarBlock(true, unformed, baseSettings), false);
+		altars.add(formed_alchemist);
+		altars.add(core_alchemist);
+		BewitchmentAPI.registerAltarMap(unformed, formed_alchemist, core_alchemist, alchemist_carpet);
+		Block formed_besmirched = create("besmirched_" + name, new FormedWitchAltarBlock(false, unformed, baseSettings), false);
+		Block core_besmirched = create("besmirched_" + name + "_core", new FormedWitchAltarBlock(true, unformed, baseSettings), false);
+		altars.add(formed_besmirched);
+		altars.add(core_besmirched);
+		BewitchmentAPI.registerAltarMap(unformed, formed_besmirched, core_besmirched, besmirched_carpet);
 		return altars;
 	}
 	

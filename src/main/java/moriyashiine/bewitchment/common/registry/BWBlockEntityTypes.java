@@ -1,9 +1,11 @@
 package moriyashiine.bewitchment.common.registry;
 
 import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.block.FormedWitchAltarBlock;
 import moriyashiine.bewitchment.common.block.entity.DistilleryBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.FocalChalkBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.SpinningWheelBlockEntity;
+import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -20,6 +22,7 @@ import java.util.function.Supplier;
 public class BWBlockEntityTypes {
 	private static final Map<BlockEntityType<?>, Identifier> BLOCK_ENTITY_TYPES = new LinkedHashMap<>();
 	
+	public static final BlockEntityType<WitchAltarBlockEntity> witch_altar = create("witch_altar", WitchAltarBlockEntity::new, block -> block instanceof FormedWitchAltarBlock);
 	public static final BlockEntityType<FocalChalkBlockEntity> focal_chalk = create("focal_chalk", FocalChalkBlockEntity::new, BWObjects.focal_chalk_block);
 	public static final BlockEntityType<DistilleryBlockEntity> distillery = create("distillery", DistilleryBlockEntity::new, BWObjects.distillery);
 	public static final BlockEntityType<SpinningWheelBlockEntity> spinning_wheel = create("spinning_wheel", SpinningWheelBlockEntity::new, BWObjects.spinning_wheel);

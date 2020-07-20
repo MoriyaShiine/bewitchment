@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.accessor.BloodAccessor;
+import moriyashiine.bewitchment.api.interfaces.BloodAccessor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

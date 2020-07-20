@@ -168,6 +168,8 @@
   "entity.bewitchment.toad": "Toad",
   "bewitchment.subtitle.chalk_scribble": "Chalk scribbles",
   "altar.invalid": "This altar is incomplete",
+  "altar.information": "%d / %d (x%d)",
+  "bewitchment.ritual.no_power": "Your source of magic is not strong enough",
   "bewitchment.ritual.null": "You have not heard of such rites",
   "bewitchment.ritual.solar_glory": "Solar Glory",
   "bewitchment.ritual.high_moon": "High Moon",

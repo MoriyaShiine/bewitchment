@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.accessor.BloodAccessor;
+import moriyashiine.bewitchment.api.interfaces.BloodAccessor;
 import moriyashiine.bewitchment.common.item.tool.AthameItem;
 import moriyashiine.bewitchment.common.recipe.AthameDropRecipe;
 import moriyashiine.bewitchment.common.registry.BWObjects;

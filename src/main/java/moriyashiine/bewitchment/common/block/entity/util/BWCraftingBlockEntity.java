@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.block.entity.util;
 
+import moriyashiine.bewitchment.api.interfaces.MagicUser;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
@@ -12,9 +13,10 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
-public abstract class BWCraftingBlockEntity extends LockableContainerBlockEntity implements SidedInventory, Tickable {
+public abstract class BWCraftingBlockEntity extends LockableContainerBlockEntity implements SidedInventory, Tickable, MagicUser {
 	public final PropertyDelegate propertyDelegate = new PropertyDelegate() {
 		@Override
 		public int get(int index) {
@@ -39,6 +41,8 @@ public abstract class BWCraftingBlockEntity extends LockableContainerBlockEntity
 	
 	protected int recipeTime = 0;
 	
+	private BlockPos altarPos = null;
+	
 	protected BWCraftingBlockEntity(BlockEntityType<?> blockEntityType) {
 		super(blockEntityType);
 	}
@@ -52,6 +56,7 @@ public abstract class BWCraftingBlockEntity extends LockableContainerBlockEntity
 	public void fromTag(BlockState state, CompoundTag tag) {
 		Inventories.fromTag(tag, inventory);
 		recipeTime = tag.getInt("RecipeTime");
+		fromTagMagicUser(tag);
 		super.fromTag(state, tag);
 	}
 	
@@ -59,6 +64,7 @@ public abstract class BWCraftingBlockEntity extends LockableContainerBlockEntity
 	public CompoundTag toTag(CompoundTag tag) {
 		Inventories.toTag(tag, inventory);
 		tag.putInt("RecipeTime", recipeTime);
+		toTagMagicUser(tag);
 		return super.toTag(tag);
 	}
 	
@@ -125,5 +131,15 @@ public abstract class BWCraftingBlockEntity extends LockableContainerBlockEntity
 	@Override
 	public boolean canPlayerUse(PlayerEntity player) {
 		return (world == null || world.getBlockEntity(pos) == this) && player.squaredDistanceTo(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) <= 74;
+	}
+	
+	@Override
+	public BlockPos getAltarPos() {
+		return altarPos;
+	}
+	
+	@Override
+	public void setAltarPos(BlockPos altarPos) {
+		this.altarPos = altarPos;
 	}
 }

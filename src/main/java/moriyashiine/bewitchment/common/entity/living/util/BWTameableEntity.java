@@ -111,9 +111,7 @@ public abstract class BWTameableEntity extends TameableEntity {
 			return ActionResult.success(client);
 		}
 		else if (isTamed() && isOwner(player)) {
-			if (!client) {
-				setSitting(!isSitting());
-			}
+			setSitting(!isSitting());
 			return ActionResult.success(client);
 		}
 		return super.interactMob(player, hand);

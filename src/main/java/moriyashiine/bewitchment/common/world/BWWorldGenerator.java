@@ -33,12 +33,12 @@ public class BWWorldGenerator {
 	private static final TreeFeatureConfig SWAMP_TREE_WITH_SPANISH_MOSS_CONFIG = (new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(Blocks.OAK_LOG.getDefaultState()), new SimpleBlockStateProvider(Blocks.OAK_LEAVES.getDefaultState()), new BlobFoliagePlacer(3, 0, 0, 0, 3), new StraightTrunkPlacer(5, 3, 0), new TwoLayersFeatureSize(1, 0, 1))).maxWaterDepth(1).decorators(ImmutableList.of(LeaveSpanishMossTreeDecorator.INSTANCE)).build();
 	
 	public static void init() {
-		LootTableLoadingCallback.EVENT.register((resourceManager, lootManager, identifier, fabricLootSupplierBuilder, lootTableSetter) -> {
-			if (Blocks.GRASS.getLootTableId().equals(identifier) || Blocks.TALL_GRASS.getLootTableId().equals(identifier) || Blocks.FERN.getLootTableId().equals(identifier) || Blocks.LARGE_FERN.getLootTableId().equals(identifier)) {
-				fabricLootSupplierBuilder.withPool(FabricLootPoolBuilder.builder().rolls(ConstantLootTableRange.create(1)).withCondition(RandomChanceWithLootingLootCondition.builder(0.125f, 2).build()).withEntry(ItemEntry.builder(BWObjects.aconite_seeds).build()).withCondition(RandomChanceWithLootingLootCondition.builder(0.125f, 2).build()).withEntry(ItemEntry.builder(BWObjects.belladonna_seeds).build()).withCondition(RandomChanceWithLootingLootCondition.builder(0.125f, 2).build()).withEntry(ItemEntry.builder(BWObjects.garlic).build()).withCondition(RandomChanceWithLootingLootCondition.builder(0.125f, 2).build()).withEntry(ItemEntry.builder(BWObjects.mandrake_seeds).build()).build());
+		LootTableLoadingCallback.EVENT.register((resourceManager, manager, id, supplier, setter) -> {
+			if (Blocks.GRASS.getLootTableId().equals(id) || Blocks.TALL_GRASS.getLootTableId().equals(id) || Blocks.FERN.getLootTableId().equals(id) || Blocks.LARGE_FERN.getLootTableId().equals(id)) {
+				supplier.withPool(FabricLootPoolBuilder.builder().rolls(ConstantLootTableRange.create(1)).withCondition(RandomChanceWithLootingLootCondition.builder(0.125f, 2).build()).withEntry(ItemEntry.builder(BWObjects.aconite_seeds).build()).withCondition(RandomChanceWithLootingLootCondition.builder(0.125f, 2).build()).withEntry(ItemEntry.builder(BWObjects.belladonna_seeds).build()).withCondition(RandomChanceWithLootingLootCondition.builder(0.125f, 2).build()).withEntry(ItemEntry.builder(BWObjects.garlic).build()).withCondition(RandomChanceWithLootingLootCondition.builder(0.125f, 2).build()).withEntry(ItemEntry.builder(BWObjects.mandrake_seeds).build()).build());
 			}
-			if (LootTables.NETHER_BRIDGE_CHEST.equals(identifier)) {
-				fabricLootSupplierBuilder.withPool(FabricLootPoolBuilder.builder().rolls(ConstantLootTableRange.create(1)).withFunction(SetCountLootFunction.builder(UniformLootTableRange.between(1, 2)).build()).withEntry(ItemEntry.builder(BWObjects.dragons_blood_sapling).weight(10).build()).build());
+			if (LootTables.NETHER_BRIDGE_CHEST.equals(id)) {
+				supplier.withPool(FabricLootPoolBuilder.builder().rolls(ConstantLootTableRange.create(1)).withFunction(SetCountLootFunction.builder(UniformLootTableRange.between(1, 2)).build()).withEntry(ItemEntry.builder(BWObjects.dragons_blood_sapling).weight(10).build()).build());
 			}
 		});
 		for (Biome biome : Registry.BIOME) {
@@ -71,8 +71,8 @@ public class BWWorldGenerator {
 		}
 	}
 	
-	private static void addEntitySpawn(Biome biome, EntityType<?> entityType, int weight, int minGroupCount, int maxGroupCount) {
-		biome.getEntitySpawnList(entityType.getSpawnGroup()).add(new Biome.SpawnEntry(entityType, weight, minGroupCount, maxGroupCount));
+	private static void addEntitySpawn(Biome biome, EntityType<?> type, int weight, int minGroupSize, int maxGroupSize) {
+		biome.getEntitySpawnList(type.getSpawnGroup()).add(new Biome.SpawnEntry(type, weight, minGroupSize, maxGroupSize));
 	}
 	
 	private static void addOres(Biome biome) {

@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.block;
 
+import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.pattern.BlockPattern;
@@ -15,11 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.*;
 
 public class UnformedWitchAltarBlock extends Block {
 	public static final Set<AltarGroup> ALTAR_MAP = new HashSet<>();
@@ -35,7 +32,7 @@ public class UnformedWitchAltarBlock extends Block {
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		boolean client = world.isClient;
 		if (!client) {
-			AtomicBoolean failed = new AtomicBoolean(true);
+			boolean failed = true;
 			BlockPattern.Result match = pattern.searchAround(world, pos);
 			if (match != null && match.getForwards().getAxis() == Direction.Axis.Y) {
 				for (AltarGroup group : ALTAR_MAP) {
@@ -50,16 +47,20 @@ public class UnformedWitchAltarBlock extends Block {
 						}
 						if (!wrongCarpet) {
 							altarPoses.keySet().forEach(altarPos -> {
-								world.setBlockState(altarPos, group.formed.getDefaultState().with(BWProperties.ALTAR_CORE, altarPoses.get(altarPos)));
+								boolean core = altarPoses.get(altarPos);
+								world.setBlockState(altarPos, (core ? group.core : group.formed).getDefaultState());
+								if (core) {
+									((WitchAltarBlockEntity) Objects.requireNonNull(world.getBlockEntity(altarPos))).refreshAltar();
+								}
 								world.breakBlock(altarPos.up(), false);
 							});
-							failed.set(false);
+							failed = false;
 							break;
 						}
 					}
 				}
 			}
-			if (failed.get()) {
+			if (failed) {
 				world.playSound(null, pos, SoundEvents.BLOCK_NOTE_BLOCK_SNARE, SoundCategory.BLOCKS, 1, 0.8f);
 				player.sendMessage(new TranslatableText("altar.invalid"), true);
 			}
@@ -84,11 +85,12 @@ public class UnformedWitchAltarBlock extends Block {
 	}
 	
 	public static class AltarGroup {
-		public final Block unformed, formed, carpet;
+		public final Block unformed, formed, core, carpet;
 		
-		public AltarGroup(Block unformed, Block formed, Block carpet) {
+		public AltarGroup(Block unformed, Block formed, Block core, Block carpet) {
 			this.unformed = unformed;
 			this.formed = formed;
+			this.core = core;
 			this.carpet = carpet;
 		}
 	}

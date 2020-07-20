@@ -1,9 +1,6 @@
 package moriyashiine.bewitchment.client;
 
-import moriyashiine.bewitchment.client.network.message.SmokePuffMessage;
-import moriyashiine.bewitchment.client.network.message.SyncDistillingRecipeMessage;
-import moriyashiine.bewitchment.client.network.message.SyncFocalChalkBlockEntityMessage;
-import moriyashiine.bewitchment.client.network.message.SyncSpinningRecipeMessage;
+import moriyashiine.bewitchment.client.network.message.*;
 import moriyashiine.bewitchment.client.render.entity.SilverArrowEntityRenderer;
 import moriyashiine.bewitchment.client.render.entity.living.OwlEntityRenderer;
 import moriyashiine.bewitchment.client.render.entity.living.RavenEntityRenderer;
@@ -29,6 +26,7 @@ import net.minecraft.client.render.RenderLayer;
 public class BewitchmentClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
+		ClientSidePacketRegistry.INSTANCE.register(CreateNonLivingEntityPacket.ID, CreateNonLivingEntityPacket::handle);
 		ClientSidePacketRegistry.INSTANCE.register(SmokePuffMessage.ID, SmokePuffMessage::handle);
 		ClientSidePacketRegistry.INSTANCE.register(SyncDistillingRecipeMessage.ID, SyncDistillingRecipeMessage::handle);
 		ClientSidePacketRegistry.INSTANCE.register(SyncSpinningRecipeMessage.ID, SyncSpinningRecipeMessage::handle);

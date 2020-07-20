@@ -45,10 +45,11 @@ public class BewitchmentAPI {
 	 * registers a set of blocks to the altar map. this is used to determine what unformed altar becomes what formed altar with which carpet
 	 * @param unformed the unformed altar
 	 * @param formed the formed altar
+	 * @param core the altar core, should be the same as the formed altar but has a tile
 	 * @param carpet the carpet
 	 */
-	public static void registerAltarMap(Block unformed, Block formed, Block carpet) {
-		UnformedWitchAltarBlock.ALTAR_MAP.add(new UnformedWitchAltarBlock.AltarGroup(unformed, formed, carpet));
+	public static void registerAltarMap(Block unformed, Block formed, Block core, Block carpet) {
+		UnformedWitchAltarBlock.ALTAR_MAP.add(new UnformedWitchAltarBlock.AltarGroup(unformed, formed, core, carpet));
 	}
 	
 	/**

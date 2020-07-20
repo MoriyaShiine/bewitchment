@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.block.entity;
 
+import moriyashiine.bewitchment.api.interfaces.MagicUser;
 import moriyashiine.bewitchment.client.network.message.SmokePuffMessage;
 import moriyashiine.bewitchment.client.network.message.SyncFocalChalkBlockEntityMessage;
 import moriyashiine.bewitchment.common.Bewitchment;
@@ -36,7 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tickable {
+public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tickable, MagicUser {
 	private static final byte[][] inner = {{0, 0, 1, 1, 1, 0, 0}, {0, 1, 0, 0, 0, 1, 0}, {1, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 1}, {0, 1, 0, 0, 0, 1, 0}, {0, 0, 1, 1, 1, 0, 0}};
 	private static final byte[][] middle = {{0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0}};
 	private static final byte[][] outer = {{0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0}};
@@ -45,6 +46,8 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 	
 	private Lazy<Ritual> lazyRitual = new Lazy<>(() -> null);
 	public int time = 0;
+	
+	private BlockPos altarPos = null;
 	
 	public FocalChalkBlockEntity() {
 		super(BWBlockEntityTypes.focal_chalk);
@@ -78,6 +81,7 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 		lazyRitual = new Lazy<>(() -> Objects.requireNonNull(world).getRecipeManager().method_30027(BWRecipeTypes.ritual_type).stream().filter(ritual -> ritual.getId().toString().equals(tag.getString("Ritual"))).findFirst().orElse(null));
 		Inventories.fromTag(tag, inventory);
 		time = tag.getInt("Time");
+		fromTagMagicUser(tag);
 		super.fromTag(state, tag);
 	}
 	
@@ -89,6 +93,7 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 		}
 		Inventories.toTag(tag, inventory);
 		tag.putInt("Time", time);
+		toTagMagicUser(tag);
 		return super.toTag(tag);
 	}
 	
@@ -122,17 +127,22 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 					}
 					if (rit != null) {
 						if (rit.function.isValid(world, pos)) {
-							//todo: drain
-							for (ItemEntity itemEntity : itemsOnGround) {
-								world.playSound(null, itemEntity.getBlockPos(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1, 1);
-								PlayerStream.watching(this).forEach(foundPlayer -> SmokePuffMessage.send(foundPlayer, itemEntity.getEntityId()));
-								setStack(-1, itemEntity.getStack().split(1));
+							if (drainMagic(world, rit.cost, false)) {
+								for (ItemEntity itemEntity : itemsOnGround) {
+									world.playSound(null, itemEntity.getBlockPos(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1, 1);
+									PlayerStream.watching(this).forEach(foundPlayer -> SmokePuffMessage.send(foundPlayer, itemEntity.getEntityId()));
+									setStack(-1, itemEntity.getStack().split(1));
+								}
+								world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1, 1);
+								player.sendMessage(new TranslatableText(rit.getId().toString().replaceAll(":", ".").replaceAll("/", ".")), true);
+								setRitual(rit);
+								time = rit.time;
+								syncToClientAndMarkDirty();
 							}
-							world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1, 1);
-							player.sendMessage(new TranslatableText(rit.getId().toString().replaceAll(":", ".").replaceAll("/", ".")), true);
-							setRitual(rit);
-							time = rit.time;
-							syncToClientAndMarkDirty();
+							else {
+								world.playSound(null, pos, SoundEvents.BLOCK_NOTE_BLOCK_SNARE, SoundCategory.BLOCKS, 1, 0.8f);
+								player.sendMessage(new TranslatableText(Bewitchment.MODID + ".ritual.no_power"), true);
+							}
 						}
 						else {
 							world.playSound(null, pos, SoundEvents.BLOCK_NOTE_BLOCK_SNARE, SoundCategory.BLOCKS, 1, 0.8f);
@@ -293,6 +303,16 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 	@Override
 	public boolean canPlayerUse(PlayerEntity player) {
 		return (world == null || world.getBlockEntity(pos) == this) && player.squaredDistanceTo(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) <= 74;
+	}
+	
+	@Override
+	public BlockPos getAltarPos() {
+		return altarPos;
+	}
+	
+	@Override
+	public void setAltarPos(BlockPos altarPos) {
+		this.altarPos = altarPos;
 	}
 	
 	private void syncToClientAndMarkDirty() {

@@ -53,7 +53,7 @@ public class DistilleryScreenHandler extends ScreenHandler {
 			ItemStack stack0 = slot.getStack();
 			stack = stack0.copy();
 			int containerSlots = slots.size() - player.inventory.main.size();
-			if (index < containerSlots && (!insertItem(stack0, containerSlots, slots.size(), true) || !insertItem(stack0, 0, containerSlots, false))) {
+			if (index < containerSlots && !insertItem(stack0, containerSlots, slots.size(), true) || !insertItem(stack0, 0, containerSlots, false)) {
 				stack = ItemStack.EMPTY;
 			}
 			if (stack0.isEmpty()) {
