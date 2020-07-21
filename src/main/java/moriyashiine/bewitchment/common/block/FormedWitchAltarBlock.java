@@ -1,6 +1,10 @@
 package moriyashiine.bewitchment.common.block;
 
+import moriyashiine.bewitchment.client.network.message.SyncPlacedItem;
+import moriyashiine.bewitchment.common.block.entity.PlacedItemBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
+import moriyashiine.bewitchment.common.registry.BWObjects;
+import net.fabricmc.fabric.api.server.PlayerStream;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -8,6 +12,8 @@ import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
@@ -21,6 +27,7 @@ import net.minecraft.world.explosion.Explosion;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class FormedWitchAltarBlock extends BlockWithEntity {
 	private final Block unformed;
@@ -47,12 +54,27 @@ public class FormedWitchAltarBlock extends BlockWithEntity {
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		boolean client = world.isClient;
 		if (!client) {
-			BlockPos altarPos = findAltarPos(world, pos);
-			if (altarPos != null) {
-				BlockEntity blockEntity = world.getBlockEntity(altarPos);
-				if (blockEntity instanceof WitchAltarBlockEntity) {
-					WitchAltarBlockEntity witchAltar = (WitchAltarBlockEntity) blockEntity;
-					player.sendMessage(new TranslatableText("altar.information", witchAltar.magic, witchAltar.maxMagic, witchAltar.gain), true);
+			ItemStack stack = player.getStackInHand(hand);
+			ItemPlacementContext ctx = new ItemPlacementContext(player, hand, stack, new BlockHitResult(hit.getPos().add(0, 1, 0), hit.getSide(), hit.getBlockPos().up(), hit.isInsideBlock()));
+			if (!stack.isEmpty() && !(stack.getItem() instanceof BlockItem) && world.getBlockState(pos.up()).canReplace(ctx)) {
+				world.setBlockState(pos.up(), BWObjects.placed_item.getPlacementState(ctx));
+				BlockEntity blockEntity = world.getBlockEntity(pos.up());
+				if (blockEntity instanceof PlacedItemBlockEntity) {
+					PlacedItemBlockEntity placedItemBlockEntity = ((PlacedItemBlockEntity) blockEntity);
+					placedItemBlockEntity.stack = stack.split(1);
+					placedItemBlockEntity.markDirty();
+					Objects.requireNonNull(world.getServer()).submit(() -> PlayerStream.watching(placedItemBlockEntity).forEach(foundPlayer -> SyncPlacedItem.send(foundPlayer, placedItemBlockEntity.getPos(), placedItemBlockEntity.stack)));
+				}
+				world.updateNeighbor(pos, this, pos.up());
+			}
+			else {
+				BlockPos altarPos = findAltarPos(world, pos);
+				if (altarPos != null) {
+					BlockEntity blockEntity = world.getBlockEntity(altarPos);
+					if (blockEntity instanceof WitchAltarBlockEntity) {
+						WitchAltarBlockEntity witchAltar = (WitchAltarBlockEntity) blockEntity;
+						player.sendMessage(new TranslatableText("altar.information", witchAltar.magic, witchAltar.maxMagic, witchAltar.gain), true);
+					}
 				}
 			}
 		}
@@ -68,6 +90,16 @@ public class FormedWitchAltarBlock extends BlockWithEntity {
 	@Override
 	public PistonBehavior getPistonBehavior(BlockState state) {
 		return PistonBehavior.BLOCK;
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+		super.neighborUpdate(state, world, pos, block, fromPos, notify);
+		BlockEntity blockEntity = world.getBlockEntity(findAltarPos(world, pos));
+		if (blockEntity instanceof WitchAltarBlockEntity) {
+			((WitchAltarBlockEntity) blockEntity).refreshAltar();
+		}
 	}
 	
 	@Override

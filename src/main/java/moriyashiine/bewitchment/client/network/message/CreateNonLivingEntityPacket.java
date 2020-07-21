@@ -48,8 +48,7 @@ public class CreateNonLivingEntityPacket {
 				ClientWorld world = MinecraftClient.getInstance().world;
 				if (world != null) {
 					Entity entity = type.create(world);
-					if (entity != null)
-					{
+					if (entity != null) {
 						entity.updatePosition(x, y, z);
 						entity.updateTrackedPosition(x, y, z);
 						entity.pitch = pitch;

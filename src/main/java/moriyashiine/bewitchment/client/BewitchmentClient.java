@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.client;
 
 import moriyashiine.bewitchment.client.network.message.*;
+import moriyashiine.bewitchment.client.render.blockentity.PlacedItemBlockEntityRenderer;
 import moriyashiine.bewitchment.client.render.entity.SilverArrowEntityRenderer;
 import moriyashiine.bewitchment.client.render.entity.living.OwlEntityRenderer;
 import moriyashiine.bewitchment.client.render.entity.living.RavenEntityRenderer;
@@ -8,6 +9,7 @@ import moriyashiine.bewitchment.client.render.entity.living.SnakeEntityRenderer;
 import moriyashiine.bewitchment.client.render.entity.living.ToadEntityRenderer;
 import moriyashiine.bewitchment.client.screen.DistilleryScreen;
 import moriyashiine.bewitchment.client.screen.SpinningWheelScreen;
+import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWScreenHandlerTypes;
@@ -15,6 +17,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
@@ -28,6 +31,7 @@ public class BewitchmentClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		ClientSidePacketRegistry.INSTANCE.register(CreateNonLivingEntityPacket.ID, CreateNonLivingEntityPacket::handle);
 		ClientSidePacketRegistry.INSTANCE.register(SmokePuffMessage.ID, SmokePuffMessage::handle);
+		ClientSidePacketRegistry.INSTANCE.register(SyncPlacedItem.ID, SyncPlacedItem::handle);
 		ClientSidePacketRegistry.INSTANCE.register(SyncDistillingRecipeMessage.ID, SyncDistillingRecipeMessage::handle);
 		ClientSidePacketRegistry.INSTANCE.register(SyncSpinningRecipeMessage.ID, SyncSpinningRecipeMessage::handle);
 		ClientSidePacketRegistry.INSTANCE.register(SyncFocalChalkBlockEntityMessage.ID, SyncFocalChalkBlockEntityMessage::handle);
@@ -84,6 +88,7 @@ public class BewitchmentClient implements ClientModInitializer {
 			BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
 		}
 		BlockRenderLayerMap.INSTANCE.putBlock(BWObjects.distillery, RenderLayer.getTranslucent());
+		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.placed_item, PlacedItemBlockEntityRenderer::new);
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.silver_arrow, (entityRenderDispatcher, context) -> new SilverArrowEntityRenderer(entityRenderDispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.owl, (entityRenderDispatcher, context) -> new OwlEntityRenderer(entityRenderDispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.raven, (entityRenderDispatcher, context) -> new RavenEntityRenderer(entityRenderDispatcher));

@@ -251,6 +251,8 @@ public class BWObjects {
 	public static final ChalkBlock chalk_block = create("chalk", new ChalkBlock(FabricBlockSettings.copy(focal_chalk_block)), false);
 	public static final ChalkBlock infernal_chalk_block = create("infernal_chalk", new ChalkBlock(FabricBlockSettings.copy(focal_chalk_block).lightLevel(state -> 4)), false);
 	public static final ChalkBlock eldritch_chalk_block = create("eldritch_chalk", new ChalkBlock(FabricBlockSettings.copy(focal_chalk_block).lightLevel(state -> 2)), false);
+	//other
+	public static final Block placed_item = create("placed_item", new PlacedItemBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL).strength(0).collidable(false).dropsNothing()), false);
 	//////item
 	////door
 	public static final Item juniper_door_item = create("juniper_door", new TallBlockItem(juniper_door_block, gen()));
