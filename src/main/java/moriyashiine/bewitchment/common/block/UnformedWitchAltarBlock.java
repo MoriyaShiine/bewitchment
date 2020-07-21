@@ -21,7 +21,7 @@ import java.util.*;
 public class UnformedWitchAltarBlock extends Block {
 	public static final Set<AltarGroup> ALTAR_MAP = new HashSet<>();
 	
-	private final BlockPattern pattern = BlockPatternBuilder.start().aisle("AAA", "AAA").where('A', state -> state.getBlockState().getBlock() == this).build();
+	private final BlockPattern pattern = BlockPatternBuilder.start().aisle("AAAAA", "ABBBA", "ABBBA", "AAAAA").where('A', state -> !(state.getBlockState().getBlock() instanceof UnformedWitchAltarBlock || state.getBlockState().getBlock() instanceof FormedWitchAltarBlock)).where('B', state -> state.getBlockState().getBlock() == this).build();
 	
 	public UnformedWitchAltarBlock(Settings settings) {
 		super(settings);
@@ -51,6 +51,7 @@ public class UnformedWitchAltarBlock extends Block {
 								world.setBlockState(altarPos, (core ? group.core : group.formed).getDefaultState());
 								if (core) {
 									((WitchAltarBlockEntity) Objects.requireNonNull(world.getBlockEntity(altarPos))).refreshAltar();
+									FormedWitchAltarBlock.refreshAltarPoses(world, altarPos);
 								}
 								world.breakBlock(altarPos.up(), false);
 							});
@@ -75,9 +76,9 @@ public class UnformedWitchAltarBlock extends Block {
 		Map<BlockPos, Boolean> altarPoses = new HashMap<>();
 		BlockPattern.Result match = pattern.searchAround(world, pos);
 		if (match != null) {
-			for (int w = 0; w < match.getWidth(); w++) {
-				for (int h = 0; h < match.getHeight(); h++) {
-					altarPoses.put(match.translate(w, h, 0).getBlockPos(), w == 1 && h == 1);
+			for (int w = 1; w < match.getWidth() - 1; w++) {
+				for (int h = 1; h < match.getHeight() - 1; h++) {
+					altarPoses.put(match.translate(w, h, 0).getBlockPos(), w == 2 && h == 2);
 				}
 			}
 		}

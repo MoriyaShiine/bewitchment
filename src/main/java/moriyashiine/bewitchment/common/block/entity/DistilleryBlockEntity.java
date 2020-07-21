@@ -1,6 +1,5 @@
 package moriyashiine.bewitchment.common.block.entity;
 
-import moriyashiine.bewitchment.client.network.message.SyncDistillingRecipeMessage;
 import moriyashiine.bewitchment.common.block.BWProperties;
 import moriyashiine.bewitchment.common.block.entity.util.BWCraftingBlockEntity;
 import moriyashiine.bewitchment.common.recipe.DistillingRecipe;
@@ -8,8 +7,6 @@ import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
 import moriyashiine.bewitchment.common.screenhandler.DistilleryScreenHandler;
-import net.fabricmc.fabric.api.server.PlayerStream;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -36,18 +33,20 @@ public class DistilleryBlockEntity extends BWCraftingBlockEntity {
 	}
 	
 	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
+	protected void fromTagAdditional(CompoundTag tag)
+	{
 		lazyRecipe = new Lazy<>(() -> Objects.requireNonNull(world).getRecipeManager().method_30027(BWRecipeTypes.distilling_type).stream().filter(recipe -> recipe.getId().toString().equals(tag.getString("Recipe"))).findFirst().orElse(null));
-		super.fromTag(state, tag);
+		super.fromTagAdditional(tag);
 	}
 	
 	@Override
-	public CompoundTag toTag(CompoundTag tag) {
+	protected CompoundTag toTagAdditional(CompoundTag tag)
+	{
 		DistillingRecipe recipe = getRecipe();
 		if (recipe != null) {
 			tag.putString("Recipe", recipe.getId().toString());
 		}
-		return super.toTag(tag);
+		return super.toTagAdditional(tag);
 	}
 	
 	@Override
@@ -85,9 +84,6 @@ public class DistilleryBlockEntity extends BWCraftingBlockEntity {
 			}
 			setRecipe(actualRecipe);
 			markDirty();
-			if (!world.isClient) {
-				PlayerStream.watching(this).forEach(player -> SyncDistillingRecipeMessage.send(player, pos, getRecipe()));
-			}
 		}
 	}
 	

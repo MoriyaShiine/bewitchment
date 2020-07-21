@@ -8,13 +8,17 @@ import net.minecraft.world.World;
 
 public interface MagicUser {
 	default boolean drainMagic(World world, int amount, boolean simulate) {
-		BlockEntity blockEntity = world.getBlockEntity(getAltarPos());
-		if (blockEntity instanceof WitchAltarBlockEntity) {
-			boolean flag = ((WitchAltarBlockEntity) blockEntity).drainMagic(amount, simulate);
-			if (flag && !simulate) {
-				blockEntity.markDirty();
+		BlockPos altarPos = getAltarPos();
+		if (altarPos != null)
+		{
+			BlockEntity blockEntity = world.getBlockEntity(altarPos);
+			if (blockEntity instanceof WitchAltarBlockEntity) {
+				boolean flag = ((WitchAltarBlockEntity) blockEntity).drainMagic(amount, simulate);
+				if (flag && !simulate) {
+					blockEntity.markDirty();
+				}
+				return flag;
 			}
-			return flag;
 		}
 		return false;
 	}

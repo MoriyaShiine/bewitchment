@@ -6,7 +6,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 
 public class PlacedItemBlockEntity extends BlockEntity implements BlockEntityClientSerializable {
 	public ItemStack stack = ItemStack.EMPTY;
@@ -15,30 +14,36 @@ public class PlacedItemBlockEntity extends BlockEntity implements BlockEntityCli
 		super(BWBlockEntityTypes.placed_item);
 	}
 	
-	@Override
-	public BlockEntityUpdateS2CPacket toUpdatePacket() {
-		return new BlockEntityUpdateS2CPacket(pos, 0, toTag(new CompoundTag()));
+	private void fromTagAdditional(CompoundTag tag)
+	{
+		stack = ItemStack.fromTag(tag.getCompound("Item"));
+	}
+	
+	private CompoundTag toTagAdditional(CompoundTag tag)
+	{
+		tag.put("Item", stack.toTag(new CompoundTag()));
+		return tag;
 	}
 	
 	@Override
 	public void fromTag(BlockState state, CompoundTag tag) {
-		stack = ItemStack.fromTag(tag.getCompound("Item"));
+		fromTagAdditional(tag);
 		super.fromTag(state, tag);
 	}
 	
 	@Override
 	public CompoundTag toTag(CompoundTag tag) {
-		tag.put("Item", stack.toTag(new CompoundTag()));
+		toTagAdditional(tag);
 		return super.toTag(tag);
 	}
 	
 	@Override
 	public void fromClientTag(CompoundTag tag) {
-		fromTag(getCachedState(), tag);
+		fromTagAdditional(tag);
 	}
 	
 	@Override
 	public CompoundTag toClientTag(CompoundTag tag) {
-		return toTag(tag);
+		return toTagAdditional(tag);
 	}
 }

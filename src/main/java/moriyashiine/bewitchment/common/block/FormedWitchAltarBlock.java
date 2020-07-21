@@ -1,10 +1,9 @@
 package moriyashiine.bewitchment.common.block;
 
-import moriyashiine.bewitchment.client.network.message.SyncPlacedItem;
+import moriyashiine.bewitchment.api.interfaces.MagicUser;
 import moriyashiine.bewitchment.common.block.entity.PlacedItemBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWObjects;
-import net.fabricmc.fabric.api.server.PlayerStream;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -23,11 +22,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.explosion.Explosion;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class FormedWitchAltarBlock extends BlockWithEntity {
 	private final Block unformed;
@@ -63,7 +60,6 @@ public class FormedWitchAltarBlock extends BlockWithEntity {
 					PlacedItemBlockEntity placedItemBlockEntity = ((PlacedItemBlockEntity) blockEntity);
 					placedItemBlockEntity.stack = stack.split(1);
 					placedItemBlockEntity.markDirty();
-					Objects.requireNonNull(world.getServer()).submit(() -> PlayerStream.watching(placedItemBlockEntity).forEach(foundPlayer -> SyncPlacedItem.send(foundPlayer, placedItemBlockEntity.getPos(), placedItemBlockEntity.stack)));
 				}
 				world.updateNeighbor(pos, this, pos.up());
 			}
@@ -96,28 +92,88 @@ public class FormedWitchAltarBlock extends BlockWithEntity {
 	@Override
 	public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
 		super.neighborUpdate(state, world, pos, block, fromPos, notify);
-		BlockEntity blockEntity = world.getBlockEntity(findAltarPos(world, pos));
-		if (blockEntity instanceof WitchAltarBlockEntity) {
-			((WitchAltarBlockEntity) blockEntity).refreshAltar();
+		if (fromPos.equals(pos.up()))
+		{
+			BlockPos altarPos = findAltarPos(world, pos);
+			if (altarPos != null)
+			{
+				BlockEntity blockEntity = world.getBlockEntity(altarPos);
+				if (blockEntity instanceof WitchAltarBlockEntity) {
+					((WitchAltarBlockEntity) blockEntity).refreshAltar();
+				}
+			}
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
-	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-		super.onBreak(world, pos, state, player);
-		breakAltar(world, pos);
+	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+		super.onStateReplaced(state, world, pos, newState, moved);
+		if (state.getBlock() != newState.getBlock())
+		{
+			breakAltar(world, pos);
+			if (hasEntity)
+			{
+				refreshAltarPoses(world, pos);
+			}
+		}
 	}
 	
-	@Override
-	public void onDestroyedByExplosion(World world, BlockPos pos, Explosion explosion) {
-		super.onDestroyedByExplosion(world, pos, explosion);
-		breakAltar(world, pos);
+	public static void refreshAltarPoses(World world, BlockPos pos)
+	{
+		BlockPos.Mutable mutablePos = new BlockPos.Mutable();
+		for (byte x = -24; x <= 24; x++)
+		{
+			for (byte y = -24; y <= 24; y++)
+			{
+				for (byte z = -24; z <= 24; z++)
+				{
+					mutablePos.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
+					BlockEntity blockEntity = world.getBlockEntity(mutablePos);
+					if (blockEntity instanceof MagicUser)
+					{
+						((MagicUser) blockEntity).setAltarPos(getNearestAltarPos(world, mutablePos));
+						blockEntity.markDirty();
+					}
+				}
+			}
+		}
 	}
 	
-	public BlockPos findAltarPos(World world, BlockPos pos) {
+	private static BlockPos getNearestAltarPos(World world, BlockPos pos)
+	{
 		List<BlockPos> validPoses = new ArrayList<>();
-		for (int x = -1; x <= 1; x++) {
-			for (int z = -1; z <= 1; z++) {
+		for (byte x = -24; x <= 24; x++) {
+			for (byte y = -24; y <= 24; y++) {
+				for (byte z = -24; z <= 24; z++) {
+					BlockPos foundPos = pos.add(x, y, z);
+					if (world.getBlockState(foundPos).getBlock() instanceof FormedWitchAltarBlock)
+					{
+						BlockPos altarPos = findAltarPos(world, foundPos);
+						if (altarPos != null)
+						{
+							validPoses.add(altarPos);
+						}
+					}
+				}
+			}
+		}
+		if (validPoses.size() > 0) {
+			BlockPos closest = validPoses.get(0);
+			for (BlockPos foundPos : validPoses) {
+				if (foundPos.getSquaredDistance(pos) < closest.getSquaredDistance(pos)) {
+					closest = foundPos;
+				}
+			}
+			return closest;
+		}
+		return null;
+	}
+	
+	public static BlockPos findAltarPos(World world, BlockPos pos) {
+		List<BlockPos> validPoses = new ArrayList<>();
+		for (byte x = -1; x <= 1; x++) {
+			for (byte z = -1; z <= 1; z++) {
 				BlockPos foundPos = pos.add(x, 0, z);
 				if (world.getBlockEntity(foundPos) instanceof WitchAltarBlockEntity) {
 					validPoses.add(foundPos);
@@ -139,7 +195,8 @@ public class FormedWitchAltarBlock extends BlockWithEntity {
 	private void breakAltar(World world, BlockPos pos) {
 		for (Direction direction : Direction.Type.HORIZONTAL) {
 			BlockPos offset = pos.offset(direction);
-			if (world.getBlockState(offset).getBlock() == this) {
+			Block block = world.getBlockState(offset).getBlock();
+			if (block instanceof FormedWitchAltarBlock) {
 				world.breakBlock(offset, true);
 				breakAltar(world, offset);
 			}

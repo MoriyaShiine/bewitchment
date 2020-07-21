@@ -31,10 +31,6 @@ public class BewitchmentClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		ClientSidePacketRegistry.INSTANCE.register(CreateNonLivingEntityPacket.ID, CreateNonLivingEntityPacket::handle);
 		ClientSidePacketRegistry.INSTANCE.register(SmokePuffMessage.ID, SmokePuffMessage::handle);
-		ClientSidePacketRegistry.INSTANCE.register(SyncPlacedItem.ID, SyncPlacedItem::handle);
-		ClientSidePacketRegistry.INSTANCE.register(SyncDistillingRecipeMessage.ID, SyncDistillingRecipeMessage::handle);
-		ClientSidePacketRegistry.INSTANCE.register(SyncSpinningRecipeMessage.ID, SyncSpinningRecipeMessage::handle);
-		ClientSidePacketRegistry.INSTANCE.register(SyncFocalChalkBlockEntityMessage.ID, SyncFocalChalkBlockEntityMessage::handle);
 		BlockRenderLayerMap.INSTANCE.putBlock(BWObjects.aconite_crops, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(BWObjects.belladonna_crops, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(BWObjects.garlic_crops, RenderLayer.getCutout());

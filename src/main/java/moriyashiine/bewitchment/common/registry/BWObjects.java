@@ -247,12 +247,12 @@ public class BWObjects {
 	public static final Block potted_elder_sapling = create("potted_elder_sapling", new FlowerPotBlock(BWObjects.elder_sapling, FabricBlockSettings.copy(potted_juniper_sapling)), false);
 	public static final Block potted_dragons_blood_sapling = create("potted_dragons_blood_sapling", new FlowerPotBlock(BWObjects.dragons_blood_sapling, FabricBlockSettings.copy(potted_juniper_sapling)), false);
 	//chalk
-	public static final ChalkBlock focal_chalk_block = create("focal_chalk", new ChalkBlock(FabricBlockSettings.of(Material.SUPPORTED).strength(2, 0).breakByTool(FabricToolTags.PICKAXES).collidable(false).dropsNothing().sounds(BWSoundTypes.chalk)), false);
+	public static final ChalkBlock focal_chalk_block = create("focal_chalk", new ChalkBlock(FabricBlockSettings.of(Material.SUPPORTED).strength(2, 0).breakByTool(FabricToolTags.PICKAXES).noCollision().dropsNothing().sounds(BWSoundTypes.chalk)), false);
 	public static final ChalkBlock chalk_block = create("chalk", new ChalkBlock(FabricBlockSettings.copy(focal_chalk_block)), false);
 	public static final ChalkBlock infernal_chalk_block = create("infernal_chalk", new ChalkBlock(FabricBlockSettings.copy(focal_chalk_block).lightLevel(state -> 4)), false);
 	public static final ChalkBlock eldritch_chalk_block = create("eldritch_chalk", new ChalkBlock(FabricBlockSettings.copy(focal_chalk_block).lightLevel(state -> 2)), false);
 	//other
-	public static final Block placed_item = create("placed_item", new PlacedItemBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL).strength(0).collidable(false).dropsNothing()), false);
+	public static final Block placed_item = create("placed_item", new PlacedItemBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL).strength(0).noCollision().dropsNothing()), false);
 	//////item
 	////door
 	public static final Item juniper_door_item = create("juniper_door", new TallBlockItem(juniper_door_block, gen()));
@@ -406,7 +406,7 @@ public class BWObjects {
 		altars.add(core_alchemist);
 		BewitchmentAPI.registerAltarMap(unformed, formed_alchemist, core_alchemist, alchemist_carpet);
 		Block formed_besmirched = create("besmirched_" + name, new FormedWitchAltarBlock(false, unformed, baseSettings), false);
-		Block core_besmirched = create("besmirched_" + name + "_core", new FormedWitchAltarBlock(true, unformed, baseSettings), false);
+		Block core_besmirched = create("besmirched_" + name + "_core", new FormedWitchAltarBlock(true, unformed, baseSettings.dropsLike(formed_besmirched)), false);
 		altars.add(formed_besmirched);
 		altars.add(core_besmirched);
 		BewitchmentAPI.registerAltarMap(unformed, formed_besmirched, core_besmirched, besmirched_carpet);

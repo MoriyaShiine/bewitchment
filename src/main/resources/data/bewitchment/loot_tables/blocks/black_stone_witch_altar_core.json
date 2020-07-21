@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+	{
+	  "rolls": 1,
+	  "entries": [
+		{
+		  "type": "minecraft:item",
+		  "name": "bewitchment:stone_witch_altar"
+		}
+	  ],
+	  "conditions": [
+		{
+		  "condition": "minecraft:survives_explosion"
+		}
+	  ]
+	},
+	{
+	  "rolls": 1,
+	  "entries": [
+		{
+		  "type": "minecraft:item",
+		  "name": "minecraft:black_carpet"
+		}
+	  ],
+	  "conditions": [
+		{
+		  "condition": "minecraft:survives_explosion"
+		}
+	  ]
+	}
+  ]
+}

@@ -15,7 +15,7 @@ public interface MagicAccessor {
 		int magic = getMagic();
 		if (magic < maxMagic) {
 			if (!simulate) {
-				setMagic(magic + amount);
+				setMagic(Math.min(magic + amount, maxMagic));
 			}
 			return true;
 		}

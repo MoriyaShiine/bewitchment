@@ -1,14 +1,11 @@
 package moriyashiine.bewitchment.common.block.entity;
 
-import moriyashiine.bewitchment.client.network.message.SyncSpinningRecipeMessage;
 import moriyashiine.bewitchment.common.block.entity.util.BWCraftingBlockEntity;
 import moriyashiine.bewitchment.common.recipe.SpinningRecipe;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
 import moriyashiine.bewitchment.common.screenhandler.SpinningWheelScreenHandler;
-import net.fabricmc.fabric.api.server.PlayerStream;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -35,20 +32,22 @@ public class SpinningWheelBlockEntity extends BWCraftingBlockEntity {
 	}
 	
 	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
+	protected void fromTagAdditional(CompoundTag tag)
+	{
 		lazyRecipe = new Lazy<>(() -> Objects.requireNonNull(world).getRecipeManager().method_30027(BWRecipeTypes.spinning_type).stream().filter(recipe -> recipe.getId().toString().equals(tag.getString("Recipe"))).findFirst().orElse(null));
-		super.fromTag(state, tag);
+		super.fromTagAdditional(tag);
 	}
 	
 	@Override
-	public CompoundTag toTag(CompoundTag tag) {
+	protected CompoundTag toTagAdditional(CompoundTag tag)
+	{
 		SpinningRecipe recipe = getRecipe();
 		if (recipe != null) {
 			tag.putString("Recipe", recipe.getId().toString());
 		}
-		return super.toTag(tag);
+		return super.toTagAdditional(tag);
 	}
-	
+
 	@Override
 	public void setStack(int slot, ItemStack stack) {
 		super.setStack(slot, stack);
@@ -81,9 +80,6 @@ public class SpinningWheelBlockEntity extends BWCraftingBlockEntity {
 			}
 			setRecipe(actualRecipe);
 			markDirty();
-			if (!world.isClient) {
-				PlayerStream.watching(this).forEach(player -> SyncSpinningRecipeMessage.send(player, pos, getRecipe()));
-			}
 		}
 	}
 	

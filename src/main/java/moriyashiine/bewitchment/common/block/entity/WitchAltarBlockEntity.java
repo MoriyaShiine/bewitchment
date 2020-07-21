@@ -113,7 +113,7 @@ public class WitchAltarBlockEntity extends BlockEntity implements Tickable, Magi
 				for (byte z = -1; z <= 1; z++) {
 					searchPos.set(pos.getX() + x, pos.getY(), pos.getZ() + z);
 					Block block = world.getBlockState(searchPos).getBlock();
-					if (block instanceof FormedWitchAltarBlock && ((FormedWitchAltarBlock) block).findAltarPos(world, searchPos).equals(pos)) {
+					if (block instanceof FormedWitchAltarBlock && pos.equals(FormedWitchAltarBlock.findAltarPos(world, searchPos))) {
 						block = world.getBlockState(searchPos.up()).getBlock();
 						if (block instanceof FlowerPotBlock) {
 							block = Blocks.FLOWER_POT;

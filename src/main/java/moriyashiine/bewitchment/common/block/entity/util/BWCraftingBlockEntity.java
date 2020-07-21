@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.common.block.entity.util;
 
 import moriyashiine.bewitchment.api.interfaces.MagicUser;
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
@@ -9,14 +10,13 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
-public abstract class BWCraftingBlockEntity extends LockableContainerBlockEntity implements SidedInventory, Tickable, MagicUser {
+public abstract class BWCraftingBlockEntity extends LockableContainerBlockEntity implements BlockEntityClientSerializable, SidedInventory, Tickable, MagicUser {
 	public final PropertyDelegate propertyDelegate = new PropertyDelegate() {
 		@Override
 		public int get(int index) {
@@ -47,27 +47,42 @@ public abstract class BWCraftingBlockEntity extends LockableContainerBlockEntity
 		super(blockEntityType);
 	}
 	
-	@Override
-	public BlockEntityUpdateS2CPacket toUpdatePacket() {
-		return new BlockEntityUpdateS2CPacket(pos, 0, toTag(new CompoundTag()));
+	protected void fromTagAdditional(CompoundTag tag) {
+		Inventories.fromTag(tag, inventory);
+		recipeTime = tag.getInt("RecipeTime");
+		fromTagMagicUser(tag);
+	}
+	
+	protected CompoundTag toTagAdditional(CompoundTag tag)
+	{
+		Inventories.toTag(tag, inventory);
+		tag.putInt("RecipeTime", recipeTime);
+		toTagMagicUser(tag);
+		return tag;
 	}
 	
 	@Override
 	public void fromTag(BlockState state, CompoundTag tag) {
-		Inventories.fromTag(tag, inventory);
-		recipeTime = tag.getInt("RecipeTime");
-		fromTagMagicUser(tag);
+		fromTagAdditional(tag);
 		super.fromTag(state, tag);
 	}
 	
 	@Override
 	public CompoundTag toTag(CompoundTag tag) {
-		Inventories.toTag(tag, inventory);
-		tag.putInt("RecipeTime", recipeTime);
-		toTagMagicUser(tag);
+		toTagAdditional(tag);
 		return super.toTag(tag);
 	}
 	
+	@Override
+	public void fromClientTag(CompoundTag tag) {
+		fromTagAdditional(tag);
+	}
+	
+	@Override
+	public CompoundTag toClientTag(CompoundTag tag) {
+		return toTagAdditional(tag);
+	}
+
 	@Override
 	public boolean isEmpty() {
 		for (ItemStack stack : inventory) {

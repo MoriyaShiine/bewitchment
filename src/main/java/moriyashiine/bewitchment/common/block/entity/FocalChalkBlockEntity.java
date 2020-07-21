@@ -2,13 +2,13 @@ package moriyashiine.bewitchment.common.block.entity;
 
 import moriyashiine.bewitchment.api.interfaces.MagicUser;
 import moriyashiine.bewitchment.client.network.message.SmokePuffMessage;
-import moriyashiine.bewitchment.client.network.message.SyncFocalChalkBlockEntityMessage;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.ChalkBlock;
 import moriyashiine.bewitchment.common.recipe.Ritual;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.server.PlayerStream;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -19,7 +19,6 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.sound.SoundCategory;
@@ -37,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tickable, MagicUser {
+public class FocalChalkBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Inventory, Tickable, MagicUser {
 	private static final byte[][] inner = {{0, 0, 1, 1, 1, 0, 0}, {0, 1, 0, 0, 0, 1, 0}, {1, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 1}, {0, 1, 0, 0, 0, 1, 0}, {0, 0, 1, 1, 1, 0, 0}};
 	private static final byte[][] middle = {{0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0}};
 	private static final byte[][] outer = {{0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0}, {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0}};
@@ -52,12 +51,7 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 	public FocalChalkBlockEntity() {
 		super(BWBlockEntityTypes.focal_chalk);
 	}
-	
-	@Override
-	public BlockEntityUpdateS2CPacket toUpdatePacket() {
-		return new BlockEntityUpdateS2CPacket(pos, 0, toTag(new CompoundTag()));
-	}
-	
+
 	@Override
 	public void tick() {
 		if (world != null) {
@@ -69,24 +63,24 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 					if (time == 0) {
 						ritual.function.finish(ritual, world, pos);
 						finishRitual(false);
-						syncToClientAndMarkDirty();
+						markDirty();
+						sync();
 					}
 				}
 			}
 		}
 	}
 	
-	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
+	private void fromTagAdditional(CompoundTag tag)
+	{
 		lazyRitual = new Lazy<>(() -> Objects.requireNonNull(world).getRecipeManager().method_30027(BWRecipeTypes.ritual_type).stream().filter(ritual -> ritual.getId().toString().equals(tag.getString("Ritual"))).findFirst().orElse(null));
 		Inventories.fromTag(tag, inventory);
 		time = tag.getInt("Time");
 		fromTagMagicUser(tag);
-		super.fromTag(state, tag);
 	}
 	
-	@Override
-	public CompoundTag toTag(CompoundTag tag) {
+	private CompoundTag toTagAdditional(CompoundTag tag)
+	{
 		Ritual ritual = getRitual();
 		if (ritual != null) {
 			tag.putString("Ritual", ritual.getId().toString());
@@ -94,14 +88,36 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 		Inventories.toTag(tag, inventory);
 		tag.putInt("Time", time);
 		toTagMagicUser(tag);
+		return tag;
+	}
+	
+	@Override
+	public void fromTag(BlockState state, CompoundTag tag) {
+		fromTagAdditional(tag);
+		super.fromTag(state, tag);
+	}
+	
+	@Override
+	public CompoundTag toTag(CompoundTag tag) {
+		toTagAdditional(tag);
 		return super.toTag(tag);
+	}
+	
+	@Override
+	public void fromClientTag(CompoundTag tag) {
+		fromTagAdditional(tag);
+	}
+	
+	@Override
+	public CompoundTag toClientTag(CompoundTag tag) {
+		return toTagAdditional(tag);
 	}
 	
 	public void onUse(PlayerEntity player, Hand hand) {
 		if (world != null && !world.isClient) {
 			if (getRitual() == null) {
 				if (hand == Hand.MAIN_HAND) {
-					List<ItemEntity> itemsOnGround = new ArrayList<>(world.getNonSpectatingEntities(ItemEntity.class, new Box(pos).expand(3, 0, 3)));
+					List<ItemEntity> itemsOnGround = new ArrayList<>(world.getNonSpectatingEntities(ItemEntity.class, new Box(pos).expand(2, 0, 2)));
 					Ritual rit = null;
 					for (Recipe<?> recipe : world.getRecipeManager().method_30027(BWRecipeTypes.ritual_type)) {
 						if (recipe instanceof Ritual) {
@@ -137,7 +153,8 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 								player.sendMessage(new TranslatableText(rit.getId().toString().replaceAll(":", ".").replaceAll("/", ".")), true);
 								setRitual(rit);
 								time = rit.time;
-								syncToClientAndMarkDirty();
+								markDirty();
+								sync();
 							}
 							else {
 								world.playSound(null, pos, SoundEvents.BLOCK_NOTE_BLOCK_SNARE, SoundCategory.BLOCKS, 1, 0.8f);
@@ -157,7 +174,8 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 			}
 			else {
 				finishRitual(true);
-				syncToClientAndMarkDirty();
+				markDirty();
+				sync();
 			}
 		}
 	}
@@ -174,8 +192,8 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 		if (world != null) {
 			BlockPos.Mutable mutablePos = new BlockPos.Mutable();
 			String ritualInner = ritual.inner;
-			for (int x = 0; x < inner.length; x++) {
-				for (int z = 0; z < inner.length; z++) {
+			for (byte x = 0; x < inner.length; x++) {
+				for (byte z = 0; z < inner.length; z++) {
 					Block block = world.getBlockState(mutablePos.set(pos.getX() + (x - inner.length / 2), pos.getY(), pos.getZ() + (z - inner.length / 2))).getBlock();
 					if (inner[x][z] == 1 && !isValidChalk(ritualInner, block)) {
 						return false;
@@ -184,8 +202,8 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 			}
 			String ritualMiddle = ritual.middle;
 			if (!ritualMiddle.isEmpty()) {
-				for (int x = 0; x < middle.length; x++) {
-					for (int z = 0; z < middle.length; z++) {
+				for (byte x = 0; x < middle.length; x++) {
+					for (byte z = 0; z < middle.length; z++) {
 						Block block = world.getBlockState(mutablePos.set(pos.getX() + (x - middle.length / 2), pos.getY(), pos.getZ() + (z - middle.length / 2))).getBlock();
 						if (middle[x][z] == 1 && !isValidChalk(ritualMiddle, block)) {
 							return false;
@@ -194,8 +212,8 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 				}
 				String ritualOuter = ritual.outer;
 				if (!ritualOuter.isEmpty()) {
-					for (int x = 0; x < outer.length; x++) {
-						for (int z = 0; z < outer.length; z++) {
+					for (byte x = 0; x < outer.length; x++) {
+						for (byte z = 0; z < outer.length; z++) {
 							Block block = world.getBlockState(mutablePos.set(pos.getX() + (x - outer.length / 2), pos.getY(), pos.getZ() + (z - outer.length / 2))).getBlock();
 							if (outer[x][z] == 1 && !isValidChalk(ritualOuter, block)) {
 								return false;
@@ -226,7 +244,7 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 	private void finishRitual(boolean dropItems) {
 		if (world != null) {
 			boolean playSound = dropItems;
-			for (int i = 0; i < 12; i++) {
+			for (int i = 0; i < size(); i++) {
 				if (!dropItems) {
 					ItemStack stack = inventory.get(i);
 					ItemStack toSet = ItemStack.EMPTY;
@@ -313,12 +331,5 @@ public class FocalChalkBlockEntity extends BlockEntity implements Inventory, Tic
 	@Override
 	public void setAltarPos(BlockPos altarPos) {
 		this.altarPos = altarPos;
-	}
-	
-	private void syncToClientAndMarkDirty() {
-		if (world != null) {
-			markDirty();
-			PlayerStream.watching(this).forEach(player -> SyncFocalChalkBlockEntityMessage.send(player, pos, getRitual(), time));
-		}
 	}
 }
