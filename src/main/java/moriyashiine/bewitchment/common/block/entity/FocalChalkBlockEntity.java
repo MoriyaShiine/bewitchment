@@ -73,7 +73,7 @@ public class FocalChalkBlockEntity extends BlockEntity implements BlockEntityCli
 	
 	private void fromTagAdditional(CompoundTag tag)
 	{
-		lazyRitual = new Lazy<>(() -> Objects.requireNonNull(world).getRecipeManager().method_30027(BWRecipeTypes.ritual_type).stream().filter(ritual -> ritual.getId().toString().equals(tag.getString("Ritual"))).findFirst().orElse(null));
+		lazyRitual = new Lazy<>(() -> Objects.requireNonNull(world).getRecipeManager().listAllOfType(BWRecipeTypes.ritual_type).stream().filter(ritual -> ritual.getId().toString().equals(tag.getString("Ritual"))).findFirst().orElse(null));
 		Inventories.fromTag(tag, inventory);
 		time = tag.getInt("Time");
 		fromTagMagicUser(tag);
@@ -119,7 +119,7 @@ public class FocalChalkBlockEntity extends BlockEntity implements BlockEntityCli
 				if (hand == Hand.MAIN_HAND) {
 					List<ItemEntity> itemsOnGround = new ArrayList<>(world.getNonSpectatingEntities(ItemEntity.class, new Box(pos).expand(2, 0, 2)));
 					Ritual rit = null;
-					for (Recipe<?> recipe : world.getRecipeManager().method_30027(BWRecipeTypes.ritual_type)) {
+					for (Recipe<?> recipe : world.getRecipeManager().listAllOfType(BWRecipeTypes.ritual_type)) {
 						if (recipe instanceof Ritual) {
 							Ritual foundRit = (Ritual) recipe;
 							if (foundRit.input.size() == itemsOnGround.size()) {

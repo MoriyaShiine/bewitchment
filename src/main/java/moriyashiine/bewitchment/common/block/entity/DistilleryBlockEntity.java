@@ -35,7 +35,7 @@ public class DistilleryBlockEntity extends BWCraftingBlockEntity {
 	@Override
 	protected void fromTagAdditional(CompoundTag tag)
 	{
-		lazyRecipe = new Lazy<>(() -> Objects.requireNonNull(world).getRecipeManager().method_30027(BWRecipeTypes.distilling_type).stream().filter(recipe -> recipe.getId().toString().equals(tag.getString("Recipe"))).findFirst().orElse(null));
+		lazyRecipe = new Lazy<>(() -> Objects.requireNonNull(world).getRecipeManager().listAllOfType(BWRecipeTypes.distilling_type).stream().filter(recipe -> recipe.getId().toString().equals(tag.getString("Recipe"))).findFirst().orElse(null));
 		super.fromTagAdditional(tag);
 	}
 	
@@ -57,7 +57,7 @@ public class DistilleryBlockEntity extends BWCraftingBlockEntity {
 				world.setBlockState(pos, getCachedState().with(BWProperties.FILLED, !getStack(slot).isEmpty()));
 			}
 			DistillingRecipe actualRecipe = null;
-			for (Recipe<?> recipe : world.getRecipeManager().method_30027(BWRecipeTypes.distilling_type)) {
+			for (Recipe<?> recipe : world.getRecipeManager().listAllOfType(BWRecipeTypes.distilling_type)) {
 				if (recipe instanceof DistillingRecipe) {
 					DistillingRecipe foundRecipe = (DistillingRecipe) recipe;
 					List<ItemStack> items = new ArrayList<>();

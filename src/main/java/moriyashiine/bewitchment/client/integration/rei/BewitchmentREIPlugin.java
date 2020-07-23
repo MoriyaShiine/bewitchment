@@ -36,10 +36,10 @@ public class BewitchmentREIPlugin implements REIPluginV0 {
 	public void registerRecipeDisplays(RecipeHelper recipeHelper) {
 		World world = MinecraftClient.getInstance().world;
 		if (world != null) {
-			world.getRecipeManager().method_30027(BWRecipeTypes.athame_drop_type).forEach(recipe -> recipeHelper.registerDisplay(new AthameDropCategory.Display((AthameDropRecipe) recipe)));
-			world.getRecipeManager().method_30027(BWRecipeTypes.ritual_type).forEach(recipe -> recipeHelper.registerDisplay(new RitualCategory.Display((Ritual) recipe)));
-			world.getRecipeManager().method_30027(BWRecipeTypes.distilling_type).forEach(recipe -> recipeHelper.registerDisplay(new DistillingCategory.Display((DistillingRecipe) recipe)));
-			world.getRecipeManager().method_30027(BWRecipeTypes.spinning_type).forEach(recipe -> recipeHelper.registerDisplay(new SpinningCategory.Display((SpinningRecipe) recipe)));
+			world.getRecipeManager().listAllOfType(BWRecipeTypes.athame_drop_type).forEach(recipe -> recipeHelper.registerDisplay(new AthameDropCategory.Display((AthameDropRecipe) recipe)));
+			world.getRecipeManager().listAllOfType(BWRecipeTypes.ritual_type).forEach(recipe -> recipeHelper.registerDisplay(new RitualCategory.Display((Ritual) recipe)));
+			world.getRecipeManager().listAllOfType(BWRecipeTypes.distilling_type).forEach(recipe -> recipeHelper.registerDisplay(new DistillingCategory.Display((DistillingRecipe) recipe)));
+			world.getRecipeManager().listAllOfType(BWRecipeTypes.spinning_type).forEach(recipe -> recipeHelper.registerDisplay(new SpinningCategory.Display((SpinningRecipe) recipe)));
 		}
 	}
 	

@@ -57,7 +57,7 @@ public abstract class AthameHandler extends Entity implements BloodAccessor {
 				LivingEntity livingAttacker = (LivingEntity) attacker;
 				ItemStack stack = livingAttacker.getMainHandStack();
 				if (stack.getItem() instanceof AthameItem && livingAttacker.preferredHand == Hand.MAIN_HAND) {
-					for (Recipe<?> recipe : world.getRecipeManager().method_30027(BWRecipeTypes.athame_drop_type)) {
+					for (Recipe<?> recipe : world.getRecipeManager().listAllOfType(BWRecipeTypes.athame_drop_type)) {
 						if (recipe instanceof AthameDropRecipe) {
 							AthameDropRecipe athameDrop = (AthameDropRecipe) recipe;
 							if (athameDrop.entity_type.equals(getType()) && world.random.nextFloat() < athameDrop.chance * (EnchantmentHelper.getLevel(Enchantments.LOOTING, stack) + 1)) {

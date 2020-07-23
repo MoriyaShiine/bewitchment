@@ -16,6 +16,7 @@ import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -50,10 +51,10 @@ public class OwlEntity extends BWTameableEntity {
 	}
 	
 	@Override
-	public PassiveEntity createChild(PassiveEntity mate) {
-		OwlEntity child = BWEntityTypes.owl.create(world);
-		if (child != null && mate instanceof OwlEntity) {
-			child.dataTracker.set(VARIANT, random.nextBoolean() ? dataTracker.get(VARIANT) : mate.getDataTracker().get(VARIANT));
+	public PassiveEntity createChild(ServerWorld serverWorld, PassiveEntity passiveEntity) {
+		OwlEntity child = BWEntityTypes.owl.create(serverWorld);
+		if (child != null && passiveEntity instanceof OwlEntity) {
+			child.dataTracker.set(VARIANT, random.nextBoolean() ? dataTracker.get(VARIANT) : passiveEntity.getDataTracker().get(VARIANT));
 		}
 		return null;
 	}

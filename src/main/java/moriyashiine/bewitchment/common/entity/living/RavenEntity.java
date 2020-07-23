@@ -19,6 +19,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
@@ -57,10 +58,10 @@ public class RavenEntity extends BWTameableEntity {
 	}
 	
 	@Override
-	public PassiveEntity createChild(PassiveEntity mate) {
-		RavenEntity child = BWEntityTypes.raven.create(world);
-		if (child != null && mate instanceof RavenEntity) {
-			child.dataTracker.set(VARIANT, random.nextBoolean() ? dataTracker.get(VARIANT) : mate.getDataTracker().get(VARIANT));
+	public PassiveEntity createChild(ServerWorld serverWorld, PassiveEntity passiveEntity) {
+		RavenEntity child = BWEntityTypes.raven.create(serverWorld);
+		if (child != null && passiveEntity instanceof RavenEntity) {
+			child.dataTracker.set(VARIANT, random.nextBoolean() ? dataTracker.get(VARIANT) : passiveEntity.getDataTracker().get(VARIANT));
 		}
 		return null;
 	}

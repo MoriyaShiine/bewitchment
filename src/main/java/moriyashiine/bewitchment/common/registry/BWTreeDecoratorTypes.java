@@ -5,8 +5,8 @@ import moriyashiine.bewitchment.common.mixin.TreeDecoratorTypeAccessor;
 import moriyashiine.bewitchment.common.world.generator.decorator.LeaveSpanishMossTreeDecorator;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.gen.decorator.TreeDecorator;
-import net.minecraft.world.gen.decorator.TreeDecoratorType;
+import net.minecraft.world.gen.tree.TreeDecorator;
+import net.minecraft.world.gen.tree.TreeDecoratorType;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

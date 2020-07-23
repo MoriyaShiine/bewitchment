@@ -22,6 +22,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -69,10 +70,10 @@ public class SnakeEntity extends BWTameableEntity {
 	}
 	
 	@Override
-	public PassiveEntity createChild(PassiveEntity mate) {
-		SnakeEntity child = BWEntityTypes.snake.create(world);
-		if (child != null && mate instanceof SnakeEntity) {
-			child.dataTracker.set(VARIANT, random.nextBoolean() ? dataTracker.get(VARIANT) : mate.getDataTracker().get(VARIANT));
+	public PassiveEntity createChild(ServerWorld serverWorld, PassiveEntity passiveEntity) {
+		SnakeEntity child = BWEntityTypes.snake.create(serverWorld);
+		if (child != null && passiveEntity instanceof SnakeEntity) {
+			child.dataTracker.set(VARIANT, random.nextBoolean() ? dataTracker.get(VARIANT) : passiveEntity.getDataTracker().get(VARIANT));
 		}
 		return null;
 	}

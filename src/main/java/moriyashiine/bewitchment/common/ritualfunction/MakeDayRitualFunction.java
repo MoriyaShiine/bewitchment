@@ -31,7 +31,7 @@ public class MakeDayRitualFunction extends RitualFunction {
 		if (world instanceof ServerWorld) {
 			ServerWorld serverWorld = ((ServerWorld) world);
 			while (world.getTimeOfDay() % 24000 != 0) {
-				serverWorld.method_29199(world.getTimeOfDay() + 1);
+				serverWorld.setTimeOfDay(world.getTimeOfDay() + 1);
 			}
 		}
 	}

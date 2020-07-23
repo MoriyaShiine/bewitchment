@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.entity.living.util;
 
+import net.minecraft.class_5425;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
@@ -18,7 +19,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 
 public abstract class BWTameableEntity extends TameableEntity {
 	public static final TrackedData<Byte> VARIANT = DataTracker.registerData(BWTameableEntity.class, TrackedDataHandlerRegistry.BYTE);
@@ -67,7 +67,7 @@ public abstract class BWTameableEntity extends TameableEntity {
 	}
 	
 	@Override
-	public EntityData initialize(WorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, CompoundTag entityTag) {
+	public EntityData initialize(class_5425 world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, CompoundTag entityTag) {
 		byte variants = getVariants();
 		if (variants > 1) {
 			if (hasShiny()) {

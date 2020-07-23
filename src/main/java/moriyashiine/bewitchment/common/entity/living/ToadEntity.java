@@ -14,6 +14,7 @@ import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -54,10 +55,10 @@ public class ToadEntity extends BWTameableEntity {
 	}
 	
 	@Override
-	public PassiveEntity createChild(PassiveEntity mate) {
-		ToadEntity child = BWEntityTypes.toad.create(world);
-		if (child != null && mate instanceof ToadEntity) {
-			child.dataTracker.set(VARIANT, random.nextBoolean() ? dataTracker.get(VARIANT) : mate.getDataTracker().get(VARIANT));
+	public PassiveEntity createChild(ServerWorld serverWorld, PassiveEntity passiveEntity) {
+		ToadEntity child = BWEntityTypes.toad.create(serverWorld);
+		if (child != null && passiveEntity instanceof ToadEntity) {
+			child.dataTracker.set(VARIANT, random.nextBoolean() ? dataTracker.get(VARIANT) : passiveEntity.getDataTracker().get(VARIANT));
 		}
 		return null;
 	}

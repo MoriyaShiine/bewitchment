@@ -7,9 +7,9 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ModifiableWorld;
-import net.minecraft.world.gen.decorator.LeaveVineTreeDecorator;
-import net.minecraft.world.gen.decorator.TreeDecorator;
-import net.minecraft.world.gen.decorator.TreeDecoratorType;
+import net.minecraft.world.gen.tree.LeaveVineTreeDecorator;
+import net.minecraft.world.gen.tree.TreeDecorator;
+import net.minecraft.world.gen.tree.TreeDecoratorType;
 
 import java.util.Set;
 

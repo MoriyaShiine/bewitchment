@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import moriyashiine.bewitchment.common.BWConfig;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWObjects;
-import moriyashiine.bewitchment.common.world.generator.decorator.LeaveSpanishMossTreeDecorator;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import net.minecraft.block.Blocks;
@@ -15,22 +14,22 @@ import net.minecraft.loot.UniformLootTableRange;
 import net.minecraft.loot.condition.RandomChanceWithLootingLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.SetCountLootFunction;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.CountConfig;
 import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.decorator.CountExtraChanceDecoratorConfig;
+import net.minecraft.world.gen.UniformIntDistribution;
 import net.minecraft.world.gen.decorator.Decorator;
-import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.OreFeatureConfig;
-import net.minecraft.world.gen.feature.TreeFeatureConfig;
+import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize;
 import net.minecraft.world.gen.foliage.BlobFoliagePlacer;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
+import net.minecraft.world.gen.tree.LeaveVineTreeDecorator;
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer;
 
 public class BWWorldGenerator {
-	private static final TreeFeatureConfig SWAMP_TREE_WITH_SPANISH_MOSS_CONFIG = (new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(Blocks.OAK_LOG.getDefaultState()), new SimpleBlockStateProvider(Blocks.OAK_LEAVES.getDefaultState()), new BlobFoliagePlacer(3, 0, 0, 0, 3), new StraightTrunkPlacer(5, 3, 0), new TwoLayersFeatureSize(1, 0, 1))).maxWaterDepth(1).decorators(ImmutableList.of(LeaveSpanishMossTreeDecorator.INSTANCE)).build();
+	private static final ConfiguredFeature<?, ?> SWAMP_TREE_WITH_SPANISH_MOSS_CONFIG = Feature.TREE.configure((new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(Blocks.OAK_LOG.getDefaultState()), new SimpleBlockStateProvider(Blocks.OAK_LEAVES.getDefaultState()), new BlobFoliagePlacer(UniformIntDistribution.of(3), UniformIntDistribution.of(0), 3), new StraightTrunkPlacer(5, 3, 0), new TwoLayersFeatureSize(1, 0, 1))).maxWaterDepth(1).decorators(ImmutableList.of(LeaveVineTreeDecorator.INSTANCE)).build()).decorate(ConfiguredFeatures.Decorators.field_26165).decorate(Decorator.COUNT.configure(new CountConfig(1)));
+	private static final ConfiguredFeature<?, ?> ORE_SILVER = Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, BWObjects.silver_ore.getDefaultState(), BWConfig.INSTANCE.silverOreSize)).method_30377(BWConfig.INSTANCE.silverOreMaxHeight).spreadHorizontally().repeat(BWConfig.INSTANCE.silverOreCount);
+	private static final ConfiguredFeature<?, ?> ORE_SALT = Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, BWObjects.salt_ore.getDefaultState(), BWConfig.INSTANCE.saltOreSize)).method_30377(BWConfig.INSTANCE.saltOreMaxHeight).spreadHorizontally().repeat(BWConfig.INSTANCE.saltOreCount);
 	
 	public static void init() {
 		LootTableLoadingCallback.EVENT.register((resourceManager, manager, id, supplier, setter) -> {
@@ -41,7 +40,7 @@ public class BWWorldGenerator {
 				supplier.withPool(FabricLootPoolBuilder.builder().rolls(ConstantLootTableRange.create(1)).withFunction(SetCountLootFunction.builder(UniformLootTableRange.between(1, 2)).build()).withEntry(ItemEntry.builder(BWObjects.dragons_blood_sapling).weight(10).build()).build());
 			}
 		});
-		for (Biome biome : Registry.BIOME) {
+		for (Biome biome : Biome.BIOMES) {
 			Biome.Category category = biome.getCategory();
 			if (BWConfig.INSTANCE.owlBiomeCategories.contains(category.getName())) {
 				addEntitySpawn(biome, BWEntityTypes.owl, BWConfig.INSTANCE.owlWeight, BWConfig.INSTANCE.owlMinGroupCount, BWConfig.INSTANCE.owlMaxGroupCount);
@@ -65,18 +64,14 @@ public class BWWorldGenerator {
 			//				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, ElderTree.FEATURE.createDecoratedFeature(Decorator.COUNT_EXTRA_HEIGHTMAP.configure(new CountExtraChanceDecoratorConfig(1, 0.05f, 1))));
 			//			}
 			if (category == Biome.Category.SWAMP) {
-				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.TREE.configure(SWAMP_TREE_WITH_SPANISH_MOSS_CONFIG).createDecoratedFeature(Decorator.COUNT_EXTRA_HEIGHTMAP.configure(new CountExtraChanceDecoratorConfig(1, 0.05f, 1))));
+				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, SWAMP_TREE_WITH_SPANISH_MOSS_CONFIG);
 			}
-			addOres(biome);
+			biome.addFeature(GenerationStep.Feature.UNDERGROUND_ORES, ORE_SILVER);
+			biome.addFeature(GenerationStep.Feature.UNDERGROUND_ORES, ORE_SALT);
 		}
 	}
 	
 	private static void addEntitySpawn(Biome biome, EntityType<?> type, int weight, int minGroupSize, int maxGroupSize) {
 		biome.getEntitySpawnList(type.getSpawnGroup()).add(new Biome.SpawnEntry(type, weight, minGroupSize, maxGroupSize));
-	}
-	
-	private static void addOres(Biome biome) {
-		biome.addFeature(GenerationStep.Feature.UNDERGROUND_ORES, Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Target.NATURAL_STONE, BWObjects.silver_ore.getDefaultState(), BWConfig.INSTANCE.silverOreSize)).createDecoratedFeature(Decorator.COUNT_RANGE.configure(new RangeDecoratorConfig(BWConfig.INSTANCE.silverOreCount, 0, 0, BWConfig.INSTANCE.silverOreMaxHeight))));
-		biome.addFeature(GenerationStep.Feature.UNDERGROUND_ORES, Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Target.NATURAL_STONE, BWObjects.salt_ore.getDefaultState(), BWConfig.INSTANCE.saltOreSize)).createDecoratedFeature(Decorator.COUNT_RANGE.configure(new RangeDecoratorConfig(BWConfig.INSTANCE.saltOreCount, 0, 0, BWConfig.INSTANCE.saltOreMaxHeight))));
 	}
 }

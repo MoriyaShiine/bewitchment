@@ -34,7 +34,7 @@ public class SpinningWheelBlockEntity extends BWCraftingBlockEntity {
 	@Override
 	protected void fromTagAdditional(CompoundTag tag)
 	{
-		lazyRecipe = new Lazy<>(() -> Objects.requireNonNull(world).getRecipeManager().method_30027(BWRecipeTypes.spinning_type).stream().filter(recipe -> recipe.getId().toString().equals(tag.getString("Recipe"))).findFirst().orElse(null));
+		lazyRecipe = new Lazy<>(() -> Objects.requireNonNull(world).getRecipeManager().listAllOfType(BWRecipeTypes.spinning_type).stream().filter(recipe -> recipe.getId().toString().equals(tag.getString("Recipe"))).findFirst().orElse(null));
 		super.fromTagAdditional(tag);
 	}
 	
@@ -53,7 +53,7 @@ public class SpinningWheelBlockEntity extends BWCraftingBlockEntity {
 		super.setStack(slot, stack);
 		if (world != null) {
 			SpinningRecipe actualRecipe = null;
-			for (Recipe<?> recipe : world.getRecipeManager().method_30027(BWRecipeTypes.spinning_type)) {
+			for (Recipe<?> recipe : world.getRecipeManager().listAllOfType(BWRecipeTypes.spinning_type)) {
 				if (recipe instanceof SpinningRecipe) {
 					SpinningRecipe foundRecipe = (SpinningRecipe) recipe;
 					List<ItemStack> items = new ArrayList<>();

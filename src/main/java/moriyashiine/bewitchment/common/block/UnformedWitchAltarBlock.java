@@ -76,8 +76,8 @@ public class UnformedWitchAltarBlock extends Block {
 		Map<BlockPos, Boolean> altarPoses = new HashMap<>();
 		BlockPattern.Result match = pattern.searchAround(world, pos);
 		if (match != null) {
-			for (int w = 1; w < match.getWidth() - 1; w++) {
-				for (int h = 1; h < match.getHeight() - 1; h++) {
+			for (int w = 1; w < pattern.getWidth() - 1; w++) {
+				for (int h = 1; h < pattern.getHeight() - 1; h++) {
 					altarPoses.put(match.translate(w, h, 0).getBlockPos(), w == 2 && h == 2);
 				}
 			}
