@@ -53,8 +53,7 @@ public abstract class BWCraftingBlockEntity extends LockableContainerBlockEntity
 		fromTagMagicUser(tag);
 	}
 	
-	protected CompoundTag toTagAdditional(CompoundTag tag)
-	{
+	protected CompoundTag toTagAdditional(CompoundTag tag) {
 		Inventories.toTag(tag, inventory);
 		tag.putInt("RecipeTime", recipeTime);
 		toTagMagicUser(tag);
@@ -82,7 +81,7 @@ public abstract class BWCraftingBlockEntity extends LockableContainerBlockEntity
 	public CompoundTag toClientTag(CompoundTag tag) {
 		return toTagAdditional(tag);
 	}
-
+	
 	@Override
 	public boolean isEmpty() {
 		for (ItemStack stack : inventory) {

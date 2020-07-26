@@ -33,15 +33,13 @@ public class DistilleryBlockEntity extends BWCraftingBlockEntity {
 	}
 	
 	@Override
-	protected void fromTagAdditional(CompoundTag tag)
-	{
+	protected void fromTagAdditional(CompoundTag tag) {
 		lazyRecipe = new Lazy<>(() -> Objects.requireNonNull(world).getRecipeManager().listAllOfType(BWRecipeTypes.distilling_type).stream().filter(recipe -> recipe.getId().toString().equals(tag.getString("Recipe"))).findFirst().orElse(null));
 		super.fromTagAdditional(tag);
 	}
 	
 	@Override
-	protected CompoundTag toTagAdditional(CompoundTag tag)
-	{
+	protected CompoundTag toTagAdditional(CompoundTag tag) {
 		DistillingRecipe recipe = getRecipe();
 		if (recipe != null) {
 			tag.putString("Recipe", recipe.getId().toString());

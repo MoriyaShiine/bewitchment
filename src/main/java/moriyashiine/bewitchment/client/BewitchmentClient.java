@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.client;
 
-import moriyashiine.bewitchment.client.network.message.*;
+import moriyashiine.bewitchment.client.network.message.CreateNonLivingEntityPacket;
+import moriyashiine.bewitchment.client.network.message.SmokePuffMessage;
 import moriyashiine.bewitchment.client.render.blockentity.PlacedItemBlockEntityRenderer;
 import moriyashiine.bewitchment.client.render.entity.SilverArrowEntityRenderer;
 import moriyashiine.bewitchment.client.render.entity.living.OwlEntityRenderer;

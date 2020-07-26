@@ -92,11 +92,9 @@ public class FormedWitchAltarBlock extends BlockWithEntity {
 	@Override
 	public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
 		super.neighborUpdate(state, world, pos, block, fromPos, notify);
-		if (fromPos.equals(pos.up()))
-		{
+		if (fromPos.equals(pos.up())) {
 			BlockPos altarPos = findAltarPos(world, pos);
-			if (altarPos != null)
-			{
+			if (altarPos != null) {
 				BlockEntity blockEntity = world.getBlockEntity(altarPos);
 				if (blockEntity instanceof WitchAltarBlockEntity) {
 					((WitchAltarBlockEntity) blockEntity).refreshAltar();
@@ -109,29 +107,22 @@ public class FormedWitchAltarBlock extends BlockWithEntity {
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		super.onStateReplaced(state, world, pos, newState, moved);
-		if (state.getBlock() != newState.getBlock())
-		{
+		if (state.getBlock() != newState.getBlock()) {
 			breakAltar(world, pos);
-			if (hasEntity)
-			{
+			if (hasEntity) {
 				refreshAltarPoses(world, pos);
 			}
 		}
 	}
 	
-	public static void refreshAltarPoses(World world, BlockPos pos)
-	{
+	public static void refreshAltarPoses(World world, BlockPos pos) {
 		BlockPos.Mutable mutablePos = new BlockPos.Mutable();
-		for (byte x = -24; x <= 24; x++)
-		{
-			for (byte y = -24; y <= 24; y++)
-			{
-				for (byte z = -24; z <= 24; z++)
-				{
+		for (byte x = -24; x <= 24; x++) {
+			for (byte y = -24; y <= 24; y++) {
+				for (byte z = -24; z <= 24; z++) {
 					mutablePos.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
 					BlockEntity blockEntity = world.getBlockEntity(mutablePos);
-					if (blockEntity instanceof MagicUser)
-					{
+					if (blockEntity instanceof MagicUser) {
 						((MagicUser) blockEntity).setAltarPos(getNearestAltarPos(world, mutablePos));
 						blockEntity.markDirty();
 					}
@@ -140,18 +131,15 @@ public class FormedWitchAltarBlock extends BlockWithEntity {
 		}
 	}
 	
-	private static BlockPos getNearestAltarPos(World world, BlockPos pos)
-	{
+	private static BlockPos getNearestAltarPos(World world, BlockPos pos) {
 		List<BlockPos> validPoses = new ArrayList<>();
 		for (byte x = -24; x <= 24; x++) {
 			for (byte y = -24; y <= 24; y++) {
 				for (byte z = -24; z <= 24; z++) {
 					BlockPos foundPos = pos.add(x, y, z);
-					if (world.getBlockState(foundPos).getBlock() instanceof FormedWitchAltarBlock)
-					{
+					if (world.getBlockState(foundPos).getBlock() instanceof FormedWitchAltarBlock) {
 						BlockPos altarPos = findAltarPos(world, foundPos);
-						if (altarPos != null)
-						{
+						if (altarPos != null) {
 							validPoses.add(altarPos);
 						}
 					}

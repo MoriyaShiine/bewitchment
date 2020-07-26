@@ -32,22 +32,20 @@ public class SpinningWheelBlockEntity extends BWCraftingBlockEntity {
 	}
 	
 	@Override
-	protected void fromTagAdditional(CompoundTag tag)
-	{
+	protected void fromTagAdditional(CompoundTag tag) {
 		lazyRecipe = new Lazy<>(() -> Objects.requireNonNull(world).getRecipeManager().listAllOfType(BWRecipeTypes.spinning_type).stream().filter(recipe -> recipe.getId().toString().equals(tag.getString("Recipe"))).findFirst().orElse(null));
 		super.fromTagAdditional(tag);
 	}
 	
 	@Override
-	protected CompoundTag toTagAdditional(CompoundTag tag)
-	{
+	protected CompoundTag toTagAdditional(CompoundTag tag) {
 		SpinningRecipe recipe = getRecipe();
 		if (recipe != null) {
 			tag.putString("Recipe", recipe.getId().toString());
 		}
 		return super.toTagAdditional(tag);
 	}
-
+	
 	@Override
 	public void setStack(int slot, ItemStack stack) {
 		super.setStack(slot, stack);

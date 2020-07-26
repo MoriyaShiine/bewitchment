@@ -14,13 +14,11 @@ public class PlacedItemBlockEntity extends BlockEntity implements BlockEntityCli
 		super(BWBlockEntityTypes.placed_item);
 	}
 	
-	private void fromTagAdditional(CompoundTag tag)
-	{
+	private void fromTagAdditional(CompoundTag tag) {
 		stack = ItemStack.fromTag(tag.getCompound("Item"));
 	}
 	
-	private CompoundTag toTagAdditional(CompoundTag tag)
-	{
+	private CompoundTag toTagAdditional(CompoundTag tag) {
 		tag.put("Item", stack.toTag(new CompoundTag()));
 		return tag;
 	}

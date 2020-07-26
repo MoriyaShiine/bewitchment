@@ -9,8 +9,7 @@ import net.minecraft.world.World;
 public interface MagicUser {
 	default boolean drainMagic(World world, int amount, boolean simulate) {
 		BlockPos altarPos = getAltarPos();
-		if (altarPos != null)
-		{
+		if (altarPos != null) {
 			BlockEntity blockEntity = world.getBlockEntity(altarPos);
 			if (blockEntity instanceof WitchAltarBlockEntity) {
 				boolean flag = ((WitchAltarBlockEntity) blockEntity).drainMagic(amount, simulate);

@@ -51,7 +51,7 @@ public class FocalChalkBlockEntity extends BlockEntity implements BlockEntityCli
 	public FocalChalkBlockEntity() {
 		super(BWBlockEntityTypes.focal_chalk);
 	}
-
+	
 	@Override
 	public void tick() {
 		if (world != null) {
@@ -71,16 +71,14 @@ public class FocalChalkBlockEntity extends BlockEntity implements BlockEntityCli
 		}
 	}
 	
-	private void fromTagAdditional(CompoundTag tag)
-	{
+	private void fromTagAdditional(CompoundTag tag) {
 		lazyRitual = new Lazy<>(() -> Objects.requireNonNull(world).getRecipeManager().listAllOfType(BWRecipeTypes.ritual_type).stream().filter(ritual -> ritual.getId().toString().equals(tag.getString("Ritual"))).findFirst().orElse(null));
 		Inventories.fromTag(tag, inventory);
 		time = tag.getInt("Time");
 		fromTagMagicUser(tag);
 	}
 	
-	private CompoundTag toTagAdditional(CompoundTag tag)
-	{
+	private CompoundTag toTagAdditional(CompoundTag tag) {
 		Ritual ritual = getRitual();
 		if (ritual != null) {
 			tag.putString("Ritual", ritual.getId().toString());
