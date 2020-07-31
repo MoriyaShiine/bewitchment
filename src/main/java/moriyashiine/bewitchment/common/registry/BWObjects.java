@@ -150,7 +150,7 @@ public class BWObjects {
 	public static final Block juniper_fence_gate = create("juniper_fence_gate", new FenceGateBlock(FabricBlockSettings.copy(Blocks.OAK_FENCE_GATE)), true);
 	public static final Block juniper_trapdoor = create("juniper_trapdoor", new BWTrapdoorBlock(FabricBlockSettings.copy(Blocks.OAK_TRAPDOOR)), true);
 	public static final Block juniper_pressure_plate = create("juniper_pressure_plate", new BWPressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, FabricBlockSettings.copy(Blocks.OAK_PRESSURE_PLATE)), true);
-	public static final Block juniper_button = create("juniper_button", new BWWoodButtonBlock(FabricBlockSettings.copy(Blocks.OAK_BUTTON)), true);
+	public static final Block juniper_button = create("juniper_button", new BWWoodenButtonBlock(FabricBlockSettings.copy(Blocks.OAK_BUTTON)), true);
 	public static final Item juniper_sign = create("juniper_sign", new SignItem(gen(), juniper_standing_sign, juniper_wall_sign));
 	//cypress
 	public static final Block cypress_log = create("cypress_log", new PillarBlock(FabricBlockSettings.copy(juniper_log)), true);
@@ -166,7 +166,7 @@ public class BWObjects {
 	public static final Block cypress_fence_gate = create("cypress_fence_gate", new FenceGateBlock(FabricBlockSettings.copy(juniper_fence_gate)), true);
 	public static final Block cypress_trapdoor = create("cypress_trapdoor", new BWTrapdoorBlock(FabricBlockSettings.copy(juniper_trapdoor)), true);
 	public static final Block cypress_pressure_plate = create("cypress_pressure_plate", new BWPressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, FabricBlockSettings.copy(juniper_pressure_plate)), true);
-	public static final Block cypress_button = create("cypress_button", new BWWoodButtonBlock(FabricBlockSettings.copy(juniper_button)), true);
+	public static final Block cypress_button = create("cypress_button", new BWWoodenButtonBlock(FabricBlockSettings.copy(juniper_button)), true);
 	public static final Item cypress_sign = create("cypress_sign", new SignItem(gen(), cypress_standing_sign, cypress_wall_sign));
 	//elder
 	public static final Block elder_log = create("elder_log", new PillarBlock(FabricBlockSettings.copy(juniper_log)), true);
@@ -182,7 +182,7 @@ public class BWObjects {
 	public static final Block elder_fence_gate = create("elder_fence_gate", new FenceGateBlock(FabricBlockSettings.copy(juniper_fence_gate)), true);
 	public static final Block elder_trapdoor = create("elder_trapdoor", new BWTrapdoorBlock(FabricBlockSettings.copy(juniper_trapdoor)), true);
 	public static final Block elder_pressure_plate = create("elder_pressure_plate", new BWPressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, FabricBlockSettings.copy(juniper_pressure_plate)), true);
-	public static final Block elder_button = create("elder_button", new BWWoodButtonBlock(FabricBlockSettings.copy(juniper_button)), true);
+	public static final Block elder_button = create("elder_button", new BWWoodenButtonBlock(FabricBlockSettings.copy(juniper_button)), true);
 	public static final Item elder_sign = create("elder_sign", new SignItem(gen(), elder_standing_sign, elder_wall_sign));
 	//dragons_blood
 	public static final Block dragons_blood_log = create("dragons_blood_log", new DragonsBloodLogBlock(FabricBlockSettings.copy(juniper_log).ticksRandomly()), true);
@@ -198,7 +198,7 @@ public class BWObjects {
 	public static final Block dragons_blood_fence_gate = create("dragons_blood_fence_gate", new FenceGateBlock(FabricBlockSettings.copy(juniper_fence_gate)), true);
 	public static final Block dragons_blood_trapdoor = create("dragons_blood_trapdoor", new BWTrapdoorBlock(FabricBlockSettings.copy(juniper_trapdoor)), true);
 	public static final Block dragons_blood_pressure_plate = create("dragons_blood_pressure_plate", new BWPressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, FabricBlockSettings.copy(juniper_pressure_plate)), true);
-	public static final Block dragons_blood_button = create("dragons_blood_button", new BWWoodButtonBlock(FabricBlockSettings.copy(juniper_button)), true);
+	public static final Block dragons_blood_button = create("dragons_blood_button", new BWWoodenButtonBlock(FabricBlockSettings.copy(juniper_button)), true);
 	public static final Item dragons_blood_sign = create("dragons_blood_sign", new SignItem(gen(), dragons_blood_standing_sign, dragons_blood_wall_sign));
 	////natural
 	public static final Block spanish_moss = create("spanish_moss", new VineBlock(FabricBlockSettings.copy(Blocks.VINE)), true);

@@ -1,6 +1,5 @@
 package moriyashiine.bewitchment.common.entity.living.util;
 
-import net.minecraft.class_5425;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
@@ -18,6 +17,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 
 public abstract class BWTameableEntity extends TameableEntity {
@@ -67,7 +67,7 @@ public abstract class BWTameableEntity extends TameableEntity {
 	}
 	
 	@Override
-	public EntityData initialize(class_5425 world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, CompoundTag entityTag) {
+	public EntityData initialize(ServerWorldAccess serverWorldAccess, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, CompoundTag entityTag) {
 		byte variants = getVariants();
 		if (variants > 1) {
 			if (hasShiny()) {
@@ -82,7 +82,7 @@ public abstract class BWTameableEntity extends TameableEntity {
 				dataTracker.set(VARIANT, (byte) random.nextInt(variants));
 			}
 		}
-		return super.initialize(world, difficulty, spawnReason, entityData, entityTag);
+		return super.initialize(serverWorldAccess, difficulty, spawnReason, entityData, entityTag);
 	}
 	
 	@Override

@@ -15,8 +15,8 @@ import net.minecraft.loot.condition.RandomChanceWithLootingLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.SpawnSettings;
 import net.minecraft.world.gen.CountConfig;
-import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.UniformIntDistribution;
 import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.feature.*;
@@ -27,7 +27,7 @@ import net.minecraft.world.gen.tree.LeaveVineTreeDecorator;
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer;
 
 public class BWWorldGenerator {
-	private static final ConfiguredFeature<?, ?> SWAMP_TREE_WITH_SPANISH_MOSS_CONFIG = Feature.TREE.configure((new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(Blocks.OAK_LOG.getDefaultState()), new SimpleBlockStateProvider(Blocks.OAK_LEAVES.getDefaultState()), new BlobFoliagePlacer(UniformIntDistribution.of(3), UniformIntDistribution.of(0), 3), new StraightTrunkPlacer(5, 3, 0), new TwoLayersFeatureSize(1, 0, 1))).maxWaterDepth(1).decorators(ImmutableList.of(LeaveVineTreeDecorator.INSTANCE)).build()).decorate(ConfiguredFeatures.Decorators.field_26165).decorate(Decorator.COUNT.configure(new CountConfig(1)));
+	private static final ConfiguredFeature<?, ?> SWAMP_TREE_WITH_SPANISH_MOSS_CONFIG = Feature.TREE.configure((new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(Blocks.OAK_LOG.getDefaultState()), new SimpleBlockStateProvider(Blocks.OAK_LEAVES.getDefaultState()), new BlobFoliagePlacer(UniformIntDistribution.of(3), UniformIntDistribution.of(0), 3), new StraightTrunkPlacer(5, 3, 0), new TwoLayersFeatureSize(1, 0, 1))).maxWaterDepth(1).decorators(ImmutableList.of(LeaveVineTreeDecorator.INSTANCE)).build()).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP).decorate(Decorator.COUNT.configure(new CountConfig(1)));
 	private static final ConfiguredFeature<?, ?> ORE_SILVER = Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, BWObjects.silver_ore.getDefaultState(), BWConfig.INSTANCE.silverOreSize)).method_30377(BWConfig.INSTANCE.silverOreMaxHeight).spreadHorizontally().repeat(BWConfig.INSTANCE.silverOreCount);
 	private static final ConfiguredFeature<?, ?> ORE_SALT = Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, BWObjects.salt_ore.getDefaultState(), BWConfig.INSTANCE.saltOreSize)).method_30377(BWConfig.INSTANCE.saltOreMaxHeight).spreadHorizontally().repeat(BWConfig.INSTANCE.saltOreCount);
 	
@@ -63,15 +63,15 @@ public class BWWorldGenerator {
 			//			if (category == Biome.Category.FOREST) {
 			//				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, ElderTree.FEATURE.createDecoratedFeature(Decorator.COUNT_EXTRA_HEIGHTMAP.configure(new CountExtraChanceDecoratorConfig(1, 0.05f, 1))));
 			//			}
-			if (category == Biome.Category.SWAMP) {
-				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, SWAMP_TREE_WITH_SPANISH_MOSS_CONFIG);
-			}
-			biome.addFeature(GenerationStep.Feature.UNDERGROUND_ORES, ORE_SILVER);
-			biome.addFeature(GenerationStep.Feature.UNDERGROUND_ORES, ORE_SALT);
+//			if (category == Biome.Category.SWAMP) {
+//				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, SWAMP_TREE_WITH_SPANISH_MOSS_CONFIG);
+//			}
+//			biome.addFeature(GenerationStep.Feature.UNDERGROUND_ORES, ORE_SILVER);
+//			biome.addFeature(GenerationStep.Feature.UNDERGROUND_ORES, ORE_SALT);
 		}
 	}
 	
 	private static void addEntitySpawn(Biome biome, EntityType<?> type, int weight, int minGroupSize, int maxGroupSize) {
-		biome.getEntitySpawnList(type.getSpawnGroup()).add(new Biome.SpawnEntry(type, weight, minGroupSize, maxGroupSize));
+		biome.getSpawnSettings().getSpawnEntry(type.getSpawnGroup()).add(new SpawnSettings.SpawnEntry(type, weight, minGroupSize, maxGroupSize));
 	}
 }
