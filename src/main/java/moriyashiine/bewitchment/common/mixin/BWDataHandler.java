@@ -85,7 +85,6 @@ public abstract class BWDataHandler extends Entity implements MagicAccessor, Blo
 	
 	@Mixin(ServerPlayerEntity.class)
 	private static abstract class Server extends PlayerEntity implements MagicAccessor, BloodAccessor {
-		
 		public Server(World world, BlockPos blockPos, float f, GameProfile gameProfile) {
 			super(world, blockPos, f, gameProfile);
 		}
