@@ -7,7 +7,7 @@ import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.loot.ConstantLootTableRange;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.UniformLootTableRange;
@@ -31,6 +31,11 @@ public class BWWorldGenerator {
 	private static final ConfiguredFeature<?, ?> ORE_SILVER = Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, BWObjects.silver_ore.getDefaultState(), BWConfig.INSTANCE.silverOreSize)).method_30377(BWConfig.INSTANCE.silverOreMaxHeight).spreadHorizontally().repeat(BWConfig.INSTANCE.silverOreCount);
 	private static final ConfiguredFeature<?, ?> ORE_SALT = Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, BWObjects.salt_ore.getDefaultState(), BWConfig.INSTANCE.saltOreSize)).method_30377(BWConfig.INSTANCE.saltOreMaxHeight).spreadHorizontally().repeat(BWConfig.INSTANCE.saltOreCount);
 	
+	private static final SpawnSettings.SpawnEntry owlEntry = new SpawnSettings.SpawnEntry(BWEntityTypes.owl, BWConfig.INSTANCE.owlWeight, BWConfig.INSTANCE.owlMinGroupCount, BWConfig.INSTANCE.owlMaxGroupCount);
+	private static final SpawnSettings.SpawnEntry ravenEntry = new SpawnSettings.SpawnEntry(BWEntityTypes.raven, BWConfig.INSTANCE.ravenWeight, BWConfig.INSTANCE.ravenMinGroupCount, BWConfig.INSTANCE.ravenMaxGroupCount);
+	private static final SpawnSettings.SpawnEntry snakeEntry = new SpawnSettings.SpawnEntry(BWEntityTypes.snake, BWConfig.INSTANCE.snakeWeight, BWConfig.INSTANCE.snakeMinGroupCount, BWConfig.INSTANCE.snakeMaxGroupCount);
+	private static final SpawnSettings.SpawnEntry toadEntry = new SpawnSettings.SpawnEntry(BWEntityTypes.toad, BWConfig.INSTANCE.toadWeight, BWConfig.INSTANCE.toadMinGroupCount, BWConfig.INSTANCE.toadMaxGroupCount);
+	
 	public static void init() {
 		LootTableLoadingCallback.EVENT.register((resourceManager, manager, id, supplier, setter) -> {
 			if (Blocks.GRASS.getLootTableId().equals(id) || Blocks.TALL_GRASS.getLootTableId().equals(id) || Blocks.FERN.getLootTableId().equals(id) || Blocks.LARGE_FERN.getLootTableId().equals(id)) {
@@ -40,38 +45,41 @@ public class BWWorldGenerator {
 				supplier.withPool(FabricLootPoolBuilder.builder().rolls(ConstantLootTableRange.create(1)).withFunction(SetCountLootFunction.builder(UniformLootTableRange.between(1, 2)).build()).withEntry(ItemEntry.builder(BWObjects.dragons_blood_sapling).weight(10).build()).build());
 			}
 		});
-		for (Biome biome : Biome.BIOMES) {
-			Biome.Category category = biome.getCategory();
-			if (BWConfig.INSTANCE.owlBiomeCategories.contains(category.getName())) {
-				addEntitySpawn(biome, BWEntityTypes.owl, BWConfig.INSTANCE.owlWeight, BWConfig.INSTANCE.owlMinGroupCount, BWConfig.INSTANCE.owlMaxGroupCount);
-			}
-			if (BWConfig.INSTANCE.ravenBiomeCategories.contains(category.getName())) {
-				addEntitySpawn(biome, BWEntityTypes.raven, BWConfig.INSTANCE.ravenWeight, BWConfig.INSTANCE.ravenMinGroupCount, BWConfig.INSTANCE.ravenMaxGroupCount);
-			}
-			if (BWConfig.INSTANCE.snakeBiomeCategories.contains(category.getName())) {
-				addEntitySpawn(biome, BWEntityTypes.snake, BWConfig.INSTANCE.snakeWeight, BWConfig.INSTANCE.snakeMinGroupCount, BWConfig.INSTANCE.snakeMaxGroupCount);
-			}
-			if (BWConfig.INSTANCE.toadBiomeCategories.contains(category.getName())) {
-				addEntitySpawn(biome, BWEntityTypes.toad, BWConfig.INSTANCE.toadWeight, BWConfig.INSTANCE.toadMinGroupCount, BWConfig.INSTANCE.toadMaxGroupCount);
-			}
-			//			if (category == Biome.Category.SAVANNA) {
-			//				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, JuniperTree.FEATURE.createDecoratedFeature(Decorator.COUNT_EXTRA_HEIGHTMAP.configure(new CountExtraChanceDecoratorConfig(1, 0.05f, 1))));
-			//			}
-			//			if (category == Biome.Category.TAIGA || category == Biome.Category.SWAMP) {
-			//				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, CypressTree.FEATURE.createDecoratedFeature(Decorator.COUNT_EXTRA_HEIGHTMAP.configure(new CountExtraChanceDecoratorConfig(1, 0.05f, 1))));
-			//			}
-			//			if (category == Biome.Category.FOREST) {
-			//				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, ElderTree.FEATURE.createDecoratedFeature(Decorator.COUNT_EXTRA_HEIGHTMAP.configure(new CountExtraChanceDecoratorConfig(1, 0.05f, 1))));
-			//			}
-//			if (category == Biome.Category.SWAMP) {
-//				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, SWAMP_TREE_WITH_SPANISH_MOSS_CONFIG);
-//			}
-//			biome.addFeature(GenerationStep.Feature.UNDERGROUND_ORES, ORE_SILVER);
-//			biome.addFeature(GenerationStep.Feature.UNDERGROUND_ORES, ORE_SALT);
-		}
+		Biome.BIOMES.forEach(BWWorldGenerator::registerStuffInBiome);
 	}
 	
-	private static void addEntitySpawn(Biome biome, EntityType<?> type, int weight, int minGroupSize, int maxGroupSize) {
-		biome.getSpawnSettings().getSpawnEntry(type.getSpawnGroup()).add(new SpawnSettings.SpawnEntry(type, weight, minGroupSize, maxGroupSize));
+	private static void registerStuffInBiome(Biome biome)
+	{
+		Biome.Category category = biome.getCategory();
+		if (BWConfig.INSTANCE.owlBiomeCategories.contains(category.getName())) {
+			addEntitySpawn(biome, BWEntityTypes.owl.getSpawnGroup(), owlEntry);
+		}
+		if (BWConfig.INSTANCE.ravenBiomeCategories.contains(category.getName())) {
+			addEntitySpawn(biome, BWEntityTypes.raven.getSpawnGroup(), ravenEntry);
+		}
+		if (BWConfig.INSTANCE.snakeBiomeCategories.contains(category.getName())) {
+			addEntitySpawn(biome, BWEntityTypes.snake.getSpawnGroup(), snakeEntry);
+		}
+		if (BWConfig.INSTANCE.toadBiomeCategories.contains(category.getName())) {
+			addEntitySpawn(biome, BWEntityTypes.toad.getSpawnGroup(), toadEntry);
+		}
+		//			if (category == Biome.Category.SAVANNA) {
+		//				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, JuniperTree.FEATURE.createDecoratedFeature(Decorator.COUNT_EXTRA_HEIGHTMAP.configure(new CountExtraChanceDecoratorConfig(1, 0.05f, 1))));
+		//			}
+		//			if (category == Biome.Category.TAIGA || category == Biome.Category.SWAMP) {
+		//				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, CypressTree.FEATURE.createDecoratedFeature(Decorator.COUNT_EXTRA_HEIGHTMAP.configure(new CountExtraChanceDecoratorConfig(1, 0.05f, 1))));
+		//			}
+		//			if (category == Biome.Category.FOREST) {
+		//				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, ElderTree.FEATURE.createDecoratedFeature(Decorator.COUNT_EXTRA_HEIGHTMAP.configure(new CountExtraChanceDecoratorConfig(1, 0.05f, 1))));
+		//			}
+		//			if (category == Biome.Category.SWAMP) {
+		//				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, SWAMP_TREE_WITH_SPANISH_MOSS_CONFIG);
+		//			}
+		//			biome.addFeature(GenerationStep.Feature.UNDERGROUND_ORES, ORE_SILVER);
+		//			biome.addFeature(GenerationStep.Feature.UNDERGROUND_ORES, ORE_SALT);
+	}
+	
+	private static void addEntitySpawn(Biome biome, SpawnGroup group, SpawnSettings.SpawnEntry entry) {
+		biome.getSpawnSettings().getSpawnEntry(group).add(entry);
 	}
 }
