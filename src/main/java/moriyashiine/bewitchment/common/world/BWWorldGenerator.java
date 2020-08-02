@@ -7,7 +7,6 @@ import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.SpawnGroup;
 import net.minecraft.loot.ConstantLootTableRange;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.UniformLootTableRange;
@@ -52,16 +51,16 @@ public class BWWorldGenerator {
 	{
 		Biome.Category category = biome.getCategory();
 		if (BWConfig.INSTANCE.owlBiomeCategories.contains(category.getName())) {
-			addEntitySpawn(biome, BWEntityTypes.owl.getSpawnGroup(), owlEntry);
+			biome.getSpawnSettings().getSpawnEntry(BWEntityTypes.owl.getSpawnGroup()).add(owlEntry);
 		}
 		if (BWConfig.INSTANCE.ravenBiomeCategories.contains(category.getName())) {
-			addEntitySpawn(biome, BWEntityTypes.raven.getSpawnGroup(), ravenEntry);
+			biome.getSpawnSettings().getSpawnEntry(BWEntityTypes.raven.getSpawnGroup()).add(ravenEntry);
 		}
 		if (BWConfig.INSTANCE.snakeBiomeCategories.contains(category.getName())) {
-			addEntitySpawn(biome, BWEntityTypes.snake.getSpawnGroup(), snakeEntry);
+			biome.getSpawnSettings().getSpawnEntry(BWEntityTypes.snake.getSpawnGroup()).add(snakeEntry);
 		}
 		if (BWConfig.INSTANCE.toadBiomeCategories.contains(category.getName())) {
-			addEntitySpawn(biome, BWEntityTypes.toad.getSpawnGroup(), toadEntry);
+			biome.getSpawnSettings().getSpawnEntry(BWEntityTypes.toad.getSpawnGroup()).add(toadEntry);
 		}
 		//			if (category == Biome.Category.SAVANNA) {
 		//				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, JuniperTree.FEATURE.createDecoratedFeature(Decorator.COUNT_EXTRA_HEIGHTMAP.configure(new CountExtraChanceDecoratorConfig(1, 0.05f, 1))));
@@ -77,9 +76,5 @@ public class BWWorldGenerator {
 		//			}
 		//			biome.addFeature(GenerationStep.Feature.UNDERGROUND_ORES, ORE_SILVER);
 		//			biome.addFeature(GenerationStep.Feature.UNDERGROUND_ORES, ORE_SALT);
-	}
-	
-	private static void addEntitySpawn(Biome biome, SpawnGroup group, SpawnSettings.SpawnEntry entry) {
-		biome.getSpawnSettings().getSpawnEntry(group).add(entry);
 	}
 }
