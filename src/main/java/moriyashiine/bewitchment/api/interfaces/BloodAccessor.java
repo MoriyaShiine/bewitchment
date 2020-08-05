@@ -8,7 +8,20 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 
+import java.util.Optional;
+
 public interface BloodAccessor {
+	static Optional<BloodAccessor> get(Entity entity) {
+		if (entity instanceof BloodAccessor && hasBlood(entity)) {
+			return Optional.of((BloodAccessor) entity);
+		}
+		return Optional.empty();
+	}
+	
+	static boolean hasBlood(Entity entity) {
+		return entity instanceof PlayerEntity || HAS_BLOOD.contains(entity.getType());
+	}
+	
 	Tag<EntityType<?>> HAS_BLOOD = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "has_blood"));
 	
 	int MAX_BLOOD = 100;
@@ -16,10 +29,6 @@ public interface BloodAccessor {
 	int getBlood();
 	
 	void setBlood(int blood);
-	
-	default boolean hasBlood(Entity entity) {
-		return entity instanceof PlayerEntity || HAS_BLOOD.contains(entity.getType());
-	}
 	
 	default boolean fillBlood(int amount, boolean simulate) {
 		int magic = getBlood();

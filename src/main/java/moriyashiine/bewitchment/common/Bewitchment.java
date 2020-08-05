@@ -9,6 +9,8 @@ import net.fabricmc.api.ModInitializer;
 public class Bewitchment implements ModInitializer {
 	public static final String MODID = "bewitchment";
 	
+	public static final BWConfig CONFIG = new BWConfig();
+	
 	@Override
 	public void onInitialize() {
 		ConfigManager.loadConfig(BWConfig.class);

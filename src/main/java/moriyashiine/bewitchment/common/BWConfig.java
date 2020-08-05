@@ -9,8 +9,6 @@ import java.util.List;
 
 @ConfigFile(name = Bewitchment.MODID)
 public class BWConfig {
-	public static final BWConfig INSTANCE = new BWConfig();
-	
 	@Comment("The size of Silver Ore veins")
 	public int silverOreSize = 8;
 	@Comment("The amount of Silver Ore veins in a chunk")

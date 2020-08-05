@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.mixin;
+package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.block.Block;

@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.mixin;
+package moriyashiine.bewitchment.mixin;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.world.gen.tree.TreeDecorator;

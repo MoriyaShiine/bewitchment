@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.mixin;
+package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.BloodAccessor;
@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
-public abstract class BloodHandler extends Entity implements BloodAccessor {
+public abstract class BloodHandler extends Entity {
 	@Shadow
 	public abstract boolean isSleeping();
 	
@@ -23,8 +23,10 @@ public abstract class BloodHandler extends Entity implements BloodAccessor {
 	
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void regenerateBlood(CallbackInfo callbackInfo) {
-		if (hasBlood(this) && !BewitchmentAPI.isVampire(this) && getBlood() < MAX_BLOOD && world.random.nextFloat() < (isSleeping() ? 1 / 20f : 1 / 200f)) {
-			fillBlood(1, false);
-		}
+		BloodAccessor.get(this).ifPresent(bloodAccessor -> {
+			if (!BewitchmentAPI.isVampire(this) && bloodAccessor.getBlood() < BloodAccessor.MAX_BLOOD && world.random.nextFloat() < (isSleeping() ? 1 / 20f : 1 / 200f)) {
+				bloodAccessor.fillBlood(1, false);
+			}
+		});
 	}
 }

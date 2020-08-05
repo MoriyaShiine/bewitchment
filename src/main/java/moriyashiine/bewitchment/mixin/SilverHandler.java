@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.mixin;
+package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.Bewitchment;

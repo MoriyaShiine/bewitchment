@@ -1,6 +1,15 @@
 package moriyashiine.bewitchment.api.interfaces;
 
+import java.util.Optional;
+
 public interface MagicAccessor {
+	static Optional<MagicAccessor> get(Object obj) {
+		if (obj instanceof MagicAccessor) {
+			return Optional.of((MagicAccessor) obj);
+		}
+		return Optional.empty();
+	}
+	
 	int MAX_PLAYER_MAGIC = 100;
 	
 	int getMagic();

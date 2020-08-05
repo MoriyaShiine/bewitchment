@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.common.registry;
 
 import moriyashiine.bewitchment.common.Bewitchment;
-import moriyashiine.bewitchment.common.mixin.TreeDecoratorTypeAccessor;
 import moriyashiine.bewitchment.common.world.generator.decorator.LeaveSpanishMossTreeDecorator;
+import moriyashiine.bewitchment.mixin.TreeDecoratorTypeAccessor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.tree.TreeDecorator;

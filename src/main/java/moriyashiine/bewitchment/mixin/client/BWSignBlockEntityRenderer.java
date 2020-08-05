@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.client.mixin;
+package moriyashiine.bewitchment.mixin.client;
 
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.registry.BWObjects;

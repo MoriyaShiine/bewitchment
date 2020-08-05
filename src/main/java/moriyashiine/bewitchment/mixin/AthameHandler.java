@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.mixin;
+package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.BloodAccessor;
@@ -27,26 +27,26 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
-public abstract class AthameHandler extends Entity implements BloodAccessor {
+public abstract class AthameHandler extends Entity {
 	public AthameHandler(EntityType<?> type, World world) {
 		super(type, world);
 	}
 	
 	@Inject(method = "onKilledBy", at = @At("HEAD"))
 	private void dropBlood(LivingEntity adversary, CallbackInfo callbackInfo) {
-		if (hasBlood(this)) {
+		BloodAccessor.get(this).ifPresent(bloodAccessor -> {
 			if (!world.isClient) {
 				if (adversary instanceof PlayerEntity) {
 					PlayerEntity playerAttacker = (PlayerEntity) adversary;
 					ItemStack offhand = playerAttacker.getOffHandStack();
-					if (offhand.getItem() instanceof GlassBottleItem && playerAttacker.getMainHandStack().getItem() instanceof AthameItem && playerAttacker.preferredHand == Hand.MAIN_HAND && drainBlood(25, false)) {
+					if (offhand.getItem() instanceof GlassBottleItem && playerAttacker.getMainHandStack().getItem() instanceof AthameItem && playerAttacker.preferredHand == Hand.MAIN_HAND && bloodAccessor.drainBlood(25, false)) {
 						BewitchmentAPI.giveStackToPlayer(playerAttacker, new ItemStack(BWObjects.bottle_of_blood));
 						world.playSound(null, playerAttacker.getBlockPos(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1, 1);
 						offhand.decrement(1);
 					}
 				}
 			}
-		}
+		});
 	}
 	
 	@Inject(method = "drop", at = @At("HEAD"))

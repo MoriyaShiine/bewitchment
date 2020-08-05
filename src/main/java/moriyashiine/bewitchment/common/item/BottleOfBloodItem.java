@@ -27,13 +27,12 @@ public class BottleOfBloodItem extends Item {
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (!world.isClient) {
-			BloodAccessor bloodAccessor = (BloodAccessor) user;
-			if (bloodAccessor.hasBlood(user)) {
+			BloodAccessor.get(user).ifPresent(bloodAccessor -> {
 				bloodAccessor.fillBlood(5, false);
-			}
-			if (!BewitchmentAPI.isVampire(user)) {
-				user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200, 1));
-			}
+				if (!BewitchmentAPI.isVampire(user)) {
+					user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200, 1));
+				}
+			});
 		}
 		return Items.POTION.finishUsing(stack, world, user);
 	}

@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.mixin;
+package moriyashiine.bewitchment.mixin;
 
 import com.mojang.authlib.GameProfile;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
@@ -20,7 +20,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
 public abstract class BWDataHandler extends Entity implements MagicAccessor, BloodAccessor {
 	private static final TrackedData<Integer> MAGIC = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
@@ -52,47 +51,32 @@ public abstract class BWDataHandler extends Entity implements MagicAccessor, Blo
 	
 	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
 	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		Object obj = this;
-		if (obj instanceof PlayerEntity) {
-			setMagic(tag.getInt("Magic"));
-		}
-		if (hasBlood(this)) {
-			setBlood(tag.getInt("Blood"));
-		}
+		MagicAccessor.get(this).ifPresent(magicAccessor -> magicAccessor.setMagic(tag.getInt("Magic")));
+		BloodAccessor.get(this).ifPresent(bloodAccessor -> bloodAccessor.setBlood(tag.getInt("Blood")));
 	}
 	
 	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
 	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		Object obj = this;
-		if (obj instanceof PlayerEntity) {
-			tag.putInt("Magic", getMagic());
-		}
-		if (hasBlood(this)) {
-			tag.putInt("Blood", getBlood());
-		}
+		MagicAccessor.get(this).ifPresent(magicAccessor -> tag.putInt("Magic", magicAccessor.getMagic()));
+		BloodAccessor.get(this).ifPresent(bloodAccessor -> tag.putInt("Blood", bloodAccessor.getBlood()));
 	}
 	
 	@Inject(method = "initDataTracker", at = @At("TAIL"))
 	private void initDataTracker(CallbackInfo callbackInfo) {
-		Object obj = this;
-		if (obj instanceof PlayerEntity) {
-			dataTracker.startTracking(MAGIC, 0);
-		}
-		if (hasBlood(this)) {
-			dataTracker.startTracking(BLOOD, MAX_BLOOD);
-		}
+		MagicAccessor.get(this).ifPresent(magicAccessor -> dataTracker.startTracking(MAGIC, 0));
+		BloodAccessor.get(this).ifPresent(bloodAccessor -> dataTracker.startTracking(BLOOD, MAX_BLOOD));
 	}
 	
 	@Mixin(ServerPlayerEntity.class)
-	private static abstract class Server extends PlayerEntity implements MagicAccessor, BloodAccessor {
+	private static abstract class Server extends PlayerEntity {
 		public Server(World world, BlockPos blockPos, float f, GameProfile gameProfile) {
 			super(world, blockPos, f, gameProfile);
 		}
 		
 		@Inject(method = "copyFrom", at = @At("TAIL"))
 		private void copyFrom(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo callbackInfo) {
-			setMagic(((MagicAccessor) oldPlayer).getMagic());
-			setBlood(BewitchmentAPI.isVampire(this) ? 30 : ((BloodAccessor) oldPlayer).getBlood());
+			MagicAccessor.get(this).ifPresent(magicAccessor -> MagicAccessor.get(oldPlayer).ifPresent(oldMagicAccessor -> magicAccessor.setMagic(oldMagicAccessor.getMagic())));
+			BloodAccessor.get(this).ifPresent(bloodAccessor -> BloodAccessor.get(oldPlayer).ifPresent(oldBloodAccessor -> bloodAccessor.setBlood(BewitchmentAPI.isVampire(this) ? 30 : oldBloodAccessor.getBlood())));
 		}
 	}
 }

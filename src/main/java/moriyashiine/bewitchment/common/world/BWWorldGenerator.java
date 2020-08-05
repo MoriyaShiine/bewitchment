@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.world;
 
 import com.google.common.collect.ImmutableList;
-import moriyashiine.bewitchment.common.BWConfig;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
@@ -27,13 +27,13 @@ import net.minecraft.world.gen.trunk.StraightTrunkPlacer;
 
 public class BWWorldGenerator {
 	private static final ConfiguredFeature<?, ?> SWAMP_TREE_WITH_SPANISH_MOSS_CONFIG = Feature.TREE.configure((new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(Blocks.OAK_LOG.getDefaultState()), new SimpleBlockStateProvider(Blocks.OAK_LEAVES.getDefaultState()), new BlobFoliagePlacer(UniformIntDistribution.of(3), UniformIntDistribution.of(0), 3), new StraightTrunkPlacer(5, 3, 0), new TwoLayersFeatureSize(1, 0, 1))).maxWaterDepth(1).decorators(ImmutableList.of(LeaveVineTreeDecorator.INSTANCE)).build()).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP).decorate(Decorator.COUNT.configure(new CountConfig(1)));
-	private static final ConfiguredFeature<?, ?> ORE_SILVER = Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, BWObjects.silver_ore.getDefaultState(), BWConfig.INSTANCE.silverOreSize)).method_30377(BWConfig.INSTANCE.silverOreMaxHeight).spreadHorizontally().repeat(BWConfig.INSTANCE.silverOreCount);
-	private static final ConfiguredFeature<?, ?> ORE_SALT = Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, BWObjects.salt_ore.getDefaultState(), BWConfig.INSTANCE.saltOreSize)).method_30377(BWConfig.INSTANCE.saltOreMaxHeight).spreadHorizontally().repeat(BWConfig.INSTANCE.saltOreCount);
+	private static final ConfiguredFeature<?, ?> ORE_SILVER = Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, BWObjects.silver_ore.getDefaultState(), Bewitchment.CONFIG.silverOreSize)).method_30377(Bewitchment.CONFIG.silverOreMaxHeight).spreadHorizontally().repeat(Bewitchment.CONFIG.silverOreCount);
+	private static final ConfiguredFeature<?, ?> ORE_SALT = Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, BWObjects.salt_ore.getDefaultState(), Bewitchment.CONFIG.saltOreSize)).method_30377(Bewitchment.CONFIG.saltOreMaxHeight).spreadHorizontally().repeat(Bewitchment.CONFIG.saltOreCount);
 	
-	private static final SpawnSettings.SpawnEntry owlEntry = new SpawnSettings.SpawnEntry(BWEntityTypes.owl, BWConfig.INSTANCE.owlWeight, BWConfig.INSTANCE.owlMinGroupCount, BWConfig.INSTANCE.owlMaxGroupCount);
-	private static final SpawnSettings.SpawnEntry ravenEntry = new SpawnSettings.SpawnEntry(BWEntityTypes.raven, BWConfig.INSTANCE.ravenWeight, BWConfig.INSTANCE.ravenMinGroupCount, BWConfig.INSTANCE.ravenMaxGroupCount);
-	private static final SpawnSettings.SpawnEntry snakeEntry = new SpawnSettings.SpawnEntry(BWEntityTypes.snake, BWConfig.INSTANCE.snakeWeight, BWConfig.INSTANCE.snakeMinGroupCount, BWConfig.INSTANCE.snakeMaxGroupCount);
-	private static final SpawnSettings.SpawnEntry toadEntry = new SpawnSettings.SpawnEntry(BWEntityTypes.toad, BWConfig.INSTANCE.toadWeight, BWConfig.INSTANCE.toadMinGroupCount, BWConfig.INSTANCE.toadMaxGroupCount);
+	private static final SpawnSettings.SpawnEntry OWL_SPAWN_ENTRY = new SpawnSettings.SpawnEntry(BWEntityTypes.owl, Bewitchment.CONFIG.owlWeight, Bewitchment.CONFIG.owlMinGroupCount, Bewitchment.CONFIG.owlMaxGroupCount);
+	private static final SpawnSettings.SpawnEntry RAVEN_SPAWN_ENTRY = new SpawnSettings.SpawnEntry(BWEntityTypes.raven, Bewitchment.CONFIG.ravenWeight, Bewitchment.CONFIG.ravenMinGroupCount, Bewitchment.CONFIG.ravenMaxGroupCount);
+	private static final SpawnSettings.SpawnEntry SNAKE_SPAWN_ENTRY = new SpawnSettings.SpawnEntry(BWEntityTypes.snake, Bewitchment.CONFIG.snakeWeight, Bewitchment.CONFIG.snakeMinGroupCount, Bewitchment.CONFIG.snakeMaxGroupCount);
+	private static final SpawnSettings.SpawnEntry TOAD_SPAWN_ENTRY = new SpawnSettings.SpawnEntry(BWEntityTypes.toad, Bewitchment.CONFIG.toadWeight, Bewitchment.CONFIG.toadMinGroupCount, Bewitchment.CONFIG.toadMaxGroupCount);
 	
 	public static void init() {
 		LootTableLoadingCallback.EVENT.register((resourceManager, manager, id, supplier, setter) -> {
@@ -47,20 +47,19 @@ public class BWWorldGenerator {
 		Biome.BIOMES.forEach(BWWorldGenerator::registerStuffInBiome);
 	}
 	
-	private static void registerStuffInBiome(Biome biome)
-	{
+	private static void registerStuffInBiome(Biome biome) {
 		Biome.Category category = biome.getCategory();
-		if (BWConfig.INSTANCE.owlBiomeCategories.contains(category.getName())) {
-			biome.getSpawnSettings().getSpawnEntry(BWEntityTypes.owl.getSpawnGroup()).add(owlEntry);
+		if (Bewitchment.CONFIG.owlBiomeCategories.contains(category.getName())) {
+			biome.getSpawnSettings().getSpawnEntry(BWEntityTypes.owl.getSpawnGroup()).add(OWL_SPAWN_ENTRY);
 		}
-		if (BWConfig.INSTANCE.ravenBiomeCategories.contains(category.getName())) {
-			biome.getSpawnSettings().getSpawnEntry(BWEntityTypes.raven.getSpawnGroup()).add(ravenEntry);
+		if (Bewitchment.CONFIG.ravenBiomeCategories.contains(category.getName())) {
+			biome.getSpawnSettings().getSpawnEntry(BWEntityTypes.raven.getSpawnGroup()).add(RAVEN_SPAWN_ENTRY);
 		}
-		if (BWConfig.INSTANCE.snakeBiomeCategories.contains(category.getName())) {
-			biome.getSpawnSettings().getSpawnEntry(BWEntityTypes.snake.getSpawnGroup()).add(snakeEntry);
+		if (Bewitchment.CONFIG.snakeBiomeCategories.contains(category.getName())) {
+			biome.getSpawnSettings().getSpawnEntry(BWEntityTypes.snake.getSpawnGroup()).add(SNAKE_SPAWN_ENTRY);
 		}
-		if (BWConfig.INSTANCE.toadBiomeCategories.contains(category.getName())) {
-			biome.getSpawnSettings().getSpawnEntry(BWEntityTypes.toad.getSpawnGroup()).add(toadEntry);
+		if (Bewitchment.CONFIG.toadBiomeCategories.contains(category.getName())) {
+			biome.getSpawnSettings().getSpawnEntry(BWEntityTypes.toad.getSpawnGroup()).add(TOAD_SPAWN_ENTRY);
 		}
 		//			if (category == Biome.Category.SAVANNA) {
 		//				biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, JuniperTree.FEATURE.createDecoratedFeature(Decorator.COUNT_EXTRA_HEIGHTMAP.configure(new CountExtraChanceDecoratorConfig(1, 0.05f, 1))));
