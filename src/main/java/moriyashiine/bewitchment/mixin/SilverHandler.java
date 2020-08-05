@@ -38,13 +38,13 @@ public abstract class SilverHandler extends Entity {
 		Entity attacker = source.getSource();
 		if (isWeakToSilver(this)) {
 			if (isHoldingSilver(attacker, Hand.MAIN_HAND, true) || attacker instanceof SilverArrowEntity) {
-				return amount * 1.5f;
+				return amount + 4;
 			}
 		}
 		if (attacker != null && isWeakToSilver(attacker)) {
 			byte armorPieces = getSilverArmor(this);
 			attacker.damage(DamageSource.thorns(this), armorPieces);
-			return amount * (1 - (0.15f * armorPieces));
+			return amount * (1 - (0.12f * armorPieces));
 		}
 		return amount;
 	}
