@@ -44,7 +44,7 @@ public class BWWorldGenerator {
 				supplier.withPool(FabricLootPoolBuilder.builder().rolls(ConstantLootTableRange.create(1)).withFunction(SetCountLootFunction.builder(UniformLootTableRange.between(1, 2)).build()).withEntry(ItemEntry.builder(BWObjects.dragons_blood_sapling).weight(10).build()).build());
 			}
 		});
-//		Biome.BIOMES.forEach(BWWorldGenerator::registerStuffInBiome);
+		//		Biome.BIOMES.forEach(BWWorldGenerator::registerStuffInBiome);
 	}
 	
 	private static void registerStuffInBiome(Biome biome) {

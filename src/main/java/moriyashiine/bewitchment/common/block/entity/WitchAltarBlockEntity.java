@@ -1,12 +1,11 @@
 package moriyashiine.bewitchment.common.block.entity;
 
 import moriyashiine.bewitchment.api.interfaces.MagicAccessor;
-import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.FormedWitchAltarBlock;
 import moriyashiine.bewitchment.common.block.PlacedItemBlock;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
+import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.fabric.api.server.PlayerStream;
-import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -15,8 +14,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.tag.Tag;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
 
@@ -25,24 +22,6 @@ import java.util.Map;
 import java.util.Objects;
 
 public class WitchAltarBlockEntity extends BlockEntity implements Tickable, MagicAccessor {
-	private static final Tag<Block> GIVES_ALTAR_POWER = TagRegistry.block(new Identifier(Bewitchment.MODID, "gives_altar_power"));
-	
-	private static final Tag<Item> WEAK_SWORD_MODIFIERS = TagRegistry.item(new Identifier(Bewitchment.MODID, "weak_sword_modifiers"));
-	private static final Tag<Item> MODERATE_SWORD_MODIFIERS = TagRegistry.item(new Identifier(Bewitchment.MODID, "moderate_sword_modifiers"));
-	private static final Tag<Item> STRONG_SWORD_MODIFIERS = TagRegistry.item(new Identifier(Bewitchment.MODID, "strong_sword_modifiers"));
-	
-	private static final Tag<Item> WEAK_CUP_MODIFIERS = TagRegistry.item(new Identifier(Bewitchment.MODID, "weak_cup_modifiers"));
-	private static final Tag<Item> MODERATE_CUP_MODIFIERS = TagRegistry.item(new Identifier(Bewitchment.MODID, "moderate_cup_modifiers"));
-	private static final Tag<Item> STRONG_CUP_MODIFIERS = TagRegistry.item(new Identifier(Bewitchment.MODID, "strong_cup_modifiers"));
-	
-	private static final Tag<Item> WEAK_WAND_MODIFIERS = TagRegistry.item(new Identifier(Bewitchment.MODID, "weak_wand_modifiers"));
-	private static final Tag<Item> MODERATE_WAND_MODIFIERS = TagRegistry.item(new Identifier(Bewitchment.MODID, "moderate_wand_modifiers"));
-	private static final Tag<Item> STRONG_WAND_MODIFIERS = TagRegistry.item(new Identifier(Bewitchment.MODID, "strong_wand_modifiers"));
-	
-	private static final Tag<Item> WEAK_PENTACLE_MODIFIERS = TagRegistry.item(new Identifier(Bewitchment.MODID, "weak_pentacle_modifiers"));
-	private static final Tag<Item> MODERATE_PENTACLE_MODIFIERS = TagRegistry.item(new Identifier(Bewitchment.MODID, "moderate_pentacle_modifiers"));
-	private static final Tag<Item> STRONG_PENTACLE_MODIFIERS = TagRegistry.item(new Identifier(Bewitchment.MODID, "strong_pentacle_modifiers"));
-	
 	public int magic = 0, maxMagic = 0, gain = 1;
 	
 	public WitchAltarBlockEntity() {
@@ -122,9 +101,9 @@ public class WitchAltarBlockEntity extends BlockEntity implements Tickable, Magi
 						if (block instanceof PlacedItemBlock) {
 							item = ((PlacedItemBlockEntity) Objects.requireNonNull(world.getBlockEntity(searchPos.up()))).stack.getItem();
 						}
-						boolean weak = WEAK_SWORD_MODIFIERS.contains(item);
-						boolean moderate = MODERATE_SWORD_MODIFIERS.contains(item);
-						boolean strong = STRONG_SWORD_MODIFIERS.contains(item);
+						boolean weak = BWTags.WEAK_SWORD_MODIFIERS.contains(item);
+						boolean moderate = BWTags.MODERATE_SWORD_MODIFIERS.contains(item);
+						boolean strong = BWTags.STRONG_SWORD_MODIFIERS.contains(item);
 						if (!foundSword && (weak || moderate || strong)) {
 							foundSword = true;
 							if (weak) {
@@ -137,9 +116,9 @@ public class WitchAltarBlockEntity extends BlockEntity implements Tickable, Magi
 								multiplier = 1.3f;
 							}
 						}
-						weak = WEAK_CUP_MODIFIERS.contains(item);
-						moderate = MODERATE_CUP_MODIFIERS.contains(item);
-						strong = STRONG_CUP_MODIFIERS.contains(item);
+						weak = BWTags.WEAK_CUP_MODIFIERS.contains(item);
+						moderate = BWTags.MODERATE_CUP_MODIFIERS.contains(item);
+						strong = BWTags.STRONG_CUP_MODIFIERS.contains(item);
 						if (!foundCup && (weak || moderate || strong)) {
 							foundCup = true;
 							if (weak) {
@@ -152,9 +131,9 @@ public class WitchAltarBlockEntity extends BlockEntity implements Tickable, Magi
 								varietyCapBonus = 4;
 							}
 						}
-						weak = WEAK_WAND_MODIFIERS.contains(item);
-						moderate = MODERATE_WAND_MODIFIERS.contains(item);
-						strong = STRONG_WAND_MODIFIERS.contains(item);
+						weak = BWTags.WEAK_WAND_MODIFIERS.contains(item);
+						moderate = BWTags.MODERATE_WAND_MODIFIERS.contains(item);
+						strong = BWTags.STRONG_WAND_MODIFIERS.contains(item);
 						if (!foundWand && (weak || moderate || strong)) {
 							foundWand = true;
 							if (weak) {
@@ -167,9 +146,9 @@ public class WitchAltarBlockEntity extends BlockEntity implements Tickable, Magi
 								flatBonus = 120;
 							}
 						}
-						weak = WEAK_PENTACLE_MODIFIERS.contains(item);
-						moderate = MODERATE_PENTACLE_MODIFIERS.contains(item);
-						strong = STRONG_PENTACLE_MODIFIERS.contains(item);
+						weak = BWTags.WEAK_PENTACLE_MODIFIERS.contains(item);
+						moderate = BWTags.MODERATE_PENTACLE_MODIFIERS.contains(item);
+						strong = BWTags.STRONG_PENTACLE_MODIFIERS.contains(item);
 						if (!foundPentacle && (weak || moderate || strong)) {
 							foundPentacle = true;
 							if (weak) {
@@ -194,7 +173,7 @@ public class WitchAltarBlockEntity extends BlockEntity implements Tickable, Magi
 						if (block == Blocks.CARVED_PUMPKIN || block == Blocks.JACK_O_LANTERN) {
 							block = Blocks.PUMPKIN;
 						}
-						if (GIVES_ALTAR_POWER.contains(block)) {
+						if (BWTags.GIVES_ALTAR_POWER.contains(block)) {
 							foundBlocks.put(block, foundBlocks.getOrDefault(block, 0) + 1);
 							maxMagic++;
 						}

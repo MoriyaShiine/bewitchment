@@ -2,7 +2,7 @@ package moriyashiine.bewitchment.common.entity.living;
 
 import moriyashiine.bewitchment.common.entity.living.util.BWTameableEntity;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
-import net.fabricmc.fabric.api.tag.TagRegistry;
+import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.control.FlightMoveControl;
@@ -21,14 +21,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.Tag;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class RavenEntity extends BWTameableEntity {
-	private static final Tag<Item> SILVER_NUGGETS = TagRegistry.item(new Identifier("c", "silver_nuggets"));
-	
 	public RavenEntity(EntityType<? extends TameableEntity> type, World world) {
 		super(type, world);
 		moveControl = new FlightMoveControl(this, 180, false);
@@ -74,7 +70,7 @@ public class RavenEntity extends BWTameableEntity {
 	@Override
 	protected boolean isTamingItem(ItemStack stack) {
 		Item item = stack.getItem();
-		return item == Items.GOLD_NUGGET || SILVER_NUGGETS.contains(item);
+		return item == Items.GOLD_NUGGET || BWTags.SILVER_NUGGETS.contains(item);
 	}
 	
 	@SuppressWarnings("ConstantConditions")

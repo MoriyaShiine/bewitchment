@@ -1,12 +1,8 @@
 package moriyashiine.bewitchment.api.interfaces;
 
-import moriyashiine.bewitchment.common.Bewitchment;
-import net.fabricmc.fabric.api.tag.TagRegistry;
+import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tag.Tag;
-import net.minecraft.util.Identifier;
 
 import java.util.Optional;
 
@@ -19,10 +15,8 @@ public interface BloodAccessor {
 	}
 	
 	static boolean hasBlood(Entity entity) {
-		return entity instanceof PlayerEntity || HAS_BLOOD.contains(entity.getType());
+		return entity instanceof PlayerEntity || BWTags.HAS_BLOOD.contains(entity.getType());
 	}
-	
-	Tag<EntityType<?>> HAS_BLOOD = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "has_blood"));
 	
 	int MAX_BLOOD = 100;
 	

@@ -1,18 +1,14 @@
 package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.SilverArrowEntity;
-import net.fabricmc.fabric.api.tag.TagRegistry;
+import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tag.Tag;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,11 +20,6 @@ import java.util.function.Predicate;
 
 @Mixin(LivingEntity.class)
 public abstract class SilverHandler extends Entity {
-	private static final Tag<EntityType<?>> WEAK_TO_SILVER = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "weak_to_silver"));
-	
-	private static final Tag<Item> SILVER_TOOLS = TagRegistry.item(new Identifier(Bewitchment.MODID, "silver_tools"));
-	private static final Tag<Item> SILVER_ARMOR = TagRegistry.item(new Identifier(Bewitchment.MODID, "silver_armor"));
-	
 	public SilverHandler(EntityType<?> type, World world) {
 		super(type, world);
 	}
@@ -68,7 +59,7 @@ public abstract class SilverHandler extends Entity {
 	private boolean isHoldingSilver(Entity entity, Hand hand, boolean checkSwinging) {
 		if (entity instanceof LivingEntity) {
 			LivingEntity livingEntity = (LivingEntity) entity;
-			return SILVER_TOOLS.contains(livingEntity.getStackInHand(hand).getItem()) && (!checkSwinging || (livingEntity.handSwinging && livingEntity.preferredHand == hand));
+			return BWTags.SILVER_TOOLS.contains(livingEntity.getStackInHand(hand).getItem()) && (!checkSwinging || (livingEntity.handSwinging && livingEntity.preferredHand == hand));
 		}
 		return false;
 	}
@@ -81,13 +72,13 @@ public abstract class SilverHandler extends Entity {
 				}
 			}
 		}
-		return WEAK_TO_SILVER.contains(entity.getType());
+		return BWTags.WEAK_TO_SILVER.contains(entity.getType());
 	}
 	
 	private byte getSilverArmor(Entity entity) {
 		byte fin = 0;
 		for (ItemStack stack : entity.getArmorItems()) {
-			if (SILVER_ARMOR.contains(stack.getItem())) {
+			if (BWTags.SILVER_ARMOR.contains(stack.getItem())) {
 				fin++;
 			}
 		}
