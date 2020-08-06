@@ -10,7 +10,8 @@
 	"BWDataHandler$Server",
 	"SilverHandler",
 	"SupportBWSigns",
-	"TreeDecoratorTypeAccessor"
+	"VampireHandler",
+	"VampireHandler$CancelFireImmunity"
   ],
   "client": [
 	"client.BWSignBlockEntityRenderer"
