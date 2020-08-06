@@ -2,5 +2,5 @@
   "type": "bewitchment:athame_drop",
   "entity_type": "minecraft:wither_skeleton",
   "drop": "minecraft:wither_skeleton_skull",
-  "chance": 0.1
+  "chance": 0.05
 }
