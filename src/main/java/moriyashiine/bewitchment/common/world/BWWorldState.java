@@ -8,8 +8,6 @@ import net.minecraft.world.World;
 import java.util.Objects;
 
 public class BWWorldState extends PersistentState {
-	private static final String KEY = Bewitchment.MODID;
-	
 	public BWWorldState(String name) {
 		super(name);
 	}
@@ -24,6 +22,6 @@ public class BWWorldState extends PersistentState {
 	}
 	
 	public static BWWorldState get(World world) {
-		return Objects.requireNonNull(Objects.requireNonNull(world.getServer()).getWorld(World.OVERWORLD)).getPersistentStateManager().getOrCreate(() -> new BWWorldState(KEY), KEY);
+		return Objects.requireNonNull(Objects.requireNonNull(world.getServer()).getWorld(World.OVERWORLD)).getPersistentStateManager().getOrCreate(() -> new BWWorldState(Bewitchment.MODID), Bewitchment.MODID);
 	}
 }
