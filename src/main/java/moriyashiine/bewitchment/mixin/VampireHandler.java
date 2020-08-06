@@ -31,7 +31,7 @@ public abstract class VampireHandler extends Entity {
 	
 	@Mixin(Entity.class)
 	private static class CancelFireImmunity {
-		@Inject(method = "isFireImmune", at = @At("RETURN"), cancellable = true)
+		@Inject(method = "isFireImmune", at = @At("HEAD"), cancellable = true)
 		private void isFireImmune(CallbackInfoReturnable<Boolean> callbackInfo) {
 			Object obj = this;
 			//noinspection ConstantConditions
