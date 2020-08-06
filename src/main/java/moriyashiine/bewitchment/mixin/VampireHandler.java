@@ -15,7 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class VampireHandler extends Entity {
-	@Shadow public abstract boolean damage(DamageSource source, float amount);
+	@Shadow
+	public abstract boolean damage(DamageSource source, float amount);
 	
 	public VampireHandler(EntityType<?> type, World world) {
 		super(type, world);
@@ -29,15 +30,12 @@ public abstract class VampireHandler extends Entity {
 	}
 	
 	@Mixin(Entity.class)
-	private static class CancelFireImmunity
-	{
+	private static class CancelFireImmunity {
 		@Inject(method = "isFireImmune", at = @At("RETURN"), cancellable = true)
-		private void isFireImmune(CallbackInfoReturnable<Boolean> callbackInfo)
-		{
+		private void isFireImmune(CallbackInfoReturnable<Boolean> callbackInfo) {
 			Object obj = this;
 			//noinspection ConstantConditions
-			if (BewitchmentAPI.isVampire((Entity) obj))
-			{
+			if (BewitchmentAPI.isVampire((Entity) obj)) {
 				callbackInfo.setReturnValue(false);
 			}
 		}
