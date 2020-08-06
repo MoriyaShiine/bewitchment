@@ -28,10 +28,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.SignType;
 import net.minecraft.util.registry.Registry;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @SuppressWarnings("unused")
 public class BWObjects {
@@ -434,15 +431,15 @@ public class BWObjects {
 		BLOCKS.keySet().forEach(block -> Registry.register(Registry.BLOCK, BLOCKS.get(block), block));
 		ITEMS.keySet().forEach(item -> Registry.register(Registry.ITEM, ITEMS.get(item), item));
 		
-		//		HashMap<Block, Block> MODIFIED_STRIPPED_BLOCKS = new HashMap<>(STRIPPED_BLOCKS);
-		//		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.juniper_log, BWObjects.stripped_juniper_log);
-		//		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.juniper_wood, BWObjects.stripped_juniper_wood);
-		//		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.cypress_log, BWObjects.stripped_cypress_log);
-		//		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.cypress_wood, BWObjects.stripped_cypress_wood);
-		//		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.elder_log, BWObjects.stripped_elder_log);
-		//		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.elder_wood, BWObjects.stripped_elder_wood);
-		//		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.dragons_blood_log, BWObjects.stripped_dragons_blood_log);
-		//		MODIFIED_STRIPPED_BLOCKS.put(BWObjects.dragons_blood_wood, BWObjects.stripped_dragons_blood_wood);
+		AxeItem.STRIPPED_BLOCKS = new HashMap<>(AxeItem.STRIPPED_BLOCKS);
+		AxeItem.STRIPPED_BLOCKS.put(juniper_log, stripped_juniper_log);
+		AxeItem.STRIPPED_BLOCKS.put(juniper_wood, stripped_juniper_wood);
+		AxeItem.STRIPPED_BLOCKS.put(cypress_log, stripped_cypress_log);
+		AxeItem.STRIPPED_BLOCKS.put(cypress_wood, stripped_cypress_wood);
+		AxeItem.STRIPPED_BLOCKS.put(elder_log, stripped_elder_log);
+		AxeItem.STRIPPED_BLOCKS.put(elder_wood, stripped_elder_wood);
+		AxeItem.STRIPPED_BLOCKS.put(dragons_blood_log, stripped_dragons_blood_log);
+		AxeItem.STRIPPED_BLOCKS.put(dragons_blood_wood, stripped_dragons_blood_wood);
 		
 		ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(juniper_leaves, 0.3f);
 		ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(juniper_sapling, 0.3f);

@@ -1,0 +1,4 @@
+accessWidener v1 named
+
+accessible field net/minecraft/item/AxeItem STRIPPED_BLOCKS Ljava/util/Map;
+mutable field net/minecraft/item/AxeItem STRIPPED_BLOCKS Ljava/util/Map;
