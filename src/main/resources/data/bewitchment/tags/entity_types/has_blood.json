@@ -8,6 +8,7 @@
 	"minecraft:vindicator",
 	"minecraft:evoker",
 	"minecraft:illusioner",
-	"minecraft:piglin"
+	"minecraft:piglin",
+	"minecraft:piglin_brute"
   ]
 }
