@@ -7,10 +7,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -24,18 +26,28 @@ public abstract class SilverHandler extends Entity {
 		super(type, world);
 	}
 	
-	@ModifyVariable(method = {"damage"}, at = @At("HEAD"))
-	private float modifyDamage(float amount, DamageSource source) {
-		Entity attacker = source.getSource();
-		if (isWeakToSilver(this)) {
-			if (isHoldingSilver(attacker, Hand.MAIN_HAND, true) || attacker instanceof SilverArrowEntity) {
+	@ModifyVariable(method = {"applyEnchantmentsToDamage"}, at = @At("HEAD"))
+	private float modifyDamageOffense(float amount, DamageSource source) {
+		if (isWeakToSilver(this) && !(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns())) {
+			Entity attacker = source.getSource();
+			if (isHoldingSilver(attacker, Hand.MAIN_HAND) || attacker instanceof SilverArrowEntity) {
 				return amount + 4;
 			}
 		}
-		if (attacker != null && isWeakToSilver(attacker)) {
-			byte armorPieces = getSilverArmor(this);
-			attacker.damage(DamageSource.thorns(this), armorPieces);
-			return amount * (1 - (0.12f * armorPieces));
+		return amount;
+	}
+	
+	@ModifyVariable(method = {"damage"}, at = @At("HEAD"))
+	private float modifyDamageDefense(float amount, DamageSource source) {
+		if (!(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns())) {
+			Entity attacker = source.getSource();
+			if (attacker != null && isWeakToSilver(attacker)) {
+				byte armorPieces = getSilverArmor(this);
+				if (armorPieces > 0) {
+					attacker.damage(DamageSource.thorns(this), armorPieces);
+				}
+				return amount * (1 - (0.12f * armorPieces));
+			}
 		}
 		return amount;
 	}
@@ -44,10 +56,10 @@ public abstract class SilverHandler extends Entity {
 	private void damageEntitiesWeakToSilver(CallbackInfo callbackInfo) {
 		if (!world.isClient && isWeakToSilver(this)) {
 			byte damage = getSilverArmor(this);
-			if (isHoldingSilver(this, Hand.MAIN_HAND, false)) {
+			if (isHoldingSilver(this, Hand.MAIN_HAND)) {
 				damage++;
 			}
-			if (isHoldingSilver(this, Hand.OFF_HAND, false)) {
+			if (isHoldingSilver(this, Hand.OFF_HAND)) {
 				damage++;
 			}
 			if (damage > 0) {
@@ -56,10 +68,10 @@ public abstract class SilverHandler extends Entity {
 		}
 	}
 	
-	private boolean isHoldingSilver(Entity entity, Hand hand, boolean checkSwinging) {
+	private boolean isHoldingSilver(Entity entity, Hand hand) {
 		if (entity instanceof LivingEntity) {
 			LivingEntity livingEntity = (LivingEntity) entity;
-			return BWTags.SILVER_TOOLS.contains(livingEntity.getStackInHand(hand).getItem()) && (!checkSwinging || (livingEntity.handSwinging && livingEntity.preferredHand == hand));
+			return BWTags.SILVER_TOOLS.contains(livingEntity.getStackInHand(hand).getItem());
 		}
 		return false;
 	}
