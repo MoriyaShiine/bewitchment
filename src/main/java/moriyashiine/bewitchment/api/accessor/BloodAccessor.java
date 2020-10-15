@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.api.interfaces;
+package moriyashiine.bewitchment.api.accessor;
 
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.entity.Entity;
@@ -7,7 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import java.util.Optional;
 
 public interface BloodAccessor {
-	static Optional<BloodAccessor> get(Entity entity) {
+	static Optional<BloodAccessor> of(Entity entity) {
 		if (entity instanceof BloodAccessor && hasBlood(entity)) {
 			return Optional.of((BloodAccessor) entity);
 		}

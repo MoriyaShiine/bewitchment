@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.block;
 
-import moriyashiine.bewitchment.api.interfaces.MagicUser;
+import moriyashiine.bewitchment.api.accessor.MagicUser;
 import moriyashiine.bewitchment.common.block.entity.PlacedItemBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWObjects;

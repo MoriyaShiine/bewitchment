@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.block.entity;
 
-import moriyashiine.bewitchment.api.interfaces.MagicUser;
+import moriyashiine.bewitchment.api.accessor.MagicUser;
 import moriyashiine.bewitchment.client.network.message.SmokePuffMessage;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.ChalkBlock;

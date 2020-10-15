@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.block.entity.util;
 
-import moriyashiine.bewitchment.api.interfaces.MagicUser;
+import moriyashiine.bewitchment.api.accessor.MagicUser;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;

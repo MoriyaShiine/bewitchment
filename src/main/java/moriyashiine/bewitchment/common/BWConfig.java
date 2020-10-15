@@ -1,14 +1,15 @@
 package moriyashiine.bewitchment.common;
 
-import blue.endless.jankson.Comment;
-import io.github.cottonmc.cotton.config.annotations.ConfigFile;
+import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
+import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
+import me.sargunvohra.mcmods.autoconfig1u.shadowed.blue.endless.jankson.Comment;
 import net.minecraft.world.biome.Biome;
 
 import java.util.Arrays;
 import java.util.List;
 
-@ConfigFile(name = Bewitchment.MODID)
-public class BWConfig {
+@Config(name = Bewitchment.MODID)
+public class BWConfig implements ConfigData {
 	@Comment("The size of Silver Ore veins")
 	public int silverOreSize = 8;
 	@Comment("The amount of Silver Ore veins in a chunk")

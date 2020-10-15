@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.api.interfaces;
+package moriyashiine.bewitchment.api.accessor;
 
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import net.minecraft.block.entity.BlockEntity;

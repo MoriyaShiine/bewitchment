@@ -30,7 +30,6 @@ import net.minecraft.util.registry.Registry;
 
 import java.util.*;
 
-@SuppressWarnings("unused")
 public class BWObjects {
 	private static final Map<Block, Identifier> BLOCKS = new LinkedHashMap<>();
 	private static final Map<Item, Identifier> ITEMS = new LinkedHashMap<>();
@@ -216,10 +215,10 @@ public class BWObjects {
 	public static final Block alchemist_carpet = create("alchemist_carpet", new BWCarpetBlock(DyeColor.GRAY, FabricBlockSettings.copy(druid_carpet)), true);
 	public static final Block besmirched_carpet = create("besmirched_carpet", new BWCarpetBlock(DyeColor.BLACK, FabricBlockSettings.copy(druid_carpet)), true);
 	//candelabra
-	public static final Block iron_candelabra = create("iron_candelabra", new CandelabraBlock(FabricBlockSettings.copy(Blocks.IRON_BLOCK).lightLevel(state -> state.get(Properties.LIT) ? 15 : 0)), true);
-	public static final Block golden_candelabra = create("golden_candelabra", new CandelabraBlock(FabricBlockSettings.copy(Blocks.GOLD_BLOCK).lightLevel(state -> state.get(Properties.LIT) ? 15 : 0)), true);
-	public static final Block silver_candelabra = create("silver_candelabra", new CandelabraBlock(FabricBlockSettings.copy(silver_block).lightLevel(state -> state.get(Properties.LIT) ? 15 : 0)), true);
-	public static final Block netherite_candelabra = create("netherite_candelabra", new CandelabraBlock(FabricBlockSettings.copy(Blocks.NETHERITE_BLOCK).lightLevel(state -> state.get(Properties.LIT) ? 15 : 0)), true);
+	public static final Block iron_candelabra = create("iron_candelabra", new CandelabraBlock(FabricBlockSettings.copy(Blocks.IRON_BLOCK).luminance(state -> state.get(Properties.LIT) ? 15 : 0)), true);
+	public static final Block golden_candelabra = create("golden_candelabra", new CandelabraBlock(FabricBlockSettings.copy(Blocks.GOLD_BLOCK).luminance(state -> state.get(Properties.LIT) ? 15 : 0)), true);
+	public static final Block silver_candelabra = create("silver_candelabra", new CandelabraBlock(FabricBlockSettings.copy(silver_block).luminance(state -> state.get(Properties.LIT) ? 15 : 0)), true);
+	public static final Block netherite_candelabra = create("netherite_candelabra", new CandelabraBlock(FabricBlockSettings.copy(Blocks.NETHERITE_BLOCK).luminance(state -> state.get(Properties.LIT) ? 15 : 0)), true);
 	//goblet
 	public static final Block iron_goblet = create("iron_goblet", new GobletBlock(FabricBlockSettings.copy(Blocks.IRON_BLOCK)), true);
 	public static final Block golden_goblet = create("golden_goblet", new GobletBlock(FabricBlockSettings.copy(Blocks.GOLD_BLOCK)), true);
@@ -246,8 +245,8 @@ public class BWObjects {
 	//chalk
 	public static final ChalkBlock focal_chalk_block = create("focal_chalk", new ChalkBlock(FabricBlockSettings.of(Material.SUPPORTED).strength(2, 0).breakByTool(FabricToolTags.PICKAXES).noCollision().dropsNothing().sounds(BWSoundTypes.chalk)), false);
 	public static final ChalkBlock chalk_block = create("chalk", new ChalkBlock(FabricBlockSettings.copy(focal_chalk_block)), false);
-	public static final ChalkBlock infernal_chalk_block = create("infernal_chalk", new ChalkBlock(FabricBlockSettings.copy(focal_chalk_block).lightLevel(state -> 4)), false);
-	public static final ChalkBlock eldritch_chalk_block = create("eldritch_chalk", new ChalkBlock(FabricBlockSettings.copy(focal_chalk_block).lightLevel(state -> 2)), false);
+	public static final ChalkBlock infernal_chalk_block = create("infernal_chalk", new ChalkBlock(FabricBlockSettings.copy(focal_chalk_block).luminance(state -> 4)), false);
+	public static final ChalkBlock eldritch_chalk_block = create("eldritch_chalk", new ChalkBlock(FabricBlockSettings.copy(focal_chalk_block).luminance(state -> 2)), false);
 	//other
 	public static final Block placed_item = create("placed_item", new PlacedItemBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL).strength(0).noCollision().dropsNothing()), false);
 	//////item

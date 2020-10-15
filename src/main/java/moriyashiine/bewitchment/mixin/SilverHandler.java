@@ -12,7 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -42,7 +41,7 @@ public abstract class SilverHandler extends Entity {
 		if (!(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns())) {
 			Entity attacker = source.getSource();
 			if (attacker != null && isWeakToSilver(attacker)) {
-				byte armorPieces = getSilverArmor(this);
+				int armorPieces = getSilverArmor(this);
 				if (armorPieces > 0) {
 					attacker.damage(DamageSource.thorns(this), armorPieces);
 				}
@@ -55,7 +54,7 @@ public abstract class SilverHandler extends Entity {
 	@Inject(method = "tick", at = @At("HEAD"))
 	private void damageEntitiesWeakToSilver(CallbackInfo callbackInfo) {
 		if (!world.isClient && isWeakToSilver(this)) {
-			byte damage = getSilverArmor(this);
+			int damage = getSilverArmor(this);
 			if (isHoldingSilver(this, Hand.MAIN_HAND)) {
 				damage++;
 			}
@@ -87,8 +86,8 @@ public abstract class SilverHandler extends Entity {
 		return BWTags.WEAK_TO_SILVER.contains(entity.getType());
 	}
 	
-	private byte getSilverArmor(Entity entity) {
-		byte fin = 0;
+	private int getSilverArmor(Entity entity) {
+		int fin = 0;
 		for (ItemStack stack : entity.getArmorItems()) {
 			if (BWTags.SILVER_ARMOR.contains(stack.getItem())) {
 				fin++;

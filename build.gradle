@@ -11,10 +11,7 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-	maven {
-		name "cotton-config"
-		url "http://server.bbkr.space:8081/artifactory/libs-release"
-	}
+	jcenter()
 	maven {
 		name "rei"
 		url "http://maven.modmuss50.me"
@@ -30,7 +27,14 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	modImplementation "io.github.cottonmc.cotton:cotton-config:${project.cotton_version}"
+	modApi("me.shedaniel.cloth:config-2:${project.cloth_config_version}") {
+		exclude(group: "net.fabricmc.fabric-api")
+	}
+	include "me.shedaniel.cloth:config-2:${project.cloth_config_version}"
+	modApi("me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}") {
+		exclude(group: "net.fabricmc.fabric-api")
+	}
+	include "me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}"
 	modCompile "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
 }
 

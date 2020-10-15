@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.BloodAccessor;
+import moriyashiine.bewitchment.api.accessor.BloodAccessor;
 import moriyashiine.bewitchment.common.item.tool.AthameItem;
 import moriyashiine.bewitchment.common.recipe.AthameDropRecipe;
 import moriyashiine.bewitchment.common.registry.BWObjects;
@@ -34,7 +34,7 @@ public abstract class AthameHandler extends Entity {
 	
 	@Inject(method = "onKilledBy", at = @At("HEAD"))
 	private void dropBlood(LivingEntity adversary, CallbackInfo callbackInfo) {
-		BloodAccessor.get(this).ifPresent(bloodAccessor -> {
+		BloodAccessor.of(this).ifPresent(bloodAccessor -> {
 			if (!world.isClient) {
 				if (adversary instanceof PlayerEntity) {
 					PlayerEntity playerAttacker = (PlayerEntity) adversary;

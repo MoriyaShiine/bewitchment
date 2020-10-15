@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.block.entity;
 
-import moriyashiine.bewitchment.api.interfaces.MagicAccessor;
+import moriyashiine.bewitchment.api.accessor.MagicAccessor;
 import moriyashiine.bewitchment.common.block.FormedWitchAltarBlock;
 import moriyashiine.bewitchment.common.block.PlacedItemBlock;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;

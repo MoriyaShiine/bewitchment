@@ -1,9 +1,9 @@
-package moriyashiine.bewitchment.api.interfaces;
+package moriyashiine.bewitchment.api.accessor;
 
 import java.util.Optional;
 
 public interface MagicAccessor {
-	static Optional<MagicAccessor> get(Object obj) {
+	static Optional<MagicAccessor> of(Object obj) {
 		if (obj instanceof MagicAccessor) {
 			return Optional.of((MagicAccessor) obj);
 		}
