@@ -1,9 +1,0 @@
-accessWidener v1 named
-
-accessible field net/minecraft/item/AxeItem STRIPPED_BLOCKS Ljava/util/Map;
-mutable field net/minecraft/item/AxeItem STRIPPED_BLOCKS Ljava/util/Map;
-
-accessible method net/minecraft/entity/damage/DamageSource <init> (Ljava/lang/String;)V
-accessible method net/minecraft/entity/damage/DamageSource setBypassesArmor ()Lnet/minecraft/entity/damage/DamageSource;
-
-accessible method net/minecraft/world/gen/tree/TreeDecoratorType <init> (Lcom/mojang/serialization/Codec;)V

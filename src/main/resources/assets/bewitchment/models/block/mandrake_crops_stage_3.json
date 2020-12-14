@@ -1,6 +1,0 @@
-{
-  "parent": "block/crop",
-  "textures": {
-	"crop": "bewitchment:block/mandrake_crops_stage_3"
-  }
-}

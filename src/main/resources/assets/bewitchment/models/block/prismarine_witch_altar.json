@@ -1,7 +1,0 @@
-{
-  "parent": "bewitchment:block/witch_altar",
-  "textures": {
-	"end": "bewitchment:block/prismarine_witch_altar_end",
-	"side": "bewitchment:block/prismarine_witch_altar_side"
-  }
-}

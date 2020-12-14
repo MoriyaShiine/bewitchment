@@ -1,9 +1,0 @@
-{
-  "replace": false,
-  "values": [
-	"bewitchment:juniper_fence_gate",
-	"bewitchment:cypress_fence_gate",
-	"bewitchment:elder_fence_gate",
-	"bewitchment:dragons_blood_fence_gate"
-  ]
-}

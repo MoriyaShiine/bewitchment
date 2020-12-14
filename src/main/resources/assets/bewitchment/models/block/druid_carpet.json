@@ -1,7 +1,0 @@
-{
-  "parent": "block/carpet",
-  "textures": {
-	"particle": "bewitchment:block/druid_wool",
-	"wool": "bewitchment:block/druid_wool"
-  }
-}

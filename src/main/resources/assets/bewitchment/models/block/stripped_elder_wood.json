@@ -1,7 +1,0 @@
-{
-  "parent": "block/cube_column",
-  "textures": {
-	"end": "bewitchment:block/stripped_elder_log",
-	"side": "bewitchment:block/stripped_elder_log"
-  }
-}

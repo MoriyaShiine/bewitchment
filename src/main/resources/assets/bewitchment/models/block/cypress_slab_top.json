@@ -1,8 +1,0 @@
-{
-  "parent": "block/slab_top",
-  "textures": {
-	"bottom": "bewitchment:block/cypress_planks",
-	"top": "bewitchment:block/cypress_planks",
-	"side": "bewitchment:block/cypress_planks"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "replace": false,
-  "values": [
-	"#bewitchment:juniper_logs",
-	"#bewitchment:cypress_logs",
-	"#bewitchment:elder_logs",
-	"#bewitchment:dragons_blood_logs"
-  ]
-}

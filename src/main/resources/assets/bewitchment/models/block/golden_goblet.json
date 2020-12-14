@@ -1,6 +1,0 @@
-{
-  "parent": "bewitchment:block/iron_goblet",
-  "textures": {
-	"particle": "bewitchment:block/golden_goblet"
-  }
-}

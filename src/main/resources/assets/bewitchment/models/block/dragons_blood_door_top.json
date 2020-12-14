@@ -1,7 +1,0 @@
-{
-  "parent": "block/door_top",
-  "textures": {
-	"bottom": "bewitchment:block/dragons_blood_door_bottom",
-	"top": "bewitchment:block/dragons_blood_door_top"
-  }
-}
