@@ -1,0 +1,13 @@
+{
+  "variants": {
+	"type=bottom": {
+	  "model": "bewitchment:block/dragons_blood_slab"
+	},
+	"type=double": {
+	  "model": "bewitchment:block/dragons_blood_planks"
+	},
+	"type=top": {
+	  "model": "bewitchment:block/dragons_blood_slab_top"
+	}
+  }
+}

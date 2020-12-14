@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/pressure_plate_up",
+  "textures": {
+	"texture": "bewitchment:block/dragons_blood_planks"
+  }
+}

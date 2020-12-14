@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "boat",
+  "pattern": [
+	"# #",
+	"###"
+  ],
+  "key": {
+	"#": {
+	  "item": "bewitchment:dragons_blood_planks"
+	}
+  },
+  "result": {
+	"item": "bewitchment:dragons_blood_boat"
+  }
+}

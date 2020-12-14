@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+	"end": "bewitchment:block/dragons_blood_log",
+	"side": "bewitchment:block/dragons_blood_log"
+  }
+}

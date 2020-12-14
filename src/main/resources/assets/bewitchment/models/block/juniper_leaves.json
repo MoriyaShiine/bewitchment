@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+	"all": "bewitchment:block/juniper_leaves"
+  }
+}

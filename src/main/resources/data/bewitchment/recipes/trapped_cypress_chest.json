@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "bewitchment:cypress_chest"
+	},
+	{
+	  "item": "minecraft:tripwire_hook"
+	}
+  ],
+  "result": {
+	"item": "bewitchment:trapped_cypress_chest"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_pressure_plate",
+  "pattern": [
+	"##"
+  ],
+  "key": {
+	"#": {
+	  "item": "bewitchment:juniper_planks"
+	}
+  },
+  "result": {
+	"item": "bewitchment:juniper_pressure_plate"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+	"bewitchment:juniper_wall_sign",
+	"bewitchment:cypress_wall_sign",
+	"bewitchment:elder_wall_sign",
+	"bewitchment:dragons_blood_wall_sign"
+  ]
+}

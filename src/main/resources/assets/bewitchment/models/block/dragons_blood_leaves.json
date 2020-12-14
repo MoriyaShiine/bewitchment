@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+	"all": "bewitchment:block/dragons_blood_leaves"
+  }
+}

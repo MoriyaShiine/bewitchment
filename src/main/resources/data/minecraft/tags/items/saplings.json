@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+	"bewitchment:juniper_sapling",
+	"bewitchment:cypress_sapling",
+	"bewitchment:elder_sapling",
+	"bewitchment:dragons_blood_sapling"
+  ]
+}

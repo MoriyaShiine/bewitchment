@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "bark",
+  "pattern": [
+	"##",
+	"##"
+  ],
+  "key": {
+	"#": {
+	  "item": "bewitchment:stripped_elder_log"
+	}
+  },
+  "result": {
+	"item": "bewitchment:stripped_elder_wood",
+	"count": 3
+  }
+}

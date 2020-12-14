@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+	"bewitchment:juniper_pressure_plate",
+	"bewitchment:cypress_pressure_plate",
+	"bewitchment:elder_pressure_plate",
+	"bewitchment:dragons_blood_pressure_plate"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_trapdoor",
+  "pattern": [
+	"###",
+	"###"
+  ],
+  "key": {
+	"#": {
+	  "item": "bewitchment:dragons_blood_planks"
+	}
+  },
+  "result": {
+	"item": "bewitchment:dragons_blood_trapdoor",
+	"count": 2
+  }
+}

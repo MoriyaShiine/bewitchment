@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "moriyashiine.bewitchment.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "client": [
+	"client.ChestTextureOverride"
+  ],
+  "injectors": {
+	"defaultRequire": 1
+  }
+}

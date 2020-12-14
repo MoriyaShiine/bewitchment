@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "bark",
+  "pattern": [
+	"##",
+	"##"
+  ],
+  "key": {
+	"#": {
+	  "item": "bewitchment:cypress_log"
+	}
+  },
+  "result": {
+	"item": "bewitchment:cypress_wood",
+	"count": 3
+  }
+}

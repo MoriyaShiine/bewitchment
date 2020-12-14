@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+	"bewitchment:cypress_log",
+	"bewitchment:cypress_wood",
+	"bewitchment:stripped_cypress_log",
+	"bewitchment:stripped_cypress_wood"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+	"bewitchment:dragons_blood_log",
+	"bewitchment:dragons_blood_wood",
+	"bewitchment:stripped_dragons_blood_log",
+	"bewitchment:stripped_dragons_blood_wood"
+  ]
+}

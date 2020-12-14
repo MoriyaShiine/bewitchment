@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+	"end": "bewitchment:block/stripped_juniper_log_top",
+	"side": "bewitchment:block/stripped_juniper_log"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "bewitchment",
+  "version": "${version}",
+  "name": "Bewitchment",
+  "description": "generic witchery clone lol",
+  "authors": [
+	"MoriyaShiine",
+	"cybercat5555",
+	"Sunconure11"
+  ],
+  "contact": {
+	"website": "todo",
+	"repo": "todo"
+  },
+  "license": "GPL-3.0",
+  "icon": "assets/bewitchment/icon.png",
+  "environment": "*",
+  "entrypoints": {
+	"client": [
+	  "moriyashiine.bewitchment.client.BewitchmentClient"
+	],
+	"main": [
+	  "moriyashiine.bewitchment.common.Bewitchment"
+	]
+  },
+  "mixins": [
+	"bewitchment.mixins.json"
+  ],
+  "depends": {
+	"fabricloader": ">=0.10.8",
+	"fabric": "*",
+	"minecraft": "1.16.4"
+  }
+}
