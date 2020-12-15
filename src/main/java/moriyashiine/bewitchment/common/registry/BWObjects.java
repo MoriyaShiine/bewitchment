@@ -289,5 +289,14 @@ public class BWObjects {
 		compostRegistry.add(DRAGONS_BLOOD_LEAVES, 0.3f);
 		compostRegistry.add(DRAGONS_BLOOD_SAPLING, 0.3f);
 		compostRegistry.add(SPANISH_MOSS, 0.5f);
+		compostRegistry.add(ACONITE, 0.65f);
+		compostRegistry.add(ACONITE_SEEDS, 0.3f);
+		compostRegistry.add(BELLADONNA, 0.65f);
+		compostRegistry.add(BELLADONNA_SEEDS, 0.3f);
+		compostRegistry.add(GARLIC, 0.65f);
+		compostRegistry.add(MANDRAKE_ROOT, 0.65f);
+		compostRegistry.add(MANDRAKE_SEEDS, 0.3f);
+		compostRegistry.add(GRILLED_GARLIC, 0.85f);
+		compostRegistry.add(GARLIC_BREAD, 1f);
 	}
 }
