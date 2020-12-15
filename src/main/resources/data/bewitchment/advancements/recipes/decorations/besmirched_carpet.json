@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+	"recipes": [
+	  "minecraft:besmirched_carpet"
+	]
+  },
+  "criteria": {
+	"has_besmirched_wool": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "bewitchment:besmirched_wool"
+		  }
+		]
+	  }
+	},
+	"has_the_recipe": {
+	  "trigger": "minecraft:recipe_unlocked",
+	  "conditions": {
+		"recipe": "bewitchment:besmirched_carpet"
+	  }
+	}
+  },
+  "requirements": [
+	[
+	  "has_besmirched_wool",
+	  "has_the_recipe"
+	]
+  ]
+}

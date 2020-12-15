@@ -9,8 +9,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(TreeDecoratorType.class)
 public interface TreeDecoratorTypeAccessor {
 	@Invoker
-	static <T extends TreeDecorator> TreeDecoratorType<T> callRegister(String id, Codec<T> codec)
-	{
+	static <T extends TreeDecorator> TreeDecoratorType<T> callRegister(String id, Codec<T> codec) {
 		throw new UnsupportedOperationException();
 	}
 }

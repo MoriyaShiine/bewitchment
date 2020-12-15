@@ -51,7 +51,7 @@ public class BWWorldGenerators {
 	public static final ConfiguredFeature<?, ?> SILVER_ORE = create("silver_ore", Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, BWObjects.SILVER_ORE.getDefaultState(), Bewitchment.config.silverSize)).rangeOf(Bewitchment.config.silverMaxHeight).spreadHorizontally().repeat(Bewitchment.config.silverCount));
 	public static final ConfiguredFeature<?, ?> SALT_ORE = create("salt_ore", Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, BWObjects.SALT_ORE.getDefaultState(), Bewitchment.config.saltSize)).rangeOf(Bewitchment.config.saltMaxHeight).spreadHorizontally().repeat(Bewitchment.config.saltCount));
 	
-	public static TreeDecoratorType<LeaveSpanishMossTreeDecorator> LEAVE_SPANISH_MOSS = TreeDecoratorTypeAccessor.callRegister("leave_spanish_moss", LeaveSpanishMossTreeDecorator.CODEC);;
+	public static TreeDecoratorType<LeaveSpanishMossTreeDecorator> LEAVE_SPANISH_MOSS = TreeDecoratorTypeAccessor.callRegister("leave_spanish_moss", LeaveSpanishMossTreeDecorator.CODEC);
 	
 	private static <F extends FeatureConfig> ConfiguredFeature<F, ?> create(String name, ConfiguredFeature<F, ?> configuredFeature) {
 		CONFIGURED_FEATURES.put(configuredFeature, new Identifier(Bewitchment.MODID, name));

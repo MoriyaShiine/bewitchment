@@ -6,15 +6,12 @@
 	  "entries": [
 		{
 		  "type": "minecraft:item",
-		  "name": "bewitchment:spanish_moss"
+		  "name": "bewitchment:hedgewitch_carpet"
 		}
 	  ],
 	  "conditions": [
 		{
-		  "condition": "minecraft:match_tool",
-		  "predicate": {
-			"item": "minecraft:shears"
-		  }
+		  "condition": "minecraft:survives_explosion"
 		}
 	  ]
 	}

@@ -9,6 +9,7 @@ import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.BWChestBlock;
 import moriyashiine.bewitchment.common.block.DragonsBloodLogBlock;
 import moriyashiine.bewitchment.common.block.SaltLineBlock;
+import moriyashiine.bewitchment.common.block.util.BWCarpetBlock;
 import moriyashiine.bewitchment.common.block.util.BWCropBlock;
 import moriyashiine.bewitchment.common.block.util.BWOreBlock;
 import moriyashiine.bewitchment.common.block.util.BWSaplingBlock;
@@ -27,6 +28,7 @@ import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.block.*;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -152,6 +154,12 @@ public class BWObjects {
 	public static final TerraformBoatItem DRAGONS_BLOOD_BOAT = create("dragons_blood_boat", new TerraformBoatItem(() -> BWEntityTypes.DRAGONS_BLOOD_BOAT, gen().maxCount(1)));
 	//misc_block
 	public static final Block SPANISH_MOSS = create("spanish_moss", new VineBlock(copyOf(Blocks.VINE)), true);
+	public static final Block HEDGEWITCH_WOOL = create("hedgewitch_wool", new Block(copyOf(Blocks.WHITE_WOOL)), true);
+	public static final Block ALCHEMIST_WOOL = create("alchemist_wool", new Block(copyOf(HEDGEWITCH_WOOL)), true);
+	public static final Block BESMIRCHED_WOOL = create("besmirched_wool", new Block(copyOf(HEDGEWITCH_WOOL)), true);
+	public static final Block HEDGEWITCH_CARPET = create("hedgewitch_carpet", new BWCarpetBlock(DyeColor.GREEN, copyOf(Blocks.WHITE_CARPET)), true);
+	public static final Block ALCHEMIST_CARPET = create("alchemist_carpet", new BWCarpetBlock(DyeColor.LIGHT_GRAY, copyOf(HEDGEWITCH_CARPET)), true);
+	public static final Block BESMIRCHED_CARPET = create("besmirched_carpet", new BWCarpetBlock(DyeColor.BLACK, copyOf(HEDGEWITCH_CARPET)), true);
 	//material_block
 	public static final Block SILVER_BLOCK = create("silver_block", new Block(copyOf(Blocks.GOLD_BLOCK)), true);
 	public static final Block SALT_BLOCK = create("salt_block", new Block(copyOf(Blocks.COAL_BLOCK)), true);
@@ -264,6 +272,13 @@ public class BWObjects {
 		flammableRegistry.add(DRAGONS_BLOOD_SLAB, 5, 20);
 		flammableRegistry.add(DRAGONS_BLOOD_FENCE, 5, 20);
 		flammableRegistry.add(DRAGONS_BLOOD_FENCE_GATE, 5, 20);
+		flammableRegistry.add(SPANISH_MOSS, 15, 100);
+		flammableRegistry.add(HEDGEWITCH_WOOL, 30, 60);
+		flammableRegistry.add(ALCHEMIST_WOOL, 30, 60);
+		flammableRegistry.add(BESMIRCHED_WOOL, 30, 60);
+		flammableRegistry.add(HEDGEWITCH_CARPET, 60, 20);
+		flammableRegistry.add(ALCHEMIST_CARPET, 60, 20);
+		flammableRegistry.add(BESMIRCHED_CARPET, 60, 20);
 		CompostingChanceRegistry compostRegistry = CompostingChanceRegistry.INSTANCE;
 		compostRegistry.add(JUNIPER_LEAVES, 0.3f);
 		compostRegistry.add(JUNIPER_SAPLING, 0.3f);
@@ -273,5 +288,6 @@ public class BWObjects {
 		compostRegistry.add(ELDER_SAPLING, 0.3f);
 		compostRegistry.add(DRAGONS_BLOOD_LEAVES, 0.3f);
 		compostRegistry.add(DRAGONS_BLOOD_SAPLING, 0.3f);
+		compostRegistry.add(SPANISH_MOSS, 0.5f);
 	}
 }
