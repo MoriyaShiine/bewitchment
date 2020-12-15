@@ -4,6 +4,8 @@
   "package": "moriyashiine.bewitchment.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+	"EntityShapeContextAddition",
+	"SaltCollisionHack",
 	"SilverHandler"
   ],
   "client": [

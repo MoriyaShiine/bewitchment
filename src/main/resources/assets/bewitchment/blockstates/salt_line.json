@@ -1,0 +1,104 @@
+{
+  "multipart": [
+	{
+	  "when": {
+		"OR": [
+		  {
+			"north": "none",
+			"south": "none",
+			"east": "none",
+			"west": "none"
+		  },
+		  {
+			"north": "side|up",
+			"east": "side|up"
+		  },
+		  {
+			"south": "side|up",
+			"east": "side|up"
+		  },
+		  {
+			"south": "side|up",
+			"west": "side|up"
+		  },
+		  {
+			"north": "side|up",
+			"west": "side|up"
+		  }
+		]
+	  },
+	  "apply": {
+		"model": "bewitchment:block/salt_line_dot"
+	  }
+	},
+	{
+	  "when": {
+		"north": "side|up"
+	  },
+	  "apply": {
+		"model": "bewitchment:block/salt_line_side0"
+	  }
+	},
+	{
+	  "when": {
+		"south": "side|up"
+	  },
+	  "apply": {
+		"model": "bewitchment:block/salt_line_side_alt0"
+	  }
+	},
+	{
+	  "when": {
+		"east": "side|up"
+	  },
+	  "apply": {
+		"model": "bewitchment:block/salt_line_side_alt1",
+		"y": 270
+	  }
+	},
+	{
+	  "when": {
+		"west": "side|up"
+	  },
+	  "apply": {
+		"model": "bewitchment:block/salt_line_side1",
+		"y": 270
+	  }
+	},
+	{
+	  "when": {
+		"north": "up"
+	  },
+	  "apply": {
+		"model": "bewitchment:block/salt_line_up"
+	  }
+	},
+	{
+	  "when": {
+		"east": "up"
+	  },
+	  "apply": {
+		"model": "bewitchment:block/salt_line_up",
+		"y": 90
+	  }
+	},
+	{
+	  "when": {
+		"south": "up"
+	  },
+	  "apply": {
+		"model": "bewitchment:block/salt_line_up",
+		"y": 180
+	  }
+	},
+	{
+	  "when": {
+		"west": "up"
+	  },
+	  "apply": {
+		"model": "bewitchment:block/salt_line_up",
+		"y": 270
+	  }
+	}
+  ]
+}

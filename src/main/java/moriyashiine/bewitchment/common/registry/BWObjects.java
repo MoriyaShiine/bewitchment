@@ -8,6 +8,7 @@ import com.terraformersmc.terraform.wood.block.*;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.BWChestBlock;
 import moriyashiine.bewitchment.common.block.DragonsBloodLogBlock;
+import moriyashiine.bewitchment.common.block.SaltLineBlock;
 import moriyashiine.bewitchment.common.block.util.BWCropBlock;
 import moriyashiine.bewitchment.common.block.util.BWOreBlock;
 import moriyashiine.bewitchment.common.block.util.BWSaplingBlock;
@@ -38,6 +39,8 @@ public class BWObjects {
 	private static final Map<Block, Identifier> BLOCKS = new LinkedHashMap<>();
 	private static final Map<Item, Identifier> ITEMS = new LinkedHashMap<>();
 	
+	//misc_no_item
+	public static final Block SALT_LINE = create("salt_line", new SaltLineBlock(copyOf(Blocks.REDSTONE_WIRE)), false);
 	//crop
 	public static final Block ACONITE_CROP = create("aconite", new BWCropBlock(copyOf(Blocks.WHEAT)), false);
 	public static final Block BELLADONNA_CROP = create("belladonna", new BWCropBlock(copyOf(ACONITE_CROP)), false);
@@ -169,7 +172,7 @@ public class BWObjects {
 	//material_item
 	public static final Item SILVER_INGOT = create("silver_ingot", new Item(gen()));
 	public static final Item SILVER_NUGGET = create("silver_nugget", new Item(gen()));
-	public static final Item SALT = create("salt", new Item(gen()));
+	public static final Item SALT = create("salt", new AliasedBlockItem(SALT_LINE, gen()));
 	public static final Item ACONITE = create("aconite", new Item(gen()));
 	public static final Item ACONITE_SEEDS = create("aconite_seeds", new AliasedBlockItem(ACONITE_CROP, gen()));
 	public static final Item BELLADONNA = create("belladonna", new Item(gen()));

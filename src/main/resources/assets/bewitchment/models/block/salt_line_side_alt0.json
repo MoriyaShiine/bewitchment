@@ -1,0 +1,6 @@
+{
+  "parent": "bewitchment:block/salt_line_side_alt",
+  "textures": {
+	"line": "bewitchment:block/salt_line_line0"
+  }
+}

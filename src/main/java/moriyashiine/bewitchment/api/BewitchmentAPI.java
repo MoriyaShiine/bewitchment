@@ -17,8 +17,6 @@ import java.util.function.Predicate;
 public class BewitchmentAPI {
 	public static Set<AthameDropEntry> ATHAME_DROP_ENTRIES = new HashSet<>();
 	
-	public static Set<Predicate<LivingEntity>> ADDITIONAL_SILVER_WEAKNESSES = new HashSet<>();
-	
 	public static boolean isSourceFromSilver(DamageSource source) {
 		Entity attacker = source.getAttacker();
 		return !(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns()) && (attacker instanceof LivingEntity && BewitchmentAPI.isHoldingSilver((LivingEntity) attacker, Hand.MAIN_HAND)) || attacker instanceof SilverArrowEntity;
@@ -29,11 +27,6 @@ public class BewitchmentAPI {
 	}
 	
 	public static boolean isWeakToSilver(LivingEntity livingEntity) {
-		for (Predicate<LivingEntity> predicate : ADDITIONAL_SILVER_WEAKNESSES) {
-			if (predicate.test(livingEntity)) {
-				return true;
-			}
-		}
 		return BWTags.WEAK_TO_SILVER.contains(livingEntity.getType());
 	}
 	
