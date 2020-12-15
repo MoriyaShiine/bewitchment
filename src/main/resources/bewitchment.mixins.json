@@ -6,7 +6,8 @@
   "mixins": [
 	"EntityShapeContextAddition",
 	"SaltCollisionHack",
-	"SilverHandler"
+	"SilverHandler",
+	"TreeDecoratorTypeAccessor"
   ],
   "client": [
 	"client.ChestTextureOverride"
