@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+	"item": "minecraft:iron_chestplate"
+  },
+  "addition": {
+	"tag": "c:silver_ingots"
+  },
+  "result": {
+	"item": "bewitchment:silver_chestplate"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+	"recipes": [
+	  "bewitchment:dragons_blood_resin_from_dragons_blood_resin_block"
+	]
+  },
+  "criteria": {
+	"has_block": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "bewitchment:dragons_blood_resin_block"
+		  }
+		]
+	  }
+	},
+	"has_the_recipe": {
+	  "trigger": "minecraft:recipe_unlocked",
+	  "conditions": {
+		"recipe": "bewitchment:dragons_blood_resin_from_dragons_blood_resin_block"
+	  }
+	}
+  },
+  "requirements": [
+	[
+	  "has_block",
+	  "has_the_recipe"
+	]
+  ]
+}

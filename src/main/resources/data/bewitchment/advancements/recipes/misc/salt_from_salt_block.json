@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+	"recipes": [
+	  "bewitchment:salt_from_salt_block"
+	]
+  },
+  "criteria": {
+	"has_block": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "bewitchment:salt_block"
+		  }
+		]
+	  }
+	},
+	"has_the_recipe": {
+	  "trigger": "minecraft:recipe_unlocked",
+	  "conditions": {
+		"recipe": "bewitchment:salt_from_salt_block"
+	  }
+	}
+  },
+  "requirements": [
+	[
+	  "has_block",
+	  "has_the_recipe"
+	]
+  ]
+}

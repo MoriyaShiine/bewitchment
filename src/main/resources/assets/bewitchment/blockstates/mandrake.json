@@ -1,0 +1,16 @@
+{
+  "variants": {
+	"age=0": {
+	  "model": "bewitchment:block/mandrake_stage0"
+	},
+	"age=1": {
+	  "model": "bewitchment:block/mandrake_stage1"
+	},
+	"age=2": {
+	  "model": "bewitchment:block/mandrake_stage2"
+	},
+	"age=3": {
+	  "model": "bewitchment:block/mandrake_stage3"
+	}
+  }
+}

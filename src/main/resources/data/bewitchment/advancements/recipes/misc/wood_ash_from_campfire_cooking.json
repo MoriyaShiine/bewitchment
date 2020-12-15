@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+	"recipes": [
+	  "bewitchment:wood_ash_from_campfire_cooking"
+	]
+  },
+  "criteria": {
+	"has_bark": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"tag": "bewitchment:barks"
+		  }
+		]
+	  }
+	},
+	"has_the_recipe": {
+	  "trigger": "minecraft:recipe_unlocked",
+	  "conditions": {
+		"recipe": "bewitchment:wood_ash_from_campfire_cooking"
+	  }
+	}
+  },
+  "requirements": [
+	[
+	  "has_bark",
+	  "has_the_recipe"
+	]
+  ]
+}

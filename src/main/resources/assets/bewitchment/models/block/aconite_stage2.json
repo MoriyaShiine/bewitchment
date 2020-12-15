@@ -1,0 +1,6 @@
+{
+  "parent": "bewitchment:block/crop_cross",
+  "textures": {
+	"cross": "bewitchment:block/aconite_stage2"
+  }
+}

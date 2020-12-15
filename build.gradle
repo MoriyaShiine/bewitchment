@@ -27,9 +27,7 @@ dependencies {
         exclude(group: "net.fabricmc.fabric-api")
     }
     include "me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}"
-    modImplementation "com.terraformersmc.terraform-api:terraform-tree-api-v1:${project.terraform_tree_api_version}"
     modImplementation "com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraform_wood_api_version}"
-    include "com.terraformersmc.terraform-api:terraform-tree-api-v1:${project.terraform_tree_api_version}"
     include "com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraform_wood_api_version}"
 
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"

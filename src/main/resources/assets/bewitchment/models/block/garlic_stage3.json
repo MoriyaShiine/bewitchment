@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+	"crop": "bewitchment:block/garlic_stage3"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+	"recipes": [
+	  "bewitchment:garlic_bread"
+	]
+  },
+  "criteria": {
+	"has_garlic": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "bewitchment:grilled_garlic"
+		  }
+		]
+	  }
+	},
+	"has_the_recipe": {
+	  "trigger": "minecraft:recipe_unlocked",
+	  "conditions": {
+		"recipe": "bewitchment:garlic_bread"
+	  }
+	}
+  },
+  "requirements": [
+	[
+	  "has_garlic",
+	  "has_the_recipe"
+	]
+  ]
+}

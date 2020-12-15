@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+	"crop": "bewitchment:block/mandrake_stage2"
+  }
+}

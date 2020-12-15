@@ -17,11 +17,11 @@
   "icon": "assets/bewitchment/icon.png",
   "environment": "*",
   "entrypoints": {
-	"client": [
-	  "moriyashiine.bewitchment.client.BewitchmentClient"
-	],
 	"main": [
 	  "moriyashiine.bewitchment.common.Bewitchment"
+	],
+	"client": [
+	  "moriyashiine.bewitchment.client.BewitchmentClient"
 	]
   },
   "mixins": [

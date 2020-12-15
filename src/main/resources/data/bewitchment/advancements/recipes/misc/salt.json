@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+	"recipes": [
+	  "bewitchment:salt"
+	]
+  },
+  "criteria": {
+	"has_ore": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "bewitchment:salt_ore"
+		  }
+		]
+	  }
+	},
+	"has_the_recipe": {
+	  "trigger": "minecraft:recipe_unlocked",
+	  "conditions": {
+		"recipe": "bewitchment:salt"
+	  }
+	}
+  },
+  "requirements": [
+	[
+	  "has_ore",
+	  "has_the_recipe"
+	]
+  ]
+}

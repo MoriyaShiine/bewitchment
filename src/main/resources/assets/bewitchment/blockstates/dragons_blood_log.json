@@ -1,16 +1,28 @@
 {
   "variants": {
-	"axis=x": {
-	  "model": "bewitchment:block/dragons_blood_log_horizontal",
+	"axis=y,cut=false": {
+	  "model": "bewitchment:block/dragons_blood_log"
+	},
+	"axis=z,cut=false": {
+	  "model": "bewitchment:block/dragons_blood_log",
+	  "x": 90
+	},
+	"axis=x,cut=false": {
+	  "model": "bewitchment:block/dragons_blood_log",
 	  "x": 90,
 	  "y": 90
 	},
-	"axis=y": {
-	  "model": "bewitchment:block/dragons_blood_log"
+	"axis=y,cut=true": {
+	  "model": "bewitchment:block/dragons_blood_log_cut"
 	},
-	"axis=z": {
-	  "model": "bewitchment:block/dragons_blood_log_horizontal",
+	"axis=z,cut=true": {
+	  "model": "bewitchment:block/dragons_blood_log_cut",
 	  "x": 90
+	},
+	"axis=x,cut=true": {
+	  "model": "bewitchment:block/dragons_blood_log_cut",
+	  "x": 90,
+	  "y": 90
 	}
   }
 }

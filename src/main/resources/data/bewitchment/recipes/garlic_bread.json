@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "minecraft:bread"
+	},
+	{
+	  "item": "bewitchment:grilled_garlic"
+	}
+  ],
+  "result": {
+	"item": "bewitchment:garlic_bread"
+  }
+}

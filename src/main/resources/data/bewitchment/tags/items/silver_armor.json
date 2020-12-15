@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+	"bewitchment:silver_helmet",
+	"bewitchment:silver_chestplate",
+	"bewitchment:silver_leggings",
+	"bewitchment:silver_boots"
+  ]
+}
