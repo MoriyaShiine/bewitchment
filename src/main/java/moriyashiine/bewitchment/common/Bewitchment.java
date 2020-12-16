@@ -45,5 +45,13 @@ public class Bewitchment implements ModInitializer {
 		BewitchmentAPI.ATHAME_DROP_ENTRIES.add(new AthameDropEntry(BWObjects.ELDER_LOG, BWObjects.STRIPPED_ELDER_LOG, BWObjects.ELDER_BARK));
 		BewitchmentAPI.ATHAME_DROP_ENTRIES.add(new AthameDropEntry(BWObjects.ELDER_WOOD, BWObjects.STRIPPED_ELDER_WOOD, BWObjects.ELDER_BARK));
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.STONE_WITCH_ALTAR);
+		BewitchmentAPI.registerAltarMapEntries(BWObjects.MOSSY_COBBLESTONE_WITCH_ALTAR);
+		BewitchmentAPI.registerAltarMapEntries(BWObjects.PRISMARINE_WITCH_ALTAR);
+		BewitchmentAPI.registerAltarMapEntries(BWObjects.NETHER_BRICK_WITCH_ALTAR);
+		BewitchmentAPI.registerAltarMapEntries(BWObjects.BLACKSTONE_WITCH_ALTAR);
+		BewitchmentAPI.registerAltarMapEntries(BWObjects.GOLDEN_WITCH_ALTAR);
+		BewitchmentAPI.registerAltarMapEntries(BWObjects.END_STONE_WITCH_ALTAR);
+		BewitchmentAPI.registerAltarMapEntries(BWObjects.OBSIDIAN_WITCH_ALTAR);
+		BewitchmentAPI.registerAltarMapEntries(BWObjects.PURPUR_WITCH_ALTAR);
 	}
 }

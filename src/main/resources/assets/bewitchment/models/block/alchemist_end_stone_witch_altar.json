@@ -1,0 +1,7 @@
+{
+  "parent": "bewitchment:block/alchemist_stone_witch_altar",
+  "textures": {
+	"side": "bewitchment:block/end_stone_witch_altar",
+	"end": "bewitchment:block/end_stone_witch_altar_end"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "bewitchment:block/brown_stone_witch_altar",
+  "textures": {
+	"side": "bewitchment:block/golden_witch_altar",
+	"end": "bewitchment:block/golden_witch_altar_end"
+  }
+}

@@ -170,6 +170,14 @@ public class BWObjects {
 	public static final Block SALT_ORE = create("salt_ore", new BWOreBlock(copyOf(Blocks.COAL_ORE)), true);
 	//block_entity
 	public static final Block[] STONE_WITCH_ALTAR = createAltar("stone_witch_altar", copyOf(Blocks.STONE));
+	public static final Block[] MOSSY_COBBLESTONE_WITCH_ALTAR = createAltar("mossy_cobblestone_witch_altar", copyOf(Blocks.MOSSY_COBBLESTONE));
+	public static final Block[] PRISMARINE_WITCH_ALTAR = createAltar("prismarine_witch_altar", copyOf(Blocks.PRISMARINE));
+	public static final Block[] NETHER_BRICK_WITCH_ALTAR = createAltar("nether_brick_witch_altar", copyOf(Blocks.NETHER_BRICKS));
+	public static final Block[] BLACKSTONE_WITCH_ALTAR = createAltar("blackstone_witch_altar", copyOf(Blocks.BLACKSTONE));
+	public static final Block[] GOLDEN_WITCH_ALTAR = createAltar("golden_witch_altar", copyOf(Blocks.GOLD_BLOCK));
+	public static final Block[] END_STONE_WITCH_ALTAR = createAltar("end_stone_witch_altar", copyOf(Blocks.END_STONE));
+	public static final Block[] OBSIDIAN_WITCH_ALTAR = createAltar("obsidian_witch_altar", copyOf(Blocks.OBSIDIAN));
+	public static final Block[] PURPUR_WITCH_ALTAR = createAltar("purpur_witch_altar", copyOf(Blocks.PURPUR_BLOCK));
 	//armor
 	public static final Item SILVER_HELMET = create("silver_helmet", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.HEAD, gen()));
 	public static final Item SILVER_CHESTPLATE = create("silver_chestplate", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.CHEST, gen()));

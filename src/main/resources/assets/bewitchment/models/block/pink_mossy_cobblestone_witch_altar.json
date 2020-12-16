@@ -1,0 +1,7 @@
+{
+  "parent": "bewitchment:block/pink_stone_witch_altar",
+  "textures": {
+	"side": "bewitchment:block/mossy_cobblestone_witch_altar",
+	"end": "bewitchment:block/mossy_cobblestone_witch_altar_end"
+  }
+}

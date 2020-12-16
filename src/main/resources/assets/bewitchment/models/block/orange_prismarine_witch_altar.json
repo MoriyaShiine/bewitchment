@@ -1,0 +1,7 @@
+{
+  "parent": "bewitchment:block/orange_stone_witch_altar",
+  "textures": {
+	"side": "bewitchment:block/prismarine_witch_altar",
+	"end": "bewitchment:block/prismarine_witch_altar_end"
+  }
+}
