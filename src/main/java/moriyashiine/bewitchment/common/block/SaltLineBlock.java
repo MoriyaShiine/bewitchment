@@ -34,9 +34,9 @@ import java.util.Map;
 import static net.minecraft.block.RedstoneWireBlock.*;
 
 public class SaltLineBlock extends Block {
-	private static final Map<Direction, VoxelShape> SIDE_SHAPES = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.createCuboidShape(3, 0, 0, 13, 1, 13), Direction.SOUTH, Block.createCuboidShape(3, 0, 3, 13, 1, 16), Direction.EAST, Block.createCuboidShape(3, 0, 3, 16, 1, 13), Direction.WEST, Block.createCuboidShape(0, 0, 3, 13, 1, 13)));
-	private static final Map<Direction, VoxelShape> NON_SIDE_SHAPES = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, VoxelShapes.union(SIDE_SHAPES.get(Direction.NORTH), Block.createCuboidShape(3, 0, 0, 13, 16, 1)), Direction.SOUTH, VoxelShapes.union(SIDE_SHAPES.get(Direction.SOUTH), Block.createCuboidShape(3, 0, 15, 13, 16, 16)), Direction.EAST, VoxelShapes.union(SIDE_SHAPES.get(Direction.EAST), Block.createCuboidShape(15, 0, 3, 16, 16, 13)), Direction.WEST, VoxelShapes.union(SIDE_SHAPES.get(Direction.WEST), Block.createCuboidShape(0, 0, 3, 1, 16, 13))));
-	private static final VoxelShape DOT_SHAPE = Block.createCuboidShape(3, 0, 3, 13, 1, 13);
+	private static final Map<Direction, VoxelShape> SIDE_SHAPES = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, createCuboidShape(3, 0, 0, 13, 1, 13), Direction.SOUTH, createCuboidShape(3, 0, 3, 13, 1, 16), Direction.EAST, createCuboidShape(3, 0, 3, 16, 1, 13), Direction.WEST, createCuboidShape(0, 0, 3, 13, 1, 13)));
+	private static final Map<Direction, VoxelShape> NON_SIDE_SHAPES = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, VoxelShapes.union(SIDE_SHAPES.get(Direction.NORTH), createCuboidShape(3, 0, 0, 13, 16, 1)), Direction.SOUTH, VoxelShapes.union(SIDE_SHAPES.get(Direction.SOUTH), createCuboidShape(3, 0, 15, 13, 16, 16)), Direction.EAST, VoxelShapes.union(SIDE_SHAPES.get(Direction.EAST), createCuboidShape(15, 0, 3, 16, 16, 13)), Direction.WEST, VoxelShapes.union(SIDE_SHAPES.get(Direction.WEST), createCuboidShape(0, 0, 3, 1, 16, 13))));
+	private static final VoxelShape DOT_SHAPE = createCuboidShape(3, 0, 3, 13, 1, 13);
 	private final Map<BlockState, VoxelShape> outlineShapes = new HashMap<>();
 	
 	public SaltLineBlock(Settings settings) {

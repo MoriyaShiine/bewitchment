@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
 	"recipes": [
-	  "minecraft:besmirched_carpet"
+	  "bewitchment:besmirched_carpet"
 	]
   },
   "criteria": {

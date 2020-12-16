@@ -1,0 +1,377 @@
+{
+  "credit": "Made with Blockbench",
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+	"side": "bewitchment:block/stone_witch_altar",
+	"end": "bewitchment:block/stone_witch_altar_end",
+	"particle": "#side"
+  },
+  "elements": [
+	{
+	  "name": "plinthBase",
+	  "from": [
+		0,
+		0,
+		0
+	  ],
+	  "to": [
+		16,
+		2,
+		16
+	  ],
+	  "faces": {
+		"north": {
+		  "uv": [
+			0,
+			14,
+			16,
+			16
+		  ],
+		  "texture": "#side"
+		},
+		"east": {
+		  "uv": [
+			0,
+			14,
+			16,
+			16
+		  ],
+		  "texture": "#side"
+		},
+		"south": {
+		  "uv": [
+			0,
+			14,
+			16,
+			16
+		  ],
+		  "texture": "#side"
+		},
+		"west": {
+		  "uv": [
+			0,
+			14,
+			16,
+			16
+		  ],
+		  "texture": "#side"
+		},
+		"up": {
+		  "uv": [
+			0,
+			0,
+			16,
+			16
+		  ],
+		  "texture": "#end"
+		},
+		"down": {
+		  "uv": [
+			0,
+			0,
+			16,
+			16
+		  ],
+		  "texture": "#end"
+		}
+	  }
+	},
+	{
+	  "name": "plinthM1",
+	  "from": [
+		1,
+		2,
+		1
+	  ],
+	  "to": [
+		15,
+		5,
+		15
+	  ],
+	  "faces": {
+		"north": {
+		  "uv": [
+			1,
+			11,
+			15,
+			14
+		  ],
+		  "texture": "#side"
+		},
+		"east": {
+		  "uv": [
+			0,
+			11,
+			14,
+			14
+		  ],
+		  "texture": "#side"
+		},
+		"south": {
+		  "uv": [
+			1,
+			11,
+			15,
+			13
+		  ],
+		  "texture": "#side"
+		},
+		"west": {
+		  "uv": [
+			0,
+			11,
+			14,
+			14
+		  ],
+		  "texture": "#side"
+		},
+		"up": {
+		  "uv": [
+			0,
+			0,
+			14,
+			14
+		  ],
+		  "texture": "#side"
+		},
+		"down": {
+		  "uv": [
+			0,
+			0,
+			14,
+			14
+		  ],
+		  "texture": "#side"
+		}
+	  }
+	},
+	{
+	  "name": "plinthM2",
+	  "from": [
+		2,
+		5,
+		2
+	  ],
+	  "to": [
+		14,
+		10,
+		14
+	  ],
+	  "faces": {
+		"north": {
+		  "uv": [
+			2,
+			6,
+			14,
+			11
+		  ],
+		  "texture": "#side"
+		},
+		"east": {
+		  "uv": [
+			1,
+			6,
+			13,
+			11
+		  ],
+		  "texture": "#side"
+		},
+		"south": {
+		  "uv": [
+			4,
+			6,
+			16,
+			11
+		  ],
+		  "texture": "#side"
+		},
+		"west": {
+		  "uv": [
+			0,
+			6,
+			12,
+			11
+		  ],
+		  "texture": "#side"
+		},
+		"up": {
+		  "uv": [
+			0,
+			0,
+			12,
+			12
+		  ],
+		  "texture": "#side"
+		},
+		"down": {
+		  "uv": [
+			0,
+			0,
+			12,
+			12
+		  ],
+		  "texture": "#side"
+		}
+	  }
+	},
+	{
+	  "name": "topSupport",
+	  "from": [
+		1,
+		10,
+		1
+	  ],
+	  "to": [
+		15,
+		12,
+		15
+	  ],
+	  "faces": {
+		"north": {
+		  "uv": [
+			1,
+			4,
+			15,
+			6
+		  ],
+		  "texture": "#side"
+		},
+		"east": {
+		  "uv": [
+			0,
+			4,
+			14,
+			6
+		  ],
+		  "texture": "#side"
+		},
+		"south": {
+		  "uv": [
+			1,
+			4,
+			15,
+			6
+		  ],
+		  "texture": "#side"
+		},
+		"west": {
+		  "uv": [
+			2,
+			4,
+			16,
+			6
+		  ],
+		  "texture": "#side"
+		},
+		"up": {
+		  "uv": [
+			0,
+			0,
+			14,
+			14
+		  ],
+		  "texture": "#side"
+		},
+		"down": {
+		  "uv": [
+			0,
+			0,
+			14,
+			14
+		  ],
+		  "texture": "#side"
+		}
+	  }
+	},
+	{
+	  "name": "top",
+	  "from": [
+		0,
+		12,
+		0
+	  ],
+	  "to": [
+		16,
+		16,
+		16
+	  ],
+	  "faces": {
+		"north": {
+		  "uv": [
+			0,
+			0,
+			16,
+			4
+		  ],
+		  "texture": "#side"
+		},
+		"east": {
+		  "uv": [
+			0,
+			0,
+			16,
+			4
+		  ],
+		  "texture": "#side"
+		},
+		"south": {
+		  "uv": [
+			0,
+			0,
+			16,
+			4
+		  ],
+		  "texture": "#side"
+		},
+		"west": {
+		  "uv": [
+			0,
+			0,
+			16,
+			4
+		  ],
+		  "texture": "#side"
+		},
+		"up": {
+		  "uv": [
+			0,
+			0,
+			16,
+			16
+		  ],
+		  "texture": "#end"
+		},
+		"down": {
+		  "uv": [
+			0,
+			0,
+			16,
+			16
+		  ],
+		  "texture": "#end"
+		}
+	  }
+	}
+  ],
+  "groups": [
+	{
+	  "name": "altar",
+	  "origin": [
+		8,
+		8,
+		8
+	  ],
+	  "children": [
+		0,
+		1,
+		2,
+		3,
+		4,
+		5,
+		6,
+		7,
+		8
+	  ]
+	}
+  ]
+}

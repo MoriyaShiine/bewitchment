@@ -9,6 +9,7 @@ import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.BWChestBlock;
 import moriyashiine.bewitchment.common.block.DragonsBloodLogBlock;
 import moriyashiine.bewitchment.common.block.SaltLineBlock;
+import moriyashiine.bewitchment.common.block.WitchAltarBlock;
 import moriyashiine.bewitchment.common.block.util.BWCarpetBlock;
 import moriyashiine.bewitchment.common.block.util.BWCropBlock;
 import moriyashiine.bewitchment.common.block.util.BWOreBlock;
@@ -22,6 +23,7 @@ import moriyashiine.bewitchment.common.world.generator.tree.generator.CypressSap
 import moriyashiine.bewitchment.common.world.generator.tree.generator.DragonsBloodSaplingGenerator;
 import moriyashiine.bewitchment.common.world.generator.tree.generator.ElderSaplingGenerator;
 import moriyashiine.bewitchment.common.world.generator.tree.generator.JuniperSaplingGenerator;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
@@ -166,6 +168,8 @@ public class BWObjects {
 	public static final Block DRAGONS_BLOOD_RESIN_BLOCK = create("dragons_blood_resin_block", new Block(copyOf(Blocks.NETHER_WART_BLOCK)), true);
 	public static final Block SILVER_ORE = create("silver_ore", new Block(copyOf(Blocks.GOLD_ORE)), true);
 	public static final Block SALT_ORE = create("salt_ore", new BWOreBlock(copyOf(Blocks.COAL_ORE)), true);
+	//block_entity
+	public static final Block[] STONE_WITCH_ALTAR = createAltar("stone_witch_altar", copyOf(Blocks.STONE));
 	//armor
 	public static final Item SILVER_HELMET = create("silver_helmet", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.HEAD, gen()));
 	public static final Item SILVER_CHESTPLATE = create("silver_chestplate", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.CHEST, gen()));
@@ -216,6 +220,19 @@ public class BWObjects {
 	
 	private static Item.Settings gen() {
 		return new Item.Settings().group(Bewitchment.BEWITCHMENT_GROUP);
+	}
+	
+	private static Block[] createAltar(String name, FabricBlockSettings settings) {
+		Block[] altars = new Block[20];
+		WitchAltarBlock unformed = create(name, new WitchAltarBlock(settings, null, false), true);
+		altars[0] = unformed;
+		for (int i = 0; i < DyeColor.values().length; i++) {
+			altars[i + 1] = create(DyeColor.byId(i).getName() + "_" + name, new WitchAltarBlock(settings, unformed, true), false);
+		}
+		altars[17] = create("hedgewitch_" + name, new WitchAltarBlock(settings, unformed, true), false);
+		altars[18] = create("alchemist_" + name, new WitchAltarBlock(settings, unformed, true), false);
+		altars[19] = create("besmirched_" + name, new WitchAltarBlock(settings, unformed, true), false);
+		return altars;
 	}
 	
 	public static void init() {

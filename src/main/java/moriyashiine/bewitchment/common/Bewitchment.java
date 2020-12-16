@@ -13,7 +13,6 @@ import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
 public class Bewitchment implements ModInitializer {
@@ -21,7 +20,7 @@ public class Bewitchment implements ModInitializer {
 	
 	public static BWConfig config;
 	
-	public static final ItemGroup BEWITCHMENT_GROUP = FabricItemGroupBuilder.build(new Identifier(MODID, MODID), () -> new ItemStack(Items.STONE));
+	public static final ItemGroup BEWITCHMENT_GROUP = FabricItemGroupBuilder.build(new Identifier(MODID, MODID), () -> new ItemStack(BWObjects.ATHAME));
 	
 	@Override
 	public void onInitialize() {
@@ -45,5 +44,6 @@ public class Bewitchment implements ModInitializer {
 		BewitchmentAPI.ATHAME_DROP_ENTRIES.add(new AthameDropEntry(BWObjects.CYPRESS_WOOD, BWObjects.STRIPPED_CYPRESS_WOOD, BWObjects.CYPRESS_BARK));
 		BewitchmentAPI.ATHAME_DROP_ENTRIES.add(new AthameDropEntry(BWObjects.ELDER_LOG, BWObjects.STRIPPED_ELDER_LOG, BWObjects.ELDER_BARK));
 		BewitchmentAPI.ATHAME_DROP_ENTRIES.add(new AthameDropEntry(BWObjects.ELDER_WOOD, BWObjects.STRIPPED_ELDER_WOOD, BWObjects.ELDER_BARK));
+		BewitchmentAPI.registerAltarMapEntries(BWObjects.STONE_WITCH_ALTAR);
 	}
 }

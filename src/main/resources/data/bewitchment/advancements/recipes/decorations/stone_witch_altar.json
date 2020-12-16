@@ -2,16 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
 	"recipes": [
-	  "bewitchment:hedgewitch_carpet"
+	  "bewitchment:stone_witch_altar"
 	]
   },
   "criteria": {
-	"has_hedgewitch_wool": {
+	"has_material": {
 	  "trigger": "minecraft:inventory_changed",
 	  "conditions": {
 		"items": [
 		  {
-			"item": "bewitchment:hedgewitch_wool"
+			"item": "minecraft:stone"
 		  }
 		]
 	  }
@@ -19,13 +19,13 @@
 	"has_the_recipe": {
 	  "trigger": "minecraft:recipe_unlocked",
 	  "conditions": {
-		"recipe": "bewitchment:hedgewitch_carpet"
+		"recipe": "bewitchment:stone_witch_altar"
 	  }
 	}
   },
   "requirements": [
 	[
-	  "has_hedgewitch_wool",
+	  "has_material",
 	  "has_the_recipe"
 	]
   ]
