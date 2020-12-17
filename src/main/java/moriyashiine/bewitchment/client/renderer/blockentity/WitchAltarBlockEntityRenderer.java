@@ -10,9 +10,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -24,6 +22,7 @@ public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAlta
 		super(dispatcher);
 	}
 	
+	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void render(WitchAltarBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 		World world = entity.getWorld();
@@ -34,7 +33,7 @@ public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAlta
 			boolean block;
 			ItemStack sword = entity.getStack(0);
 			if (!sword.isEmpty()) {
-				block = sword.getItem() instanceof BlockItem;
+				block = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(sword.getItem()).hasDepth();
 				matrices.push();
 				matrices.translate(direction == Direction.NORTH || direction == Direction.EAST ? 0.25 : 0.75, block ? 0.98 : 1.0125, direction == Direction.NORTH || direction == Direction.WEST ? 0.75 : 0.25);
 				if (!block) {
@@ -62,7 +61,7 @@ public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAlta
 			}
 			ItemStack pentacle = entity.getStack(1);
 			if (!pentacle.isEmpty()) {
-				block = pentacle.getItem() instanceof BlockItem;
+				block = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(pentacle.getItem()).hasDepth();
 				matrices.push();
 				matrices.translate(direction == Direction.NORTH || direction == Direction.SOUTH ? 0.5 : direction == Direction.EAST ? 0.75 : 0.25, block ? 1.025 : 1.01, direction == Direction.EAST || direction == Direction.WEST ? 0.5 : direction == Direction.NORTH ? 0.25 : 0.75);
 				if (!block) {
@@ -90,7 +89,7 @@ public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAlta
 			}
 			ItemStack wand = entity.getStack(2);
 			if (!wand.isEmpty()) {
-				block = wand.getItem() instanceof BlockItem || wand.getItem() == Items.TORCH;
+				block = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(wand.getItem()).hasDepth();
 				matrices.push();
 				matrices.translate(direction == Direction.NORTH || direction == Direction.WEST ? 0.75 : 0.25, 1.01, direction == Direction.NORTH || direction == Direction.EAST ? 0.75 : 0.25);
 				if (!block) {
