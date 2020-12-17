@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.client;
 import com.terraformersmc.terraform.sign.SpriteIdentifierRegistry;
 import moriyashiine.bewitchment.client.misc.SpriteIdentifiers;
 import moriyashiine.bewitchment.client.network.packet.CreateNonLivingEntityPacket;
+import moriyashiine.bewitchment.client.renderer.blockentity.WitchAltarBlockEntityRenderer;
 import moriyashiine.bewitchment.client.renderer.entity.SilverArrowEntityRenderer;
 import moriyashiine.bewitchment.common.block.entity.BWChestBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
@@ -30,6 +31,7 @@ public class BewitchmentClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		ClientSidePacketRegistry.INSTANCE.register(CreateNonLivingEntityPacket.ID, CreateNonLivingEntityPacket::handle);
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.BW_CHEST, ChestBlockEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.WITCH_ALTAR, WitchAltarBlockEntityRenderer::new);
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.JUNIPER_BOAT, (dispatcher, context) -> new BoatEntityRenderer(dispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.CYPRESS_BOAT, (dispatcher, context) -> new BoatEntityRenderer(dispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.ELDER_BOAT, (dispatcher, context) -> new BoatEntityRenderer(dispatcher));

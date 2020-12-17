@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+	"minecraft:iron_sword",
+	"minecraft:golden_sword",
+	"bewitchment:silver_sword",
+	"bewitchment:athame"
+  ]
+}

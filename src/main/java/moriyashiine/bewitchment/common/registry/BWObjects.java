@@ -30,6 +30,7 @@ import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.block.*;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -231,6 +232,7 @@ public class BWObjects {
 	}
 	
 	private static Block[] createAltar(String name, FabricBlockSettings settings) {
+		settings = settings.luminance(blockState -> blockState.get(Properties.LEVEL_15));
 		Block[] altars = new Block[20];
 		WitchAltarBlock unformed = create(name, new WitchAltarBlock(settings, null, false), true);
 		altars[0] = unformed;

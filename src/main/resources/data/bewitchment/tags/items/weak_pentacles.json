@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+	"minecraft:diamond",
+	"minecraft:emerald",
+	"minecraft:quartz",
+	"minecraft:zombie_head",
+	"minecraft:skeleton_skull",
+	"minecraft:creeper_head",
+	"minecraft:player_head"
+  ]
+}

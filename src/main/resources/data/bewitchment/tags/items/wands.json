@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+	"#bewitchment:weak_wands",
+	"#bewitchment:average_wands",
+	"#bewitchment:strong_wands"
+  ]
+}
