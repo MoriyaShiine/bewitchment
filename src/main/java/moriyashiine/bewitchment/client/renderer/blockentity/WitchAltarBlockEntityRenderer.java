@@ -55,7 +55,7 @@ public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAlta
 				else {
 					matrices.translate(0, 0.1, 0);
 				}
-				matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(rotation));
+				matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vector3f.POSITIVE_Z : Vector3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
 				matrices.scale(0.5f, 0.5f, 0.5f);
 				MinecraftClient.getInstance().getItemRenderer().renderItem(pentacle, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers);
 				matrices.pop();
