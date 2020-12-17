@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"TTT",
+	"NIN",
+	" I "
+  ],
+  "key": {
+	"T": {
+	  "item": "minecraft:torch"
+	},
+	"N": {
+	  "item": "minecraft:nether_brick"
+	},
+	"I": {
+	  "item": "minecraft:netherite_scrap"
+	}
+  },
+  "result": {
+	"item": "bewitchment:netherite_candelabra"
+  }
+}

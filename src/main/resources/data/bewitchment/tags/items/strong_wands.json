@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-	"minecraft:end_rod"
+	"minecraft:end_rod",
+	"bewitchment:netherite_candelabra"
   ]
 }

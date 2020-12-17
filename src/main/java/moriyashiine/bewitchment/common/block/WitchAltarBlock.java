@@ -57,13 +57,6 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 		return SHAPE;
 	}
 	
-	@SuppressWarnings("ConstantConditions")
-	@Nullable
-	@Override
-	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		return super.getPlacementState(ctx).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER).with(Properties.HORIZONTAL_FACING, ctx.getPlayerFacing());
-	}
-	
 	@Override
 	public PistonBehavior getPistonBehavior(BlockState state) {
 		return PistonBehavior.BLOCK;
@@ -138,18 +131,11 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 		return super.getPickStack(world, pos, state);
 	}
 	
+	@SuppressWarnings("ConstantConditions")
+	@Nullable
 	@Override
-	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-		if (!world.isClient && state.getBlock() != newState.getBlock()) {
-			BlockEntity entity = world.getBlockEntity(pos);
-			if (entity instanceof WitchAltarBlockEntity) {
-				WitchAltarBlockEntity altar = (WitchAltarBlockEntity) entity;
-				for (int i = 0; i < altar.size(); i++) {
-					world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, altar.removeStack(i, 1)));
-				}
-			}
-		}
-		super.onStateReplaced(state, world, pos, newState, moved);
+	public BlockState getPlacementState(ItemPlacementContext ctx) {
+		return super.getPlacementState(ctx).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER).with(Properties.HORIZONTAL_FACING, ctx.getPlayerFacing());
 	}
 	
 	@Override
@@ -163,6 +149,20 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.get(Properties.WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+	}
+	
+	@Override
+	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+		if (!world.isClient && state.getBlock() != newState.getBlock()) {
+			BlockEntity entity = world.getBlockEntity(pos);
+			if (entity instanceof WitchAltarBlockEntity) {
+				WitchAltarBlockEntity altar = (WitchAltarBlockEntity) entity;
+				for (int i = 0; i < altar.size(); i++) {
+					world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, altar.removeStack(i, 1)));
+				}
+			}
+		}
+		super.onStateReplaced(state, world, pos, newState, moved);
 	}
 	
 	@Override
