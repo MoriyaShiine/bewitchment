@@ -2,10 +2,12 @@ package moriyashiine.bewitchment.common.block;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
+import moriyashiine.bewitchment.client.network.packet.SyncWitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.server.PlayerStream;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
@@ -114,6 +116,7 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 							world.setBlockState(pos, state.with(Properties.LEVEL_15, 0), 11);
 							altar.markedForScan = true;
 							altar.sync();
+							PlayerStream.watching(altar).forEach(playerEntity -> SyncWitchAltarBlockEntity.send(player, altar));
 						}
 						else {
 							player.sendMessage(new LiteralText(altar.power + " / " + altar.maxPower + " (" + altar.gain + "x)"), true);

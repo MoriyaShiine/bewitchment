@@ -180,7 +180,7 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 						overworld.setBlockState(checking, original);
 					}
 					if (!strippedLog) {
-						checked.put(checkedBlock, checked.getOrDefault(checkedBlock, 0) + 1);
+						checked.put(checkedBlock, Math.min(checked.getOrDefault(checkedBlock, 0) + 1, 256));
 					}
 				}
 				if (counter == Short.MAX_VALUE - 1) {
