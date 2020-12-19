@@ -2,7 +2,7 @@ package moriyashiine.bewitchment.api;
 
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
 import moriyashiine.bewitchment.api.registry.AthameDropEntry;
-import moriyashiine.bewitchment.common.entity.SilverArrowEntity;
+import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.block.Block;

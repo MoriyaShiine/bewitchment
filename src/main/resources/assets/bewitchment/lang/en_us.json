@@ -139,11 +139,14 @@
   "item.bewitchment.elder_bark": "Elder Bark",
   "item.bewitchment.wood_ash": "Wood Ash",
   "item.bewitchment.dragons_blood_resin": "Dragon's Blood Resin",
+  "item.bewitchment.snake_tongue": "Snake Tongue",
   "item.bewitchment.grilled_garlic": "Grilled Garlic",
   "item.bewitchment.garlic_bread": "Garlic Bread",
+  "item.bewitchment.owl_spawn_egg": "Owl Spawn Egg",
   "entity.bewitchment.juniper_boat": "Juniper Boat",
   "entity.bewitchment.cypress_boat": "Cypress Boat",
   "entity.bewitchment.elder_boat": "Elder Boat",
   "entity.bewitchment.dragons_blood_boat": "Dragon's Blood Boat",
-  "entity.bewitchment.silver_arrow": "Silver Arrow"
+  "entity.bewitchment.silver_arrow": "Silver Arrow",
+  "entity.bewitchment.owl": "Owl"
 }

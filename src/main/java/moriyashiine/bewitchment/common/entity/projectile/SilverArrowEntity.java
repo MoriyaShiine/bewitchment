@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.entity;
+package moriyashiine.bewitchment.common.entity.projectile;
 
 import moriyashiine.bewitchment.client.network.packet.CreateNonLivingEntityPacket;
 import moriyashiine.bewitchment.common.registry.BWObjects;

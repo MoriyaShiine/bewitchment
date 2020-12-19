@@ -213,8 +213,11 @@ public class BWObjects {
 	public static final Item ELDER_BARK = create("elder_bark", new Item(gen()));
 	public static final Item WOOD_ASH = create("wood_ash", new Item(gen()));
 	public static final Item DRAGONS_BLOOD_RESIN = create("dragons_blood_resin", new Item(gen()));
+	public static final Item SNAKE_TONGUE = create("snake_tongue", new Item(gen()));
 	public static final Item GRILLED_GARLIC = create("grilled_garlic", new Item(gen().food(FoodComponents.BAKED_POTATO)));
 	public static final Item GARLIC_BREAD = create("garlic_bread", new Item(gen().food(FoodComponents.PUMPKIN_PIE)));
+	//spawn_egg
+	public static final Item OWL_SPAWN_EGG = create("owl_spawn_egg", new SpawnEggItem(BWEntityTypes.OWL, 0x7f3f00, 0xc0c0c0, gen()));
 	
 	private static <T extends Block> T create(String name, T block, boolean createItem) {
 		BLOCKS.put(block, new Identifier(Bewitchment.MODID, name));

@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.item.tool;
 
-import moriyashiine.bewitchment.common.entity.SilverArrowEntity;
+import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
