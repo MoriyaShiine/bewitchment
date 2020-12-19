@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.entity.living;
+package moriyashiine.bewitchment.common.entity.living.util;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityData;

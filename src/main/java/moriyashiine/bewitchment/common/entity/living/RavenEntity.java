@@ -2,6 +2,7 @@ package moriyashiine.bewitchment.common.entity.living;
 
 import moriyashiine.bewitchment.common.entity.living.util.BWTameableEntity;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
+import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.control.FlightMoveControl;
@@ -22,8 +23,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class OwlEntity extends BWTameableEntity {
-	public OwlEntity(EntityType<? extends TameableEntity> type, World world) {
+public class RavenEntity extends BWTameableEntity {
+	public RavenEntity(EntityType<? extends TameableEntity> type, World world) {
 		super(type, world);
 		moveControl = new FlightMoveControl(this, 180, false);
 	}
@@ -39,20 +40,20 @@ public class OwlEntity extends BWTameableEntity {
 	
 	@Override
 	public int getVariants() {
-		return 5;
+		return 2;
 	}
 	
 	@Override
 	protected boolean isTamingItem(ItemStack stack) {
-		return stack.getItem() == Items.RABBIT;
+		return stack.getItem() == Items.GOLD_NUGGET || BWTags.SILVER_NUGGETS.contains(stack.getItem());
 	}
 	
 	@Nullable
 	@Override
 	public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-		if (entity instanceof OwlEntity)
+		if (entity instanceof RavenEntity)
 		{
-			OwlEntity child = BWEntityTypes.OWL.create(world);
+			RavenEntity child = BWEntityTypes.RAVEN.create(world);
 			if (child != null) {
 				child.dataTracker.set(VARIANT, random.nextBoolean() ? dataTracker.get(VARIANT) : entity.getDataTracker().get(VARIANT));
 			}
@@ -71,7 +72,7 @@ public class OwlEntity extends BWTameableEntity {
 	
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
-		return stack.getItem() == Items.CHICKEN;
+		return stack.getItem() == Items.WHEAT_SEEDS;
 	}
 	
 	@Override
@@ -128,7 +129,6 @@ public class OwlEntity extends BWTameableEntity {
 		goalSelector.add(7, new LookAroundGoal(this));
 		targetSelector.add(1, new TrackOwnerAttackerGoal(this));
 		targetSelector.add(2, new AttackWithOwnerGoal(this));
-		targetSelector.add(3, new RevengeGoal(this));
-		targetSelector.add(4, new FollowTargetIfTamedGoal<>(this, AnimalEntity.class, false, entity -> entity instanceof ChickenEntity || entity instanceof RabbitEntity));
+		targetSelector.add(3, (new RevengeGoal(this)).setGroupRevenge());
 	}
 }
