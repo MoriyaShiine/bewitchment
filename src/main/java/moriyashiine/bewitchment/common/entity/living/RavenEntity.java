@@ -13,7 +13,8 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.*;
+import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -51,14 +52,11 @@ public class RavenEntity extends BWTameableEntity {
 	@Nullable
 	@Override
 	public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-		if (entity instanceof RavenEntity)
-		{
-			RavenEntity child = BWEntityTypes.RAVEN.create(world);
-			if (child != null) {
-				child.dataTracker.set(VARIANT, random.nextBoolean() ? dataTracker.get(VARIANT) : entity.getDataTracker().get(VARIANT));
-			}
+		RavenEntity child = BWEntityTypes.RAVEN.create(world);
+		if (child != null && entity instanceof RavenEntity) {
+			child.dataTracker.set(VARIANT, random.nextBoolean() ? dataTracker.get(VARIANT) : entity.getDataTracker().get(VARIANT));
 		}
-		return null;
+		return child;
 	}
 	
 	@Override

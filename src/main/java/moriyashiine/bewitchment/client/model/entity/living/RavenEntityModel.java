@@ -2,12 +2,13 @@ package moriyashiine.bewitchment.client.model.entity.living;
 
 import com.google.common.collect.ImmutableList;
 import moriyashiine.bewitchment.common.entity.living.RavenEntity;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.AnimalModel;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 
+@Environment(EnvType.CLIENT)
 public class RavenEntityModel<T extends RavenEntity> extends AnimalModel<T> {
 	private final ModelPart body;
 	private final ModelPart head;
@@ -235,7 +236,7 @@ public class RavenEntityModel<T extends RavenEntity> extends AnimalModel<T> {
 			lLeg01.pitch = (MathHelper.cos((float) (limbAngle + Math.PI)) * limbDistance) + 0.3142f;
 			rLeg01.pitch = (MathHelper.cos(limbAngle) * limbDistance) + 0.3142f;
 		}
-		boolean sitting = entity.isSitting();
+		boolean sitting = entity.isInSittingPose();
 		lLeg01.visible = rLeg01.visible = !sitting;
 		if (sitting) {
 			body.pivotY = 21.5f;
@@ -246,13 +247,8 @@ public class RavenEntityModel<T extends RavenEntity> extends AnimalModel<T> {
 	}
 	
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
-		body.render(matrices, vertices, light, overlay, red, green, blue, alpha);
-	}
-	
-	@Override
 	protected Iterable<ModelPart> getHeadParts() {
-		return null;
+		return ImmutableList.of();
 	}
 	
 	@Override
@@ -260,7 +256,7 @@ public class RavenEntityModel<T extends RavenEntity> extends AnimalModel<T> {
 		return ImmutableList.of(body);
 	}
 	
-	public void setRotationAngle(ModelPart bone, float x, float y, float z) {
+	private void setRotationAngle(ModelPart bone, float x, float y, float z) {
 		bone.pitch = x;
 		bone.yaw = y;
 		bone.roll = z;

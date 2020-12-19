@@ -50,14 +50,11 @@ public class OwlEntity extends BWTameableEntity {
 	@Nullable
 	@Override
 	public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-		if (entity instanceof OwlEntity)
-		{
-			OwlEntity child = BWEntityTypes.OWL.create(world);
-			if (child != null) {
-				child.dataTracker.set(VARIANT, random.nextBoolean() ? dataTracker.get(VARIANT) : entity.getDataTracker().get(VARIANT));
-			}
+		OwlEntity child = BWEntityTypes.OWL.create(world);
+		if (child != null && entity instanceof OwlEntity) {
+			child.dataTracker.set(VARIANT, random.nextBoolean() ? dataTracker.get(VARIANT) : entity.getDataTracker().get(VARIANT));
 		}
-		return null;
+		return child;
 	}
 	
 	@Override

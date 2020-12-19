@@ -5,6 +5,8 @@ import com.terraformersmc.terraform.boat.TerraformBoatEntity;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.OwlEntity;
 import moriyashiine.bewitchment.common.entity.living.RavenEntity;
+import moriyashiine.bewitchment.common.entity.living.SnakeEntity;
+import moriyashiine.bewitchment.common.entity.living.ToadEntity;
 import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
@@ -26,8 +28,10 @@ public class BWEntityTypes {
 	
 	public static final EntityType<SilverArrowEntity> SILVER_ARROW = create("silver_arrow", FabricEntityTypeBuilder.<SilverArrowEntity>create(SpawnGroup.MISC, SilverArrowEntity::new).dimensions(EntityType.ARROW.getDimensions()).build());
 	
-	public static final EntityType<OwlEntity> OWL = create("owl", OwlEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, OwlEntity::new).dimensions(EntityDimensions.fixed(0.5f, 0.75f)).build());
-	public static final EntityType<RavenEntity> RAVEN = create("raven", RavenEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, RavenEntity::new).dimensions(EntityDimensions.fixed(0.4f, 0.4f)).build());
+	public static final EntityType<OwlEntity> OWL = create("owl", OwlEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, OwlEntity::new).dimensions(EntityDimensions.changing(0.5f, 0.75f)).build());
+	public static final EntityType<RavenEntity> RAVEN = create("raven", RavenEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, RavenEntity::new).dimensions(EntityDimensions.changing(0.4f, 0.4f)).build());
+	public static final EntityType<SnakeEntity> SNAKE = create("snake", SnakeEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, SnakeEntity::new).dimensions(EntityDimensions.changing(0.75f, 0.25f)).build());
+	public static final EntityType<ToadEntity> TOAD = create("toad", ToadEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ToadEntity::new).dimensions(EntityDimensions.changing(0.5f, 0.5f)).build());
 	
 	private static <T extends LivingEntity> EntityType<T> create(String name, DefaultAttributeContainer.Builder attributes, EntityType<T> type) {
 		FabricDefaultAttributeRegistry.register(type, attributes);

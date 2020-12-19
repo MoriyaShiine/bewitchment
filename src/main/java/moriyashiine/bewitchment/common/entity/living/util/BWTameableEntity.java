@@ -19,6 +19,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class BWTameableEntity extends TameableEntity {
 	public static final TrackedData<Integer> VARIANT = DataTracker.registerData(BWTameableEntity.class, TrackedDataHandlerRegistry.INTEGER);
@@ -67,7 +68,7 @@ public abstract class BWTameableEntity extends TameableEntity {
 	}
 	
 	@Override
-	public EntityData initialize(ServerWorldAccess serverWorldAccess, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, CompoundTag entityTag) {
+	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable CompoundTag entityTag) {
 		int variants = getVariants();
 		if (variants > 1) {
 			if (hasShiny()) {
@@ -82,7 +83,7 @@ public abstract class BWTameableEntity extends TameableEntity {
 				dataTracker.set(VARIANT, random.nextInt(variants));
 			}
 		}
-		return super.initialize(serverWorldAccess, difficulty, spawnReason, entityData, entityTag);
+		return super.initialize(world, difficulty, spawnReason, entityData, entityTag);
 	}
 	
 	@Override
@@ -99,9 +100,8 @@ public abstract class BWTameableEntity extends TameableEntity {
 			if (!client) {
 				if (random.nextInt(4) == 0) {
 					setOwner(player);
-					navigation.stop();
-					setTarget(null);
 					setSitting(true);
+					navigation.stop();
 					world.sendEntityStatus(this, (byte) 7);
 				}
 				else {
@@ -111,7 +111,17 @@ public abstract class BWTameableEntity extends TameableEntity {
 			return ActionResult.success(client);
 		}
 		else if (isTamed() && isOwner(player)) {
-			setSitting(!isSitting());
+			if (!client) {
+				if (isBreedingItem(stack) && getHealth() < getMaxHealth()) {
+					if (!player.abilities.creativeMode) {
+						stack.decrement(1);
+					}
+					heal(4);
+				}
+				else {
+					setSitting(!isSitting());
+				}
+			}
 			return ActionResult.success(client);
 		}
 		return super.interactMob(player, hand);
