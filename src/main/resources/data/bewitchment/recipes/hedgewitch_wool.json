@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "wool",
+  "ingredients": [
+	{
+	  "tag": "minecraft:wool"
+	},
+	{
+	  "tag": "minecraft:wool"
+	},
+	{
+	  "tag": "minecraft:wool"
+	},
+	{
+	  "tag": "minecraft:wool"
+	},
+	{
+	  "item": "bewitchment:cleansing_balm"
+	},
+	{
+	  "item": "bewitchment:earth_ichor"
+	}
+  ],
+  "result": {
+	"item": "bewitchment:hedgewitch_wool",
+	"count": 4
+  }
+}

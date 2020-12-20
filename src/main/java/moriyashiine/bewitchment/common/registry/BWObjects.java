@@ -195,7 +195,7 @@ public class BWObjects {
 	public static final Item ATHAME = create("athame", new AthameItem(BWMaterials.SILVER_TOOL, 1, -2, gen()));
 	public static final Item SILVER_ARROW = create("silver_arrow", new SilverArrowItem(gen()));
 	//material_item
-	public static final Item CLEANSING_OIL = create("cleansing_oil", new Item(gen().recipeRemainder(Items.GLASS_BOTTLE)));
+	public static final Item CLEANSING_BALM = create("cleansing_balm", new Item(gen().recipeRemainder(Items.GLASS_BOTTLE)));
 	public static final Item GRIM_ELIXIR = create("grim_elixir", new Item(gen().recipeRemainder(Items.GLASS_BOTTLE)));
 	public static final Item AQUA_CERATE = create("aqua_cerate", new Item(gen().recipeRemainder(Items.GLASS_BOTTLE)));
 	public static final Item FIERY_SERUM = create("fiery_serum", new Item(gen().recipeRemainder(Items.GLASS_BOTTLE)));

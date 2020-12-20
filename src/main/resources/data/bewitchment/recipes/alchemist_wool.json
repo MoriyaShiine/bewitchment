@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "wool",
+  "ingredients": [
+	{
+	  "tag": "minecraft:wool"
+	},
+	{
+	  "tag": "minecraft:wool"
+	},
+	{
+	  "tag": "minecraft:wool"
+	},
+	{
+	  "tag": "minecraft:wool"
+	},
+	{
+	  "item": "bewitchment:aqua_cerate"
+	},
+	{
+	  "item": "bewitchment:heaven_extract"
+	}
+  ],
+  "result": {
+	"item": "bewitchment:alchemist_wool",
+	"count": 4
+  }
+}
