@@ -40,7 +40,7 @@ public class BewitchmentClient implements ClientModInitializer {
 		ClientSidePacketRegistry.INSTANCE.register(CreateNonLivingEntityPacket.ID, CreateNonLivingEntityPacket::handle);
 		ClientSidePacketRegistry.INSTANCE.register(SyncWitchAltarBlockEntity.ID, SyncWitchAltarBlockEntity::handle);
 		ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> {
-			if (tintIndex == 0 && world != null) {
+			if (tintIndex == 1 && world != null) {
 				BlockEntity blockEntity = world.getBlockEntity(pos);
 				if (blockEntity instanceof WitchCauldronBlockEntity) {
 					return ((WitchCauldronBlockEntity) blockEntity).color;

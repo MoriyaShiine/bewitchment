@@ -39,6 +39,10 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	@Override
 	public CompoundTag toClientTag(CompoundTag tag) {
 		Inventories.toTag(tag, inventory);
+		if (customName != null) {
+			tag.putString("CustomName", Text.Serializer.toJson(customName));
+		}
+		tag.putInt("Color", color);
 		return tag;
 	}
 	
@@ -48,16 +52,9 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 		if (tag.contains("CustomName", NbtType.STRING)) {
 			customName = Text.Serializer.fromJson(tag.getString("CustomName"));
 		}
-		color = tag.getInt("Color");
-	}
-	
-	@Override
-	public CompoundTag toTag(CompoundTag tag) {
-		if (customName != null) {
-			tag.putString("CustomName", Text.Serializer.toJson(customName));
+		if (tag.contains("Color")) {
+			color = tag.getInt("Color");
 		}
-		tag.putInt("Color", color);
-		return super.toTag(toClientTag(tag));
 	}
 	
 	@Override
@@ -69,6 +66,11 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	@Override
 	public Text getCustomName() {
 		return customName;
+	}
+	
+	@Override
+	public CompoundTag toTag(CompoundTag tag) {
+		return super.toTag(toClientTag(tag));
 	}
 	
 	@Override
