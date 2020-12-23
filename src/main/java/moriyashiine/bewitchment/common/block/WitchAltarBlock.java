@@ -154,9 +154,9 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!world.isClient && state.getBlock() != newState.getBlock()) {
-			BlockEntity entity = world.getBlockEntity(pos);
-			if (entity instanceof WitchAltarBlockEntity) {
-				WitchAltarBlockEntity altar = (WitchAltarBlockEntity) entity;
+			BlockEntity blockEntity = world.getBlockEntity(pos);
+			if (blockEntity instanceof WitchAltarBlockEntity) {
+				WitchAltarBlockEntity altar = (WitchAltarBlockEntity) blockEntity;
 				for (int i = 0; i < altar.size(); i++) {
 					world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, altar.removeStack(i, 1)));
 				}

@@ -4,6 +4,7 @@ import com.terraformersmc.terraform.sign.SpriteIdentifierRegistry;
 import moriyashiine.bewitchment.client.misc.SpriteIdentifiers;
 import moriyashiine.bewitchment.client.network.packet.CreateNonLivingEntityPacket;
 import moriyashiine.bewitchment.client.network.packet.SyncWitchAltarBlockEntity;
+import moriyashiine.bewitchment.client.particle.CauldronBubbleParticle;
 import moriyashiine.bewitchment.client.renderer.blockentity.WitchAltarBlockEntityRenderer;
 import moriyashiine.bewitchment.client.renderer.blockentity.WitchCauldronBlockEntityRenderer;
 import moriyashiine.bewitchment.client.renderer.entity.SilverArrowEntityRenderer;
@@ -16,10 +17,12 @@ import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWObjects;
+import moriyashiine.bewitchment.common.registry.BWParticleTypes;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
@@ -39,6 +42,7 @@ public class BewitchmentClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		ClientSidePacketRegistry.INSTANCE.register(CreateNonLivingEntityPacket.ID, CreateNonLivingEntityPacket::handle);
 		ClientSidePacketRegistry.INSTANCE.register(SyncWitchAltarBlockEntity.ID, SyncWitchAltarBlockEntity::handle);
+		ParticleFactoryRegistry.getInstance().register(BWParticleTypes.CAULDRON_BUBBLE, CauldronBubbleParticle.Factory::new);
 		ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> {
 			if (tintIndex == 1 && world != null) {
 				BlockEntity blockEntity = world.getBlockEntity(pos);

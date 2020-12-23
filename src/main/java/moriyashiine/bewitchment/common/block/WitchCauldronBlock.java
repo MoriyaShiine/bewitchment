@@ -5,16 +5,26 @@ import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.NameTagItem;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
@@ -65,6 +75,32 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.get(Properties.WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+	}
+	
+	@Override
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		ItemStack stack = player.getStackInHand(hand);
+		if (stack.getItem() instanceof NameTagItem && stack.hasCustomName()) {
+			BlockEntity blockEntity = world.getBlockEntity(pos);
+			if (blockEntity instanceof WitchCauldronBlockEntity) {
+				((WitchCauldronBlockEntity) blockEntity).customName = stack.getName();
+				if (!player.isCreative()) {
+					stack.decrement(1);
+				}
+				return ActionResult.success(world.isClient);
+			}
+		}
+		return super.onUse(state, world, pos, player, hand, hit);
+	}
+	
+	@Override
+	public void onSteppedOn(World world, BlockPos pos, Entity entity) {
+		if (entity instanceof LivingEntity) {
+			BlockEntity blockEntity = world.getBlockEntity(pos);
+			if (blockEntity instanceof WitchCauldronBlockEntity && ((WitchCauldronBlockEntity) blockEntity).heatTimer >= 60) {
+				entity.damage(DamageSource.HOT_FLOOR, 1);
+			}
+		}
 	}
 	
 	@Override

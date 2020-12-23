@@ -10,6 +10,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.world.World;
@@ -33,12 +34,11 @@ public class WitchCauldronBlockEntityRenderer extends BlockEntityRenderer<WitchC
 					matrices.translate(0.5, 1, 0.5);
 					matrices.multiply(dispatcher.camera.getRotation());
 					matrices.scale(-0.025f, -0.025f, 0.025f);
-					//noinspection ConstantConditions
-					String string = entity.getCustomName().getString();
+					Text name = entity.getCustomName();
 					Matrix4f model = matrices.peek().getModel();
-					int x = -dispatcher.getTextRenderer().getWidth(string) / 2;
-					dispatcher.getTextRenderer().draw(string, x, 0, 0x20ffff, false, model, vertexConsumers, false, (int) (MinecraftClient.getInstance().options.getTextBackgroundOpacity(0.25f) * 255) << 24, light);
-					dispatcher.getTextRenderer().draw(string, x, 0, -1, false, model, vertexConsumers, false, 0, light);
+					int x = -dispatcher.getTextRenderer().getWidth(name) / 2;
+					dispatcher.getTextRenderer().draw(name, x, 0, 0x20ffff, false, model, vertexConsumers, true, (int) (MinecraftClient.getInstance().options.getTextBackgroundOpacity(0.25f) * 255f) << 24, light);
+					dispatcher.getTextRenderer().draw(name, x, 0, -1, false, model, vertexConsumers, false, 0, light);
 					matrices.pop();
 				}
 			}
