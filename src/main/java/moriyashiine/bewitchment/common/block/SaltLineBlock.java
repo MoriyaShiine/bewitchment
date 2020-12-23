@@ -41,7 +41,7 @@ public class SaltLineBlock extends Block {
 	
 	public SaltLineBlock(Settings settings) {
 		super(settings);
-		setDefaultState(stateManager.getDefaultState().with(WIRE_CONNECTION_NORTH, WireConnection.NONE).with(WIRE_CONNECTION_EAST, WireConnection.NONE).with(WIRE_CONNECTION_SOUTH, WireConnection.NONE).with(WIRE_CONNECTION_WEST, WireConnection.NONE));
+		setDefaultState(getDefaultState().with(WIRE_CONNECTION_NORTH, WireConnection.NONE).with(WIRE_CONNECTION_EAST, WireConnection.NONE).with(WIRE_CONNECTION_SOUTH, WireConnection.NONE).with(WIRE_CONNECTION_WEST, WireConnection.NONE));
 		for (BlockState state : getStateManager().getStates()) {
 			VoxelShape voxelShape = DOT_SHAPE;
 			for (Direction direction : Direction.Type.HORIZONTAL) {

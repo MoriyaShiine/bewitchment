@@ -25,7 +25,6 @@ import java.util.Random;
 import java.util.function.Supplier;
 
 public class DragonsBloodLogBlock extends StrippableLogBlock {
-	
 	public DragonsBloodLogBlock(Supplier<Block> stripped, MaterialColor top, Settings settings) {
 		super(stripped, top, settings);
 		setDefaultState(getDefaultState().with(BWProperties.NATURAL, false).with(BWProperties.CUT, false));
