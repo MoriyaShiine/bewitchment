@@ -131,7 +131,7 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 	
 	@Override
 	public void onSteppedOn(World world, BlockPos pos, Entity entity) {
-		if (entity instanceof LivingEntity) {
+		if (world.getBlockState(pos).get(Properties.LEVEL_3) > 0 && entity instanceof LivingEntity) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof WitchCauldronBlockEntity && ((WitchCauldronBlockEntity) blockEntity).heatTimer >= 60) {
 				entity.damage(DamageSource.HOT_FLOOR, 1);
