@@ -11,9 +11,11 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.NameTagItem;
+import net.minecraft.item.*;
+import net.minecraft.potion.PotionUtil;
+import net.minecraft.potion.Potions;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
@@ -79,8 +81,10 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 	
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		boolean client = world.isClient;
 		ItemStack stack = player.getStackInHand(hand);
-		if (stack.getItem() instanceof NameTagItem && stack.hasCustomName()) {
+		Item item = stack.getItem();
+		if (item instanceof NameTagItem && stack.hasCustomName()) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof WitchCauldronBlockEntity) {
 				((WitchCauldronBlockEntity) blockEntity).customName = stack.getName();
@@ -89,6 +93,38 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 				}
 				return ActionResult.success(world.isClient);
 			}
+		}
+		boolean bucket = stack.getItem() == Items.BUCKET, waterBucket = stack.getItem() == Items.WATER_BUCKET, glassBottle = stack.getItem() == Items.GLASS_BOTTLE;
+		if (bucket || waterBucket || glassBottle) {
+			if (!client) {
+				boolean canUse = bucket ? state.get(Properties.LEVEL_3) == 3 : waterBucket ? state.get(Properties.LEVEL_3) == 0 : state.get(Properties.LEVEL_3) > 0;
+				int targetLevel = bucket ? 0 : waterBucket ? 3 : state.get(Properties.LEVEL_3) - 1;
+				if (canUse) {
+					world.setBlockState(pos, state.with(Properties.LEVEL_3, targetLevel));
+					world.playSound(null, pos, bucket ? SoundEvents.ITEM_BUCKET_FILL : waterBucket ? SoundEvents.ITEM_BUCKET_EMPTY : SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1, 1);
+					if (!player.isCreative() || glassBottle) {
+						if (bucket) {
+							ItemStack water = new ItemStack(Items.WATER_BUCKET);
+							if (stack.getCount() == 1) {
+								player.setStackInHand(hand, water);
+							}
+							else if (!player.inventory.insertStack(water)) {
+								player.dropStack(water);
+							}
+						}
+						else if (waterBucket) {
+							player.setStackInHand(hand, new ItemStack(Items.BUCKET));
+						}
+						else {
+							ItemStack potion = PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER);
+							if (!player.inventory.insertStack(potion)) {
+								player.dropStack(potion);
+							}
+						}
+					}
+				}
+			}
+			return ActionResult.success(client);
 		}
 		return super.onUse(state, world, pos, player, hand, hit);
 	}
