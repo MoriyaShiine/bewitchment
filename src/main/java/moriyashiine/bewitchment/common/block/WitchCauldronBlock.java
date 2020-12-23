@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.common.block;
 
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
+import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
@@ -45,14 +46,18 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 	@Nullable
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		return super.getPlacementState(ctx).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);
+		return super.getPlacementState(ctx).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER).with(Properties.LIT, BWTags.HEATS_CAULDRON.contains(ctx.getWorld().getBlockState(ctx.getBlockPos().down()).getBlock()));
 	}
 	
 	@Override
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
 		if (state.get(Properties.WATERLOGGED)) {
 			world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
-			world.setBlockState(pos, state.with(Properties.LEVEL_3, 0), 3);
+			state = state.with(Properties.LEVEL_3, 0);
+			state = state.with(Properties.LIT, false);
+		}
+		else {
+			state = state.with(Properties.LIT, BWTags.HEATS_CAULDRON.contains(world.getBlockState(pos.down()).getBlock()));
 		}
 		return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
 	}
@@ -64,6 +69,6 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 	
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-		builder.add(Properties.WATERLOGGED, Properties.LEVEL_3);
+		builder.add(Properties.WATERLOGGED, Properties.LEVEL_3, Properties.LIT);
 	}
 }

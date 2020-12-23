@@ -85,7 +85,7 @@ public class CandelabraBlock extends Block implements Waterloggable {
 			world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
 			if (state.get(Properties.LIT)) {
 				world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1, 2);
-				world.setBlockState(pos, state.with(Properties.LIT, false), 3);
+				state = state.with(Properties.LIT, false);
 			}
 		}
 		return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
