@@ -18,7 +18,7 @@ import java.util.List;
 
 public class OilRecipe implements Recipe<Inventory> {
 	private final Identifier identifier;
-	private final DefaultedList<Ingredient> input;
+	public final DefaultedList<Ingredient> input;
 	private final ItemStack output;
 	public final int color;
 	

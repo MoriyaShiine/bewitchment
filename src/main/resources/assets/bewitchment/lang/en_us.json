@@ -160,5 +160,6 @@
   "entity.bewitchment.silver_arrow": "Silver Arrow",
   "entity.bewitchment.owl": "Owl",
   "bewitchment.insufficent_altar_power": "Your source of magic is not strong enough",
-  "rei.bewitchment.athame_stripping": "Athame Stripping"
+  "rei.bewitchment.athame_stripping": "Athame Stripping",
+  "rei.bewitchment.oil_crafting": "Oil Crafting"
 }
