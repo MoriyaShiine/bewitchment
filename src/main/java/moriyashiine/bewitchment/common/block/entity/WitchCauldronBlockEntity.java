@@ -270,7 +270,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 				}
 			}
 		}
-		setColor(0x3f0000);
+		setColor(0x835432);
 		return Mode.FAILED;
 	}
 	
