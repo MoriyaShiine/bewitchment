@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.item.tool;
 
-import moriyashiine.bewitchment.api.registry.AthameDropEntry;
+import moriyashiine.bewitchment.api.registry.AthameStrippingRecipe;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PillarBlock;
@@ -25,7 +25,7 @@ public class AthameItem extends SwordItem {
 		World world = context.getWorld();
 		BlockPos pos = context.getBlockPos();
 		BlockState state = world.getBlockState(pos);
-		AthameDropEntry entry = world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_STRIPPING_RECIPE_TYPE).stream().filter(recipe -> recipe.log == state.getBlock()).findFirst().orElse(null);
+		AthameStrippingRecipe entry = world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_STRIPPING_RECIPE_TYPE).stream().filter(recipe -> recipe.log == state.getBlock()).findFirst().orElse(null);
 		if (entry != null) {
 			PlayerEntity player = context.getPlayer();
 			world.playSound(player, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1, 1);

@@ -10,7 +10,7 @@
 	"Sunconure11"
   ],
   "contact": {
-	"website": "todo",
+	"website": "https://github.com/MoriyaShiine/bewitchment",
 	"repo": "todo"
   },
   "license": "GPL-3.0",
@@ -22,6 +22,9 @@
 	],
 	"client": [
 	  "moriyashiine.bewitchment.client.BewitchmentClient"
+	],
+	"rei_plugins": [
+	  "moriyashiine.bewitchment.client.integration.rei.BewitchmentREIPlugin"
 	]
   },
   "mixins": [
