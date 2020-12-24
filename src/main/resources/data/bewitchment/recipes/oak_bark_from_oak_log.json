@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:athame_stripping",
+  "log": "minecraft:oak_log",
+  "stripped_log": "minecraft:stripped_oak_log",
+  "result": {
+	"item": "bewitchment:oak_bark"
+  }
+}

@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.item.tool;
 
-import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.registry.AthameDropEntry;
+import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PillarBlock;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,16 +25,16 @@ public class AthameItem extends SwordItem {
 		World world = context.getWorld();
 		BlockPos pos = context.getBlockPos();
 		BlockState state = world.getBlockState(pos);
-		AthameDropEntry entry = BewitchmentAPI.ATHAME_DROP_ENTRIES.stream().filter(e -> e.log == state.getBlock()).findFirst().orElse(null);
+		AthameDropEntry entry = world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_STRIPPING_RECIPE_TYPE).stream().filter(recipe -> recipe.log == state.getBlock()).findFirst().orElse(null);
 		if (entry != null) {
 			PlayerEntity player = context.getPlayer();
 			world.playSound(player, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1, 1);
 			if (!world.isClient) {
-				world.setBlockState(pos, entry.stripped_log.getDefaultState().with(PillarBlock.AXIS, state.get(PillarBlock.AXIS)), 11);
+				world.setBlockState(pos, entry.strippedLog.getDefaultState().with(PillarBlock.AXIS, state.get(PillarBlock.AXIS)), 11);
 				if (player != null) {
 					context.getStack().damage(1, player, (user) -> user.sendToolBreakStatus(context.getHand()));
 					if (world.random.nextBoolean()) {
-						ItemStack bark = new ItemStack(entry.bark);
+						ItemStack bark = entry.getOutput().copy();
 						if (!player.inventory.insertStack(bark)) {
 							player.dropStack(bark);
 						}

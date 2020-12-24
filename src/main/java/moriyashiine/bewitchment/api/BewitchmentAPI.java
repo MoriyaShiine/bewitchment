@@ -1,7 +1,6 @@
 package moriyashiine.bewitchment.api;
 
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
-import moriyashiine.bewitchment.api.registry.AthameDropEntry;
 import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWTags;
@@ -21,7 +20,6 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 public class BewitchmentAPI {
-	public static Set<AthameDropEntry> ATHAME_DROP_ENTRIES = new HashSet<>();
 	public static Set<AltarMapEntry> ALTAR_MAP_ENTRIES = new HashSet<>();
 	
 	public static boolean isSourceFromSilver(DamageSource source) {
