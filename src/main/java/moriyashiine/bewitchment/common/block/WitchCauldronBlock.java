@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.block;
 
+import moriyashiine.bewitchment.api.registry.OilRecipe;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.block.*;
@@ -11,7 +12,10 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.NameTagItem;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.sound.SoundCategory;
@@ -81,44 +85,53 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 	
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		boolean client = world.isClient;
-		ItemStack stack = player.getStackInHand(hand);
-		Item item = stack.getItem();
-		if (item instanceof NameTagItem && stack.hasCustomName()) {
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof WitchCauldronBlockEntity) {
-				((WitchCauldronBlockEntity) blockEntity).customName = stack.getName();
-				if (!player.isCreative()) {
-					stack.decrement(1);
-				}
-				return ActionResult.success(world.isClient);
-			}
-		}
-		boolean bucket = stack.getItem() == Items.BUCKET, waterBucket = stack.getItem() == Items.WATER_BUCKET, glassBottle = stack.getItem() == Items.GLASS_BOTTLE;
-		if (bucket || waterBucket || glassBottle) {
-			if (!client) {
-				boolean canUse = bucket ? state.get(Properties.LEVEL_3) == 3 : waterBucket ? state.get(Properties.LEVEL_3) == 0 : state.get(Properties.LEVEL_3) > 0;
-				int targetLevel = bucket ? 0 : waterBucket ? 3 : state.get(Properties.LEVEL_3) - 1;
-				if (canUse) {
-					world.setBlockState(pos, state.with(Properties.LEVEL_3, targetLevel));
-					world.playSound(null, pos, bucket ? SoundEvents.ITEM_BUCKET_FILL : waterBucket ? SoundEvents.ITEM_BUCKET_EMPTY : SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1, 1);
-					if (!player.isCreative() || glassBottle) {
-						if (bucket) {
-							ItemStack water = new ItemStack(Items.WATER_BUCKET);
-							if (stack.getCount() == 1) {
-								player.setStackInHand(hand, water);
-							}
-							else if (!player.inventory.insertStack(water)) {
-								player.dropStack(water);
-							}
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if (blockEntity instanceof WitchCauldronBlockEntity) {
+			WitchCauldronBlockEntity cauldron = (WitchCauldronBlockEntity) blockEntity;
+			boolean client = world.isClient;
+			ItemStack stack = player.getStackInHand(hand);
+			boolean nameTag = stack.getItem() instanceof NameTagItem, bucket = stack.getItem() == Items.BUCKET, waterBucket = stack.getItem() == Items.WATER_BUCKET, glassBottle = stack.getItem() == Items.GLASS_BOTTLE;
+			if (nameTag || bucket || waterBucket || glassBottle) {
+				if (!client) {
+					if (nameTag && stack.hasCustomName()) {
+						cauldron.customName = stack.getName();
+						cauldron.syncCauldron();
+						if (!player.isCreative()) {
+							stack.decrement(1);
 						}
-						else if (waterBucket) {
-							player.setStackInHand(hand, new ItemStack(Items.BUCKET));
-						}
-						else {
-							ItemStack potion = PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER);
-							if (!player.inventory.insertStack(potion)) {
-								player.dropStack(potion);
+					}
+					else {
+						if (bucket ? state.get(Properties.LEVEL_3) == 3 && cauldron.mode == WitchCauldronBlockEntity.Mode.NORMAL : waterBucket ? state.get(Properties.LEVEL_3) == 0 : state.get(Properties.LEVEL_3) > 0) {
+							int targetLevel = bucket ? 0 : waterBucket ? 3 : state.get(Properties.LEVEL_3) - 1;
+							world.setBlockState(pos, state.with(Properties.LEVEL_3, targetLevel));
+							world.playSound(null, pos, bucket ? SoundEvents.ITEM_BUCKET_FILL : waterBucket ? SoundEvents.ITEM_BUCKET_EMPTY : SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1, 1);
+							if (!player.isCreative() || glassBottle) {
+								if (bucket) {
+									ItemStack water = new ItemStack(Items.WATER_BUCKET);
+									if (stack.getCount() == 1) {
+										player.setStackInHand(hand, water);
+									}
+									else if (!player.inventory.insertStack(water)) {
+										player.dropStack(water);
+									}
+								}
+								else if (waterBucket) {
+									player.setStackInHand(hand, new ItemStack(Items.BUCKET));
+								}
+								else {
+									ItemStack bottle = PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER);
+									OilRecipe recipe = cauldron.oilRecipe;
+									if (recipe != null) {
+										bottle = recipe.getOutput().copy();
+									}
+									if (!player.inventory.insertStack(bottle)) {
+										player.dropStack(bottle);
+									}
+								}
+								if (targetLevel == 0) {
+									cauldron.mode = cauldron.reset();
+									cauldron.syncCauldron();
+								}
 							}
 						}
 					}
@@ -133,8 +146,11 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 	public void onSteppedOn(World world, BlockPos pos, Entity entity) {
 		if (world.getBlockState(pos).get(Properties.LEVEL_3) > 0 && entity instanceof LivingEntity) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof WitchCauldronBlockEntity && ((WitchCauldronBlockEntity) blockEntity).heatTimer >= 60) {
-				entity.damage(DamageSource.HOT_FLOOR, 1);
+			if (blockEntity instanceof WitchCauldronBlockEntity) {
+				WitchCauldronBlockEntity cauldron = (WitchCauldronBlockEntity) blockEntity;
+				if (cauldron.heatTimer >= 60 && cauldron.mode != WitchCauldronBlockEntity.Mode.TELEPORTATION) {
+					entity.damage(DamageSource.HOT_FLOOR, 1);
+				}
 			}
 		}
 	}

@@ -8,11 +8,11 @@ import net.minecraft.particle.ParticleType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BWParticleTypes {
-	private static final Map<ParticleType<?>, Identifier> PARTICLE_TYPES = new HashMap<>();
+	private static final Map<ParticleType<?>, Identifier> PARTICLE_TYPES = new LinkedHashMap<>();
 	
 	public static ParticleType<DefaultParticleType> CAULDRON_BUBBLE = create("cauldron_bubble", FabricParticleTypes.simple());
 	

@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin;
 
-import moriyashiine.bewitchment.api.accesor.EntityShapeContextAdditionAccesor;
+import moriyashiine.bewitchment.api.accessor.EntityShapeContextAdditionAccesor;
 import net.minecraft.block.EntityShapeContext;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;

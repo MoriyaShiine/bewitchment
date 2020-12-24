@@ -26,6 +26,7 @@ public class Bewitchment implements ModInitializer {
 		BWObjects.init();
 		BWBlockEntityTypes.init();
 		BWEntityTypes.init();
+		BWRecipeTypes.init();
 		BWWorldGenerators.init();
 		BWParticleTypes.init();
 		BewitchmentAPI.ATHAME_DROP_ENTRIES.add(new AthameDropEntry(Blocks.OAK_LOG, Blocks.STRIPPED_OAK_LOG, BWObjects.OAK_BARK));

@@ -1,19 +1,26 @@
 package moriyashiine.bewitchment.common.block.entity;
 
+import moriyashiine.bewitchment.api.registry.OilRecipe;
+import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWParticleTypes;
+import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.fabricmc.fabric.api.server.PlayerStream;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particle.ParticleEffect;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
@@ -22,13 +29,20 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Nameable;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 
 public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Tickable, Inventory, Nameable {
 	private static final TranslatableText DEFAULT_NAME = new TranslatableText(BWObjects.WITCH_CAULDRON.getTranslationKey());
 	
+	private Box box;
+	
 	private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
+	
+	public OilRecipe oilRecipe = null;
+	
+	public Mode mode = Mode.NORMAL;
 	
 	public Text customName;
 	
@@ -47,6 +61,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	@Override
 	public CompoundTag toClientTag(CompoundTag tag) {
 		Inventories.toTag(tag, inventory);
+		tag.putString("Mode", mode.name);
 		if (customName != null) {
 			tag.putString("CustomName", Text.Serializer.toJson(customName));
 		}
@@ -58,6 +73,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	@Override
 	public void fromClientTag(CompoundTag tag) {
 		Inventories.fromTag(tag, inventory);
+		mode = Mode.valueOf(tag.getString("Mode"));
 		if (tag.contains("CustomName", NbtType.STRING)) {
 			customName = Text.Serializer.fromJson(tag.getString("CustomName"));
 		}
@@ -94,6 +110,8 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 		if (world != null) {
 			if (!loaded) {
 				markDirty();
+				box = new Box(pos);
+				oilRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.OIL_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
 				loaded = true;
 			}
 			heatTimer = MathHelper.clamp(heatTimer + (getCachedState().get(Properties.LIT) && getCachedState().get(Properties.LEVEL_3) > 0 ? 1 : -1), 0, 160);
@@ -118,8 +136,19 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 				}
 			}
 			else {
-				if (world.random.nextFloat() <= 0.075f && getCachedState().get(Properties.LEVEL_3) > 0 && heatTimer >= 60) {
-					world.playSound(null, pos, SoundEvents.BLOCK_BUBBLE_COLUMN_UPWARDS_AMBIENT, SoundCategory.BLOCKS, 1, 1);
+				if (getCachedState().get(Properties.LEVEL_3) > 0 && heatTimer >= 60) {
+					if (world.random.nextFloat() <= 0.075f) {
+						world.playSound(null, pos, SoundEvents.BLOCK_BUBBLE_COLUMN_UPWARDS_AMBIENT, SoundCategory.BLOCKS, 1 / 3f, mode == Mode.FAILED ? 0.5f : 1);
+					}
+					if (world.getTime() % 5 == 0) {
+						world.getEntitiesByType(EntityType.ITEM, box, entity -> true).forEach(itemEntity -> {
+							if (itemEntity.getStack().getItem() == BWObjects.WOOD_ASH || getCachedState().get(Properties.LEVEL_3) == 3) {
+								world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_SPLASH, SoundCategory.BLOCKS, 1 / 3f, 1);
+								mode = insertStack(itemEntity.getStack().split(1));
+								syncCauldron();
+							}
+						});
+					}
 				}
 			}
 		}
@@ -165,11 +194,72 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 		inventory.clear();
 	}
 	
+	public void syncCauldron() {
+		if (world instanceof ServerWorld) {
+			PlayerStream.watching(this).forEach(playerEntity -> SyncClientSerializableBlockEntity.send(playerEntity, this));
+		}
+	}
+	
 	public void setColor(int color) {
 		if (world != null) {
 			this.color = color;
-			world.setBlockState(pos, getCachedState().with(Properties.LIT, !getCachedState().get(Properties.LIT)));
-			world.setBlockState(pos, getCachedState().with(Properties.LIT, !getCachedState().get(Properties.LIT)));
+		}
+	}
+	
+	public Mode reset() {
+		if (world != null) {
+			setColor(0x3f76e4);
+			clear();
+			oilRecipe = null;
+			world.setBlockState(pos, getCachedState().with(Properties.LEVEL_3, 0));
+			syncCauldron();
+		}
+		return Mode.NORMAL;
+	}
+	
+	private int getFirstEmptySlot() {
+		for (int i = 0; i < size(); i++) {
+			if (getStack(i).isEmpty()) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	private Mode insertStack(ItemStack stack) {
+		if (world != null) {
+			if (stack.getItem() == BWObjects.WOOD_ASH) {
+				return reset();
+			}
+			else if (mode != Mode.FAILED && mode != Mode.TELEPORTATION) {
+				int firstEmpty = getFirstEmptySlot();
+				if (firstEmpty != -1) {
+					setStack(firstEmpty, stack);
+					oilRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.OIL_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
+					if (oilRecipe != null) {
+						setColor(oilRecipe.color);
+						return Mode.OIL_CRAFTING;
+					}
+					else if (firstEmpty == 0 && stack.getItem() == Items.ENDER_PEARL) {
+						setColor(0x7fff7f);
+						return Mode.TELEPORTATION;
+					}
+					setColor(0xff3fff);
+					return Mode.OIL_CRAFTING;
+				}
+			}
+		}
+		setColor(0x3f0000);
+		return Mode.FAILED;
+	}
+	
+	public enum Mode {
+		NORMAL("NORMAL"), OIL_CRAFTING("OIL_CRAFTING"), TELEPORTATION("TELEPORTATION"), FAILED("FAILED");
+		
+		public final String name;
+		
+		Mode(String name) {
+			this.name = name;
 		}
 	}
 }

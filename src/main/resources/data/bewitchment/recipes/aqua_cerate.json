@@ -1,0 +1,18 @@
+{
+  "type": "bewitchment:oil_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:birch_bark"
+	},
+	{
+	  "tag": "minecraft:fishes"
+	},
+	{
+	  "item": "minecraft:kelp"
+	}
+  ],
+  "result": {
+	"item": "bewitchment:aqua_cerate"
+  },
+  "color": 4137154
+}
