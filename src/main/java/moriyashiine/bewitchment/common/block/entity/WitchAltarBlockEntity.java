@@ -154,6 +154,14 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 		inventory.clear();
 	}
 	
+	public boolean drain(int amount) {
+		if (power - amount >= 0) {
+			power -= amount;
+			return true;
+		}
+		return false;
+	}
+	
 	@SuppressWarnings("ConstantConditions")
 	private void scan(int times) {
 		if (world != null) {

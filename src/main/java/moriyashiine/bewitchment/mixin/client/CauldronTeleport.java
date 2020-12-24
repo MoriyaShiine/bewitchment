@@ -27,7 +27,7 @@ public abstract class CauldronTeleport extends PlayerEntity {
 		for (int i = 0; i < 1; i++) {
 			BlockEntity blockEntity = world.getBlockEntity(getBlockPos().down(i));
 			if (blockEntity instanceof WitchCauldronBlockEntity && ((WitchCauldronBlockEntity) blockEntity).mode == WitchCauldronBlockEntity.Mode.TELEPORTATION) {
-				CauldronTeleportPacket.send(message);
+				CauldronTeleportPacket.send(blockEntity.getPos(), message);
 				callbackInfo.cancel();
 				break;
 			}

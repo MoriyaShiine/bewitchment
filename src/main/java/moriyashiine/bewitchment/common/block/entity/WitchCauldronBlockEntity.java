@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.block.entity;
 
+import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
 import moriyashiine.bewitchment.api.registry.OilRecipe;
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
@@ -29,11 +30,12 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Nameable;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 
-public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Tickable, Inventory, Nameable {
+public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Tickable, Inventory, Nameable, UsesAltarPower {
 	private static final TranslatableText DEFAULT_NAME = new TranslatableText(BWObjects.WITCH_CAULDRON.getTranslationKey());
 	
 	private Box box;
@@ -47,6 +49,8 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	public Text customName;
 	
 	public int color = 0x3f76e4, heatTimer = 0;
+	
+	private BlockPos altarPos = null;
 	
 	private boolean loaded = false;
 	
@@ -67,6 +71,9 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 		}
 		tag.putInt("Color", color);
 		tag.putInt("HeatTimer", heatTimer);
+		if (getAltarPos() != null) {
+			tag.putLong("AltarPos", getAltarPos().asLong());
+		}
 		return tag;
 	}
 	
@@ -81,6 +88,9 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 			color = tag.getInt("Color");
 		}
 		heatTimer = tag.getInt("HeatTimer");
+		if (tag.contains("AltarPos")) {
+			setAltarPos(BlockPos.fromLong(tag.getLong("AltarPos")));
+		}
 	}
 	
 	@Override
@@ -92,6 +102,16 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	@Override
 	public Text getCustomName() {
 		return customName;
+	}
+	
+	@Override
+	public BlockPos getAltarPos() {
+		return altarPos;
+	}
+	
+	@Override
+	public void setAltarPos(BlockPos pos) {
+		altarPos = pos;
 	}
 	
 	@Override
@@ -212,7 +232,6 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 			clear();
 			oilRecipe = null;
 			world.setBlockState(pos, getCachedState().with(Properties.LEVEL_3, 0));
-			syncCauldron();
 		}
 		return Mode.NORMAL;
 	}
@@ -229,7 +248,9 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	private Mode insertStack(ItemStack stack) {
 		if (world != null) {
 			if (stack.getItem() == BWObjects.WOOD_ASH) {
-				return reset();
+				Mode reset = reset();
+				syncCauldron();
+				return reset;
 			}
 			else if (mode != Mode.FAILED && mode != Mode.TELEPORTATION) {
 				int firstEmpty = getFirstEmptySlot();

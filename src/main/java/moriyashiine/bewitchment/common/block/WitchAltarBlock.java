@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.common.block;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
 import moriyashiine.bewitchment.client.network.packet.SyncWitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
@@ -152,6 +153,25 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 	}
 	
 	@Override
+	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
+		if (formed) {
+			BlockPos.Mutable mutable = new BlockPos.Mutable();
+			for (int x = -24; x <= 24; x++) {
+				for (int y = -24; y <= 24; y++) {
+					for (int z = -24; z <= 24; z++) {
+						mutable.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
+						BlockEntity blockEntity = world.getBlockEntity(mutable);
+						if (blockEntity instanceof UsesAltarPower) {
+							((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, mutable.toImmutable()));
+							blockEntity.markDirty();
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!world.isClient && state.getBlock() != newState.getBlock()) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -163,11 +183,43 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 			}
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);
+		if (!world.isClient && state.getBlock() != newState.getBlock()) {
+			BlockPos.Mutable mutable = new BlockPos.Mutable();
+			for (int x = -24; x <= 24; x++) {
+				for (int y = -24; y <= 24; y++) {
+					for (int z = -24; z <= 24; z++) {
+						mutable.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
+						BlockEntity blockEntity = world.getBlockEntity(mutable);
+						if (blockEntity instanceof UsesAltarPower) {
+							((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, mutable.toImmutable()));
+							blockEntity.markDirty();
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
 		builder.add(Properties.WATERLOGGED, Properties.HORIZONTAL_FACING, Properties.LEVEL_15);
+	}
+	
+	@Nullable
+	public static BlockPos getClosestAltarPos(World world, BlockPos pos) {
+		BlockPos closest = null;
+		BlockPos.Mutable mutable = new BlockPos.Mutable();
+		for (int x = -24; x <= 24; x++) {
+			for (int y = -24; y <= 24; y++) {
+				for (int z = -24; z <= 24; z++) {
+					mutable.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
+					if (world.getBlockEntity(mutable) instanceof WitchAltarBlockEntity && (closest == null || pos.getSquaredDistance(mutable.toImmutable()) < pos.getSquaredDistance(closest))) {
+						closest = mutable.toImmutable();
+					}
+				}
+			}
+		}
+		return closest;
 	}
 	
 	private static int calculateLuminance(WitchAltarBlockEntity blockEntity) {

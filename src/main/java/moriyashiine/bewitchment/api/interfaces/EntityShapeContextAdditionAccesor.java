@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.api.accessor;
+package moriyashiine.bewitchment.api.interfaces;
 
 import net.minecraft.block.EntityShapeContext;
 import net.minecraft.entity.Entity;

@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.block;
 
+import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
 import moriyashiine.bewitchment.api.registry.OilRecipe;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWTags;
@@ -145,10 +146,14 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 	
 	@Override
 	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
-		if (!world.isClient) {
+		if (!world.isClient && state.getBlock() != oldState.getBlock()) {
 			BWWorldState worldState = BWWorldState.get(world);
 			worldState.witchCauldrons.add(pos.asLong());
 			worldState.markDirty();
+			BlockEntity blockEntity = world.getBlockEntity(pos);
+			//noinspection ConstantConditions
+			((UsesAltarPower) blockEntity).setAltarPos(WitchAltarBlock.getClosestAltarPos(world, pos));
+			blockEntity.markDirty();
 		}
 	}
 	
