@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.common.block;
 import moriyashiine.bewitchment.api.registry.OilRecipe;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWTags;
+import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
@@ -140,6 +141,29 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 			return ActionResult.success(client);
 		}
 		return super.onUse(state, world, pos, player, hand, hit);
+	}
+	
+	@Override
+	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
+		if (!world.isClient) {
+			BWWorldState worldState = BWWorldState.get(world);
+			worldState.witchCauldrons.add(pos.asLong());
+			worldState.markDirty();
+		}
+	}
+	
+	@Override
+	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+		if (!world.isClient) {
+			BWWorldState worldState = BWWorldState.get(world);
+			for (int i = worldState.witchCauldrons.size() - 1; i >= 0; i--) {
+				if (worldState.witchCauldrons.get(i) == pos.asLong()) {
+					worldState.witchCauldrons.remove(i);
+					worldState.markDirty();
+				}
+			}
+		}
+		super.onStateReplaced(state, world, pos, newState, moved);
 	}
 	
 	@Override

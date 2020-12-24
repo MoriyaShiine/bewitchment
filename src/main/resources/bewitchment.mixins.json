@@ -11,6 +11,7 @@
 	"TreeDecoratorTypeAccessor"
   ],
   "client": [
+	"client.CauldronTeleport",
 	"client.ChestTextureOverride"
   ],
   "injectors": {
