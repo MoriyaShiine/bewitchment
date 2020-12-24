@@ -116,7 +116,7 @@ public class OilRecipe implements Recipe<Inventory> {
 			for (Ingredient ingredient : recipe.input) {
 				ingredient.write(buf);
 			}
-			buf.writeItemStack(recipe.output);
+			buf.writeItemStack(recipe.getOutput());
 			buf.writeInt(recipe.color);
 		}
 		

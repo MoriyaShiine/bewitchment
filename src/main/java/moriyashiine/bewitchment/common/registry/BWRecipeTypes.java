@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.registry;
 
+import moriyashiine.bewitchment.api.registry.AthameDropRecipe;
 import moriyashiine.bewitchment.api.registry.AthameStrippingRecipe;
 import moriyashiine.bewitchment.api.registry.OilRecipe;
 import moriyashiine.bewitchment.common.Bewitchment;
@@ -18,6 +19,9 @@ public class BWRecipeTypes {
 	
 	public static final RecipeSerializer<AthameStrippingRecipe> ATHAME_STRIPPING_RECIPE_SERIALIZER = create("athame_stripping", new AthameStrippingRecipe.Serializer());
 	public static final RecipeType<AthameStrippingRecipe> ATHAME_STRIPPING_RECIPE_TYPE = create("athame_stripping");
+	
+	public static final RecipeSerializer<AthameDropRecipe> ATHAME_DROP_RECIPE_SERIALIZER = create("athame_drop", new AthameDropRecipe.Serializer());
+	public static final RecipeType<AthameDropRecipe> ATHAME_DROP_RECIPE_TYPE = create("athame_drop");
 	
 	public static final RecipeSerializer<OilRecipe> OIL_RECIPE_SERIALIZER = create("oil_recipe", new OilRecipe.Serializer());
 	public static final RecipeType<OilRecipe> OIL_RECIPE_TYPE = create("oil_recipe");

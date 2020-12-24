@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:athame_drop",
+  "entity_type": "minecraft:creeper",
+  "result": {
+	"item": "minecraft:creeper_head"
+  },
+  "chance": 0.2
+}

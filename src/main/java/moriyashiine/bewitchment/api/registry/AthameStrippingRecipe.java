@@ -77,7 +77,7 @@ public class AthameStrippingRecipe implements Recipe<Inventory> {
 		public void write(PacketByteBuf buf, AthameStrippingRecipe recipe) {
 			buf.writeString(Registry.BLOCK.getId(recipe.log).toString());
 			buf.writeString(Registry.BLOCK.getId(recipe.strippedLog).toString());
-			buf.writeItemStack(recipe.output);
+			buf.writeItemStack(recipe.getOutput());
 		}
 	}
 }
