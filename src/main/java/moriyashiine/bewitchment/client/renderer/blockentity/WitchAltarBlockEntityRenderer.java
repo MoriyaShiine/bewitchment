@@ -3,14 +3,18 @@ package moriyashiine.bewitchment.client.renderer.blockentity;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.RenderLayers;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.WallStandingBlockItem;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -22,7 +26,6 @@ public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAlta
 		super(dispatcher);
 	}
 	
-	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void render(WitchAltarBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 		World world = entity.getWorld();
@@ -30,17 +33,11 @@ public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAlta
 			BlockPos pos = entity.getPos();
 			Direction direction = world.getBlockState(pos).get(Properties.HORIZONTAL_FACING);
 			float rotation = -direction.asRotation();
-			boolean hasDepth;
 			ItemStack sword = entity.getStack(0);
 			if (!sword.isEmpty()) {
-				hasDepth = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(sword.getItem()).hasDepth();
 				matrices.push();
-				matrices.translate(direction == Direction.NORTH || direction == Direction.EAST ? 0.25 : 0.75, hasDepth ? 0.98 : 1.0125, direction == Direction.NORTH || direction == Direction.WEST ? 0.75 : 0.25);
-				if (!hasDepth) {
-					matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
-				}
-				else {
-					matrices.translate(0, 0.145, 0);
+				if (sword.getItem() instanceof WallStandingBlockItem) {
+					matrices.translate(direction == Direction.NORTH || direction == Direction.EAST ? 0.25 : 0.75, 1.125, direction == Direction.NORTH || direction == Direction.WEST ? 0.75 : 0.25);
 					if (direction == Direction.NORTH) {
 						matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(180));
 					}
@@ -52,23 +49,38 @@ public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAlta
 						matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
 						matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270));
 					}
+					matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vector3f.POSITIVE_Z : Vector3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
+					matrices.scale(0.5f, 0.5f, 0.5f);
+					MinecraftClient.getInstance().getItemRenderer().renderItem(sword, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers);
 				}
-				matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vector3f.POSITIVE_Z : Vector3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
-				float scale = hasDepth ? 0.5f : 1 / 3f;
-				matrices.scale(scale, scale, scale);
-				MinecraftClient.getInstance().getItemRenderer().renderItem(sword, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers);
+				else if (!(sword.getItem() instanceof BlockItem)) {
+					matrices.translate(direction == Direction.NORTH || direction == Direction.EAST ? 0.25 : 0.75, 1.01, direction == Direction.NORTH || direction == Direction.WEST ? 0.75 : 0.25);
+					matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
+					matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vector3f.POSITIVE_Z : Vector3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
+					matrices.scale(1 / 3f, 1 / 3f, 1 / 3f);
+					MinecraftClient.getInstance().getItemRenderer().renderItem(sword, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers);
+				}
+				else {
+					matrices.translate(direction == Direction.SOUTH || direction == Direction.WEST ? 0.5f : 0, 1, direction == Direction.NORTH || direction == Direction.WEST ? 0.5f : 0);
+					matrices.scale(0.5f, 0.5f, 0.5f);
+					BlockState state = ((BlockItem) sword.getItem()).getBlock().getDefaultState();
+					if (state.getProperties().contains(Properties.HORIZONTAL_FACING)) {
+						state = state.with(Properties.HORIZONTAL_FACING, direction.getOpposite());
+					}
+					if (state.getProperties().contains(Properties.FACING)) {
+						state = state.with(Properties.FACING, direction.getOpposite());
+					}
+					MinecraftClient.getInstance().getBlockRenderManager().getModelRenderer().render(matrices.peek(), vertexConsumers.getBuffer(RenderLayers.getEntityBlockLayer(state, false)), state, MinecraftClient.getInstance().getBlockRenderManager().getModels().getModel(state), 1, 1, 1, light, overlay);
+				}
 				matrices.pop();
 			}
 			ItemStack pentacle = entity.getStack(1);
 			if (!pentacle.isEmpty()) {
-				hasDepth = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(pentacle.getItem()).hasDepth();
 				matrices.push();
-				matrices.translate(direction == Direction.NORTH || direction == Direction.SOUTH ? 0.5 : direction == Direction.EAST ? 0.75 : 0.25, hasDepth ? 1.025 : 1.01, direction == Direction.EAST || direction == Direction.WEST ? 0.5 : direction == Direction.NORTH ? 0.25 : 0.75);
-				if (!hasDepth) {
-					matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
-				}
-				else {
-					matrices.translate(0, 0.1, 0);
+				double x = direction == Direction.NORTH || direction == Direction.SOUTH ? 0.5 : direction == Direction.EAST ? 0.75 : 0.25;
+				double z = direction == Direction.EAST || direction == Direction.WEST ? 0.5 : direction == Direction.NORTH ? 0.25 : 0.75;
+				if (pentacle.getItem() instanceof WallStandingBlockItem) {
+					matrices.translate(x, 1.125, z);
 					if (direction == Direction.NORTH) {
 						matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(180));
 					}
@@ -80,23 +92,36 @@ public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAlta
 						matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
 						matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270));
 					}
+					matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vector3f.POSITIVE_Z : Vector3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
+					matrices.scale(0.5f, 0.5f, 0.5f);
+					MinecraftClient.getInstance().getItemRenderer().renderItem(pentacle, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers);
 				}
-				matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vector3f.POSITIVE_Z : Vector3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
-				float scale = hasDepth ? 0.5f : 1 / 3f;
-				matrices.scale(scale, scale, scale);
-				MinecraftClient.getInstance().getItemRenderer().renderItem(pentacle, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers);
+				else if (!(pentacle.getItem() instanceof BlockItem)) {
+					matrices.translate(x, 1.01, z);
+					matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
+					matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vector3f.POSITIVE_Z : Vector3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
+					matrices.scale(1 / 3f, 1 / 3f, 1 / 3f);
+					MinecraftClient.getInstance().getItemRenderer().renderItem(pentacle, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers);
+				}
+				else {
+					matrices.translate(direction == Direction.NORTH || direction == Direction.SOUTH ? 0.25f : direction == Direction.EAST ? 0.35f : 0.15f, 1, direction == Direction.EAST || direction == Direction.WEST ? 0.25f : direction == Direction.NORTH ? 0.15f : 0.35f);
+					matrices.scale(0.5f, 0.5f, 0.5f);
+					BlockState state = ((BlockItem) pentacle.getItem()).getBlock().getDefaultState();
+					if (state.getProperties().contains(Properties.HORIZONTAL_FACING)) {
+						state = state.with(Properties.HORIZONTAL_FACING, direction.getOpposite());
+					}
+					if (state.getProperties().contains(Properties.FACING)) {
+						state = state.with(Properties.FACING, direction.getOpposite());
+					}
+					MinecraftClient.getInstance().getBlockRenderManager().getModelRenderer().render(matrices.peek(), vertexConsumers.getBuffer(RenderLayers.getEntityBlockLayer(state, false)), state, MinecraftClient.getInstance().getBlockRenderManager().getModels().getModel(state), 1, 1, 1, light, overlay);
+				}
 				matrices.pop();
 			}
 			ItemStack wand = entity.getStack(2);
 			if (!wand.isEmpty()) {
-				hasDepth = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(wand.getItem()).hasDepth();
 				matrices.push();
-				matrices.translate(direction == Direction.NORTH || direction == Direction.WEST ? 0.75 : 0.25, 1.01, direction == Direction.NORTH || direction == Direction.EAST ? 0.75 : 0.25);
-				if (!hasDepth) {
-					matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
-				}
-				else {
-					matrices.translate(0, 0.115, 0);
+				if (wand.getItem() instanceof WallStandingBlockItem) {
+					matrices.translate(direction == Direction.NORTH || direction == Direction.WEST ? 0.75f : 0.25f, 1.125f, direction == Direction.NORTH || direction == Direction.EAST ? 0.75f : 0.25f);
 					if (direction == Direction.NORTH) {
 						matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(180));
 					}
@@ -108,11 +133,29 @@ public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAlta
 						matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
 						matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270));
 					}
+					matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vector3f.POSITIVE_Z : Vector3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
+					matrices.scale(0.5f, 0.5f, 0.5f);
+					MinecraftClient.getInstance().getItemRenderer().renderItem(wand, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers);
 				}
-				matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vector3f.POSITIVE_Z : Vector3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
-				float scale = hasDepth ? 0.5f : 1 / 3f;
-				matrices.scale(scale, scale, scale);
-				MinecraftClient.getInstance().getItemRenderer().renderItem(wand, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers);
+				else if (!(wand.getItem() instanceof BlockItem)) {
+					matrices.translate(direction == Direction.NORTH || direction == Direction.WEST ? 0.75 : 0.25, 1.01, direction == Direction.NORTH || direction == Direction.EAST ? 0.75 : 0.25);
+					matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
+					matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vector3f.POSITIVE_Z : Vector3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
+					matrices.scale(1 / 3f, 1 / 3f, 1 / 3f);
+					MinecraftClient.getInstance().getItemRenderer().renderItem(wand, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers);
+				}
+				else {
+					matrices.translate(direction == Direction.NORTH || direction == Direction.WEST ? 0.5f : 0, 1, direction == Direction.NORTH || direction == Direction.EAST ? 0.5f : 0);
+					matrices.scale(0.5f, 0.5f, 0.5f);
+					BlockState state = ((BlockItem) wand.getItem()).getBlock().getDefaultState();
+					if (state.getProperties().contains(Properties.HORIZONTAL_FACING)) {
+						state = state.with(Properties.HORIZONTAL_FACING, direction.getOpposite());
+					}
+					if (state.getProperties().contains(Properties.FACING)) {
+						state = state.with(Properties.FACING, direction.getOpposite());
+					}
+					MinecraftClient.getInstance().getBlockRenderManager().getModelRenderer().render(matrices.peek(), vertexConsumers.getBuffer(RenderLayers.getEntityBlockLayer(state, false)), state, MinecraftClient.getInstance().getBlockRenderManager().getModels().getModel(state), 1, 1, 1, light, overlay);
+				}
 				matrices.pop();
 			}
 		}
