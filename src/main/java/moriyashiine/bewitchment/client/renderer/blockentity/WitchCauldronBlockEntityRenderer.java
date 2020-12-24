@@ -3,12 +3,10 @@ package moriyashiine.bewitchment.client.renderer.blockentity;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
@@ -17,8 +15,6 @@ import net.minecraft.world.World;
 
 @Environment(EnvType.CLIENT)
 public class WitchCauldronBlockEntityRenderer extends BlockEntityRenderer<WitchCauldronBlockEntity> {
-	private static final Sprite WATER_SPRITE = MinecraftClient.getInstance().getBlockRenderManager().getModel(Blocks.WATER.getDefaultState()).getSprite();
-	
 	public WitchCauldronBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
 		super(dispatcher);
 	}
