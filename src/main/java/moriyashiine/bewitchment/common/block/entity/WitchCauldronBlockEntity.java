@@ -262,7 +262,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 						return Mode.OIL_CRAFTING;
 					}
 					else if (firstEmpty == 0 && stack.getItem() == Items.ENDER_PEARL) {
-						setColor(0x7fff7f);
+						setColor(0x319A89);
 						return Mode.TELEPORTATION;
 					}
 					setColor(0xff3fff);
