@@ -6,10 +6,9 @@ import moriyashiine.bewitchment.common.network.packet.CauldronTeleportPacket;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.client.world.ClientWorld;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,9 +16,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Environment(EnvType.CLIENT)
 @Mixin(ClientPlayerEntity.class)
-public abstract class ClientPlayerEntityMixin extends PlayerEntity {
-	public ClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
-		super(world, pos, yaw, profile);
+public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
+	public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
+		super(world, profile);
 	}
 	
 	@Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)

@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.common.entity.living.SnakeEntity;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.PounceAtTargetGoal;
 import net.minecraft.entity.mob.MobEntity;
 import org.spongepowered.asm.mixin.Final;
@@ -11,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PounceAtTargetGoal.class)
-public abstract class PounceAtTargetGoalMixin {
+public abstract class PounceAtTargetGoalMixin extends Goal {
 	@Shadow
 	@Final
 	private MobEntity mob;

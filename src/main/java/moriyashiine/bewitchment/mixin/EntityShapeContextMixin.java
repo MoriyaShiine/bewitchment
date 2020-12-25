@@ -13,13 +13,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class EntityShapeContextMixin implements ShapeContext, EntityShapeContextAdditionAccesor {
 	private Entity entity;
 	
-	@Inject(method = "<init>(Lnet/minecraft/entity/Entity;)V", at = @At("TAIL"))
-	private void init(Entity entity, CallbackInfo callbackInfo) {
-		this.entity = entity;
-	}
-	
 	@Override
 	public Entity getEntity() {
 		return entity;
+	}
+	
+	@Inject(method = "<init>(Lnet/minecraft/entity/Entity;)V", at = @At("TAIL"))
+	private void init(Entity entity, CallbackInfo callbackInfo) {
+		this.entity = entity;
 	}
 }
