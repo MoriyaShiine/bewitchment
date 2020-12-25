@@ -17,8 +17,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Environment(EnvType.CLIENT)
 @Mixin(ClientPlayerEntity.class)
-public abstract class CauldronTeleport extends PlayerEntity {
-	public CauldronTeleport(World world, BlockPos pos, float yaw, GameProfile profile) {
+public abstract class ClientPlayerEntityMixin extends PlayerEntity {
+	public ClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
 		super(world, pos, yaw, profile);
 	}
 	

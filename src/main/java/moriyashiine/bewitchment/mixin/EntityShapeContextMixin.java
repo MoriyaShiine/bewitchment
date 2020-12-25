@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntityShapeContext.class)
-public abstract class EntityShapeContextAddition implements ShapeContext, EntityShapeContextAdditionAccesor {
+public abstract class EntityShapeContextMixin implements ShapeContext, EntityShapeContextAdditionAccesor {
 	private Entity entity;
 	
 	@Inject(method = "<init>(Lnet/minecraft/entity/Entity;)V", at = @At("TAIL"))

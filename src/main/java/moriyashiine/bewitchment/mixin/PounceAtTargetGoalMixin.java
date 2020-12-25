@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PounceAtTargetGoal.class)
-public abstract class SnakePounceFix {
+public abstract class PounceAtTargetGoalMixin {
 	@Shadow
 	@Final
 	private MobEntity mob;

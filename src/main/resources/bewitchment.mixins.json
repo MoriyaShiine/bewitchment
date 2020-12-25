@@ -4,16 +4,15 @@
   "package": "moriyashiine.bewitchment.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-	"AthameHandler",
-	"EntityShapeContextAddition",
-	"SaltCollisionHack",
-	"SilverHandler",
-	"SnakePounceFix",
+	"AbstractBlockStateMixin",
+	"EntityShapeContextMixin",
+	"LivingEntityMixin",
+	"PounceAtTargetGoalMixin",
 	"TreeDecoratorTypeAccessor"
   ],
   "client": [
-	"client.CauldronTeleport",
-	"client.ChestTextureOverride"
+	"client.ClientPlayerEntityMixin",
+	"client.TexturedRenderLayersMixin"
   ],
   "injectors": {
 	"defaultRequire": 1

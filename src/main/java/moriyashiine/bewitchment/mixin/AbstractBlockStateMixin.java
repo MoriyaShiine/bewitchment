@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AbstractBlock.AbstractBlockState.class)
-public abstract class SaltCollisionHack {
+public abstract class AbstractBlockStateMixin {
 	@Shadow
 	public abstract Block getBlock();
 	
