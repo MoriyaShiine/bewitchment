@@ -6,6 +6,8 @@
   "mixins": [
 	"AbstractBlockStateMixin",
 	"EntityShapeContextMixin",
+	"EntityTypeMixin",
+	"LandPathNodeMakerMixin",
 	"LivingEntityMixin",
 	"PounceAtTargetGoalMixin",
 	"TreeDecoratorTypeAccessor"
