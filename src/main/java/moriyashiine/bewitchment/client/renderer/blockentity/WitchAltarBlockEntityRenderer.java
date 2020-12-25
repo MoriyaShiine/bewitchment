@@ -68,7 +68,7 @@ public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAlta
 						state = state.with(Properties.HORIZONTAL_FACING, direction.getOpposite());
 					}
 					if (state.getProperties().contains(Properties.FACING)) {
-						state = state.with(Properties.FACING, direction.getOpposite());
+						state = state.with(Properties.FACING, Direction.UP);
 					}
 					MinecraftClient.getInstance().getBlockRenderManager().getModelRenderer().render(matrices.peek(), vertexConsumers.getBuffer(RenderLayers.getEntityBlockLayer(state, false)), state, MinecraftClient.getInstance().getBlockRenderManager().getModels().getModel(state), 1, 1, 1, light, overlay);
 				}
@@ -111,7 +111,7 @@ public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAlta
 						state = state.with(Properties.HORIZONTAL_FACING, direction.getOpposite());
 					}
 					if (state.getProperties().contains(Properties.FACING)) {
-						state = state.with(Properties.FACING, direction.getOpposite());
+						state = state.with(Properties.FACING, Direction.UP);
 					}
 					MinecraftClient.getInstance().getBlockRenderManager().getModelRenderer().render(matrices.peek(), vertexConsumers.getBuffer(RenderLayers.getEntityBlockLayer(state, false)), state, MinecraftClient.getInstance().getBlockRenderManager().getModels().getModel(state), 1, 1, 1, light, overlay);
 				}
@@ -152,7 +152,7 @@ public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAlta
 						state = state.with(Properties.HORIZONTAL_FACING, direction.getOpposite());
 					}
 					if (state.getProperties().contains(Properties.FACING)) {
-						state = state.with(Properties.FACING, direction.getOpposite());
+						state = state.with(Properties.FACING, Direction.UP);
 					}
 					MinecraftClient.getInstance().getBlockRenderManager().getModelRenderer().render(matrices.peek(), vertexConsumers.getBuffer(RenderLayers.getEntityBlockLayer(state, false)), state, MinecraftClient.getInstance().getBlockRenderManager().getModels().getModel(state), 1, 1, 1, light, overlay);
 				}
