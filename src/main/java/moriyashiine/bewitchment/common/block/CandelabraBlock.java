@@ -61,7 +61,7 @@ public class CandelabraBlock extends Block implements Waterloggable {
 				}
 				return ActionResult.success(client);
 			}
-			else if (stack.isEmpty()) {
+			else if (stack.isEmpty() && state.get(Properties.LIT)) {
 				if (!client) {
 					world.setBlockState(pos, state.with(Properties.LIT, false));
 					world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1, 2);
