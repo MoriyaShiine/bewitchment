@@ -265,7 +265,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 						setColor(0x319a89);
 						return Mode.TELEPORTATION;
 					}
-					setColor(0xffd700);
+					setColor(0xde6fa1);
 					return Mode.OIL_CRAFTING;
 				}
 			}
