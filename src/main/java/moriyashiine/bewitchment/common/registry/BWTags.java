@@ -11,6 +11,7 @@ import net.minecraft.util.Identifier;
 public class BWTags {
 	public static final Tag<EntityType<?>> WEAK_TO_SILVER = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "weak_to_silver"));
 	
+	public static final Tag<Item> SKULLS = TagRegistry.item(new Identifier("c", "skulls"));
 	public static final Tag<Block> GIVES_ALTAR_POWER = TagRegistry.block(new Identifier(Bewitchment.MODID, "gives_altar_power"));
 	public static final Tag<Block> HEATS_CAULDRON = TagRegistry.block(new Identifier(Bewitchment.MODID, "heats_cauldron"));
 	

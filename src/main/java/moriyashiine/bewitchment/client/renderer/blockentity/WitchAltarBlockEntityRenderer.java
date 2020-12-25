@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.client.renderer.blockentity;
 
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
+import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -14,7 +15,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.WallStandingBlockItem;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -36,7 +36,7 @@ public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAlta
 			ItemStack sword = entity.getStack(0);
 			if (!sword.isEmpty()) {
 				matrices.push();
-				if (sword.getItem() instanceof WallStandingBlockItem) {
+				if (BWTags.SKULLS.contains(sword.getItem())) {
 					matrices.translate(direction == Direction.NORTH || direction == Direction.EAST ? 0.25 : 0.75, 1.125, direction == Direction.NORTH || direction == Direction.WEST ? 0.75 : 0.25);
 					if (direction == Direction.NORTH) {
 						matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(180));
@@ -79,7 +79,7 @@ public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAlta
 				matrices.push();
 				double x = direction == Direction.NORTH || direction == Direction.SOUTH ? 0.5 : direction == Direction.EAST ? 0.75 : 0.25;
 				double z = direction == Direction.EAST || direction == Direction.WEST ? 0.5 : direction == Direction.NORTH ? 0.25 : 0.75;
-				if (pentacle.getItem() instanceof WallStandingBlockItem) {
+				if (BWTags.SKULLS.contains(pentacle.getItem())) {
 					matrices.translate(x, 1.125, z);
 					if (direction == Direction.NORTH) {
 						matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(180));
@@ -120,7 +120,7 @@ public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAlta
 			ItemStack wand = entity.getStack(2);
 			if (!wand.isEmpty()) {
 				matrices.push();
-				if (wand.getItem() instanceof WallStandingBlockItem) {
+				if (BWTags.SKULLS.contains(wand.getItem())) {
 					matrices.translate(direction == Direction.NORTH || direction == Direction.WEST ? 0.75f : 0.25f, 1.125f, direction == Direction.NORTH || direction == Direction.EAST ? 0.75f : 0.25f);
 					if (direction == Direction.NORTH) {
 						matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(180));
