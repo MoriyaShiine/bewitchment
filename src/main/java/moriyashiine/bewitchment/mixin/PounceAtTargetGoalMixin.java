@@ -17,7 +17,7 @@ public abstract class PounceAtTargetGoalMixin {
 	private MobEntity mob;
 	
 	@Inject(method = "start", at = @At("TAIL"), cancellable = true)
-	private void getCollisionShape(CallbackInfo callbackInfo) {
+	private void start(CallbackInfo callbackInfo) {
 		if (mob instanceof SnakeEntity) {
 			((SnakeEntity) mob).toggleAttack(true);
 		}

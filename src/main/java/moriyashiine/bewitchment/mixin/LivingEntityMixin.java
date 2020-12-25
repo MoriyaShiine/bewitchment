@@ -29,7 +29,7 @@ public abstract class LivingEntityMixin extends Entity {
 	}
 	
 	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 0, target = "Lnet/minecraft/entity/LivingEntity;getHealth()F"))
-	private float modifyDamageOffense(float amount, DamageSource source) {
+	private float applyDamage(float amount, DamageSource source) {
 		if (BewitchmentAPI.isWeakToSilver((LivingEntity) (Object) this)) {
 			if (BewitchmentAPI.isSourceFromSilver(source)) {
 				return amount + 4;
@@ -39,7 +39,7 @@ public abstract class LivingEntityMixin extends Entity {
 	}
 	
 	@ModifyVariable(method = {"damage"}, at = @At("HEAD"))
-	private float modifyDamageDefense(float amount, DamageSource source) {
+	private float damage(float amount, DamageSource source) {
 		if (!(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns())) {
 			Entity attacker = source.getSource();
 			if (attacker instanceof LivingEntity) {
@@ -57,7 +57,7 @@ public abstract class LivingEntityMixin extends Entity {
 	}
 	
 	@Inject(method = "tick", at = @At("HEAD"))
-	private void damageEntitiesWeakToSilver(CallbackInfo callbackInfo) {
+	private void tick(CallbackInfo callbackInfo) {
 		//noinspection ConstantConditions
 		if (!world.isClient && (Object) this instanceof LivingEntity) {
 			LivingEntity livingEntity = (LivingEntity) (Object) this;
@@ -77,7 +77,7 @@ public abstract class LivingEntityMixin extends Entity {
 	}
 	
 	@Inject(method = "drop", at = @At("HEAD"))
-	private void dropLoot(DamageSource source, CallbackInfo callbackInfo) {
+	private void drop(DamageSource source, CallbackInfo callbackInfo) {
 		if (!world.isClient) {
 			Entity attacker = source.getSource();
 			if (attacker instanceof LivingEntity) {
