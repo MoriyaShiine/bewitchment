@@ -145,6 +145,16 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 	}
 	
 	@Override
+	public boolean hasComparatorOutput(BlockState state) {
+		return true;
+	}
+	
+	@Override
+	public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+		return state.get(Properties.LEVEL_3);
+	}
+	
+	@Override
 	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
 		if (!world.isClient && state.getBlock() != oldState.getBlock()) {
 			BWWorldState worldState = BWWorldState.get(world);

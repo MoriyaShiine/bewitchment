@@ -98,6 +98,7 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 							world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, upgrade));
 							altar.setStack(slot, stack.split(1));
 							world.setBlockState(pos, state.with(Properties.LEVEL_15, calculateLuminance(altar)), 11);
+							world.updateComparators(pos, this);
 							altar.markedForScan = true;
 							altar.sync();
 						}
@@ -108,6 +109,7 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 								world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, altar.removeStack(i, 1)));
 							}
 							world.setBlockState(pos, state.with(Properties.LEVEL_15, 0), 11);
+							world.updateComparators(pos, this);
 							altar.markedForScan = true;
 							altar.sync();
 							PlayerStream.watching(altar).forEach(playerEntity -> SyncWitchAltarBlockEntity.send(player, altar));
@@ -150,6 +152,27 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.get(Properties.WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+	}
+	
+	@Override
+	public boolean hasComparatorOutput(BlockState state) {
+		return formed;
+	}
+	
+	@Override
+	public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if (blockEntity instanceof WitchAltarBlockEntity) {
+			WitchAltarBlockEntity altar = (WitchAltarBlockEntity) blockEntity;
+			int items = 0;
+			for (int i = 0; i < altar.size(); i++) {
+				if (!altar.getStack(i).isEmpty()) {
+					items++;
+				}
+			}
+			return items;
+		}
+		return 0;
 	}
 	
 	@Override
