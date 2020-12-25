@@ -23,12 +23,14 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 	
 	@Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
 	private void sendChatMessage(String message, CallbackInfo callbackInfo) {
-		for (int i = 0; i < 1; i++) {
-			BlockEntity blockEntity = world.getBlockEntity(getBlockPos().down(i));
-			if (blockEntity instanceof WitchCauldronBlockEntity && ((WitchCauldronBlockEntity) blockEntity).mode == WitchCauldronBlockEntity.Mode.TELEPORTATION) {
-				CauldronTeleportPacket.send(blockEntity.getPos(), message);
-				callbackInfo.cancel();
-				break;
+		if (!message.startsWith("/")) {
+			for (int i = 0; i < 1; i++) {
+				BlockEntity blockEntity = world.getBlockEntity(getBlockPos().down(i));
+				if (blockEntity instanceof WitchCauldronBlockEntity && ((WitchCauldronBlockEntity) blockEntity).mode == WitchCauldronBlockEntity.Mode.TELEPORTATION) {
+					CauldronTeleportPacket.send(blockEntity.getPos(), message);
+					callbackInfo.cancel();
+					break;
+				}
 			}
 		}
 	}
