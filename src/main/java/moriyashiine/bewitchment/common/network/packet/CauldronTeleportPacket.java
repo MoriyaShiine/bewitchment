@@ -58,7 +58,7 @@ public class CauldronTeleportPacket {
 						BlockPos altarPos = ((UsesAltarPower) world.getBlockEntity(cauldronPos)).getAltarPos();
 						if (altarPos != null) {
 							WitchAltarBlockEntity altar = (WitchAltarBlockEntity) world.getBlockEntity(altarPos);
-							if (altar != null && altar.drain((int) (Math.sqrt(closest.getSquaredDistance(player.getPos(), true)) * 2))) {
+							if (altar != null && altar.drain((int) (Math.sqrt(closest.getSquaredDistance(player.getPos(), true)) * 2), false)) {
 								world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1, 1);
 								PlayerStream.watching(player).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, player));
 								SpawnPortalParticlesPacket.send(player, player);

@@ -9,7 +9,9 @@
 	"EntityTypeMixin",
 	"LandPathNodeMakerMixin",
 	"LivingEntityMixin",
+	"PlayerEntityMixin",
 	"PounceAtTargetGoalMixin",
+	"ServerPlayerEntityMixin",
 	"TreeDecoratorTypeAccessor"
   ],
   "client": [

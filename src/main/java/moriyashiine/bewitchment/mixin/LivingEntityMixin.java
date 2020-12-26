@@ -38,7 +38,7 @@ public abstract class LivingEntityMixin extends Entity {
 		return amount;
 	}
 	
-	@ModifyVariable(method = {"damage"}, at = @At("HEAD"))
+	@ModifyVariable(method = "damage", at = @At("HEAD"))
 	private float damage(float amount, DamageSource source) {
 		if (!(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns())) {
 			Entity attacker = source.getSource();
