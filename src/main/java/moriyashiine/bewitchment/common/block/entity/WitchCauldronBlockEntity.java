@@ -132,7 +132,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 		if (world != null) {
 			if (!loaded) {
 				markDirty();
-				box = new Box(pos);
+				box = new Box(pos).contract(0.75);
 				oilRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.OIL_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
 				loaded = true;
 			}
