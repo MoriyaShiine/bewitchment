@@ -5,7 +5,6 @@ import moriyashiine.bewitchment.common.Bewitchment;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
@@ -40,8 +39,6 @@ public class SyncClientSerializableBlockEntity {
 					if (blockEntity instanceof BlockEntityClientSerializable) {
 						BlockEntityClientSerializable clientSerializable = (BlockEntityClientSerializable) blockEntity;
 						clientSerializable.fromClientTag(tag);
-						BlockState state = world.getBlockState(pos);
-						world.updateListeners(pos, state, state, 3);
 					}
 				}
 			}

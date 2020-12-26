@@ -15,7 +15,6 @@ import moriyashiine.bewitchment.client.renderer.entity.living.RavenEntityRendere
 import moriyashiine.bewitchment.client.renderer.entity.living.SnakeEntityRenderer;
 import moriyashiine.bewitchment.client.renderer.entity.living.ToadEntityRenderer;
 import moriyashiine.bewitchment.common.block.entity.BWChestBlockEntity;
-import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWObjects;
@@ -28,7 +27,6 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.render.RenderLayer;
@@ -47,15 +45,6 @@ public class BewitchmentClient implements ClientModInitializer {
 		ClientSidePacketRegistry.INSTANCE.register(SyncClientSerializableBlockEntity.ID, SyncClientSerializableBlockEntity::handle);
 		ClientSidePacketRegistry.INSTANCE.register(SpawnPortalParticlesPacket.ID, SpawnPortalParticlesPacket::handle);
 		ParticleFactoryRegistry.getInstance().register(BWParticleTypes.CAULDRON_BUBBLE, CauldronBubbleParticle.Factory::new);
-		ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> {
-			if (tintIndex == 1 && world != null) {
-				BlockEntity blockEntity = world.getBlockEntity(pos);
-				if (blockEntity instanceof WitchCauldronBlockEntity) {
-					return ((WitchCauldronBlockEntity) blockEntity).color;
-				}
-			}
-			return 0xffffff;
-		}, BWObjects.WITCH_CAULDRON);
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.BW_CHEST, ChestBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.WITCH_ALTAR, WitchAltarBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.WITCH_CAULDRON, WitchCauldronBlockEntityRenderer::new);
@@ -84,7 +73,6 @@ public class BewitchmentClient implements ClientModInitializer {
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), BWObjects.END_STONE_WITCH_ALTAR);
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), BWObjects.OBSIDIAN_WITCH_ALTAR);
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), BWObjects.PURPUR_WITCH_ALTAR);
-		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(), BWObjects.WITCH_CAULDRON);
 		SpriteIdentifierRegistry.INSTANCE.addIdentifier(SpriteIdentifiers.JUNIPER);
 		SpriteIdentifierRegistry.INSTANCE.addIdentifier(SpriteIdentifiers.TRAPPED_JUNIPER);
 		SpriteIdentifierRegistry.INSTANCE.addIdentifier(SpriteIdentifiers.JUNIPER_LEFT);

@@ -160,6 +160,7 @@
   "entity.bewitchment.silver_arrow": "Silver Arrow",
   "entity.bewitchment.owl": "Owl",
   "bewitchment.insufficent_altar_power": "Your source of magic is not strong enough",
+  "bewitchment.invalid_cauldron": "Cannot find a cauldron named '%s'",
   "rei.bewitchment.athame_stripping": "Athame Stripping",
   "rei.bewitchment.athame_drops": "Athame Drops",
   "rei.bewitchment.oil_crafting": "Oil Crafting"
