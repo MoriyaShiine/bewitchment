@@ -35,6 +35,7 @@ public class CauldronTeleportPacket {
 		String message = buf.readString();
 		//noinspection Convert2Lambda
 		context.getTaskQueue().submit(new Runnable() {
+			@SuppressWarnings("ConstantConditions")
 			@Override
 			public void run() {
 				PlayerEntity player = context.getPlayer();
@@ -43,35 +44,36 @@ public class CauldronTeleportPacket {
 				BlockPos closest = null;
 				for (long longPos : worldState.witchCauldrons) {
 					BlockPos pos = BlockPos.fromLong(longPos);
-					BlockEntity cauldron = world.getBlockEntity(pos);
-					if ((cauldron instanceof WitchCauldronBlockEntity && ((WitchCauldronBlockEntity) cauldron).hasCustomName()) && (closest == null || closest.getSquaredDistance(player.getPos(), true) < pos.getSquaredDistance(player.getPos(), true))) {
-						closest = pos;
+					BlockEntity blockEntity = world.getBlockEntity(pos);
+					if (blockEntity instanceof WitchCauldronBlockEntity) {
+						WitchCauldronBlockEntity cauldron = (WitchCauldronBlockEntity) blockEntity;
+						if (cauldron.hasCustomName() && cauldron.getCustomName().asString().equals(message) && (closest == null || pos.getSquaredDistance(player.getPos(), true) < closest.getSquaredDistance(player.getPos(), true))) {
+							closest = pos;
+						}
 					}
 				}
 				if (closest != null) {
 					BlockEntity blockEntity = world.getBlockEntity(closest);
 					if (blockEntity instanceof WitchCauldronBlockEntity) {
-						WitchCauldronBlockEntity cauldron = (WitchCauldronBlockEntity) blockEntity;
-						//noinspection ConstantConditions
-						if (cauldron.hasCustomName() && cauldron.getCustomName().asString().equals(message)) {
-							//noinspection ConstantConditions
-							BlockPos altarPos = ((UsesAltarPower) world.getBlockEntity(cauldronPos)).getAltarPos();
-							if (altarPos != null) {
-								WitchAltarBlockEntity altar = (WitchAltarBlockEntity) world.getBlockEntity(altarPos);
-								if (altar != null && altar.drain((int) (Math.sqrt(closest.getSquaredDistance(player.getPos(), true)) * 2))) {
-									world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1, 1);
-									PlayerStream.watching(player).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, player));
-									SpawnPortalParticlesPacket.send(player, player);
-									player.teleport(closest.getX() + 0.5, closest.getY() + 0.5, closest.getZ() + 0.5);
-									world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1, 1);
-									PlayerStream.watching(player).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, player));
-									SpawnPortalParticlesPacket.send(player, player);
-									return;
-								}
+						BlockPos altarPos = ((UsesAltarPower) world.getBlockEntity(cauldronPos)).getAltarPos();
+						if (altarPos != null) {
+							WitchAltarBlockEntity altar = (WitchAltarBlockEntity) world.getBlockEntity(altarPos);
+							if (altar != null && altar.drain((int) (Math.sqrt(closest.getSquaredDistance(player.getPos(), true)) * 2))) {
+								world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1, 1);
+								PlayerStream.watching(player).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, player));
+								SpawnPortalParticlesPacket.send(player, player);
+								player.teleport(closest.getX() + 0.5, closest.getY() + 0.5, closest.getZ() + 0.5);
+								world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1, 1);
+								PlayerStream.watching(player).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, player));
+								SpawnPortalParticlesPacket.send(player, player);
+								return;
 							}
-							player.sendMessage(new TranslatableText(Bewitchment.MODID + ".insufficent_altar_power"), true);
 						}
+						player.sendMessage(new TranslatableText(Bewitchment.MODID + ".insufficent_altar_power"), true);
 					}
+				}
+				else {
+					player.sendMessage(new TranslatableText(Bewitchment.MODID + ".invalid_cauldron", message), true);
 				}
 			}
 		});
