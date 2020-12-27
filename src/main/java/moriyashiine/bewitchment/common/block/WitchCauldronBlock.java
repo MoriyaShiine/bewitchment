@@ -137,7 +137,7 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 											BlockPos altarPos = cauldron.getAltarPos();
 											if (altarPos != null) {
 												blockEntity = world.getBlockEntity(altarPos);
-												if (!(blockEntity instanceof WitchAltarBlockEntity && ((WitchAltarBlockEntity) blockEntity).drain(cauldron.getBrewCost(), false))) {
+												if (blockEntity instanceof WitchAltarBlockEntity && ((WitchAltarBlockEntity) blockEntity).drain(cauldron.getBrewCost(), false)) {
 													failed = false;
 												}
 											}
