@@ -16,6 +16,7 @@
   ],
   "client": [
 	"client.ClientPlayerEntityMixin",
+	"client.InGameHudMixin",
 	"client.TexturedRenderLayersMixin"
   ],
   "injectors": {

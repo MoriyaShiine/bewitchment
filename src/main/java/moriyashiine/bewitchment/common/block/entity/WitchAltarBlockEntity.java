@@ -114,7 +114,6 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 					PlayerStream.around(world, pos, 24).forEach(playerEntity -> MagicAccessor.of(playerEntity).ifPresent(magicAccessor -> {
 						if (magicAccessor.fill(100, true) && drain(10, true)) {
 							magicAccessor.fill(100, false);
-							System.out.println(magicAccessor.getMagic());
 							drain(10, false);
 						}
 					}));

@@ -15,10 +15,15 @@ public interface MagicAccessor {
 	
 	void setMagic(int magic);
 	
+	int getMagicTimer();
+	
+	void setMagicTimer(int magicTimer);
+	
 	default boolean fill(int amount, boolean simulate) {
 		if (getMagic() < MAX_MAGIC) {
 			if (!simulate) {
 				setMagic(Math.min(MAX_MAGIC, getMagic() + amount));
+				setMagicTimer(60);
 			}
 			return true;
 		}
@@ -29,6 +34,7 @@ public interface MagicAccessor {
 		if (getMagic() - amount >= 0) {
 			if (!simulate) {
 				setMagic(getMagic() - amount);
+				setMagicTimer(60);
 			}
 			return true;
 		}
