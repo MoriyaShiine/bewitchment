@@ -27,7 +27,6 @@ public class AthameDropsCategory implements RecipeCategory<AthameDropsCategory.D
 	public static final Identifier IDENTIFIER = new Identifier(Bewitchment.MODID, "athame_drops");
 	public static final EntryStack LOGO = EntryStack.create(BWObjects.ATHAME);
 	
-	
 	@Override
 	public @NotNull Identifier getIdentifier() {
 		return IDENTIFIER;

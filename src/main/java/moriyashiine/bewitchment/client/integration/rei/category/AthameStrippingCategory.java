@@ -26,7 +26,6 @@ public class AthameStrippingCategory implements RecipeCategory<AthameStrippingCa
 	public static final Identifier IDENTIFIER = new Identifier(Bewitchment.MODID, "athame_stripping");
 	public static final EntryStack LOGO = EntryStack.create(BWObjects.ATHAME);
 	
-	
 	@Override
 	public @NotNull Identifier getIdentifier() {
 		return IDENTIFIER;

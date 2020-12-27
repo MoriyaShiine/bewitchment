@@ -153,6 +153,9 @@
   "item.bewitchment.raven_spawn_egg": "Raven Spawn Egg",
   "item.bewitchment.snake_spawn_egg": "Snake Spawn Egg",
   "item.bewitchment.toad_spawn_egg": "Toad Spawn Egg",
+  "item.bewitchment.potion": "Witch Brew",
+  "item.bewitchment.splash_potion": "Splash Witch Brew",
+  "item.bewitchment.lingering_potion": "Lingering Witch Brew",
   "entity.bewitchment.juniper_boat": "Juniper Boat",
   "entity.bewitchment.cypress_boat": "Cypress Boat",
   "entity.bewitchment.elder_boat": "Elder Boat",
@@ -163,5 +166,6 @@
   "bewitchment.invalid_cauldron": "Cannot find a cauldron named '%s'",
   "rei.bewitchment.athame_stripping": "Athame Stripping",
   "rei.bewitchment.athame_drops": "Athame Drops",
-  "rei.bewitchment.oil_crafting": "Oil Crafting"
+  "rei.bewitchment.oil_crafting": "Oil Crafting",
+  "rei.bewitchment.cauldron_brewing": "Cauldron Brewing"
 }

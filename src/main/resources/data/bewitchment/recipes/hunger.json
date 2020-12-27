@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "minecraft:rotten_flesh"
+  },
+  "effect": "minecraft:hunger",
+  "time": 600
+}

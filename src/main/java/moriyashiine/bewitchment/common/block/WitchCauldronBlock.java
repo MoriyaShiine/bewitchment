@@ -103,8 +103,8 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 						}
 					}
 					else {
-						if (bucket ? state.get(Properties.LEVEL_3) == 3 && cauldron.mode == WitchCauldronBlockEntity.Mode.NORMAL : waterBucket ? state.get(Properties.LEVEL_3) == 0 : state.get(Properties.LEVEL_3) > 0) {
-							int targetLevel = bucket ? 0 : waterBucket ? 3 : state.get(Properties.LEVEL_3) - 1;
+						int targetLevel = cauldron.getTargetLevel(stack.getItem());
+						if (targetLevel > -1) {
 							world.setBlockState(pos, state.with(Properties.LEVEL_3, targetLevel));
 							world.playSound(null, pos, bucket ? SoundEvents.ITEM_BUCKET_FILL : waterBucket ? SoundEvents.ITEM_BUCKET_EMPTY : SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1, 1);
 							if (!player.isCreative() || glassBottle) {
@@ -121,12 +121,20 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 									player.setStackInHand(hand, new ItemStack(Items.BUCKET));
 								}
 								else {
-									ItemStack bottle = PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER);
-									OilRecipe recipe = cauldron.oilRecipe;
-									if (recipe != null) {
-										bottle = recipe.getOutput().copy();
+									ItemStack bottle = null;
+									if (cauldron.mode == WitchCauldronBlockEntity.Mode.NORMAL) {
+										bottle = PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER);
 									}
-									if (!player.inventory.insertStack(bottle)) {
+									else if (cauldron.mode == WitchCauldronBlockEntity.Mode.OIL_CRAFTING) {
+										OilRecipe recipe = cauldron.oilRecipe;
+										if (recipe != null) {
+											bottle = recipe.getOutput().copy();
+										}
+									}
+									else {
+										bottle = cauldron.getPotion();
+									}
+									if (bottle != null && !player.inventory.insertStack(bottle)) {
 										player.dropStack(bottle);
 									}
 								}

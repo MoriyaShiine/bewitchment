@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "bewitchment:spruce_bark"
+  },
+  "effect": "minecraft:resistance",
+  "time": 600
+}
