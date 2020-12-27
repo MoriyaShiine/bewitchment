@@ -28,6 +28,7 @@ import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.potion.PotionUtil;
+import net.minecraft.potion.Potions;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -263,6 +264,11 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 		return Mode.NORMAL;
 	}
 	
+	public Mode fail() {
+		setColor(0x6b4423);
+		return Mode.FAILED;
+	}
+	
 	private int getFirstEmptySlot() {
 		for (int i = 0; i < size(); i++) {
 			if (getStack(i).isEmpty()) {
@@ -289,9 +295,15 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 					}
 					if (mode == Mode.BREWING) {
 						CauldronBrewingRecipe cauldronBrewingRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CAULDRON_BREWING_RECIPE_TYPE).stream().filter(recipe -> recipe.input.test(stack)).findFirst().orElse(null);
-						if (cauldronBrewingRecipe != null || (getFirstEmptySlot() > 1 && (stack.getItem() == Items.REDSTONE || stack.getItem() == Items.GLOWSTONE_DUST))) {
-							setColor(PotionUtil.getColor(getPotion()));
-							return Mode.BREWING;
+						if (cauldronBrewingRecipe != null || (firstEmpty > 0 && (stack.getItem() == Items.REDSTONE || stack.getItem() == Items.GLOWSTONE_DUST))) {
+							BlockPos altarPos = getAltarPos();
+							if (altarPos != null) {
+								BlockEntity blockEntity = world.getBlockEntity(altarPos);
+								if (blockEntity instanceof WitchAltarBlockEntity && ((WitchAltarBlockEntity) blockEntity).drain(getBrewCost(), true)) {
+									setColor(PotionUtil.getColor(getPotion()));
+									return Mode.BREWING;
+								}
+							}
 						}
 					}
 					else {
@@ -311,14 +323,14 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 				}
 			}
 		}
-		setColor(0x6b4423);
-		return Mode.FAILED;
+		return fail();
 	}
 	
 	public ItemStack getPotion() {
 		ItemStack stack = new ItemStack(Items.POTION);
 		if (world != null) {
 			List<StatusEffectInstance> effects = new ArrayList<>();
+			int redstone = 0, glowstone = 0;
 			for (int i = 0; i < size(); i++) {
 				ItemStack stackInSlot = getStack(i);
 				CauldronBrewingRecipe cauldronBrewingRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CAULDRON_BREWING_RECIPE_TYPE).stream().filter(recipe -> recipe.input.test(stackInSlot)).findFirst().orElse(null);
@@ -326,10 +338,18 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 					effects.add(new StatusEffectInstance(cauldronBrewingRecipe.output, cauldronBrewingRecipe.time));
 				}
 				else if (stackInSlot.getItem() == Items.REDSTONE) {
-					effects.set(i - 1, new StatusEffectInstance(effects.get(i - 1).getEffectType(), effects.get(i - 1).getDuration() * 2));
+					redstone++;
 				}
 				else if (stackInSlot.getItem() == Items.GLOWSTONE_DUST) {
-					effects.set(i - 1, new StatusEffectInstance(effects.get(i - 1).getEffectType(), effects.get(i - 1).getDuration() / 2, 1));
+					glowstone++;
+				}
+			}
+			for (int i = 0; i < effects.size(); i++) {
+				for (int j = 0; j < redstone; j++) {
+					effects.set(i, new StatusEffectInstance(effects.get(i).getEffectType(), effects.get(i).getDuration() * 2));
+				}
+				for (int j = 0; j < glowstone; j++) {
+					effects.set(i, new StatusEffectInstance(effects.get(i).getEffectType(), effects.get(i).getDuration() / 2, effects.get(i).getAmplifier() + 1));
 				}
 			}
 			PotionUtil.setCustomPotionEffects(stack, effects);
@@ -339,9 +359,44 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 		return stack;
 	}
 	
-	public int getTargetLevel(Item item) {
+	public int getBrewCost() {
+		int cost = 0;
+		for (int i = 0; i < size(); i++) {
+			if (!getStack(i).isEmpty()) {
+				cost += 150;
+			}
+		}
+		return cost;
+	}
+	
+	public int getTargetLevel(ItemStack stack) {
+		Item item = stack.getItem();
 		int level = getCachedState().get(Properties.LEVEL_3);
-		return mode == Mode.NORMAL ? ((item == Items.BUCKET && level == 3) ? 0 : (item == Items.WATER_BUCKET && level == 0) ? 3 : item == Items.GLASS_BOTTLE ? level - 1 : -1) : (mode == Mode.OIL_CRAFTING && oilRecipe != null) || mode == Mode.BREWING ? level - 1 : -1;
+		if (mode == Mode.NORMAL) {
+			if (item == Items.BUCKET && level == 3) {
+				return 0;
+			}
+			else if (item == Items.WATER_BUCKET && level == 0) {
+				return 3;
+			}
+			else if (item == Items.GLASS_BOTTLE) {
+				return level - 1;
+			}
+			else if (item == Items.POTION && level < 3 && PotionUtil.getPotion(stack) == Potions.WATER) {
+				return level + 1;
+			}
+		}
+		else if (mode == Mode.OIL_CRAFTING) {
+			if (oilRecipe != null && item == Items.GLASS_BOTTLE) {
+				return level - 1;
+			}
+		}
+		else if (mode == Mode.BREWING) {
+			if (item == Items.GLASS_BOTTLE) {
+				return level - 1;
+			}
+		}
+		return -1;
 	}
 	
 	public enum Mode {
