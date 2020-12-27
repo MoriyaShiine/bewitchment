@@ -186,7 +186,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 							if (itemEntity.getStack().getItem() == BWObjects.WOOD_ASH || getCachedState().get(Properties.LEVEL_3) == 3) {
 								world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_SPLASH, SoundCategory.BLOCKS, 1 / 3f, 1);
 								ItemStack stack = itemEntity.getStack();
-								if (stack.getItem().getRecipeRemainder() != null) {
+								if (stack.getItem().hasRecipeRemainder()) {
 									ItemEntity remainder = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, new ItemStack(stack.getItem().getRecipeRemainder()));
 									remainder.setVelocity(Vec3d.ZERO);
 									remainder.setNoGravity(true);
