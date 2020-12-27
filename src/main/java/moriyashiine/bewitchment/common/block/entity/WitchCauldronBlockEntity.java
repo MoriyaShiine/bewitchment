@@ -65,6 +65,22 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	}
 	
 	@Override
+	public void fromClientTag(CompoundTag tag) {
+		Inventories.fromTag(tag, inventory);
+		mode = Mode.valueOf(tag.getString("Mode"));
+		if (tag.contains("CustomName", NbtType.STRING)) {
+			customName = Text.Serializer.fromJson(tag.getString("CustomName"));
+		}
+		if (tag.contains("Color")) {
+			color = tag.getInt("Color");
+		}
+		heatTimer = tag.getInt("HeatTimer");
+		if (tag.contains("AltarPos")) {
+			setAltarPos(BlockPos.fromLong(tag.getLong("AltarPos")));
+		}
+	}
+	
+	@Override
 	public CompoundTag toClientTag(CompoundTag tag) {
 		Inventories.toTag(tag, inventory);
 		tag.putString("Mode", mode.name);
@@ -80,19 +96,14 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	}
 	
 	@Override
-	public void fromClientTag(CompoundTag tag) {
-		Inventories.fromTag(tag, inventory);
-		mode = Mode.valueOf(tag.getString("Mode"));
-		if (tag.contains("CustomName", NbtType.STRING)) {
-			customName = Text.Serializer.fromJson(tag.getString("CustomName"));
-		}
-		if (tag.contains("Color")) {
-			color = tag.getInt("Color");
-		}
-		heatTimer = tag.getInt("HeatTimer");
-		if (tag.contains("AltarPos")) {
-			setAltarPos(BlockPos.fromLong(tag.getLong("AltarPos")));
-		}
+	public void fromTag(BlockState state, CompoundTag tag) {
+		fromClientTag(tag);
+		super.fromTag(state, tag);
+	}
+	
+	@Override
+	public CompoundTag toTag(CompoundTag tag) {
+		return super.toTag(toClientTag(tag));
 	}
 	
 	@Override
@@ -114,17 +125,6 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	@Override
 	public void setAltarPos(BlockPos pos) {
 		altarPos = pos;
-	}
-	
-	@Override
-	public CompoundTag toTag(CompoundTag tag) {
-		return super.toTag(toClientTag(tag));
-	}
-	
-	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
-		fromClientTag(tag);
-		super.fromTag(state, tag);
 	}
 	
 	@Override

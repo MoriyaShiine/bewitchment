@@ -59,6 +59,14 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 	}
 	
 	@Override
+	public void fromClientTag(CompoundTag tag) {
+		Inventories.fromTag(tag, inventory);
+		power = tag.getInt("Power");
+		maxPower = tag.getInt("MaxPower");
+		gain = tag.getInt("Gain");
+	}
+	
+	@Override
 	public CompoundTag toClientTag(CompoundTag tag) {
 		Inventories.toTag(tag, inventory);
 		tag.putInt("Power", power);
@@ -68,22 +76,14 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 	}
 	
 	@Override
-	public void fromClientTag(CompoundTag tag) {
-		Inventories.fromTag(tag, inventory);
-		power = tag.getInt("Power");
-		maxPower = tag.getInt("MaxPower");
-		gain = tag.getInt("Gain");
+	public void fromTag(BlockState state, CompoundTag tag) {
+		fromClientTag(tag);
+		super.fromTag(state, tag);
 	}
 	
 	@Override
 	public CompoundTag toTag(CompoundTag tag) {
 		return super.toTag(toClientTag(tag));
-	}
-	
-	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
-		fromClientTag(tag);
-		super.fromTag(state, tag);
 	}
 	
 	@Override
