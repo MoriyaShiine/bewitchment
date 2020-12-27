@@ -2,6 +2,7 @@ package moriyashiine.bewitchment.common.registry;
 
 import moriyashiine.bewitchment.api.registry.AthameDropRecipe;
 import moriyashiine.bewitchment.api.registry.AthameStrippingRecipe;
+import moriyashiine.bewitchment.api.registry.CauldronBrewingRecipe;
 import moriyashiine.bewitchment.api.registry.OilRecipe;
 import moriyashiine.bewitchment.common.Bewitchment;
 import net.minecraft.recipe.Recipe;
@@ -25,6 +26,9 @@ public class BWRecipeTypes {
 	
 	public static final RecipeSerializer<OilRecipe> OIL_RECIPE_SERIALIZER = create("oil_recipe", new OilRecipe.Serializer());
 	public static final RecipeType<OilRecipe> OIL_RECIPE_TYPE = create("oil_recipe");
+	
+	public static final RecipeSerializer<CauldronBrewingRecipe> CAULDRON_BREWING_RECIPE_SERIALIZER = create("cauldron_brewing_recipe", new CauldronBrewingRecipe.Serializer());
+	public static final RecipeType<CauldronBrewingRecipe> CAULDRON_BREWING_RECIPE_TYPE = create("cauldron_brewing_recipe");
 	
 	private static <T extends Recipe<?>> RecipeSerializer<T> create(String name, RecipeSerializer<T> serializer) {
 		RECIPE_SERIALIZERS.put(serializer, new Identifier(Bewitchment.MODID, name));

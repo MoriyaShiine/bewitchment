@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.common.block.entity;
 
 import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
+import moriyashiine.bewitchment.api.registry.CauldronBrewingRecipe;
 import moriyashiine.bewitchment.api.registry.OilRecipe;
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
@@ -14,15 +15,19 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.potion.PotionUtil;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -35,7 +40,11 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Tickable, Inventory, Nameable, UsesAltarPower {
 	private static final TranslatableText DEFAULT_NAME = new TranslatableText(BWObjects.WITCH_CAULDRON.getTranslationKey());
@@ -159,6 +168,9 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 						if (mode == Mode.OIL_CRAFTING && color != 0xff3fff) {
 							world.addParticle(ParticleTypes.ENCHANTED_HIT, pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + fluidHeight, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), 0, 0, 0);
 						}
+						if (mode == Mode.BREWING) {
+							world.addParticle(ParticleTypes.ENTITY_EFFECT, pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + fluidHeight, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), ((color >> 16) & 0xff) / 255f, ((color >> 8) & 0xff) / 255f, (color & 0xff) / 255f);
+						}
 						world.addParticle((ParticleEffect) BWParticleTypes.CAULDRON_BUBBLE, pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + fluidHeight, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), ((color >> 16) & 0xff) / 255f, ((color >> 8) & 0xff) / 255f, (color & 0xff) / 255f);
 					}
 				}
@@ -172,7 +184,14 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 						world.getEntitiesByType(EntityType.ITEM, box, entity -> true).forEach(itemEntity -> {
 							if (itemEntity.getStack().getItem() == BWObjects.WOOD_ASH || getCachedState().get(Properties.LEVEL_3) == 3) {
 								world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_SPLASH, SoundCategory.BLOCKS, 1 / 3f, 1);
-								mode = insertStack(itemEntity.getStack().split(1));
+								ItemStack stack = itemEntity.getStack();
+								if (stack.getItem().getRecipeRemainder() != null) {
+									ItemEntity remainder = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, new ItemStack(stack.getItem().getRecipeRemainder()));
+									remainder.setVelocity(Vec3d.ZERO);
+									remainder.setNoGravity(true);
+									world.spawnEntity(remainder);
+								}
+								mode = insertStack(stack.split(1));
 								syncCauldron();
 							}
 						});
@@ -264,17 +283,31 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 				int firstEmpty = getFirstEmptySlot();
 				if (firstEmpty != -1) {
 					setStack(firstEmpty, stack);
-					oilRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.OIL_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
-					if (oilRecipe != null) {
-						setColor(oilRecipe.color);
+					if (mode == Mode.NORMAL && stack.getItem() == BWObjects.MANDRAKE_ROOT) {
+						clear();
+						return Mode.BREWING;
+					}
+					if (mode == Mode.BREWING) {
+						CauldronBrewingRecipe cauldronBrewingRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CAULDRON_BREWING_RECIPE_TYPE).stream().filter(recipe -> recipe.input.test(stack)).findFirst().orElse(null);
+						if (cauldronBrewingRecipe != null || (getFirstEmptySlot() > 1 && (stack.getItem() == Items.REDSTONE || stack.getItem() == Items.GLOWSTONE_DUST))) {
+							setColor(PotionUtil.getColor(getPotion()));
+							return Mode.BREWING;
+						}
+					}
+					else {
+						oilRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.OIL_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
+						if (oilRecipe != null) {
+							setColor(oilRecipe.color);
+							return Mode.OIL_CRAFTING;
+						}
+						else if (firstEmpty == 0 && stack.getItem() == Items.ENDER_PEARL) {
+							clear();
+							setColor(0x319a89);
+							return Mode.TELEPORTATION;
+						}
+						setColor(0xde6fa1);
 						return Mode.OIL_CRAFTING;
 					}
-					else if (firstEmpty == 0 && stack.getItem() == Items.ENDER_PEARL) {
-						setColor(0x319a89);
-						return Mode.TELEPORTATION;
-					}
-					setColor(0xde6fa1);
-					return Mode.OIL_CRAFTING;
 				}
 			}
 		}
@@ -282,8 +315,37 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 		return Mode.FAILED;
 	}
 	
+	public ItemStack getPotion() {
+		ItemStack stack = new ItemStack(Items.POTION);
+		if (world != null) {
+			List<StatusEffectInstance> effects = new ArrayList<>();
+			for (int i = 0; i < size(); i++) {
+				ItemStack stackInSlot = getStack(i);
+				CauldronBrewingRecipe cauldronBrewingRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CAULDRON_BREWING_RECIPE_TYPE).stream().filter(recipe -> recipe.input.test(stackInSlot)).findFirst().orElse(null);
+				if (cauldronBrewingRecipe != null) {
+					effects.add(new StatusEffectInstance(cauldronBrewingRecipe.output, cauldronBrewingRecipe.time));
+				}
+				else if (stackInSlot.getItem() == Items.REDSTONE) {
+					effects.set(i - 1, new StatusEffectInstance(effects.get(i - 1).getEffectType(), effects.get(i - 1).getDuration() * 2));
+				}
+				else if (stackInSlot.getItem() == Items.GLOWSTONE_DUST) {
+					effects.set(i - 1, new StatusEffectInstance(effects.get(i - 1).getEffectType(), effects.get(i - 1).getDuration() / 2, 1));
+				}
+			}
+			PotionUtil.setCustomPotionEffects(stack, effects);
+			stack.getOrCreateTag().putInt("CustomPotionColor", PotionUtil.getColor(effects));
+			stack.getOrCreateTag().putBoolean("BewitchmentBrew", true);
+		}
+		return stack;
+	}
+	
+	public int getTargetLevel(Item item) {
+		int level = getCachedState().get(Properties.LEVEL_3);
+		return mode == Mode.NORMAL ? ((item == Items.BUCKET && level == 3) ? 0 : (item == Items.WATER_BUCKET && level == 0) ? 3 : item == Items.GLASS_BOTTLE ? level - 1 : -1) : (mode == Mode.OIL_CRAFTING && oilRecipe != null) || mode == Mode.BREWING ? level - 1 : -1;
+	}
+	
 	public enum Mode {
-		NORMAL("NORMAL"), OIL_CRAFTING("OIL_CRAFTING"), TELEPORTATION("TELEPORTATION"), FAILED("FAILED");
+		NORMAL("NORMAL"), OIL_CRAFTING("OIL_CRAFTING"), BREWING("BREWING"), TELEPORTATION("TELEPORTATION"), FAILED("FAILED");
 		
 		public final String name;
 		
