@@ -12,12 +12,15 @@
 	"LandPathNodeMakerMixin",
 	"LivingEntityMixin",
 	"PlayerEntityMixin",
+	"PotionItemMixin",
 	"PounceAtTargetGoalMixin",
 	"ServerPlayerEntityMixin",
+	"StatusEffectAccessor",
 	"TreeDecoratorTypeAccessor"
   ],
   "client": [
 	"client.ClientPlayerEntityMixin",
+	"client.ClientWorldMixin",
 	"client.InGameHudMixin",
 	"client.TexturedRenderLayersMixin"
   ],

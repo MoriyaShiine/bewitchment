@@ -2,10 +2,7 @@ package moriyashiine.bewitchment.client;
 
 import com.terraformersmc.terraform.sign.SpriteIdentifierRegistry;
 import moriyashiine.bewitchment.client.misc.SpriteIdentifiers;
-import moriyashiine.bewitchment.client.network.packet.CreateNonLivingEntityPacket;
-import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
-import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
-import moriyashiine.bewitchment.client.network.packet.SyncWitchAltarBlockEntity;
+import moriyashiine.bewitchment.client.network.packet.*;
 import moriyashiine.bewitchment.client.particle.CauldronBubbleParticle;
 import moriyashiine.bewitchment.client.renderer.blockentity.WitchAltarBlockEntityRenderer;
 import moriyashiine.bewitchment.client.renderer.blockentity.WitchCauldronBlockEntityRenderer;
@@ -14,6 +11,7 @@ import moriyashiine.bewitchment.client.renderer.entity.living.OwlEntityRenderer;
 import moriyashiine.bewitchment.client.renderer.entity.living.RavenEntityRenderer;
 import moriyashiine.bewitchment.client.renderer.entity.living.SnakeEntityRenderer;
 import moriyashiine.bewitchment.client.renderer.entity.living.ToadEntityRenderer;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.BWChestBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
@@ -27,7 +25,9 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.TexturedRenderLayers;
@@ -35,6 +35,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.ChestBlockEntityRenderer;
 import net.minecraft.client.render.entity.BoatEntityRenderer;
 import net.minecraft.client.util.SpriteIdentifier;
+import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class BewitchmentClient implements ClientModInitializer {
@@ -44,7 +45,10 @@ public class BewitchmentClient implements ClientModInitializer {
 		ClientSidePacketRegistry.INSTANCE.register(SyncWitchAltarBlockEntity.ID, SyncWitchAltarBlockEntity::handle);
 		ClientSidePacketRegistry.INSTANCE.register(SyncClientSerializableBlockEntity.ID, SyncClientSerializableBlockEntity::handle);
 		ClientSidePacketRegistry.INSTANCE.register(SpawnPortalParticlesPacket.ID, SpawnPortalParticlesPacket::handle);
+		ClientSidePacketRegistry.INSTANCE.register(SpawnExplosionParticlesPacket.ID, SpawnExplosionParticlesPacket::handle);
 		ParticleFactoryRegistry.getInstance().register(BWParticleTypes.CAULDRON_BUBBLE, CauldronBubbleParticle.Factory::new);
+		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex == 0 ? 0x7f0000 : 0xffffff, BWObjects.BOTTLE_OF_BLOOD);
+		FabricModelPredicateProviderRegistry.register(BWObjects.TAGLOCK, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID") ? 1 : 0);
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.BW_CHEST, ChestBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.WITCH_ALTAR, WitchAltarBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.WITCH_CAULDRON, WitchCauldronBlockEntityRenderer::new);
@@ -57,7 +61,7 @@ public class BewitchmentClient implements ClientModInitializer {
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.RAVEN, (dispatcher, context) -> new RavenEntityRenderer(dispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.SNAKE, (dispatcher, context) -> new SnakeEntityRenderer(dispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.TOAD, (dispatcher, context) -> new ToadEntityRenderer(dispatcher));
-		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), BWObjects.SALT_LINE);
+		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), BWObjects.SALT_LINE, BWObjects.TEMPORARY_COBWEB);
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), BWObjects.ACONITE_CROP, BWObjects.BELLADONNA_CROP, BWObjects.GARLIC_CROP, BWObjects.MANDRAKE_CROP);
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), BWObjects.JUNIPER_SAPLING, BWObjects.POTTED_JUNIPER_SAPLING, BWObjects.JUNIPER_DOOR, BWObjects.JUNIPER_TRAPDOOR);
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), BWObjects.CYPRESS_SAPLING, BWObjects.POTTED_CYPRESS_SAPLING, BWObjects.CYPRESS_DOOR, BWObjects.CYPRESS_TRAPDOOR);

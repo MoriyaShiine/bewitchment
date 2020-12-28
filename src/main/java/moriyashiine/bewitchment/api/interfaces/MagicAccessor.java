@@ -19,7 +19,7 @@ public interface MagicAccessor {
 	
 	void setMagicTimer(int magicTimer);
 	
-	default boolean fill(int amount, boolean simulate) {
+	default boolean fillMagic(int amount, boolean simulate) {
 		if (getMagic() < MAX_MAGIC) {
 			if (!simulate) {
 				setMagic(Math.min(MAX_MAGIC, getMagic() + amount));
@@ -30,7 +30,7 @@ public interface MagicAccessor {
 		return false;
 	}
 	
-	default boolean drain(int amount, boolean simulate) {
+	default boolean drainMagic(int amount, boolean simulate) {
 		if (getMagic() - amount >= 0) {
 			if (!simulate) {
 				setMagic(getMagic() - amount);

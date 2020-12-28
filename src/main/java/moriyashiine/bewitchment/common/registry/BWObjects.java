@@ -11,6 +11,8 @@ import moriyashiine.bewitchment.common.block.util.BWCarpetBlock;
 import moriyashiine.bewitchment.common.block.util.BWCropBlock;
 import moriyashiine.bewitchment.common.block.util.BWOreBlock;
 import moriyashiine.bewitchment.common.block.util.BWSaplingBlock;
+import moriyashiine.bewitchment.common.item.BottleOfBloodItem;
+import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.item.tool.AthameItem;
 import moriyashiine.bewitchment.common.item.tool.SilverArrowItem;
 import moriyashiine.bewitchment.common.item.tool.util.BWAxeItem;
@@ -43,6 +45,7 @@ public class BWObjects {
 	
 	//misc_no_item
 	public static final Block SALT_LINE = create("salt_line", new SaltLineBlock(copyOf(Blocks.REDSTONE_WIRE)), false);
+	public static final Block TEMPORARY_COBWEB = create("temporary_cobweb", new TemporaryCobwebBlock(copyOf(Blocks.COBWEB).dropsNothing().ticksRandomly()), false);
 	//crop
 	public static final Block ACONITE_CROP = create("aconite", new BWCropBlock(copyOf(Blocks.WHEAT)), false);
 	public static final Block BELLADONNA_CROP = create("belladonna", new BWCropBlock(copyOf(ACONITE_CROP)), false);
@@ -195,6 +198,7 @@ public class BWObjects {
 	public static final Item SILVER_HOE = create("silver_hoe", new BWHoeItem(BWMaterials.SILVER_TOOL, -2, -3, gen()));
 	public static final Item ATHAME = create("athame", new AthameItem(BWMaterials.SILVER_TOOL, 1, -2, gen()));
 	public static final Item SILVER_ARROW = create("silver_arrow", new SilverArrowItem(gen()));
+	public static final Item TAGLOCK = create("taglock", new TaglockItem(gen()));
 	//material_item
 	public static final Item CLEANSING_BALM = create("cleansing_balm", new Item(gen().recipeRemainder(Items.GLASS_BOTTLE)));
 	public static final Item GRIM_ELIXIR = create("grim_elixir", new Item(gen().recipeRemainder(Items.GLASS_BOTTLE)));
@@ -222,6 +226,7 @@ public class BWObjects {
 	public static final Item DRAGONS_BLOOD_RESIN = create("dragons_blood_resin", new Item(gen()));
 	public static final Item SNAKE_TONGUE = create("snake_tongue", new Item(gen()));
 	public static final Item ECTOPLASM = create("ectoplasm", new Item(gen()));
+	public static final Item BOTTLE_OF_BLOOD = create("bottle_of_blood", new BottleOfBloodItem(gen().maxCount(1)));
 	public static final Item GRILLED_GARLIC = create("grilled_garlic", new Item(gen().food(FoodComponents.BAKED_POTATO)));
 	public static final Item GARLIC_BREAD = create("garlic_bread", new Item(gen().food(FoodComponents.PUMPKIN_PIE)));
 	//spawn_egg
