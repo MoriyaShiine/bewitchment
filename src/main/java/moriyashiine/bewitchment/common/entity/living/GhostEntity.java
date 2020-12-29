@@ -32,7 +32,7 @@ import java.util.EnumSet;
 import java.util.Random;
 
 public class GhostEntity extends BWHostileEntity {
-	public static final TrackedData<Boolean> ATTACKING = DataTracker.registerData(GhostEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+	public static final TrackedData<Boolean> HAS_TARGET = DataTracker.registerData(GhostEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
 	public GhostEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
@@ -111,13 +111,13 @@ public class GhostEntity extends BWHostileEntity {
 	@Override
 	public void setTarget(@Nullable LivingEntity target) {
 		super.setTarget(target);
-		dataTracker.set(ATTACKING, target != null);
+		dataTracker.set(HAS_TARGET, target != null);
 	}
 	
 	@Override
 	protected void initDataTracker() {
 		super.initDataTracker();
-		dataTracker.startTracking(ATTACKING, false);
+		dataTracker.startTracking(HAS_TARGET, false);
 	}
 	
 	@Override

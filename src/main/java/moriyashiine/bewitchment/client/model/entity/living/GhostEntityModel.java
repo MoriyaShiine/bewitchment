@@ -89,7 +89,7 @@ public class GhostEntityModel<T extends GhostEntity> extends EntityModel<T> {
 		bodyTrail00.pitch = MathHelper.sin(animationProgress / 12) / 6;
 		leftArm.pitch = MathHelper.sin(animationProgress / 8) / 8;
 		rightArm.pitch = MathHelper.sin((float) (animationProgress / 8 + Math.PI)) / 8;
-		if (entity.getDataTracker().get(GhostEntity.ATTACKING)) {
+		if (entity.getDataTracker().get(GhostEntity.HAS_TARGET)) {
 			leftArm.pitch += 3.25;
 			leftArm.roll = MathHelper.sin((float) (animationProgress + Math.PI)) / 2;
 			rightArm.pitch += 3.25;
