@@ -27,7 +27,7 @@ public class BWStatusEffects {
 	public static final StatusEffect GILLS = create("gills", new GillsStatusEffect(StatusEffectType.HARMFUL, 0x2f5e7b));
 	public static final StatusEffect HARDENING = create("hardening", new EmptyStatusEffect(StatusEffectType.BENEFICIAL, 0x3fa442).addAttributeModifier(EntityAttributes.GENERIC_ARMOR, "7f7f1ce3-6383-49a8-a9f1-af0f5c7ab38f", 3, EntityAttributeModifier.Operation.ADDITION));
 	public static final StatusEffect IGNITION = create("ignition", new IgnitionStatusEffect(StatusEffectType.HARMFUL, 0xd68a0c));
-	public static final StatusEffect INHIBITED = create("inhibited", new EmptyStatusEffect(StatusEffectType.HARMFUL, 0));
+	public static final StatusEffect INHIBITED = create("inhibited", new EmptyStatusEffect(StatusEffectType.HARMFUL, 0x383a41));
 	public static final StatusEffect INVIGORATING = create("invigorating", new InvigoratingStatusEffect(StatusEffectType.BENEFICIAL, 0xaa64b3));
 	public static final StatusEffect LEECHING = create("leeching", new EmptyStatusEffect(StatusEffectType.BENEFICIAL, 0x4a0000));
 	public static final StatusEffect MAGIC_RESISTANCE = create("magic_resistance", new EmptyStatusEffect(StatusEffectType.BENEFICIAL, 0xb03013));
