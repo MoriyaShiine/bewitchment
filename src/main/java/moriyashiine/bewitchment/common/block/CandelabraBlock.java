@@ -39,7 +39,7 @@ public class CandelabraBlock extends Block implements Waterloggable {
 	public CandelabraBlock(Settings settings, int repellentRadius) {
 		super(settings);
 		this.repellentRadius = repellentRadius;
-		setDefaultState(getDefaultState().with(Properties.WATERLOGGED, false).with(Properties.LIT, false));
+		setDefaultState(getDefaultState().with(Properties.WATERLOGGED, false).with(Properties.LIT, true));
 	}
 	
 	@Override
@@ -80,7 +80,7 @@ public class CandelabraBlock extends Block implements Waterloggable {
 	@Nullable
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		return super.getPlacementState(ctx).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);
+		return super.getPlacementState(ctx).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER).with(Properties.LIT, false);
 	}
 	
 	@Override
