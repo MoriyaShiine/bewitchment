@@ -24,6 +24,7 @@ public class ToadEntity extends BWTameableEntity {
 	public ToadEntity(EntityType<? extends TameableEntity> type, World world) {
 		super(type, world);
 		setPathfindingPenalty(PathNodeType.WATER, -1);
+		setPathfindingPenalty(PathNodeType.WATER_BORDER, -1);
 	}
 	
 	public static DefaultAttributeContainer.Builder createAttributes() {
