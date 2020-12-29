@@ -30,8 +30,8 @@ public class BWEntityTypes {
 	public static final EntityType<SnakeEntity> SNAKE = create("snake", SnakeEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, SnakeEntity::new).dimensions(EntityDimensions.changing(0.75f, 0.25f)).build());
 	public static final EntityType<ToadEntity> TOAD = create("toad", ToadEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ToadEntity::new).dimensions(EntityDimensions.changing(0.5f, 0.5f)).build());
 	
-	public static final EntityType<GhostEntity> GHOST = create("ghost", GhostEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, GhostEntity::new).dimensions(EntityDimensions.fixed(0.6f, 1.8f)).build());
-	public static final EntityType<BlackDogEntity> BLACK_DOG = create("black_dog", BlackDogEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, BlackDogEntity::new).dimensions(EntityDimensions.fixed(0.6f, 0.6f)).build());
+	public static final EntityType<GhostEntity> GHOST = create("ghost", GhostEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, GhostEntity::new).dimensions(EntityDimensions.fixed(0.6f, 1.8f)).fireImmune().build());
+	public static final EntityType<BlackDogEntity> BLACK_DOG = create("black_dog", BlackDogEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, BlackDogEntity::new).dimensions(EntityDimensions.fixed(0.6f, 0.6f)).fireImmune().build());
 	
 	private static <T extends LivingEntity> EntityType<T> create(String name, DefaultAttributeContainer.Builder attributes, EntityType<T> type) {
 		FabricDefaultAttributeRegistry.register(type, attributes);
