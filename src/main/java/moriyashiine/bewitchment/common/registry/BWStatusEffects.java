@@ -24,7 +24,7 @@ public class BWStatusEffects {
 	public static final StatusEffect DISJUNCTION = create("disjunction", new DisjunctionStatusEffect(StatusEffectType.NEUTRAL, 0xb154a9));
 	public static final StatusEffect ENCHANTED = create("enchanted", new EmptyStatusEffect(StatusEffectType.BENEFICIAL, 0xf5ce8c));
 	public static final StatusEffect ETHEREAL = create("ethereal", new EmptyStatusEffect(StatusEffectType.NEUTRAL, 0x9a9ebf));
-	public static final StatusEffect GILLS = create("gills", new EmptyStatusEffect(StatusEffectType.HARMFUL, 0x2f5e7b));
+	public static final StatusEffect GILLS = create("gills", new GillsStatusEffect(StatusEffectType.HARMFUL, 0x2f5e7b));
 	public static final StatusEffect HARDENING = create("hardening", new EmptyStatusEffect(StatusEffectType.BENEFICIAL, 0x3fa442).addAttributeModifier(EntityAttributes.GENERIC_ARMOR, "7f7f1ce3-6383-49a8-a9f1-af0f5c7ab38f", 3, EntityAttributeModifier.Operation.ADDITION));
 	public static final StatusEffect IGNITION = create("ignition", new IgnitionStatusEffect(StatusEffectType.HARMFUL, 0xd68a0c));
 	public static final StatusEffect INHIBITED = create("inhibited", new EmptyStatusEffect(StatusEffectType.HARMFUL, 0));
@@ -34,7 +34,7 @@ public class BWStatusEffects {
 	public static final StatusEffect MORTAL_COIL = create("mortal_coil", new MortalCoilStatusEffect(StatusEffectType.HARMFUL, 0x2d2d2d));
 	public static final StatusEffect NOURISHING = create("nourishing", new EmptyStatusEffect(StatusEffectType.BENEFICIAL, 0x71bc78));
 	public static final StatusEffect POLYMORPH = create("polymorph", new PolymorphStatusEffect(StatusEffectType.NEUTRAL, 0xb154a9));
-	public static final StatusEffect SINKING = create("sinking", new EmptyStatusEffect(StatusEffectType.HARMFUL, 0x6c6c6c));
+	public static final StatusEffect SINKING = create("sinking", new SinkingStatusEffect(StatusEffectType.HARMFUL, 0x6c6c6c));
 	public static final StatusEffect SYNCHRONIZED = create("synchronized", new SynchronizedStatusEffect(StatusEffectType.NEUTRAL, 0x990404));
 	public static final StatusEffect THEFT = create("theft", new TheftStatusEffect(StatusEffectType.BENEFICIAL, 0x773b89));
 	public static final StatusEffect THORNS = create("thorns", new EmptyStatusEffect(StatusEffectType.BENEFICIAL, 0x527d26));

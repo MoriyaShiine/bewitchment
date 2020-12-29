@@ -27,8 +27,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.EntityTypeTags;
@@ -54,12 +52,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor 
 	@Shadow
 	@Nullable
 	public abstract StatusEffectInstance getStatusEffect(StatusEffect effect);
-	
-	@Shadow
-	protected abstract int getNextAirUnderwater(int air);
-	
-	@Shadow
-	protected abstract int getNextAirOnLand(int air);
 	
 	@Shadow
 	public abstract void heal(float amount);
@@ -178,36 +170,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor 
 				if (damage > 0) {
 					damage(DamageSource.MAGIC, damage);
 				}
-			}
-			if (hasStatusEffect(BWStatusEffects.SINKING)) {
-				Vec3d velocity = getVelocity();
-				float amount = 0.05f * (getStatusEffect(BWStatusEffects.SINKING).getAmplifier() + 1);
-				if (!onGround && velocity.getY() < 0) {
-					setVelocity(velocity.multiply(1, 1 + amount, 1));
-					PlayerStream.watching(this).forEach(playerEntity -> ((ServerPlayerEntity) playerEntity).networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(this)));
-					if (livingEntity instanceof PlayerEntity) {
-						((ServerPlayerEntity) livingEntity).networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(this));
-					}
-				}
-				if (isTouchingWater()) {
-					setVelocity(velocity.add(0, -amount / 2, 0));
-					PlayerStream.watching(this).forEach(playerEntity -> ((ServerPlayerEntity) playerEntity).networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(this)));
-					if (livingEntity instanceof PlayerEntity) {
-						((ServerPlayerEntity) livingEntity).networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(this));
-					}
-				}
-			}
-		}
-		if (hasStatusEffect(BWStatusEffects.GILLS)) {
-			if (!isSubmergedInWater() && !world.hasRain(getBlockPos())) {
-				setAir(getNextAirUnderwater(getAir() - getNextAirOnLand(0)));
-				if (getAir() == -20) {
-					damage(DamageSource.GENERIC, 2);
-					setAir(0);
-				}
-			}
-			else if (getAir() < getMaxAir()) {
-				setAir(getNextAirOnLand(getAir()));
 			}
 		}
 	}

@@ -80,7 +80,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo callbackInfo) {
-		//		System.out.println(getGameProfile());
 		if (getMagicTimer() > 0) {
 			setMagicTimer(getMagicTimer() - 1);
 		}
