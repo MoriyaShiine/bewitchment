@@ -52,7 +52,7 @@ public class GhostEntity extends BWHostileEntity {
 		if (age % 20 == 0 && getTarget() != null) {
 			int type = dataTracker.get(VARIANT);
 			if (type == 0) {
-				type = random.nextInt(getVariants()) + 1;
+				type = random.nextInt(getVariants() - 1) + 1;
 			}
 			getTarget().addStatusEffect(new StatusEffectInstance(type == 1 ? StatusEffects.HUNGER : type == 2 ? StatusEffects.BLINDNESS : type == 3 ? StatusEffects.SLOWNESS : StatusEffects.NAUSEA, 100));
 		}
