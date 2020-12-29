@@ -6,6 +6,7 @@ import moriyashiine.bewitchment.api.registry.AltarMapEntry;
 import moriyashiine.bewitchment.client.network.packet.SyncWitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWTags;
+import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.server.PlayerStream;
@@ -178,6 +179,11 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 	@Override
 	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
 		if (formed) {
+			if (!world.isClient && state.getBlock() != oldState.getBlock()) {
+				BWWorldState worldState = BWWorldState.get(world);
+				worldState.potentialCandelabras.add(pos.asLong());
+				worldState.markDirty();
+			}
 			BlockPos.Mutable mutable = new BlockPos.Mutable();
 			for (int x = -24; x <= 24; x++) {
 				for (int y = -24; y <= 24; y++) {
@@ -197,6 +203,13 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!world.isClient && state.getBlock() != newState.getBlock()) {
+			BWWorldState worldState = BWWorldState.get(world);
+			for (int i = worldState.potentialCandelabras.size() - 1; i >= 0; i--) {
+				if (worldState.potentialCandelabras.get(i) == pos.asLong()) {
+					worldState.potentialCandelabras.remove(i);
+					worldState.markDirty();
+				}
+			}
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof WitchAltarBlockEntity) {
 				WitchAltarBlockEntity altar = (WitchAltarBlockEntity) blockEntity;

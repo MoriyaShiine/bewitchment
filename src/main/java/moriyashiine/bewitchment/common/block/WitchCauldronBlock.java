@@ -202,7 +202,7 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 	
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-		if (!world.isClient) {
+		if (!world.isClient && state.getBlock() != newState.getBlock()) {
 			BWWorldState worldState = BWWorldState.get(world);
 			for (int i = worldState.witchCauldrons.size() - 1; i >= 0; i--) {
 				if (worldState.witchCauldrons.get(i) == pos.asLong()) {

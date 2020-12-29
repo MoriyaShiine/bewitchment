@@ -1,8 +1,14 @@
 package moriyashiine.bewitchment.common.entity.living;
 
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
+import moriyashiine.bewitchment.common.block.CandelabraBlock;
+import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
+import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.fabric.api.server.PlayerStream;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
@@ -22,6 +28,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -29,7 +36,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
-import java.util.Random;
 
 public class GhostEntity extends BWHostileEntity {
 	public static final TrackedData<Boolean> HAS_TARGET = DataTracker.registerData(GhostEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -190,20 +196,47 @@ public class GhostEntity extends BWHostileEntity {
 		
 		@Override
 		public void start() {
-			Random random = getRandom();
-			double targetX = getX() + (double) ((random.nextFloat() * 2 - 1) * 16);
-			double targetY = getY() + (double) ((random.nextFloat() * 2 - 1) * 16);
-			double targetZ = getZ() + (double) ((random.nextFloat() * 2 - 1) * 16);
-			BlockPos.Mutable mutable = new BlockPos.Mutable(targetX, targetY, targetZ);
-			while (world.getBlockState(mutable).getMaterial().isSolid()) {
-				mutable.set(mutable.getX(), mutable.getY() + 1, mutable.getZ());
+			BlockPos target = findTarget(new BlockPos.Mutable(getX() + MathHelper.nextDouble(random, -8, 8), getY() + MathHelper.nextDouble(random, -4, 4), getZ() + MathHelper.nextDouble(random, -8, 8)), 0);
+			if (target != null) {
+				getMoveControl().moveTo(target.getX(), target.getY(), target.getZ(), 0.2);
+				lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, new Vec3d(target.getX(), target.getY(), target.getZ()));
 			}
-			while (!world.getBlockState(mutable).getMaterial().isSolid()) {
-				mutable.set(mutable.getX(), mutable.getY() - 1, mutable.getZ());
+		}
+		
+		private BlockPos findTarget(BlockPos.Mutable target, int tries) {
+			if (tries <= 16) {
+				while (world.getBlockState(target).getMaterial().isSolid()) {
+					target.set(target.getX(), target.getY() + 1, target.getZ());
+				}
+				while (!world.getBlockState(target).getMaterial().isSolid()) {
+					target.set(target.getX(), target.getY() - 1, target.getZ());
+				}
+				target.set(target.getX(), target.getY() + random.nextInt(8), target.getZ());
+				for (Long longPos : BWWorldState.get(world).potentialCandelabras) {
+					BlockPos candelabraPos = BlockPos.fromLong(longPos);
+					int radius = -1;
+					BlockEntity blockEntity = world.getBlockEntity(candelabraPos);
+					BlockState state = world.getBlockState(candelabraPos);
+					if (blockEntity instanceof WitchAltarBlockEntity) {
+						WitchAltarBlockEntity witchAltar = (WitchAltarBlockEntity) blockEntity;
+						for (int i = 0; i < witchAltar.size(); i++) {
+							Block block = Block.getBlockFromItem(witchAltar.getStack(i).getItem());
+							if (block instanceof CandelabraBlock) {
+								radius = ((CandelabraBlock) block).repellentRadius;
+								break;
+							}
+						}
+					}
+					else if (state.getBlock() instanceof CandelabraBlock && state.get(Properties.LIT)) {
+						radius = ((CandelabraBlock) state.getBlock()).repellentRadius;
+					}
+					if (Math.sqrt(candelabraPos.getSquaredDistance(target)) <= radius) {
+						return findTarget(target.set(candelabraPos.getX() + MathHelper.nextDouble(random, -radius, radius), candelabraPos.getY() + MathHelper.nextDouble(random, -radius, radius), candelabraPos.getZ() + MathHelper.nextDouble(random, -radius, radius)), ++tries);
+					}
+				}
+				return target.toImmutable();
 			}
-			mutable.set(mutable.getX(), mutable.getY() + random.nextInt(8), mutable.getZ());
-			getMoveControl().moveTo(mutable.getX(), mutable.getY(), mutable.getZ(), 0.2);
-			lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, new Vec3d(mutable.getX(), mutable.getY(), mutable.getZ()));
+			return null;
 		}
 	}
 }
