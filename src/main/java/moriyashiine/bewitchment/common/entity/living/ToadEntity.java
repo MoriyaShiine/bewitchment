@@ -5,6 +5,7 @@ import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -22,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 public class ToadEntity extends BWTameableEntity {
 	public ToadEntity(EntityType<? extends TameableEntity> type, World world) {
 		super(type, world);
+		setPathfindingPenalty(PathNodeType.WATER, -1);
 	}
 	
 	public static DefaultAttributeContainer.Builder createAttributes() {
