@@ -54,7 +54,7 @@ public class BWWorldGenerators {
 	
 	public static TreeDecoratorType<LeaveSpanishMossTreeDecorator> LEAVE_SPANISH_MOSS = TreeDecoratorTypeAccessor.callRegister("leave_spanish_moss", LeaveSpanishMossTreeDecorator.CODEC);
 	
-	private static <F extends FeatureConfig> ConfiguredFeature<F, ?> create(String name, ConfiguredFeature<F, ?> configuredFeature) {
+	private static <T extends FeatureConfig> ConfiguredFeature<T, ?> create(String name, ConfiguredFeature<T, ?> configuredFeature) {
 		CONFIGURED_FEATURES.put(configuredFeature, new Identifier(Bewitchment.MODID, name));
 		return configuredFeature;
 	}

@@ -199,6 +199,7 @@
   "effect.bewitchment.volatility": "Volatility",
   "effect.bewitchment.webbed": "Webbed",
   "effect.bewitchment.wednesday": "Wednesday",
+  "enchantment.bewitchment.magic_protection": "Magic Protection",
   "death.attack.wednesday": "%s realized what day it is",
   "death.attack.wednesday.player": "%s realized what day it is while vibing with $s",
   "bewitchment.insufficent_altar_power": "Your source of magic is not strong enough",

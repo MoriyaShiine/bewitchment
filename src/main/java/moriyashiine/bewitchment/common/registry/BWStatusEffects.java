@@ -42,7 +42,7 @@ public class BWStatusEffects {
 	public static final StatusEffect WEBBED = create("webbed", new WebbedStatusEffect(StatusEffectType.HARMFUL, 0x2d312f));
 	public static final StatusEffect WEDNESDAY = create("wednesday", new WednesdayStatusEffect(StatusEffectType.BENEFICIAL, 0x00ff00));
 	
-	private static StatusEffect create(String name, StatusEffect effect) {
+	private static <T extends StatusEffect> T create(String name, T effect) {
 		STATUS_EFFECTS.put(effect, new Identifier(Bewitchment.MODID, name));
 		return effect;
 	}
