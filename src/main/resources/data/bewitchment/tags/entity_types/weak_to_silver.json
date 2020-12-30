@@ -1,16 +1,16 @@
 {
   "replace": false,
   "values": [
-	"minecraft:zombie",
-	"minecraft:zombie_villager",
-	"minecraft:zombified_piglin",
-	"minecraft:zoglin",
-	"minecraft:husk",
-	"minecraft:skeleton",
-	"minecraft:stray",
-	"minecraft:zombie_horse",
-	"minecraft:skeleton_horse",
-	"minecraft:wither",
+	"zombie",
+	"zombie_villager",
+	"zombified_piglin",
+	"zoglin",
+	"husk",
+	"skeleton",
+	"stray",
+	"zombie_horse",
+	"skeleton_horse",
+	"wither",
 	"bewitchment:ghost",
 	"bewitchment:black_dog"
   ]
