@@ -44,6 +44,12 @@
 	"lily_pad",
 	"hay_block",
 	"vine",
-	"bewitchment:spanish_moss"
+	"bewitchment:spanish_moss",
+	"bewitchment:glowing_bramble",
+	"bewitchment:ender_bramble",
+	"bewitchment:fruiting_bramble",
+	"bewitchment:scorched_bramble",
+	"bewitchment:thick_bramble",
+	"bewitchment:fleeting_bramble"
   ]
 }

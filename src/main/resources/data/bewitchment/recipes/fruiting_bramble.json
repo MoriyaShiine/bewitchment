@@ -1,0 +1,24 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "sugar_cane"
+	},
+	{
+	  "item": "sugar_cane"
+	},
+	{
+	  "item": "sugar_cane"
+	},
+	{
+	  "item": "bewitchment:aqua_cerate"
+	},
+	{
+	  "item": "sweet_berries"
+	}
+  ],
+  "result": {
+	"item": "bewitchment:fruiting_bramble",
+	"count": 3
+  }
+}

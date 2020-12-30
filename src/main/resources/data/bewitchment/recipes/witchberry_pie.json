@@ -1,0 +1,17 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "bewitchment:witchberry_pie"
+	},
+	{
+	  "item": "sugar"
+	},
+	{
+	  "item": "wheat"
+	}
+  ],
+  "result": {
+	"item": "bewitchment:witchberry_pie"
+  }
+}

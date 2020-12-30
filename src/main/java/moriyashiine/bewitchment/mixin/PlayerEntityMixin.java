@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.mixin;
 import moriyashiine.bewitchment.api.interfaces.MagicAccessor;
 import moriyashiine.bewitchment.api.interfaces.PolymorphAccessor;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
+import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
@@ -10,6 +11,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.FoodComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.World;
@@ -90,6 +92,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		if (hasStatusEffect(BWStatusEffects.NOURISHING)) {
 			//noinspection ConstantConditions
 			getHungerManager().add(getStatusEffect(BWStatusEffects.NOURISHING).getAmplifier() + 2, 0.5f);
+		}
+		FoodComponent foodComponent = stack.getItem().getFoodComponent();
+		if (foodComponent != null && BWTags.WITCHBERRY_FOODS.contains(stack.getItem())) {
+			MagicAccessor.of((PlayerEntity) (Object) this).ifPresent(magicAccessor -> magicAccessor.fillMagic(foodComponent.getHunger() * 100, false));
 		}
 	}
 	

@@ -16,6 +16,7 @@
 	"PotionItemMixin",
 	"PounceAtTargetGoalMixin",
 	"ServerPlayerEntityMixin",
+	"SpawnHelperMixin",
 	"StatusEffectAccessor",
 	"TreeDecoratorTypeAccessor"
   ],

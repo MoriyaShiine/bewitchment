@@ -188,8 +188,7 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 			for (int x = -24; x <= 24; x++) {
 				for (int y = -24; y <= 24; y++) {
 					for (int z = -24; z <= 24; z++) {
-						mutable.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
-						BlockEntity blockEntity = world.getBlockEntity(mutable);
+						BlockEntity blockEntity = world.getBlockEntity(mutable.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z));
 						if (blockEntity instanceof UsesAltarPower) {
 							((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, mutable.toImmutable()));
 							blockEntity.markDirty();
@@ -224,8 +223,7 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 			for (int x = -24; x <= 24; x++) {
 				for (int y = -24; y <= 24; y++) {
 					for (int z = -24; z <= 24; z++) {
-						mutable.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
-						BlockEntity blockEntity = world.getBlockEntity(mutable);
+						BlockEntity blockEntity = world.getBlockEntity(mutable.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z));
 						if (blockEntity instanceof UsesAltarPower) {
 							((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, mutable.toImmutable()));
 							blockEntity.markDirty();
@@ -248,8 +246,7 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 		for (int x = -24; x <= 24; x++) {
 			for (int y = -24; y <= 24; y++) {
 				for (int z = -24; z <= 24; z++) {
-					mutable.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
-					if (world.getBlockEntity(mutable) instanceof WitchAltarBlockEntity && (closest == null || pos.getSquaredDistance(mutable.toImmutable()) < pos.getSquaredDistance(closest))) {
+					if (world.getBlockEntity(mutable.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z)) instanceof WitchAltarBlockEntity && (closest == null || pos.getSquaredDistance(mutable.toImmutable()) < pos.getSquaredDistance(closest))) {
 						closest = mutable.toImmutable();
 					}
 				}

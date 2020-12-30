@@ -1,0 +1,18 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	"WBW"
+  ],
+  "key": {
+	"W": {
+	  "item": "wheat"
+	},
+	"B": {
+	  "item": "bewitchment:witchberry"
+	}
+  },
+  "result": {
+	"item": "bewitchment:witchberry_cookie",
+	"count": 8
+  }
+}

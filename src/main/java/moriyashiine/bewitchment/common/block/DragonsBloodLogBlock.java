@@ -47,7 +47,7 @@ public class DragonsBloodLogBlock extends StrippableLogBlock {
 	
 	@Override
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-		if (!world.isClient && state.get(BWProperties.CUT)) {
+		if (state.get(BWProperties.CUT)) {
 			if (random.nextInt(10) == 0) {
 				for (int i = 0; i < 8; i++) {
 					BlockPos offset = pos.offset(Direction.Type.HORIZONTAL.random(random));
