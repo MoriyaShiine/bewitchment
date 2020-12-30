@@ -115,6 +115,16 @@ public class GhostEntity extends BWHostileEntity {
 	}
 	
 	@Override
+	public boolean isTouchingWater() {
+		return false;
+	}
+	
+	@Override
+	public boolean isInLava() {
+		return false;
+	}
+	
+	@Override
 	public void setTarget(@Nullable LivingEntity target) {
 		super.setTarget(target);
 		dataTracker.set(HAS_TARGET, target != null);
