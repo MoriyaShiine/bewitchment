@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "bewitchment:oak_bark"
+  },
+  "effect": "minecraft:strength",
+  "time": 1200
+}

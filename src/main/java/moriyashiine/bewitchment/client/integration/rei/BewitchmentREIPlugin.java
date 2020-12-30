@@ -4,6 +4,7 @@ import me.shedaniel.rei.api.RecipeHelper;
 import me.shedaniel.rei.api.plugins.REIPluginV0;
 import moriyashiine.bewitchment.client.integration.rei.category.AthameDropsCategory;
 import moriyashiine.bewitchment.client.integration.rei.category.AthameStrippingCategory;
+import moriyashiine.bewitchment.client.integration.rei.category.CauldronBrewingCategory;
 import moriyashiine.bewitchment.client.integration.rei.category.OilCraftingCategory;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
@@ -27,6 +28,7 @@ public class BewitchmentREIPlugin implements REIPluginV0 {
 		recipeHelper.registerCategory(new AthameStrippingCategory());
 		recipeHelper.registerCategory(new AthameDropsCategory());
 		recipeHelper.registerCategory(new OilCraftingCategory());
+		recipeHelper.registerCategory(new CauldronBrewingCategory());
 	}
 	
 	@Override
@@ -36,6 +38,7 @@ public class BewitchmentREIPlugin implements REIPluginV0 {
 			world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_STRIPPING_RECIPE_TYPE).forEach(recipe -> recipeHelper.registerDisplay(new AthameStrippingCategory.Display(recipe)));
 			world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_DROP_RECIPE_TYPE).forEach(recipe -> recipeHelper.registerDisplay(new AthameDropsCategory.Display(recipe)));
 			world.getRecipeManager().listAllOfType(BWRecipeTypes.OIL_RECIPE_TYPE).forEach(recipe -> recipeHelper.registerDisplay(new OilCraftingCategory.Display(recipe)));
+			world.getRecipeManager().listAllOfType(BWRecipeTypes.CAULDRON_BREWING_RECIPE_TYPE).forEach(recipe -> recipeHelper.registerDisplay(new CauldronBrewingCategory.Display(recipe)));
 		}
 	}
 	
@@ -44,5 +47,6 @@ public class BewitchmentREIPlugin implements REIPluginV0 {
 		recipeHelper.registerWorkingStations(AthameStrippingCategory.IDENTIFIER, AthameStrippingCategory.LOGO);
 		recipeHelper.registerWorkingStations(AthameDropsCategory.IDENTIFIER, AthameDropsCategory.LOGO);
 		recipeHelper.registerWorkingStations(OilCraftingCategory.IDENTIFIER, OilCraftingCategory.LOGO);
+		recipeHelper.registerWorkingStations(CauldronBrewingCategory.IDENTIFIER, CauldronBrewingCategory.LOGO);
 	}
 }

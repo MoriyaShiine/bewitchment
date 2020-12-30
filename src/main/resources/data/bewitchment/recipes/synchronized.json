@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "minecraft:ghast_tear"
+  },
+  "effect": "bewitchment:synchronized",
+  "time": 600
+}

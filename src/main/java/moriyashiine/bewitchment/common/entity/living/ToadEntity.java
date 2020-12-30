@@ -91,12 +91,12 @@ public class ToadEntity extends BWTameableEntity {
 	
 	@Override
 	protected void initGoals() {
-		goalSelector.add(1, new SwimGoal(this));
-		goalSelector.add(2, new SitGoal(this));
-		goalSelector.add(3, new FollowOwnerGoal(this, 1, 10, 2, false));
-		goalSelector.add(4, new AnimalMateGoal(this, 1));
-		goalSelector.add(5, new WanderAroundFarGoal(this, 1));
-		goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8));
-		goalSelector.add(6, new LookAroundGoal(this));
+		goalSelector.add(0, new SwimGoal(this));
+		goalSelector.add(1, new SitGoal(this));
+		goalSelector.add(2, new FollowOwnerGoal(this, 1, 10, 2, false));
+		goalSelector.add(3, new AnimalMateGoal(this, 1));
+		goalSelector.add(4, new WanderAroundFarGoal(this, 1));
+		goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 8));
+		goalSelector.add(5, new LookAroundGoal(this));
 	}
 }

@@ -10,6 +10,8 @@
 	"minecraft:stray",
 	"minecraft:zombie_horse",
 	"minecraft:skeleton_horse",
-	"minecraft:wither"
+	"minecraft:wither",
+	"bewitchment:ghost",
+	"bewitchment:black_dog"
   ]
 }

@@ -27,7 +27,6 @@ public class OilCraftingCategory implements RecipeCategory<OilCraftingCategory.D
 	public static final Identifier IDENTIFIER = new Identifier(Bewitchment.MODID, "oil_crafting");
 	public static final EntryStack LOGO = EntryStack.create(BWObjects.WITCH_CAULDRON);
 	
-	
 	@Override
 	public @NotNull Identifier getIdentifier() {
 		return IDENTIFIER;

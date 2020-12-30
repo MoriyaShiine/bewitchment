@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "minecraft:scute"
+  },
+  "effect": "bewitchment:hardening",
+  "time": 600
+}

@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "bewitchment:juniper_bark"
+  },
+  "effect": "minecraft:regeneration",
+  "time": 600
+}

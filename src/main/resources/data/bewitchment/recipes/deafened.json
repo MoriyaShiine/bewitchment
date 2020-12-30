@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "minecraft:honeycomb"
+  },
+  "effect": "bewitchment:deafened",
+  "time": 1200
+}

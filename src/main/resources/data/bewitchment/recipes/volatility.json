@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "minecraft:fire_charge"
+  },
+  "effect": "bewitchment:volatility",
+  "time": 600
+}

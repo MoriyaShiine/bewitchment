@@ -39,7 +39,7 @@ public class AthameStrippingRecipe implements Recipe<Inventory> {
 	
 	@Override
 	public boolean fits(int width, int height) {
-		return true;
+		return false;
 	}
 	
 	@Override

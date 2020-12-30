@@ -1,9 +1,11 @@
 package moriyashiine.bewitchment.common.block.entity;
 
 import com.mojang.authlib.GameProfile;
+import moriyashiine.bewitchment.api.interfaces.MagicAccessor;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.fabricmc.fabric.api.server.PlayerStream;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -57,6 +59,14 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 	}
 	
 	@Override
+	public void fromClientTag(CompoundTag tag) {
+		Inventories.fromTag(tag, inventory);
+		power = tag.getInt("Power");
+		maxPower = tag.getInt("MaxPower");
+		gain = tag.getInt("Gain");
+	}
+	
+	@Override
 	public CompoundTag toClientTag(CompoundTag tag) {
 		Inventories.toTag(tag, inventory);
 		tag.putInt("Power", power);
@@ -66,22 +76,14 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 	}
 	
 	@Override
-	public void fromClientTag(CompoundTag tag) {
-		Inventories.fromTag(tag, inventory);
-		power = tag.getInt("Power");
-		maxPower = tag.getInt("MaxPower");
-		gain = tag.getInt("Gain");
+	public void fromTag(BlockState state, CompoundTag tag) {
+		fromClientTag(tag);
+		super.fromTag(state, tag);
 	}
 	
 	@Override
 	public CompoundTag toTag(CompoundTag tag) {
 		return super.toTag(toClientTag(tag));
-	}
-	
-	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
-		fromClientTag(tag);
-		super.fromTag(state, tag);
 	}
 	
 	@Override
@@ -109,6 +111,12 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 				scan(80);
 				if (world.getTime() % 20 == 0) {
 					power = Math.min(power + gain, maxPower);
+					PlayerStream.around(world, pos, 24).forEach(playerEntity -> MagicAccessor.of(playerEntity).ifPresent(magicAccessor -> {
+						if (magicAccessor.fillMagic(100, true) && drain(10, true)) {
+							magicAccessor.fillMagic(100, false);
+							drain(10, false);
+						}
+					}));
 				}
 			}
 		}
@@ -154,9 +162,11 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 		inventory.clear();
 	}
 	
-	public boolean drain(int amount) {
+	public boolean drain(int amount, boolean simulate) {
 		if (power - amount >= 0) {
-			power -= amount;
+			if (!simulate) {
+				power -= amount;
+			}
 			return true;
 		}
 		return false;

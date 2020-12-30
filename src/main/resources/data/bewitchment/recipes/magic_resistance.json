@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "bewitchment:dragons_blood_resin"
+  },
+  "effect": "bewitchment:magic_resistance",
+  "time": 3000
+}

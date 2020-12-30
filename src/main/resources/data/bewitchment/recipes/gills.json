@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"tag": "minecraft:fishes"
+  },
+  "effect": "bewitchment:gills",
+  "time": 1200
+}

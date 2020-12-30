@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.block;
 
+import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -33,9 +34,12 @@ import java.util.Random;
 public class CandelabraBlock extends Block implements Waterloggable {
 	private static final VoxelShape SHAPE = VoxelShapes.union(createCuboidShape(6, 0, 6, 10, 2, 10), createCuboidShape(6.5, 2, 6.5, 9.5, 3, 9.5), createCuboidShape(7, 3, 7, 9, 16, 9), createCuboidShape(1, 7.5, 7, 15, 8.5, 9), createCuboidShape(7, 7.5, 1, 9, 8.5, 15), createCuboidShape(7, 8.5, 1, 9, 14.5, 3), createCuboidShape(1, 8.5, 7, 3, 14.5, 9), createCuboidShape(13, 8.5, 7, 15, 14.5, 9), createCuboidShape(7, 8.5, 13, 9, 14.5, 15), createCuboidShape(6.5, 9.5, 0.5, 9.5, 10.5, 3.5), createCuboidShape(0.5, 9.5, 6.5, 3.5, 10.5, 9.5), createCuboidShape(12.5, 9.5, 6.5, 15.5, 10.5, 9.5), createCuboidShape(6.5, 9.5, 12.5, 9.5, 10.5, 15.5), createCuboidShape(6.5, 11, 6.5, 9.5, 12, 9.5));
 	
-	public CandelabraBlock(Settings settings) {
+	public final int repellentRadius;
+	
+	public CandelabraBlock(Settings settings, int repellentRadius) {
 		super(settings);
-		setDefaultState(getDefaultState().with(Properties.WATERLOGGED, false).with(Properties.LIT, false));
+		this.repellentRadius = repellentRadius;
+		setDefaultState(getDefaultState().with(Properties.WATERLOGGED, false).with(Properties.LIT, true));
 	}
 	
 	@Override
@@ -76,7 +80,7 @@ public class CandelabraBlock extends Block implements Waterloggable {
 	@Nullable
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		return super.getPlacementState(ctx).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);
+		return super.getPlacementState(ctx).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER).with(Properties.LIT, false);
 	}
 	
 	@Override
@@ -94,6 +98,29 @@ public class CandelabraBlock extends Block implements Waterloggable {
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.get(Properties.WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+	}
+	
+	@Override
+	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
+		if (!world.isClient && state.getBlock() != oldState.getBlock()) {
+			BWWorldState worldState = BWWorldState.get(world);
+			worldState.potentialCandelabras.add(pos.asLong());
+			worldState.markDirty();
+		}
+	}
+	
+	@Override
+	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+		if (!world.isClient && state.getBlock() != newState.getBlock()) {
+			BWWorldState worldState = BWWorldState.get(world);
+			for (int i = worldState.potentialCandelabras.size() - 1; i >= 0; i--) {
+				if (worldState.potentialCandelabras.get(i) == pos.asLong()) {
+					worldState.potentialCandelabras.remove(i);
+					worldState.markDirty();
+				}
+			}
+		}
+		super.onStateReplaced(state, world, pos, newState, moved);
 	}
 	
 	@Override

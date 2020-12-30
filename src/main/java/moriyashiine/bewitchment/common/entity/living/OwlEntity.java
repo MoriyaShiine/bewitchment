@@ -115,17 +115,17 @@ public class OwlEntity extends BWTameableEntity {
 	
 	@Override
 	protected void initGoals() {
-		goalSelector.add(1, new SwimGoal(this));
-		goalSelector.add(2, new SitGoal(this));
-		goalSelector.add(3, new MeleeAttackGoal(this, 1, true));
-		goalSelector.add(4, new FollowOwnerGoal(this, 1, 10, 2, false));
-		goalSelector.add(5, new AnimalMateGoal(this, 1));
-		goalSelector.add(6, new WanderAroundFarGoal(this, 1));
-		goalSelector.add(7, new LookAtEntityGoal(this, PlayerEntity.class, 8));
-		goalSelector.add(7, new LookAroundGoal(this));
-		targetSelector.add(1, new TrackOwnerAttackerGoal(this));
-		targetSelector.add(2, new AttackWithOwnerGoal(this));
-		targetSelector.add(3, new RevengeGoal(this));
-		targetSelector.add(4, new FollowTargetIfTamedGoal<>(this, AnimalEntity.class, false, entity -> entity instanceof ChickenEntity || entity instanceof RabbitEntity));
+		goalSelector.add(0, new SwimGoal(this));
+		goalSelector.add(1, new SitGoal(this));
+		goalSelector.add(2, new MeleeAttackGoal(this, 1, true));
+		goalSelector.add(3, new FollowOwnerGoal(this, 1, 10, 2, false));
+		goalSelector.add(4, new AnimalMateGoal(this, 1));
+		goalSelector.add(5, new WanderAroundFarGoal(this, 1));
+		goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8));
+		goalSelector.add(6, new LookAroundGoal(this));
+		targetSelector.add(0, new TrackOwnerAttackerGoal(this));
+		targetSelector.add(1, new AttackWithOwnerGoal(this));
+		targetSelector.add(2, new RevengeGoal(this));
+		targetSelector.add(3, new FollowTargetIfTamedGoal<>(this, AnimalEntity.class, false, entity -> entity instanceof ChickenEntity || entity instanceof RabbitEntity));
 	}
 }
