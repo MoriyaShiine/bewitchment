@@ -29,7 +29,7 @@ public class TaglockItem extends Item {
 	
 	@Override
 	public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
-		if (!entity.isDead() && !BWTags.CANNOT_TAGLOCK.contains(entity.getType()) && !(stack.hasTag() && !stack.getOrCreateTag().getString("OwnerName").isEmpty())) {
+		if (!entity.isDead() && !BWTags.BOSSES.contains(entity.getType()) && !(stack.hasTag() && !stack.getOrCreateTag().getString("OwnerName").isEmpty())) {
 			double targetYaw = entity.getHeadYaw() % 360;
 			double userYaw = user.getHeadYaw() % 360;
 			if (userYaw < 0) {
