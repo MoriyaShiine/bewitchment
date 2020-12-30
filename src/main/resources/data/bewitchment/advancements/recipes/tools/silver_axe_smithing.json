@@ -2,11 +2,11 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
 	"recipes": [
-	  "bewitchment:silver_axe"
+	  "bewitchment:silver_axe_smithing"
 	]
   },
   "criteria": {
-	"has_ingot": {
+	"has_item": {
 	  "trigger": "minecraft:inventory_changed",
 	  "conditions": {
 		"items": [
@@ -19,13 +19,13 @@
 	"has_the_recipe": {
 	  "trigger": "minecraft:recipe_unlocked",
 	  "conditions": {
-		"recipe": "bewitchment:silver_axe"
+		"recipe": "bewitchment:silver_axe_smithing"
 	  }
 	}
   },
   "requirements": [
 	[
-	  "has_ingot",
+	  "has_item",
 	  "has_the_recipe"
 	]
   ]

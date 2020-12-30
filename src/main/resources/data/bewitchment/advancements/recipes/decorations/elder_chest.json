@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
 	"recipes": [
-	  "bewitchment:cypress_chest"
+	  "bewitchment:elder_chest"
 	]
   },
   "criteria": {
@@ -19,7 +19,7 @@
 	"has_the_recipe": {
 	  "trigger": "minecraft:recipe_unlocked",
 	  "conditions": {
-		"recipe": "bewitchment:cypress_chest"
+		"recipe": "bewitchment:elder_chest"
 	  }
 	}
   },
