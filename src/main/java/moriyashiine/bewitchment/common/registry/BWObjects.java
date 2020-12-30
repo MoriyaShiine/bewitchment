@@ -29,6 +29,7 @@ import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.block.*;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
@@ -157,12 +158,12 @@ public class BWObjects {
 	public static final TerraformBoatItem DRAGONS_BLOOD_BOAT = create("dragons_blood_boat", new TerraformBoatItem(() -> BWEntityTypes.DRAGONS_BLOOD_BOAT, gen().maxCount(1)));
 	//other_plants
 	public static final Block SPANISH_MOSS = create("spanish_moss", new VineBlock(copyOf(Blocks.VINE)), true);
-	public static final Block GLOWING_BRAMBLE = create("glowing_bramble", new BrambleBlock(copyOf(JUNIPER_PLANKS).noCollision().ticksRandomly().luminance(15)), true);
-	public static final Block ENDER_BRAMBLE = create("ender_bramble", new BrambleBlock(copyOf(JUNIPER_PLANKS).noCollision().ticksRandomly()), true);
-	public static final Block FRUITING_BRAMBLE = create("fruiting_bramble", new BrambleBlock.Fruiting(copyOf(JUNIPER_PLANKS).noCollision().ticksRandomly()), true);
-	public static final Block SCORCHED_BRAMBLE = create("scorched_bramble", new BrambleBlock(copyOf(JUNIPER_PLANKS).noCollision().ticksRandomly()), true);
-	public static final Block THICK_BRAMBLE = create("thick_bramble", new BrambleBlock(copyOf(JUNIPER_PLANKS).noCollision().ticksRandomly()), true);
-	public static final Block FLEETING_BRAMBLE = create("fleeting_bramble", new BrambleBlock(copyOf(JUNIPER_PLANKS).noCollision().ticksRandomly()), true);
+	public static final Block GLOWING_BRAMBLE = create("glowing_bramble", new BrambleBlock(copyOf(JUNIPER_PLANKS).sounds(BlockSoundGroup.GRASS).noCollision().ticksRandomly().luminance(15)), true);
+	public static final Block ENDER_BRAMBLE = create("ender_bramble", new BrambleBlock(copyOf(JUNIPER_PLANKS).sounds(BlockSoundGroup.GRASS).noCollision().ticksRandomly()), true);
+	public static final Block FRUITING_BRAMBLE = create("fruiting_bramble", new BrambleBlock.Fruiting(copyOf(ENDER_BRAMBLE)), true);
+	public static final Block SCORCHED_BRAMBLE = create("scorched_bramble", new BrambleBlock(copyOf(ENDER_BRAMBLE)), true);
+	public static final Block THICK_BRAMBLE = create("thick_bramble", new BrambleBlock(copyOf(ENDER_BRAMBLE)), true);
+	public static final Block FLEETING_BRAMBLE = create("fleeting_bramble", new BrambleBlock(copyOf(ENDER_BRAMBLE)), true);
 	//material_block
 	public static final Block SILVER_BLOCK = create("silver_block", new Block(copyOf(Blocks.GOLD_BLOCK)), true);
 	public static final Block SALT_BLOCK = create("salt_block", new Block(copyOf(Blocks.COAL_BLOCK)), true);
