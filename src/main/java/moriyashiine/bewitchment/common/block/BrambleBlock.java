@@ -12,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
@@ -134,10 +135,10 @@ public class BrambleBlock extends SugarCaneBlock {
 		
 		@Override
 		public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+			boolean client = world.isClient;
 			if (state.get(BWProperties.HAS_FRUIT)) {
-				boolean client = world.isClient;
 				if (!client) {
-					world.setBlockState(pos, state.with(BWProperties.HAS_FRUIT, false));
+					world.setBlockState(pos, state.with(Properties.LEVEL_15, 0).with(BWProperties.HAS_FRUIT, false));
 					world.playSound(null, pos, SoundEvents.ITEM_SWEET_BERRIES_PICK_FROM_BUSH, SoundCategory.BLOCKS, 1, 1);
 					ItemStack stack = new ItemStack(BWObjects.WITCHBERRY);
 					if (!player.inventory.insertStack(stack)) {
@@ -145,6 +146,19 @@ public class BrambleBlock extends SugarCaneBlock {
 					}
 				}
 				return ActionResult.success(client);
+			}
+			else {
+				ItemStack stack = player.getStackInHand(hand);
+				if (stack.getItem() instanceof BoneMealItem) {
+					if (!world.isClient) {
+						if (!player.isCreative()) {
+							stack.decrement(1);
+						}
+						int level = Math.min(8, state.get(Properties.LEVEL_15) + world.random.nextInt(3) + 2);
+						world.setBlockState(pos, state.with(Properties.LEVEL_15, level).with(BWProperties.HAS_FRUIT, level == 8));
+					}
+					return ActionResult.success(client);
+				}
 			}
 			return super.onUse(state, world, pos, player, hand, hit);
 		}
@@ -156,7 +170,7 @@ public class BrambleBlock extends SugarCaneBlock {
 			if (!state.get(BWProperties.HAS_FRUIT)) {
 				int level = state.get(Properties.LEVEL_15);
 				if (level == 15) {
-					world.setBlockState(pos, state.with(BWProperties.HAS_FRUIT, true).with(Properties.LEVEL_15, 0));
+					world.setBlockState(pos, state.with(Properties.LEVEL_15, 0).with(BWProperties.HAS_FRUIT, true));
 				}
 				else {
 					world.setBlockState(pos, state.with(Properties.LEVEL_15, level + 1));
