@@ -200,18 +200,10 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor 
 					}
 					if (livingAttacker.getOffHandStack().getItem() == Items.GLASS_BOTTLE && getBlood() > 30) {
 						world.playSound(null, attacker.getBlockPos(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1, 0.5f);
-						if (!(attacker instanceof PlayerEntity && ((PlayerEntity) attacker).isCreative())) {
-							livingAttacker.getOffHandStack().decrement(1);
-						}
 						ItemStack bloodBottle = new ItemStack(BWObjects.BOTTLE_OF_BLOOD);
 						bloodBottle.getOrCreateTag().putUuid("OwnerUUID", getUuid());
 						bloodBottle.getOrCreateTag().putString("OwnerName", getDisplayName().getString());
-						if (livingAttacker.getStackInHand(Hand.OFF_HAND).getCount() == 1) {
-							livingAttacker.setStackInHand(Hand.OFF_HAND, bloodBottle);
-						}
-						else if (livingAttacker instanceof PlayerEntity && !((PlayerEntity) livingAttacker).inventory.insertStack(bloodBottle)) {
-							livingAttacker.dropStack(bloodBottle);
-						}
+						BewitchmentAPI.addItemToInventoryAndConsume(livingAttacker, Hand.OFF_HAND, bloodBottle);
 					}
 				}
 			}

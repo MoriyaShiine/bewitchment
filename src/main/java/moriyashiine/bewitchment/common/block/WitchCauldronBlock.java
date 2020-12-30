@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.block;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
 import moriyashiine.bewitchment.api.registry.OilRecipe;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
@@ -106,65 +107,51 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 					else {
 						int targetLevel = cauldron.getTargetLevel(stack);
 						if (targetLevel > -1) {
-							if (!player.isCreative() || glassBottle) {
-								if (bucket) {
-									ItemStack water = new ItemStack(Items.WATER_BUCKET);
-									if (stack.getCount() == 1) {
-										player.setStackInHand(hand, water);
-									}
-									else if (!player.inventory.insertStack(water)) {
-										player.dropStack(water);
+							if (bucket) {
+								BewitchmentAPI.addItemToInventoryAndConsume(player, hand, new ItemStack(Items.WATER_BUCKET));
+							}
+							else if (waterBucket) {
+								BewitchmentAPI.addItemToInventoryAndConsume(player, hand, new ItemStack(Items.BUCKET));
+							}
+							else if (glassBottle) {
+								ItemStack bottle = null;
+								if (cauldron.mode == WitchCauldronBlockEntity.Mode.NORMAL) {
+									bottle = PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER);
+								}
+								else if (cauldron.mode == WitchCauldronBlockEntity.Mode.OIL_CRAFTING) {
+									OilRecipe recipe = cauldron.oilRecipe;
+									if (recipe != null) {
+										bottle = recipe.getOutput().copy();
 									}
 								}
-								else if (waterBucket) {
-									player.setStackInHand(hand, new ItemStack(Items.BUCKET));
-								}
-								else if (glassBottle) {
-									ItemStack bottle = null;
-									if (cauldron.mode == WitchCauldronBlockEntity.Mode.NORMAL) {
-										bottle = PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER);
-									}
-									else if (cauldron.mode == WitchCauldronBlockEntity.Mode.OIL_CRAFTING) {
-										OilRecipe recipe = cauldron.oilRecipe;
-										if (recipe != null) {
-											bottle = recipe.getOutput().copy();
-										}
-									}
-									else {
-										bottle = cauldron.getPotion();
-										if (targetLevel == 2) {
-											boolean failed = true;
-											BlockPos altarPos = cauldron.getAltarPos();
-											if (altarPos != null) {
-												blockEntity = world.getBlockEntity(altarPos);
-												if (blockEntity instanceof WitchAltarBlockEntity && ((WitchAltarBlockEntity) blockEntity).drain(cauldron.getBrewCost(), false)) {
-													failed = false;
-												}
-											}
-											if (failed) {
-												cauldron.mode = cauldron.fail();
-												cauldron.syncCauldron();
-												return ActionResult.FAIL;
+								else {
+									bottle = cauldron.getPotion();
+									if (targetLevel == 2) {
+										boolean failed = true;
+										BlockPos altarPos = cauldron.getAltarPos();
+										if (altarPos != null) {
+											blockEntity = world.getBlockEntity(altarPos);
+											if (blockEntity instanceof WitchAltarBlockEntity && ((WitchAltarBlockEntity) blockEntity).drain(cauldron.getBrewCost(), false)) {
+												failed = false;
 											}
 										}
-									}
-									if (bottle != null && !player.inventory.insertStack(bottle)) {
-										player.dropStack(bottle);
-									}
-								}
-								else if (waterBottle) {
-									ItemStack bottle = PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER);
-									if (stack.getCount() == 1) {
-										player.setStackInHand(hand, bottle);
-									}
-									else if (!player.inventory.insertStack(bottle)) {
-										player.dropStack(bottle);
+										if (failed) {
+											cauldron.mode = cauldron.fail();
+											cauldron.syncCauldron();
+											return ActionResult.FAIL;
+										}
 									}
 								}
-								if (targetLevel == 0) {
-									cauldron.mode = cauldron.reset();
-									cauldron.syncCauldron();
+								if (bottle != null) {
+									BewitchmentAPI.addItemToInventoryAndConsume(player, hand, bottle);
 								}
+							}
+							else if (waterBottle) {
+								BewitchmentAPI.addItemToInventoryAndConsume(player, hand, new ItemStack(Items.GLASS_BOTTLE));
+							}
+							if (targetLevel == 0) {
+								cauldron.mode = cauldron.reset();
+								cauldron.syncCauldron();
 							}
 							world.setBlockState(pos, state.with(Properties.LEVEL_3, targetLevel));
 							world.playSound(null, pos, bucket ? SoundEvents.ITEM_BUCKET_FILL : waterBucket ? SoundEvents.ITEM_BUCKET_EMPTY : glassBottle ? SoundEvents.ITEM_BOTTLE_FILL : SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1, 1);
