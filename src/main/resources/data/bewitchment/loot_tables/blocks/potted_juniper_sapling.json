@@ -1,17 +1,17 @@
 {
-  "type": "minecraft:block",
+  "type": "block",
   "pools": [
 	{
 	  "rolls": 1,
 	  "entries": [
 		{
-		  "type": "minecraft:item",
-		  "name": "minecraft:flower_pot"
+		  "type": "item",
+		  "name": "flower_pot"
 		}
 	  ],
 	  "conditions": [
 		{
-		  "condition": "minecraft:survives_explosion"
+		  "condition": "survives_explosion"
 		}
 	  ]
 	},
@@ -19,13 +19,13 @@
 	  "rolls": 1,
 	  "entries": [
 		{
-		  "type": "minecraft:item",
+		  "type": "item",
 		  "name": "bewitchment:juniper_sapling"
 		}
 	  ],
 	  "conditions": [
 		{
-		  "condition": "minecraft:survives_explosion"
+		  "condition": "survives_explosion"
 		}
 	  ]
 	}

@@ -5,10 +5,10 @@
 	  "item": "bewitchment:oak_bark"
 	},
 	{
-	  "tag": "minecraft:coals"
+	  "tag": "coals"
 	},
 	{
-	  "item": "minecraft:poppy"
+	  "item": "poppy"
 	}
   ],
   "result": {

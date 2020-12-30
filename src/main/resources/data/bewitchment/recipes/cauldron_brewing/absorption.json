@@ -1,8 +1,8 @@
 {
   "type": "bewitchment:cauldron_brewing_recipe",
   "ingredient": {
-	"item": "minecraft:honey_bottle"
+	"item": "honey_bottle"
   },
-  "effect": "minecraft:absorption",
+  "effect": "absorption",
   "time": 1200
 }

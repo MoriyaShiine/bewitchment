@@ -3,6 +3,6 @@
   "ingredient": {
 	"item": "bewitchment:belladonna"
   },
-  "effect": "minecraft:poison",
+  "effect": "poison",
   "time": 600
 }

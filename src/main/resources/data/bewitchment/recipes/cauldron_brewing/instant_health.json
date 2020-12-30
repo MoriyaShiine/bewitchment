@@ -3,6 +3,6 @@
   "ingredient": {
 	"item": "bewitchment:garlic"
   },
-  "effect": "minecraft:instant_health",
+  "effect": "instant_health",
   "time": 1
 }

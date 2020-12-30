@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/button",
+  "parent": "block/button",
   "textures": {
 	"texture": "bewitchment:block/juniper_planks"
   }

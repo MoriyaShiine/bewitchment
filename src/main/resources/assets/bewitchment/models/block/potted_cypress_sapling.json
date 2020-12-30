@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/flower_pot_cross",
+  "parent": "block/flower_pot_cross",
   "textures": {
 	"plant": "bewitchment:block/cypress_sapling"
   }

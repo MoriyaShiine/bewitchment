@@ -1,8 +1,8 @@
 {
   "type": "bewitchment:athame_drop",
-  "entity_type": "minecraft:zombie",
+  "entity_type": "zombie",
   "result": {
-	"item": "minecraft:zombie_head"
+	"item": "zombie_head"
   },
   "chance": 0.2
 }

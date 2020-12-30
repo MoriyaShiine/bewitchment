@@ -3,6 +3,6 @@
   "ingredient": {
 	"item": "bewitchment:oak_bark"
   },
-  "effect": "minecraft:strength",
+  "effect": "strength",
   "time": 1200
 }

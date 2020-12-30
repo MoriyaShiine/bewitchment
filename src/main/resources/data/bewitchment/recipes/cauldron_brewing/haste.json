@@ -1,8 +1,8 @@
 {
   "type": "bewitchment:cauldron_brewing_recipe",
   "ingredient": {
-	"item": "minecraft:dandelion"
+	"item": "dandelion"
   },
-  "effect": "minecraft:haste",
+  "effect": "haste",
   "time": 1800
 }

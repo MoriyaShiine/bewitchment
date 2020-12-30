@@ -1,7 +1,7 @@
 {
   "type": "bewitchment:cauldron_brewing_recipe",
   "ingredient": {
-	"item": "minecraft:diamond"
+	"item": "diamond"
   },
   "effect": "bewitchment:theft",
   "time": 600

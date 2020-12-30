@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:smoking",
+  "type": "smoking",
   "ingredient": {
 	"item": "bewitchment:garlic"
   },

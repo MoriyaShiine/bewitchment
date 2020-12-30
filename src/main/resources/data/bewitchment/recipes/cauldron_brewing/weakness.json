@@ -3,6 +3,6 @@
   "ingredient": {
 	"tag": "c:mushrooms"
   },
-  "effect": "minecraft:weakness",
+  "effect": "weakness",
   "time": 1200
 }

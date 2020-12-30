@@ -3,6 +3,6 @@
   "ingredient": {
 	"item": "bewitchment:cypress_bark"
   },
-  "effect": "minecraft:instant_damage",
+  "effect": "instant_damage",
   "time": 1
 }

@@ -1,8 +1,8 @@
 {
   "type": "bewitchment:cauldron_brewing_recipe",
   "ingredient": {
-	"item": "minecraft:glistering_melon_slice"
+	"item": "glistering_melon_slice"
   },
-  "effect": "minecraft:glowing",
+  "effect": "glowing",
   "time": 200
 }

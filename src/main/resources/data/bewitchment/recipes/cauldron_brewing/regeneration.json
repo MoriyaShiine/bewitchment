@@ -3,6 +3,6 @@
   "ingredient": {
 	"item": "bewitchment:juniper_bark"
   },
-  "effect": "minecraft:regeneration",
+  "effect": "regeneration",
   "time": 600
 }

@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "crafting_shaped",
   "pattern": [
 	"N",
 	"S",
@@ -10,10 +10,10 @@
 	  "tag": "c:silver_nuggets"
 	},
 	"S": {
-	  "item": "minecraft:stick"
+	  "item": "stick"
 	},
 	"F": {
-	  "item": "minecraft:feather"
+	  "item": "feather"
 	}
   },
   "result": {

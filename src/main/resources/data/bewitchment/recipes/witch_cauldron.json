@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "crafting_shaped",
   "pattern": [
 	" B ",
 	"SCS",
@@ -13,7 +13,7 @@
 	  "tag": "c:silver_ingots"
 	},
 	"C": {
-	  "item": "minecraft:cauldron"
+	  "item": "cauldron"
 	}
   },
   "result": {

@@ -3,6 +3,6 @@
   "ingredient": {
 	"item": "bewitchment:spruce_bark"
   },
-  "effect": "minecraft:resistance",
+  "effect": "resistance",
   "time": 600
 }

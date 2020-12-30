@@ -1,8 +1,8 @@
 {
   "type": "bewitchment:cauldron_brewing_recipe",
   "ingredient": {
-	"item": "minecraft:wither_rose"
+	"item": "wither_rose"
   },
-  "effect": "minecraft:wither",
+  "effect": "wither",
   "time": 400
 }

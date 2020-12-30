@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/cube_column",
+  "parent": "block/cube_column",
   "textures": {
 	"end": "bewitchment:block/cypress_log_top",
 	"side": "bewitchment:block/cypress_log"

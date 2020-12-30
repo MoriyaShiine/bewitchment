@@ -1,17 +1,17 @@
 {
-  "type": "minecraft:block",
+  "type": "block",
   "pools": [
 	{
 	  "rolls": 1,
 	  "entries": [
 		{
-		  "type": "minecraft:item",
+		  "type": "item",
 		  "name": "bewitchment:stone_witch_altar"
 		}
 	  ],
 	  "conditions": [
 		{
-		  "condition": "minecraft:survives_explosion"
+		  "condition": "survives_explosion"
 		}
 	  ]
 	},
@@ -19,13 +19,13 @@
 	  "rolls": 1,
 	  "entries": [
 		{
-		  "type": "minecraft:item",
+		  "type": "item",
 		  "name": "bewitchment:besmirched_carpet"
 		}
 	  ],
 	  "conditions": [
 		{
-		  "condition": "minecraft:survives_explosion"
+		  "condition": "survives_explosion"
 		}
 	  ]
 	}

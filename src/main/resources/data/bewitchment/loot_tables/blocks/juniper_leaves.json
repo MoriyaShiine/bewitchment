@@ -1,30 +1,30 @@
 {
-  "type": "minecraft:block",
+  "type": "block",
   "pools": [
 	{
 	  "rolls": 1,
 	  "entries": [
 		{
-		  "type": "minecraft:alternatives",
+		  "type": "alternatives",
 		  "children": [
 			{
-			  "type": "minecraft:item",
+			  "type": "item",
 			  "conditions": [
 				{
-				  "condition": "minecraft:alternative",
+				  "condition": "alternative",
 				  "terms": [
 					{
-					  "condition": "minecraft:match_tool",
+					  "condition": "match_tool",
 					  "predicate": {
 						"tag": "fabric:shears"
 					  }
 					},
 					{
-					  "condition": "minecraft:match_tool",
+					  "condition": "match_tool",
 					  "predicate": {
 						"enchantments": [
 						  {
-							"enchantment": "minecraft:silk_touch",
+							"enchantment": "silk_touch",
 							"levels": {
 							  "min": 1
 							}
@@ -38,14 +38,14 @@
 			  "name": "bewitchment:juniper_leaves"
 			},
 			{
-			  "type": "minecraft:item",
+			  "type": "item",
 			  "conditions": [
 				{
-				  "condition": "minecraft:survives_explosion"
+				  "condition": "survives_explosion"
 				},
 				{
-				  "condition": "minecraft:table_bonus",
-				  "enchantment": "minecraft:fortune",
+				  "condition": "table_bonus",
+				  "enchantment": "fortune",
 				  "chances": [
 					0.05,
 					0.0625,
@@ -64,11 +64,11 @@
 	  "rolls": 1,
 	  "entries": [
 		{
-		  "type": "minecraft:item",
+		  "type": "item",
 		  "conditions": [
 			{
-			  "condition": "minecraft:table_bonus",
-			  "enchantment": "minecraft:fortune",
+			  "condition": "table_bonus",
+			  "enchantment": "fortune",
 			  "chances": [
 				0.02,
 				0.022222223,
@@ -80,38 +80,38 @@
 		  ],
 		  "functions": [
 			{
-			  "function": "minecraft:set_count",
+			  "function": "set_count",
 			  "count": {
 				"min": 1.0,
 				"max": 2.0,
-				"type": "minecraft:uniform"
+				"type": "uniform"
 			  }
 			},
 			{
-			  "function": "minecraft:explosion_decay"
+			  "function": "explosion_decay"
 			}
 		  ],
-		  "name": "minecraft:stick"
+		  "name": "stick"
 		}
 	  ],
 	  "conditions": [
 		{
-		  "condition": "minecraft:inverted",
+		  "condition": "inverted",
 		  "term": {
-			"condition": "minecraft:alternative",
+			"condition": "alternative",
 			"terms": [
 			  {
-				"condition": "minecraft:match_tool",
+				"condition": "match_tool",
 				"predicate": {
-				  "item": "minecraft:shears"
+				  "item": "shears"
 				}
 			  },
 			  {
-				"condition": "minecraft:match_tool",
+				"condition": "match_tool",
 				"predicate": {
 				  "enchantments": [
 					{
-					  "enchantment": "minecraft:silk_touch",
+					  "enchantment": "silk_touch",
 					  "levels": {
 						"min": 1
 					  }

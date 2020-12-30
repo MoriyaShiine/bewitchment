@@ -3,6 +3,6 @@
   "ingredient": {
 	"item": "bewitchment:ectoplasm"
   },
-  "effect": "minecraft:invisibility",
+  "effect": "invisibility",
   "time": 3000
 }

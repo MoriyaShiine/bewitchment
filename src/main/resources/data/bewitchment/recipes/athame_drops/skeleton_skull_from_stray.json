@@ -1,8 +1,8 @@
 {
   "type": "bewitchment:athame_drop",
-  "entity_type": "minecraft:stray",
+  "entity_type": "stray",
   "result": {
-	"item": "minecraft:skeleton_skull"
+	"item": "skeleton_skull"
   },
   "chance": 0.2
 }

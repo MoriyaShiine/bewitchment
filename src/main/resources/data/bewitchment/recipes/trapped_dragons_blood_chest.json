@@ -1,11 +1,11 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "crafting_shapeless",
   "ingredients": [
 	{
 	  "item": "bewitchment:dragons_blood_chest"
 	},
 	{
-	  "item": "minecraft:tripwire_hook"
+	  "item": "tripwire_hook"
 	}
   ],
   "result": {

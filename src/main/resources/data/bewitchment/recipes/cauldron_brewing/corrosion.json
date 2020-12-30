@@ -1,7 +1,7 @@
 {
   "type": "bewitchment:cauldron_brewing_recipe",
   "ingredient": {
-	"item": "minecraft:dragon_breath"
+	"item": "dragon_breath"
   },
   "effect": "bewitchment:corrosion",
   "time": 600

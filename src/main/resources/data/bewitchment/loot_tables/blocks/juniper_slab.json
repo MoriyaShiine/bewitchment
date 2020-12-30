@@ -1,17 +1,17 @@
 {
-  "type": "minecraft:block",
+  "type": "block",
   "pools": [
 	{
 	  "rolls": 1,
 	  "entries": [
 		{
-		  "type": "minecraft:item",
+		  "type": "item",
 		  "functions": [
 			{
-			  "function": "minecraft:set_count",
+			  "function": "set_count",
 			  "conditions": [
 				{
-				  "condition": "minecraft:block_state_property",
+				  "condition": "block_state_property",
 				  "block": "bewitchment:juniper_slab",
 				  "properties": {
 					"type": "double"
@@ -21,7 +21,7 @@
 			  "count": 2
 			},
 			{
-			  "function": "minecraft:explosion_decay"
+			  "function": "explosion_decay"
 			}
 		  ],
 		  "name": "bewitchment:juniper_slab"

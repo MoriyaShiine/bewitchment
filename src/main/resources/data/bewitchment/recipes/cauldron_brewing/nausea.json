@@ -3,6 +3,6 @@
   "ingredient": {
 	"item": "bewitchment:aconite"
   },
-  "effect": "minecraft:nausea",
+  "effect": "nausea",
   "time": 200
 }

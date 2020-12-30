@@ -1,8 +1,8 @@
 {
   "type": "bewitchment:cauldron_brewing_recipe",
   "ingredient": {
-	"item": "minecraft:slime_ball"
+	"item": "slime_ball"
   },
-  "effect": "minecraft:slowness",
+  "effect": "slowness",
   "time": 1200
 }

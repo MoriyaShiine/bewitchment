@@ -1,8 +1,8 @@
 {
   "type": "bewitchment:cauldron_brewing_recipe",
   "ingredient": {
-	"item": "minecraft:chorus_fruit"
+	"item": "chorus_fruit"
   },
-  "effect": "minecraft:levitation",
+  "effect": "levitation",
   "time": 200
 }

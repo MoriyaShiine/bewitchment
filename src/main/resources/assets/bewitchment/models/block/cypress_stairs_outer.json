@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/outer_stairs",
+  "parent": "block/outer_stairs",
   "textures": {
 	"bottom": "bewitchment:block/cypress_planks",
 	"top": "bewitchment:block/cypress_planks",

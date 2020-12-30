@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:recipes/root",
+  "parent": "recipes/root",
   "rewards": {
 	"recipes": [
 	  "bewitchment:stripped_juniper_wood"
@@ -7,7 +7,7 @@
   },
   "criteria": {
 	"has_item": {
-	  "trigger": "minecraft:inventory_changed",
+	  "trigger": "inventory_changed",
 	  "conditions": {
 		"items": [
 		  {
@@ -17,7 +17,7 @@
 	  }
 	},
 	"has_the_recipe": {
-	  "trigger": "minecraft:recipe_unlocked",
+	  "trigger": "recipe_unlocked",
 	  "conditions": {
 		"recipe": "bewitchment:stripped_juniper_wood"
 	  }

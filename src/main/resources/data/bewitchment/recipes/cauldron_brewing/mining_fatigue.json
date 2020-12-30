@@ -1,8 +1,8 @@
 {
   "type": "bewitchment:cauldron_brewing_recipe",
   "ingredient": {
-	"item": "minecraft:poppy"
+	"item": "poppy"
   },
-  "effect": "minecraft:mining_fatigue",
+  "effect": "mining_fatigue",
   "time": 1800
 }

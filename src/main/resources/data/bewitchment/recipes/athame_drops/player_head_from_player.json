@@ -1,8 +1,8 @@
 {
   "type": "bewitchment:athame_drop",
-  "entity_type": "minecraft:player",
+  "entity_type": "player",
   "result": {
-	"item": "minecraft:player_head"
+	"item": "player_head"
   },
   "chance": 0.2
 }
