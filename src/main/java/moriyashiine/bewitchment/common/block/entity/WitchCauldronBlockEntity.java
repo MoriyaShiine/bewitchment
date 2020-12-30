@@ -331,7 +331,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 			int redstone = 0, glowstone = 0;
 			for (int i = 0; i < size(); i++) {
 				ItemStack stackInSlot = getStack(i);
-				if (stackInSlot.getItem() instanceof TaglockItem && stackInSlot.hasTag() && !stackInSlot.getOrCreateTag().getString("OwnerName").isEmpty() && stackInSlot.getOrCreateTag().getBoolean("FromPlayer")) {
+				if (stackInSlot.getItem() instanceof TaglockItem && TaglockItem.hasTaglock(stackInSlot) && stackInSlot.getOrCreateTag().getBoolean("FromPlayer")) {
 					stack.getOrCreateTag().putUuid("PolymorphUUID", stackInSlot.getOrCreateTag().getUuid("OwnerUUID"));
 					stack.getOrCreateTag().putString("PolymorphName", stackInSlot.getOrCreateTag().getString("OwnerName"));
 				}
