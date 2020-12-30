@@ -62,7 +62,7 @@ public class GhostEntity extends BWHostileEntity {
 			}
 			getTarget().addStatusEffect(new StatusEffectInstance(type == 1 ? StatusEffects.HUNGER : type == 2 ? StatusEffects.BLINDNESS : type == 3 ? StatusEffects.SLOWNESS : StatusEffects.NAUSEA, 100));
 		}
-		if (!world.isClient && !hasCustomName() && world.isDay() && world.isSkyVisible(getBlockPos())) {
+		if (!world.isClient && !hasCustomName() && world.isDay() && world.isSkyVisibleAllowingSea(getBlockPos())) {
 			PlayerStream.watching(this).forEach(playerEntity -> SpawnSmokeParticlesPacket.send(playerEntity, this));
 			remove();
 		}
