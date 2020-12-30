@@ -358,5 +358,8 @@ public class BWObjects {
 		compostRegistry.add(MANDRAKE_SEEDS, 0.3f);
 		compostRegistry.add(GRILLED_GARLIC, 0.85f);
 		compostRegistry.add(GARLIC_BREAD, 1f);
+		compostRegistry.add(WITCHBERRY, 0.65f);
+		compostRegistry.add(WITCHBERRY_PIE, 1f);
+		compostRegistry.add(WITCHBERRY_COOKIE, 0.85f);
 	}
 }
