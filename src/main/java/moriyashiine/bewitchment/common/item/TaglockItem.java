@@ -5,6 +5,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -29,7 +30,7 @@ public class TaglockItem extends Item {
 	
 	@Override
 	public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
-		if (!entity.isDead() && !BWTags.BOSSES.contains(entity.getType()) && !(stack.hasTag() && !stack.getOrCreateTag().getString("OwnerName").isEmpty())) {
+		if (entity.isAlive() && !BWTags.BOSSES.contains(entity.getType()) && !(stack.hasTag() && !stack.getOrCreateTag().getString("OwnerName").isEmpty())) {
 			double targetYaw = entity.getHeadYaw() % 360;
 			double userYaw = user.getHeadYaw() % 360;
 			if (userYaw < 0) {
@@ -41,6 +42,9 @@ public class TaglockItem extends Item {
 			if (Math.abs(targetYaw - userYaw) < 120) {
 				boolean client = user.world.isClient;
 				if (!client) {
+					if (entity instanceof MobEntity) {
+						((MobEntity) entity).setPersistent();
+					}
 					ItemStack taglock = new ItemStack(this);
 					taglock.getOrCreateTag().putUuid("OwnerUUID", entity.getUuid());
 					taglock.getOrCreateTag().putString("OwnerName", entity.getDisplayName().getString());
