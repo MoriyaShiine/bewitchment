@@ -1,10 +1,12 @@
 package moriyashiine.bewitchment.common.entity.living;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.EntityData;
+import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
@@ -60,6 +62,11 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	@Override
 	public int getVariants() {
 		return 5;
+	}
+	
+	@Override
+	public EntityGroup getGroup() {
+		return BewitchmentAPI.DEMON;
 	}
 	
 	@Nullable

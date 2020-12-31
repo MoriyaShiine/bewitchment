@@ -6,6 +6,7 @@ import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.EntityDamageSource;
@@ -22,6 +23,9 @@ import java.util.function.Predicate;
 
 public class BewitchmentAPI {
 	public static Set<AltarMapEntry> ALTAR_MAP_ENTRIES = new HashSet<>();
+	
+	@SuppressWarnings("InstantiationOfUtilityClass")
+	public static EntityGroup DEMON = new EntityGroup();
 	
 	public static boolean isSourceFromSilver(DamageSource source) {
 		Entity attacker = source.getAttacker();

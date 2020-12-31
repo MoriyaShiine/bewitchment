@@ -1,9 +1,11 @@
 package moriyashiine.bewitchment.common.entity.living;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import net.fabricmc.fabric.api.server.PlayerStream;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
@@ -45,6 +47,11 @@ public class HellhoundEntity extends BWHostileEntity {
 	@Override
 	public int getVariants() {
 		return 5;
+	}
+	
+	@Override
+	public EntityGroup getGroup() {
+		return BewitchmentAPI.DEMON;
 	}
 	
 	@Nullable
