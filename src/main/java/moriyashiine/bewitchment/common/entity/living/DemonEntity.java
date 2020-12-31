@@ -103,7 +103,7 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	
 	@Override
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
-		if (isAlive() && !getOffers().isEmpty() && getCurrentCustomer() == null) {
+		if (isAlive() && !getOffers().isEmpty() && getCurrentCustomer() == null && getTarget() == null) {
 			boolean client = world.isClient;
 			if (!client) {
 				setCurrentCustomer(player);
@@ -125,9 +125,8 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 		if (!world.isClient) {
 			LivingEntity target = getTarget();
 			if (target != null) {
-				setCurrentCustomer(null);
 				lookAtEntity(target, 360, 360);
-				if (age % 40 == 0) {
+				if ((age + getEntityId()) % 40 == 0) {
 					FireballEntity fireball = new FireballEntity(world, this, target.getX() - getX(), target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ());
 					fireball.updatePosition(fireball.getX(), getBodyY(0.5), fireball.getZ());
 					world.playSound(null, getBlockPos(), SoundEvents.ENTITY_BLAZE_SHOOT, SoundCategory.HOSTILE, 1, 1);
@@ -153,6 +152,14 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 			swingHand(Hand.MAIN_HAND);
 		}
 		return flag;
+	}
+	
+	@Override
+	public void setTarget(@Nullable LivingEntity target) {
+		super.setTarget(target);
+		if (target != null) {
+			setCurrentCustomer(null);
+		}
 	}
 	
 	@Override
@@ -258,49 +265,56 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 				List<ItemStack> cost = generateCost(random, false);
 				offers.add(new TradeOffer(cost.get(0), cost.size() > 1 ? cost.get(1) : ItemStack.EMPTY, generateRewardStack(random), Integer.MAX_VALUE, 0, 1));
 			}
+			List<ItemStack> cost = generateCost(random, true);
+			offers.add(new TradeOffer(cost.get(0), cost.get(1), new ItemStack(BWObjects.DEMONIC_CONTRACT), Integer.MAX_VALUE, 0, 1));
 			return offers;
 		}
 		
-		private static List<ItemStack> generateCost(Random random, boolean alwaysTwo) {
+		private static List<ItemStack> generateCost(Random random, boolean contract) {
 			List<ItemStack> cost = new ArrayList<>();
-			cost.add(generateCostStack(random));
-			if (alwaysTwo || random.nextBoolean()) {
-				cost.add(generateCostStack(random));
+			ItemStack stack = generateCostStack(random, contract ? 3 : 1);
+			cost.add(stack);
+			if (contract || random.nextBoolean()) {
+				ItemStack stack2 = generateCostStack(random, contract ? 3 : 1);
+				while (stack.getItem() == stack2.getItem()) {
+					stack2 = generateCostStack(random, contract ? 3 : 1);
+				}
+				cost.add(stack2);
 			}
 			return cost;
 		}
 		
-		private static ItemStack generateCostStack(Random random) {
+		private static ItemStack generateCostStack(Random random, int costMultiplier) {
 			switch (random.nextInt(9)) {
 				case 0:
-					return new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(random, 1, 5));
+					return new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(random, 1, 5) * costMultiplier);
 				case 1:
-					return new ItemStack(Items.DIAMOND, MathHelper.nextInt(random, 1, 2));
+					return new ItemStack(Items.DIAMOND, MathHelper.nextInt(random, 1, 2) * costMultiplier);
 				case 2:
-					return new ItemStack(Items.BLAZE_ROD, MathHelper.nextInt(random, 1, 3));
+					return new ItemStack(Items.BLAZE_ROD, MathHelper.nextInt(random, 1, 3) * costMultiplier);
 				case 3:
-					return new ItemStack(Items.FERMENTED_SPIDER_EYE, MathHelper.nextInt(random, 1, 2));
+					return new ItemStack(Items.FERMENTED_SPIDER_EYE, MathHelper.nextInt(random, 1, 2) * costMultiplier);
 				case 4:
 					switch (random.nextInt(4)) {
 						case 0:
-							return new ItemStack(Items.ZOMBIE_HEAD, MathHelper.nextInt(random, 1, 2));
+							return new ItemStack(Items.ZOMBIE_HEAD, MathHelper.nextInt(random, 1, 2) * costMultiplier);
 						case 1:
-							return new ItemStack(Items.CREEPER_HEAD, MathHelper.nextInt(random, 1, 2));
+							return new ItemStack(Items.CREEPER_HEAD, MathHelper.nextInt(random, 1, 2) * costMultiplier);
 						case 2:
-							return new ItemStack(Items.SKELETON_SKULL, MathHelper.nextInt(random, 1, 2));
+							return new ItemStack(Items.SKELETON_SKULL, MathHelper.nextInt(random, 1, 2) * costMultiplier);
 						case 3:
-							return new ItemStack(Items.WITHER_SKELETON_SKULL);
+							return new ItemStack(Items.WITHER_SKELETON_SKULL, costMultiplier);
 					}
 				case 5:
-					return new ItemStack(BWObjects.BESMIRCHED_WOOL, MathHelper.nextInt(random, 1, 3));
+					return new ItemStack(BWObjects.BESMIRCHED_WOOL, MathHelper.nextInt(random, 1, 3) * costMultiplier);
 				case 6:
-					return new ItemStack(BWObjects.SNAKE_TONGUE, MathHelper.nextInt(random, 1, 3));
+					return new ItemStack(BWObjects.SNAKE_TONGUE, MathHelper.nextInt(random, 1, 3) * costMultiplier);
 				case 7:
-					return new ItemStack(BWObjects.DEMON_HORN, MathHelper.nextInt(random, 1, 3));
+					return new ItemStack(BWObjects.DEMON_HORN, MathHelper.nextInt(random, 1, 3) * costMultiplier);
 				case 8:
 					return new ItemStack(BWObjects.BOTTLE_OF_BLOOD);
 				default:
-					return new ItemStack(Items.BEDROCK);
+					return ItemStack.EMPTY;
 			}
 		}
 		
