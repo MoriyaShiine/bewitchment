@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-	"wither_skeleton_skull"
+	"wither_skeleton_skull",
+	"bewitchment:demon_heart"
   ]
 }
