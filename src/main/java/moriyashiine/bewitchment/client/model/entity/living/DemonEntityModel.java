@@ -5,31 +5,36 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
-public class DemonEntityModel<T extends DemonEntity> extends EntityModel<T> {
+public class DemonEntityModel<T extends DemonEntity> extends BipedEntityModel<T> {
 	private final Model male = new Male();
 	private final Model female = new Female();
 	
 	private Model model;
 	
+	public DemonEntityModel() {
+		super(1);
+	}
+	
 	@Override
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+		super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
 		model = entity.getDataTracker().get(DemonEntity.MALE) ? male : female;
-		model.head.pitch = (float) (headPitch * (Math.PI / 180f));
-		model.head.yaw = (float) (headYaw * (Math.PI / 180f)) * 2 / 3f;
-		model.lWing01.yaw = (MathHelper.cos(limbDistance * 2 / 3f)) + MathHelper.sin((animationProgress + entity.getEntityId()) * 1 / 8f) / 8f - 2 / 3f;
-		model.rWing01.yaw = -((MathHelper.cos(limbDistance * 2 / 3f)) + MathHelper.sin((animationProgress + entity.getEntityId()) * 1 / 8f) / 8f - 2 / 3f);
-		model.BipedLeftArm.pitch = MathHelper.sin(animationProgress / 8) * (limbDistance + 1) / 8f;
-		model.BipedRightArm.pitch = MathHelper.sin((float) (animationProgress / 8 + Math.PI)) * (limbDistance + 1) / 8f;
-		model.BipedLeftLeg.pitch = MathHelper.cos(limbAngle * 2 / 3f) * limbDistance - 1 / 3f;
-		model.BipedRightLeg.pitch = MathHelper.cos((float) (limbAngle * 2 / 3f + Math.PI)) * limbDistance - 1 / 3f;
-		model.tail01.roll = (MathHelper.cos(limbAngle * 2 / 3f) * limbDistance) + MathHelper.sin((animationProgress * 2 + entity.getEntityId()) * 1 / 8f) / 8f;
+		model.head.copyPositionAndRotation(super.head);
+		model.leftArm.copyPositionAndRotation(super.leftArm);
+		model.rightArm.copyPositionAndRotation(super.rightArm);
+		model.leftLeg.pitch = MathHelper.cos((float) (limbAngle * 2 / 3 + Math.PI)) * limbDistance - 1 / 3f;
+		model.rightLeg.pitch = MathHelper.cos(limbAngle * 2 / 3) * limbDistance - 1 / 3f;
+		model.lWing01.yaw = MathHelper.cos(animationProgress / 8) / 3 + 1 / 3f;
+		model.rWing01.yaw = MathHelper.cos((float) (animationProgress / 8 + Math.PI)) / 3 - 1 / 3f;
+		model.tail01.roll = MathHelper.sin(animationProgress / 8) / 8;
 		if (model.loincloth != null) {
-			model.loincloth.pitch = Math.min(model.BipedLeftLeg.pitch, model.BipedRightLeg.pitch);
+			model.loincloth.pitch = Math.min(model.leftLeg.pitch, model.rightLeg.pitch);
 		}
 	}
 	
@@ -49,10 +54,10 @@ public class DemonEntityModel<T extends DemonEntity> extends EntityModel<T> {
 		protected ModelPart body;
 		protected ModelPart lWing01;
 		protected ModelPart rWing01;
-		protected ModelPart BipedLeftArm;
-		protected ModelPart BipedRightArm;
-		protected ModelPart BipedLeftLeg;
-		protected ModelPart BipedRightLeg;
+		protected ModelPart leftArm;
+		protected ModelPart rightArm;
+		protected ModelPart leftLeg;
+		protected ModelPart rightLeg;
 		protected ModelPart tail01;
 		protected ModelPart loincloth;
 	}
@@ -220,15 +225,15 @@ public class DemonEntityModel<T extends DemonEntity> extends EntityModel<T> {
 			setRotationAngle(lHorn04, -0.1396F, 0.0F, -0.1047F);
 			lHorn04.setTextureOffset(35, 10).addCuboid(-0.5F, -3.0F, -0.5F, 1.0F, 3.0F, 1.0F, 0.0F, false);
 			
-			BipedLeftLeg = new ModelPart(this);
-			BipedLeftLeg.setPivot(2.1F, 12.6F, 0.1F);
-			body.addChild(BipedLeftLeg);
-			setRotationAngle(BipedLeftLeg, -0.2618F, 0.0F, -0.1047F);
-			BipedLeftLeg.setTextureOffset(0, 17).addCuboid(-2.0F, -1.0F, -2.5F, 4.0F, 8.0F, 5.0F, 0.0F, false);
+			leftLeg = new ModelPart(this);
+			leftLeg.setPivot(2.1F, 12.6F, 0.1F);
+			body.addChild(leftLeg);
+			setRotationAngle(leftLeg, -0.2618F, 0.0F, -0.1047F);
+			leftLeg.setTextureOffset(0, 17).addCuboid(-2.0F, -1.0F, -2.5F, 4.0F, 8.0F, 5.0F, 0.0F, false);
 			
 			ModelPart lLeg02 = new ModelPart(this);
 			lLeg02.setPivot(0.0F, 5.7F, -0.4F);
-			BipedLeftLeg.addChild(lLeg02);
+			leftLeg.addChild(lLeg02);
 			setRotationAngle(lLeg02, 0.6981F, 0.0F, 0.1047F);
 			lLeg02.setTextureOffset(0, 30).addCuboid(-1.5F, 0.0F, -2.0F, 3.0F, 6.0F, 4.0F, 0.0F, false);
 			
@@ -262,15 +267,15 @@ public class DemonEntityModel<T extends DemonEntity> extends EntityModel<T> {
 			setRotationAngle(lHoofClaw02b, 0.3491F, 0.0F, 0.0F);
 			lHoofClaw02b.setTextureOffset(7, 56).addCuboid(-0.49F, -1.1F, -1.2F, 1.0F, 1.0F, 3.0F, 0.0F, false);
 			
-			BipedRightLeg = new ModelPart(this);
-			BipedRightLeg.setPivot(-2.1F, 12.6F, 0.1F);
-			body.addChild(BipedRightLeg);
-			setRotationAngle(BipedRightLeg, -0.2618F, 0.0F, 0.1047F);
-			BipedRightLeg.setTextureOffset(0, 17).addCuboid(-2.0F, -1.0F, -2.5F, 4.0F, 8.0F, 5.0F, 0.0F, true);
+			rightLeg = new ModelPart(this);
+			rightLeg.setPivot(-2.1F, 12.6F, 0.1F);
+			body.addChild(rightLeg);
+			setRotationAngle(rightLeg, -0.2618F, 0.0F, 0.1047F);
+			rightLeg.setTextureOffset(0, 17).addCuboid(-2.0F, -1.0F, -2.5F, 4.0F, 8.0F, 5.0F, 0.0F, true);
 			
 			ModelPart rLeg02 = new ModelPart(this);
 			rLeg02.setPivot(0.0F, 5.7F, -0.4F);
-			BipedRightLeg.addChild(rLeg02);
+			rightLeg.addChild(rLeg02);
 			setRotationAngle(rLeg02, 0.6981F, 0.0F, -0.1047F);
 			rLeg02.setTextureOffset(0, 30).addCuboid(-1.5F, 0.0F, -2.0F, 3.0F, 6.0F, 4.0F, 0.0F, true);
 			
@@ -304,25 +309,27 @@ public class DemonEntityModel<T extends DemonEntity> extends EntityModel<T> {
 			setRotationAngle(rHoofClaw02b, 0.3491F, 0.0F, 0.0F);
 			rHoofClaw02b.setTextureOffset(7, 56).addCuboid(-0.49F, -1.1F, -1.2F, 1.0F, 1.0F, 3.0F, 0.0F, true);
 			
-			BipedLeftArm = new ModelPart(this);
-			BipedLeftArm.setPivot(5.0F, 2.0F, 0.0F);
-			body.addChild(BipedLeftArm);
-			setRotationAngle(BipedLeftArm, 0.0F, 0.0F, -0.1F);
-			BipedLeftArm.setTextureOffset(44, 16).addCuboid(-1.0F, -2.0F, -2.0F, 4.0F, 14.0F, 4.0F, 0.0F, false);
+			leftArm = new ModelPart(this);
+			leftArm.setPivot(5.0F, 2.0F, 0.0F);
+			body.addChild(leftArm);
+			setRotationAngle(leftArm, 0.0F, 0.0F, -0.1F);
+			leftArm.setTextureOffset(44, 16).addCuboid(-1.0F, -2.0F, -2.0F, 4.0F, 14.0F, 4.0F, 0.0F, false);
 			
-			BipedRightArm = new ModelPart(this);
-			BipedRightArm.setPivot(-5.0F, 2.0F, 0.0F);
-			body.addChild(BipedRightArm);
-			setRotationAngle(BipedRightArm, 0.0F, 0.0F, 0.1F);
-			BipedRightArm.setTextureOffset(44, 16).addCuboid(-3.0F, -2.0F, -2.0F, 4.0F, 14.0F, 4.0F, 0.0F, true);
+			rightArm = new ModelPart(this);
+			rightArm.setPivot(-5.0F, 2.0F, 0.0F);
+			body.addChild(rightArm);
+			setRotationAngle(rightArm, 0.0F, 0.0F, 0.1F);
+			rightArm.setTextureOffset(44, 16).addCuboid(-3.0F, -2.0F, -2.0F, 4.0F, 14.0F, 4.0F, 0.0F, true);
 		}
 		
 		@Override
 		public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+		
 		}
 		
 		@Override
 		public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
+		
 		}
 	}
 	
@@ -535,15 +542,15 @@ public class DemonEntityModel<T extends DemonEntity> extends EntityModel<T> {
 			setRotationAngle(tailTip02, 0.0F, -0.7854F, 0.0F);
 			tailTip02.setTextureOffset(36, 52).addCuboid(-0.5F, -0.5F, -0.5F, 2.0F, 1.0F, 2.0F, 0.0F, false);
 			
-			BipedLeftLeg = new ModelPart(this);
-			BipedLeftLeg.setPivot(2.1F, 6.2F, 0.1F);
-			stomach.addChild(BipedLeftLeg);
-			setRotationAngle(BipedLeftLeg, -0.2618F, 0.0F, -0.1047F);
-			BipedLeftLeg.setTextureOffset(0, 17).addCuboid(-2.0F, -1.0F, -2.5F, 4.0F, 8.0F, 5.0F, 0.0F, false);
+			leftLeg = new ModelPart(this);
+			leftLeg.setPivot(2.1F, 6.2F, 0.1F);
+			stomach.addChild(leftLeg);
+			setRotationAngle(leftLeg, -0.2618F, 0.0F, -0.1047F);
+			leftLeg.setTextureOffset(0, 17).addCuboid(-2.0F, -1.0F, -2.5F, 4.0F, 8.0F, 5.0F, 0.0F, false);
 			
 			ModelPart lLeg02 = new ModelPart(this);
 			lLeg02.setPivot(0.0F, 5.7F, -0.4F);
-			BipedLeftLeg.addChild(lLeg02);
+			leftLeg.addChild(lLeg02);
 			setRotationAngle(lLeg02, 0.6981F, 0.0F, 0.1047F);
 			lLeg02.setTextureOffset(0, 30).addCuboid(-1.5F, 0.0F, -2.0F, 3.0F, 6.0F, 4.0F, 0.0F, false);
 			
@@ -577,15 +584,15 @@ public class DemonEntityModel<T extends DemonEntity> extends EntityModel<T> {
 			setRotationAngle(lHoofClaw02b, 0.3491F, 0.0F, 0.0F);
 			lHoofClaw02b.setTextureOffset(7, 53).addCuboid(-0.49F, -1.1F, -1.2F, 1.0F, 1.0F, 3.0F, 0.0F, false);
 			
-			BipedRightLeg = new ModelPart(this);
-			BipedRightLeg.setPivot(-2.1F, 6.2F, 0.1F);
-			stomach.addChild(BipedRightLeg);
-			setRotationAngle(BipedRightLeg, -0.2618F, 0.0F, 0.1047F);
-			BipedRightLeg.setTextureOffset(0, 17).addCuboid(-2.0F, -1.0F, -2.5F, 4.0F, 8.0F, 5.0F, 0.0F, true);
+			rightLeg = new ModelPart(this);
+			rightLeg.setPivot(-2.1F, 6.2F, 0.1F);
+			stomach.addChild(rightLeg);
+			setRotationAngle(rightLeg, -0.2618F, 0.0F, 0.1047F);
+			rightLeg.setTextureOffset(0, 17).addCuboid(-2.0F, -1.0F, -2.5F, 4.0F, 8.0F, 5.0F, 0.0F, true);
 			
 			ModelPart rLeg02 = new ModelPart(this);
 			rLeg02.setPivot(0.0F, 5.7F, -0.4F);
-			BipedRightLeg.addChild(rLeg02);
+			rightLeg.addChild(rLeg02);
 			setRotationAngle(rLeg02, 0.6981F, 0.0F, -0.1047F);
 			rLeg02.setTextureOffset(0, 30).addCuboid(-1.5F, 0.0F, -2.0F, 3.0F, 6.0F, 4.0F, 0.0F, true);
 			
@@ -619,25 +626,27 @@ public class DemonEntityModel<T extends DemonEntity> extends EntityModel<T> {
 			setRotationAngle(rHoofClaw02b, 0.3491F, 0.0F, 0.0F);
 			rHoofClaw02b.setTextureOffset(7, 53).addCuboid(-0.49F, -1.1F, -1.2F, 1.0F, 1.0F, 3.0F, 0.0F, true);
 			
-			BipedLeftArm = new ModelPart(this);
-			BipedLeftArm.setPivot(5.0F, 2.0F, 0.0F);
-			body.addChild(BipedLeftArm);
-			setRotationAngle(BipedLeftArm, 0.0F, 0.0F, -0.1F);
-			BipedLeftArm.setTextureOffset(44, 16).addCuboid(-1.0F, -2.0F, -2.0F, 3.0F, 14.0F, 4.0F, 0.0F, false);
+			leftArm = new ModelPart(this);
+			leftArm.setPivot(5.0F, 2.0F, 0.0F);
+			body.addChild(leftArm);
+			setRotationAngle(leftArm, 0.0F, 0.0F, -0.1F);
+			leftArm.setTextureOffset(44, 16).addCuboid(-1.0F, -2.0F, -2.0F, 3.0F, 14.0F, 4.0F, 0.0F, false);
 			
-			BipedRightArm = new ModelPart(this);
-			BipedRightArm.setPivot(-5.0F, 2.0F, 0.0F);
-			body.addChild(BipedRightArm);
-			setRotationAngle(BipedRightArm, 0.0F, 0.0F, 0.1F);
-			BipedRightArm.setTextureOffset(44, 16).addCuboid(-2.0F, -2.0F, -2.0F, 3.0F, 14.0F, 4.0F, 0.0F, true);
+			rightArm = new ModelPart(this);
+			rightArm.setPivot(-5.0F, 2.0F, 0.0F);
+			body.addChild(rightArm);
+			setRotationAngle(rightArm, 0.0F, 0.0F, 0.1F);
+			rightArm.setTextureOffset(44, 16).addCuboid(-2.0F, -2.0F, -2.0F, 3.0F, 14.0F, 4.0F, 0.0F, true);
 		}
 		
 		@Override
 		public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+		
 		}
 		
 		@Override
 		public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
+		
 		}
 	}
 }

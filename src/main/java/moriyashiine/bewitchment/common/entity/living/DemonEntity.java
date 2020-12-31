@@ -5,11 +5,9 @@ import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.util.NbtType;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityGroup;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -18,9 +16,8 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -47,6 +44,8 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	
 	public DemonEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
+		setPathfindingPenalty(PathNodeType.DANGER_FIRE, 0);
+		setPathfindingPenalty(PathNodeType.DAMAGE_FIRE, 0);
 		experiencePoints = 20;
 	}
 	
@@ -77,7 +76,7 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.ENTITY_BLAZE_HURT;
+		return SoundEvents.ENTITY_ZOMBIE_HURT;
 	}
 	
 	@Override
@@ -114,9 +113,38 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	}
 	
 	@Override
+	public void tick() {
+		super.tick();
+		if (!world.isClient) {
+			LivingEntity target = getTarget();
+			if (target != null) {
+				lookAtEntity(target, 360, 360);
+				if (age % 40 == 0) {
+					FireballEntity fireball = new FireballEntity(world, this, target.getX() - getX(), target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ());
+					fireball.updatePosition(fireball.getX(), getBodyY(0.5), fireball.getZ());
+					world.playSound(null, getBlockPos(), SoundEvents.ENTITY_BLAZE_SHOOT, SoundCategory.HOSTILE, 1, 1);
+					world.spawnEntity(fireball);
+					swingHand(Hand.MAIN_HAND);
+				}
+			}
+		}
+	}
+	
+	@Override
 	public void onDeath(DamageSource source) {
 		super.onDeath(source);
 		setCurrentCustomer(null);
+	}
+	
+	@Override
+	public boolean tryAttack(Entity target) {
+		boolean flag = super.tryAttack(target);
+		if (flag && target instanceof LivingEntity) {
+			target.setOnFireFor(6);
+			target.addVelocity(0, 0.2, 0);
+			swingHand(Hand.MAIN_HAND);
+		}
+		return flag;
 	}
 	
 	@Override
@@ -212,8 +240,6 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 		goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8));
 		goalSelector.add(3, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this));
-		targetSelector.add(1, new FollowTargetGoal<>(this, PlayerEntity.class, true));
-		targetSelector.add(2, new FollowTargetGoal<>(this, IronGolemEntity.class, true));
-		targetSelector.add(3, new FollowTargetGoal<>(this, MerchantEntity.class, 10, true, false, entity -> entity instanceof MerchantEntity));
+		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> entity.getGroup() != BewitchmentAPI.DEMON));
 	}
 }

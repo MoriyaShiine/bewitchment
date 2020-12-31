@@ -15,7 +15,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(DamageEnchantment.class)
 public abstract class DamageEnchantmentMixin extends Enchantment {
-	@Shadow @Final public int typeIndex;
+	@Shadow
+	@Final
+	public int typeIndex;
 	
 	protected DamageEnchantmentMixin(Rarity weight, EnchantmentTarget type, EquipmentSlot[] slotTypes) {
 		super(weight, type, slotTypes);
@@ -23,9 +25,8 @@ public abstract class DamageEnchantmentMixin extends Enchantment {
 	
 	@Inject(method = "getAttackDamage", at = @At("TAIL"), cancellable = true)
 	private void getAttackDamage(int level, EntityGroup group, CallbackInfoReturnable<Float> callbackInfo) {
-		if (typeIndex == 1 && group == BewitchmentAPI.DEMON)
-		{
-			callbackInfo.setReturnValue(level * 2.5f);
+		if (typeIndex == 1 && group == BewitchmentAPI.DEMON) {
+			callbackInfo.setReturnValue(level * 3f);
 		}
 	}
 }

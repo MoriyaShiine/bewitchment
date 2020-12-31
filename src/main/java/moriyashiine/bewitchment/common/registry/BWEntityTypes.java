@@ -34,7 +34,7 @@ public class BWEntityTypes {
 	public static final EntityType<BlackDogEntity> BLACK_DOG = create("black_dog", BlackDogEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, BlackDogEntity::new).dimensions(EntityDimensions.fixed(0.6f, 0.6f)).fireImmune().build());
 	
 	public static final EntityType<HellhoundEntity> HELLHOUND = create("hellhound", HellhoundEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, HellhoundEntity::new).dimensions(EntityType.WOLF.getDimensions()).fireImmune().build());
-	public static final EntityType<DemonEntity> DEMON = create("demon", DemonEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DemonEntity::new).dimensions(EntityDimensions.fixed(0.8f, 1.8f)).fireImmune().build());
+	public static final EntityType<DemonEntity> DEMON = create("demon", DemonEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DemonEntity::new).dimensions(EntityDimensions.fixed(0.8f, 2.4f)).fireImmune().build());
 	
 	private static <T extends LivingEntity> EntityType<T> create(String name, DefaultAttributeContainer.Builder attributes, EntityType<T> type) {
 		FabricDefaultAttributeRegistry.register(type, attributes);
