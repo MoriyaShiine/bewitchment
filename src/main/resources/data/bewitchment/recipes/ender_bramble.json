@@ -1,0 +1,24 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "sugar_cane"
+	},
+	{
+	  "item": "sugar_cane"
+	},
+	{
+	  "item": "sugar_cane"
+	},
+	{
+	  "item": "bewitchment:grim_elixir"
+	},
+	{
+	  "item": "ender_pearl"
+	}
+  ],
+  "result": {
+	"item": "bewitchment:ender_bramble",
+	"count": 3
+  }
+}

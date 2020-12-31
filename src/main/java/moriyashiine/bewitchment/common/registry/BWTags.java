@@ -9,9 +9,9 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 
 public class BWTags {
+	public static final Tag<EntityType<?>> BOSSES = TagRegistry.entityType(new Identifier("c", "bosses"));
 	public static final Tag<EntityType<?>> WEAK_TO_SILVER = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "weak_to_silver"));
 	public static final Tag<EntityType<?>> HAS_BLOOD = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "has_blood"));
-	public static final Tag<EntityType<?>> CANNOT_TAGLOCK = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "cannot_taglock"));
 	
 	public static final Tag<Item> SKULLS = TagRegistry.item(new Identifier("c", "skulls"));
 	public static final Tag<Block> GIVES_ALTAR_POWER = TagRegistry.block(new Identifier(Bewitchment.MODID, "gives_altar_power"));
@@ -22,6 +22,7 @@ public class BWTags {
 	
 	public static final Tag<Item> BARKS = TagRegistry.item(new Identifier(Bewitchment.MODID, "barks"));
 	public static final Tag<Item> SILVER_NUGGETS = TagRegistry.item(new Identifier("c", "silver_nuggets"));
+	public static final Tag<Item> WITCHBERRY_FOODS = TagRegistry.item(new Identifier(Bewitchment.MODID, "witchberry_foods"));
 	
 	public static final Tag<Item> SWORDS = TagRegistry.item(new Identifier(Bewitchment.MODID, "swords"));
 	public static final Tag<Item> PENTACLES = TagRegistry.item(new Identifier(Bewitchment.MODID, "pentacles"));

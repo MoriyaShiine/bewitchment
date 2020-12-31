@@ -27,10 +27,11 @@ public class Bewitchment implements ModInitializer {
 		BWObjects.init();
 		BWBlockEntityTypes.init();
 		BWEntityTypes.init();
+		BWStatusEffects.init();
+		BWEnchantments.init();
+		BWParticleTypes.init();
 		BWRecipeTypes.init();
 		BWWorldGenerators.init();
-		BWStatusEffects.init();
-		BWParticleTypes.init();
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.STONE_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.MOSSY_COBBLESTONE_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.PRISMARINE_WITCH_ALTAR);

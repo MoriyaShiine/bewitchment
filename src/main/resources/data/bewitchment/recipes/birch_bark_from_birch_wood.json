@@ -1,8 +1,0 @@
-{
-  "type": "bewitchment:athame_stripping",
-  "log": "minecraft:birch_wood",
-  "stripped_log": "minecraft:stripped_birch_wood",
-  "result": {
-	"item": "bewitchment:birch_bark"
-  }
-}

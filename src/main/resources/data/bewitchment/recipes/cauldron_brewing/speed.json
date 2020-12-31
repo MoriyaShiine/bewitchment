@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "sugar_cane"
+  },
+  "effect": "speed",
+  "time": 1200
+}

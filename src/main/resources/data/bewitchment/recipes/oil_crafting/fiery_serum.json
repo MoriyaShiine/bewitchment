@@ -1,0 +1,18 @@
+{
+  "type": "bewitchment:oil_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:oak_bark"
+	},
+	{
+	  "tag": "coals"
+	},
+	{
+	  "item": "poppy"
+	}
+  ],
+  "result": {
+	"item": "bewitchment:fiery_serum"
+  },
+  "color": 16735744
+}

@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/door_bottom_rh",
+  "parent": "block/door_bottom_rh",
   "textures": {
 	"top": "bewitchment:block/cypress_door_top",
 	"bottom": "bewitchment:block/cypress_door_bottom"

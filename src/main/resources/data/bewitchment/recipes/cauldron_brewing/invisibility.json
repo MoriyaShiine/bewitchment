@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "bewitchment:ectoplasm"
+  },
+  "effect": "invisibility",
+  "time": 3000
+}

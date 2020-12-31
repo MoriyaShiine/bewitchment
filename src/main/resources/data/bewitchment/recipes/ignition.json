@@ -1,8 +1,0 @@
-{
-  "type": "bewitchment:cauldron_brewing_recipe",
-  "ingredient": {
-	"item": "minecraft:blaze_powder"
-  },
-  "effect": "bewitchment:ignition",
-  "time": 600
-}

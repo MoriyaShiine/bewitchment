@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:athame_drop",
+  "entity_type": "husk",
+  "result": {
+	"item": "zombie_head"
+  },
+  "chance": 0.2
+}

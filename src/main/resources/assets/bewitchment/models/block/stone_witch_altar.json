@@ -1,6 +1,6 @@
 {
   "credit": "Made with Blockbench",
-  "parent": "minecraft:block/cube_all",
+  "parent": "block/cube_all",
   "textures": {
 	"side": "bewitchment:block/stone_witch_altar",
 	"end": "bewitchment:block/stone_witch_altar_end",

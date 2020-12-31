@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-	"minecraft:diamond_sword",
-	"minecraft:netherite_sword"
+	"diamond_sword",
+	"netherite_sword"
   ]
 }

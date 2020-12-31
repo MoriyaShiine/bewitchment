@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/slab",
+  "parent": "block/slab",
   "textures": {
 	"bottom": "bewitchment:block/elder_planks",
 	"top": "bewitchment:block/elder_planks",

@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/leaves",
+  "parent": "block/leaves",
   "textures": {
 	"all": "bewitchment:block/juniper_leaves"
   }

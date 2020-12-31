@@ -29,6 +29,7 @@ import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.block.*;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
@@ -157,6 +158,12 @@ public class BWObjects {
 	public static final TerraformBoatItem DRAGONS_BLOOD_BOAT = create("dragons_blood_boat", new TerraformBoatItem(() -> BWEntityTypes.DRAGONS_BLOOD_BOAT, gen().maxCount(1)));
 	//other_plants
 	public static final Block SPANISH_MOSS = create("spanish_moss", new VineBlock(copyOf(Blocks.VINE)), true);
+	public static final Block GLOWING_BRAMBLE = create("glowing_bramble", new BrambleBlock(copyOf(JUNIPER_PLANKS).sounds(BlockSoundGroup.GRASS).noCollision().ticksRandomly().luminance(15)), true);
+	public static final Block ENDER_BRAMBLE = create("ender_bramble", new BrambleBlock(copyOf(JUNIPER_PLANKS).sounds(BlockSoundGroup.GRASS).noCollision().ticksRandomly()), true);
+	public static final Block FRUITING_BRAMBLE = create("fruiting_bramble", new BrambleBlock.Fruiting(copyOf(ENDER_BRAMBLE)), true);
+	public static final Block SCORCHED_BRAMBLE = create("scorched_bramble", new BrambleBlock(copyOf(ENDER_BRAMBLE)), true);
+	public static final Block THICK_BRAMBLE = create("thick_bramble", new BrambleBlock(copyOf(ENDER_BRAMBLE)), true);
+	public static final Block FLEETING_BRAMBLE = create("fleeting_bramble", new BrambleBlock(copyOf(ENDER_BRAMBLE)), true);
 	//material_block
 	public static final Block SILVER_BLOCK = create("silver_block", new Block(copyOf(Blocks.GOLD_BLOCK)), true);
 	public static final Block SALT_BLOCK = create("salt_block", new Block(copyOf(Blocks.COAL_BLOCK)), true);
@@ -170,10 +177,10 @@ public class BWObjects {
 	public static final Block HEDGEWITCH_CARPET = create("hedgewitch_carpet", new BWCarpetBlock(DyeColor.GREEN, copyOf(Blocks.WHITE_CARPET)), true);
 	public static final Block ALCHEMIST_CARPET = create("alchemist_carpet", new BWCarpetBlock(DyeColor.LIGHT_GRAY, copyOf(HEDGEWITCH_CARPET)), true);
 	public static final Block BESMIRCHED_CARPET = create("besmirched_carpet", new BWCarpetBlock(DyeColor.BLACK, copyOf(HEDGEWITCH_CARPET)), true);
-	public static final Block IRON_CANDELABRA = create("iron_candelabra", new CandelabraBlock(copyOf(Blocks.IRON_BLOCK).luminance(blockState -> blockState.get(Properties.LIT) ? 15 : 0), 8), true);
-	public static final Block GOLDEN_CANDELABRA = create("golden_candelabra", new CandelabraBlock(copyOf(Blocks.GOLD_BLOCK).luminance(blockState -> blockState.get(Properties.LIT) ? 15 : 0), 16), true);
-	public static final Block SILVER_CANDELABRA = create("silver_candelabra", new CandelabraBlock(copyOf(SILVER_BLOCK).luminance(blockState -> blockState.get(Properties.LIT) ? 15 : 0), 16), true);
-	public static final Block NETHERITE_CANDELABRA = create("netherite_candelabra", new CandelabraBlock(copyOf(Blocks.NETHERITE_BLOCK).luminance(blockState -> blockState.get(Properties.LIT) ? 15 : 0), 32), true);
+	public static final Block IRON_CANDELABRA = create("iron_candelabra", new CandelabraBlock(copyOf(Blocks.IRON_BLOCK).luminance(blockState -> blockState.get(Properties.LIT) ? 15 : 0), (byte) 8), true);
+	public static final Block GOLDEN_CANDELABRA = create("golden_candelabra", new CandelabraBlock(copyOf(Blocks.GOLD_BLOCK).luminance(blockState -> blockState.get(Properties.LIT) ? 15 : 0), (byte) 16), true);
+	public static final Block SILVER_CANDELABRA = create("silver_candelabra", new CandelabraBlock(copyOf(SILVER_BLOCK).luminance(blockState -> blockState.get(Properties.LIT) ? 15 : 0), (byte) 16), true);
+	public static final Block NETHERITE_CANDELABRA = create("netherite_candelabra", new CandelabraBlock(copyOf(Blocks.NETHERITE_BLOCK).luminance(blockState -> blockState.get(Properties.LIT) ? 15 : 0), (byte) 32), true);
 	//block_entity
 	public static final Block[] STONE_WITCH_ALTAR = createAltar("stone_witch_altar", copyOf(Blocks.STONE));
 	public static final Block[] MOSSY_COBBLESTONE_WITCH_ALTAR = createAltar("mossy_cobblestone_witch_altar", copyOf(Blocks.MOSSY_COBBLESTONE));
@@ -229,6 +236,9 @@ public class BWObjects {
 	public static final Item BOTTLE_OF_BLOOD = create("bottle_of_blood", new BottleOfBloodItem(gen().maxCount(1).recipeRemainder(Items.GLASS_BOTTLE)));
 	public static final Item GRILLED_GARLIC = create("grilled_garlic", new Item(gen().food(FoodComponents.BAKED_POTATO)));
 	public static final Item GARLIC_BREAD = create("garlic_bread", new Item(gen().food(FoodComponents.PUMPKIN_PIE)));
+	public static final Item WITCHBERRY = create("witchberry", new Item(gen().food(BWFoodComponents.WITCHBERRY)));
+	public static final Item WITCHBERRY_PIE = create("witchberry_pie", new Item(gen().food(BWFoodComponents.WITCHBERRY_PIE)));
+	public static final Item WITCHBERRY_COOKIE = create("witchberry_cookie", new Item(gen().food(BWFoodComponents.WITCHBERRY_COOKIE)));
 	//spawn_egg
 	public static final Item OWL_SPAWN_EGG = create("owl_spawn_egg", new SpawnEggItem(BWEntityTypes.OWL, 0x7f3f00, 0xc0c0c0, gen()));
 	public static final Item RAVEN_SPAWN_EGG = create("raven_spawn_egg", new SpawnEggItem(BWEntityTypes.RAVEN, 0x3f3f3f, 0x000000, gen()));
@@ -281,6 +291,7 @@ public class BWObjects {
 		fuelRegistry.add(DRAGONS_BLOOD_FENCE, 300);
 		fuelRegistry.add(DRAGONS_BLOOD_FENCE_GATE, 300);
 		fuelRegistry.add(BWTags.BARKS, 100);
+		fuelRegistry.add(SCORCHED_BRAMBLE, 800);
 		FlammableBlockRegistry flammableRegistry = FlammableBlockRegistry.getDefaultInstance();
 		flammableRegistry.add(STRIPPED_JUNIPER_LOG, 5, 5);
 		flammableRegistry.add(STRIPPED_JUNIPER_WOOD, 5, 5);
@@ -348,5 +359,8 @@ public class BWObjects {
 		compostRegistry.add(MANDRAKE_SEEDS, 0.3f);
 		compostRegistry.add(GRILLED_GARLIC, 0.85f);
 		compostRegistry.add(GARLIC_BREAD, 1f);
+		compostRegistry.add(WITCHBERRY, 0.65f);
+		compostRegistry.add(WITCHBERRY_PIE, 1f);
+		compostRegistry.add(WITCHBERRY_COOKIE, 0.85f);
 	}
 }

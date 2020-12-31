@@ -1,8 +1,0 @@
-{
-  "type": "bewitchment:cauldron_brewing_recipe",
-  "ingredient": {
-	"item": "minecraft:bamboo"
-  },
-  "effect": "bewitchment:nourishing",
-  "time": 1800
-}

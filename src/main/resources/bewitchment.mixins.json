@@ -10,11 +10,13 @@
 	"EntityTypeMixin",
 	"ItemStackMixin",
 	"LandPathNodeMakerMixin",
+	"LivingEntityAccessor",
 	"LivingEntityMixin",
 	"PlayerEntityMixin",
 	"PotionItemMixin",
 	"PounceAtTargetGoalMixin",
 	"ServerPlayerEntityMixin",
+	"SpawnHelperMixin",
 	"StatusEffectAccessor",
 	"TreeDecoratorTypeAccessor"
   ],

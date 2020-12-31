@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "bewitchment:cypress_bark"
+  },
+  "effect": "instant_damage",
+  "time": 1
+}

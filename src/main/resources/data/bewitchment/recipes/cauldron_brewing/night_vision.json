@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "carrot"
+  },
+  "effect": "night_vision",
+  "time": 3000
+}

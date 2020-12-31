@@ -1,8 +1,0 @@
-{
-  "type": "bewitchment:cauldron_brewing_recipe",
-  "ingredient": {
-	"item": "minecraft:nautilus_shell"
-  },
-  "effect": "bewitchment:deflection",
-  "time": 600
-}

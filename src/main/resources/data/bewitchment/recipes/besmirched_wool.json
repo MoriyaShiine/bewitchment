@@ -1,18 +1,18 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "crafting_shapeless",
   "group": "wool",
   "ingredients": [
 	{
-	  "tag": "minecraft:wool"
+	  "tag": "wool"
 	},
 	{
-	  "tag": "minecraft:wool"
+	  "tag": "wool"
 	},
 	{
-	  "tag": "minecraft:wool"
+	  "tag": "wool"
 	},
 	{
-	  "tag": "minecraft:wool"
+	  "tag": "wool"
 	},
 	{
 	  "item": "bewitchment:grim_elixir"

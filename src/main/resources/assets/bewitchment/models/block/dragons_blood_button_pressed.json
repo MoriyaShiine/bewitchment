@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/button_pressed",
+  "parent": "block/button_pressed",
   "textures": {
 	"texture": "bewitchment:block/dragons_blood_planks"
   }

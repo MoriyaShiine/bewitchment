@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "kelp"
+  },
+  "effect": "water_breathing",
+  "time": 3000
+}

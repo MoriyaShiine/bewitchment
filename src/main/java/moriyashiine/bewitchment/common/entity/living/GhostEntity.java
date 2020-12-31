@@ -62,7 +62,7 @@ public class GhostEntity extends BWHostileEntity {
 			}
 			getTarget().addStatusEffect(new StatusEffectInstance(type == 1 ? StatusEffects.HUNGER : type == 2 ? StatusEffects.BLINDNESS : type == 3 ? StatusEffects.SLOWNESS : StatusEffects.NAUSEA, 100));
 		}
-		if (!world.isClient && !hasCustomName() && world.isDay() && world.isSkyVisible(getBlockPos())) {
+		if (!world.isClient && !hasCustomName() && world.isDay() && !world.isRaining() && world.isSkyVisibleAllowingSea(getBlockPos())) {
 			PlayerStream.watching(this).forEach(playerEntity -> SpawnSmokeParticlesPacket.send(playerEntity, this));
 			remove();
 		}
@@ -111,6 +111,16 @@ public class GhostEntity extends BWHostileEntity {
 	
 	@Override
 	public boolean canHaveStatusEffect(StatusEffectInstance effect) {
+		return false;
+	}
+	
+	@Override
+	public boolean isTouchingWater() {
+		return false;
+	}
+	
+	@Override
+	public boolean isInLava() {
 		return false;
 	}
 	
@@ -214,24 +224,27 @@ public class GhostEntity extends BWHostileEntity {
 				target.set(target.getX(), target.getY() + random.nextInt(8), target.getZ());
 				for (Long longPos : BWWorldState.get(world).potentialCandelabras) {
 					BlockPos candelabraPos = BlockPos.fromLong(longPos);
-					int radius = -1;
-					BlockEntity blockEntity = world.getBlockEntity(candelabraPos);
-					BlockState state = world.getBlockState(candelabraPos);
-					if (blockEntity instanceof WitchAltarBlockEntity) {
-						WitchAltarBlockEntity witchAltar = (WitchAltarBlockEntity) blockEntity;
-						for (int i = 0; i < witchAltar.size(); i++) {
-							Block block = Block.getBlockFromItem(witchAltar.getStack(i).getItem());
-							if (block instanceof CandelabraBlock) {
-								radius = ((CandelabraBlock) block).repellentRadius;
-								break;
+					double distance = Math.sqrt(candelabraPos.getSquaredDistance(target));
+					if (distance <= Byte.MAX_VALUE) {
+						int radius = -1;
+						BlockEntity blockEntity = world.getBlockEntity(candelabraPos);
+						BlockState state = world.getBlockState(candelabraPos);
+						if (blockEntity instanceof WitchAltarBlockEntity) {
+							WitchAltarBlockEntity witchAltar = (WitchAltarBlockEntity) blockEntity;
+							for (int i = 0; i < witchAltar.size(); i++) {
+								Block block = Block.getBlockFromItem(witchAltar.getStack(i).getItem());
+								if (block instanceof CandelabraBlock) {
+									radius = ((CandelabraBlock) block).repellentRadius;
+									break;
+								}
 							}
 						}
-					}
-					else if (state.getBlock() instanceof CandelabraBlock && state.get(Properties.LIT)) {
-						radius = ((CandelabraBlock) state.getBlock()).repellentRadius;
-					}
-					if (Math.sqrt(candelabraPos.getSquaredDistance(target)) <= radius) {
-						return findTarget(target.set(candelabraPos.getX() + MathHelper.nextDouble(random, -radius, radius), candelabraPos.getY() + MathHelper.nextDouble(random, -radius, radius), candelabraPos.getZ() + MathHelper.nextDouble(random, -radius, radius)), ++tries);
+						else if (state.getBlock() instanceof CandelabraBlock && state.get(Properties.LIT)) {
+							radius = ((CandelabraBlock) state.getBlock()).repellentRadius;
+						}
+						if (distance <= radius) {
+							return findTarget(target.set(candelabraPos.getX() + MathHelper.nextDouble(random, -radius, radius), candelabraPos.getY() + MathHelper.nextDouble(random, -radius, radius), candelabraPos.getZ() + MathHelper.nextDouble(random, -radius, radius)), ++tries);
+						}
 					}
 				}
 				return target.toImmutable();

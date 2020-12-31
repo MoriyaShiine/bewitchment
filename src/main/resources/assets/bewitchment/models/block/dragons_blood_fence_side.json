@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/fence_side",
+  "parent": "block/fence_side",
   "textures": {
 	"texture": "bewitchment:block/dragons_blood_planks"
   }

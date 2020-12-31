@@ -14,6 +14,7 @@ import java.util.List;
 public class BWWorldState extends PersistentState {
 	public final List<Long> potentialCandelabras = new ArrayList<>();
 	public final List<Long> witchCauldrons = new ArrayList<>();
+	public final List<Long> glowingBrambles = new ArrayList<>();
 	
 	public BWWorldState(String key) {
 		super(key);
@@ -35,6 +36,13 @@ public class BWWorldState extends PersistentState {
 			witchCauldrons.add(posTag);
 		}
 		tag.put("WitchCauldrons", witchCauldrons);
+		ListTag glowingBrambles = new ListTag();
+		for (long pos : this.glowingBrambles) {
+			CompoundTag posTag = new CompoundTag();
+			posTag.putLong("Pos", pos);
+			glowingBrambles.add(posTag);
+		}
+		tag.put("GlowingBrambles", glowingBrambles);
 		return tag;
 	}
 	
@@ -49,6 +57,11 @@ public class BWWorldState extends PersistentState {
 		for (int i = 0; i < witchCauldrons.size(); i++) {
 			CompoundTag posTag = witchCauldrons.getCompound(i);
 			this.witchCauldrons.add(posTag.getLong("Pos"));
+		}
+		ListTag glowingBrambles = tag.getList("GlowingBrambles", NbtType.COMPOUND);
+		for (int i = 0; i < glowingBrambles.size(); i++) {
+			CompoundTag posTag = glowingBrambles.getCompound(i);
+			this.glowingBrambles.add(posTag.getLong("Pos"));
 		}
 	}
 	

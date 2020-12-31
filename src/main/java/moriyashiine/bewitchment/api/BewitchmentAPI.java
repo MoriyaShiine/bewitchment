@@ -9,6 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.EntityDamageSource;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -43,6 +44,17 @@ public class BewitchmentAPI {
 			}
 		}
 		return amount;
+	}
+	
+	public static void addItemToInventoryAndConsume(LivingEntity entity, Hand hand, ItemStack toAdd) {
+		ItemStack stack = entity.getStackInHand(hand);
+		stack.decrement(1);
+		if (stack.isEmpty()) {
+			entity.setStackInHand(hand, toAdd);
+		}
+		else if (!(entity instanceof PlayerEntity) || !((PlayerEntity) entity).inventory.insertStack(toAdd)) {
+			entity.dropStack(toAdd);
+		}
 	}
 	
 	public static void registerAltarMapEntries(Block[]... altarArray) {

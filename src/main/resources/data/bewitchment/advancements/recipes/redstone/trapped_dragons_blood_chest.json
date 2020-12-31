@@ -1,23 +1,23 @@
 {
-  "parent": "minecraft:recipes/root",
+  "parent": "recipes/root",
   "rewards": {
 	"recipes": [
 	  "bewitchment:trapped_dragons_blood_chest"
 	]
   },
   "criteria": {
-	"has_tripwire_hook": {
-	  "trigger": "minecraft:inventory_changed",
+	"has_item": {
+	  "trigger": "inventory_changed",
 	  "conditions": {
 		"items": [
 		  {
-			"item": "minecraft:tripwire_hook"
+			"item": "tripwire_hook"
 		  }
 		]
 	  }
 	},
 	"has_the_recipe": {
-	  "trigger": "minecraft:recipe_unlocked",
+	  "trigger": "recipe_unlocked",
 	  "conditions": {
 		"recipe": "bewitchment:trapped_dragons_blood_chest"
 	  }
@@ -25,7 +25,7 @@
   },
   "requirements": [
 	[
-	  "has_tripwire_hook",
+	  "has_item",
 	  "has_the_recipe"
 	]
   ]

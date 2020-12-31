@@ -1,11 +1,11 @@
 {
   "replace": false,
   "values": [
-	"minecraft:lava",
-	"minecraft:magma_block",
-	"minecraft:fire",
-	"minecraft:soul_fire",
-	"minecraft:campfire",
-	"minecraft:soul_campfire"
+	"lava",
+	"magma_block",
+	"fire",
+	"soul_fire",
+	"campfire",
+	"soul_campfire"
   ]
 }

@@ -1,15 +1,15 @@
 {
   "replace": false,
   "values": [
-	"minecraft:player",
-	"minecraft:villager",
-	"minecraft:wandering_trader",
-	"minecraft:witch",
-	"minecraft:pillager",
-	"minecraft:vindicator",
-	"minecraft:evoker",
-	"minecraft:illusioner",
-	"minecraft:piglin",
-	"minecraft:piglin_brute"
+	"player",
+	"villager",
+	"wandering_trader",
+	"witch",
+	"pillager",
+	"vindicator",
+	"evoker",
+	"illusioner",
+	"piglin",
+	"piglin_brute"
   ]
 }

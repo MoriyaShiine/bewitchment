@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "bewitchment:aconite"
+  },
+  "effect": "nausea",
+  "time": 200
+}

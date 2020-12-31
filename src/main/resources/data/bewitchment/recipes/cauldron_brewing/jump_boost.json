@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "rabbit_foot"
+  },
+  "effect": "jump_boost",
+  "time": 3000
+}

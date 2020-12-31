@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "cobweb"
+  },
+  "effect": "bewitchment:webbed",
+  "time": 1
+}

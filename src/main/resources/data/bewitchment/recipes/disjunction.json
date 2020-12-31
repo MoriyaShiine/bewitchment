@@ -1,8 +1,0 @@
-{
-  "type": "bewitchment:cauldron_brewing_recipe",
-  "ingredient": {
-	"item": "minecraft:ender_pearl"
-  },
-  "effect": "bewitchment:disjunction",
-  "time": 1
-}

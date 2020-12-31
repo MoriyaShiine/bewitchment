@@ -1,23 +1,23 @@
 {
-  "parent": "minecraft:recipes/root",
+  "parent": "recipes/root",
   "rewards": {
 	"recipes": [
 	  "bewitchment:taglock"
 	]
   },
   "criteria": {
-	"has_bottle": {
-	  "trigger": "minecraft:inventory_changed",
+	"has_item": {
+	  "trigger": "inventory_changed",
 	  "conditions": {
 		"items": [
 		  {
-			"item": "minecraft:glass_bottle"
+			"item": "glass_bottle"
 		  }
 		]
 	  }
 	},
 	"has_the_recipe": {
-	  "trigger": "minecraft:recipe_unlocked",
+	  "trigger": "recipe_unlocked",
 	  "conditions": {
 		"recipe": "bewitchment:taglock"
 	  }
@@ -25,7 +25,7 @@
   },
   "requirements": [
 	[
-	  "has_bottle",
+	  "has_item",
 	  "has_the_recipe"
 	]
   ]

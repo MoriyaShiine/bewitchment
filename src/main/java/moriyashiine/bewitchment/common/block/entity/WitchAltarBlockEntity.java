@@ -180,14 +180,13 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 				int x = counter & 31;
 				int y = (counter >> 5) & 31;
 				int z = (counter >> 10) & 31;
-				checking.set(pos.getX() + x - 15, pos.getY() + y - 15, pos.getZ() + z - 15);
-				Block checkedBlock = world.getBlockState(checking).getBlock();
+				Block checkedBlock = world.getBlockState(checking.set(pos.getX() + x - 15, pos.getY() + y - 15, pos.getZ() + z - 15)).getBlock();
 				if (BWTags.GIVES_ALTAR_POWER.contains(checkedBlock)) {
 					boolean strippedLog = false;
 					if (BlockTags.LOGS.contains(checkedBlock)) {
 						MinecraftServer server = getWorld().getServer();
 						ServerWorld overworld = server.getOverworld();
-						checking.set(0, 0, 0);
+						checking.set(BlockPos.ORIGIN);
 						BlockState original = overworld.getBlockState(checking);
 						overworld.setBlockState(checking, checkedBlock.getDefaultState());
 						BlockState checkingState = overworld.getBlockState(checking);

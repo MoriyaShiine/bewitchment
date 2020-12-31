@@ -5,10 +5,7 @@ import moriyashiine.bewitchment.api.registry.CauldronBrewingRecipe;
 import moriyashiine.bewitchment.api.registry.OilRecipe;
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
-import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
-import moriyashiine.bewitchment.common.registry.BWObjects;
-import moriyashiine.bewitchment.common.registry.BWParticleTypes;
-import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
+import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.server.PlayerStream;
 import net.fabricmc.fabric.api.util.NbtType;
@@ -334,7 +331,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 			int redstone = 0, glowstone = 0;
 			for (int i = 0; i < size(); i++) {
 				ItemStack stackInSlot = getStack(i);
-				if (stackInSlot.getItem() instanceof TaglockItem && stackInSlot.hasTag() && !stackInSlot.getOrCreateTag().getString("OwnerName").isEmpty() && stackInSlot.getOrCreateTag().getBoolean("FromPlayer")) {
+				if (stackInSlot.getItem() instanceof TaglockItem && TaglockItem.hasTaglock(stackInSlot) && stackInSlot.getOrCreateTag().getBoolean("FromPlayer")) {
 					stack.getOrCreateTag().putUuid("PolymorphUUID", stackInSlot.getOrCreateTag().getUuid("OwnerUUID"));
 					stack.getOrCreateTag().putString("PolymorphName", stackInSlot.getOrCreateTag().getString("OwnerName"));
 				}
@@ -357,8 +354,15 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 					effects.set(i, new StatusEffectInstance(effects.get(i).getEffectType(), effects.get(i).getDuration() / 2, effects.get(i).getAmplifier() + 1));
 				}
 			}
-			PotionUtil.setCustomPotionEffects(stack, effects);
-			stack.getOrCreateTag().putInt("CustomPotionColor", PotionUtil.getColor(effects));
+			List<StatusEffectInstance> finalEffects = new ArrayList<>();
+			for (int i = effects.size() - 1; i >= 0; i--) {
+				if (effects.get(i).getEffectType() == BWStatusEffects.ABSENCE || effects.get(i).getEffectType() == BWStatusEffects.CORRUPTION) {
+					finalEffects.add(effects.remove(i));
+				}
+			}
+			finalEffects.addAll(effects);
+			PotionUtil.setCustomPotionEffects(stack, finalEffects);
+			stack.getOrCreateTag().putInt("CustomPotionColor", PotionUtil.getColor(finalEffects));
 			stack.getOrCreateTag().putBoolean("BewitchmentBrew", true);
 		}
 		return stack;

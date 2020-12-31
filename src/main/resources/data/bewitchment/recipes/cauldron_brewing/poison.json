@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "bewitchment:belladonna"
+  },
+  "effect": "poison",
+  "time": 600
+}

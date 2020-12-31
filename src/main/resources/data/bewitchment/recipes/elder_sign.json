@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "crafting_shaped",
   "group": "sign",
   "pattern": [
 	"###",
@@ -11,7 +11,7 @@
 	  "item": "bewitchment:elder_planks"
 	},
 	"X": {
-	  "item": "minecraft:stick"
+	  "item": "stick"
 	}
   },
   "result": {

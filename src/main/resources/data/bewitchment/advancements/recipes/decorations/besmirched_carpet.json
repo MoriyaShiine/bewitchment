@@ -1,13 +1,13 @@
 {
-  "parent": "minecraft:recipes/root",
+  "parent": "recipes/root",
   "rewards": {
 	"recipes": [
 	  "bewitchment:besmirched_carpet"
 	]
   },
   "criteria": {
-	"has_besmirched_wool": {
-	  "trigger": "minecraft:inventory_changed",
+	"has_item": {
+	  "trigger": "inventory_changed",
 	  "conditions": {
 		"items": [
 		  {
@@ -17,7 +17,7 @@
 	  }
 	},
 	"has_the_recipe": {
-	  "trigger": "minecraft:recipe_unlocked",
+	  "trigger": "recipe_unlocked",
 	  "conditions": {
 		"recipe": "bewitchment:besmirched_carpet"
 	  }
@@ -25,7 +25,7 @@
   },
   "requirements": [
 	[
-	  "has_besmirched_wool",
+	  "has_item",
 	  "has_the_recipe"
 	]
   ]

@@ -1,19 +1,19 @@
 {
-  "type": "minecraft:block",
+  "type": "block",
   "pools": [
 	{
 	  "rolls": 1,
 	  "entries": [
 		{
-		  "type": "minecraft:item",
+		  "type": "item",
 		  "name": "bewitchment:spanish_moss"
 		}
 	  ],
 	  "conditions": [
 		{
-		  "condition": "minecraft:match_tool",
+		  "condition": "match_tool",
 		  "predicate": {
-			"item": "minecraft:shears"
+			"tag": "fabric:shears"
 		  }
 		}
 	  ]
