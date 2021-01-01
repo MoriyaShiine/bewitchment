@@ -4,10 +4,7 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import net.fabricmc.fabric.api.server.PlayerStream;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityGroup;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -18,8 +15,14 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.tag.BlockTags;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Random;
 
 public class HellhoundEntity extends BWHostileEntity {
 	public HellhoundEntity(EntityType<? extends HostileEntity> entityType, World world) {
@@ -112,5 +115,9 @@ public class HellhoundEntity extends BWHostileEntity {
 		goalSelector.add(4, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this).setGroupRevenge());
 		targetSelector.add(1, new FollowTargetGoal<>(this, PlayerEntity.class, true));
+	}
+	
+	public static boolean canSpawn(EntityType<HellhoundEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+		return world.getDifficulty() != Difficulty.PEACEFUL && !BlockTags.WART_BLOCKS.contains(world.getBlockState(pos.down()).getBlock());
 	}
 }
