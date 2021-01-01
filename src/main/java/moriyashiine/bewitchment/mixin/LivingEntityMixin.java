@@ -56,26 +56,26 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	private final List<Contract.Instance> contracts = new ArrayList<>();
 	
 	@Shadow
-	public abstract boolean hasStatusEffect(StatusEffect effect);
-	
-	@Shadow
 	@Nullable
 	public abstract StatusEffectInstance getStatusEffect(StatusEffect effect);
 	
 	@Shadow
-	public abstract void heal(float amount);
-	
-	@Shadow
-	public abstract boolean removeStatusEffect(StatusEffect type);
+	public abstract boolean hasStatusEffect(StatusEffect effect);
 	
 	@Shadow
 	public abstract boolean addStatusEffect(StatusEffectInstance effect);
+	
+	@Shadow
+	public abstract boolean removeStatusEffect(StatusEffect type);
 	
 	@Shadow
 	public abstract float getMaxHealth();
 	
 	@Shadow
 	public abstract float getHealth();
+	
+	@Shadow
+	public abstract void heal(float amount);
 	
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
@@ -137,13 +137,13 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		if (((Object) this instanceof PlayerEntity) && hasContract(BWContracts.FAMINE)) {
 			amount *= (1 - (0.025 * (20 - ((PlayerEntity) (Object) this).getHungerManager().getFoodLevel())));
 		}
-		if (attacker instanceof PlayerEntity && ((ContractAccessor) attacker).hasContract(BWContracts.FAMINE) && ((ContractAccessor) attacker).hasNegativeEffects()) {
+		if (attacker instanceof PlayerEntity && ((ContractAccessor) attacker).hasNegativeEffects() && ((ContractAccessor) attacker).hasContract(BWContracts.FAMINE)) {
 			amount *= (1 - (0.025 * (20 - ((PlayerEntity) attacker).getHungerManager().getFoodLevel())));
 		}
 		if (attacker instanceof LivingEntity && ((ContractAccessor) attacker).hasContract(BWContracts.WRATH)) {
 			amount *= (1 + (0.025 * (((LivingEntity) attacker).getMaxHealth() - ((LivingEntity) attacker).getHealth())));
 		}
-		if (hasContract(BWContracts.WRATH) && hasNegativeEffects()) {
+		if (hasNegativeEffects() && hasContract(BWContracts.WRATH)) {
 			amount *= (1 + (0.025 * (getMaxHealth() - getHealth())));
 		}
 		return amount;

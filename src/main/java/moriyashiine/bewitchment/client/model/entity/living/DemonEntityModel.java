@@ -28,8 +28,8 @@ public class DemonEntityModel<T extends DemonEntity> extends BipedEntityModel<T>
 		model.head.copyPositionAndRotation(super.head);
 		model.leftArm.copyPositionAndRotation(super.leftArm);
 		model.rightArm.copyPositionAndRotation(super.rightArm);
-		model.leftLeg.pitch = MathHelper.cos((float) (limbAngle * 2 / 3 + Math.PI)) * limbDistance - 1 / 3f;
-		model.rightLeg.pitch = MathHelper.cos(limbAngle * 2 / 3) * limbDistance - 1 / 3f;
+		model.leftLeg.pitch = MathHelper.cos((float) (limbAngle * 2 / 3f + Math.PI)) * limbDistance - 1 / 3f;
+		model.rightLeg.pitch = MathHelper.cos(limbAngle * 2 / 3f) * limbDistance - 1 / 3f;
 		model.lWing01.yaw = MathHelper.cos(animationProgress / 8) / 3 + 1 / 3f;
 		model.rWing01.yaw = MathHelper.cos((float) (animationProgress / 8 + Math.PI)) / 3 - 1 / 3f;
 		model.tail01.roll = MathHelper.sin(animationProgress / 8) / 8;
@@ -67,7 +67,7 @@ public class DemonEntityModel<T extends DemonEntity> extends BipedEntityModel<T>
 			textureWidth = 64;
 			textureHeight = 64;
 			body = new ModelPart(this);
-			body.setPivot(0.0F, -5.5F, 0.0F);
+			body.setPivot(0.0F, -6.5F, 0.0F);
 			body.setTextureOffset(19, 17).addCuboid(-4.0F, 0.0F, -2.0F, 8.0F, 13.0F, 4.0F, 0.0F, false);
 			
 			tail01 = new ModelPart(this);
@@ -338,7 +338,7 @@ public class DemonEntityModel<T extends DemonEntity> extends BipedEntityModel<T>
 			textureWidth = 64;
 			textureHeight = 64;
 			body = new ModelPart(this);
-			body.setPivot(0.0F, -6.2F, 0.0F);
+			body.setPivot(0.0F, -6, 0.0F);
 			body.setTextureOffset(19, 17).addCuboid(-4.0F, 0.0F, -2.0F, 8.0F, 6.0F, 4.0F, 0.0F, false);
 			
 			lWing01 = new ModelPart(this);

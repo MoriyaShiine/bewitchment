@@ -5,9 +5,6 @@ import moriyashiine.bewitchment.common.registry.BWContracts;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
@@ -22,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MobEntity.class)
 public abstract class MobEntityMixin extends LivingEntity {
-	private static final TrackedData<Boolean> AFFECTED_BY_WAR = DataTracker.registerData(MobEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+	private boolean affectByWar = false;
 	
 	protected MobEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
@@ -40,10 +37,10 @@ public abstract class MobEntityMixin extends LivingEntity {
 					}
 				}
 				if (nearest != null) {
-					dataTracker.set(AFFECTED_BY_WAR, true);
+					affectByWar = true;
 					return (LivingEntity) nearest;
 				}
-				else if (contractAccessor.hasNegativeEffects() && dataTracker.get(AFFECTED_BY_WAR)) {
+				else if (affectByWar && contractAccessor.hasNegativeEffects()) {
 					addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, Integer.MAX_VALUE, 1));
 					addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE, 1));
 					addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, Integer.MAX_VALUE, 1));
@@ -55,16 +52,11 @@ public abstract class MobEntityMixin extends LivingEntity {
 	
 	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
 	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		dataTracker.set(AFFECTED_BY_WAR, tag.getBoolean("AffectedByWar"));
+		affectByWar = tag.getBoolean("AffectedByWar");
 	}
 	
 	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
 	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		tag.putBoolean("AffectedByWar", dataTracker.get(AFFECTED_BY_WAR));
-	}
-	
-	@Inject(method = "initDataTracker", at = @At("TAIL"))
-	private void initDataTracker(CallbackInfo callbackInfo) {
-		dataTracker.startTracking(AFFECTED_BY_WAR, false);
+		tag.putBoolean("AffectedByWar", affectByWar);
 	}
 }

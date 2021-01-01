@@ -25,10 +25,10 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 		if (alive) {
 			MagicAccessor.of(this).ifPresent(magicAccessor -> MagicAccessor.of(oldPlayer).ifPresent(oldMagicAccessor -> magicAccessor.setMagic(oldMagicAccessor.getMagic())));
 			BloodAccessor.of(this).ifPresent(bloodAccessor -> BloodAccessor.of(oldPlayer).ifPresent(oldBloodAccessor -> bloodAccessor.setBlood(oldBloodAccessor.getBlood())));
-			PolymorphAccessor.of(this).ifPresent(polymorphAccessor -> {
-				PolymorphAccessor.of(oldPlayer).ifPresent(oldPolymorphAccessor -> polymorphAccessor.setPolymorphUUID(oldPolymorphAccessor.getPolymorphUUID()));
-				PolymorphAccessor.of(oldPlayer).ifPresent(oldPolymorphAccessor -> polymorphAccessor.setPolymorphName(oldPolymorphAccessor.getPolymorphName()));
-			});
+			PolymorphAccessor.of(this).ifPresent(polymorphAccessor -> PolymorphAccessor.of(oldPlayer).ifPresent(oldPolymorphAccessor -> {
+				polymorphAccessor.setPolymorphUUID(oldPolymorphAccessor.getPolymorphUUID());
+				polymorphAccessor.setPolymorphName(oldPolymorphAccessor.getPolymorphName());
+			}));
 		}
 		ContractAccessor.of(this).ifPresent(contractAccessor -> ContractAccessor.of(oldPlayer).ifPresent(oldContractAccessor -> contractAccessor.getContracts().addAll(oldContractAccessor.getContracts())));
 	}

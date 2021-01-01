@@ -199,6 +199,18 @@ public class BWObjects {
 	public static final Item SILVER_CHESTPLATE = create("silver_chestplate", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.CHEST, gen()));
 	public static final Item SILVER_LEGGINGS = create("silver_leggings", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.LEGS, gen()));
 	public static final Item SILVER_BOOTS = create("silver_boots", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.FEET, gen()));
+	public static final Item HEDGEWITCH_HOOD = create("hedgewitch_hood", new ArmorItem(BWMaterials.HEDGEWITCH_ARMOR, EquipmentSlot.HEAD, gen()));
+	public static final Item HEDGEWITCH_HAT = create("hedgewitch_hat", new ArmorItem(BWMaterials.HEDGEWITCH_ARMOR, EquipmentSlot.HEAD, gen()));
+	public static final Item HEDGEWITCH_ROBES = create("hedgewitch_robes", new ArmorItem(BWMaterials.HEDGEWITCH_ARMOR, EquipmentSlot.CHEST, gen()));
+	public static final Item HEDGEWITCH_PANTS = create("hedgewitch_pants", new ArmorItem(BWMaterials.HEDGEWITCH_ARMOR, EquipmentSlot.LEGS, gen()));
+	public static final Item ALCHEMIST_HOOD = create("alchemist_hood", new ArmorItem(BWMaterials.ALCHEMIST_ARMOR, EquipmentSlot.HEAD, gen()));
+	public static final Item ALCHEMIST_HAT = create("alchemist_hat", new ArmorItem(BWMaterials.ALCHEMIST_ARMOR, EquipmentSlot.HEAD, gen()));
+	public static final Item ALCHEMIST_ROBES = create("alchemist_robes", new ArmorItem(BWMaterials.ALCHEMIST_ARMOR, EquipmentSlot.CHEST, gen()));
+	public static final Item ALCHEMIST_PANTS = create("alchemist_pants", new ArmorItem(BWMaterials.ALCHEMIST_ARMOR, EquipmentSlot.LEGS, gen()));
+	public static final Item BESMIRCHED_HOOD = create("besmirched_hood", new ArmorItem(BWMaterials.BESMIRCHED_ARMOR, EquipmentSlot.HEAD, gen()));
+	public static final Item BESMIRCHED_HAT = create("besmirched_hat", new ArmorItem(BWMaterials.BESMIRCHED_ARMOR, EquipmentSlot.HEAD, gen()));
+	public static final Item BESMIRCHED_ROBES = create("besmirched_robes", new ArmorItem(BWMaterials.BESMIRCHED_ARMOR, EquipmentSlot.CHEST, gen()));
+	public static final Item BESMIRCHED_PANTS = create("besmirched_pants", new ArmorItem(BWMaterials.BESMIRCHED_ARMOR, EquipmentSlot.LEGS, gen()));
 	//tool
 	public static final Item SILVER_SWORD = create("silver_sword", new SwordItem(BWMaterials.SILVER_TOOL, 3, -2.4f, gen()));
 	public static final Item SILVER_PICKAXE = create("silver_pickaxe", new BWPickaxeItem(BWMaterials.SILVER_TOOL, 1, -2.8f, gen()));

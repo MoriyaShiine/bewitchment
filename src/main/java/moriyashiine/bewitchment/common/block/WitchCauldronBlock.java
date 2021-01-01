@@ -125,7 +125,7 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 									}
 								}
 								else {
-									bottle = cauldron.getPotion();
+									bottle = cauldron.getPotion(player);
 									if (targetLevel == 2) {
 										boolean failed = true;
 										BlockPos altarPos = cauldron.getAltarPos();

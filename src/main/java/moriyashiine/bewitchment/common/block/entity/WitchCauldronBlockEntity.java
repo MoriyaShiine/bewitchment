@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.block.entity;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
 import moriyashiine.bewitchment.api.registry.CauldronBrewingRecipe;
 import moriyashiine.bewitchment.api.registry.OilRecipe;
@@ -14,10 +15,13 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -298,7 +302,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 							if (altarPos != null) {
 								BlockEntity blockEntity = world.getBlockEntity(altarPos);
 								if (blockEntity instanceof WitchAltarBlockEntity && ((WitchAltarBlockEntity) blockEntity).drain(getBrewCost(), true)) {
-									setColor(PotionUtil.getColor(getPotion()));
+									setColor(PotionUtil.getColor(getPotion(null)));
 									return Mode.BREWING;
 								}
 							}
@@ -324,7 +328,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 		return fail();
 	}
 	
-	public ItemStack getPotion() {
+	public ItemStack getPotion(LivingEntity creator) {
 		ItemStack stack = new ItemStack(Items.POTION);
 		if (world != null) {
 			List<StatusEffectInstance> effects = new ArrayList<>();
@@ -361,6 +365,13 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 				}
 			}
 			finalEffects.addAll(effects);
+			if (creator != null && BewitchmentAPI.getArmorPieces(creator, armorStack -> armorStack.getItem() instanceof ArmorItem && ((ArmorItem) armorStack.getItem()).getMaterial() == BWMaterials.ALCHEMIST_ARMOR) >= 3) {
+				for (int i = 0; i < finalEffects.size(); i++) {
+					StatusEffect type = finalEffects.get(i).getEffectType();
+					int duration = finalEffects.get(i).getDuration();
+					finalEffects.set(i, new StatusEffectInstance(type, type.isInstant() ? duration : duration * 2, finalEffects.get(i).getAmplifier()));
+				}
+			}
 			PotionUtil.setCustomPotionEffects(stack, finalEffects);
 			stack.getOrCreateTag().putInt("CustomPotionColor", PotionUtil.getColor(finalEffects));
 			stack.getOrCreateTag().putBoolean("BewitchmentBrew", true);

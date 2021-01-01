@@ -1,16 +1,20 @@
 package moriyashiine.bewitchment.mixin;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.ContractAccessor;
 import moriyashiine.bewitchment.common.registry.BWContracts;
+import moriyashiine.bewitchment.common.registry.BWMaterials;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.CropBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeType;
@@ -31,10 +35,10 @@ public abstract class BlockMixin {
 	@Inject(method = "getDroppedStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/entity/BlockEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/item/ItemStack;)Ljava/util/List;", at = @At("RETURN"), cancellable = true)
 	private static void getDroppedStacks(BlockState state, ServerWorld world, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity entity, ItemStack stack, CallbackInfoReturnable<List<ItemStack>> callbackInfo) {
 		if (!EnchantmentHelper.get(stack).containsKey(Enchantments.SILK_TOUCH) && entity instanceof LivingEntity) {
+			List<ItemStack> drops = callbackInfo.getReturnValue();
 			ContractAccessor.of((LivingEntity) entity).ifPresent(contractAccessor -> {
-				List<ItemStack> drops = callbackInfo.getReturnValue();
 				if (contractAccessor.hasContract(BWContracts.GREED)) {
-					if (world.random.nextFloat() < 1 / 8f && contractAccessor.hasNegativeEffects()) {
+					if (contractAccessor.hasNegativeEffects() && world.random.nextFloat() < 1 / 8f) {
 						drops.clear();
 					}
 					else {
@@ -63,6 +67,11 @@ public abstract class BlockMixin {
 					}
 				}
 			});
+			if (BewitchmentAPI.getArmorPieces((LivingEntity) entity, armorStack -> armorStack.getItem() instanceof ArmorItem && ((ArmorItem) armorStack.getItem()).getMaterial() == BWMaterials.HEDGEWITCH_ARMOR) >= 3 && state.getBlock() instanceof CropBlock && state.get(((CropBlock) state.getBlock()).getAgeProperty()) == ((CropBlock) state.getBlock()).getMaxAge()) {
+				for (int i = 0; i < drops.size(); i++) {
+					drops.set(i, new ItemStack(drops.get(i).getItem(), drops.get(i).getCount() + 1));
+				}
+			}
 		}
 	}
 }
