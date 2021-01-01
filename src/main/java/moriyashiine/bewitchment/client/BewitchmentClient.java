@@ -47,6 +47,7 @@ public class BewitchmentClient implements ClientModInitializer {
 		ParticleFactoryRegistry.getInstance().register(BWParticleTypes.CAULDRON_BUBBLE, CauldronBubbleParticle.Factory::new);
 		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex == 0 ? 0x7f0000 : 0xffffff, BWObjects.BOTTLE_OF_BLOOD);
 		FabricModelPredicateProviderRegistry.register(BWObjects.TAGLOCK, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID") ? 1 : 0);
+		FabricModelPredicateProviderRegistry.register(BWObjects.DEMONIC_CONTRACT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID") ? 1 : 0);
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.BW_CHEST, ChestBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.WITCH_ALTAR, WitchAltarBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.WITCH_CAULDRON, WitchCauldronBlockEntityRenderer::new);

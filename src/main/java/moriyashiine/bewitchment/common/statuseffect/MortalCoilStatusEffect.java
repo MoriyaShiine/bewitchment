@@ -5,6 +5,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectType;
 
+@SuppressWarnings("ConstantConditions")
 public class MortalCoilStatusEffect extends StatusEffect {
 	public MortalCoilStatusEffect(StatusEffectType type, int color) {
 		super(type, color);
@@ -17,7 +18,6 @@ public class MortalCoilStatusEffect extends StatusEffect {
 	
 	@Override
 	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-		//noinspection ConstantConditions
 		if (entity.getStatusEffect(this).getDuration() == 1) {
 			entity.damage(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
 		}

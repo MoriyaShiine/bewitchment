@@ -12,6 +12,7 @@ import moriyashiine.bewitchment.common.block.util.BWCropBlock;
 import moriyashiine.bewitchment.common.block.util.BWOreBlock;
 import moriyashiine.bewitchment.common.block.util.BWSaplingBlock;
 import moriyashiine.bewitchment.common.item.BottleOfBloodItem;
+import moriyashiine.bewitchment.common.item.ContractItem;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.item.tool.AthameItem;
 import moriyashiine.bewitchment.common.item.tool.SilverArrowItem;
@@ -207,7 +208,7 @@ public class BWObjects {
 	public static final Item ATHAME = create("athame", new AthameItem(BWMaterials.SILVER_TOOL, 1, -2, gen()));
 	public static final Item SILVER_ARROW = create("silver_arrow", new SilverArrowItem(gen()));
 	public static final Item TAGLOCK = create("taglock", new TaglockItem(gen()));
-	public static final Item DEMONIC_CONTRACT = create("demonic_contract", new Item(gen().rarity(Rarity.RARE)));
+	public static final Item DEMONIC_CONTRACT = create("demonic_contract", new ContractItem(gen().rarity(Rarity.RARE).maxCount(1)));
 	//material_item
 	public static final Item CLEANSING_BALM = create("cleansing_balm", new Item(gen().recipeRemainder(Items.GLASS_BOTTLE)));
 	public static final Item GRIM_ELIXIR = create("grim_elixir", new Item(gen().recipeRemainder(Items.GLASS_BOTTLE)));

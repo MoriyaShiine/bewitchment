@@ -5,6 +5,8 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
 	"AbstractBlockStateMixin",
+	"AnimalMateGoalMixin",
+	"BlockMixin",
 	"BrewingRecipeRegistryMixin",
 	"DamageEnchantmentMixin",
 	"EntityShapeContextMixin",
@@ -13,13 +15,15 @@
 	"LandPathNodeMakerMixin",
 	"LivingEntityAccessor",
 	"LivingEntityMixin",
+	"MobEntityMixin",
 	"PlayerEntityMixin",
 	"PotionItemMixin",
 	"PounceAtTargetGoalMixin",
 	"ServerPlayerEntityMixin",
 	"SpawnHelperMixin",
 	"StatusEffectAccessor",
-	"TreeDecoratorTypeAccessor"
+	"TreeDecoratorTypeAccessor",
+	"VillagerEntityMixin"
   ],
   "client": [
 	"client.ClientPlayerEntityMixin",

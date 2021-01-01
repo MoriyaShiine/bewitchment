@@ -26,6 +26,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("ConstantConditions")
 public class SnakeEntity extends BWTameableEntity {
 	public float curve = 0;
 	public int tongueFlick = 0, attackTick = 0;
@@ -99,7 +100,6 @@ public class SnakeEntity extends BWTameableEntity {
 		return flag;
 	}
 	
-	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void setTamed(boolean tamed) {
 		super.setTamed(tamed);

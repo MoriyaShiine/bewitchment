@@ -52,7 +52,7 @@ public class BewitchmentAPI {
 	
 	public static void addItemToInventoryAndConsume(LivingEntity entity, Hand hand, ItemStack toAdd) {
 		ItemStack stack = entity.getStackInHand(hand);
-		stack.decrement(1);
+		stack.decrement(entity instanceof PlayerEntity && !((PlayerEntity) entity).isCreative() ? 1 : 0);
 		if (stack.isEmpty()) {
 			entity.setStackInHand(hand, toAdd);
 		}

@@ -63,6 +63,7 @@ public class CauldronBrewingRecipe implements Recipe<Inventory> {
 		return BWRecipeTypes.CAULDRON_BREWING_RECIPE_TYPE;
 	}
 	
+	@SuppressWarnings("ConstantConditions")
 	public static class Serializer implements RecipeSerializer<CauldronBrewingRecipe> {
 		@Override
 		public CauldronBrewingRecipe read(Identifier id, JsonObject json) {
@@ -77,7 +78,6 @@ public class CauldronBrewingRecipe implements Recipe<Inventory> {
 		@Override
 		public void write(PacketByteBuf buf, CauldronBrewingRecipe recipe) {
 			recipe.input.write(buf);
-			//noinspection ConstantConditions
 			buf.writeString(Registry.STATUS_EFFECT.getId(recipe.output).toString());
 			buf.writeInt(recipe.time);
 		}

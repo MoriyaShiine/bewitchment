@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.common.entity.living;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.registry.BWObjects;
+import moriyashiine.bewitchment.common.registry.BWRegistries;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.util.NbtType;
@@ -123,6 +124,9 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	public void tick() {
 		super.tick();
 		if (!world.isClient) {
+			if (customer != null) {
+				navigation.stop();
+			}
 			LivingEntity target = getTarget();
 			if (target != null) {
 				lookAtEntity(target, 360, 360);
@@ -258,6 +262,7 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> entity.getGroup() != BewitchmentAPI.DEMON));
 	}
 	
+	@SuppressWarnings("ConstantConditions")
 	private static class TradeGenerator {
 		public static TradeOfferList build(Random random) {
 			TradeOfferList offers = new TradeOfferList();
@@ -266,7 +271,9 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 				offers.add(new TradeOffer(cost.get(0), cost.size() > 1 ? cost.get(1) : ItemStack.EMPTY, generateRewardStack(random), Integer.MAX_VALUE, 0, 1));
 			}
 			List<ItemStack> cost = generateCost(random, true);
-			offers.add(new TradeOffer(cost.get(0), cost.get(1), new ItemStack(BWObjects.DEMONIC_CONTRACT), Integer.MAX_VALUE, 0, 1));
+			ItemStack stack = new ItemStack(BWObjects.DEMONIC_CONTRACT);
+			stack.getOrCreateTag().putString("Contract", BWRegistries.CONTRACTS.getId(BWRegistries.CONTRACTS.get(random.nextInt(BWRegistries.CONTRACTS.getEntries().size()))).toString());
+			offers.add(new TradeOffer(cost.get(0), cost.get(1), stack, Integer.MAX_VALUE, 0, 1));
 			return offers;
 		}
 		

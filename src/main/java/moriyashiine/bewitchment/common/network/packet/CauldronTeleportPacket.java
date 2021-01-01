@@ -20,6 +20,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+@SuppressWarnings("ConstantConditions")
 public class CauldronTeleportPacket {
 	public static final Identifier ID = new Identifier(Bewitchment.MODID, "cauldron_teleport");
 	
@@ -35,7 +36,6 @@ public class CauldronTeleportPacket {
 		String message = buf.readString();
 		//noinspection Convert2Lambda
 		context.getTaskQueue().submit(new Runnable() {
-			@SuppressWarnings("ConstantConditions")
 			@Override
 			public void run() {
 				PlayerEntity player = context.getPlayer();

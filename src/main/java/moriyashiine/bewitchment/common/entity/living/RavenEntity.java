@@ -24,6 +24,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("ConstantConditions")
 public class RavenEntity extends BWTameableEntity {
 	public RavenEntity(EntityType<? extends TameableEntity> type, World world) {
 		super(type, world);
@@ -98,7 +99,6 @@ public class RavenEntity extends BWTameableEntity {
 	protected void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition) {
 	}
 	
-	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void setTamed(boolean tamed) {
 		super.setTamed(tamed);

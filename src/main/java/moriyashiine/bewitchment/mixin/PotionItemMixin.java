@@ -17,7 +17,6 @@ import java.util.UUID;
 
 @Mixin(PotionItem.class)
 public abstract class PotionItemMixin {
-	
 	@Inject(method = "finishUsing", at = @At("HEAD"))
 	private void finishUsing(ItemStack stack, World world, LivingEntity user, CallbackInfoReturnable<ItemStack> callbackInfo) {
 		try {

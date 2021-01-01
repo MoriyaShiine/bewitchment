@@ -36,6 +36,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("ConstantConditions")
 public class WitchAltarBlock extends Block implements BlockEntityProvider, Waterloggable {
 	private static final VoxelShape SHAPE = VoxelShapes.union(createCuboidShape(0, 0, 0, 16, 2, 16), createCuboidShape(1, 2, 1, 15, 5, 15), createCuboidShape(2, 5, 2, 14, 10, 14), createCuboidShape(1, 10, 1, 15, 12, 15), createCuboidShape(0, 12, 0, 16, 16, 16));
 	
@@ -77,7 +78,6 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 					}
 					Direction facing = world.getBlockState(pos).get(Properties.HORIZONTAL_FACING);
 					world.breakBlock(pos, false);
-					//noinspection ConstantConditions
 					world.setBlockState(pos, entry.formed.getPlacementState(new ItemPlacementContext(player, hand, stack, hit)).with(Properties.HORIZONTAL_FACING, facing));
 				}
 				return ActionResult.success(client);
@@ -135,7 +135,6 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 		return super.getPickStack(world, pos, state);
 	}
 	
-	@SuppressWarnings("ConstantConditions")
 	@Nullable
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
