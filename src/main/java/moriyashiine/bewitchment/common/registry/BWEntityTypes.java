@@ -36,6 +36,9 @@ public class BWEntityTypes {
 	public static final EntityType<HellhoundEntity> HELLHOUND = create("hellhound", HellhoundEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, HellhoundEntity::new).dimensions(EntityType.WOLF.getDimensions()).fireImmune().build());
 	public static final EntityType<DemonEntity> DEMON = create("demon", DemonEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DemonEntity::new).dimensions(EntityDimensions.fixed(0.8f, 2.4f)).fireImmune().build());
 	
+	public static final EntityType<LeonardEntity> LEONARD = create("leonard", LeonardEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, LeonardEntity::new).dimensions(EntityDimensions.fixed(0.8f, 2.8f)).fireImmune().build());
+	public static final EntityType<BaphometEntity> BAPHOMET = create("baphomet", BaphometEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, BaphometEntity::new).dimensions(EntityDimensions.fixed(0.8f, 2.8f)).fireImmune().build());
+	
 	private static <T extends LivingEntity> EntityType<T> create(String name, DefaultAttributeContainer.Builder attributes, EntityType<T> type) {
 		FabricDefaultAttributeRegistry.register(type, attributes);
 		ENTITY_TYPES.put(type, new Identifier(Bewitchment.MODID, name));

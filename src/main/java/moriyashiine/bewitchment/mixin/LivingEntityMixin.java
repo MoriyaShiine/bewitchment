@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.mixin;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.BloodAccessor;
 import moriyashiine.bewitchment.api.interfaces.ContractAccessor;
+import moriyashiine.bewitchment.api.interfaces.MasterAccessor;
 import moriyashiine.bewitchment.api.registry.AthameDropRecipe;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.client.network.packet.SpawnExplosionParticlesPacket;
@@ -182,6 +183,13 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					contracts.remove(i);
 				}
 			}
+		}
+	}
+	
+	@Inject(method = "isAffectedBySplashPotions", at = @At("HEAD"), cancellable = true)
+	private void isAffectedBySplashPotions(CallbackInfoReturnable<Boolean> callbackInfo) {
+		if (this instanceof MasterAccessor && ((MasterAccessor) this).getMasterUUID() != null) {
+			callbackInfo.setReturnValue(false);
 		}
 	}
 	

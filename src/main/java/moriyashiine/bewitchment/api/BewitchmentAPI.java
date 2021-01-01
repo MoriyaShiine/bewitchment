@@ -1,9 +1,11 @@
 package moriyashiine.bewitchment.api;
 
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
+import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
 import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWTags;
+import net.fabricmc.fabric.api.server.PlayerStream;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
@@ -14,8 +16,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -58,6 +65,35 @@ public class BewitchmentAPI {
 		}
 		else if (!(entity instanceof PlayerEntity) || !((PlayerEntity) entity).inventory.insertStack(toAdd)) {
 			entity.dropStack(toAdd);
+		}
+	}
+	
+	public static void attemptTeleport(Entity entity, BlockPos origin, int distance) {
+		for (int i = 0; i < 32; i++) {
+			BlockPos.Mutable mutable = new BlockPos.Mutable(origin.getX() + 0.5 + MathHelper.nextDouble(entity.world.random, -distance, distance), origin.getY() + 0.5 + MathHelper.nextDouble(entity.world.random, -distance / 2f, distance / 2f), origin.getZ() + 0.5 + MathHelper.nextDouble(entity.world.random, -distance, distance));
+			if (!entity.world.getBlockState(mutable).getMaterial().isSolid()) {
+				while (mutable.getY() > 0 && !entity.world.getBlockState(mutable).getMaterial().isSolid()) {
+					mutable.move(Direction.DOWN);
+				}
+				if (entity.world.getBlockState(mutable).getMaterial().blocksMovement()) {
+					if (!entity.isSilent()) {
+						entity.world.playSound(null, entity.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.NEUTRAL, 1, 1);
+					}
+					PlayerStream.watching(entity).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, entity));
+					if (entity instanceof PlayerEntity) {
+						SpawnPortalParticlesPacket.send((PlayerEntity) entity, entity);
+					}
+					entity.teleport(mutable.getX(), mutable.getY() + 1, mutable.getZ());
+					if (!entity.isSilent()) {
+						entity.world.playSound(null, entity.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.NEUTRAL, 1, 1);
+					}
+					PlayerStream.watching(entity).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, entity));
+					if (entity instanceof PlayerEntity) {
+						SpawnPortalParticlesPacket.send((PlayerEntity) entity, entity);
+					}
+					break;
+				}
+			}
 		}
 	}
 	

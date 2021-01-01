@@ -199,9 +199,9 @@ public class HellhoundEntityModel<T extends HellhoundEntity> extends EntityModel
 		head.pitch = (float) (headPitch * (Math.PI / 180f));
 		head.yaw = (float) (headYaw * (Math.PI / 180f)) * 2 / 3f;
 		lForeleg.pitch = MathHelper.cos(limbAngle * 2 / 3f) * 1.4f * limbDistance;
-		rForeleg.pitch = MathHelper.cos((float) (limbAngle * 2 / 3f + Math.PI)) * 1.4f * limbDistance;
-		lHindleg.pitch = MathHelper.cos((float) (limbAngle * 2 / 3f + Math.PI)) * 1.4f * limbDistance;
+		rForeleg.pitch = -lForeleg.pitch;
 		rHindleg.pitch = MathHelper.cos(limbAngle * 2 / 3f) * 1.4f * limbDistance;
+		lHindleg.pitch = -rHindleg.pitch;
 		tail00.roll = (MathHelper.cos(limbAngle * 2 / 3f) * limbDistance) + MathHelper.sin((animationProgress + entity.getEntityId()) * 1 / 8f) * 0.25f;
 	}
 	

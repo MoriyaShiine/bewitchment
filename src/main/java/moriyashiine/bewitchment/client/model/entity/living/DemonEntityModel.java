@@ -27,11 +27,13 @@ public class DemonEntityModel<T extends DemonEntity> extends BipedEntityModel<T>
 		model = entity.getDataTracker().get(DemonEntity.MALE) ? male : female;
 		model.head.copyPositionAndRotation(super.head);
 		model.leftArm.copyPositionAndRotation(super.leftArm);
+		model.leftArm.roll -= 1 / 16f;
 		model.rightArm.copyPositionAndRotation(super.rightArm);
-		model.leftLeg.pitch = MathHelper.cos((float) (limbAngle * 2 / 3f + Math.PI)) * limbDistance - 1 / 3f;
+		model.rightArm.roll += 1 / 16f;
 		model.rightLeg.pitch = MathHelper.cos(limbAngle * 2 / 3f) * limbDistance - 1 / 3f;
+		model.leftLeg.pitch = -model.rightLeg.pitch - 2 / 3f;
 		model.lWing01.yaw = MathHelper.cos(animationProgress / 8) / 3 + 1 / 3f;
-		model.rWing01.yaw = MathHelper.cos((float) (animationProgress / 8 + Math.PI)) / 3 - 1 / 3f;
+		model.rWing01.yaw = -model.lWing01.yaw;
 		model.tail01.roll = MathHelper.sin(animationProgress / 8) / 8;
 		if (model.loincloth != null) {
 			model.loincloth.pitch = Math.min(model.leftLeg.pitch, model.rightLeg.pitch);

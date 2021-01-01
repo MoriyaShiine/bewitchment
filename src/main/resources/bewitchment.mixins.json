@@ -9,6 +9,7 @@
 	"BlockMixin",
 	"BrewingRecipeRegistryMixin",
 	"DamageEnchantmentMixin",
+	"EntityMixin",
 	"EntityShapeContextMixin",
 	"EntityTypeMixin",
 	"ItemStackMixin",
@@ -28,6 +29,7 @@
   "client": [
 	"client.ClientPlayerEntityMixin",
 	"client.ClientWorldMixin",
+	"client.HeldItemFeatureRendererMixin",
 	"client.InGameHudMixin",
 	"client.TexturedRenderLayersMixin"
   ],
