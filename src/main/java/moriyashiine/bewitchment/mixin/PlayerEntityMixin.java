@@ -123,8 +123,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
 	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
 		tag.putInt("Magic", getMagic());
-		boolean present = getPolymorphUUID().isPresent();
-		tag.putString("PolymorphUUID", present ? getPolymorphUUID().get().toString() : "");
+		tag.putString("PolymorphUUID", getPolymorphUUID().isPresent() ? getPolymorphUUID().get().toString() : "");
 		tag.putString("PolymorphName", getPolymorphName());
 	}
 	

@@ -5,6 +5,7 @@ import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket
 import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWTags;
+import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.fabricmc.fabric.api.server.PlayerStream;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -23,9 +24,9 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class BewitchmentAPI {
@@ -45,6 +46,49 @@ public class BewitchmentAPI {
 	
 	public static boolean isWeakToSilver(LivingEntity livingEntity) {
 		return BWTags.WEAK_TO_SILVER.contains(livingEntity.getType());
+	}
+	
+	public static boolean hasPledge(World world, UUID entity) {
+		BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
+		for (UUID uuid : worldState.pledges.keySet()) {
+			if (isPledged(world, uuid, entity)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean isPledged(World world, UUID pledgeableUUID, UUID entity) {
+		BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
+		if (worldState.pledges.containsKey(pledgeableUUID)) {
+			for (UUID livingUUID : worldState.pledges.get(pledgeableUUID)) {
+				if (livingUUID.equals(entity)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public static void pledge(World world, UUID pledgeable, UUID entity) {
+		BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
+		List<UUID> pledges = worldState.pledges.getOrDefault(pledgeable, new ArrayList<>());
+		pledges.add(entity);
+		worldState.pledges.put(pledgeable, pledges);
+		worldState.markDirty();
+	}
+	
+	public static void unpledge(World world, UUID pledgeable, UUID entity) {
+		BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
+		if (worldState.pledges.containsKey(pledgeable)) {
+			List<UUID> pledges = worldState.pledges.get(pledgeable);
+			for (int i = pledges.size() - 1; i >= 0; i--) {
+				if (pledges.get(i).equals(entity)) {
+					pledges.remove(i);
+					worldState.markDirty();
+				}
+			}
+		}
 	}
 	
 	public static int getArmorPieces(LivingEntity livingEntity, Predicate<ItemStack> predicate) {

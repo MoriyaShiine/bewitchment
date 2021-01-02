@@ -365,11 +365,15 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 				}
 			}
 			finalEffects.addAll(effects);
-			if (creator != null && BewitchmentAPI.getArmorPieces(creator, armorStack -> armorStack.getItem() instanceof ArmorItem && ((ArmorItem) armorStack.getItem()).getMaterial() == BWMaterials.ALCHEMIST_ARMOR) >= 3) {
-				for (int i = 0; i < finalEffects.size(); i++) {
-					StatusEffect type = finalEffects.get(i).getEffectType();
-					int duration = finalEffects.get(i).getDuration();
-					finalEffects.set(i, new StatusEffectInstance(type, type.isInstant() ? duration : duration * 2, finalEffects.get(i).getAmplifier()));
+			if (creator != null) {
+				boolean wearingAlchemistRobes = BewitchmentAPI.getArmorPieces(creator, armorStack -> armorStack.getItem() instanceof ArmorItem && ((ArmorItem) armorStack.getItem()).getMaterial() == BWMaterials.ALCHEMIST_ARMOR) >= 3;
+				boolean pledgedToLeonard = BewitchmentAPI.isPledged(world, BWPledges.LEONARD_UUID, creator.getUuid());
+				if (wearingAlchemistRobes || pledgedToLeonard) {
+					for (int i = 0; i < finalEffects.size(); i++) {
+						StatusEffect type = finalEffects.get(i).getEffectType();
+						int duration = finalEffects.get(i).getDuration();
+						finalEffects.set(i, new StatusEffectInstance(type, type.isInstant() || !wearingAlchemistRobes ? duration : duration * 2, finalEffects.get(i).getAmplifier() + (pledgedToLeonard ? 1 : 0)));
+					}
 				}
 			}
 			PotionUtil.setCustomPotionEffects(stack, finalEffects);

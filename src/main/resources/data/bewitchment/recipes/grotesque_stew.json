@@ -1,0 +1,35 @@
+{
+  "type": "crafting_shaped",
+  "group": "carpet",
+  "pattern": [
+	"EBT",
+	"FHR",
+	" C "
+  ],
+  "key": {
+	"E": {
+	  "item": "fermented_spider_eye"
+	},
+	"B": {
+	  "item": "bewitchment:bottle_of_blood"
+	},
+	"T": {
+	  "item": "bewitchment:snake_tongue"
+	},
+	"F": {
+	  "item": "rabbit_foot"
+	},
+	"H": {
+	  "item": "bewitchment:demon_heart"
+	},
+	"R": {
+	  "item": "rotten_flesh"
+	},
+	"C": {
+	  "item": "bowl"
+	}
+  },
+  "result": {
+	"item": "bewitchment:grotesque_stew"
+  }
+}

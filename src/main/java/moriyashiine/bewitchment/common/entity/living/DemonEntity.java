@@ -123,6 +123,11 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	}
 	
 	@Override
+	public boolean cannotDespawn() {
+		return true;
+	}
+	
+	@Override
 	public void tick() {
 		super.tick();
 		if (!world.isClient) {
@@ -284,8 +289,8 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 			ItemStack stack = generateCostStack(random, contract ? 3 : 1);
 			cost.add(stack);
 			if (contract || random.nextBoolean()) {
-				ItemStack stack2 = generateCostStack(random, contract ? 3 : 1);
-				while (stack.getItem() == stack2.getItem()) {
+				ItemStack stack2 = null;
+				while (stack2 == null || stack.getItem() == stack2.getItem()) {
 					stack2 = generateCostStack(random, contract ? 3 : 1);
 				}
 				cost.add(stack2);

@@ -2,8 +2,10 @@ package moriyashiine.bewitchment.common.entity.living;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.MasterAccessor;
+import moriyashiine.bewitchment.api.interfaces.Pledgeable;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.registry.BWMaterials;
+import moriyashiine.bewitchment.common.registry.BWPledges;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
 import net.minecraft.entity.Entity;
@@ -44,7 +46,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class LeonardEntity extends BWHostileEntity {
+import java.util.UUID;
+
+public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 	private final ServerBossBar bossBar;
 	
 	public LeonardEntity(EntityType<? extends HostileEntity> entityType, World world) {
@@ -57,6 +61,11 @@ public class LeonardEntity extends BWHostileEntity {
 	
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 375).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 8).add(EntityAttributes.GENERIC_ARMOR, 6).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.75);
+	}
+	
+	@Override
+	public UUID getPledgeUUID() {
+		return BWPledges.LEONARD_UUID;
 	}
 	
 	@Override
@@ -111,6 +120,11 @@ public class LeonardEntity extends BWHostileEntity {
 	}
 	
 	@Override
+	public boolean cannotDespawn() {
+		return true;
+	}
+	
+	@Override
 	public void tick() {
 		super.tick();
 		if (!world.isClient) {
@@ -147,6 +161,9 @@ public class LeonardEntity extends BWHostileEntity {
 	@Override
 	public void setTarget(@Nullable LivingEntity target) {
 		if (target != null) {
+			if (BewitchmentAPI.isPledged(world, getPledgeUUID(), target.getUuid())) {
+				BewitchmentAPI.unpledge(world, getPledgeUUID(), target.getUuid());
+			}
 			if (target instanceof MasterAccessor && getUuid().equals(((MasterAccessor) target).getMasterUUID())) {
 				return;
 			}
@@ -191,7 +208,7 @@ public class LeonardEntity extends BWHostileEntity {
 		goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8));
 		goalSelector.add(3, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this));
-		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> entity.getGroup() != BewitchmentAPI.DEMON && BewitchmentAPI.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3));
+		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> entity.getGroup() != BewitchmentAPI.DEMON && BewitchmentAPI.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3 && !(entity instanceof PlayerEntity && BewitchmentAPI.isPledged(world, getPledgeUUID(), entity.getUuid()))));
 	}
 	
 	private void summonMinions() {

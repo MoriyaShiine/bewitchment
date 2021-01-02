@@ -256,6 +256,7 @@ public class BWObjects {
 	public static final Item WITCHBERRY = create("witchberry", new Item(gen().food(BWFoodComponents.WITCHBERRY)));
 	public static final Item WITCHBERRY_PIE = create("witchberry_pie", new Item(gen().food(BWFoodComponents.WITCHBERRY_PIE)));
 	public static final Item WITCHBERRY_COOKIE = create("witchberry_cookie", new Item(gen().food(BWFoodComponents.WITCHBERRY_COOKIE)));
+	public static final Item GROTESQUE_STEW = create("grotesque_stew", new GrotestqueStew(gen().food(BWFoodComponents.DEMON_HEART).maxCount(1).recipeRemainder(Items.BOWL)));
 	//spawn_egg
 	public static final Item OWL_SPAWN_EGG = create("owl_spawn_egg", new SpawnEggItem(BWEntityTypes.OWL, 0x7f3f00, 0xc0c0c0, gen()));
 	public static final Item RAVEN_SPAWN_EGG = create("raven_spawn_egg", new SpawnEggItem(BWEntityTypes.RAVEN, 0x3f3f3f, 0x000000, gen()));

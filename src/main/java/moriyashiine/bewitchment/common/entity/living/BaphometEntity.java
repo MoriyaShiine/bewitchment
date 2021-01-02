@@ -1,9 +1,15 @@
 package moriyashiine.bewitchment.common.entity.living;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.interfaces.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.MasterAccessor;
+import moriyashiine.bewitchment.api.interfaces.Pledgeable;
+import moriyashiine.bewitchment.api.registry.Contract;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.registry.BWMaterials;
+import moriyashiine.bewitchment.common.registry.BWPledges;
+import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
 import net.minecraft.entity.Entity;
@@ -32,12 +38,17 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class BaphometEntity extends BWHostileEntity {
+import java.util.UUID;
+
+@SuppressWarnings("ConstantConditions")
+public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 	private final ServerBossBar bossBar;
 	
 	public int flameIndex = random.nextInt(8);
@@ -52,6 +63,11 @@ public class BaphometEntity extends BWHostileEntity {
 	
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 375).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 8).add(EntityAttributes.GENERIC_ARMOR, 6).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.75);
+	}
+	
+	@Override
+	public UUID getPledgeUUID() {
+		return BWPledges.BAPHOMET_UUID;
 	}
 	
 	@Override
@@ -91,6 +107,34 @@ public class BaphometEntity extends BWHostileEntity {
 	}
 	
 	@Override
+	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
+		if (isAlive() && getTarget() == null) {
+			boolean client = world.isClient;
+			if (!client) {
+				if (BewitchmentAPI.isPledged(world, getPledgeUUID(), player.getUuid())) {
+					ContractAccessor.of(player).ifPresent(contractAccessor -> {
+						if (player.experienceLevel >= 30 || player.isCreative()) {
+							Contract contract = null;
+							while (contract == null || !contract.canBeGiven) {
+								contract = BWRegistries.CONTRACTS.get(random.nextInt(BWRegistries.CONTRACTS.getEntries().size()));
+							}
+							Contract.Instance instance = new Contract.Instance(contract, 168000);
+							contractAccessor.addContract(instance);
+							player.sendMessage(new TranslatableText(Bewitchment.MODID + ".baphomet_contract", new TranslatableText("contract." + BWRegistries.CONTRACTS.getId(instance.contract).toString().replace(":", "."))), true);
+							if (!player.isCreative()) {
+								player.addExperienceLevels(-30);
+								world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1, 0.5f);
+							}
+						}
+					});
+				}
+			}
+			return ActionResult.success(client);
+		}
+		return super.interactMob(player, hand);
+	}
+	
+	@Override
 	public boolean canBeLeashedBy(PlayerEntity player) {
 		return false;
 	}
@@ -103,6 +147,11 @@ public class BaphometEntity extends BWHostileEntity {
 	@Override
 	public boolean isAffectedBySplashPotions() {
 		return false;
+	}
+	
+	@Override
+	public boolean cannotDespawn() {
+		return true;
 	}
 	
 	@Override
@@ -148,6 +197,9 @@ public class BaphometEntity extends BWHostileEntity {
 	@Override
 	public void setTarget(@Nullable LivingEntity target) {
 		if (target != null) {
+			if (BewitchmentAPI.isPledged(world, getPledgeUUID(), target.getUuid())) {
+				BewitchmentAPI.unpledge(world, getPledgeUUID(), target.getUuid());
+			}
 			if (target instanceof MasterAccessor && getUuid().equals(((MasterAccessor) target).getMasterUUID())) {
 				return;
 			}
@@ -192,7 +244,7 @@ public class BaphometEntity extends BWHostileEntity {
 		goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8));
 		goalSelector.add(3, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this));
-		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> entity.getGroup() != BewitchmentAPI.DEMON && BewitchmentAPI.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3));
+		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> entity.getGroup() != BewitchmentAPI.DEMON && BewitchmentAPI.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3 && !(entity instanceof PlayerEntity && BewitchmentAPI.isPledged(world, getPledgeUUID(), entity.getUuid()))));
 	}
 	
 	private void summonMinions() {

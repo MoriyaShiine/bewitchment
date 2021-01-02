@@ -1,11 +1,13 @@
 package moriyashiine.bewitchment.common.network.packet;
 
 import io.netty.buffer.Unpooled;
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
 import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
+import moriyashiine.bewitchment.common.registry.BWPledges;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.fabric.api.network.PacketContext;
@@ -53,27 +55,35 @@ public class CauldronTeleportPacket {
 					}
 				}
 				if (closest != null) {
-					BlockEntity blockEntity = world.getBlockEntity(closest);
-					if (blockEntity instanceof WitchCauldronBlockEntity) {
-						BlockPos altarPos = ((UsesAltarPower) world.getBlockEntity(cauldronPos)).getAltarPos();
-						if (altarPos != null) {
-							WitchAltarBlockEntity altar = (WitchAltarBlockEntity) world.getBlockEntity(altarPos);
-							if (altar != null && altar.drain((int) (Math.sqrt(closest.getSquaredDistance(player.getPos(), true)) * 2), false)) {
-								if (!player.isSilent()) {
-									world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1, 1);
+					boolean pledgedToLeonard = BewitchmentAPI.isPledged(world, BWPledges.LEONARD_UUID, player.getUuid());
+					boolean hasPower = false;
+					if (!pledgedToLeonard) {
+						BlockEntity blockEntity = world.getBlockEntity(closest);
+						if (blockEntity instanceof WitchCauldronBlockEntity) {
+							BlockPos altarPos = ((UsesAltarPower) world.getBlockEntity(cauldronPos)).getAltarPos();
+							if (altarPos != null) {
+								WitchAltarBlockEntity altar = (WitchAltarBlockEntity) world.getBlockEntity(altarPos);
+								if (altar != null && altar.drain((int) (Math.sqrt(closest.getSquaredDistance(player.getPos(), true)) * 2), false)) {
+									hasPower = true;
 								}
-								PlayerStream.watching(player).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, player));
-								SpawnPortalParticlesPacket.send(player, player);
-								player.teleport(closest.getX() + 0.5, closest.getY() + 0.5, closest.getZ() + 0.5);
-								if (!player.isSilent()) {
-									world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1, 1);
-								}
-								PlayerStream.watching(player).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, player));
-								SpawnPortalParticlesPacket.send(player, player);
-								return;
 							}
 						}
-						player.sendMessage(new TranslatableText(Bewitchment.MODID + ".insufficent_altar_power"), true);
+					}
+					if (pledgedToLeonard || hasPower) {
+						if (!player.isSilent()) {
+							world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1, 1);
+						}
+						PlayerStream.watching(player).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, player));
+						SpawnPortalParticlesPacket.send(player, player);
+						player.teleport(closest.getX() + 0.5, closest.getY() + 0.5, closest.getZ() + 0.5);
+						if (!player.isSilent()) {
+							world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1, 1);
+						}
+						PlayerStream.watching(player).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, player));
+						SpawnPortalParticlesPacket.send(player, player);
+					}
+					else {
+						player.sendMessage(new TranslatableText(Bewitchment.MODID + ".insufficent_altar_power", message), true);
 					}
 				}
 				else {

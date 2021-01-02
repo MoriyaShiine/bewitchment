@@ -15,6 +15,12 @@ import net.minecraft.util.math.Box;
 import net.minecraft.world.ServerWorldAccess;
 
 public class Contract {
+	public final boolean canBeGiven;
+	
+	public Contract(boolean canBeGiven) {
+		this.canBeGiven = canBeGiven;
+	}
+	
 	public void tick(LivingEntity target, boolean includeNegative) {
 		ContractAccessor.of(target).ifPresent(contractAccessor -> {
 			if (this == BWContracts.SLOTH && target.age % 20 == 0 && includeNegative) {
