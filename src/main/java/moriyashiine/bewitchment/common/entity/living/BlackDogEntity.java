@@ -92,7 +92,7 @@ public class BlackDogEntity extends BWHostileEntity {
 		}
 		if (world instanceof ServerWorld) {
 			BlockPos nearestVillage = ((ServerWorld) world).locateStructure(StructureFeature.VILLAGE, getBlockPos(), 3, false);
-			return nearestVillage != null && Math.sqrt(nearestVillage.getSquaredDistance(getBlockPos())) < 256;
+			return nearestVillage != null && Math.sqrt(nearestVillage.getSquaredDistance(getBlockPos())) < 128;
 		}
 		return false;
 	}
