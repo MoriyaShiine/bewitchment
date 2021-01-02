@@ -5,6 +5,7 @@ import moriyashiine.bewitchment.api.registry.AthameStrippingRecipe;
 import moriyashiine.bewitchment.api.registry.CauldronBrewingRecipe;
 import moriyashiine.bewitchment.api.registry.OilRecipe;
 import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.recipe.ScepterCraftingRecipe;
 import moriyashiine.bewitchment.common.recipe.TaglockCraftingRecipe;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
@@ -33,6 +34,7 @@ public class BWRecipeTypes {
 	public static final RecipeType<CauldronBrewingRecipe> CAULDRON_BREWING_RECIPE_TYPE = create("cauldron_brewing_recipe");
 	
 	public static final RecipeSerializer<TaglockCraftingRecipe> TAGLOCK_CRAFTING_SERIALIZER = create("taglock_crafting", new SpecialRecipeSerializer<>(TaglockCraftingRecipe::new));
+	public static final RecipeSerializer<ScepterCraftingRecipe> SCEPTER_CRAFTING_SERIALIZER = create("scepter_crafting", new SpecialRecipeSerializer<>(ScepterCraftingRecipe::new));
 	
 	private static <T extends Recipe<?>> RecipeSerializer<T> create(String name, RecipeSerializer<T> serializer) {
 		RECIPE_SERIALIZERS.put(serializer, new Identifier(Bewitchment.MODID, name));
