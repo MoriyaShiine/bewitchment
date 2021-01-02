@@ -12,6 +12,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.IllagerEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
@@ -92,7 +93,8 @@ public class BlackDogEntity extends BWHostileEntity {
 		}
 		if (world instanceof ServerWorld) {
 			BlockPos nearestVillage = ((ServerWorld) world).locateStructure(StructureFeature.VILLAGE, getBlockPos(), 3, false);
-			return nearestVillage != null && Math.sqrt(nearestVillage.getSquaredDistance(getBlockPos())) < 128;
+			BlockPos nearestPillagerOutpost = ((ServerWorld) world).locateStructure(StructureFeature.PILLAGER_OUTPOST, getBlockPos(), 3, false);
+			return (nearestVillage != null && Math.sqrt(nearestVillage.getSquaredDistance(getBlockPos())) < 128) || (nearestPillagerOutpost != null && Math.sqrt(nearestPillagerOutpost.getSquaredDistance(getBlockPos())) < 128);
 		}
 		return false;
 	}
@@ -108,6 +110,6 @@ public class BlackDogEntity extends BWHostileEntity {
 		targetSelector.add(0, new RevengeGoal(this));
 		targetSelector.add(1, new FollowTargetGoal<>(this, PlayerEntity.class, true));
 		targetSelector.add(2, new FollowTargetGoal<>(this, IronGolemEntity.class, true));
-		targetSelector.add(3, new FollowTargetGoal<>(this, MerchantEntity.class, 10, true, false, entity -> entity instanceof MerchantEntity));
+		targetSelector.add(3, new FollowTargetGoal<>(this, MerchantEntity.class, 10, true, false, entity -> entity instanceof MerchantEntity || entity instanceof IllagerEntity));
 	}
 }
