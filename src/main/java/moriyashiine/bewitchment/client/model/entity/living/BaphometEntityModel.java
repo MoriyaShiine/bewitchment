@@ -1,16 +1,21 @@
 package moriyashiine.bewitchment.client.model.entity.living;
 
 import moriyashiine.bewitchment.common.entity.living.BaphometEntity;
+import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
 public class BaphometEntityModel<T extends BaphometEntity> extends BipedEntityModel<T> {
+	private static final ItemStack CADUCEUS = new ItemStack(BWObjects.CADUCEUS);
+	
 	private final ModelPart body;
 	private final ModelPart leftLeg;
 	private final ModelPart rightLeg;
@@ -426,6 +431,7 @@ public class BaphometEntityModel<T extends BaphometEntity> extends BipedEntityMo
 	@Override
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 		super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
+		entity.setStackInHand(Hand.MAIN_HAND, CADUCEUS);
 		head.copyPositionAndRotation(super.head);
 		leftArm.copyPositionAndRotation(super.leftArm);
 		leftArm.roll -= 1 / 8f;
