@@ -26,7 +26,26 @@ import java.util.concurrent.CompletableFuture;
 @SuppressWarnings("ConstantConditions")
 public class BWCommands {
 	public static void init(CommandDispatcher<ServerCommandSource> dispatcher, boolean dedicated) {
-		dispatcher.register(CommandManager.literal("contract").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.argument("target", EntityArgumentType.entity()).then(CommandManager.literal("get").then(CommandManager.argument("contract", ContractArgumentType.contract()).executes(context -> {
+		dispatcher.register(CommandManager.literal("contract").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.argument("target", EntityArgumentType.entity()).then(CommandManager.literal("get").executes(context -> {
+			Entity target = EntityArgumentType.getEntity(context, "target");
+			if (target instanceof LivingEntity) {
+				ContractAccessor contractAccessor = ContractAccessor.of((LivingEntity) target).orElse(null);
+				if (contractAccessor != null) {
+					if (!contractAccessor.getContracts().isEmpty()) {
+						StringBuilder contracts = new StringBuilder();
+						for (Contract.Instance instance : contractAccessor.getContracts()) {
+							contracts.append(BWRegistries.CONTRACTS.getId(instance.contract).toString()).append(", ");
+						}
+						context.getSource().sendFeedback(new LiteralText(target.getEntityName() + " has the following contracts: " + contracts.delete(contracts.lastIndexOf(","), contracts.capacity())), true);
+						return 1;
+					}
+					else {
+						context.getSource().sendFeedback(new LiteralText(target.getEntityName() + " does not have any contracts"), true);
+					}
+				}
+			}
+			return 0;
+		}).then(CommandManager.argument("contract", ContractArgumentType.contract()).executes(context -> {
 			Entity target = EntityArgumentType.getEntity(context, "target");
 			if (target instanceof LivingEntity) {
 				ContractAccessor contractAccessor = ContractAccessor.of((LivingEntity) target).orElse(null);
