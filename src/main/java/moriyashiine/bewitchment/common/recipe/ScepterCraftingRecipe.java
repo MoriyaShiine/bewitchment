@@ -29,7 +29,7 @@ public class ScepterCraftingRecipe extends SpecialCraftingRecipe {
 				}
 				foundItems++;
 			}
-			else if (stack.getItem() instanceof SplashPotionItem && stack.hasTag() && stack.getOrCreateTag().contains("BewitchmentBrew")) {
+			else if (stack.getItem() instanceof SplashPotionItem && !PotionUtil.getCustomPotionEffects(stack).isEmpty()) {
 				if (!foundPotion) {
 					foundPotion = true;
 				}
