@@ -252,6 +252,7 @@
   "contract.bewitchment.treachery": "Treachery",
   "death.attack.wednesday": "%s realized what day it is",
   "death.attack.wednesday.player": "%s realized what day it is while vibing with $s",
+  "contract.contractNotFound": "Unknown contract: %s",
   "bewitchment.insufficent_altar_power": "Your source of magic is not strong enough",
   "bewitchment.invalid_cauldron": "Cannot find a cauldron named '%s'",
   "bewitchment.taglock_fail": "$s tried to take your taglock!",
