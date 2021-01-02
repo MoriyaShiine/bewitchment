@@ -108,6 +108,7 @@ public class BaphometEntity extends BWHostileEntity {
 	@Override
 	public void tick() {
 		super.tick();
+		flameIndex = ++flameIndex % 8;
 		if (!world.isClient) {
 			bossBar.setPercent(getHealth() / getMaxHealth());
 			LivingEntity target = getTarget();
