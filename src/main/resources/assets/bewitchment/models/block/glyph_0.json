@@ -1,0 +1,29 @@
+{
+  "textures": {
+	"particle": "bewitchment:block/glyph_0"
+  },
+  "elements": [
+	{
+	  "from": [
+		0,
+		0,
+		0
+	  ],
+	  "to": [
+		16,
+		0.125,
+		16
+	  ],
+	  "faces": {
+		"up": {
+		  "texture": "#particle",
+		  "tintindex": 0
+		},
+		"down": {
+		  "texture": "#particle",
+		  "tintindex": 0
+		}
+	  }
+	}
+  ]
+}

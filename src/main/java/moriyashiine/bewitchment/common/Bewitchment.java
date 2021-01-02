@@ -31,6 +31,7 @@ public class Bewitchment implements ModInitializer {
 		BWStatusEffects.init();
 		BWEnchantments.init();
 		BWContracts.init();
+		BWSoundEvents.init();
 		BWParticleTypes.init();
 		BWRecipeTypes.init();
 		BWWorldGenerators.init();

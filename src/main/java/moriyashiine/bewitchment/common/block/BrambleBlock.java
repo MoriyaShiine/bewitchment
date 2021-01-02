@@ -121,11 +121,6 @@ public class BrambleBlock extends SugarCaneBlock {
 		}
 	}
 	
-	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-		super.appendProperties(builder);
-	}
-	
 	public static class Fruiting extends BrambleBlock {
 		public Fruiting(Settings settings) {
 			super(settings);

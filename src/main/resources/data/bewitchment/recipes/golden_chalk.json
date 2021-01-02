@@ -1,0 +1,17 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "bewitchment:chalk"
+	},
+	{
+	  "item": "bewitchment:cleansing_balm"
+	},
+	{
+	  "item": "bewitchment:earth_ichor"
+	}
+  ],
+  "result": {
+	"item": "bewitchment:golden_chalk"
+  }
+}
