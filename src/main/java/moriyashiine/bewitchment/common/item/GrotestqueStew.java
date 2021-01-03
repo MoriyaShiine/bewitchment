@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Pair;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 
@@ -29,7 +30,7 @@ public class GrotestqueStew extends Item {
 				if (closest instanceof Pledgeable) {
 					BewitchmentAPI.pledge(world, ((Pledgeable) closest).getPledgeUUID(), user.getUuid());
 					BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-					worldState.specificPledges.put(user.getUuid(), closest.getUuid());
+					worldState.specificPledges.add(new Pair<>(user.getUuid(), closest.getUuid()));
 					worldState.markDirty();
 					world.playSound(null, user.getBlockPos(), SoundEvents.ENTITY_WITHER_SPAWN, SoundCategory.PLAYERS, 1, 1);
 				}

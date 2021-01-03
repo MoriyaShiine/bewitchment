@@ -23,7 +23,7 @@ public class Contract {
 	
 	public void tick(LivingEntity target, boolean includeNegative) {
 		ContractAccessor.of(target).ifPresent(contractAccessor -> {
-			if (this == BWContracts.SLOTH && target.age % 20 == 0 && includeNegative) {
+			if (this == BWContracts.SLOTH && target.age % 20 == 0) {
 				if (target.isOnGround() && !target.isSprinting()) {
 					target.heal(1);
 				}

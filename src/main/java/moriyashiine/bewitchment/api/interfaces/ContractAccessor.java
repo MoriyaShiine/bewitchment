@@ -30,9 +30,11 @@ public interface ContractAccessor {
 	}
 	
 	default void removeContract(Contract contract) {
-		for (Contract.Instance instance : getContracts()) {
-			if (instance.contract == contract) {
-				instance.duration = 0;
+		if (hasContract(contract)) {
+			for (Contract.Instance instance : getContracts()) {
+				if (instance.contract == contract) {
+					instance.duration = 0;
+				}
 			}
 		}
 	}

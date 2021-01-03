@@ -21,6 +21,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
@@ -50,9 +51,11 @@ public class BewitchmentAPI {
 	
 	public static boolean hasPledge(World world, UUID entity) {
 		BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-		for (UUID uuid : worldState.pledges.keySet()) {
-			if (isPledged(world, uuid, entity)) {
-				return true;
+		for (Pair<UUID, List<UUID>> pair : worldState.pledges) {
+			for (UUID player : pair.getRight()) {
+				if (player.equals(entity)) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -60,10 +63,12 @@ public class BewitchmentAPI {
 	
 	public static boolean isPledged(World world, UUID pledgeableUUID, UUID entity) {
 		BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-		if (worldState.pledges.containsKey(pledgeableUUID)) {
-			for (UUID livingUUID : worldState.pledges.get(pledgeableUUID)) {
-				if (livingUUID.equals(entity)) {
-					return true;
+		for (Pair<UUID, List<UUID>> pair : worldState.pledges) {
+			if (pair.getLeft().equals(pledgeableUUID)) {
+				for (UUID livingUUID : pair.getRight()) {
+					if (livingUUID.equals(entity)) {
+						return true;
+					}
 				}
 			}
 		}
@@ -72,23 +77,40 @@ public class BewitchmentAPI {
 	
 	public static void pledge(World world, UUID pledgeable, UUID entity) {
 		BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-		List<UUID> pledges = worldState.pledges.getOrDefault(pledgeable, new ArrayList<>());
-		pledges.add(entity);
-		worldState.pledges.put(pledgeable, pledges);
+		List<UUID> currentPlayers = new ArrayList<>();
+		for (Pair<UUID, List<UUID>> pair : worldState.pledges) {
+			if (pair.getLeft().equals(pledgeable)) {
+				currentPlayers = pair.getRight();
+				break;
+			}
+		}
+		currentPlayers.add(entity);
+		boolean found = false;
+		for (int i = 0; i < worldState.pledges.size(); i++) {
+			if (worldState.pledges.get(i).getLeft().equals(pledgeable)) {
+				worldState.pledges.set(i, new Pair<>(pledgeable, currentPlayers));
+				found = true;
+				break;
+			}
+		}
+		if (!found) {
+			worldState.pledges.add(new Pair<>(pledgeable, currentPlayers));
+		}
 		worldState.markDirty();
 	}
 	
 	public static void unpledge(World world, UUID pledgeable, UUID entity) {
 		BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-		if (worldState.pledges.containsKey(pledgeable)) {
-			List<UUID> pledges = worldState.pledges.get(pledgeable);
-			for (int i = pledges.size() - 1; i >= 0; i--) {
-				if (pledges.get(i).equals(entity)) {
-					pledges.remove(i);
-					worldState.markDirty();
+		for (int i = worldState.pledges.size() - 1; i >= 0; i--) {
+			if (worldState.pledges.get(i).getLeft().equals(pledgeable)) {
+				for (int j = worldState.pledges.get(i).getRight().size() - 1; j >= 0; j--) {
+					if (worldState.pledges.get(i).getRight().get(j).equals(entity)) {
+						worldState.pledges.get(i).getRight().remove(j);
+					}
 				}
 			}
 		}
+		worldState.markDirty();
 	}
 	
 	public static int getArmorPieces(LivingEntity livingEntity, Predicate<ItemStack> predicate) {
