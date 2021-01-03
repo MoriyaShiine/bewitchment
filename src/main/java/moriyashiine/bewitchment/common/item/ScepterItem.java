@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.item;
 
+import moriyashiine.bewitchment.api.interfaces.MagicAccessor;
 import moriyashiine.bewitchment.common.Bewitchment;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -43,23 +44,25 @@ public class ScepterItem extends Item {
 	
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		if (!world.isClient) {
-			PotionEntity potion = new PotionEntity(world, user);
-			List<StatusEffectInstance> effects = PotionUtil.getCustomPotionEffects(stack);
-			ItemStack potionStack = PotionUtil.setCustomPotionEffects(new ItemStack(Items.SPLASH_POTION), effects);
-			potionStack.getOrCreateTag().putInt("CustomPotionColor", PotionUtil.getColor(effects));
-			potion.setItem(potionStack);
-			potion.setProperties(user, user.pitch, user.yaw, -20.0F, 0.5F, 1.0F);
-			world.spawnEntity(potion);
-			world.playSound(null, user.getBlockPos(), SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 1, 1);
-			if (!(user instanceof PlayerEntity && ((PlayerEntity) user).isCreative())) {
-				stack.getOrCreateTag().putInt("PotionUses", stack.getOrCreateTag().getInt("PotionUses") - 1);
-				if (stack.getOrCreateTag().getInt("PotionUses") <= 0) {
-					stack.getOrCreateTag().put("CustomPotionEffects", new ListTag());
+		MagicAccessor.of(user).ifPresent(magicAccessor -> {
+			if (!world.isClient && ((user instanceof PlayerEntity && ((PlayerEntity) user).isCreative()) || magicAccessor.drainMagic(250, false))) {
+				PotionEntity potion = new PotionEntity(world, user);
+				List<StatusEffectInstance> effects = PotionUtil.getCustomPotionEffects(stack);
+				ItemStack potionStack = PotionUtil.setCustomPotionEffects(new ItemStack(Items.SPLASH_POTION), effects);
+				potionStack.getOrCreateTag().putInt("CustomPotionColor", PotionUtil.getColor(effects));
+				potion.setItem(potionStack);
+				potion.setProperties(user, user.pitch, user.yaw, -20.0F, 0.5F, 1.0F);
+				world.spawnEntity(potion);
+				world.playSound(null, user.getBlockPos(), SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 1, 1);
+				if (!(user instanceof PlayerEntity && ((PlayerEntity) user).isCreative())) {
+					stack.getOrCreateTag().putInt("PotionUses", stack.getOrCreateTag().getInt("PotionUses") - 1);
+					if (stack.getOrCreateTag().getInt("PotionUses") <= 0) {
+						stack.getOrCreateTag().put("CustomPotionEffects", new ListTag());
+					}
+					stack.damage(1, user, stackUser -> stackUser.sendToolBreakStatus(user.getActiveHand()));
 				}
-				stack.damage(1, user, stackUser -> stackUser.sendToolBreakStatus(user.getActiveHand()));
 			}
-		}
+		});
 		return stack;
 	}
 	

@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.item;
 
+import moriyashiine.bewitchment.api.interfaces.MagicAccessor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
@@ -26,14 +27,16 @@ public class CaduceusItem extends SwordItem {
 	
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		if (!world.isClient) {
-			FireballEntity fireball = new FireballEntity(world, user, user.getRotationVector().x, user.getRotationVector().y, user.getRotationVector().z);
-			fireball.setOwner(user);
-			fireball.setPos(fireball.getX(), fireball.getY() + 1, fireball.getZ());
-			world.playSound(null, user.getBlockPos(), SoundEvents.ENTITY_BLAZE_SHOOT, SoundCategory.HOSTILE, 1, 1);
-			world.spawnEntity(fireball);
-			stack.damage(1, user, stackUser -> stackUser.sendToolBreakStatus(user.getActiveHand()));
-		}
+		MagicAccessor.of(user).ifPresent(magicAccessor -> {
+			if (!world.isClient && ((user instanceof PlayerEntity && ((PlayerEntity) user).isCreative()) || magicAccessor.drainMagic(250, false))) {
+				FireballEntity fireball = new FireballEntity(world, user, user.getRotationVector().x, user.getRotationVector().y, user.getRotationVector().z);
+				fireball.setOwner(user);
+				fireball.setPos(fireball.getX(), fireball.getY() + 1, fireball.getZ());
+				world.playSound(null, user.getBlockPos(), SoundEvents.ENTITY_BLAZE_SHOOT, SoundCategory.HOSTILE, 1, 1);
+				world.spawnEntity(fireball);
+				stack.damage(1, user, stackUser -> stackUser.sendToolBreakStatus(user.getActiveHand()));
+			}
+		});
 		return stack;
 	}
 	
