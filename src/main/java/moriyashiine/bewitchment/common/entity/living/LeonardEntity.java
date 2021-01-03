@@ -213,7 +213,7 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 	
 	private void summonMinions() {
 		if (!world.isClient) {
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < MathHelper.nextInt(random, 2, 3); i++) {
 				WitchEntity witch = EntityType.WITCH.create(world);
 				if (witch != null) {
 					BewitchmentAPI.attemptTeleport(witch, getBlockPos(), 3);

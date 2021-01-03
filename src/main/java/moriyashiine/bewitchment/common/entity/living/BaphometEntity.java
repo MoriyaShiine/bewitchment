@@ -42,6 +42,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -249,7 +250,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 	
 	private void summonMinions() {
 		if (!world.isClient) {
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < MathHelper.nextInt(random, 2, 3); i++) {
 				BlazeEntity blaze = EntityType.BLAZE.create(world);
 				if (blaze != null) {
 					BewitchmentAPI.attemptTeleport(blaze, getBlockPos(), 3);
