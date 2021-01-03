@@ -4,6 +4,7 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.registry.BWMaterials;
+import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.fabric.api.server.PlayerStream;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
@@ -62,34 +63,17 @@ public class HellhoundEntity extends BWHostileEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundEvents.ENTITY_WOLF_GROWL;
+		return BWSoundEvents.ENTITY_HELLHOUND_AMBIENT;
 	}
 	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.ENTITY_WOLF_HURT;
+		return BWSoundEvents.ENTITY_HELLHOUND_HURT;
 	}
 	
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_WOLF_DEATH;
-	}
-	
-	@Override
-	public void playAmbientSound() {
-		super.playAmbientSound();
-		playSound(SoundEvents.ENTITY_BLAZE_AMBIENT, getSoundVolume(), getSoundPitch());
-	}
-	
-	@Override
-	protected void playHurtSound(DamageSource source) {
-		super.playHurtSound(source);
-		playSound(SoundEvents.ENTITY_BLAZE_HURT, getSoundVolume(), getSoundPitch());
-	}
-	
-	@Override
-	protected float getSoundPitch() {
-		return 2 / 3f;
+		return BWSoundEvents.ENTITY_HELLHOUND_DEATH;
 	}
 	
 	@Override
@@ -99,12 +83,6 @@ public class HellhoundEntity extends BWHostileEntity {
 			target.setOnFireFor(3);
 		}
 		return flag;
-	}
-	
-	@Override
-	public void onDeath(DamageSource source) {
-		super.onDeath(source);
-		playSound(SoundEvents.ENTITY_BLAZE_DEATH, getSoundVolume(), getSoundPitch());
 	}
 	
 	@Override

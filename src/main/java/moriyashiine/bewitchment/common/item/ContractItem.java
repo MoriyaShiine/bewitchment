@@ -4,6 +4,7 @@ import moriyashiine.bewitchment.api.interfaces.ContractAccessor;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
+import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
@@ -17,7 +18,6 @@ import net.minecraft.item.ItemUsage;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -53,7 +53,7 @@ public class ContractItem extends Item {
 						if (contract != null) {
 							((ContractAccessor) entity).addContract(new Contract.Instance(contract, 168000));
 							contract.finishUsing(user, ((ContractAccessor) user).hasNegativeEffects());
-							world.playSound(null, user.getBlockPos(), SoundEvents.ENTITY_WITHER_SPAWN, SoundCategory.PLAYERS, 1, 2);
+							world.playSound(null, user.getBlockPos(), BWSoundEvents.ITEM_CONTRACT_USE, SoundCategory.PLAYERS, 1, 1);
 							if (!(user instanceof PlayerEntity && ((PlayerEntity) user).isCreative())) {
 								stack.decrement(1);
 							}

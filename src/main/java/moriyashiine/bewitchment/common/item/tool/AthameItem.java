@@ -5,6 +5,7 @@ import moriyashiine.bewitchment.common.block.DragonsBloodLogBlock;
 import moriyashiine.bewitchment.common.registry.BWMaterials;
 import moriyashiine.bewitchment.common.registry.BWProperties;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
+import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.PillarBlock;
@@ -16,7 +17,6 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPointer;
@@ -47,7 +47,7 @@ public class AthameItem extends SwordItem {
 		AthameStrippingRecipe entry = world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_STRIPPING_RECIPE_TYPE).stream().filter(recipe -> recipe.log == state.getBlock()).findFirst().orElse(null);
 		if (entry != null) {
 			PlayerEntity player = context.getPlayer();
-			world.playSound(player, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1, 1);
+			world.playSound(player, pos, BWSoundEvents.ITEM_ATHAME_STRIP, SoundCategory.BLOCKS, 1, 1);
 			if (!world.isClient) {
 				world.setBlockState(pos, entry.strippedLog.getDefaultState().with(PillarBlock.AXIS, state.get(PillarBlock.AXIS)), 11);
 				if (player != null) {
@@ -68,7 +68,7 @@ public class AthameItem extends SwordItem {
 	private static boolean cutLog(World world, BlockPos pos, ItemStack stack) {
 		BlockState state = world.getBlockState(pos);
 		if (state.getBlock() instanceof DragonsBloodLogBlock && state.get(BWProperties.NATURAL) && !state.get(BWProperties.CUT)) {
-			world.playSound(null, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1, 1);
+			world.playSound(null, pos, BWSoundEvents.ITEM_ATHAME_STRIP, SoundCategory.BLOCKS, 1, 1);
 			world.setBlockState(pos, state.with(BWProperties.CUT, true));
 			stack.damage(1, world.random, null);
 			if (stack.getDamage() == BWMaterials.SILVER_TOOL.getDurability()) {

@@ -7,10 +7,7 @@ import moriyashiine.bewitchment.api.interfaces.Pledgeable;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
-import moriyashiine.bewitchment.common.registry.BWMaterials;
-import moriyashiine.bewitchment.common.registry.BWPledges;
-import moriyashiine.bewitchment.common.registry.BWRegistries;
-import moriyashiine.bewitchment.common.registry.BWStatusEffects;
+import moriyashiine.bewitchment.common.registry.*;
 import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
@@ -89,22 +86,17 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundEvents.ENTITY_BLAZE_AMBIENT;
+		return BWSoundEvents.ENTITY_BAPHOMET_AMBIENT;
 	}
 	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.ENTITY_ZOMBIE_HURT;
+		return BWSoundEvents.ENTITY_BAPHOMET_HURT;
 	}
 	
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_BLAZE_DEATH;
-	}
-	
-	@Override
-	protected float getSoundPitch() {
-		return 0.5f;
+		return BWSoundEvents.ENTITY_BAPHOMET_DEATH;
 	}
 	
 	@Override
@@ -172,7 +164,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 					for (int i = -1; i <= 1; i++) {
 						FireballEntity fireball = new FireballEntity(world, this, target.getX() - getX() + i, target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ() + i);
 						fireball.updatePosition(fireball.getX(), getBodyY(0.5), fireball.getZ());
-						world.playSound(null, getBlockPos(), SoundEvents.ENTITY_BLAZE_SHOOT, SoundCategory.HOSTILE, 1, 1);
+						world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_SHOOT, SoundCategory.HOSTILE, 1, 1);
 						world.spawnEntity(fireball);
 					}
 					swingHand(Hand.MAIN_HAND);

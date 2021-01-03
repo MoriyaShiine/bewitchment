@@ -2,12 +2,12 @@ package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.Pledgeable;
+import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
@@ -32,7 +32,7 @@ public class GrotestqueStew extends Item {
 					BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
 					worldState.specificPledges.add(new Pair<>(user.getUuid(), closest.getUuid()));
 					worldState.markDirty();
-					world.playSound(null, user.getBlockPos(), SoundEvents.ENTITY_WITHER_SPAWN, SoundCategory.PLAYERS, 1, 1);
+					world.playSound(null, user.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_PLEDGE, SoundCategory.PLAYERS, 1, 1);
 				}
 			}
 		}

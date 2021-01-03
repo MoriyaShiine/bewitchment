@@ -4,6 +4,7 @@ import moriyashiine.bewitchment.api.registry.AltarMapEntry;
 import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
 import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
 import moriyashiine.bewitchment.common.registry.BWObjects;
+import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.fabricmc.fabric.api.server.PlayerStream;
@@ -18,7 +19,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Pair;
@@ -146,7 +146,7 @@ public class BewitchmentAPI {
 				}
 				if (entity.world.getBlockState(mutable).getMaterial().blocksMovement()) {
 					if (!entity.isSilent()) {
-						entity.world.playSound(null, entity.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.NEUTRAL, 1, 1);
+						entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, SoundCategory.NEUTRAL, 1, 1);
 					}
 					PlayerStream.watching(entity).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, entity));
 					if (entity instanceof PlayerEntity) {
@@ -154,7 +154,7 @@ public class BewitchmentAPI {
 					}
 					entity.teleport(mutable.getX(), mutable.getY() + 1, mutable.getZ());
 					if (!entity.isSilent()) {
-						entity.world.playSound(null, entity.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.NEUTRAL, 1, 1);
+						entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, SoundCategory.NEUTRAL, 1, 1);
 					}
 					PlayerStream.watching(entity).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, entity));
 					if (entity instanceof PlayerEntity) {

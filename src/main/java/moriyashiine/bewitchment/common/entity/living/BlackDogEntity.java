@@ -2,6 +2,7 @@ package moriyashiine.bewitchment.common.entity.living;
 
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
+import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.fabric.api.server.PlayerStream;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
@@ -19,7 +20,6 @@ import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
@@ -62,22 +62,17 @@ public class BlackDogEntity extends BWHostileEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundEvents.ENTITY_WOLF_GROWL;
+		return BWSoundEvents.ENTITY_BLACK_DOG_AMBIENT;
 	}
 	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.ENTITY_WOLF_HURT;
+		return BWSoundEvents.ENTITY_BLACK_DOG_HURT;
 	}
 	
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_WOLF_DEATH;
-	}
-	
-	@Override
-	protected float getSoundPitch() {
-		return 2 / 3f;
+		return BWSoundEvents.ENTITY_BLACK_DOG_DEATH;
 	}
 	
 	@Override

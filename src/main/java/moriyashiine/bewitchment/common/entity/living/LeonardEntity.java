@@ -6,6 +6,7 @@ import moriyashiine.bewitchment.api.interfaces.Pledgeable;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.registry.BWMaterials;
 import moriyashiine.bewitchment.common.registry.BWPledges;
+import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
 import net.minecraft.entity.Entity;
@@ -86,22 +87,17 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundEvents.ENTITY_BLAZE_AMBIENT;
+		return BWSoundEvents.ENTITY_LEONARD_AMBIENT;
 	}
 	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.ENTITY_ZOMBIE_HURT;
+		return BWSoundEvents.ENTITY_LEONARD_HURT;
 	}
 	
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_BLAZE_DEATH;
-	}
-	
-	@Override
-	protected float getSoundPitch() {
-		return 0.5f;
+		return BWSoundEvents.ENTITY_LEONARD_DEATH;
 	}
 	
 	@Override

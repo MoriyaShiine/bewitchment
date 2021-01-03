@@ -4,6 +4,7 @@ import com.terraformersmc.terraform.wood.block.StrippableLogBlock;
 import moriyashiine.bewitchment.common.item.tool.AthameItem;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWProperties;
+import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.MaterialColor;
@@ -37,7 +38,7 @@ public class DragonsBloodLogBlock extends StrippableLogBlock {
 			boolean client = world.isClient;
 			if (!client) {
 				world.setBlockState(pos, state.with(BWProperties.CUT, true));
-				world.playSound(null, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1, 1);
+				world.playSound(null, pos, BWSoundEvents.ITEM_ATHAME_STRIP, SoundCategory.BLOCKS, 1, 1);
 				stack.damage(1, player, (user) -> user.sendToolBreakStatus(hand));
 			}
 			return ActionResult.success(client);

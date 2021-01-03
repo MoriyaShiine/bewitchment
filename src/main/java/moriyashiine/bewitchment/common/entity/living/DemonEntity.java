@@ -82,27 +82,22 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundEvents.ENTITY_BLAZE_AMBIENT;
+		return BWSoundEvents.ENTITY_DEMON_AMBIENT;
 	}
 	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.ENTITY_ZOMBIE_HURT;
+		return BWSoundEvents.ENTITY_DEMON_HURT;
 	}
 	
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_BLAZE_DEATH;
+		return BWSoundEvents.ENTITY_DEMON_DEATH;
 	}
 	
 	@Override
 	public SoundEvent getYesSound() {
-		return SoundEvents.ENTITY_BLAZE_AMBIENT;
-	}
-	
-	@Override
-	protected float getSoundPitch() {
-		return 0.5f;
+		return getAmbientSound();
 	}
 	
 	@Override
