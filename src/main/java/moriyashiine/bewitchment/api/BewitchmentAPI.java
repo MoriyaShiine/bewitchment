@@ -108,6 +108,9 @@ public class BewitchmentAPI {
 						worldState.pledges.get(i).getRight().remove(j);
 					}
 				}
+				if (worldState.pledges.get(i).getRight().isEmpty()) {
+					worldState.pledges.remove(i);
+				}
 			}
 		}
 		worldState.markDirty();
