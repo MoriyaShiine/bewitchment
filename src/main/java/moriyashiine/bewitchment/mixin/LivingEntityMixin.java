@@ -26,6 +26,8 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
@@ -136,16 +138,28 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			}
 		}
 		if (((Object) this instanceof PlayerEntity) && hasContract(BWContracts.FAMINE)) {
-			amount *= (1 - (0.025 * (20 - ((PlayerEntity) (Object) this).getHungerManager().getFoodLevel())));
+			amount *= (1 - (0.025f * (20 - ((PlayerEntity) (Object) this).getHungerManager().getFoodLevel())));
 		}
 		if (attacker instanceof PlayerEntity && ((ContractAccessor) attacker).hasNegativeEffects() && ((ContractAccessor) attacker).hasContract(BWContracts.FAMINE)) {
-			amount *= (1 - (0.025 * (20 - ((PlayerEntity) attacker).getHungerManager().getFoodLevel())));
+			amount *= (1 - (0.025f * (20 - ((PlayerEntity) attacker).getHungerManager().getFoodLevel())));
 		}
 		if (attacker instanceof LivingEntity && ((ContractAccessor) attacker).hasContract(BWContracts.WRATH)) {
-			amount *= (1 + (0.025 * (((LivingEntity) attacker).getMaxHealth() - ((LivingEntity) attacker).getHealth())));
+			amount *= (1 + (0.025f * (((LivingEntity) attacker).getMaxHealth() - ((LivingEntity) attacker).getHealth())));
 		}
 		if (hasNegativeEffects() && hasContract(BWContracts.WRATH)) {
-			amount *= (1 + (0.025 * (getMaxHealth() - getHealth())));
+			amount *= (1 + (0.025f * (getMaxHealth() - getHealth())));
+		}
+		if (source.getMagic() && (Object) this instanceof LivingEntity) {
+			int armorPieces = BewitchmentAPI.getArmorPieces((LivingEntity) (Object) this, stack -> {
+				if (stack.getItem() instanceof ArmorItem) {
+					ArmorMaterial material = ((ArmorItem) stack.getItem()).getMaterial();
+					return material == BWMaterials.HEDGEWITCH_ARMOR || material == BWMaterials.ALCHEMIST_ARMOR || material == BWMaterials.BESMIRCHED_ARMOR;
+				}
+				return false;
+			});
+			if (armorPieces > 0) {
+				amount *= (1 - (0.2f * armorPieces));
+			}
 		}
 		return amount;
 	}
