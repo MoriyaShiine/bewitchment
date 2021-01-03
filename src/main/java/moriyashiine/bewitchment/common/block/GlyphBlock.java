@@ -44,7 +44,7 @@ public class GlyphBlock extends HorizontalFacingBlock implements BlockEntityProv
 	
 	@Override
 	public PistonBehavior getPistonBehavior(BlockState state) {
-		return PistonBehavior.DESTROY;
+		return this == BWObjects.GOLDEN_GLYPH ? PistonBehavior.BLOCK : PistonBehavior.DESTROY;
 	}
 	
 	@Nullable
@@ -86,7 +86,7 @@ public class GlyphBlock extends HorizontalFacingBlock implements BlockEntityProv
 			particleType = ParticleTypes.FLAME;
 		}
 		else if (this == BWObjects.ELDRITCH_GLYPH) {
-			particleType = ParticleTypes.END_ROD;
+			particleType = ParticleTypes.REVERSE_PORTAL;
 		}
 		if (particleType != null) {
 			world.addParticle((ParticleEffect) particleType, pos.getX() + 0.5 + MathHelper.nextDouble(random, -0.5, 0.5), pos.getY() + 0.125, pos.getZ() + 0.5 + MathHelper.nextDouble(random, -0.5, 0.5), 0, 0, 0);
