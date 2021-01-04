@@ -211,6 +211,9 @@
   },
   "entity.hellhound.ambient": {
 	"sounds": [
+	  "bewitchment:mob/hellhound/say1",
+	  "bewitchment:mob/hellhound/say2",
+	  "bewitchment:mob/hellhound/say3"
 	],
 	"subtitle": "bewitchment.subtitles.entity.hellhound.ambient"
   },
