@@ -6,6 +6,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
+import net.minecraft.client.render.entity.model.CrossbowPosing;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 
@@ -87,12 +88,11 @@ public class GhostEntityModel<T extends GhostEntity> extends BipedEntityModel<T>
 		super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
 		head.copyPositionAndRotation(super.head);
 		bodyTrail00.pitch = MathHelper.sin(animationProgress / 12) / 6;
-		leftArm.copyPositionAndRotation(super.leftArm);
-		rightArm.copyPositionAndRotation(super.rightArm);
+		CrossbowPosing.method_29352(leftArm, rightArm, false, entity.handSwingProgress, animationProgress);
 		if (entity.getDataTracker().get(GhostEntity.HAS_TARGET)) {
-			rightArm.pitch += 3.25;
+			rightArm.pitch += 4.5;
 			rightArm.roll = MathHelper.sin(animationProgress) / 2;
-			leftArm.pitch += 3.25;
+			leftArm.pitch += 4.5;
 			leftArm.roll = -rightArm.roll;
 			
 		}
