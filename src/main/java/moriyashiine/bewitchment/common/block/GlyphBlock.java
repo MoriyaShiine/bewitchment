@@ -1,5 +1,7 @@
 package moriyashiine.bewitchment.common.block;
 
+import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
+import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -34,7 +36,7 @@ public class GlyphBlock extends HorizontalFacingBlock implements BlockEntityProv
 	@Nullable
 	@Override
 	public BlockEntity createBlockEntity(BlockView world) {
-		return null;
+		return this == BWObjects.GOLDEN_GLYPH ? new GlyphBlockEntity() : null;
 	}
 	
 	@Override
@@ -71,11 +73,11 @@ public class GlyphBlock extends HorizontalFacingBlock implements BlockEntityProv
 	
 	@Override
 	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
-		//		if (!world.isClient && state.getBlock() != oldState.getBlock()) {
-		//			BlockEntity blockEntity = world.getBlockEntity(pos);
-		//			((UsesAltarPower) blockEntity).setAltarPos(WitchAltarBlock.getClosestAltarPos(world, pos));
-		//			blockEntity.markDirty();
-		//		}
+		if (!world.isClient && state.getBlock() != oldState.getBlock()) {
+			BlockEntity blockEntity = world.getBlockEntity(pos);
+			((UsesAltarPower) blockEntity).setAltarPos(WitchAltarBlock.getClosestAltarPos(world, pos));
+			blockEntity.markDirty();
+		}
 	}
 	
 	@Environment(EnvType.CLIENT)
