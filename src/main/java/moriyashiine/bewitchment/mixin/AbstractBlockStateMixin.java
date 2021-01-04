@@ -7,8 +7,6 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
 import net.minecraft.state.State;
 import net.minecraft.state.property.Property;
 import net.minecraft.util.math.BlockPos;
@@ -20,8 +18,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.List;
 
 @Mixin(AbstractBlock.AbstractBlockState.class)
 public abstract class AbstractBlockStateMixin extends State<Block, BlockState> {
@@ -43,10 +39,5 @@ public abstract class AbstractBlockStateMixin extends State<Block, BlockState> {
 				}
 			}
 		}
-	}
-	
-	@Inject(method = "getDroppedStacks", at = @At("RETURN"), cancellable = true)
-	private void getDroppedStacks(LootContext.Builder builder, CallbackInfoReturnable<List<ItemStack>> callbackInfo) {
-	
 	}
 }

@@ -9,7 +9,7 @@ import moriyashiine.bewitchment.common.registry.BWTags;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.server.PlayerStream;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
@@ -113,7 +113,7 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 							world.updateComparators(pos, this);
 							altar.markedForScan = true;
 							altar.sync();
-							PlayerStream.watching(altar).forEach(playerEntity -> SyncWitchAltarBlockEntity.send(player, altar));
+							PlayerLookup.tracking(altar).forEach(playerEntity -> SyncWitchAltarBlockEntity.send(player, altar));
 						}
 						else {
 							player.sendMessage(new LiteralText(altar.power + " / " + altar.maxPower + " (" + altar.gain + "x)"), true);

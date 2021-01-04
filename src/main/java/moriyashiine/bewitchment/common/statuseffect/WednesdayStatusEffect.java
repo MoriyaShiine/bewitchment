@@ -2,7 +2,7 @@ package moriyashiine.bewitchment.common.statuseffect;
 
 import moriyashiine.bewitchment.client.network.packet.SpawnExplosionParticlesPacket;
 import moriyashiine.bewitchment.common.registry.BWDamageSources;
-import net.fabricmc.fabric.api.server.PlayerStream;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
@@ -21,7 +21,7 @@ public class WednesdayStatusEffect extends StatusEffect {
 		super.onRemoved(entity, attributes, amplifier);
 		entity.damage(BWDamageSources.WEDNESDAY, Float.MAX_VALUE);
 		entity.world.playSound(null, entity.getBlockPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1, 1);
-		PlayerStream.watching(entity).forEach(playerEntity -> SpawnExplosionParticlesPacket.send(playerEntity, entity));
+		PlayerLookup.tracking(entity).forEach(playerEntity -> SpawnExplosionParticlesPacket.send(playerEntity, entity));
 		if (entity instanceof PlayerEntity) {
 			SpawnExplosionParticlesPacket.send((PlayerEntity) entity, entity);
 		}

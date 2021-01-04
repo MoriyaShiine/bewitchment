@@ -9,7 +9,7 @@ import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.client.network.packet.SpawnExplosionParticlesPacket;
 import moriyashiine.bewitchment.common.item.tool.AthameItem;
 import moriyashiine.bewitchment.common.registry.*;
-import net.fabricmc.fabric.api.server.PlayerStream;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -231,7 +231,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					entity.damage(DamageSource.explosion(((LivingEntity) (Object) this)), 4 * (getStatusEffect(BWStatusEffects.VOLATILITY).getAmplifier() + 1));
 				}
 				world.playSound(null, getBlockPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1, 1);
-				PlayerStream.watching(this).forEach(playerEntity -> SpawnExplosionParticlesPacket.send(playerEntity, this));
+				PlayerLookup.tracking(this).forEach(playerEntity -> SpawnExplosionParticlesPacket.send(playerEntity, this));
 				if (((Object) this) instanceof PlayerEntity) {
 					SpawnExplosionParticlesPacket.send((PlayerEntity) (Object) this, this);
 				}

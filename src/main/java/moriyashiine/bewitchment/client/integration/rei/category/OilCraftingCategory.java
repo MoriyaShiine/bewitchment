@@ -66,13 +66,13 @@ public class OilCraftingCategory implements RecipeCategory<OilCraftingCategory.D
 			}
 		}
 		widgets.add(Widgets.createResultSlotBackground(outputPoint));
-		widgets.add(Widgets.createSlot(outputPoint).entry(recipeDisplay.getOutputEntries().get(0)).disableBackground().markOutput());
+		widgets.add(Widgets.createSlot(outputPoint).entries(recipeDisplay.getResultingEntries().get(0)).disableBackground().markOutput());
 		return widgets;
 	}
 	
 	public static class Display implements RecipeDisplay {
 		private final List<List<EntryStack>> input;
-		private final List<EntryStack> output;
+		private final List<List<EntryStack>> output;
 		
 		public Display(OilRecipe recipe) {
 			List<List<EntryStack>> input = new ArrayList<>();
@@ -84,7 +84,7 @@ public class OilCraftingCategory implements RecipeCategory<OilCraftingCategory.D
 				input.add(entries);
 			}
 			this.input = input;
-			output = Collections.singletonList(EntryStack.create(recipe.getOutput()));
+			output = Collections.singletonList(Collections.singletonList(EntryStack.create(recipe.getOutput())));
 		}
 		
 		@Override
@@ -93,7 +93,7 @@ public class OilCraftingCategory implements RecipeCategory<OilCraftingCategory.D
 		}
 		
 		@Override
-		public @NotNull List<EntryStack> getOutputEntries() {
+		public @NotNull List<List<EntryStack>> getResultingEntries() {
 			return output;
 		}
 		

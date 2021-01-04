@@ -55,17 +55,17 @@ public class AthameStrippingCategory implements RecipeCategory<AthameStrippingCa
 		widgets.add(Widgets.createArrow(new Point(startPoint.x + 50, startPoint.y + 7)));
 		widgets.add(Widgets.createSlot(new Point(startPoint.x + 27, startPoint.y + 8)).entry(recipeDisplay.getInputEntries().get(0).get(0)).markInput());
 		widgets.add(Widgets.createResultSlotBackground(outputPoint));
-		widgets.add(Widgets.createSlot(outputPoint).entry(recipeDisplay.getOutputEntries().get(0)).disableBackground().markOutput());
+		widgets.add(Widgets.createSlot(outputPoint).entries(recipeDisplay.getResultingEntries().get(0)).disableBackground().markOutput());
 		return widgets;
 	}
 	
 	public static class Display implements RecipeDisplay {
 		private final List<List<EntryStack>> input;
-		private final List<EntryStack> output;
+		private final List<List<EntryStack>> output;
 		
 		public Display(AthameStrippingRecipe recipe) {
 			input = Collections.singletonList(Collections.singletonList(EntryStack.create(new ItemStack(recipe.log))));
-			output = Collections.singletonList(EntryStack.create(recipe.getOutput()));
+			output = Collections.singletonList(Collections.singletonList(EntryStack.create(recipe.getOutput())));
 		}
 		
 		@Override
@@ -74,7 +74,7 @@ public class AthameStrippingCategory implements RecipeCategory<AthameStrippingCa
 		}
 		
 		@Override
-		public @NotNull List<EntryStack> getOutputEntries() {
+		public @NotNull List<List<EntryStack>> getResultingEntries() {
 			return output;
 		}
 		

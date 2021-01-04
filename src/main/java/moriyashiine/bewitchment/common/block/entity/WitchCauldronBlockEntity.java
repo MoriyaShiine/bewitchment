@@ -8,7 +8,7 @@ import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBloc
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-import net.fabricmc.fabric.api.server.PlayerStream;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -246,7 +246,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	
 	public void syncCauldron() {
 		if (world instanceof ServerWorld) {
-			PlayerStream.watching(this).forEach(playerEntity -> SyncClientSerializableBlockEntity.send(playerEntity, this));
+			PlayerLookup.tracking(this).forEach(playerEntity -> SyncClientSerializableBlockEntity.send(playerEntity, this));
 		}
 	}
 	

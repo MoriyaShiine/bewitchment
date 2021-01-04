@@ -12,7 +12,7 @@ import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.fabric.api.network.PacketContext;
-import net.fabricmc.fabric.api.server.PlayerStream;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
@@ -73,13 +73,13 @@ public class CauldronTeleportPacket {
 						if (!player.isSilent()) {
 							world.playSound(null, player.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, SoundCategory.PLAYERS, 1, 1);
 						}
-						PlayerStream.watching(player).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, player));
+						PlayerLookup.tracking(player).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, player));
 						SpawnPortalParticlesPacket.send(player, player);
 						player.teleport(closest.getX() + 0.5, closest.getY() + 0.5, closest.getZ() + 0.5);
 						if (!player.isSilent()) {
 							world.playSound(null, player.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, SoundCategory.PLAYERS, 1, 1);
 						}
-						PlayerStream.watching(player).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, player));
+						PlayerLookup.tracking(player).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, player));
 						SpawnPortalParticlesPacket.send(player, player);
 					}
 					else {

@@ -5,7 +5,7 @@ import moriyashiine.bewitchment.api.interfaces.MagicAccessor;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-import net.fabricmc.fabric.api.server.PlayerStream;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -111,7 +111,7 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 				scan(80);
 				if (world.getTime() % 20 == 0) {
 					power = Math.min(power + gain, maxPower);
-					PlayerStream.around(world, pos, 24).forEach(playerEntity -> MagicAccessor.of(playerEntity).ifPresent(magicAccessor -> {
+					PlayerLookup.around((ServerWorld) world, Vec3d.of(pos), 24).forEach(playerEntity -> MagicAccessor.of(playerEntity).ifPresent(magicAccessor -> {
 						if (magicAccessor.fillMagic(100, true) && drain(10, true)) {
 							magicAccessor.fillMagic(100, false);
 							drain(10, false);
