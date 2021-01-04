@@ -282,45 +282,45 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 		
 		private static List<ItemStack> generateCost(Random random, boolean contract) {
 			List<ItemStack> cost = new ArrayList<>();
-			ItemStack stack = generateCostStack(random, contract ? 3 : 1);
+			ItemStack stack = generateCostStack(random, contract ? 2.5f : 1);
 			cost.add(stack);
 			if (contract || random.nextBoolean()) {
 				ItemStack stack2 = null;
 				while (stack2 == null || stack.getItem() == stack2.getItem()) {
-					stack2 = generateCostStack(random, contract ? 3 : 1);
+					stack2 = generateCostStack(random, contract ? 2.5f : 1);
 				}
 				cost.add(stack2);
 			}
 			return cost;
 		}
 		
-		private static ItemStack generateCostStack(Random random, int costMultiplier) {
+		private static ItemStack generateCostStack(Random random, float costMultiplier) {
 			switch (random.nextInt(9)) {
 				case 0:
-					return new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(random, 12, 20) * costMultiplier);
+					return new ItemStack(Items.GOLD_INGOT, (int) (MathHelper.nextInt(random, 12, 20) * costMultiplier));
 				case 1:
-					return new ItemStack(Items.DIAMOND, MathHelper.nextInt(random, 2, 8) * costMultiplier);
+					return new ItemStack(Items.DIAMOND, (int) (MathHelper.nextInt(random, 2, 8) * costMultiplier));
 				case 2:
-					return new ItemStack(Items.BLAZE_ROD, MathHelper.nextInt(random, 5, 18) * costMultiplier);
+					return new ItemStack(Items.BLAZE_ROD, (int) (MathHelper.nextInt(random, 5, 18) * costMultiplier));
 				case 3:
-					return new ItemStack(Items.FERMENTED_SPIDER_EYE, MathHelper.nextInt(random, 6, 15) * costMultiplier);
+					return new ItemStack(Items.FERMENTED_SPIDER_EYE, (int) (MathHelper.nextInt(random, 6, 15) * costMultiplier));
 				case 4:
 					switch (random.nextInt(4)) {
 						case 0:
-							return new ItemStack(Items.ZOMBIE_HEAD, MathHelper.nextInt(random, 1, 2) * costMultiplier);
+							return new ItemStack(Items.ZOMBIE_HEAD, (int) (MathHelper.nextInt(random, 1, 2) * costMultiplier));
 						case 1:
-							return new ItemStack(Items.CREEPER_HEAD, MathHelper.nextInt(random, 1, 2) * costMultiplier);
+							return new ItemStack(Items.CREEPER_HEAD, (int) (MathHelper.nextInt(random, 1, 2) * costMultiplier));
 						case 2:
-							return new ItemStack(Items.SKELETON_SKULL, MathHelper.nextInt(random, 1, 2) * costMultiplier);
+							return new ItemStack(Items.SKELETON_SKULL, (int) (MathHelper.nextInt(random, 1, 2) * costMultiplier));
 						case 3:
-							return new ItemStack(Items.WITHER_SKELETON_SKULL, costMultiplier);
+							return new ItemStack(Items.WITHER_SKELETON_SKULL, (int) costMultiplier);
 					}
 				case 5:
-					return new ItemStack(BWObjects.BESMIRCHED_WOOL, MathHelper.nextInt(random, 4, 14) * costMultiplier);
+					return new ItemStack(BWObjects.BESMIRCHED_WOOL, (int) (MathHelper.nextInt(random, 4, 14) * costMultiplier));
 				case 6:
-					return new ItemStack(BWObjects.SNAKE_TONGUE, MathHelper.nextInt(random, 6, 13) * costMultiplier);
+					return new ItemStack(BWObjects.SNAKE_TONGUE, (int) (MathHelper.nextInt(random, 6, 13) * costMultiplier));
 				case 7:
-					return new ItemStack(BWObjects.DEMON_HORN, MathHelper.nextInt(random, 3, 14) * costMultiplier);
+					return new ItemStack(BWObjects.DEMON_HORN, (int) (MathHelper.nextInt(random, 3, 14) * costMultiplier));
 				case 8:
 					return new ItemStack(BWObjects.BOTTLE_OF_BLOOD);
 				default:
