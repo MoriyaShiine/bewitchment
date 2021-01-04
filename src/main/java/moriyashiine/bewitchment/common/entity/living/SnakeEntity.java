@@ -23,7 +23,6 @@ import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
@@ -31,7 +30,6 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("ConstantConditions")
 public class SnakeEntity extends BWTameableEntity {
-	public float curve = 0;
 	public int tongueFlick = 0, attackTick = 0;
 	
 	public SnakeEntity(EntityType<? extends TameableEntity> type, World world) {
@@ -45,14 +43,10 @@ public class SnakeEntity extends BWTameableEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		double length = getVelocity().length() * 3;
-		if (submergedInWater || length > 0.25) {
-			curve += length;
-		}
 		if (tongueFlick > 0) {
 			tongueFlick--;
 		}
-		if (age % 40 == 0 && random.nextFloat() < 0.25) {
+		if (age % 40 == 0 && random.nextFloat() < 0.25f) {
 			tongueFlick = 10;
 		}
 		if (attackTick > 0) {
@@ -147,22 +141,6 @@ public class SnakeEntity extends BWTameableEntity {
 		else {
 			super.handleStatus(id);
 		}
-	}
-	
-	@Override
-	public void readCustomDataFromTag(CompoundTag tag) {
-		super.readCustomDataFromTag(tag);
-		curve = tag.getFloat("Curve");
-		tongueFlick = tag.getInt("TongueFlick");
-		attackTick = tag.getInt("AttackTick");
-	}
-	
-	@Override
-	public void writeCustomDataToTag(CompoundTag tag) {
-		super.writeCustomDataToTag(tag);
-		tag.putFloat("Curve", curve);
-		tag.putInt("TongueFlick", tongueFlick);
-		tag.putInt("AttackTick", attackTick);
 	}
 	
 	@Override
