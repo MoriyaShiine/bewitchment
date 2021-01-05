@@ -1,9 +1,7 @@
 package moriyashiine.bewitchment.common.registry;
 
-import moriyashiine.bewitchment.api.registry.*;
 import moriyashiine.bewitchment.common.Bewitchment;
-import moriyashiine.bewitchment.common.recipe.ScepterCraftingRecipe;
-import moriyashiine.bewitchment.common.recipe.TaglockCraftingRecipe;
+import moriyashiine.bewitchment.common.recipe.*;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;

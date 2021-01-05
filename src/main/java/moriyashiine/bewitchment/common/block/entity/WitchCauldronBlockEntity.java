@@ -2,10 +2,10 @@ package moriyashiine.bewitchment.common.block.entity;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
-import moriyashiine.bewitchment.api.registry.CauldronBrewingRecipe;
-import moriyashiine.bewitchment.api.registry.OilRecipe;
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
+import moriyashiine.bewitchment.common.recipe.CauldronBrewingRecipe;
+import moriyashiine.bewitchment.common.recipe.OilRecipe;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;

@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.api.registry;
+package moriyashiine.bewitchment.common.recipe;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

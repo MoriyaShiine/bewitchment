@@ -1,7 +1,8 @@
-package moriyashiine.bewitchment.api.registry;
+package moriyashiine.bewitchment.common.recipe;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import moriyashiine.bewitchment.api.registry.RitualFunction;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import net.minecraft.inventory.Inventory;
@@ -19,12 +20,15 @@ import net.minecraft.world.World;
 public class RitualRecipe implements Recipe<Inventory> {
 	private final Identifier identifier;
 	public final DefaultedList<Ingredient> input;
+	public final String inner, outer;
 	public final RitualFunction ritualFunction;
 	public final int cost, runningTime;
 	
-	public RitualRecipe(Identifier identifier, DefaultedList<Ingredient> input, RitualFunction ritualFunction, int cost, int runningTime) {
+	public RitualRecipe(Identifier identifier, DefaultedList<Ingredient> input, String inner, String outer, RitualFunction ritualFunction, int cost, int runningTime) {
 		this.identifier = identifier;
 		this.input = input;
+		this.inner = inner;
+		this.outer = outer;
 		this.ritualFunction = ritualFunction;
 		this.cost = cost;
 		this.runningTime = runningTime;
@@ -76,7 +80,11 @@ public class RitualRecipe implements Recipe<Inventory> {
 			else if (ingredients.size() > 6) {
 				throw new JsonParseException("Too many ingredients for ritual recipe");
 			}
-			return new RitualRecipe(id, ingredients, BWRegistries.RITUAL_FUNCTIONS.get(new Identifier(JsonHelper.getString(json, "ritual_function"))), JsonHelper.getInt(json, "cost"), JsonHelper.getInt(json, "running_time"));
+			String inner = JsonHelper.getString(json, "inner");
+			if (inner.isEmpty()) {
+				throw new JsonParseException("Inner circle is empty");
+			}
+			return new RitualRecipe(id, ingredients, inner, JsonHelper.getString(json, "outer"), BWRegistries.RITUAL_FUNCTIONS.get(new Identifier(JsonHelper.getString(json, "ritual_function"))), JsonHelper.getInt(json, "cost"), JsonHelper.getInt(json, "running_time"));
 		}
 		
 		@Override
@@ -85,7 +93,7 @@ public class RitualRecipe implements Recipe<Inventory> {
 			for (int i = 0; i < defaultedList.size(); i++) {
 				defaultedList.set(i, Ingredient.fromPacket(buf));
 			}
-			return new RitualRecipe(id, defaultedList, BWRegistries.RITUAL_FUNCTIONS.get(new Identifier(buf.readString())), buf.readInt(), buf.readInt());
+			return new RitualRecipe(id, defaultedList, buf.readString(), buf.readString(), BWRegistries.RITUAL_FUNCTIONS.get(new Identifier(buf.readString())), buf.readInt(), buf.readInt());
 		}
 		
 		@Override
@@ -94,6 +102,8 @@ public class RitualRecipe implements Recipe<Inventory> {
 			for (Ingredient ingredient : recipe.input) {
 				ingredient.write(buf);
 			}
+			buf.writeString(recipe.inner);
+			buf.writeString(recipe.outer);
 			buf.writeString(BWRegistries.RITUAL_FUNCTIONS.getId(recipe.ritualFunction).toString());
 			buf.writeInt(recipe.cost);
 			buf.writeInt(recipe.runningTime);

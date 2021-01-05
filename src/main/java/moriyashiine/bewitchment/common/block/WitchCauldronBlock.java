@@ -2,9 +2,9 @@ package moriyashiine.bewitchment.common.block;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
-import moriyashiine.bewitchment.api.registry.OilRecipe;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
+import moriyashiine.bewitchment.common.recipe.OilRecipe;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.minecraft.block.*;

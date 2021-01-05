@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.item.tool;
 
-import moriyashiine.bewitchment.api.registry.AthameStrippingRecipe;
 import moriyashiine.bewitchment.common.block.DragonsBloodLogBlock;
+import moriyashiine.bewitchment.common.recipe.AthameStrippingRecipe;
 import moriyashiine.bewitchment.common.registry.BWMaterials;
 import moriyashiine.bewitchment.common.registry.BWProperties;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
