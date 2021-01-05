@@ -13,7 +13,6 @@ import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.sound.SoundCategory;
@@ -46,26 +45,20 @@ public class CauldronTeleportPacket {
 				BlockPos closest = null;
 				for (long longPos : worldState.witchCauldrons) {
 					BlockPos pos = BlockPos.fromLong(longPos);
-					BlockEntity blockEntity = world.getBlockEntity(pos);
-					if (blockEntity instanceof WitchCauldronBlockEntity) {
-						WitchCauldronBlockEntity cauldron = (WitchCauldronBlockEntity) blockEntity;
-						if (cauldron.hasCustomName() && cauldron.getCustomName().asString().equals(message) && (closest == null || pos.getSquaredDistance(player.getPos(), true) < closest.getSquaredDistance(player.getPos(), true))) {
-							closest = pos;
-						}
+					WitchCauldronBlockEntity blockEntity = (WitchCauldronBlockEntity) world.getBlockEntity(pos);
+					if (blockEntity.hasCustomName() && blockEntity.getCustomName().asString().equals(message) && (closest == null || pos.getSquaredDistance(player.getPos(), true) < closest.getSquaredDistance(player.getPos(), true))) {
+						closest = pos;
 					}
 				}
 				if (closest != null) {
 					boolean pledgedToLeonard = BewitchmentAPI.isPledged(world, BWPledges.LEONARD_UUID, player.getUuid());
 					boolean hasPower = false;
 					if (!pledgedToLeonard) {
-						BlockEntity blockEntity = world.getBlockEntity(closest);
-						if (blockEntity instanceof WitchCauldronBlockEntity) {
-							BlockPos altarPos = ((UsesAltarPower) world.getBlockEntity(cauldronPos)).getAltarPos();
-							if (altarPos != null) {
-								WitchAltarBlockEntity altar = (WitchAltarBlockEntity) world.getBlockEntity(altarPos);
-								if (altar != null && altar.drain((int) (Math.sqrt(closest.getSquaredDistance(player.getPos(), true)) * 2), false)) {
-									hasPower = true;
-								}
+						BlockPos altarPos = ((UsesAltarPower) world.getBlockEntity(cauldronPos)).getAltarPos();
+						if (altarPos != null) {
+							WitchAltarBlockEntity altar = (WitchAltarBlockEntity) world.getBlockEntity(altarPos);
+							if (altar != null && altar.drain((int) (Math.sqrt(closest.getSquaredDistance(player.getPos(), true)) * 2), false)) {
+								hasPower = true;
 							}
 						}
 					}

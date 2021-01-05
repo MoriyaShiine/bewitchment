@@ -129,11 +129,8 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 									if (targetLevel == 2) {
 										boolean failed = true;
 										BlockPos altarPos = cauldron.getAltarPos();
-										if (altarPos != null) {
-											blockEntity = world.getBlockEntity(altarPos);
-											if (blockEntity instanceof WitchAltarBlockEntity && ((WitchAltarBlockEntity) blockEntity).drain(cauldron.getBrewCost(), false)) {
-												failed = false;
-											}
+										if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain(cauldron.getBrewCost(), false)) {
+											failed = false;
 										}
 										if (failed) {
 											cauldron.mode = cauldron.fail();
@@ -203,12 +200,9 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 	@Override
 	public void onSteppedOn(World world, BlockPos pos, Entity entity) {
 		if (world.getBlockState(pos).get(Properties.LEVEL_3) > 0 && entity instanceof LivingEntity) {
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof WitchCauldronBlockEntity) {
-				WitchCauldronBlockEntity cauldron = (WitchCauldronBlockEntity) blockEntity;
-				if (cauldron.heatTimer >= 60 && cauldron.mode != WitchCauldronBlockEntity.Mode.TELEPORTATION) {
-					entity.damage(DamageSource.HOT_FLOOR, 1);
-				}
+			WitchCauldronBlockEntity blockEntity = (WitchCauldronBlockEntity) world.getBlockEntity(pos);
+			if (blockEntity.heatTimer >= 60 && blockEntity.mode != WitchCauldronBlockEntity.Mode.TELEPORTATION) {
+				entity.damage(DamageSource.HOT_FLOOR, 1);
 			}
 		}
 	}

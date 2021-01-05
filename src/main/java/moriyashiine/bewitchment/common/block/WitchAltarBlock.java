@@ -84,41 +84,38 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 			}
 		}
 		else {
-			BlockEntity entity = world.getBlockEntity(pos);
-			if (entity instanceof WitchAltarBlockEntity) {
-				WitchAltarBlockEntity altar = (WitchAltarBlockEntity) entity;
-				if (!client) {
-					if (!stack.isEmpty()) {
-						Item item = stack.getItem();
-						boolean sword = BWTags.SWORDS.contains(item);
-						boolean pentacle = BWTags.PENTACLES.contains(item);
-						boolean wand = BWTags.WANDS.contains(item);
-						if (sword || pentacle || wand) {
-							int slot = sword ? 0 : pentacle ? 1 : 2;
-							ItemScatterer.spawn(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, altar.removeStack(slot, 1));
-							altar.setStack(slot, stack.split(1));
-							world.setBlockState(pos, state.with(Properties.LEVEL_15, calculateLuminance(altar)), 11);
-							world.updateComparators(pos, this);
-							altar.markedForScan = true;
-							altar.sync();
-						}
-					}
-					else {
-						if (player.isSneaking()) {
-							ItemScatterer.spawn(world, pos.add(0, 0.5, 0), altar);
-							world.setBlockState(pos, state.with(Properties.LEVEL_15, 0), 11);
-							world.updateComparators(pos, this);
-							altar.markedForScan = true;
-							altar.sync();
-							PlayerLookup.tracking(altar).forEach(playerEntity -> SyncWitchAltarBlockEntity.send(player, altar));
-						}
-						else {
-							player.sendMessage(new LiteralText(altar.power + " / " + altar.maxPower + " (" + altar.gain + "x)"), true);
-						}
+			WitchAltarBlockEntity blockEntity = (WitchAltarBlockEntity) world.getBlockEntity(pos);
+			if (!client) {
+				if (!stack.isEmpty()) {
+					Item item = stack.getItem();
+					boolean sword = BWTags.SWORDS.contains(item);
+					boolean pentacle = BWTags.PENTACLES.contains(item);
+					boolean wand = BWTags.WANDS.contains(item);
+					if (sword || pentacle || wand) {
+						int slot = sword ? 0 : pentacle ? 1 : 2;
+						ItemScatterer.spawn(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, blockEntity.removeStack(slot, 1));
+						blockEntity.setStack(slot, stack.split(1));
+						world.setBlockState(pos, state.with(Properties.LEVEL_15, calculateLuminance(blockEntity)), 11);
+						world.updateComparators(pos, this);
+						blockEntity.markedForScan = true;
+						blockEntity.sync();
 					}
 				}
-				return ActionResult.success(client);
+				else {
+					if (player.isSneaking()) {
+						ItemScatterer.spawn(world, pos.add(0, 1, 0), blockEntity);
+						world.setBlockState(pos, state.with(Properties.LEVEL_15, 0), 11);
+						world.updateComparators(pos, this);
+						blockEntity.markedForScan = true;
+						blockEntity.sync();
+						PlayerLookup.tracking(blockEntity).forEach(playerEntity -> SyncWitchAltarBlockEntity.send(player, blockEntity));
+					}
+					else {
+						player.sendMessage(new LiteralText(blockEntity.power + " / " + blockEntity.maxPower + " (" + blockEntity.gain + "x)"), true);
+					}
+				}
 			}
+			return ActionResult.success(client);
 		}
 		return super.onUse(state, world, pos, player, hand, hit);
 	}
@@ -158,12 +155,11 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 	
 	@Override
 	public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
-		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity instanceof WitchAltarBlockEntity) {
-			WitchAltarBlockEntity altar = (WitchAltarBlockEntity) blockEntity;
+		if (formed) {
+			WitchAltarBlockEntity blockEntity = (WitchAltarBlockEntity) world.getBlockEntity(pos);
 			int items = 0;
-			for (int i = 0; i < altar.size(); i++) {
-				if (!altar.getStack(i).isEmpty()) {
+			for (int i = 0; i < blockEntity.size(); i++) {
+				if (!blockEntity.getStack(i).isEmpty()) {
 					items++;
 				}
 			}

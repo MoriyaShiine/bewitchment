@@ -49,6 +49,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("ConstantConditions")
 public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Tickable, Inventory, Nameable, UsesAltarPower {
 	private static final TranslatableText DEFAULT_NAME = new TranslatableText(BWObjects.WITCH_CAULDRON.getTranslationKey());
 	
@@ -299,12 +300,9 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 						CauldronBrewingRecipe cauldronBrewingRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CAULDRON_BREWING_RECIPE_TYPE).stream().filter(recipe -> recipe.input.test(stack)).findFirst().orElse(null);
 						if (cauldronBrewingRecipe != null || (firstEmpty > 0 && (stack.getItem() == Items.REDSTONE || stack.getItem() == Items.GLOWSTONE_DUST))) {
 							BlockPos altarPos = getAltarPos();
-							if (altarPos != null) {
-								BlockEntity blockEntity = world.getBlockEntity(altarPos);
-								if (blockEntity instanceof WitchAltarBlockEntity && ((WitchAltarBlockEntity) blockEntity).drain(getBrewCost(), true)) {
-									setColor(PotionUtil.getColor(getPotion(null)));
-									return Mode.BREWING;
-								}
+							if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain(getBrewCost(), true)) {
+								setColor(PotionUtil.getColor(getPotion(null)));
+								return Mode.BREWING;
 							}
 						}
 					}
