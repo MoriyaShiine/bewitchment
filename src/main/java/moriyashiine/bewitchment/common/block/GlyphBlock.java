@@ -9,6 +9,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleEffect;
@@ -103,8 +104,8 @@ public class GlyphBlock extends HorizontalFacingBlock implements BlockEntityProv
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!world.isClient && state.getBlock() != newState.getBlock()) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof GlyphBlockEntity) {
-				ItemScatterer.spawn(world, pos, (GlyphBlockEntity) blockEntity);
+			if (blockEntity instanceof Inventory) {
+				ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
 			}
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);

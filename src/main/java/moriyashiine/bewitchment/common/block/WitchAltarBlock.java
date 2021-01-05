@@ -16,6 +16,7 @@ import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
@@ -202,8 +203,8 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 				}
 			}
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof WitchAltarBlockEntity) {
-				ItemScatterer.spawn(world, pos, (WitchAltarBlockEntity) blockEntity);
+			if (blockEntity instanceof Inventory) {
+				ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
 			}
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);
