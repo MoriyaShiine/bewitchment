@@ -3,13 +3,13 @@ package moriyashiine.bewitchment.mixin;
 import moriyashiine.bewitchment.api.interfaces.ContractAccessor;
 import moriyashiine.bewitchment.common.registry.BWContracts;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.VindicatorEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.passive.VillagerEntity;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -32,7 +32,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
 					VillagerEntity villager = (VillagerEntity) (Object) this;
 					for (TradeOffer offer : villager.getOffers()) {
 						if (!offer.isDisabled()) {
-							world.spawnEntity(new ItemEntity(world, getX() + 0.5, getY() + 0.5, getZ() + 0.5, offer.getSellItem()));
+							ItemScatterer.spawn(world, getX() + 0.5, getY() + 0.5, getZ() + 0.5, offer.getSellItem());
 						}
 					}
 					if (contractAccessor.hasNegativeEffects() && random.nextBoolean()) {

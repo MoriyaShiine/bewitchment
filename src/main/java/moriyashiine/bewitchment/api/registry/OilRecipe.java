@@ -31,30 +31,7 @@ public class OilRecipe implements Recipe<Inventory> {
 	
 	@Override
 	public boolean matches(Inventory inv, World world) {
-		List<ItemStack> checklist = new ArrayList<>();
-		for (int i = 0; i < inv.size(); i++) {
-			ItemStack stack = inv.getStack(i);
-			if (!stack.isEmpty()) {
-				checklist.add(stack);
-			}
-		}
-		if (input.size() != checklist.size()) {
-			return false;
-		}
-		for (Ingredient ingredient : input) {
-			boolean found = false;
-			for (ItemStack stack : checklist) {
-				if (ingredient.test(stack)) {
-					found = true;
-					checklist.remove(stack);
-					break;
-				}
-			}
-			if (!found) {
-				return false;
-			}
-		}
-		return true;
+		return matches(inv, input);
 	}
 	
 	@Override
@@ -87,6 +64,33 @@ public class OilRecipe implements Recipe<Inventory> {
 		return BWRecipeTypes.OIL_RECIPE_TYPE;
 	}
 	
+	public static boolean matches(Inventory inv, DefaultedList<Ingredient> input) {
+		List<ItemStack> checklist = new ArrayList<>();
+		for (int i = 0; i < inv.size(); i++) {
+			ItemStack stack = inv.getStack(i);
+			if (!stack.isEmpty()) {
+				checklist.add(stack);
+			}
+		}
+		if (input.size() != checklist.size()) {
+			return false;
+		}
+		for (Ingredient ingredient : input) {
+			boolean found = false;
+			for (ItemStack stack : checklist) {
+				if (ingredient.test(stack)) {
+					found = true;
+					checklist.remove(stack);
+					break;
+				}
+			}
+			if (!found) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	public static class Serializer implements RecipeSerializer<OilRecipe> {
 		@Override
 		public OilRecipe read(Identifier id, JsonObject json) {
@@ -106,8 +110,7 @@ public class OilRecipe implements Recipe<Inventory> {
 			for (int i = 0; i < defaultedList.size(); i++) {
 				defaultedList.set(i, Ingredient.fromPacket(buf));
 			}
-			ItemStack itemStack = buf.readItemStack();
-			return new OilRecipe(id, defaultedList, itemStack, buf.readInt());
+			return new OilRecipe(id, defaultedList, buf.readItemStack(), buf.readInt());
 		}
 		
 		@Override
@@ -120,7 +123,7 @@ public class OilRecipe implements Recipe<Inventory> {
 			buf.writeInt(recipe.color);
 		}
 		
-		private static DefaultedList<Ingredient> getIngredients(JsonArray json) {
+		public static DefaultedList<Ingredient> getIngredients(JsonArray json) {
 			DefaultedList<Ingredient> ingredients = DefaultedList.of();
 			for (int i = 0; i < json.size(); i++) {
 				Ingredient ingredient = Ingredient.fromJson(json.get(i));

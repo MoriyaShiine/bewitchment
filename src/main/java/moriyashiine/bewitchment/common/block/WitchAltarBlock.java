@@ -13,7 +13,6 @@ import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -26,6 +25,7 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -95,8 +95,7 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 						boolean wand = BWTags.WANDS.contains(item);
 						if (sword || pentacle || wand) {
 							int slot = sword ? 0 : pentacle ? 1 : 2;
-							ItemStack upgrade = altar.removeStack(slot, 1);
-							world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, upgrade));
+							ItemScatterer.spawn(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, altar.removeStack(slot, 1));
 							altar.setStack(slot, stack.split(1));
 							world.setBlockState(pos, state.with(Properties.LEVEL_15, calculateLuminance(altar)), 11);
 							world.updateComparators(pos, this);
@@ -106,9 +105,7 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 					}
 					else {
 						if (player.isSneaking()) {
-							for (int i = 0; i < altar.size(); i++) {
-								world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, altar.removeStack(i, 1)));
-							}
+							ItemScatterer.spawn(world, pos.add(0, 0.5, 0), altar);
 							world.setBlockState(pos, state.with(Properties.LEVEL_15, 0), 11);
 							world.updateComparators(pos, this);
 							altar.markedForScan = true;
@@ -210,10 +207,7 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 			}
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof WitchAltarBlockEntity) {
-				WitchAltarBlockEntity altar = (WitchAltarBlockEntity) blockEntity;
-				for (int i = 0; i < altar.size(); i++) {
-					world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, altar.removeStack(i, 1)));
-				}
+				ItemScatterer.spawn(world, pos, (WitchAltarBlockEntity) blockEntity);
 			}
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);
@@ -260,22 +254,13 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 		Item pentacle = blockEntity.getStack(1).getItem();
 		Item wand = blockEntity.getStack(2).getItem();
 		if (sword instanceof BlockItem) {
-			int blockLuminance = ((BlockItem) sword).getBlock().getDefaultState().getLuminance();
-			if (blockLuminance > luminance) {
-				luminance = blockLuminance;
-			}
+			luminance = Math.max(luminance, ((BlockItem) sword).getBlock().getDefaultState().getLuminance());
 		}
 		if (pentacle instanceof BlockItem) {
-			int blockLuminance = ((BlockItem) pentacle).getBlock().getDefaultState().getLuminance();
-			if (blockLuminance > luminance) {
-				luminance = blockLuminance;
-			}
+			luminance = Math.max(luminance, ((BlockItem) pentacle).getBlock().getDefaultState().getLuminance());
 		}
 		if (wand instanceof BlockItem) {
-			int blockLuminance = ((BlockItem) wand).getBlock().getDefaultState().getLuminance();
-			if (blockLuminance > luminance) {
-				luminance = blockLuminance;
-			}
+			luminance = Math.max(luminance, ((BlockItem) wand).getBlock().getDefaultState().getLuminance());
 		}
 		return luminance;
 	}

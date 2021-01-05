@@ -1,9 +1,6 @@
 package moriyashiine.bewitchment.common.registry;
 
-import moriyashiine.bewitchment.api.registry.AthameDropRecipe;
-import moriyashiine.bewitchment.api.registry.AthameStrippingRecipe;
-import moriyashiine.bewitchment.api.registry.CauldronBrewingRecipe;
-import moriyashiine.bewitchment.api.registry.OilRecipe;
+import moriyashiine.bewitchment.api.registry.*;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.recipe.ScepterCraftingRecipe;
 import moriyashiine.bewitchment.common.recipe.TaglockCraftingRecipe;
@@ -26,6 +23,9 @@ public class BWRecipeTypes {
 	
 	public static final RecipeSerializer<AthameDropRecipe> ATHAME_DROP_RECIPE_SERIALIZER = create("athame_drop", new AthameDropRecipe.Serializer());
 	public static final RecipeType<AthameDropRecipe> ATHAME_DROP_RECIPE_TYPE = create("athame_drop");
+	
+	public static final RecipeSerializer<RitualRecipe> RITUAL_RECIPE_SERIALIZER = create("ritual_recipe", new RitualRecipe.Serializer());
+	public static final RecipeType<RitualRecipe> RITUAL_RECIPE_TYPE = create("ritual_recipe");
 	
 	public static final RecipeSerializer<OilRecipe> OIL_RECIPE_SERIALIZER = create("oil_recipe", new OilRecipe.Serializer());
 	public static final RecipeType<OilRecipe> OIL_RECIPE_TYPE = create("oil_recipe");
