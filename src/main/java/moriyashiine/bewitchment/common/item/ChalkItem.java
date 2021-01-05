@@ -34,12 +34,14 @@ public class ChalkItem extends Item {
 		PlayerEntity player = context.getPlayer();
 		BlockState chalk = glyph.getPlacementState(placementContext);
 		if (chalk != null && chalk.canPlaceAt(world, pos)) {
-			world.playSound(null, pos, chalk.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS, 1, MathHelper.nextFloat(world.random, 0.8f, 1.2f));
-			world.setBlockState(pos, chalk);
-			ItemStack stack = context.getStack();
-			if (player instanceof ServerPlayerEntity) {
-				Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity) player, pos, stack);
-				stack.damage(1, player, user -> user.sendToolBreakStatus(context.getHand()));
+			if (!world.isClient) {
+				world.playSound(null, pos, chalk.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS, 1, MathHelper.nextFloat(world.random, 0.8f, 1.2f));
+				world.setBlockState(pos, chalk);
+				ItemStack stack = context.getStack();
+				if (player instanceof ServerPlayerEntity) {
+					Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity) player, pos, stack);
+					stack.damage(1, player, user -> user.sendToolBreakStatus(context.getHand()));
+				}
 			}
 			return ActionResult.success(world.isClient);
 		}

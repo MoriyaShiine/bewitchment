@@ -12,6 +12,9 @@ public class BWSoundEvents {
 	private static final Map<SoundEvent, Identifier> SOUND_EVENTS = new LinkedHashMap<>();
 	
 	public static final SoundEvent BLOCK_GLPYH_PLACE = create("block.glyph.place");
+	public static final SoundEvent BLOCK_GLYPH_FIRE = create("block.glyph.fire");
+	public static final SoundEvent BLOCK_GLYPH_FAIL = create("block.glyph.fail");
+	public static final SoundEvent BLOCK_GLYPH_PLING = create("block.glyph.pling");
 	public static final SoundEvent ITEM_ATHAME_STRIP = create("item.athame.strip");
 	public static final SoundEvent ITEM_CONTRACT_USE = create("item.contract.use");
 	public static final SoundEvent ENTITY_GENERIC_TELEPORT = create("entity.generic.teleport");

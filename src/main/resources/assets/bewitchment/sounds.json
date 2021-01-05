@@ -7,6 +7,24 @@
 	],
 	"subtitle": "subtitles.block.generic.place"
   },
+  "block.glyph.fire": {
+	"sounds": [
+	  "random/fizz"
+	],
+	"subtitle": "bewitchment.subtitles.block.glyph.fire"
+  },
+  "block.glyph.fail": {
+	"sounds": [
+	  "note/snare"
+	],
+	"subtitle": "bewitchment.subtitles.block.glyph.fail"
+  },
+  "block.glyph.pling": {
+	"sounds": [
+	  "random/orb"
+	],
+	"subtitle": "bewitchment.subtitles.block.glyph.pling"
+  },
   "item.athame.strip": {
 	"sounds": [
 	  {

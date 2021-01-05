@@ -8,6 +8,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleEffect;
@@ -15,6 +16,10 @@ import net.minecraft.particle.ParticleType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
@@ -49,6 +54,18 @@ public class GlyphBlock extends HorizontalFacingBlock implements BlockEntityProv
 		return this == BWObjects.GOLDEN_GLYPH ? PistonBehavior.BLOCK : PistonBehavior.DESTROY;
 	}
 	
+	@Override
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		if (this == BWObjects.GOLDEN_GLYPH) {
+			boolean client = world.isClient;
+			if (!client) {
+				((GlyphBlockEntity) world.getBlockEntity(pos)).onUse(world, pos, player, hand);
+			}
+			return ActionResult.success(client);
+		}
+		return super.onUse(state, world, pos, player, hand, hit);
+	}
+	
 	@Nullable
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
@@ -75,9 +92,22 @@ public class GlyphBlock extends HorizontalFacingBlock implements BlockEntityProv
 	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
 		if (!world.isClient && state.getBlock() != oldState.getBlock()) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			((UsesAltarPower) blockEntity).setAltarPos(WitchAltarBlock.getClosestAltarPos(world, pos));
-			blockEntity.markDirty();
+			if (blockEntity instanceof UsesAltarPower) {
+				((UsesAltarPower) blockEntity).setAltarPos(WitchAltarBlock.getClosestAltarPos(world, pos));
+				blockEntity.markDirty();
+			}
 		}
+	}
+	
+	@Override
+	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+		if (!world.isClient && state.getBlock() != newState.getBlock()) {
+			BlockEntity blockEntity = world.getBlockEntity(pos);
+			if (blockEntity instanceof GlyphBlockEntity) {
+				ItemScatterer.spawn(world, pos, (GlyphBlockEntity) blockEntity);
+			}
+		}
+		super.onStateReplaced(state, world, pos, newState, moved);
 	}
 	
 	@Environment(EnvType.CLIENT)
