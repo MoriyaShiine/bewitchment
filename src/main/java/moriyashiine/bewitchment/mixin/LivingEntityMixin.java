@@ -212,15 +212,17 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
-		BlockPos.Mutable mutable = new BlockPos.Mutable();
-		int radius = 16;
-		for (int x = -radius; x <= radius; x++) {
-			for (int y = -radius; y <= radius; y++) {
-				for (int z = -radius; z <= radius; z++) {
-					BlockEntity blockEntity = world.getBlockEntity(mutable.set(getX() + x, getY() + y, getZ() + z));
-					if (blockEntity instanceof GlyphBlockEntity && ((GlyphBlockEntity) blockEntity).ritualFunction == BWRitualFunctions.PREVENT_DAMAGE) {
-						callbackInfo.setReturnValue(false);
-						return;
+		if (!source.isOutOfWorld()) {
+			BlockPos.Mutable mutable = new BlockPos.Mutable();
+			int radius = 16;
+			for (int x = -radius; x <= radius; x++) {
+				for (int y = -radius; y <= radius; y++) {
+					for (int z = -radius; z <= radius; z++) {
+						BlockEntity blockEntity = world.getBlockEntity(mutable.set(getX() + x, getY() + y, getZ() + z));
+						if (blockEntity instanceof GlyphBlockEntity && ((GlyphBlockEntity) blockEntity).ritualFunction == BWRitualFunctions.PREVENT_DAMAGE) {
+							callbackInfo.setReturnValue(false);
+							return;
+						}
 					}
 				}
 			}

@@ -1,0 +1,14 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:grim_elixir"
+	},
+	{
+	  "item": "obsidian"
+	}
+  ],
+  "inner": "eldritch",
+  "ritual_function": "bewitchment:destroy_lights",
+  "cost": 300
+}

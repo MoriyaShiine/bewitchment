@@ -1,0 +1,14 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:cleansing_balm"
+	},
+	{
+	  "item": "gold_ingot"
+	}
+  ],
+  "inner": "normal",
+  "ritual_function": "bewitchment:turn_to_day",
+  "cost": 150
+}

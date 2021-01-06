@@ -128,11 +128,10 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 					if (!world.isClient) {
 						if (timer == 0) {
 							ritualFunction.start((ServerWorld) world, pos, this);
-						}
-						if (timer >= endTime) {
-							ritualFunction.finish((ServerWorld) world, pos, this);
 							world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_PLING, SoundCategory.BLOCKS, 1, 1);
 							ItemScatterer.spawn(world, pos, this);
+						}
+						if (timer >= endTime) {
 							ritualFunction = null;
 							timer = 0;
 							endTime = 0;
@@ -230,9 +229,6 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 			}
 			else {
 				world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FAIL, SoundCategory.BLOCKS, 1, 1);
-				if (endTime != 0) {
-					clear();
-				}
 				ItemScatterer.spawn(world, pos, this);
 				ritualFunction = null;
 				timer = 0;

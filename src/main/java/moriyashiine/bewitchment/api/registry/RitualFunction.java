@@ -17,6 +17,7 @@ import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.particle.ParticleTypes;
@@ -91,6 +92,19 @@ public class RitualFunction {
 	}
 	
 	public void start(ServerWorld world, BlockPos pos, Inventory inventory) {
+		for (int i = 0; i < inventory.size(); i++) {
+			ItemStack stack = inventory.getStack(i);
+			if (stack.getItem() instanceof AthameItem) {
+				stack.damage(50, world.random, null);
+				if (stack.getDamage() == BWMaterials.SILVER_TOOL.getDurability()) {
+					stack.decrement(1);
+				}
+			}
+			else {
+				Item item = stack.getItem();
+				inventory.setStack(i, item.hasRecipeRemainder() ? new ItemStack(item.getRecipeRemainder()) : ItemStack.EMPTY);
+			}
+		}
 		if (this == BWRitualFunctions.TURN_TO_DAY) {
 			while (world.getTimeOfDay() % 24000 != 0) {
 				world.setTimeOfDay(world.getTimeOfDay() + 1);
@@ -240,21 +254,6 @@ public class RitualFunction {
 						}
 					}
 				}
-			}
-		}
-	}
-	
-	public void finish(ServerWorld world, BlockPos pos, Inventory inventory) {
-		for (int i = 0; i < inventory.size(); i++) {
-			ItemStack stack = inventory.getStack(i);
-			if (stack.getItem() instanceof AthameItem) {
-				stack.damage(50, world.random, null);
-				if (stack.getDamage() == BWMaterials.SILVER_TOOL.getDurability()) {
-					stack.decrement(1);
-				}
-			}
-			else {
-				stack.decrement(1);
 			}
 		}
 	}

@@ -1,0 +1,19 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:cleansing_balm"
+	},
+	{
+	  "item": "diamond"
+	},
+	{
+	  "item": "phantom_membrane"
+	}
+  ],
+  "inner": "normal",
+  "outer": "eldritch",
+  "ritual_function": "bewitchment:prevent_damage",
+  "cost": 600,
+  "running_time": 12000
+}

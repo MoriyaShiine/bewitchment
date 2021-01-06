@@ -1,0 +1,14 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:earth_ichor"
+	},
+	{
+	  "item": "bewitchment:taglock"
+	}
+  ],
+  "inner": "eldritch",
+  "ritual_function": "bewitchment:teleport_entities",
+  "cost": 150
+}

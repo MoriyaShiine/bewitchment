@@ -1,0 +1,14 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:fiery_serum"
+	},
+	{
+	  "tag": "coals"
+	}
+  ],
+  "inner": "fiery",
+  "ritual_function": "bewitchment:stop_rain",
+  "cost": 150
+}

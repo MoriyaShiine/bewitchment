@@ -1,0 +1,18 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:heaven_extract"
+	},
+	{
+	  "item": "ice"
+	},
+	{
+	  "item": "bewitchment:mandrake_root"
+	}
+  ],
+  "inner": "normal",
+  "outer": "normal",
+  "ritual_function": "bewitchment:destroy_plants",
+  "cost": 600
+}

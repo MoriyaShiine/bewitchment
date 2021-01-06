@@ -1,0 +1,15 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:earth_ichor"
+	},
+	{
+	  "item": "emerald"
+	}
+  ],
+  "inner": "eldritch",
+  "outer": "eldritch",
+  "ritual_function": "bewitchment:search_blocks",
+  "cost": 600
+}
