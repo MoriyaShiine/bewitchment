@@ -14,6 +14,7 @@ public class BWTags {
 	public static final Tag<EntityType<?>> HAS_BLOOD = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "has_blood"));
 	
 	public static final Tag<Item> SKULLS = TagRegistry.item(new Identifier("c", "skulls"));
+	public static final Tag<Item> ORES = TagRegistry.item(new Identifier("c", "ores"));
 	public static final Tag<Block> GIVES_ALTAR_POWER = TagRegistry.block(new Identifier(Bewitchment.MODID, "gives_altar_power"));
 	public static final Tag<Block> HEATS_CAULDRON = TagRegistry.block(new Identifier(Bewitchment.MODID, "heats_cauldron"));
 	

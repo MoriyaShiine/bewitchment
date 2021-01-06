@@ -2,9 +2,9 @@ package moriyashiine.bewitchment.common.block;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
-import moriyashiine.bewitchment.api.registry.OilRecipe;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
+import moriyashiine.bewitchment.common.recipe.OilRecipe;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.minecraft.block.*;
@@ -38,6 +38,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("ConstantConditions")
 public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProvider, Waterloggable {
 	private static final VoxelShape SHAPE = VoxelShapes.union(createCuboidShape(2, 1, 2, 14, 2, 14), createCuboidShape(14, 2, 1, 15, 6, 15), createCuboidShape(1, 2, 1, 2, 6, 15), createCuboidShape(2, 2, 14, 14, 6, 15), createCuboidShape(13, 5, 3, 14, 8.5, 13), createCuboidShape(2, 2, 1, 14, 6, 2), createCuboidShape(2, 5, 2, 14, 8.5, 3), createCuboidShape(1, 8.5, 14, 15, 11, 15), createCuboidShape(2, 5, 3, 3, 8.5, 13), createCuboidShape(2, 5, 13, 14, 8.5, 14), createCuboidShape(14, 8.5, 2, 15, 11, 14), createCuboidShape(1, 8.5, 1, 15, 11, 2), createCuboidShape(1, 8.5, 2, 2, 11, 14), createCuboidShape(11, 0, 3, 13, 1, 5), createCuboidShape(3, 0, 3, 5, 1, 5), createCuboidShape(3, 0, 11, 5, 1, 13), createCuboidShape(11, 0, 11, 13, 1, 13));
 	
@@ -62,7 +63,6 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 		return PistonBehavior.BLOCK;
 	}
 	
-	@SuppressWarnings("ConstantConditions")
 	@Nullable
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
@@ -125,15 +125,12 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 									}
 								}
 								else {
-									bottle = cauldron.getPotion();
+									bottle = cauldron.getPotion(player);
 									if (targetLevel == 2) {
 										boolean failed = true;
 										BlockPos altarPos = cauldron.getAltarPos();
-										if (altarPos != null) {
-											blockEntity = world.getBlockEntity(altarPos);
-											if (blockEntity instanceof WitchAltarBlockEntity && ((WitchAltarBlockEntity) blockEntity).drain(cauldron.getBrewCost(), false)) {
-												failed = false;
-											}
+										if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain(cauldron.getBrewCost(), false)) {
+											failed = false;
 										}
 										if (failed) {
 											cauldron.mode = cauldron.fail();
@@ -181,7 +178,6 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 			worldState.witchCauldrons.add(pos.asLong());
 			worldState.markDirty();
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			//noinspection ConstantConditions
 			((UsesAltarPower) blockEntity).setAltarPos(WitchAltarBlock.getClosestAltarPos(world, pos));
 			blockEntity.markDirty();
 		}
@@ -204,12 +200,9 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 	@Override
 	public void onSteppedOn(World world, BlockPos pos, Entity entity) {
 		if (world.getBlockState(pos).get(Properties.LEVEL_3) > 0 && entity instanceof LivingEntity) {
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof WitchCauldronBlockEntity) {
-				WitchCauldronBlockEntity cauldron = (WitchCauldronBlockEntity) blockEntity;
-				if (cauldron.heatTimer >= 60 && cauldron.mode != WitchCauldronBlockEntity.Mode.TELEPORTATION) {
-					entity.damage(DamageSource.HOT_FLOOR, 1);
-				}
+			WitchCauldronBlockEntity blockEntity = (WitchCauldronBlockEntity) world.getBlockEntity(pos);
+			if (blockEntity.heatTimer >= 60 && blockEntity.mode != WitchCauldronBlockEntity.Mode.TELEPORTATION) {
+				entity.damage(DamageSource.HOT_FLOOR, 1);
 			}
 		}
 	}

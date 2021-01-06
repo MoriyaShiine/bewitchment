@@ -1,23 +1,27 @@
 package moriyashiine.bewitchment.common.block.entity;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
-import moriyashiine.bewitchment.api.registry.CauldronBrewingRecipe;
-import moriyashiine.bewitchment.api.registry.OilRecipe;
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
+import moriyashiine.bewitchment.common.recipe.CauldronBrewingRecipe;
+import moriyashiine.bewitchment.common.recipe.OilRecipe;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-import net.fabricmc.fabric.api.server.PlayerStream;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -45,12 +49,15 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("ConstantConditions")
 public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Tickable, Inventory, Nameable, UsesAltarPower {
 	private static final TranslatableText DEFAULT_NAME = new TranslatableText(BWObjects.WITCH_CAULDRON.getTranslationKey());
 	
 	private Box box;
 	
 	private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
+	
+	private BlockPos altarPos = null;
 	
 	public OilRecipe oilRecipe = null;
 	
@@ -59,8 +66,6 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	public Text customName;
 	
 	public int color = 0x3f76e4, heatTimer = 0;
-	
-	private BlockPos altarPos = null;
 	
 	private boolean loaded = false;
 	
@@ -74,6 +79,9 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	
 	@Override
 	public void fromClientTag(CompoundTag tag) {
+		if (tag.contains("AltarPos")) {
+			setAltarPos(BlockPos.fromLong(tag.getLong("AltarPos")));
+		}
 		Inventories.fromTag(tag, inventory);
 		mode = Mode.valueOf(tag.getString("Mode"));
 		if (tag.contains("CustomName", NbtType.STRING)) {
@@ -83,13 +91,13 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 			color = tag.getInt("Color");
 		}
 		heatTimer = tag.getInt("HeatTimer");
-		if (tag.contains("AltarPos")) {
-			setAltarPos(BlockPos.fromLong(tag.getLong("AltarPos")));
-		}
 	}
 	
 	@Override
 	public CompoundTag toClientTag(CompoundTag tag) {
+		if (getAltarPos() != null) {
+			tag.putLong("AltarPos", getAltarPos().asLong());
+		}
 		Inventories.toTag(tag, inventory);
 		tag.putString("Mode", mode.name);
 		if (customName != null) {
@@ -97,9 +105,6 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 		}
 		tag.putInt("Color", color);
 		tag.putInt("HeatTimer", heatTimer);
-		if (getAltarPos() != null) {
-			tag.putLong("AltarPos", getAltarPos().asLong());
-		}
 		return tag;
 	}
 	
@@ -242,7 +247,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	
 	public void syncCauldron() {
 		if (world instanceof ServerWorld) {
-			PlayerStream.watching(this).forEach(playerEntity -> SyncClientSerializableBlockEntity.send(playerEntity, this));
+			PlayerLookup.tracking(this).forEach(playerEntity -> SyncClientSerializableBlockEntity.send(playerEntity, this));
 		}
 	}
 	
@@ -295,12 +300,9 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 						CauldronBrewingRecipe cauldronBrewingRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CAULDRON_BREWING_RECIPE_TYPE).stream().filter(recipe -> recipe.input.test(stack)).findFirst().orElse(null);
 						if (cauldronBrewingRecipe != null || (firstEmpty > 0 && (stack.getItem() == Items.REDSTONE || stack.getItem() == Items.GLOWSTONE_DUST))) {
 							BlockPos altarPos = getAltarPos();
-							if (altarPos != null) {
-								BlockEntity blockEntity = world.getBlockEntity(altarPos);
-								if (blockEntity instanceof WitchAltarBlockEntity && ((WitchAltarBlockEntity) blockEntity).drain(getBrewCost(), true)) {
-									setColor(PotionUtil.getColor(getPotion()));
-									return Mode.BREWING;
-								}
+							if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain(getBrewCost(), true)) {
+								setColor(PotionUtil.getColor(getPotion(null)));
+								return Mode.BREWING;
 							}
 						}
 					}
@@ -324,7 +326,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 		return fail();
 	}
 	
-	public ItemStack getPotion() {
+	public ItemStack getPotion(LivingEntity creator) {
 		ItemStack stack = new ItemStack(Items.POTION);
 		if (world != null) {
 			List<StatusEffectInstance> effects = new ArrayList<>();
@@ -361,6 +363,17 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 				}
 			}
 			finalEffects.addAll(effects);
+			if (creator != null) {
+				boolean wearingAlchemistRobes = BewitchmentAPI.getArmorPieces(creator, armorStack -> armorStack.getItem() instanceof ArmorItem && ((ArmorItem) armorStack.getItem()).getMaterial() == BWMaterials.ALCHEMIST_ARMOR) >= 3;
+				boolean pledgedToLeonard = BewitchmentAPI.isPledged(world, BWPledges.LEONARD_UUID, creator.getUuid());
+				if (wearingAlchemistRobes || pledgedToLeonard) {
+					for (int i = 0; i < finalEffects.size(); i++) {
+						StatusEffect type = finalEffects.get(i).getEffectType();
+						int duration = finalEffects.get(i).getDuration();
+						finalEffects.set(i, new StatusEffectInstance(type, type.isInstant() || !wearingAlchemistRobes ? duration : duration * 2, finalEffects.get(i).getAmplifier() + (pledgedToLeonard ? 1 : 0)));
+					}
+				}
+			}
 			PotionUtil.setCustomPotionEffects(stack, finalEffects);
 			stack.getOrCreateTag().putInt("CustomPotionColor", PotionUtil.getColor(finalEffects));
 			stack.getOrCreateTag().putBoolean("BewitchmentBrew", true);

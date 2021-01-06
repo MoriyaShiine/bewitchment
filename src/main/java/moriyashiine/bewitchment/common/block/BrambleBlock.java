@@ -1,16 +1,15 @@
 package moriyashiine.bewitchment.common.block;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.EntityShapeContextAdditionAccesor;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWProperties;
-import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.ItemStack;
@@ -87,10 +86,10 @@ public class BrambleBlock extends SugarCaneBlock {
 	
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (entity instanceof LivingEntity) {
+		if (!world.isClient && entity instanceof LivingEntity) {
 			LivingEntity livingEntity = (LivingEntity) entity;
 			if (this == BWObjects.ENDER_BRAMBLE) {
-				livingEntity.addStatusEffect(new StatusEffectInstance(BWStatusEffects.DISJUNCTION, 1));
+				BewitchmentAPI.attemptTeleport(livingEntity, entity.getBlockPos(), 12);
 			}
 			if (this == BWObjects.SCORCHED_BRAMBLE) {
 				livingEntity.setOnFireFor(10);
@@ -120,11 +119,6 @@ public class BrambleBlock extends SugarCaneBlock {
 		if (particleType != null) {
 			world.addParticle((ParticleEffect) particleType, pos.getX() + 0.5 + MathHelper.nextDouble(random, -0.5, 0.5), pos.getY() + 0.5 + MathHelper.nextDouble(random, -0.5, 0.5), pos.getZ() + 0.5 + MathHelper.nextDouble(random, -0.5, 0.5), 0, 0, 0);
 		}
-	}
-	
-	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-		super.appendProperties(builder);
 	}
 	
 	public static class Fruiting extends BrambleBlock {

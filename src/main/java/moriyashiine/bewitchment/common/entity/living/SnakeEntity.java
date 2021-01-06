@@ -2,6 +2,7 @@ package moriyashiine.bewitchment.common.entity.living;
 
 import moriyashiine.bewitchment.common.entity.living.util.BWTameableEntity;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
+import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.Entity;
@@ -11,6 +12,7 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
@@ -21,13 +23,13 @@ import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("ConstantConditions")
 public class SnakeEntity extends BWTameableEntity {
-	public float curve = 0;
 	public int tongueFlick = 0, attackTick = 0;
 	
 	public SnakeEntity(EntityType<? extends TameableEntity> type, World world) {
@@ -41,14 +43,10 @@ public class SnakeEntity extends BWTameableEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		double length = getVelocity().length() * 3;
-		if (submergedInWater || length > 0.25) {
-			curve += length;
-		}
 		if (tongueFlick > 0) {
 			tongueFlick--;
 		}
-		if (age % 40 == 0 && random.nextFloat() < 0.25) {
+		if (age % 40 == 0 && random.nextFloat() < 0.25f) {
 			tongueFlick = 10;
 		}
 		if (attackTick > 0) {
@@ -82,6 +80,22 @@ public class SnakeEntity extends BWTameableEntity {
 		return child;
 	}
 	
+	@Nullable
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return BWSoundEvents.ENTITY_SNAKE_AMBIENT;
+	}
+	
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return BWSoundEvents.ENTITY_SNAKE_HURT;
+	}
+	
+	@Override
+	protected SoundEvent getDeathSound() {
+		return BWSoundEvents.ENTITY_SNAKE_DEATH;
+	}
+	
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
 		return stack.getItem() == Items.CHICKEN;
@@ -99,7 +113,6 @@ public class SnakeEntity extends BWTameableEntity {
 		return flag;
 	}
 	
-	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void setTamed(boolean tamed) {
 		super.setTamed(tamed);
@@ -128,22 +141,6 @@ public class SnakeEntity extends BWTameableEntity {
 		else {
 			super.handleStatus(id);
 		}
-	}
-	
-	@Override
-	public void readCustomDataFromTag(CompoundTag tag) {
-		super.readCustomDataFromTag(tag);
-		curve = tag.getFloat("Curve");
-		tongueFlick = tag.getInt("TongueFlick");
-		attackTick = tag.getInt("AttackTick");
-	}
-	
-	@Override
-	public void writeCustomDataToTag(CompoundTag tag) {
-		super.writeCustomDataToTag(tag);
-		tag.putFloat("Curve", curve);
-		tag.putInt("TongueFlick", tongueFlick);
-		tag.putInt("AttackTick", attackTick);
 	}
 	
 	@Override

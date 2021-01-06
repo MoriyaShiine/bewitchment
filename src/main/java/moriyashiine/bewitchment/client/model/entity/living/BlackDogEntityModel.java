@@ -108,7 +108,7 @@ public class BlackDogEntityModel<T extends BlackDogEntity> extends EntityModel<T
 		rForeleg.pitch = MathHelper.cos((float) (limbAngle * 2 / 3f + Math.PI)) * 1.4f * limbDistance;
 		lHindleg.pitch = MathHelper.cos((float) (limbAngle * 2 / 3f + Math.PI)) * 1.4f * limbDistance;
 		rHindleg.pitch = MathHelper.cos(limbAngle * 2 / 3f) * 1.4f * limbDistance;
-		tail.roll = (MathHelper.cos(limbAngle * 2 / 3f) * limbDistance) + MathHelper.sin((animationProgress + entity.getEntityId()) * 1 / 8F) * 0.25f;
+		tail.roll = (MathHelper.cos(limbAngle * 2 / 3f) * limbDistance) + MathHelper.sin((animationProgress + entity.getEntityId()) * 1 / 8f) * 0.25f;
 	}
 	
 	@Override

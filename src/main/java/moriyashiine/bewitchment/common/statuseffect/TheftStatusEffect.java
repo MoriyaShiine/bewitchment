@@ -9,6 +9,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.util.registry.Registry;
 
+@SuppressWarnings("ConstantConditions")
 public class TheftStatusEffect extends StatusEffect {
 	public TheftStatusEffect(StatusEffectType type, int color) {
 		super(type, color);
@@ -24,7 +25,6 @@ public class TheftStatusEffect extends StatusEffect {
 		if (entity.age % 20 == 0) {
 			entity.world.getEntitiesByClass(LivingEntity.class, entity.getBoundingBox().expand(3 * (amplifier + 1)), livingEntity -> livingEntity != entity).forEach(livingEntity -> Registry.STATUS_EFFECT.stream().forEach(effect -> {
 				if (effect != this && ((StatusEffectAccessor) effect).bw_getType() == StatusEffectType.BENEFICIAL && livingEntity.hasStatusEffect(effect)) {
-					//noinspection ConstantConditions
 					entity.addStatusEffect(new StatusEffectInstance(livingEntity.getStatusEffect(effect).getEffectType(), livingEntity.getStatusEffect(effect).getDuration() / 2, livingEntity.getStatusEffect(effect).getAmplifier()));
 					livingEntity.removeStatusEffect(effect);
 				}

@@ -2,6 +2,7 @@ package moriyashiine.bewitchment.common.entity.living;
 
 import moriyashiine.bewitchment.common.entity.living.util.BWTameableEntity;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
+import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.*;
@@ -9,6 +10,7 @@ import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -16,10 +18,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("ConstantConditions")
 public class ToadEntity extends BWTameableEntity {
 	public ToadEntity(EntityType<? extends TameableEntity> type, World world) {
 		super(type, world);
@@ -64,6 +68,22 @@ public class ToadEntity extends BWTameableEntity {
 		return child;
 	}
 	
+	@Nullable
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return BWSoundEvents.ENTITY_TOAD_AMBIENT;
+	}
+	
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return BWSoundEvents.ENTITY_TOAD_HURT;
+	}
+	
+	@Override
+	protected SoundEvent getDeathSound() {
+		return BWSoundEvents.ENTITY_TOAD_DEATH;
+	}
+	
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
 		return stack.getItem() == Items.SPIDER_EYE;
@@ -78,7 +98,6 @@ public class ToadEntity extends BWTameableEntity {
 	protected void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition) {
 	}
 	
-	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void setTamed(boolean tamed) {
 		super.setTamed(tamed);

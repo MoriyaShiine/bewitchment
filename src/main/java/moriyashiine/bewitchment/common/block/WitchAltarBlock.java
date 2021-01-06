@@ -9,14 +9,14 @@ import moriyashiine.bewitchment.common.registry.BWTags;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.server.PlayerStream;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
@@ -26,6 +26,7 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -36,6 +37,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("ConstantConditions")
 public class WitchAltarBlock extends Block implements BlockEntityProvider, Waterloggable {
 	private static final VoxelShape SHAPE = VoxelShapes.union(createCuboidShape(0, 0, 0, 16, 2, 16), createCuboidShape(1, 2, 1, 15, 5, 15), createCuboidShape(2, 5, 2, 14, 10, 14), createCuboidShape(1, 10, 1, 15, 12, 15), createCuboidShape(0, 12, 0, 16, 16, 16));
 	
@@ -77,51 +79,44 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 					}
 					Direction facing = world.getBlockState(pos).get(Properties.HORIZONTAL_FACING);
 					world.breakBlock(pos, false);
-					//noinspection ConstantConditions
 					world.setBlockState(pos, entry.formed.getPlacementState(new ItemPlacementContext(player, hand, stack, hit)).with(Properties.HORIZONTAL_FACING, facing));
 				}
 				return ActionResult.success(client);
 			}
 		}
 		else {
-			BlockEntity entity = world.getBlockEntity(pos);
-			if (entity instanceof WitchAltarBlockEntity) {
-				WitchAltarBlockEntity altar = (WitchAltarBlockEntity) entity;
-				if (!client) {
-					if (!stack.isEmpty()) {
-						Item item = stack.getItem();
-						boolean sword = BWTags.SWORDS.contains(item);
-						boolean pentacle = BWTags.PENTACLES.contains(item);
-						boolean wand = BWTags.WANDS.contains(item);
-						if (sword || pentacle || wand) {
-							int slot = sword ? 0 : pentacle ? 1 : 2;
-							ItemStack upgrade = altar.removeStack(slot, 1);
-							world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, upgrade));
-							altar.setStack(slot, stack.split(1));
-							world.setBlockState(pos, state.with(Properties.LEVEL_15, calculateLuminance(altar)), 11);
-							world.updateComparators(pos, this);
-							altar.markedForScan = true;
-							altar.sync();
-						}
-					}
-					else {
-						if (player.isSneaking()) {
-							for (int i = 0; i < altar.size(); i++) {
-								world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, altar.removeStack(i, 1)));
-							}
-							world.setBlockState(pos, state.with(Properties.LEVEL_15, 0), 11);
-							world.updateComparators(pos, this);
-							altar.markedForScan = true;
-							altar.sync();
-							PlayerStream.watching(altar).forEach(playerEntity -> SyncWitchAltarBlockEntity.send(player, altar));
-						}
-						else {
-							player.sendMessage(new LiteralText(altar.power + " / " + altar.maxPower + " (" + altar.gain + "x)"), true);
-						}
+			WitchAltarBlockEntity blockEntity = (WitchAltarBlockEntity) world.getBlockEntity(pos);
+			if (!client) {
+				if (!stack.isEmpty()) {
+					Item item = stack.getItem();
+					boolean sword = BWTags.SWORDS.contains(item);
+					boolean pentacle = BWTags.PENTACLES.contains(item);
+					boolean wand = BWTags.WANDS.contains(item);
+					if (sword || pentacle || wand) {
+						int slot = sword ? 0 : pentacle ? 1 : 2;
+						ItemScatterer.spawn(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, blockEntity.removeStack(slot, 1));
+						blockEntity.setStack(slot, stack.split(1));
+						world.setBlockState(pos, state.with(Properties.LEVEL_15, calculateLuminance(blockEntity)), 11);
+						world.updateComparators(pos, this);
+						blockEntity.markedForScan = true;
+						blockEntity.sync();
 					}
 				}
-				return ActionResult.success(client);
+				else {
+					if (player.isSneaking()) {
+						ItemScatterer.spawn(world, pos.add(0, 1, 0), blockEntity);
+						world.setBlockState(pos, state.with(Properties.LEVEL_15, 0), 11);
+						world.updateComparators(pos, this);
+						blockEntity.markedForScan = true;
+						blockEntity.sync();
+						PlayerLookup.tracking(blockEntity).forEach(playerEntity -> SyncWitchAltarBlockEntity.send(player, blockEntity));
+					}
+					else {
+						player.sendMessage(new LiteralText(blockEntity.power + " / " + blockEntity.maxPower + " (" + blockEntity.gain + "x)"), true);
+					}
+				}
 			}
+			return ActionResult.success(client);
 		}
 		return super.onUse(state, world, pos, player, hand, hit);
 	}
@@ -135,7 +130,6 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 		return super.getPickStack(world, pos, state);
 	}
 	
-	@SuppressWarnings("ConstantConditions")
 	@Nullable
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
@@ -162,12 +156,11 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 	
 	@Override
 	public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
-		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity instanceof WitchAltarBlockEntity) {
-			WitchAltarBlockEntity altar = (WitchAltarBlockEntity) blockEntity;
+		if (formed) {
+			WitchAltarBlockEntity blockEntity = (WitchAltarBlockEntity) world.getBlockEntity(pos);
 			int items = 0;
-			for (int i = 0; i < altar.size(); i++) {
-				if (!altar.getStack(i).isEmpty()) {
+			for (int i = 0; i < blockEntity.size(); i++) {
+				if (!blockEntity.getStack(i).isEmpty()) {
 					items++;
 				}
 			}
@@ -210,11 +203,8 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 				}
 			}
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof WitchAltarBlockEntity) {
-				WitchAltarBlockEntity altar = (WitchAltarBlockEntity) blockEntity;
-				for (int i = 0; i < altar.size(); i++) {
-					world.spawnEntity(new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, altar.removeStack(i, 1)));
-				}
+			if (blockEntity instanceof Inventory) {
+				ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
 			}
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);
@@ -261,22 +251,13 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 		Item pentacle = blockEntity.getStack(1).getItem();
 		Item wand = blockEntity.getStack(2).getItem();
 		if (sword instanceof BlockItem) {
-			int blockLuminance = ((BlockItem) sword).getBlock().getDefaultState().getLuminance();
-			if (blockLuminance > luminance) {
-				luminance = blockLuminance;
-			}
+			luminance = Math.max(luminance, ((BlockItem) sword).getBlock().getDefaultState().getLuminance());
 		}
 		if (pentacle instanceof BlockItem) {
-			int blockLuminance = ((BlockItem) pentacle).getBlock().getDefaultState().getLuminance();
-			if (blockLuminance > luminance) {
-				luminance = blockLuminance;
-			}
+			luminance = Math.max(luminance, ((BlockItem) pentacle).getBlock().getDefaultState().getLuminance());
 		}
 		if (wand instanceof BlockItem) {
-			int blockLuminance = ((BlockItem) wand).getBlock().getDefaultState().getLuminance();
-			if (blockLuminance > luminance) {
-				luminance = blockLuminance;
-			}
+			luminance = Math.max(luminance, ((BlockItem) wand).getBlock().getDefaultState().getLuminance());
 		}
 		return luminance;
 	}

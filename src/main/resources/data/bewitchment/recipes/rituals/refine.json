@@ -1,0 +1,15 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:fiery_serum"
+	},
+	{
+	  "item": "blaze_rod"
+	}
+  ],
+  "inner": "fiery",
+  "ritual_function": "bewitchment:smelt_items",
+  "cost": 600,
+  "running_time": 6000
+}

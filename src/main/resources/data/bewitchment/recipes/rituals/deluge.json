@@ -1,0 +1,14 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:aqua_cerate"
+	},
+	{
+	  "item": "water_bucket"
+	}
+  ],
+  "inner": "normal",
+  "ritual_function": "bewitchment:start_rain",
+  "cost": 150
+}

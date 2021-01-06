@@ -1,0 +1,11 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "bewitchment:demon_horn"
+	}
+  ],
+  "result": {
+	"item": "blaze_powder"
+  }
+}

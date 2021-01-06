@@ -1,7 +1,9 @@
 package moriyashiine.bewitchment.mixin;
 
+import moriyashiine.bewitchment.api.interfaces.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.MagicAccessor;
 import moriyashiine.bewitchment.api.interfaces.PolymorphAccessor;
+import moriyashiine.bewitchment.common.registry.BWContracts;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.entity.EntityType;
@@ -25,6 +27,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Optional;
 import java.util.UUID;
 
+@SuppressWarnings("ConstantConditions")
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements MagicAccessor, PolymorphAccessor {
 	private static final TrackedData<Integer> MAGIC = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
@@ -90,12 +93,23 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	@Inject(method = "eatFood", at = @At("HEAD"))
 	private void eatFood(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> callbackInfo) {
 		if (hasStatusEffect(BWStatusEffects.NOURISHING)) {
-			//noinspection ConstantConditions
 			getHungerManager().add(getStatusEffect(BWStatusEffects.NOURISHING).getAmplifier() + 2, 0.5f);
 		}
 		FoodComponent foodComponent = stack.getItem().getFoodComponent();
-		if (foodComponent != null && BWTags.WITCHBERRY_FOODS.contains(stack.getItem())) {
-			MagicAccessor.of((PlayerEntity) (Object) this).ifPresent(magicAccessor -> magicAccessor.fillMagic(foodComponent.getHunger() * 100, false));
+		if (foodComponent != null) {
+			if (BWTags.WITCHBERRY_FOODS.contains(stack.getItem())) {
+				MagicAccessor.of(this).ifPresent(magicAccessor -> magicAccessor.fillMagic(foodComponent.getHunger() * 100, false));
+			}
+			ContractAccessor.of(this).ifPresent(contractAccessor -> {
+				if (contractAccessor.hasContract(BWContracts.GLUTTONY)) {
+					if (contractAccessor.hasNegativeEffects() && random.nextFloat() < 1 / 10f) {
+						getHungerManager().add(-foodComponent.getHunger(), foodComponent.getSaturationModifier());
+					}
+					else {
+						getHungerManager().add(foodComponent.getHunger(), 0);
+					}
+				}
+			});
 		}
 	}
 	
@@ -109,8 +123,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
 	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
 		tag.putInt("Magic", getMagic());
-		boolean present = getPolymorphUUID().isPresent();
-		tag.putString("PolymorphUUID", present ? getPolymorphUUID().get().toString() : "");
+		tag.putString("PolymorphUUID", getPolymorphUUID().isPresent() ? getPolymorphUUID().get().toString() : "");
 		tag.putString("PolymorphName", getPolymorphName());
 	}
 	

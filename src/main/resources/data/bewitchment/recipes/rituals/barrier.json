@@ -1,0 +1,16 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:heaven_extract"
+	},
+	{
+	  "tag": "c:salt_dusts"
+	}
+  ],
+  "inner": "normal",
+  "outer": "normal",
+  "ritual_function": "bewitchment:push_mobs",
+  "cost": 300,
+  "running_time": 12000
+}

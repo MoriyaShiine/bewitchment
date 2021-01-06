@@ -1,0 +1,18 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:earth_ichor"
+	},
+	{
+	  "item": "bone_block"
+	},
+	{
+	  "item": "wheat"
+	}
+  ],
+  "inner": "normal",
+  "outer": "normal",
+  "ritual_function": "bewitchment:grow",
+  "cost": 300
+}

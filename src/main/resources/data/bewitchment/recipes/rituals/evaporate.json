@@ -1,0 +1,18 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:fiery_serum"
+	},
+	{
+	  "item": "lava_bucket"
+	},
+	{
+	  "item": "netherrack"
+	}
+  ],
+  "inner": "fiery",
+  "outer": "fiery",
+  "ritual_function": "bewitchment:drain_water",
+  "cost": 300
+}

@@ -1,0 +1,17 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "bewitchment:chalk"
+	},
+	{
+	  "item": "bewitchment:grim_elixir"
+	},
+	{
+	  "item": "bewitchment:aqua_cerate"
+	}
+  ],
+  "result": {
+	"item": "bewitchment:eldritch_chalk"
+  }
+}

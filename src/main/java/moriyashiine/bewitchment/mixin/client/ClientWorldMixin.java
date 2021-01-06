@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 import java.util.function.Supplier;
 
+@SuppressWarnings("ConstantConditions")
 @Environment(EnvType.CLIENT)
 @Mixin(ClientWorld.class)
 public abstract class ClientWorldMixin extends World {
@@ -33,7 +34,6 @@ public abstract class ClientWorldMixin extends World {
 		if (category != SoundCategory.MASTER && category != SoundCategory.VOICE) {
 			PlayerEntity clientPlayer = MinecraftClient.getInstance().player;
 			if (clientPlayer != null && clientPlayer.hasStatusEffect(BWStatusEffects.DEAFENED)) {
-				//noinspection ConstantConditions
 				return Math.max(0, volume * (1 - (0.2f * (clientPlayer.getStatusEffect(BWStatusEffects.DEAFENED).getAmplifier() + 1))));
 			}
 		}
@@ -45,7 +45,6 @@ public abstract class ClientWorldMixin extends World {
 		if (category != SoundCategory.MASTER && category != SoundCategory.VOICE) {
 			PlayerEntity clientPlayer = MinecraftClient.getInstance().player;
 			if (clientPlayer != null && clientPlayer.hasStatusEffect(BWStatusEffects.DEAFENED)) {
-				//noinspection ConstantConditions
 				return Math.max(0, volume * (1 - (0.2f * (clientPlayer.getStatusEffect(BWStatusEffects.DEAFENED).getAmplifier() + 1))));
 			}
 		}

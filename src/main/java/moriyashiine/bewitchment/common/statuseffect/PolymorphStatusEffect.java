@@ -19,18 +19,18 @@ public class PolymorphStatusEffect extends StatusEffect {
 	@Override
 	public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
 		if (entity instanceof PlayerEntity) {
-			//			PolymorphAccessor.of((PlayerEntity) entity).ifPresent(polymorphAccessor -> polymorphAccessor.getPolymorphUUID().ifPresent(uuid -> Impersonator.get((PlayerEntity) entity).impersonate(IMPERSONATE_IDENTIFIER, new GameProfile(uuid, polymorphAccessor.getPolymorphName()))));
+			//			PolymorphAccessor.of(entity).ifPresent(polymorphAccessor -> polymorphAccessor.getPolymorphUUID().ifPresent(uuid -> Impersonator.get((PlayerEntity) entity).impersonate(IMPERSONATE_IDENTIFIER, new GameProfile(uuid, polymorphAccessor.getPolymorphName()))));
 		}
 	}
 	
 	@Override
 	public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-		if (entity instanceof PlayerEntity) {
-			PolymorphAccessor.of((PlayerEntity) entity).ifPresent(polymorphAccessor -> {
-				polymorphAccessor.setPolymorphUUID(Optional.empty());
-				polymorphAccessor.setPolymorphName("");
-			});
-			//			Impersonator.get((PlayerEntity) entity).stopImpersonation(IMPERSONATE_IDENTIFIER);
-		}
+		PolymorphAccessor.of(entity).ifPresent(polymorphAccessor -> {
+			polymorphAccessor.setPolymorphUUID(Optional.empty());
+			polymorphAccessor.setPolymorphName("");
+			if (entity instanceof PlayerEntity) {
+				//			Impersonator.get((PlayerEntity) entity).stopImpersonation(IMPERSONATE_IDENTIFIER);
+			}
+		});
 	}
 }

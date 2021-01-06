@@ -2,6 +2,7 @@ package moriyashiine.bewitchment.common.registry;
 
 import com.google.common.collect.ImmutableList;
 import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.entity.living.HellhoundEntity;
 import moriyashiine.bewitchment.common.world.generator.tree.decorator.LeaveSpanishMossTreeDecorator;
 import moriyashiine.bewitchment.mixin.TreeDecoratorTypeAccessor;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
@@ -9,13 +10,16 @@ import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import net.fabricmc.fabric.impl.biome.modification.BiomeModificationImpl;
+import net.fabricmc.fabric.mixin.object.builder.SpawnRestrictionAccessor;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.entry.LootTableEntry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.UniformIntDistribution;
@@ -77,6 +81,8 @@ public class BWWorldGenerators {
 		BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> Bewitchment.config.toadBiomeCategories.contains(context.getBiome().getCategory().getName())), BWEntityTypes.TOAD.getSpawnGroup(), BWEntityTypes.TOAD, Bewitchment.config.toadWeight, Bewitchment.config.toadMinGroupCount, Bewitchment.config.toadMaxGroupCount);
 		BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> !context.getBiome().getSpawnSettings().getSpawnEntry(BWEntityTypes.GHOST.getSpawnGroup()).isEmpty() && context.getBiome().getCategory() != Biome.Category.OCEAN), BWEntityTypes.GHOST.getSpawnGroup(), BWEntityTypes.GHOST, Bewitchment.config.ghostWeight, Bewitchment.config.ghostMinGroupCount, Bewitchment.config.ghostMaxGroupCount);
 		BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> !context.getBiome().getSpawnSettings().getSpawnEntry(BWEntityTypes.BLACK_DOG.getSpawnGroup()).isEmpty() && context.getBiome().getCategory() != Biome.Category.OCEAN), BWEntityTypes.BLACK_DOG.getSpawnGroup(), BWEntityTypes.BLACK_DOG, Bewitchment.config.blackDogWeight, Bewitchment.config.blackDogMinGroupCount, Bewitchment.config.blackDogMaxGroupCount);
+		BiomeModifications.addSpawn(BiomeSelectors.foundInTheNether().and(context -> !context.getBiome().getSpawnSettings().getSpawnEntry(BWEntityTypes.HELLHOUND.getSpawnGroup()).isEmpty()), BWEntityTypes.HELLHOUND.getSpawnGroup(), BWEntityTypes.HELLHOUND, Bewitchment.config.hellhoundWeight, Bewitchment.config.hellhoundMinGroupCount, Bewitchment.config.hellhoundMaxGroupCount);
+		SpawnRestrictionAccessor.callRegister(BWEntityTypes.HELLHOUND, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HellhoundEntity::canSpawn);
 		LootTableLoadingCallback.EVENT.register((resourceManager, lootManager, identifier, fabricLootSupplierBuilder, lootTableSetter) -> {
 			Identifier seeds = new Identifier(Bewitchment.MODID, "inject/seeds");
 			Identifier nether_fortress = new Identifier(Bewitchment.MODID, "inject/nether_fortress");

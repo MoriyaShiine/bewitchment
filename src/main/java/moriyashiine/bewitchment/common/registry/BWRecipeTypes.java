@@ -1,13 +1,11 @@
 package moriyashiine.bewitchment.common.registry;
 
-import moriyashiine.bewitchment.api.registry.AthameDropRecipe;
-import moriyashiine.bewitchment.api.registry.AthameStrippingRecipe;
-import moriyashiine.bewitchment.api.registry.CauldronBrewingRecipe;
-import moriyashiine.bewitchment.api.registry.OilRecipe;
 import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.recipe.*;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.SpecialRecipeSerializer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -24,11 +22,17 @@ public class BWRecipeTypes {
 	public static final RecipeSerializer<AthameDropRecipe> ATHAME_DROP_RECIPE_SERIALIZER = create("athame_drop", new AthameDropRecipe.Serializer());
 	public static final RecipeType<AthameDropRecipe> ATHAME_DROP_RECIPE_TYPE = create("athame_drop");
 	
+	public static final RecipeSerializer<RitualRecipe> RITUAL_RECIPE_SERIALIZER = create("ritual_recipe", new RitualRecipe.Serializer());
+	public static final RecipeType<RitualRecipe> RITUAL_RECIPE_TYPE = create("ritual_recipe");
+	
 	public static final RecipeSerializer<OilRecipe> OIL_RECIPE_SERIALIZER = create("oil_recipe", new OilRecipe.Serializer());
 	public static final RecipeType<OilRecipe> OIL_RECIPE_TYPE = create("oil_recipe");
 	
 	public static final RecipeSerializer<CauldronBrewingRecipe> CAULDRON_BREWING_RECIPE_SERIALIZER = create("cauldron_brewing_recipe", new CauldronBrewingRecipe.Serializer());
 	public static final RecipeType<CauldronBrewingRecipe> CAULDRON_BREWING_RECIPE_TYPE = create("cauldron_brewing_recipe");
+	
+	public static final RecipeSerializer<TaglockCraftingRecipe> TAGLOCK_CRAFTING_SERIALIZER = create("taglock_crafting", new SpecialRecipeSerializer<>(TaglockCraftingRecipe::new));
+	public static final RecipeSerializer<ScepterCraftingRecipe> SCEPTER_CRAFTING_SERIALIZER = create("scepter_crafting", new SpecialRecipeSerializer<>(ScepterCraftingRecipe::new));
 	
 	private static <T extends Recipe<?>> RecipeSerializer<T> create(String name, RecipeSerializer<T> serializer) {
 		RECIPE_SERIALIZERS.put(serializer, new Identifier(Bewitchment.MODID, name));

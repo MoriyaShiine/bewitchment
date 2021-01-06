@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -15,7 +16,6 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -39,23 +39,26 @@ public class TaglockItem extends Item {
 		World world = context.getWorld();
 		BlockPos pos = context.getBlockPos();
 		if (world.getBlockState(pos).getBlock() instanceof BedBlock) {
-			PlayerEntity player = context.getPlayer();
-			if (player != null && player.isSneaking()) {
-				MinecraftServer server = world.getServer();
-				if (server != null) {
-					PlayerEntity earliestSleeper = null;
-					for (ServerPlayerEntity playerEntity : server.getPlayerManager().getPlayerList()) {
-						BlockPos bedPos = playerEntity.getSpawnPointPosition();
-						if (bedPos != null && bedPos.equals(pos) && (earliestSleeper == null || playerEntity.getSleepTimer() < earliestSleeper.getSleepTimer())) {
-							earliestSleeper = playerEntity;
+			boolean client = world.isClient;
+			if (!client) {
+				PlayerEntity player = context.getPlayer();
+				if (player != null && player.isSneaking()) {
+					MinecraftServer server = world.getServer();
+					if (server != null) {
+						PlayerEntity earliestSleeper = null;
+						for (ServerPlayerEntity playerEntity : server.getPlayerManager().getPlayerList()) {
+							BlockPos bedPos = playerEntity.getSpawnPointPosition();
+							if (bedPos != null && bedPos.equals(pos) && (earliestSleeper == null || playerEntity.getSleepTimer() < earliestSleeper.getSleepTimer())) {
+								earliestSleeper = playerEntity;
+							}
 						}
-					}
-					if (earliestSleeper != null) {
-						return useTaglock(player, earliestSleeper, context.getHand(), false);
+						if (earliestSleeper != null) {
+							return useTaglock(player, earliestSleeper, context.getHand(), false);
+						}
 					}
 				}
 			}
-			return ActionResult.success(world.isClient);
+			return ActionResult.success(client);
 		}
 		return super.useOnBlock(context);
 	}
@@ -68,7 +71,7 @@ public class TaglockItem extends Item {
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		if (stack.hasTag()) {
+		if (stack.hasTag() && stack.getOrCreateTag().contains("OwnerName")) {
 			tooltip.add(new LiteralText(stack.getOrCreateTag().getString("OwnerName")).setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
 		}
 	}
@@ -89,7 +92,7 @@ public class TaglockItem extends Item {
 					if (entity instanceof PlayerEntity) {
 						((PlayerEntity) entity).sendMessage(new TranslatableText("bewitchment.taglock_fail", user.getDisplayName().getString()), false);
 					}
-					user.world.playSound(null, entity.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1, 1);
+					user.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_PLING, SoundCategory.PLAYERS, 1, 1);
 					return ActionResult.FAIL;
 				}
 			}

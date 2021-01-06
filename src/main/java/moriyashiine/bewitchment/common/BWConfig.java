@@ -44,4 +44,8 @@ public class BWConfig implements ConfigData {
 	public int blackDogWeight = 10;
 	public int blackDogMinGroupCount = 1;
 	public int blackDogMaxGroupCount = 1;
+	
+	public int hellhoundWeight = 6;
+	public int hellhoundMinGroupCount = 1;
+	public int hellhoundMaxGroupCount = 1;
 }

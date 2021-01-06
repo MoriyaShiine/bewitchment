@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.statuseffect;
 
-import net.fabricmc.fabric.api.server.PlayerStream;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectType;
@@ -26,14 +26,14 @@ public class SinkingStatusEffect extends StatusEffect {
 			float amount = 0.05f * (amplifier + 1);
 			if (!entity.isOnGround() && velocity.getY() < 0) {
 				entity.setVelocity(velocity.multiply(1, 1 + amount, 1));
-				PlayerStream.watching(entity).forEach(playerEntity -> ((ServerPlayerEntity) playerEntity).networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(entity)));
+				PlayerLookup.tracking(entity).forEach(playerEntity -> playerEntity.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(entity)));
 				if (entity instanceof PlayerEntity) {
 					((ServerPlayerEntity) entity).networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(entity));
 				}
 			}
 			if (entity.isTouchingWater()) {
 				entity.setVelocity(velocity.add(0, -amount / 2, 0));
-				PlayerStream.watching(entity).forEach(playerEntity -> ((ServerPlayerEntity) playerEntity).networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(entity)));
+				PlayerLookup.tracking(entity).forEach(playerEntity -> playerEntity.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(entity)));
 				if (entity instanceof PlayerEntity) {
 					((ServerPlayerEntity) entity).networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(entity));
 				}

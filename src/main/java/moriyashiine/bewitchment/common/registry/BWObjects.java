@@ -11,8 +11,7 @@ import moriyashiine.bewitchment.common.block.util.BWCarpetBlock;
 import moriyashiine.bewitchment.common.block.util.BWCropBlock;
 import moriyashiine.bewitchment.common.block.util.BWOreBlock;
 import moriyashiine.bewitchment.common.block.util.BWSaplingBlock;
-import moriyashiine.bewitchment.common.item.BottleOfBloodItem;
-import moriyashiine.bewitchment.common.item.TaglockItem;
+import moriyashiine.bewitchment.common.item.*;
 import moriyashiine.bewitchment.common.item.tool.AthameItem;
 import moriyashiine.bewitchment.common.item.tool.SilverArrowItem;
 import moriyashiine.bewitchment.common.item.tool.util.BWAxeItem;
@@ -30,9 +29,11 @@ import net.minecraft.block.*;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
 
 import java.util.LinkedHashMap;
@@ -47,6 +48,10 @@ public class BWObjects {
 	//misc_no_item
 	public static final Block SALT_LINE = create("salt_line", new SaltLineBlock(copyOf(Blocks.REDSTONE_WIRE)), false);
 	public static final Block TEMPORARY_COBWEB = create("temporary_cobweb", new TemporaryCobwebBlock(copyOf(Blocks.COBWEB).dropsNothing().ticksRandomly()), false);
+	public static final Block GOLDEN_GLYPH = create("golden_glyph", new GlyphBlock(FabricBlockSettings.of(Material.SUPPORTED).sounds(new BlockSoundGroup(1, 1, SoundEvents.BLOCK_STONE_BREAK, SoundEvents.BLOCK_STONE_STEP, BWSoundEvents.BLOCK_GLPYH_PLACE, SoundEvents.BLOCK_STONE_HIT, SoundEvents.BLOCK_STONE_FALL)).noCollision().dropsNothing().strength(1, 0)), false);
+	public static final Block GLYPH = create("glyph", new GlyphBlock(copyOf(GOLDEN_GLYPH)), false);
+	public static final Block FIERY_GLYPH = create("fiery_glyph", new GlyphBlock(copyOf(GOLDEN_GLYPH).luminance(4)), false);
+	public static final Block ELDRITCH_GLYPH = create("eldritch_glyph", new GlyphBlock(copyOf(GOLDEN_GLYPH).luminance(2)), false);
 	//crop
 	public static final Block ACONITE_CROP = create("aconite", new BWCropBlock(copyOf(Blocks.WHEAT)), false);
 	public static final Block BELLADONNA_CROP = create("belladonna", new BWCropBlock(copyOf(ACONITE_CROP)), false);
@@ -197,6 +202,18 @@ public class BWObjects {
 	public static final Item SILVER_CHESTPLATE = create("silver_chestplate", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.CHEST, gen()));
 	public static final Item SILVER_LEGGINGS = create("silver_leggings", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.LEGS, gen()));
 	public static final Item SILVER_BOOTS = create("silver_boots", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.FEET, gen()));
+	public static final Item HEDGEWITCH_HOOD = create("hedgewitch_hood", new ArmorItem(BWMaterials.HEDGEWITCH_ARMOR, EquipmentSlot.HEAD, gen()));
+	public static final Item HEDGEWITCH_HAT = create("hedgewitch_hat", new ArmorItem(BWMaterials.HEDGEWITCH_ARMOR, EquipmentSlot.HEAD, gen()));
+	public static final Item HEDGEWITCH_ROBES = create("hedgewitch_robes", new ArmorItem(BWMaterials.HEDGEWITCH_ARMOR, EquipmentSlot.CHEST, gen()));
+	public static final Item HEDGEWITCH_PANTS = create("hedgewitch_pants", new ArmorItem(BWMaterials.HEDGEWITCH_ARMOR, EquipmentSlot.LEGS, gen()));
+	public static final Item ALCHEMIST_HOOD = create("alchemist_hood", new ArmorItem(BWMaterials.ALCHEMIST_ARMOR, EquipmentSlot.HEAD, gen()));
+	public static final Item ALCHEMIST_HAT = create("alchemist_hat", new ArmorItem(BWMaterials.ALCHEMIST_ARMOR, EquipmentSlot.HEAD, gen()));
+	public static final Item ALCHEMIST_ROBES = create("alchemist_robes", new ArmorItem(BWMaterials.ALCHEMIST_ARMOR, EquipmentSlot.CHEST, gen()));
+	public static final Item ALCHEMIST_PANTS = create("alchemist_pants", new ArmorItem(BWMaterials.ALCHEMIST_ARMOR, EquipmentSlot.LEGS, gen()));
+	public static final Item BESMIRCHED_HOOD = create("besmirched_hood", new ArmorItem(BWMaterials.BESMIRCHED_ARMOR, EquipmentSlot.HEAD, gen()));
+	public static final Item BESMIRCHED_HAT = create("besmirched_hat", new ArmorItem(BWMaterials.BESMIRCHED_ARMOR, EquipmentSlot.HEAD, gen()));
+	public static final Item BESMIRCHED_ROBES = create("besmirched_robes", new ArmorItem(BWMaterials.BESMIRCHED_ARMOR, EquipmentSlot.CHEST, gen()));
+	public static final Item BESMIRCHED_PANTS = create("besmirched_pants", new ArmorItem(BWMaterials.BESMIRCHED_ARMOR, EquipmentSlot.LEGS, gen()));
 	//tool
 	public static final Item SILVER_SWORD = create("silver_sword", new SwordItem(BWMaterials.SILVER_TOOL, 3, -2.4f, gen()));
 	public static final Item SILVER_PICKAXE = create("silver_pickaxe", new BWPickaxeItem(BWMaterials.SILVER_TOOL, 1, -2.8f, gen()));
@@ -205,7 +222,15 @@ public class BWObjects {
 	public static final Item SILVER_HOE = create("silver_hoe", new BWHoeItem(BWMaterials.SILVER_TOOL, -2, -3, gen()));
 	public static final Item ATHAME = create("athame", new AthameItem(BWMaterials.SILVER_TOOL, 1, -2, gen()));
 	public static final Item SILVER_ARROW = create("silver_arrow", new SilverArrowItem(gen()));
+	public static final Item CHALK = create("chalk", new ChalkItem(gen().maxDamage(128), GLYPH));
+	public static final Item GOLDEN_CHALK = create("golden_chalk", new ChalkItem(gen().maxDamage(128), GOLDEN_GLYPH));
+	public static final Item FIERY_CHALK = create("fiery_chalk", new ChalkItem(gen().maxDamage(128), FIERY_GLYPH));
+	public static final Item ELDRITCH_CHALK = create("eldritch_chalk", new ChalkItem(gen().maxDamage(128), ELDRITCH_GLYPH));
 	public static final Item TAGLOCK = create("taglock", new TaglockItem(gen()));
+	public static final Item WAYSTONE = create("waystone", new WaystoneItem(gen().maxDamage(3)));
+	public static final Item DEMONIC_CONTRACT = create("demonic_contract", new ContractItem(gen().rarity(Rarity.RARE).maxCount(1)));
+	public static final Item SCEPTER = create("scepter", new ScepterItem(gen().rarity(Rarity.RARE).maxCount(1).maxDamage(64)));
+	public static final Item CADUCEUS = create("caduceus", new CaduceusItem(ToolMaterials.DIAMOND, 3, -2.4f, gen().rarity(Rarity.RARE).maxCount(1)));
 	//material_item
 	public static final Item CLEANSING_BALM = create("cleansing_balm", new Item(gen().recipeRemainder(Items.GLASS_BOTTLE)));
 	public static final Item GRIM_ELIXIR = create("grim_elixir", new Item(gen().recipeRemainder(Items.GLASS_BOTTLE)));
@@ -233,12 +258,15 @@ public class BWObjects {
 	public static final Item DRAGONS_BLOOD_RESIN = create("dragons_blood_resin", new Item(gen()));
 	public static final Item SNAKE_TONGUE = create("snake_tongue", new Item(gen()));
 	public static final Item ECTOPLASM = create("ectoplasm", new Item(gen()));
+	public static final Item DEMON_HORN = create("demon_horn", new Item(gen()));
+	public static final Item DEMON_HEART = create("demon_heart", new Item(gen().food(BWFoodComponents.DEMON_HEART).rarity(Rarity.UNCOMMON)));
 	public static final Item BOTTLE_OF_BLOOD = create("bottle_of_blood", new BottleOfBloodItem(gen().maxCount(1).recipeRemainder(Items.GLASS_BOTTLE)));
 	public static final Item GRILLED_GARLIC = create("grilled_garlic", new Item(gen().food(FoodComponents.BAKED_POTATO)));
 	public static final Item GARLIC_BREAD = create("garlic_bread", new Item(gen().food(FoodComponents.PUMPKIN_PIE)));
 	public static final Item WITCHBERRY = create("witchberry", new Item(gen().food(BWFoodComponents.WITCHBERRY)));
 	public static final Item WITCHBERRY_PIE = create("witchberry_pie", new Item(gen().food(BWFoodComponents.WITCHBERRY_PIE)));
 	public static final Item WITCHBERRY_COOKIE = create("witchberry_cookie", new Item(gen().food(BWFoodComponents.WITCHBERRY_COOKIE)));
+	public static final Item GROTESQUE_STEW = create("grotesque_stew", new GrotestqueStew(gen().food(BWFoodComponents.DEMON_HEART).maxCount(1).recipeRemainder(Items.BOWL)));
 	//spawn_egg
 	public static final Item OWL_SPAWN_EGG = create("owl_spawn_egg", new SpawnEggItem(BWEntityTypes.OWL, 0x7f3f00, 0xc0c0c0, gen()));
 	public static final Item RAVEN_SPAWN_EGG = create("raven_spawn_egg", new SpawnEggItem(BWEntityTypes.RAVEN, 0x3f3f3f, 0x000000, gen()));
@@ -246,6 +274,10 @@ public class BWObjects {
 	public static final Item TOAD_SPAWN_EGG = create("toad_spawn_egg", new SpawnEggItem(BWEntityTypes.TOAD, 0x3f3f00, 0x00c200, gen()));
 	public static final Item GHOST_SPAWN_EGG = create("ghost_spawn_egg", new SpawnEggItem(BWEntityTypes.GHOST, 0xcacaca, 0x969696, gen()));
 	public static final Item BLACK_DOG_SPAWN_EGG = create("black_dog_spawn_egg", new SpawnEggItem(BWEntityTypes.BLACK_DOG, 0x141414, 0x212121, gen()));
+	public static final Item HELLHOUND_SPAWN_EGG = create("hellhound_spawn_egg", new SpawnEggItem(BWEntityTypes.HELLHOUND, 0xc82000, 0x802020, gen()));
+	public static final Item DEMON_SPAWN_EGG = create("demon_spawn_egg", new SpawnEggItem(BWEntityTypes.DEMON, 0x802020, 0xc82000, gen()));
+	public static final Item LEONARD_SPAWN_EGG = create("leonard_spawn_egg", new SpawnEggItem(BWEntityTypes.LEONARD, 0x5e3214, 0xa00303, gen()));
+	public static final Item BAPHOMET_SPAWN_EGG = create("baphomet_spawn_egg", new SpawnEggItem(BWEntityTypes.BAPHOMET, 0xa00303, 0x5e3214, gen()));
 	
 	private static <T extends Block> T create(String name, T block, boolean createItem) {
 		BLOCKS.put(block, new Identifier(Bewitchment.MODID, name));

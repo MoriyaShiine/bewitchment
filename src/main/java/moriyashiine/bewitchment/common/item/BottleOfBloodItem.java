@@ -52,7 +52,7 @@ public class BottleOfBloodItem extends Item {
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		if (stack.hasTag()) {
+		if (stack.hasTag() && stack.getOrCreateTag().contains("OwnerName")) {
 			tooltip.add(new LiteralText(stack.getOrCreateTag().getString("OwnerName")).setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
 		}
 	}

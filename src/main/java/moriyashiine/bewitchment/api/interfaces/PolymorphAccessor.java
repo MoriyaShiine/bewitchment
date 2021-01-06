@@ -1,13 +1,13 @@
 package moriyashiine.bewitchment.api.interfaces;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 
 import java.util.Optional;
 import java.util.UUID;
 
 public interface PolymorphAccessor {
-	static Optional<PolymorphAccessor> of(PlayerEntity player) {
-		return Optional.of(((PolymorphAccessor) player));
+	static Optional<PolymorphAccessor> of(LivingEntity entity) {
+		return Optional.of(((PolymorphAccessor) entity));
 	}
 	
 	Optional<UUID> getPolymorphUUID();

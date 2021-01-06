@@ -7,8 +7,8 @@ import java.util.Optional;
 public interface BloodAccessor {
 	int MAX_BLOOD = 100;
 	
-	static Optional<BloodAccessor> of(LivingEntity entty) {
-		return Optional.of(((BloodAccessor) entty));
+	static Optional<BloodAccessor> of(LivingEntity entity) {
+		return Optional.of(((BloodAccessor) entity));
 	}
 	
 	int getBlood();

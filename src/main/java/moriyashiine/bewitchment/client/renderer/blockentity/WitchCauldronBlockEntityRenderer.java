@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+@SuppressWarnings("ConstantConditions")
 @Environment(EnvType.CLIENT)
 public class WitchCauldronBlockEntityRenderer extends BlockEntityRenderer<WitchCauldronBlockEntity> {
 	private static final List<RenderLayer> PORTAL_LAYERS = IntStream.range(1, 16).mapToObj((i) -> RenderLayer.getEndPortal(i + 1)).collect(Collectors.toList());
@@ -68,7 +69,6 @@ public class WitchCauldronBlockEntityRenderer extends BlockEntityRenderer<WitchC
 		}
 	}
 	
-	@SuppressWarnings("ConstantConditions")
 	private void renderPortal(WitchCauldronBlockEntity entity, BlockPos pos, MatrixStack matrices, VertexConsumerProvider vertexConsumers) {
 		matrices.push();
 		double distance = pos.getSquaredDistance(dispatcher.camera.getPos(), true);

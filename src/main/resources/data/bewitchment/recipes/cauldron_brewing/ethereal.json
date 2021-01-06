@@ -1,7 +1,7 @@
 {
   "type": "bewitchment:cauldron_brewing_recipe",
   "ingredient": {
-	"item": "phantom_membrane"
+	"item": "bewitchment:ectoplasm"
   },
   "effect": "bewitchment:ethereal",
   "time": 200

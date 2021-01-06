@@ -2,7 +2,8 @@ package moriyashiine.bewitchment.common.entity.living;
 
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
-import net.fabricmc.fabric.api.server.PlayerStream;
+import moriyashiine.bewitchment.common.registry.BWSoundEvents;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -12,13 +13,13 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.IllagerEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
@@ -38,7 +39,7 @@ public class BlackDogEntity extends BWHostileEntity {
 	public void tick() {
 		super.tick();
 		if (!world.isClient && !hasCustomName() && world.isDay() && !world.isRaining() && world.isSkyVisibleAllowingSea(getBlockPos())) {
-			PlayerStream.watching(this).forEach(playerEntity -> SpawnSmokeParticlesPacket.send(playerEntity, this));
+			PlayerLookup.tracking(this).forEach(playerEntity -> SpawnSmokeParticlesPacket.send(playerEntity, this));
 			remove();
 		}
 	}
@@ -61,22 +62,17 @@ public class BlackDogEntity extends BWHostileEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundEvents.ENTITY_WOLF_GROWL;
+		return BWSoundEvents.ENTITY_BLACK_DOG_AMBIENT;
 	}
 	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.ENTITY_WOLF_HURT;
+		return BWSoundEvents.ENTITY_BLACK_DOG_HURT;
 	}
 	
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_WOLF_DEATH;
-	}
-	
-	@Override
-	protected float getSoundPitch() {
-		return 2 / 3f;
+		return BWSoundEvents.ENTITY_BLACK_DOG_DEATH;
 	}
 	
 	@Override
@@ -92,7 +88,8 @@ public class BlackDogEntity extends BWHostileEntity {
 		}
 		if (world instanceof ServerWorld) {
 			BlockPos nearestVillage = ((ServerWorld) world).locateStructure(StructureFeature.VILLAGE, getBlockPos(), 3, false);
-			return nearestVillage != null && Math.sqrt(nearestVillage.getSquaredDistance(getBlockPos())) < 256;
+			BlockPos nearestPillagerOutpost = ((ServerWorld) world).locateStructure(StructureFeature.PILLAGER_OUTPOST, getBlockPos(), 3, false);
+			return (nearestVillage != null && Math.sqrt(nearestVillage.getSquaredDistance(getBlockPos())) < 128) || (nearestPillagerOutpost != null && Math.sqrt(nearestPillagerOutpost.getSquaredDistance(getBlockPos())) < 128);
 		}
 		return false;
 	}
@@ -108,6 +105,6 @@ public class BlackDogEntity extends BWHostileEntity {
 		targetSelector.add(0, new RevengeGoal(this));
 		targetSelector.add(1, new FollowTargetGoal<>(this, PlayerEntity.class, true));
 		targetSelector.add(2, new FollowTargetGoal<>(this, IronGolemEntity.class, true));
-		targetSelector.add(3, new FollowTargetGoal<>(this, MerchantEntity.class, 10, true, false, entity -> entity instanceof MerchantEntity));
+		targetSelector.add(3, new FollowTargetGoal<>(this, MerchantEntity.class, 10, true, false, entity -> entity instanceof MerchantEntity || entity instanceof IllagerEntity));
 	}
 }

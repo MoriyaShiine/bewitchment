@@ -5,24 +5,32 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
 	"AbstractBlockStateMixin",
+	"AnimalMateGoalMixin",
+	"BlockMixin",
 	"BrewingRecipeRegistryMixin",
+	"DamageEnchantmentMixin",
+	"EntityMixin",
 	"EntityShapeContextMixin",
 	"EntityTypeMixin",
 	"ItemStackMixin",
 	"LandPathNodeMakerMixin",
 	"LivingEntityAccessor",
 	"LivingEntityMixin",
+	"MobEntityMixin",
 	"PlayerEntityMixin",
 	"PotionItemMixin",
 	"PounceAtTargetGoalMixin",
 	"ServerPlayerEntityMixin",
 	"SpawnHelperMixin",
 	"StatusEffectAccessor",
-	"TreeDecoratorTypeAccessor"
+	"TreeDecoratorTypeAccessor",
+	"VillagerEntityMixin",
+	"ZombieVillagerEntityAccessor"
   ],
   "client": [
 	"client.ClientPlayerEntityMixin",
 	"client.ClientWorldMixin",
+	"client.HeldItemFeatureRendererMixin",
 	"client.InGameHudMixin",
 	"client.TexturedRenderLayersMixin"
   ],

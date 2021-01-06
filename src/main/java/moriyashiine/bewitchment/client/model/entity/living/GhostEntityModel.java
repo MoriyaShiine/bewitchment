@@ -5,20 +5,21 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
+import net.minecraft.client.render.entity.model.CrossbowPosing;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
-public class GhostEntityModel<T extends GhostEntity> extends EntityModel<T> {
+public class GhostEntityModel<T extends GhostEntity> extends BipedEntityModel<T> {
 	private final ModelPart rightArm;
 	private final ModelPart head;
 	private final ModelPart body;
 	private final ModelPart bodyTrail00;
 	private final ModelPart leftArm;
-	private final ModelPart skull;
 	
 	public GhostEntityModel() {
+		super(1);
 		textureWidth = 64;
 		textureHeight = 64;
 		rightArm = new ModelPart(this);
@@ -62,9 +63,10 @@ public class GhostEntityModel<T extends GhostEntity> extends EntityModel<T> {
 		leftArm.addChild(lArmWisp);
 		lArmWisp.setTextureOffset(40, 34).addCuboid(-1.5F, -4.5F, 0.1F, 3.0F, 11.0F, 4.0F, 0.0F, true);
 		
-		skull = new ModelPart(this);
+		ModelPart skull = new ModelPart(this);
 		skull.setPivot(0.0F, 0.0F, 0.0F);
 		skull.setTextureOffset(34, 0).addCuboid(-3.5F, -7.5F, -3.0F, 7.0F, 5.0F, 6.0F, 0.0F, false);
+		head.addChild(skull);
 		
 		ModelPart skullJaw = new ModelPart(this);
 		skullJaw.setPivot(0.0F, -1.9F, 0.9F);
@@ -76,7 +78,6 @@ public class GhostEntityModel<T extends GhostEntity> extends EntityModel<T> {
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
 		head.render(matrices, vertices, light, overlay, red, green, blue, alpha);
-		skull.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		body.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		leftArm.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		rightArm.render(matrices, vertices, light, overlay, red, green, blue, alpha);
@@ -84,16 +85,16 @@ public class GhostEntityModel<T extends GhostEntity> extends EntityModel<T> {
 	
 	@Override
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-		head.pitch = (float) (headPitch * (Math.PI / 180f));
-		head.yaw = (float) (headYaw * (Math.PI / 180f)) * 2 / 3f;
+		super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
+		head.copyPositionAndRotation(super.head);
 		bodyTrail00.pitch = MathHelper.sin(animationProgress / 12) / 6;
-		leftArm.pitch = MathHelper.sin(animationProgress / 8) / 8;
-		rightArm.pitch = MathHelper.sin((float) (animationProgress / 8 + Math.PI)) / 8;
+		CrossbowPosing.method_29352(leftArm, rightArm, false, entity.handSwingProgress, animationProgress);
 		if (entity.getDataTracker().get(GhostEntity.HAS_TARGET)) {
-			leftArm.pitch += 3.25;
-			leftArm.roll = MathHelper.sin((float) (animationProgress + Math.PI)) / 2;
-			rightArm.pitch += 3.25;
+			rightArm.pitch += 4.5;
 			rightArm.roll = MathHelper.sin(animationProgress) / 2;
+			leftArm.pitch += 4.5;
+			leftArm.roll = -rightArm.roll;
+			
 		}
 		else {
 			leftArm.roll = -0.1f;

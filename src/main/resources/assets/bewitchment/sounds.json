@@ -1,0 +1,293 @@
+{
+  "block.glyph.place": {
+	"sounds": [
+	  "bewitchment:block/glyph/place1",
+	  "bewitchment:block/glyph/place2",
+	  "bewitchment:block/glyph/place3"
+	],
+	"subtitle": "subtitles.block.generic.place"
+  },
+  "block.glyph.fire": {
+	"sounds": [
+	  "random/fizz"
+	],
+	"subtitle": "bewitchment.subtitles.block.glyph.fire"
+  },
+  "block.glyph.fail": {
+	"sounds": [
+	  "note/snare"
+	],
+	"subtitle": "bewitchment.subtitles.block.glyph.fail"
+  },
+  "block.glyph.pling": {
+	"sounds": [
+	  "random/orb"
+	],
+	"subtitle": "bewitchment.subtitles.block.glyph.pling"
+  },
+  "item.athame.strip": {
+	"sounds": [
+	  {
+		"name": "item/axe/strip1",
+		"volume": 0.9
+	  },
+	  {
+		"name": "item/axe/strip2",
+		"volume": 0.9
+	  },
+	  {
+		"name": "item/axe/strip3",
+		"volume": 0.9
+	  },
+	  {
+		"name": "item/axe/strip4",
+		"volume": 0.9
+	  },
+	  {
+		"name": "item/axe/strip1",
+		"pitch": 0.85,
+		"volume": 0.9
+	  },
+	  {
+		"name": "item/axe/strip2",
+		"pitch": 0.85,
+		"volume": 0.9
+	  },
+	  {
+		"name": "item/axe/strip3",
+		"pitch": 0.85,
+		"volume": 0.9
+	  },
+	  {
+		"name": "item/axe/strip4",
+		"pitch": 0.85,
+		"volume": 0.9
+	  }
+	],
+	"subtitle": "bewitchment.subtitles.item.athame.strip"
+  },
+  "item.contract.use": {
+	"sounds": [
+	  {
+		"name": "mob/wither/spawn",
+		"pitch": 0.5
+	  }
+	],
+	"subtitle": "bewitchment.subtitles.item.contract.use"
+  },
+  "entity.generic.teleport": {
+	"sounds": [
+	  "mob/endermen/portal",
+	  "mob/endermen/portal2"
+	],
+	"subtitle": "bewitchment.subtitles.entity.generic.teleport"
+  },
+  "entity.generic.pling": {
+	"sounds": [
+	  "random/orb"
+	],
+	"subtitle": "bewitchment.subtitles.entity.generic.pling"
+  },
+  "entity.generic.shoot": {
+	"sounds": [
+	  "mob/ghast/fireball4"
+	],
+	"subtitle": "bewitchment.subtitles.entity.generic.shoot"
+  },
+  "entity.generic.pledge": {
+	"sounds": [
+	  "mob/wither/spawn"
+	],
+	"subtitle": "bewitchment.subtitles.entity.generic.pledge"
+  },
+  "entity.owl.ambient": {
+	"sounds": [
+	  "bewitchment:mob/owl/say1",
+	  "bewitchment:mob/owl/say2"
+	],
+	"subtitle": "bewitchment.subtitles.entity.owl.ambient"
+  },
+  "entity.owl.hurt": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.owl.hurt"
+  },
+  "entity.owl.death": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.owl.death"
+  },
+  "entity.owl.fly": {
+	"sounds": [
+	  "mob/parrot/fly1",
+	  "mob/parrot/fly2",
+	  "mob/parrot/fly3",
+	  "mob/parrot/fly4",
+	  "mob/parrot/fly5",
+	  "mob/parrot/fly6",
+	  "mob/parrot/fly7",
+	  "mob/parrot/fly8"
+	],
+	"subtitle": "bewitchment.subtitles.entity.owl.fly"
+  },
+  "entity.raven.ambient": {
+	"sounds": [
+	  "bewitchment:mob/raven/say1",
+	  "bewitchment:mob/raven/say2"
+	],
+	"subtitle": "bewitchment.subtitles.entity.raven.ambient"
+  },
+  "entity.raven.hurt": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.raven.hurt"
+  },
+  "entity.raven.death": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.raven.death"
+  },
+  "entity.raven.fly": {
+	"sounds": [
+	  "mob/parrot/fly1",
+	  "mob/parrot/fly2",
+	  "mob/parrot/fly3",
+	  "mob/parrot/fly4",
+	  "mob/parrot/fly5",
+	  "mob/parrot/fly6",
+	  "mob/parrot/fly7",
+	  "mob/parrot/fly8"
+	],
+	"subtitle": "bewitchment.subtitles.entity.raven.fly"
+  },
+  "entity.snake.ambient": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.snake.ambient"
+  },
+  "entity.snake.hurt": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.snake.hurt"
+  },
+  "entity.snake.death": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.snake.death"
+  },
+  "entity.toad.ambient": {
+	"sounds": [
+	  "bewitchment:mob/toad/say1",
+	  "bewitchment:mob/toad/say2",
+	  "bewitchment:mob/toad/say3"
+	],
+	"subtitle": "bewitchment.subtitles.entity.toad.ambient"
+  },
+  "entity.toad.hurt": {
+	"sounds": [
+	  "bewitchment:mob/toad/hurt1",
+	  "bewitchment:mob/toad/hurt2",
+	  "bewitchment:mob/toad/hurt3"
+	],
+	"subtitle": "bewitchment.subtitles.entity.toad.hurt"
+  },
+  "entity.toad.death": {
+	"sounds": [
+	  "bewitchment:mob/toad/death"
+	],
+	"subtitle": "bewitchment.subtitles.entity.toad.death"
+  },
+  "entity.ghost.ambient": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.ghost.ambient"
+  },
+  "entity.ghost.hurt": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.ghost.hurt"
+  },
+  "entity.ghost.death": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.ghost.death"
+  },
+  "entity.black_dog.ambient": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.black_dog.ambient"
+  },
+  "entity.black_dog.hurt": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.black_dog.hurt"
+  },
+  "entity.black_dog.death": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.black_dog.death"
+  },
+  "entity.hellhound.ambient": {
+	"sounds": [
+	  "bewitchment:mob/hellhound/say1",
+	  "bewitchment:mob/hellhound/say2",
+	  "bewitchment:mob/hellhound/say3"
+	],
+	"subtitle": "bewitchment.subtitles.entity.hellhound.ambient"
+  },
+  "entity.hellhound.hurt": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.hellhound.hurt"
+  },
+  "entity.hellhound.death": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.hellhound.death"
+  },
+  "entity.demon.ambient": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.demon.ambient"
+  },
+  "entity.demon.hurt": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.demon.hurt"
+  },
+  "entity.demon.death": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.demon.death"
+  },
+  "entity.leonard.ambient": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.leonard.ambient"
+  },
+  "entity.leonard.hurt": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.leonard.hurt"
+  },
+  "entity.leonard.death": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.leonard.death"
+  },
+  "entity.baphomet.ambient": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.baphomet.ambient"
+  },
+  "entity.baphomet.hurt": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.baphomet.hurt"
+  },
+  "entity.baphomet.death": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.baphomet.death"
+  }
+}

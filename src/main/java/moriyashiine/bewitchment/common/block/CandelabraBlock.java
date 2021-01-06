@@ -1,6 +1,8 @@
 package moriyashiine.bewitchment.common.block;
 
 import moriyashiine.bewitchment.common.world.BWWorldState;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -123,6 +125,7 @@ public class CandelabraBlock extends Block implements Waterloggable {
 		super.onStateReplaced(state, world, pos, newState, moved);
 	}
 	
+	@Environment(EnvType.CLIENT)
 	@Override
 	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
 		if (state.get(Properties.LIT)) {
