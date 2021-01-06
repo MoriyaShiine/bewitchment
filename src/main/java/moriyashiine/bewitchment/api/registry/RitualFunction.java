@@ -6,6 +6,7 @@ import moriyashiine.bewitchment.common.entity.living.BaphometEntity;
 import moriyashiine.bewitchment.common.entity.living.DemonEntity;
 import moriyashiine.bewitchment.common.entity.living.LeonardEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
+import moriyashiine.bewitchment.common.item.WaystoneItem;
 import moriyashiine.bewitchment.common.item.tool.AthameItem;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWMaterials;
@@ -105,6 +106,12 @@ public class RitualFunction {
 			if (stack.getItem() instanceof AthameItem) {
 				stack.damage(50, world.random, null);
 				if (stack.getDamage() == BWMaterials.SILVER_TOOL.getDurability()) {
+					stack.decrement(1);
+				}
+			}
+			else if (stack.getItem() instanceof WaystoneItem) {
+				stack.damage(1, world.random, null);
+				if (stack.getDamage() == 3) {
 					stack.decrement(1);
 				}
 			}
@@ -212,6 +219,10 @@ public class RitualFunction {
 						location = livingEntity.getBlockPos();
 						break;
 					}
+				}
+				else if (stack.getItem() instanceof WaystoneItem && stack.hasTag() && stack.getOrCreateTag().contains("LocationPos") && world.getRegistryKey().getValue().toString().equals(stack.getOrCreateTag().getString("LocationWorld"))) {
+					location = BlockPos.fromLong(stack.getOrCreateTag().getLong("LocationPos"));
+					break;
 				}
 			}
 			if (location != null) {

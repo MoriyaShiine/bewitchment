@@ -39,23 +39,26 @@ public class TaglockItem extends Item {
 		World world = context.getWorld();
 		BlockPos pos = context.getBlockPos();
 		if (world.getBlockState(pos).getBlock() instanceof BedBlock) {
-			PlayerEntity player = context.getPlayer();
-			if (player != null && player.isSneaking()) {
-				MinecraftServer server = world.getServer();
-				if (server != null) {
-					PlayerEntity earliestSleeper = null;
-					for (ServerPlayerEntity playerEntity : server.getPlayerManager().getPlayerList()) {
-						BlockPos bedPos = playerEntity.getSpawnPointPosition();
-						if (bedPos != null && bedPos.equals(pos) && (earliestSleeper == null || playerEntity.getSleepTimer() < earliestSleeper.getSleepTimer())) {
-							earliestSleeper = playerEntity;
+			boolean client = world.isClient;
+			if (!client) {
+				PlayerEntity player = context.getPlayer();
+				if (player != null && player.isSneaking()) {
+					MinecraftServer server = world.getServer();
+					if (server != null) {
+						PlayerEntity earliestSleeper = null;
+						for (ServerPlayerEntity playerEntity : server.getPlayerManager().getPlayerList()) {
+							BlockPos bedPos = playerEntity.getSpawnPointPosition();
+							if (bedPos != null && bedPos.equals(pos) && (earliestSleeper == null || playerEntity.getSleepTimer() < earliestSleeper.getSleepTimer())) {
+								earliestSleeper = playerEntity;
+							}
 						}
-					}
-					if (earliestSleeper != null) {
-						return useTaglock(player, earliestSleeper, context.getHand(), false);
+						if (earliestSleeper != null) {
+							return useTaglock(player, earliestSleeper, context.getHand(), false);
+						}
 					}
 				}
 			}
-			return ActionResult.success(world.isClient);
+			return ActionResult.success(client);
 		}
 		return super.useOnBlock(context);
 	}

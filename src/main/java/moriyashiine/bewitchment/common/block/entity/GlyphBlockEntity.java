@@ -5,6 +5,7 @@ import moriyashiine.bewitchment.api.registry.RitualFunction;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.block.GlyphBlock;
+import moriyashiine.bewitchment.common.item.WaystoneItem;
 import moriyashiine.bewitchment.common.recipe.RitualRecipe;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
@@ -46,7 +47,7 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 	
 	private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(6, ItemStack.EMPTY);
 	
-	private BlockPos altarPos = null;
+	private BlockPos altarPos = null, effectivePos = null;
 	
 	public RitualFunction ritualFunction = null;
 	private int timer = 0, endTime = 0;
@@ -66,6 +67,9 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 		if (tag.contains("AltarPos")) {
 			setAltarPos(BlockPos.fromLong(tag.getLong("AltarPos")));
 		}
+		if (tag.contains("EffectivePos")) {
+			effectivePos = BlockPos.fromLong(tag.getLong("EffectivePos"));
+		}
 		Inventories.fromTag(tag, inventory);
 		ritualFunction = BWRegistries.RITUAL_FUNCTIONS.get(new Identifier(tag.getString("RitualFunction")));
 		timer = tag.getInt("Timer");
@@ -76,6 +80,9 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 	public CompoundTag toClientTag(CompoundTag tag) {
 		if (getAltarPos() != null) {
 			tag.putLong("AltarPos", getAltarPos().asLong());
+		}
+		if (effectivePos != null) {
+			tag.putLong("EffectivePos", effectivePos.asLong());
 		}
 		Inventories.toTag(tag, inventory);
 		if (ritualFunction != null) {
@@ -115,24 +122,26 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 				loaded = true;
 			}
 			if (ritualFunction != null) {
+				BlockPos targetPos = effectivePos == null ? pos : effectivePos;
 				timer++;
 				if (world.isClient) {
 					world.addParticle(ParticleTypes.END_ROD, true, pos.getX() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), pos.getY() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), pos.getZ() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), 0, 0, 0);
 					if (timer < 0) {
 						for (int i = 0; i < 3; i++) {
-							world.addParticle((ParticleEffect) ritualFunction.startParticle, true, pos.getX() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), pos.getY() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), pos.getZ() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), MathHelper.nextFloat(world.random, -1, 1), MathHelper.nextFloat(world.random, 0.125f, 1), MathHelper.nextFloat(world.random, -1, 1));
+							world.addParticle((ParticleEffect) ritualFunction.startParticle, true, targetPos.getX() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), targetPos.getY() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), targetPos.getZ() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), MathHelper.nextFloat(world.random, -1, 1), MathHelper.nextFloat(world.random, 0.125f, 1), MathHelper.nextFloat(world.random, -1, 1));
 						}
 					}
 				}
 				if (timer >= 0) {
-					ritualFunction.tick(world, pos);
+					ritualFunction.tick(world, targetPos);
 					if (!world.isClient) {
 						if (timer == 0) {
-							ritualFunction.start((ServerWorld) world, pos, this);
+							ritualFunction.start((ServerWorld) world, targetPos, this);
 							world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_PLING, SoundCategory.BLOCKS, 1, 1);
 							ItemScatterer.spawn(world, pos, this);
 						}
 						if (timer >= endTime) {
+							effectivePos = null;
 							ritualFunction = null;
 							timer = 0;
 							endTime = 0;
@@ -192,7 +201,12 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 	
 	public void onUse(World world, BlockPos pos, PlayerEntity player, Hand hand, LivingEntity sacrifice) {
 		ItemStack stack = player.getStackInHand(hand);
-		if (stack.isEmpty() || sacrifice != null) {
+		if (stack.getItem() instanceof WaystoneItem && stack.hasTag() && stack.getOrCreateTag().contains("LocationPos")) {
+			effectivePos = BlockPos.fromLong(stack.getOrCreateTag().getLong("LocationPos"));
+			stack.damage(1, player, user -> user.sendToolBreakStatus(hand));
+			syncGlyph();
+		}
+		else {
 			if (ritualFunction == null) {
 				SimpleInventory test = new SimpleInventory(size());
 				List<ItemEntity> items = world.getEntitiesByType(EntityType.ITEM, new Box(pos).expand(2, 0, 2), entity -> true);
@@ -211,6 +225,7 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 								}
 								setStack(i, items.get(i).getStack().split(1));
 							}
+							effectivePos = pos;
 							ritualFunction = recipe.ritualFunction;
 							timer = -100;
 							endTime = recipe.runningTime;
@@ -231,6 +246,7 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 			else if (sacrifice == null) {
 				world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FAIL, SoundCategory.BLOCKS, 1, 1);
 				ItemScatterer.spawn(world, pos, this);
+				effectivePos = null;
 				ritualFunction = null;
 				timer = 0;
 				endTime = 0;

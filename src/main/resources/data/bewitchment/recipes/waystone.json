@@ -1,0 +1,19 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	" SS",
+	"SES",
+	"SS "
+  ],
+  "key": {
+	"S": {
+	  "item": "stone"
+	},
+	"E": {
+	  "item": "ender_pearl"
+	}
+  },
+  "result": {
+	"item": "bewitchment:waystone"
+  }
+}

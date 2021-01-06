@@ -5,7 +5,7 @@
 	  "item": "bewitchment:earth_ichor"
 	},
 	{
-	  "item": "bewitchment:taglock"
+	  "tag": "bewitchment:location_holders"
 	}
   ],
   "inner": "eldritch",

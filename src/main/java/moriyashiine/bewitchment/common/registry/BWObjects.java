@@ -227,6 +227,7 @@ public class BWObjects {
 	public static final Item FIERY_CHALK = create("fiery_chalk", new ChalkItem(gen().maxDamage(128), FIERY_GLYPH));
 	public static final Item ELDRITCH_CHALK = create("eldritch_chalk", new ChalkItem(gen().maxDamage(128), ELDRITCH_GLYPH));
 	public static final Item TAGLOCK = create("taglock", new TaglockItem(gen()));
+	public static final Item WAYSTONE = create("waystone", new WaystoneItem(gen().maxDamage(3)));
 	public static final Item DEMONIC_CONTRACT = create("demonic_contract", new ContractItem(gen().rarity(Rarity.RARE).maxCount(1)));
 	public static final Item SCEPTER = create("scepter", new ScepterItem(gen().rarity(Rarity.RARE).maxCount(1).maxDamage(64)));
 	public static final Item CADUCEUS = create("caduceus", new CaduceusItem(ToolMaterials.DIAMOND, 3, -2.4f, gen().rarity(Rarity.RARE).maxCount(1)));
