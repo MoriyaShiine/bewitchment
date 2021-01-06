@@ -22,37 +22,35 @@ public class Contract {
 	}
 	
 	public void tick(LivingEntity target, boolean includeNegative) {
-		ContractAccessor.of(target).ifPresent(contractAccessor -> {
-			if (this == BWContracts.SLOTH && target.age % 20 == 0) {
-				if (target.isOnGround() && !target.isSprinting()) {
-					target.heal(1);
-				}
-				if (includeNegative) {
-					target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 40, 0, true, false));
-				}
+		if (this == BWContracts.SLOTH && target.age % 20 == 0) {
+			if (target.isOnGround() && !target.isSprinting()) {
+				target.heal(1);
 			}
-			else if (this == BWContracts.PESTILENCE && includeNegative && target.age % 100 == 0) {
-				target.world.getEntitiesByType(EntityType.VILLAGER, new Box(target.getBlockPos()).expand(8), villagerEntity -> true).forEach(villagerEntity -> {
-					if (target.getRandom().nextFloat() < 1 / 40f) {
-						ZombieVillagerEntity zombieVillager = villagerEntity.method_29243(EntityType.ZOMBIE_VILLAGER, false);
-						if (zombieVillager != null) {
-							zombieVillager.initialize((ServerWorldAccess) target.world, target.world.getLocalDifficulty(zombieVillager.getBlockPos()), SpawnReason.CONVERSION, new ZombieEntity.ZombieData(false, true), null);
-							zombieVillager.setVillagerData(villagerEntity.getVillagerData());
-							zombieVillager.setGossipData(villagerEntity.getGossip().serialize(NbtOps.INSTANCE).getValue());
-							zombieVillager.setOfferData(villagerEntity.getOffers().toTag());
-							zombieVillager.setXp(villagerEntity.getExperience());
-							if (!villagerEntity.isSilent()) {
-								target.world.syncWorldEvent(null, 1026, villagerEntity.getBlockPos(), 0);
-							}
-							villagerEntity.remove();
+			if (includeNegative) {
+				target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 40, 0, true, false));
+			}
+		}
+		else if (this == BWContracts.PESTILENCE && includeNegative && target.age % 100 == 0) {
+			target.world.getEntitiesByType(EntityType.VILLAGER, new Box(target.getBlockPos()).expand(8), villagerEntity -> true).forEach(villagerEntity -> {
+				if (target.getRandom().nextFloat() < 1 / 40f) {
+					ZombieVillagerEntity zombieVillager = villagerEntity.method_29243(EntityType.ZOMBIE_VILLAGER, false);
+					if (zombieVillager != null) {
+						zombieVillager.initialize((ServerWorldAccess) target.world, target.world.getLocalDifficulty(zombieVillager.getBlockPos()), SpawnReason.CONVERSION, new ZombieEntity.ZombieData(false, true), null);
+						zombieVillager.setVillagerData(villagerEntity.getVillagerData());
+						zombieVillager.setGossipData(villagerEntity.getGossip().serialize(NbtOps.INSTANCE).getValue());
+						zombieVillager.setOfferData(villagerEntity.getOffers().toTag());
+						zombieVillager.setXp(villagerEntity.getExperience());
+						if (!villagerEntity.isSilent()) {
+							target.world.syncWorldEvent(null, 1026, villagerEntity.getBlockPos(), 0);
 						}
+						villagerEntity.remove();
 					}
-				});
-			}
-			else if (this == BWContracts.DEATH && target.damage(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE) && target.isDead()) {
-				contractAccessor.removeContract(this);
-			}
-		});
+				}
+			});
+		}
+		else if (this == BWContracts.DEATH && target.damage(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE) && target.isDead()) {
+			ContractAccessor.of(target).ifPresent(contractAccessor -> contractAccessor.removeContract(this));
+		}
 	}
 	
 	public void finishUsing(LivingEntity user, boolean includeNegative) {

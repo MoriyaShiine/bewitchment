@@ -17,6 +17,7 @@ import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -25,6 +26,8 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("ConstantConditions")
 public class ToadEntity extends BWTameableEntity {
+	public boolean isFromWednesdayRitual = false;
+	
 	public ToadEntity(EntityType<? extends TameableEntity> type, World world) {
 		super(type, world);
 		setPathfindingPenalty(PathNodeType.WATER, -1);
@@ -68,6 +71,11 @@ public class ToadEntity extends BWTameableEntity {
 		return child;
 	}
 	
+	@Override
+	protected boolean shouldDropLoot() {
+		return super.shouldDropLoot() && !isFromWednesdayRitual;
+	}
+	
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -109,6 +117,18 @@ public class ToadEntity extends BWTameableEntity {
 		else {
 			maxHealth.setBaseValue(8);
 		}
+	}
+	
+	@Override
+	public void readCustomDataFromTag(CompoundTag tag) {
+		super.readCustomDataFromTag(tag);
+		isFromWednesdayRitual = tag.getBoolean("IsFromWednesdayRitual");
+	}
+	
+	@Override
+	public void writeCustomDataToTag(CompoundTag tag) {
+		super.writeCustomDataToTag(tag);
+		tag.putBoolean("IsFromWednesdayRitual", isFromWednesdayRitual);
 	}
 	
 	@Override

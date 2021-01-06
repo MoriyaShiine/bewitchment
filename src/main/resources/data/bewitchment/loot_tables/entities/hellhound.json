@@ -26,6 +26,32 @@
 		  "name": "bewitchment:demon_horn"
 		}
 	  ]
+	},
+	{
+	  "rolls": 1,
+	  "entries": [
+		{
+		  "type": "item",
+		  "functions": [
+			{
+			  "function": "set_count",
+			  "count": {
+				"min": 0.0,
+				"max": 1.0,
+				"type": "uniform"
+			  }
+			},
+			{
+			  "function": "looting_enchant",
+			  "count": {
+				"min": 0.0,
+				"max": 1.0
+			  }
+			}
+		  ],
+		  "name": "bewitchment:snake_tongue"
+		}
+	  ]
 	}
   ]
 }

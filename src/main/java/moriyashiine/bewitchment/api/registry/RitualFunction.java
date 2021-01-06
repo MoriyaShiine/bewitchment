@@ -5,18 +5,21 @@ import moriyashiine.bewitchment.api.interfaces.WetAccessor;
 import moriyashiine.bewitchment.common.entity.living.BaphometEntity;
 import moriyashiine.bewitchment.common.entity.living.DemonEntity;
 import moriyashiine.bewitchment.common.entity.living.LeonardEntity;
+import moriyashiine.bewitchment.common.entity.living.ToadEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.item.WaystoneItem;
 import moriyashiine.bewitchment.common.item.tool.AthameItem;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWMaterials;
 import moriyashiine.bewitchment.common.registry.BWRitualFunctions;
+import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import moriyashiine.bewitchment.mixin.ZombieVillagerEntityAccessor;
 import net.minecraft.block.*;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.boss.WitherEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
 import net.minecraft.entity.passive.PassiveEntity;
@@ -37,8 +40,11 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.function.Predicate;
 
@@ -70,6 +76,9 @@ public class RitualFunction {
 		else if (this == BWRitualFunctions.STOP_RAIN) {
 			return "ritual.precondition.rain";
 		}
+		else if (this == BWRitualFunctions.WEDNESDAY) {
+			return "ritual.precondition.wednesday";
+		}
 		return "ritual.precondition.sacrifice";
 	}
 	
@@ -96,6 +105,9 @@ public class RitualFunction {
 		}
 		else if (this == BWRitualFunctions.STOP_RAIN) {
 			return world.isRaining();
+		}
+		else if (this == BWRitualFunctions.WEDNESDAY) {
+			return LocalDateTime.now().getDayOfWeek() == DayOfWeek.WEDNESDAY;
 		}
 		return sacrifice == null;
 	}
@@ -238,7 +250,7 @@ public class RitualFunction {
 		else if (this == BWRitualFunctions.SPAWN_LIGHTNING) {
 			LightningEntity entity = EntityType.LIGHTNING_BOLT.create(world);
 			if (entity != null) {
-				entity.updatePositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0, world.random.nextInt(360));
+				entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, world.random.nextInt(360));
 				world.spawnEntity(entity);
 			}
 		}
@@ -260,7 +272,7 @@ public class RitualFunction {
 			WitherEntity entity = EntityType.WITHER.create(world);
 			if (entity != null) {
 				entity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
-				entity.updatePositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0, world.random.nextInt(360));
+				entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, world.random.nextInt(360));
 				world.spawnEntity(entity);
 			}
 		}
@@ -268,7 +280,7 @@ public class RitualFunction {
 			DemonEntity entity = BWEntityTypes.DEMON.create(world);
 			if (entity != null) {
 				entity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
-				entity.updatePositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0, world.random.nextInt(360));
+				entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, world.random.nextInt(360));
 				world.spawnEntity(entity);
 			}
 		}
@@ -276,7 +288,7 @@ public class RitualFunction {
 			LeonardEntity entity = BWEntityTypes.LEONARD.create(world);
 			if (entity != null) {
 				entity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
-				entity.updatePositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0, world.random.nextInt(360));
+				entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, world.random.nextInt(360));
 				world.spawnEntity(entity);
 			}
 		}
@@ -284,7 +296,7 @@ public class RitualFunction {
 			BaphometEntity entity = BWEntityTypes.BAPHOMET.create(world);
 			if (entity != null) {
 				entity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
-				entity.updatePositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0, world.random.nextInt(360));
+				entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, world.random.nextInt(360));
 				world.spawnEntity(entity);
 			}
 		}
@@ -377,6 +389,22 @@ public class RitualFunction {
 							distanceX /= 2;
 							distanceZ /= 2;
 							hostileEntity.addVelocity(-distanceX, 0, -distanceZ);
+						}
+					}
+				}
+			}
+		}
+		else if (this == BWRitualFunctions.WEDNESDAY) {
+			if (!world.isClient) {
+				if (world.getTime() % 20 == 0) {
+					for (int i = 0; i < world.random.nextInt(4) + 1; i++) {
+						ToadEntity entity = BWEntityTypes.TOAD.create(world);
+						if (entity != null) {
+							entity.initialize((ServerWorldAccess) world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
+							entity.refreshPositionAndAngles(pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -3, 3), pos.getY() + 3, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -3, 3), 0, world.random.nextInt(360));
+							entity.addStatusEffect(new StatusEffectInstance(BWStatusEffects.WEDNESDAY, world.random.nextInt(100)));
+							entity.isFromWednesdayRitual = true;
+							world.spawnEntity(entity);
 						}
 					}
 				}

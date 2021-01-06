@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.mixin;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.BloodAccessor;
 import moriyashiine.bewitchment.api.interfaces.ContractAccessor;
+import moriyashiine.bewitchment.api.interfaces.FortuneAccessor;
 import moriyashiine.bewitchment.api.interfaces.MasterAccessor;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.client.network.packet.SpawnExplosionParticlesPacket;
@@ -73,6 +74,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Shadow
 	public abstract boolean removeStatusEffect(StatusEffect type);
+	
+	@Shadow
+	protected abstract boolean shouldDropLoot();
 	
 	@Shadow
 	public abstract float getMaxHealth();
@@ -163,6 +167,11 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			if (armorPieces > 0) {
 				amount *= (1 - (0.2f * armorPieces));
 			}
+		}
+		attacker = source.getAttacker();
+		if (amount > 0 && attacker instanceof FortuneAccessor && ((FortuneAccessor) attacker).getFortune() != null && ((FortuneAccessor) attacker).getFortune().fortune == BWFortunes.HAWKEYE && source.isProjectile()) {
+			((FortuneAccessor) attacker).getFortune().duration = 0;
+			return amount * 4;
 		}
 		return amount;
 	}
@@ -271,7 +280,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "drop", at = @At("HEAD"))
 	private void drop(DamageSource source, CallbackInfo callbackInfo) {
-		if (!world.isClient) {
+		if (!world.isClient && shouldDropLoot()) {
 			Entity attacker = source.getSource();
 			if (attacker instanceof LivingEntity) {
 				LivingEntity livingAttacker = (LivingEntity) attacker;
