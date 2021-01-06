@@ -37,6 +37,8 @@ public class BWRitualFunctions {
 	public static RitualFunction SUMMON_LEONARD = create("summon_leonard", new RitualFunction(ParticleTypes.FLAME, livingEntity -> livingEntity instanceof SheepEntity));
 	public static RitualFunction SUMMON_BAPHOMET = create("summon_baphomet", new RitualFunction(ParticleTypes.FLAME, livingEntity -> livingEntity instanceof SheepEntity));
 	
+	public static RitualFunction WEDNESDAY = create("wednesday", new RitualFunction(ParticleTypes.ITEM_SLIME, null));
+	
 	private static <T extends RitualFunction> T create(String name, T ritualFunction) {
 		RITUAL_FUNCTIONS.put(ritualFunction, new Identifier(Bewitchment.MODID, name));
 		return ritualFunction;
