@@ -2,6 +2,7 @@ package moriyashiine.bewitchment.common.block.entity;
 
 import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
+import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.block.GlyphBlock;
 import moriyashiine.bewitchment.common.recipe.RitualRecipe;
@@ -20,9 +21,10 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -31,6 +33,7 @@ import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -44,7 +47,7 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 	
 	private BlockPos altarPos = null;
 	
-	private RitualFunction ritualFunction = null;
+	public RitualFunction ritualFunction = null;
 	private int timer = 0, endTime = 0;
 	
 	private boolean loaded = false;
@@ -59,6 +62,10 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 	
 	@Override
 	public void fromClientTag(CompoundTag tag) {
+		if (tag.contains("AltarPos")) {
+			setAltarPos(BlockPos.fromLong(tag.getLong("AltarPos")));
+		}
+		Inventories.fromTag(tag, inventory);
 		ritualFunction = BWRegistries.RITUAL_FUNCTIONS.get(new Identifier(tag.getString("RitualFunction")));
 		timer = tag.getInt("Timer");
 		endTime = tag.getInt("EndTime");
@@ -66,6 +73,10 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 	
 	@Override
 	public CompoundTag toClientTag(CompoundTag tag) {
+		if (getAltarPos() != null) {
+			tag.putLong("AltarPos", getAltarPos().asLong());
+		}
+		Inventories.toTag(tag, inventory);
 		if (ritualFunction != null) {
 			tag.putString("RitualFunction", BWRegistries.RITUAL_FUNCTIONS.getId(ritualFunction).toString());
 		}
@@ -104,20 +115,24 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 			}
 			if (ritualFunction != null) {
 				timer++;
-				if (timer < 0) {
-					if (world.isClient) {
+				if (world.isClient) {
+					world.addParticle(ParticleTypes.END_ROD, true, pos.getX() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), pos.getY() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), pos.getZ() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), 0, 0, 0);
+					if (timer < 0) {
+						for (int i = 0; i < 3; i++) {
+							world.addParticle((ParticleEffect) ritualFunction.startParticle, true, pos.getX() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), pos.getY() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), pos.getZ() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), MathHelper.nextFloat(world.random, -1, 1), MathHelper.nextFloat(world.random, 0.125f, 1), MathHelper.nextFloat(world.random, -1, 1));
+						}
 					}
 				}
-				else {
+				if (timer >= 0) {
 					ritualFunction.tick(world, pos);
 					if (!world.isClient) {
 						if (timer == 0) {
-							ritualFunction.start(world, pos, this);
+							ritualFunction.start((ServerWorld) world, pos, this);
 						}
 						if (timer >= endTime) {
+							ritualFunction.finish((ServerWorld) world, pos, this);
 							world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_PLING, SoundCategory.BLOCKS, 1, 1);
 							ItemScatterer.spawn(world, pos, this);
-							ritualFunction.finish(world, pos, this);
 							ritualFunction = null;
 							timer = 0;
 							endTime = 0;
@@ -185,12 +200,15 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 					test.addStack(entity.getStack().copy().split(1));
 				}
 				RitualRecipe recipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.RITUAL_RECIPE_TYPE).stream().filter(ritualRecipe -> ritualRecipe.matches(test, world)).findFirst().orElse(null);
-				if (recipe != null && hasValidChalk(recipe)) {
-					if (recipe.ritualFunction.isValid(world, pos)) {
+				if (recipe != null && recipe.input.size() == items.size() && hasValidChalk(recipe)) {
+					if (recipe.ritualFunction.isValid((ServerWorld) world, pos, this)) {
 						if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain(recipe.cost, false)) {
 							world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FIRE, SoundCategory.BLOCKS, 1, 1);
 							player.sendMessage(new TranslatableText("ritual." + recipe.getId().toString().replace(":", ".").replace("/", ".")), true);
 							for (int i = 0; i < items.size(); i++) {
+								for (PlayerEntity foundPlayer : PlayerLookup.tracking(items.get(i))) {
+									SpawnSmokeParticlesPacket.send(foundPlayer, items.get(i));
+								}
 								setStack(i, items.get(i).getStack().split(1));
 							}
 							ritualFunction = recipe.ritualFunction;
@@ -204,14 +222,17 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 						return;
 					}
 					world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FAIL, SoundCategory.BLOCKS, 1, 1);
-					player.sendMessage(new TranslatableText("ritual.invalid"), true);
+					player.sendMessage(new TranslatableText(recipe.ritualFunction.getInvalidMessage()), true);
 					return;
 				}
 				world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FAIL, SoundCategory.BLOCKS, 1, 1);
 				player.sendMessage(new TranslatableText("ritual.null"), true);
 			}
 			else {
-				world.playSound(null, pos, SoundEvents.BLOCK_NOTE_BLOCK_BASEDRUM, SoundCategory.BLOCKS, 1, 1);
+				world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FAIL, SoundCategory.BLOCKS, 1, 1);
+				if (endTime != 0) {
+					clear();
+				}
 				ItemScatterer.spawn(world, pos, this);
 				ritualFunction = null;
 				timer = 0;

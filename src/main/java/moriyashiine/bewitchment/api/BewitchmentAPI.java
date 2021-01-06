@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.api;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
 import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
 import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
+import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.registry.BWTags;
@@ -18,6 +19,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
@@ -30,11 +32,25 @@ import net.minecraft.world.World;
 import java.util.*;
 import java.util.function.Predicate;
 
+@SuppressWarnings("ConstantConditions")
 public class BewitchmentAPI {
 	public static Set<AltarMapEntry> ALTAR_MAP_ENTRIES = new HashSet<>();
 	
 	@SuppressWarnings("InstantiationOfUtilityClass")
 	public static EntityGroup DEMON = new EntityGroup();
+	
+	public static LivingEntity getTaglockOwner(World world, ItemStack taglock) {
+		if (world instanceof ServerWorld && taglock.getItem() instanceof TaglockItem && taglock.hasTag() && taglock.getOrCreateTag().contains("OwnerUUID")) {
+			UUID ownerUUID = taglock.getOrCreateTag().getUuid("OwnerUUID");
+			for (ServerWorld serverWorld : world.getServer().getWorlds()) {
+				Entity entity = serverWorld.getEntity(ownerUUID);
+				if (entity instanceof LivingEntity) {
+					return (LivingEntity) entity;
+				}
+			}
+		}
+		return null;
+	}
 	
 	public static boolean isSourceFromSilver(DamageSource source) {
 		Entity attacker = source.getAttacker();
@@ -145,24 +161,28 @@ public class BewitchmentAPI {
 					mutable.move(Direction.DOWN);
 				}
 				if (entity.world.getBlockState(mutable).getMaterial().blocksMovement()) {
-					if (!entity.isSilent()) {
-						entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, SoundCategory.NEUTRAL, 1, 1);
-					}
-					PlayerLookup.tracking(entity).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, entity));
-					if (entity instanceof PlayerEntity) {
-						SpawnPortalParticlesPacket.send((PlayerEntity) entity, entity);
-					}
-					entity.teleport(mutable.getX(), mutable.getY() + 1, mutable.getZ());
-					if (!entity.isSilent()) {
-						entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, SoundCategory.NEUTRAL, 1, 1);
-					}
-					PlayerLookup.tracking(entity).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, entity));
-					if (entity instanceof PlayerEntity) {
-						SpawnPortalParticlesPacket.send((PlayerEntity) entity, entity);
-					}
+					teleport(entity, mutable);
 					break;
 				}
 			}
+		}
+	}
+	
+	public static void teleport(Entity entity, BlockPos target) {
+		if (!entity.isSilent()) {
+			entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, SoundCategory.NEUTRAL, 1, 1);
+		}
+		PlayerLookup.tracking(entity).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, entity));
+		if (entity instanceof PlayerEntity) {
+			SpawnPortalParticlesPacket.send((PlayerEntity) entity, entity);
+		}
+		entity.teleport(target.getX(), target.getY() + 1, target.getZ());
+		if (!entity.isSilent()) {
+			entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, SoundCategory.NEUTRAL, 1, 1);
+		}
+		PlayerLookup.tracking(entity).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, entity));
+		if (entity instanceof PlayerEntity) {
+			SpawnPortalParticlesPacket.send((PlayerEntity) entity, entity);
 		}
 	}
 	

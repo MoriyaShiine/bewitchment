@@ -84,7 +84,7 @@ public class RitualRecipe implements Recipe<Inventory> {
 			if (inner.isEmpty()) {
 				throw new JsonParseException("Inner circle is empty");
 			}
-			return new RitualRecipe(id, ingredients, inner, JsonHelper.getString(json, "outer"), BWRegistries.RITUAL_FUNCTIONS.get(new Identifier(JsonHelper.getString(json, "ritual_function"))), JsonHelper.getInt(json, "cost"), JsonHelper.getInt(json, "running_time"));
+			return new RitualRecipe(id, ingredients, inner, JsonHelper.getString(json, "outer", ""), BWRegistries.RITUAL_FUNCTIONS.get(new Identifier(JsonHelper.getString(json, "ritual_function"))), JsonHelper.getInt(json, "cost"), JsonHelper.getInt(json, "running_time"));
 		}
 		
 		@Override

@@ -3,19 +3,15 @@ package moriyashiine.bewitchment.common.network.packet;
 import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
-import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWPledges;
-import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.fabric.api.network.PacketContext;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -63,17 +59,7 @@ public class CauldronTeleportPacket {
 						}
 					}
 					if (pledgedToLeonard || hasPower) {
-						if (!player.isSilent()) {
-							world.playSound(null, player.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, SoundCategory.PLAYERS, 1, 1);
-						}
-						PlayerLookup.tracking(player).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, player));
-						SpawnPortalParticlesPacket.send(player, player);
-						player.teleport(closest.getX() + 0.5, closest.getY() + 0.5, closest.getZ() + 0.5);
-						if (!player.isSilent()) {
-							world.playSound(null, player.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, SoundCategory.PLAYERS, 1, 1);
-						}
-						PlayerLookup.tracking(player).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, player));
-						SpawnPortalParticlesPacket.send(player, player);
+						BewitchmentAPI.teleport(player, closest.add(0.5, -0.5, 0.5));
 					}
 					else {
 						player.sendMessage(new TranslatableText(Bewitchment.MODID + ".insufficent_altar_power", message), true);

@@ -57,6 +57,8 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	
 	private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
 	
+	private BlockPos altarPos = null;
+	
 	public OilRecipe oilRecipe = null;
 	
 	public Mode mode = Mode.NORMAL;
@@ -64,8 +66,6 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	public Text customName;
 	
 	public int color = 0x3f76e4, heatTimer = 0;
-	
-	private BlockPos altarPos = null;
 	
 	private boolean loaded = false;
 	
@@ -79,6 +79,9 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	
 	@Override
 	public void fromClientTag(CompoundTag tag) {
+		if (tag.contains("AltarPos")) {
+			setAltarPos(BlockPos.fromLong(tag.getLong("AltarPos")));
+		}
 		Inventories.fromTag(tag, inventory);
 		mode = Mode.valueOf(tag.getString("Mode"));
 		if (tag.contains("CustomName", NbtType.STRING)) {
@@ -88,13 +91,13 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 			color = tag.getInt("Color");
 		}
 		heatTimer = tag.getInt("HeatTimer");
-		if (tag.contains("AltarPos")) {
-			setAltarPos(BlockPos.fromLong(tag.getLong("AltarPos")));
-		}
 	}
 	
 	@Override
 	public CompoundTag toClientTag(CompoundTag tag) {
+		if (getAltarPos() != null) {
+			tag.putLong("AltarPos", getAltarPos().asLong());
+		}
 		Inventories.toTag(tag, inventory);
 		tag.putString("Mode", mode.name);
 		if (customName != null) {
@@ -102,9 +105,6 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 		}
 		tag.putInt("Color", color);
 		tag.putInt("HeatTimer", heatTimer);
-		if (getAltarPos() != null) {
-			tag.putLong("AltarPos", getAltarPos().asLong());
-		}
 		return tag;
 	}
 	

@@ -24,7 +24,8 @@
 	"SpawnHelperMixin",
 	"StatusEffectAccessor",
 	"TreeDecoratorTypeAccessor",
-	"VillagerEntityMixin"
+	"VillagerEntityMixin",
+	"ZombieVillagerEntityAccessor"
   ],
   "client": [
 	"client.ClientPlayerEntityMixin",
