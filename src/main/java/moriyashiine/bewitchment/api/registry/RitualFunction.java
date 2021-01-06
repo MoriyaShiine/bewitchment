@@ -101,25 +101,6 @@ public class RitualFunction {
 	}
 	
 	public void start(ServerWorld world, BlockPos pos, Inventory inventory) {
-		for (int i = 0; i < inventory.size(); i++) {
-			ItemStack stack = inventory.getStack(i);
-			if (stack.getItem() instanceof AthameItem) {
-				stack.damage(50, world.random, null);
-				if (stack.getDamage() == BWMaterials.SILVER_TOOL.getDurability()) {
-					stack.decrement(1);
-				}
-			}
-			else if (stack.getItem() instanceof WaystoneItem) {
-				stack.damage(1, world.random, null);
-				if (stack.getDamage() == 3) {
-					stack.decrement(1);
-				}
-			}
-			else {
-				Item item = stack.getItem();
-				inventory.setStack(i, item.hasRecipeRemainder() ? new ItemStack(item.getRecipeRemainder()) : ItemStack.EMPTY);
-			}
-		}
 		if (this == BWRitualFunctions.TURN_TO_DAY) {
 			while (world.getTimeOfDay() % 24000 != 0) {
 				world.setTimeOfDay(world.getTimeOfDay() + 1);
@@ -305,6 +286,25 @@ public class RitualFunction {
 				entity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
 				entity.updatePositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0, world.random.nextInt(360));
 				world.spawnEntity(entity);
+			}
+		}
+		for (int i = 0; i < inventory.size(); i++) {
+			ItemStack stack = inventory.getStack(i);
+			if (stack.getItem() instanceof AthameItem) {
+				stack.damage(50, world.random, null);
+				if (stack.getDamage() == BWMaterials.SILVER_TOOL.getDurability()) {
+					stack.decrement(1);
+				}
+			}
+			else if (stack.getItem() instanceof WaystoneItem) {
+				stack.damage(1, world.random, null);
+				if (stack.getDamage() == 3) {
+					stack.decrement(1);
+				}
+			}
+			else {
+				Item item = stack.getItem();
+				inventory.setStack(i, item.hasRecipeRemainder() ? new ItemStack(item.getRecipeRemainder()) : ItemStack.EMPTY);
 			}
 		}
 	}
