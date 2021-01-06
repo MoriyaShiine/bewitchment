@@ -74,6 +74,8 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	@Shadow
 	public abstract boolean removeStatusEffect(StatusEffect type);
 	
+	@Shadow protected abstract boolean shouldDropLoot();
+	
 	@Shadow
 	public abstract float getMaxHealth();
 	
@@ -271,7 +273,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "drop", at = @At("HEAD"))
 	private void drop(DamageSource source, CallbackInfo callbackInfo) {
-		if (!world.isClient) {
+		if (!world.isClient && shouldDropLoot()) {
 			Entity attacker = source.getSource();
 			if (attacker instanceof LivingEntity) {
 				LivingEntity livingAttacker = (LivingEntity) attacker;
