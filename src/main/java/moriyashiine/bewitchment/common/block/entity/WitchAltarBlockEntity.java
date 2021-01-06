@@ -92,13 +92,17 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 			if (loadingTimer > 0) {
 				loadingTimer--;
 				if (loadingTimer == 0) {
-					markDirty();
 					MinecraftServer server = world.getServer();
-					//noinspection ConstantConditions
-					ServerWorld overworld = server.getOverworld();
-					fakePlayer = new ServerPlayerEntity(server, overworld, FAKE_PLAYER_PROFILE, new ServerPlayerInteractionManager(overworld));
-					fakePlayer.setStackInHand(Hand.MAIN_HAND, new ItemStack(Items.WOODEN_AXE));
-					markedForScan = true;
+					if (server != null) {
+						markDirty();
+						ServerWorld overworld = server.getOverworld();
+						fakePlayer = new ServerPlayerEntity(server, overworld, FAKE_PLAYER_PROFILE, new ServerPlayerInteractionManager(overworld));
+						fakePlayer.setStackInHand(Hand.MAIN_HAND, new ItemStack(Items.WOODEN_AXE));
+						markedForScan = true;
+					}
+					else {
+						loadingTimer = 20;
+					}
 				}
 			}
 			else {
