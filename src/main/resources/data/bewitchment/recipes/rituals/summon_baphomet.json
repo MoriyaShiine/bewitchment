@@ -1,0 +1,27 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:grim_elixir"
+	},
+	{
+	  "item": "bewitchment:fiery_serum"
+	},
+	{
+	  "item": "bewitchment:demon_heart"
+	},
+	{
+	  "item": "bewitchment:demon_horn"
+	},
+	{
+	  "item": "fire_charge"
+	},
+	{
+	  "item": "paper"
+	}
+  ],
+  "inner": "fiery",
+  "outer": "fiery",
+  "ritual_function": "bewitchment:summon_baphomet",
+  "cost": 850
+}

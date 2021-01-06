@@ -15,6 +15,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
@@ -189,9 +190,9 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 		}
 	}
 	
-	public void onUse(World world, BlockPos pos, PlayerEntity player, Hand hand) {
+	public void onUse(World world, BlockPos pos, PlayerEntity player, Hand hand, LivingEntity sacrifice) {
 		ItemStack stack = player.getStackInHand(hand);
-		if (stack.isEmpty()) {
+		if (stack.isEmpty() || sacrifice != null) {
 			if (ritualFunction == null) {
 				SimpleInventory test = new SimpleInventory(size());
 				List<ItemEntity> items = world.getEntitiesByType(EntityType.ITEM, new Box(pos).expand(2, 0, 2), entity -> true);
@@ -200,7 +201,7 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 				}
 				RitualRecipe recipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.RITUAL_RECIPE_TYPE).stream().filter(ritualRecipe -> ritualRecipe.matches(test, world)).findFirst().orElse(null);
 				if (recipe != null && recipe.input.size() == items.size() && hasValidChalk(recipe)) {
-					if (recipe.ritualFunction.isValid((ServerWorld) world, pos, this)) {
+					if (recipe.ritualFunction.isValid((ServerWorld) world, pos, this) || (recipe.ritualFunction.sacrifice != null && sacrifice != null && recipe.ritualFunction.sacrifice.test(sacrifice))) {
 						if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain(recipe.cost, false)) {
 							world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FIRE, SoundCategory.BLOCKS, 1, 1);
 							player.sendMessage(new TranslatableText("ritual." + recipe.getId().toString().replace(":", ".").replace("/", ".")), true);
@@ -227,7 +228,7 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 				world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FAIL, SoundCategory.BLOCKS, 1, 1);
 				player.sendMessage(new TranslatableText("ritual.null"), true);
 			}
-			else {
+			else if (sacrifice == null) {
 				world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FAIL, SoundCategory.BLOCKS, 1, 1);
 				ItemScatterer.spawn(world, pos, this);
 				ritualFunction = null;

@@ -298,6 +298,31 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		}
 	}
 	
+	@Inject(method = "onDeath", at = @At("HEAD"))
+	private void onDeath(DamageSource source, CallbackInfo callbackInfo) {
+		if (!world.isClient) {
+			Entity attacker = source.getSource();
+			if (attacker instanceof PlayerEntity) {
+				PlayerEntity player = (PlayerEntity) attacker;
+				ItemStack stack = player.getMainHandStack();
+				if (stack.getItem() instanceof AthameItem && player.preferredHand == Hand.MAIN_HAND) {
+					BlockPos.Mutable mutable = new BlockPos.Mutable();
+					int radius = 6;
+					for (int x = -radius; x <= radius; x++) {
+						for (int y = -radius; y <= radius; y++) {
+							for (int z = -radius; z <= radius; z++) {
+								if (world.getBlockEntity(mutable.set(getX() + x, getY() + y, getZ() + z)) instanceof GlyphBlockEntity) {
+									((GlyphBlockEntity) world.getBlockEntity(mutable)).onUse(world, mutable, player, Hand.MAIN_HAND, (LivingEntity) (Object) this);
+									return;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	@Inject(method = "isClimbing", at = @At("HEAD"), cancellable = true)
 	private void isClimbing(CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (hasStatusEffect(BWStatusEffects.CLIMBING) && horizontalCollision) {

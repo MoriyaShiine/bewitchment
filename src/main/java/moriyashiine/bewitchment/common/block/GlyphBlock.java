@@ -60,7 +60,7 @@ public class GlyphBlock extends HorizontalFacingBlock implements BlockEntityProv
 		if (this == BWObjects.GOLDEN_GLYPH) {
 			boolean client = world.isClient;
 			if (!client) {
-				((GlyphBlockEntity) world.getBlockEntity(pos)).onUse(world, pos, player, hand);
+				((GlyphBlockEntity) world.getBlockEntity(pos)).onUse(world, pos, player, hand, null);
 			}
 			return ActionResult.success(client);
 		}

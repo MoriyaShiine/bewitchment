@@ -1,0 +1,21 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "wither_skeleton_skull"
+	},
+	{
+	  "item": "soul_sand"
+	},
+	{
+	  "item": "bewitchment:snake_tongue"
+	},
+	{
+	  "item": "bewitchment:demon_horn"
+	}
+  ],
+  "inner": "fiery",
+  "outer": "fiery",
+  "ritual_function": "bewitchment:summon_wither",
+  "cost": 500
+}

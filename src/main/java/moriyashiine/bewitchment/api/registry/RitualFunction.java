@@ -2,8 +2,12 @@ package moriyashiine.bewitchment.api.registry;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.WetAccessor;
+import moriyashiine.bewitchment.common.entity.living.BaphometEntity;
+import moriyashiine.bewitchment.common.entity.living.DemonEntity;
+import moriyashiine.bewitchment.common.entity.living.LeonardEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.item.tool.AthameItem;
+import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWMaterials;
 import moriyashiine.bewitchment.common.registry.BWRitualFunctions;
 import moriyashiine.bewitchment.mixin.ZombieVillagerEntityAccessor;
@@ -11,6 +15,7 @@ import net.minecraft.block.*;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
+import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
 import net.minecraft.entity.passive.PassiveEntity;
@@ -34,12 +39,15 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
+import java.util.function.Predicate;
 
 public class RitualFunction {
 	public final ParticleType<?> startParticle;
+	public final Predicate<LivingEntity> sacrifice;
 	
-	public RitualFunction(ParticleType<?> startParticle) {
+	public RitualFunction(ParticleType<?> startParticle, Predicate<LivingEntity> sacrifice) {
 		this.startParticle = startParticle;
+		this.sacrifice = sacrifice;
 	}
 	
 	public String getInvalidMessage() {
@@ -61,7 +69,7 @@ public class RitualFunction {
 		else if (this == BWRitualFunctions.STOP_RAIN) {
 			return "ritual.precondition.rain";
 		}
-		return "";
+		return "ritual.precondition.sacrifice";
 	}
 	
 	public boolean isValid(ServerWorld world, BlockPos pos, Inventory inventory) {
@@ -88,7 +96,7 @@ public class RitualFunction {
 		else if (this == BWRitualFunctions.STOP_RAIN) {
 			return world.isRaining();
 		}
-		return true;
+		return sacrifice == null;
 	}
 	
 	public void start(ServerWorld world, BlockPos pos, Inventory inventory) {
@@ -236,10 +244,10 @@ public class RitualFunction {
 			}
 		}
 		else if (this == BWRitualFunctions.SPAWN_LIGHTNING) {
-			LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(world);
-			if (lightningEntity != null) {
-				lightningEntity.updatePositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0, world.random.nextInt(360));
-				world.spawnEntity(lightningEntity);
+			LightningEntity entity = EntityType.LIGHTNING_BOLT.create(world);
+			if (entity != null) {
+				entity.updatePositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0, world.random.nextInt(360));
+				world.spawnEntity(entity);
 			}
 		}
 		else if (this == BWRitualFunctions.DESTROY_PLANTS) {
@@ -254,6 +262,38 @@ public class RitualFunction {
 						}
 					}
 				}
+			}
+		}
+		else if (this == BWRitualFunctions.SUMMON_WITHER) {
+			WitherEntity entity = EntityType.WITHER.create(world);
+			if (entity != null) {
+				entity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
+				entity.updatePositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0, world.random.nextInt(360));
+				world.spawnEntity(entity);
+			}
+		}
+		else if (this == BWRitualFunctions.SUMMON_DEMON) {
+			DemonEntity entity = BWEntityTypes.DEMON.create(world);
+			if (entity != null) {
+				entity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
+				entity.updatePositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0, world.random.nextInt(360));
+				world.spawnEntity(entity);
+			}
+		}
+		else if (this == BWRitualFunctions.SUMMON_LEONARD) {
+			LeonardEntity entity = BWEntityTypes.LEONARD.create(world);
+			if (entity != null) {
+				entity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
+				entity.updatePositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0, world.random.nextInt(360));
+				world.spawnEntity(entity);
+			}
+		}
+		else if (this == BWRitualFunctions.SUMMON_BAPHOMET) {
+			BaphometEntity entity = BWEntityTypes.BAPHOMET.create(world);
+			if (entity != null) {
+				entity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
+				entity.updatePositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0, world.random.nextInt(360));
+				world.spawnEntity(entity);
 			}
 		}
 	}
