@@ -163,7 +163,7 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 			if (target instanceof MasterAccessor && getUuid().equals(((MasterAccessor) target).getMasterUUID())) {
 				return;
 			}
-			if (world.getOtherEntities(this, new Box(getBlockPos()).expand(16), entity -> entity instanceof WitchEntity && !entity.removed && ((MasterAccessor) entity).getMasterUUID().equals(getUuid())).size() < 3) {
+			if (world.getOtherEntities(this, new Box(getBlockPos()).expand(16), entity -> entity instanceof WitchEntity && !entity.removed && getUuid().equals(((MasterAccessor) entity).getMasterUUID())).size() < 3) {
 				summonMinions();
 			}
 		}
