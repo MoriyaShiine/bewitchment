@@ -250,7 +250,7 @@ public class RitualFunction {
 		else if (this == BWRitualFunctions.SPAWN_LIGHTNING) {
 			LightningEntity entity = EntityType.LIGHTNING_BOLT.create(world);
 			if (entity != null) {
-				entity.updatePositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0, world.random.nextInt(360));
+				entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, world.random.nextInt(360));
 				world.spawnEntity(entity);
 			}
 		}
@@ -272,7 +272,7 @@ public class RitualFunction {
 			WitherEntity entity = EntityType.WITHER.create(world);
 			if (entity != null) {
 				entity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
-				entity.updatePositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0, world.random.nextInt(360));
+				entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, world.random.nextInt(360));
 				world.spawnEntity(entity);
 			}
 		}
@@ -280,7 +280,7 @@ public class RitualFunction {
 			DemonEntity entity = BWEntityTypes.DEMON.create(world);
 			if (entity != null) {
 				entity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
-				entity.updatePositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0, world.random.nextInt(360));
+				entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, world.random.nextInt(360));
 				world.spawnEntity(entity);
 			}
 		}
@@ -288,7 +288,7 @@ public class RitualFunction {
 			LeonardEntity entity = BWEntityTypes.LEONARD.create(world);
 			if (entity != null) {
 				entity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
-				entity.updatePositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0, world.random.nextInt(360));
+				entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, world.random.nextInt(360));
 				world.spawnEntity(entity);
 			}
 		}
@@ -296,7 +296,7 @@ public class RitualFunction {
 			BaphometEntity entity = BWEntityTypes.BAPHOMET.create(world);
 			if (entity != null) {
 				entity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
-				entity.updatePositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0, world.random.nextInt(360));
+				entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, world.random.nextInt(360));
 				world.spawnEntity(entity);
 			}
 		}
@@ -401,7 +401,7 @@ public class RitualFunction {
 						ToadEntity entity = BWEntityTypes.TOAD.create(world);
 						if (entity != null) {
 							entity.initialize((ServerWorldAccess) world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
-							entity.refreshPositionAndAngles(pos.getX() + MathHelper.nextDouble(world.random, -3, 3), pos.getY() + 4, pos.getZ() + MathHelper.nextDouble(world.random, -3, 3), 0, world.random.nextInt(360));
+							entity.refreshPositionAndAngles(pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -3, 3), pos.getY() + 3, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -3, 3), 0, world.random.nextInt(360));
 							entity.addStatusEffect(new StatusEffectInstance(BWStatusEffects.WEDNESDAY, world.random.nextInt(100)));
 							entity.isFromWednesdayRitual = true;
 							world.spawnEntity(entity);

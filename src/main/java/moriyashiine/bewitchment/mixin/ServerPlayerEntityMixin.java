@@ -1,10 +1,7 @@
 package moriyashiine.bewitchment.mixin;
 
 import com.mojang.authlib.GameProfile;
-import moriyashiine.bewitchment.api.interfaces.BloodAccessor;
-import moriyashiine.bewitchment.api.interfaces.ContractAccessor;
-import moriyashiine.bewitchment.api.interfaces.MagicAccessor;
-import moriyashiine.bewitchment.api.interfaces.PolymorphAccessor;
+import moriyashiine.bewitchment.api.interfaces.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -30,6 +27,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 				polymorphAccessor.setPolymorphName(oldPolymorphAccessor.getPolymorphName());
 			}));
 		}
+		FortuneAccessor.of(this).ifPresent(fortuneAccessor -> FortuneAccessor.of(oldPlayer).ifPresent(oldFortuneAccessor -> fortuneAccessor.setFortune(oldFortuneAccessor.getFortune())));
 		ContractAccessor.of(this).ifPresent(contractAccessor -> ContractAccessor.of(oldPlayer).ifPresent(oldContractAccessor -> contractAccessor.getContracts().addAll(oldContractAccessor.getContracts())));
 	}
 }

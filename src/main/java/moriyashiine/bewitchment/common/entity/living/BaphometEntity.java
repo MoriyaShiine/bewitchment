@@ -113,7 +113,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 							}
 							Contract.Instance instance = new Contract.Instance(contract, 168000);
 							contractAccessor.addContract(instance);
-							player.sendMessage(new TranslatableText(Bewitchment.MODID + ".baphomet_contract", new TranslatableText("contract." + BWRegistries.CONTRACTS.getId(instance.contract).toString().replace(":", "."))), true);
+							player.sendMessage(new TranslatableText(Bewitchment.MODID + ".baphomet_contract", new TranslatableText("contract." + BWRegistries.CONTRACTS.getId(contract).toString().replace(":", "."))), true);
 							if (!player.isCreative()) {
 								player.addExperienceLevels(-30);
 								world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1, 0.5f);

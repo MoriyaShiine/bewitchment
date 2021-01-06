@@ -25,6 +25,18 @@
 	],
 	"subtitle": "bewitchment.subtitles.block.glyph.pling"
   },
+  "block.crystal_ball.fire": {
+	"sounds": [
+	  "random/fizz"
+	],
+	"subtitle": "bewitchment.subtitles.block.crystal_ball.fire"
+  },
+  "block.crystal_ball.fail": {
+	"sounds": [
+	  "note/snare"
+	],
+	"subtitle": "bewitchment.subtitles.block.crystal_ball.fail"
+  },
   "item.athame.strip": {
 	"sounds": [
 	  {

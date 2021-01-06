@@ -1,0 +1,32 @@
+{
+  "parent": "recipes/root",
+  "rewards": {
+	"recipes": [
+	  "bewitchment:crystal_ball"
+	]
+  },
+  "criteria": {
+	"has_item": {
+	  "trigger": "inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "diamond"
+		  }
+		]
+	  }
+	},
+	"has_the_recipe": {
+	  "trigger": "recipe_unlocked",
+	  "conditions": {
+		"recipe": "bewitchment:crystal_ball"
+	  }
+	}
+  },
+  "requirements": [
+	[
+	  "has_item",
+	  "has_the_recipe"
+	]
+  ]
+}

@@ -197,6 +197,7 @@ public class BWObjects {
 	public static final Block[] OBSIDIAN_WITCH_ALTAR = createAltar("obsidian_witch_altar", copyOf(Blocks.OBSIDIAN));
 	public static final Block[] PURPUR_WITCH_ALTAR = createAltar("purpur_witch_altar", copyOf(Blocks.PURPUR_BLOCK));
 	public static final Block WITCH_CAULDRON = create("witch_cauldron", new WitchCauldronBlock(copyOf(Blocks.CAULDRON)), true);
+	public static final Block CRYSTAL_BALL = create("crystal_ball", new CrystalBallBlock(copyOf(SILVER_BLOCK).sounds(BlockSoundGroup.GLASS)), true);
 	//armor
 	public static final Item SILVER_HELMET = create("silver_helmet", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.HEAD, gen()));
 	public static final Item SILVER_CHESTPLATE = create("silver_chestplate", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.CHEST, gen()));

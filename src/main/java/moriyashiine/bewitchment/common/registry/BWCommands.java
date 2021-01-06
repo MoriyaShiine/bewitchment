@@ -10,7 +10,9 @@ import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import moriyashiine.bewitchment.api.interfaces.ContractAccessor;
+import moriyashiine.bewitchment.api.interfaces.FortuneAccessor;
 import moriyashiine.bewitchment.api.registry.Contract;
+import moriyashiine.bewitchment.api.registry.Fortune;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
@@ -26,6 +28,46 @@ import java.util.concurrent.CompletableFuture;
 @SuppressWarnings("ConstantConditions")
 public class BWCommands {
 	public static void init(CommandDispatcher<ServerCommandSource> dispatcher, boolean dedicated) {
+		dispatcher.register(CommandManager.literal("fortune").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.argument("target", EntityArgumentType.player()).then(CommandManager.literal("get").executes(context -> {
+			LivingEntity target = EntityArgumentType.getPlayer(context, "target");
+			if (target instanceof LivingEntity) {
+				FortuneAccessor fortuneAccessor = FortuneAccessor.of(target).orElse(null);
+				if (fortuneAccessor != null) {
+					Fortune.Instance instance = fortuneAccessor.getFortune();
+					if (instance != null) {
+						context.getSource().sendFeedback(new LiteralText(target.getEntityName() + " has the following fortune: " + BWRegistries.FORTUNES.getId(instance.fortune).toString()), true);
+						return 1;
+					}
+					else {
+						context.getSource().sendFeedback(new LiteralText(target.getEntityName() + " does not have any fortune"), true);
+					}
+				}
+			}
+			return 0;
+		})).then(CommandManager.literal("set").then(CommandManager.argument("fortune", FortuneArgumentType.fortune()).executes(context -> {
+			LivingEntity target = EntityArgumentType.getPlayer(context, "target");
+			if (target instanceof LivingEntity) {
+				FortuneAccessor fortuneAccessor = FortuneAccessor.of(target).orElse(null);
+				if (fortuneAccessor != null) {
+					Fortune fortune = FortuneArgumentType.getFortune(context, "fortune");
+					fortuneAccessor.setFortune(new Fortune.Instance(fortune, target.world.random.nextInt(120000)));
+					context.getSource().sendFeedback(new LiteralText("Set " + target.getEntityName() + "'s fortune to " + BWRegistries.FORTUNES.getId(fortune).toString()), true);
+					return 1;
+				}
+			}
+			return 0;
+		}))).then(CommandManager.literal("remove").executes(context -> {
+			LivingEntity target = EntityArgumentType.getPlayer(context, "target");
+			if (target instanceof LivingEntity) {
+				FortuneAccessor fortuneAccessor = FortuneAccessor.of(target).orElse(null);
+				if (fortuneAccessor != null) {
+					fortuneAccessor.setFortune(null);
+					context.getSource().sendFeedback(new LiteralText("Removed fortune from " + target.getEntityName()), true);
+					return 1;
+				}
+			}
+			return 0;
+		}))));
 		dispatcher.register(CommandManager.literal("contract").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.argument("target", EntityArgumentType.entity()).then(CommandManager.literal("get").executes(context -> {
 			Entity target = EntityArgumentType.getEntity(context, "target");
 			if (target instanceof LivingEntity) {
@@ -118,6 +160,29 @@ public class BWCommands {
 			}
 			return 0;
 		}))));
+	}
+	
+	private static class FortuneArgumentType implements ArgumentType<Fortune> {
+		public static final DynamicCommandExceptionType INVALID_FORTUNE_EXCEPTION = new DynamicCommandExceptionType((object) -> new TranslatableText("fortune.fortuneNotFound", object));
+		
+		public static FortuneArgumentType fortune() {
+			return new FortuneArgumentType();
+		}
+		
+		public static Fortune getFortune(CommandContext<ServerCommandSource> commandContext, String string) {
+			return commandContext.getArgument(string, Fortune.class);
+		}
+		
+		@Override
+		public Fortune parse(StringReader reader) throws CommandSyntaxException {
+			Identifier identifier = Identifier.fromCommandInput(reader);
+			return BWRegistries.FORTUNES.getOrEmpty(identifier).orElseThrow(() -> INVALID_FORTUNE_EXCEPTION.create(identifier));
+		}
+		
+		@Override
+		public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
+			return CommandSource.suggestIdentifiers(BWRegistries.FORTUNES.getIds(), builder);
+		}
 	}
 	
 	private static class ContractArgumentType implements ArgumentType<Contract> {
