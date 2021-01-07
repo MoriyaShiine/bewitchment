@@ -26,7 +26,7 @@ public abstract class AnimalMateGoalMixin extends Goal {
 	@Shadow
 	protected AnimalEntity mate;
 	
-	@Inject(method = "breed", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "breed", at = @At("HEAD"))
 	private void breed(CallbackInfo callbackInfo) {
 		ServerPlayerEntity player = animal.getLovingPlayer();
 		if (player != null) {
@@ -36,13 +36,12 @@ public abstract class AnimalMateGoalMixin extends Goal {
 						for (int i = 0; i < 3; i++) {
 							HellhoundEntity hellhound = BWEntityTypes.HELLHOUND.create(player.world);
 							if (hellhound != null) {
-								hellhound.initialize((ServerWorldAccess) animal.world, animal.world.getLocalDifficulty(animal.getBlockPos()), SpawnReason.EVENT, null, null);
+								hellhound.initialize((ServerWorldAccess) player.world, player.world.getLocalDifficulty(animal.getBlockPos()), SpawnReason.EVENT, null, null);
 								hellhound.refreshPositionAndAngles(animal.getX(), animal.getY(), animal.getZ(), 0, animal.getRandom().nextInt(360));
 								hellhound.setTarget(player);
 								player.world.spawnEntity(hellhound);
 							}
 						}
-						callbackInfo.cancel();
 					}
 					else {
 						animal.breed(player.getServerWorld(), mate);
