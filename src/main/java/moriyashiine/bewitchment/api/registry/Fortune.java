@@ -102,7 +102,7 @@ public class Fortune {
 	}
 	
 	public static class Instance {
-		public Fortune fortune;
+		public final Fortune fortune;
 		public int duration;
 		
 		public Instance(Fortune fortune, int duration) {

@@ -46,7 +46,7 @@ import java.util.List;
 import java.util.Random;
 
 public class DemonEntity extends BWHostileEntity implements Merchant {
-	public static TrackedData<Boolean> MALE = DataTracker.registerData(DemonEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+	public static final TrackedData<Boolean> MALE = DataTracker.registerData(DemonEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
 	private TradeOfferList tradeOffers = null;
 	private PlayerEntity customer = null;

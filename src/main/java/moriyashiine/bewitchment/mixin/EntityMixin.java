@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.UUID;
 
+@SuppressWarnings("ConstantConditions")
 @Mixin(Entity.class)
 public abstract class EntityMixin implements WetAccessor {
 	private int wetTimer = 0;
@@ -57,22 +58,19 @@ public abstract class EntityMixin implements WetAccessor {
 	
 	@Inject(method = "isInvulnerableTo", at = @At("HEAD"), cancellable = true)
 	private void isInvulnerableTo(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
-		Entity attacker = source.getAttacker();
-		if (attacker instanceof LivingEntity) {
-			Entity entity = (Entity) (Object) this;
-			if (entity instanceof MasterAccessor) {
-				MasterAccessor masterAccessor = (MasterAccessor) entity;
-				UUID masterUUID = masterAccessor.getMasterUUID();
-				if (masterUUID != null && masterUUID.equals(attacker.getUuid())) {
-					callbackInfo.setReturnValue(true);
-				}
-			}
-			if (attacker instanceof MasterAccessor) {
-				MasterAccessor masterAccessor = (MasterAccessor) attacker;
-				UUID masterUUID = masterAccessor.getMasterUUID();
-				if (masterUUID != null && masterUUID.equals(getUuid())) {
-					callbackInfo.setReturnValue(true);
-				}
+		if ((Object) this instanceof LivingEntity) {
+			Entity attacker = source.getAttacker();
+			if (attacker instanceof LivingEntity) {
+				MasterAccessor.of(this).ifPresent(masterAccessor -> {
+					if (attacker.getUuid().equals(masterAccessor.getMasterUUID())) {
+						callbackInfo.setReturnValue(true);
+					}
+				});
+				MasterAccessor.of(attacker).ifPresent(masterAccessor -> {
+					if (getUuid().equals(masterAccessor.getMasterUUID())) {
+						callbackInfo.setReturnValue(true);
+					}
+				});
 			}
 		}
 	}

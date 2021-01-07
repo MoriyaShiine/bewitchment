@@ -48,18 +48,19 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 		boolean client = world.isClient;
 		BlockPos nearestAltarPos = WitchAltarBlock.getClosestAltarPos(world, pos);
 		if (nearestAltarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(nearestAltarPos)).drain(500, false)) {
-			FortuneAccessor fortuneAccessor = FortuneAccessor.of(player).orElse(null);
-			if (fortuneAccessor != null && fortuneAccessor.getFortune() == null) {
-				world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE, SoundCategory.BLOCKS, 1, 1);
-				Fortune fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
-				fortuneAccessor.setFortune(new Fortune.Instance(fortune, world.random.nextInt(120000)));
-				player.sendMessage(new TranslatableText("fortune." + BWRegistries.FORTUNES.getId(fortune).toString().replace(":", ".")), true);
-				
-			}
-			else {
-				world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FAIL, SoundCategory.BLOCKS, 1, 1);
-				player.sendMessage(new TranslatableText(Bewitchment.MODID + ".has_fortune"), true);
-			}
+			FortuneAccessor.of(player).ifPresent(fortuneAccessor -> {
+				if (fortuneAccessor.getFortune() == null) {
+					world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE, SoundCategory.BLOCKS, 1, 1);
+					Fortune fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
+					fortuneAccessor.setFortune(new Fortune.Instance(fortune, world.random.nextInt(120000)));
+					player.sendMessage(new TranslatableText("fortune." + BWRegistries.FORTUNES.getId(fortune).toString().replace(":", ".")), true);
+					
+				}
+				else {
+					world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FAIL, SoundCategory.BLOCKS, 1, 1);
+					player.sendMessage(new TranslatableText(Bewitchment.MODID + ".has_fortune"), true);
+				}
+			});
 		}
 		else if (!client) {
 			world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FAIL, SoundCategory.BLOCKS, 1, 1);

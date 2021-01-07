@@ -57,7 +57,7 @@ public class Contract {
 	}
 	
 	public static class Instance {
-		public Contract contract;
+		public final Contract contract;
 		public int duration;
 		
 		public Instance(Contract contract, int duration) {

@@ -26,7 +26,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
 	
 	@Inject(method = "onDeath", at = @At("HEAD"))
 	private void onDeath(CallbackInfo callbackInfo) {
-		if (!world.isClient && attackingPlayer != null) {
+		if (!world.isClient) {
 			ContractAccessor.of(attackingPlayer).ifPresent(contractAccessor -> {
 				if (contractAccessor.hasContract(BWContracts.ENVY)) {
 					VillagerEntity villager = (VillagerEntity) (Object) this;

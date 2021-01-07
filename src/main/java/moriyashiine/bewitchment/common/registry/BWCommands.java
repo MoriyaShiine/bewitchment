@@ -16,7 +16,6 @@ import moriyashiine.bewitchment.api.registry.Fortune;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -65,93 +64,81 @@ public class BWCommands {
 		}))));
 		dispatcher.register(CommandManager.literal("contract").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.argument("target", EntityArgumentType.entity()).then(CommandManager.literal("get").executes(context -> {
 			Entity target = EntityArgumentType.getEntity(context, "target");
-			if (target instanceof LivingEntity) {
-				ContractAccessor contractAccessor = ContractAccessor.of((LivingEntity) target).orElse(null);
-				if (contractAccessor != null) {
-					if (!contractAccessor.getContracts().isEmpty()) {
-						StringBuilder contracts = new StringBuilder();
-						for (Contract.Instance instance : contractAccessor.getContracts()) {
-							contracts.append(BWRegistries.CONTRACTS.getId(instance.contract).toString()).append(", ");
-						}
-						context.getSource().sendFeedback(new LiteralText(target.getEntityName() + " has the following contracts: " + contracts.delete(contracts.lastIndexOf(","), contracts.capacity())), true);
-						return 1;
+			ContractAccessor contractAccessor = ContractAccessor.of(target).orElse(null);
+			if (contractAccessor != null) {
+				if (!contractAccessor.getContracts().isEmpty()) {
+					StringBuilder contracts = new StringBuilder();
+					for (Contract.Instance instance : contractAccessor.getContracts()) {
+						contracts.append(BWRegistries.CONTRACTS.getId(instance.contract).toString()).append(", ");
 					}
-					else {
-						context.getSource().sendFeedback(new LiteralText(target.getEntityName() + " does not have any contracts"), true);
-					}
+					context.getSource().sendFeedback(new LiteralText(target.getEntityName() + " has the following contracts: " + contracts.delete(contracts.lastIndexOf(","), contracts.capacity())), true);
+					return 1;
+				}
+				else {
+					context.getSource().sendFeedback(new LiteralText(target.getEntityName() + " does not have any contracts"), true);
 				}
 			}
 			return 0;
 		}).then(CommandManager.argument("contract", ContractArgumentType.contract()).executes(context -> {
 			Entity target = EntityArgumentType.getEntity(context, "target");
-			if (target instanceof LivingEntity) {
-				ContractAccessor contractAccessor = ContractAccessor.of((LivingEntity) target).orElse(null);
-				if (contractAccessor != null) {
-					Contract contract = ContractArgumentType.getContract(context, "contract");
-					String contractName = BWRegistries.CONTRACTS.getId(contract).toString();
-					if (contractAccessor.hasContract(contract)) {
-						int daysLeft = Math.round(contractAccessor.getContracts().stream().filter(instance -> instance.contract == contract).findFirst().orElse(null).duration / 24000f);
-						context.getSource().sendFeedback(new LiteralText(target.getEntityName() + " has contract " + contractName + " for " + daysLeft + " more " + (daysLeft == 1 ? "day" : "days")), true);
-						return 1;
-					}
-					else {
-						context.getSource().sendFeedback(new LiteralText(target.getEntityName() + " does not have contract " + contractName), true);
-					}
+			ContractAccessor contractAccessor = ContractAccessor.of(target).orElse(null);
+			if (contractAccessor != null) {
+				Contract contract = ContractArgumentType.getContract(context, "contract");
+				String contractName = BWRegistries.CONTRACTS.getId(contract).toString();
+				if (contractAccessor.hasContract(contract)) {
+					int daysLeft = Math.round(contractAccessor.getContracts().stream().filter(instance -> instance.contract == contract).findFirst().orElse(null).duration / 24000f);
+					context.getSource().sendFeedback(new LiteralText(target.getEntityName() + " has contract " + contractName + " for " + daysLeft + " more " + (daysLeft == 1 ? "day" : "days")), true);
+					return 1;
+				}
+				else {
+					context.getSource().sendFeedback(new LiteralText(target.getEntityName() + " does not have contract " + contractName), true);
 				}
 			}
 			return 0;
 		}))).then(CommandManager.literal("add").then(CommandManager.argument("contract", ContractArgumentType.contract()).executes(context -> {
 			Entity target = EntityArgumentType.getEntity(context, "target");
-			if (target instanceof LivingEntity) {
-				ContractAccessor contractAccessor = ContractAccessor.of((LivingEntity) target).orElse(null);
-				if (contractAccessor != null) {
-					Contract contract = ContractArgumentType.getContract(context, "contract");
-					contractAccessor.addContract(new Contract.Instance(contract, 168000));
-					context.getSource().sendFeedback(new LiteralText("Added contract " + BWRegistries.CONTRACTS.getId(contract).toString() + " to " + target.getEntityName() + " for 7 days"), true);
-					return 1;
-				}
+			ContractAccessor contractAccessor = ContractAccessor.of(target).orElse(null);
+			if (contractAccessor != null) {
+				Contract contract = ContractArgumentType.getContract(context, "contract");
+				contractAccessor.addContract(new Contract.Instance(contract, 168000));
+				context.getSource().sendFeedback(new LiteralText("Added contract " + BWRegistries.CONTRACTS.getId(contract).toString() + " to " + target.getEntityName() + " for 7 days"), true);
+				return 1;
 			}
 			return 0;
 		}).then(CommandManager.argument("days", IntegerArgumentType.integer(0, 365)).executes(context -> {
 			Entity target = EntityArgumentType.getEntity(context, "target");
-			if (target instanceof LivingEntity) {
-				ContractAccessor contractAccessor = ContractAccessor.of((LivingEntity) target).orElse(null);
-				if (contractAccessor != null) {
-					Contract contract = ContractArgumentType.getContract(context, "contract");
-					int days = IntegerArgumentType.getInteger(context, "days");
-					contractAccessor.addContract(new Contract.Instance(contract, days * 24000));
-					context.getSource().sendFeedback(new LiteralText("Added contract " + BWRegistries.CONTRACTS.getId(contract).toString() + " to " + target.getEntityName() + " for " + days + (days == 1 ? " day" : " days")), true);
-					return 1;
-				}
+			ContractAccessor contractAccessor = ContractAccessor.of(target).orElse(null);
+			if (contractAccessor != null) {
+				Contract contract = ContractArgumentType.getContract(context, "contract");
+				int days = IntegerArgumentType.getInteger(context, "days");
+				contractAccessor.addContract(new Contract.Instance(contract, days * 24000));
+				context.getSource().sendFeedback(new LiteralText("Added contract " + BWRegistries.CONTRACTS.getId(contract).toString() + " to " + target.getEntityName() + " for " + days + (days == 1 ? " day" : " days")), true);
+				return 1;
 			}
 			return 0;
 		})))).then(CommandManager.literal("remove").then(CommandManager.argument("contract", ContractArgumentType.contract()).executes(context -> {
 			Entity target = EntityArgumentType.getEntity(context, "target");
-			if (target instanceof LivingEntity) {
-				ContractAccessor contractAccessor = ContractAccessor.of((LivingEntity) target).orElse(null);
-				if (contractAccessor != null) {
-					Contract contract = ContractArgumentType.getContract(context, "contract");
-					String contractName = BWRegistries.CONTRACTS.getId(contract).toString();
-					if (contractAccessor.hasContract(contract)) {
-						contractAccessor.removeContract(contract);
-						context.getSource().sendFeedback(new LiteralText("Removed contract " + contractName + " from " + target.getEntityName()), true);
-						return 1;
-					}
-					else {
-						context.getSource().sendFeedback(new LiteralText("Could not find contract " + contractName + " on " + target.getEntityName()), true);
-					}
+			ContractAccessor contractAccessor = ContractAccessor.of(target).orElse(null);
+			if (contractAccessor != null) {
+				Contract contract = ContractArgumentType.getContract(context, "contract");
+				String contractName = BWRegistries.CONTRACTS.getId(contract).toString();
+				if (contractAccessor.hasContract(contract)) {
+					contractAccessor.removeContract(contract);
+					context.getSource().sendFeedback(new LiteralText("Removed contract " + contractName + " from " + target.getEntityName()), true);
+					return 1;
+				}
+				else {
+					context.getSource().sendFeedback(new LiteralText("Could not find contract " + contractName + " on " + target.getEntityName()), true);
 				}
 			}
 			return 0;
 		}))).then(CommandManager.literal("clear").executes(context -> {
 			Entity target = EntityArgumentType.getEntity(context, "target");
-			if (target instanceof LivingEntity) {
-				ContractAccessor contractAccessor = ContractAccessor.of((LivingEntity) target).orElse(null);
-				if (contractAccessor != null) {
-					contractAccessor.getContracts().clear();
-					context.getSource().sendFeedback(new LiteralText("Removed all contracts from " + target.getEntityName()), true);
-					return 1;
-				}
+			ContractAccessor contractAccessor = ContractAccessor.of(target).orElse(null);
+			if (contractAccessor != null) {
+				contractAccessor.getContracts().clear();
+				context.getSource().sendFeedback(new LiteralText("Removed all contracts from " + target.getEntityName()), true);
+				return 1;
 			}
 			return 0;
 		}))));
