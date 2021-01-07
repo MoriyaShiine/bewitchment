@@ -169,7 +169,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 					}
 					swingHand(Hand.MAIN_HAND);
 				}
-				if (timer % 600 == 0 && world.getEntitiesByType(EntityType.BLAZE, new Box(getBlockPos()).expand(32), entity -> ((MasterAccessor) entity).getMasterUUID().equals(getUuid())).size() < 3) {
+				if (timer % 600 == 0 && world.getEntitiesByType(EntityType.BLAZE, new Box(getBlockPos()).expand(32), entity -> getUuid().equals(((MasterAccessor) entity).getMasterUUID())).size() < 3) {
 					summonMinions();
 				}
 			}
@@ -248,7 +248,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 					BewitchmentAPI.attemptTeleport(blaze, getBlockPos(), 3);
 					blaze.pitch = random.nextInt(360);
 					blaze.setTarget(getTarget());
-					((MasterAccessor) blaze).setMasterUUID(getUuid());
+					MasterAccessor.of(blaze).ifPresent(masterAccessor -> masterAccessor.setMasterUUID(getUuid()));
 					blaze.setPersistent();
 					blaze.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE));
 					blaze.addStatusEffect(new StatusEffectInstance(BWStatusEffects.MAGIC_RESISTANCE, Integer.MAX_VALUE));

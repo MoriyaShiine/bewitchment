@@ -1,13 +1,15 @@
 package moriyashiine.bewitchment.api.interfaces;
 
 import moriyashiine.bewitchment.api.registry.Fortune;
-import net.minecraft.entity.LivingEntity;
 
 import java.util.Optional;
 
 public interface FortuneAccessor {
-	static Optional<FortuneAccessor> of(LivingEntity entity) {
-		return Optional.of(((FortuneAccessor) entity));
+	static Optional<FortuneAccessor> of(Object entity) {
+		if (entity instanceof FortuneAccessor) {
+			return Optional.of(((FortuneAccessor) entity));
+		}
+		return Optional.empty();
 	}
 	
 	Fortune.Instance getFortune();

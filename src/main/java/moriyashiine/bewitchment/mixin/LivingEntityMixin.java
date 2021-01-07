@@ -214,9 +214,11 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "isAffectedBySplashPotions", at = @At("HEAD"), cancellable = true)
 	private void isAffectedBySplashPotions(CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (this instanceof MasterAccessor && ((MasterAccessor) this).getMasterUUID() != null) {
-			callbackInfo.setReturnValue(false);
-		}
+		MasterAccessor.of(this).ifPresent(masterAccessor -> {
+			if (masterAccessor.getMasterUUID() != null) {
+				callbackInfo.setReturnValue(false);
+			}
+		});
 	}
 	
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)

@@ -136,7 +136,7 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 				if (timer % 80 == 0) {
 					spawnPotion(target.getBlockPos(), target.isUndead() ? Potions.STRONG_HEALING : Potions.STRONG_HARMING);
 				}
-				if (timer % 600 == 0 && world.getEntitiesByType(EntityType.WITCH, new Box(getBlockPos()).expand(32), entity -> ((MasterAccessor) entity).getMasterUUID().equals(getUuid())).size() < 3) {
+				if (timer % 600 == 0 && world.getEntitiesByType(EntityType.WITCH, new Box(getBlockPos()).expand(32), entity -> getUuid().equals(((MasterAccessor) entity).getMasterUUID())).size() < 3) {
 					summonMinions();
 				}
 			}
@@ -215,7 +215,7 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 					BewitchmentAPI.attemptTeleport(witch, getBlockPos(), 3);
 					witch.pitch = random.nextInt(360);
 					witch.setTarget(getTarget());
-					((MasterAccessor) witch).setMasterUUID(getUuid());
+					MasterAccessor.of(witch).ifPresent(masterAccessor -> masterAccessor.setMasterUUID(getUuid()));
 					witch.setPersistent();
 					witch.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE));
 					witch.addStatusEffect(new StatusEffectInstance(BWStatusEffects.MAGIC_RESISTANCE, Integer.MAX_VALUE));

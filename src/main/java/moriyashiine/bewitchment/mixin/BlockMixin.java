@@ -42,37 +42,39 @@ public abstract class BlockMixin {
 	private static void getDroppedStacks(BlockState state, ServerWorld world, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity entity, ItemStack stack, CallbackInfoReturnable<List<ItemStack>> callbackInfo) {
 		if (!EnchantmentHelper.get(stack).containsKey(Enchantments.SILK_TOUCH) && entity instanceof LivingEntity) {
 			List<ItemStack> drops = callbackInfo.getReturnValue();
-			FortuneAccessor.of((LivingEntity) entity).ifPresent(fortuneAccessor -> {
-				if (fortuneAccessor.getFortune().fortune == BWFortunes.TREASURE && world.random.nextFloat() < 1 / 25f) {
-					Set<ItemStack> treasure = new HashSet<>();
-					for (int i = 0; i < world.random.nextInt(3); i++) {
-						switch (world.random.nextInt(4)) {
-							case 0:
-								treasure.add(new ItemStack(Items.DIAMOND, MathHelper.nextInt(world.random, 0, 3)));
-							case 1:
-								treasure.add(new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(world.random, 0, 3)));
-							case 2:
-								treasure.add(new ItemStack(Items.IRON_INGOT, MathHelper.nextInt(world.random, 0, 3)));
-							case 3:
-								treasure.add(new ItemStack(BWObjects.SILVER_INGOT, MathHelper.nextInt(world.random, 0, 3)));
-							default:
-								treasure.add(ItemStack.EMPTY);
+			FortuneAccessor.of(entity).ifPresent(fortuneAccessor -> {
+				if (fortuneAccessor.getFortune() != null) {
+					if (fortuneAccessor.getFortune().fortune == BWFortunes.TREASURE && world.random.nextFloat() < 1 / 25f) {
+						Set<ItemStack> treasure = new HashSet<>();
+						for (int i = 0; i < world.random.nextInt(3); i++) {
+							switch (world.random.nextInt(4)) {
+								case 0:
+									treasure.add(new ItemStack(Items.DIAMOND, MathHelper.nextInt(world.random, 0, 3)));
+								case 1:
+									treasure.add(new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(world.random, 0, 3)));
+								case 2:
+									treasure.add(new ItemStack(Items.IRON_INGOT, MathHelper.nextInt(world.random, 0, 3)));
+								case 3:
+									treasure.add(new ItemStack(BWObjects.SILVER_INGOT, MathHelper.nextInt(world.random, 0, 3)));
+								default:
+									treasure.add(ItemStack.EMPTY);
+							}
 						}
-					}
-					drops.addAll(treasure);
-					fortuneAccessor.getFortune().duration = 0;
-				}
-				else if (fortuneAccessor.getFortune().fortune == BWFortunes.INFESTED && world.random.nextFloat() < 1 / 25f) {
-					SilverfishEntity silverfishEntity = EntityType.SILVERFISH.create(world);
-					if (silverfishEntity != null) {
-						silverfishEntity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
-						silverfishEntity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0, world.random.nextInt(360));
-						world.spawnEntity(silverfishEntity);
+						drops.addAll(treasure);
 						fortuneAccessor.getFortune().duration = 0;
+					}
+					else if (fortuneAccessor.getFortune().fortune == BWFortunes.INFESTED && world.random.nextFloat() < 1 / 25f) {
+						SilverfishEntity silverfishEntity = EntityType.SILVERFISH.create(world);
+						if (silverfishEntity != null) {
+							silverfishEntity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
+							silverfishEntity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0, world.random.nextInt(360));
+							world.spawnEntity(silverfishEntity);
+							fortuneAccessor.getFortune().duration = 0;
+						}
 					}
 				}
 			});
-			ContractAccessor.of((LivingEntity) entity).ifPresent(contractAccessor -> {
+			ContractAccessor.of(entity).ifPresent(contractAccessor -> {
 				if (contractAccessor.hasContract(BWContracts.GREED)) {
 					if (contractAccessor.hasNegativeEffects() && world.random.nextFloat() < 1 / 8f) {
 						drops.clear();

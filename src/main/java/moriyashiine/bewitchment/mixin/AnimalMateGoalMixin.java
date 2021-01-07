@@ -30,11 +30,11 @@ public abstract class AnimalMateGoalMixin extends Goal {
 		if (player != null) {
 			ContractAccessor.of(player).ifPresent(contractAccessor -> {
 				if (contractAccessor.hasContract(BWContracts.LUST)) {
-					if (contractAccessor.hasNegativeEffects() && player.getRandom().nextFloat() < 1 / 20f) {
+					if (contractAccessor.hasNegativeEffects() && player.getRandom().nextFloat() < 1 / 8f) {
 						for (int i = 0; i < 3; i++) {
 							HellhoundEntity hellhound = BWEntityTypes.HELLHOUND.create(player.world);
 							if (hellhound != null) {
-								hellhound.setPos(animal.getX(), animal.getY(), animal.getZ());
+								hellhound.refreshPositionAndAngles(animal.getX(), animal.getY(), animal.getZ(), 0, animal.getRandom().nextInt(360));
 								hellhound.setTarget(player);
 								player.world.spawnEntity(hellhound);
 							}

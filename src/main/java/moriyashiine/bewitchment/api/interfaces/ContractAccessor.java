@@ -1,14 +1,16 @@
 package moriyashiine.bewitchment.api.interfaces;
 
 import moriyashiine.bewitchment.api.registry.Contract;
-import net.minecraft.entity.LivingEntity;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ContractAccessor {
-	static Optional<ContractAccessor> of(LivingEntity entity) {
-		return Optional.of(((ContractAccessor) entity));
+	static Optional<ContractAccessor> of(Object entity) {
+		if (entity instanceof ContractAccessor) {
+			return Optional.of(((ContractAccessor) entity));
+		}
+		return Optional.empty();
 	}
 	
 	List<Contract.Instance> getContracts();

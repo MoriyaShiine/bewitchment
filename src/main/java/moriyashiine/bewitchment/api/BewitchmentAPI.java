@@ -34,10 +34,10 @@ import java.util.function.Predicate;
 
 @SuppressWarnings("ConstantConditions")
 public class BewitchmentAPI {
-	public static Set<AltarMapEntry> ALTAR_MAP_ENTRIES = new HashSet<>();
+	public static final Set<AltarMapEntry> ALTAR_MAP_ENTRIES = new HashSet<>();
 	
 	@SuppressWarnings("InstantiationOfUtilityClass")
-	public static EntityGroup DEMON = new EntityGroup();
+	public static final EntityGroup DEMON = new EntityGroup();
 	
 	public static LivingEntity getTaglockOwner(World world, ItemStack taglock) {
 		if (world instanceof ServerWorld && taglock.getItem() instanceof TaglockItem && taglock.hasTag() && taglock.getOrCreateTag().contains("OwnerUUID")) {
