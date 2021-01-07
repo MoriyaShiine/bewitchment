@@ -15,7 +15,7 @@ public class Fortune {
 	}
 	
 	public boolean finish(ServerWorld world, PlayerEntity target) {
-		return false;
+		return true;
 	}
 	
 	public static class Instance {

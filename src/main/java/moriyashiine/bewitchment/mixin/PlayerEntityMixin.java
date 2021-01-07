@@ -113,7 +113,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 				getFortune().duration--;
 			}
 			if (getFortune().duration <= 0) {
-				if (!getFortune().fortune.finish((ServerWorld) world, (PlayerEntity) (Object) this)) {
+				if (getFortune().fortune.finish((ServerWorld) world, (PlayerEntity) (Object) this)) {
 					setFortune(null);
 				}
 				else {

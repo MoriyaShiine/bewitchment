@@ -33,11 +33,10 @@ public class EncounterFortune extends Fortune {
 					}
 					entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, world.random.nextInt(360));
 					world.spawnEntity(entity);
-					return false;
+					return true;
 				}
 			}
-			return true;
 		}
-		return super.finish(world, target);
+		return false;
 	}
 }

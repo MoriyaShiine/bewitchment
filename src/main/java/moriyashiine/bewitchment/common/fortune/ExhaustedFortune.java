@@ -13,6 +13,6 @@ public class ExhaustedFortune extends Fortune {
 	@Override
 	public boolean finish(ServerWorld world, PlayerEntity target) {
 		MagicAccessor magicAccessor = MagicAccessor.of(target).orElse(null);
-		return magicAccessor == null || !magicAccessor.drainMagic(2500, false);
+		return magicAccessor != null && magicAccessor.drainMagic(2500, false);
 	}
 }
