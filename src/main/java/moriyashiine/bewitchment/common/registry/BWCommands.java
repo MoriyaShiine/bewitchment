@@ -17,6 +17,7 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.LiteralText;
@@ -29,42 +30,36 @@ import java.util.concurrent.CompletableFuture;
 public class BWCommands {
 	public static void init(CommandDispatcher<ServerCommandSource> dispatcher, boolean dedicated) {
 		dispatcher.register(CommandManager.literal("fortune").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.argument("target", EntityArgumentType.player()).then(CommandManager.literal("get").executes(context -> {
-			LivingEntity target = EntityArgumentType.getPlayer(context, "target");
-			if (target instanceof LivingEntity) {
-				FortuneAccessor fortuneAccessor = FortuneAccessor.of(target).orElse(null);
-				if (fortuneAccessor != null) {
-					Fortune.Instance instance = fortuneAccessor.getFortune();
-					if (instance != null) {
-						context.getSource().sendFeedback(new LiteralText(target.getEntityName() + " has the following fortune: " + BWRegistries.FORTUNES.getId(instance.fortune).toString()), true);
-						return 1;
-					}
-					else {
-						context.getSource().sendFeedback(new LiteralText(target.getEntityName() + " does not have any fortune"), true);
-					}
+			PlayerEntity target = EntityArgumentType.getPlayer(context, "target");
+			FortuneAccessor fortuneAccessor = FortuneAccessor.of(target).orElse(null);
+			if (fortuneAccessor != null) {
+				Fortune.Instance instance = fortuneAccessor.getFortune();
+				if (instance != null) {
+					context.getSource().sendFeedback(new LiteralText(target.getEntityName() + " has the following fortune: " + BWRegistries.FORTUNES.getId(instance.fortune).toString()), true);
+					return 1;
+				}
+				else {
+					context.getSource().sendFeedback(new LiteralText(target.getEntityName() + " does not have any fortune"), true);
 				}
 			}
 			return 0;
 		})).then(CommandManager.literal("set").then(CommandManager.argument("fortune", FortuneArgumentType.fortune()).executes(context -> {
-			LivingEntity target = EntityArgumentType.getPlayer(context, "target");
-			if (target instanceof LivingEntity) {
-				FortuneAccessor fortuneAccessor = FortuneAccessor.of(target).orElse(null);
-				if (fortuneAccessor != null) {
-					Fortune fortune = FortuneArgumentType.getFortune(context, "fortune");
-					fortuneAccessor.setFortune(new Fortune.Instance(fortune, target.world.random.nextInt(120000)));
-					context.getSource().sendFeedback(new LiteralText("Set " + target.getEntityName() + "'s fortune to " + BWRegistries.FORTUNES.getId(fortune).toString()), true);
-					return 1;
-				}
+			PlayerEntity target = EntityArgumentType.getPlayer(context, "target");
+			FortuneAccessor fortuneAccessor = FortuneAccessor.of(target).orElse(null);
+			if (fortuneAccessor != null) {
+				Fortune fortune = FortuneArgumentType.getFortune(context, "fortune");
+				fortuneAccessor.setFortune(new Fortune.Instance(fortune, target.world.random.nextInt(120000)));
+				context.getSource().sendFeedback(new LiteralText("Set " + target.getEntityName() + "'s fortune to " + BWRegistries.FORTUNES.getId(fortune).toString()), true);
+				return 1;
 			}
 			return 0;
 		}))).then(CommandManager.literal("remove").executes(context -> {
-			LivingEntity target = EntityArgumentType.getPlayer(context, "target");
-			if (target instanceof LivingEntity) {
-				FortuneAccessor fortuneAccessor = FortuneAccessor.of(target).orElse(null);
-				if (fortuneAccessor != null) {
-					fortuneAccessor.setFortune(null);
-					context.getSource().sendFeedback(new LiteralText("Removed fortune from " + target.getEntityName()), true);
-					return 1;
-				}
+			PlayerEntity target = EntityArgumentType.getPlayer(context, "target");
+			FortuneAccessor fortuneAccessor = FortuneAccessor.of(target).orElse(null);
+			if (fortuneAccessor != null) {
+				fortuneAccessor.setFortune(null);
+				context.getSource().sendFeedback(new LiteralText("Removed fortune from " + target.getEntityName()), true);
+				return 1;
 			}
 			return 0;
 		}))));
