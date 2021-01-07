@@ -343,7 +343,7 @@
   "bewitchment.subtitles.entity.baphomet.hurt": "Bapohmet hurts",
   "bewitchment.subtitles.entity.baphomet.death": "Bapohmet dies",
   "death.attack.wednesday": "%s realized what day it is",
-  "death.attack.wednesday.player": "%s realized what day it is while vibing with $s",
+  "death.attack.wednesday.player": "%s realized what day it is while vibing with %s",
   "fortune.fortuneNotFound": "Unknown fortune: %s",
   "contract.contractNotFound": "Unknown contract: %s",
   "bewitchment.insufficent_altar_power": "Your source of magic is not strong enough",
