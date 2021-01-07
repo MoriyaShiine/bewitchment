@@ -271,12 +271,12 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 			TradeOfferList offers = new TradeOfferList();
 			for (int i = 0; i < 5; i++) {
 				List<ItemStack> cost = generateCost(random, false);
-				offers.add(new TradeOffer(cost.get(0), cost.size() > 1 ? cost.get(1) : ItemStack.EMPTY, generateRewardStack(random), Integer.MAX_VALUE, 0, 1));
+				offers.add(new TradeOffer(cost.get(0), cost.size() > 1 ? cost.get(1) : ItemStack.EMPTY, generateRewardStack(random), 4, 0, 1));
 			}
 			List<ItemStack> cost = generateCost(random, true);
 			ItemStack stack = new ItemStack(BWObjects.DEMONIC_CONTRACT);
 			stack.getOrCreateTag().putString("Contract", BWRegistries.CONTRACTS.getId(BWRegistries.CONTRACTS.get(random.nextInt(BWRegistries.CONTRACTS.getEntries().size()))).toString());
-			offers.add(new TradeOffer(cost.get(0), cost.get(1), stack, Integer.MAX_VALUE, 0, 1));
+			offers.add(new TradeOffer(cost.get(0), cost.get(1), stack, 1, 0, 1));
 			return offers;
 		}
 		
