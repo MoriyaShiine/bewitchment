@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.common.block.entity;
 import com.mojang.authlib.GameProfile;
 import moriyashiine.bewitchment.api.interfaces.MagicAccessor;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
+import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
@@ -114,7 +115,12 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 				}
 				scan(80);
 				if (world.getTime() % 20 == 0) {
-					power = Math.min(power + gain, maxPower);
+					if (world.getBlockState(pos.up()).getBlock() == BWObjects.BLESSED_STONE) {
+						power = Integer.MAX_VALUE;
+					}
+					else {
+						power = Math.min(power + gain, maxPower);
+					}
 					PlayerLookup.around((ServerWorld) world, Vec3d.of(pos), 24).forEach(playerEntity -> MagicAccessor.of(playerEntity).ifPresent(magicAccessor -> {
 						if (magicAccessor.fillMagic(100, true) && drain(10, true)) {
 							magicAccessor.fillMagic(100, false);
