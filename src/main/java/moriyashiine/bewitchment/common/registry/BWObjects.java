@@ -195,7 +195,6 @@ public class BWObjects {
 	public static final Block[] PURPUR_WITCH_ALTAR = createAltar("purpur_witch_altar", copyOf(Blocks.PURPUR_BLOCK));
 	public static final Block WITCH_CAULDRON = create("witch_cauldron", new WitchCauldronBlock(copyOf(Blocks.CAULDRON)), true);
 	public static final Block CRYSTAL_BALL = create("crystal_ball", new CrystalBallBlock(copyOf(SILVER_BLOCK).sounds(BlockSoundGroup.GLASS)), true);
-	public static final Item SIGIL_ITEM = create("sigil", new SigilItem(gen()));
 	//armor
 	public static final Item SILVER_HELMET = create("silver_helmet", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.HEAD, gen()));
 	public static final Item SILVER_CHESTPLATE = create("silver_chestplate", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.CHEST, gen()));
@@ -221,15 +220,16 @@ public class BWObjects {
 	public static final Item SILVER_HOE = create("silver_hoe", new BWHoeItem(BWMaterials.SILVER_TOOL, -2, -3, gen()));
 	public static final Item ATHAME = create("athame", new AthameItem(BWMaterials.SILVER_TOOL, 1, -2, gen()));
 	public static final Item SILVER_ARROW = create("silver_arrow", new SilverArrowItem(gen()));
+	public static final Item SCEPTER = create("scepter", new ScepterItem(gen().rarity(Rarity.RARE).maxCount(1).maxDamage(64)));
+	public static final Item CADUCEUS = create("caduceus", new CaduceusItem(ToolMaterials.DIAMOND, 3, -2.4f, gen().rarity(Rarity.RARE).maxCount(1)));
 	public static final Item CHALK = create("chalk", new ChalkItem(gen().maxDamage(128), GLYPH));
 	public static final Item GOLDEN_CHALK = create("golden_chalk", new ChalkItem(gen().maxDamage(128), GOLDEN_GLYPH));
 	public static final Item FIERY_CHALK = create("fiery_chalk", new ChalkItem(gen().maxDamage(128), FIERY_GLYPH));
 	public static final Item ELDRITCH_CHALK = create("eldritch_chalk", new ChalkItem(gen().maxDamage(128), ELDRITCH_GLYPH));
 	public static final Item TAGLOCK = create("taglock", new TaglockItem(gen()));
 	public static final Item WAYSTONE = create("waystone", new WaystoneItem(gen().maxDamage(3)));
+	public static final Item SIGIL_ITEM = create("sigil", new SigilItem(gen()));
 	public static final Item DEMONIC_CONTRACT = create("demonic_contract", new ContractItem(gen().rarity(Rarity.RARE).maxCount(1)));
-	public static final Item SCEPTER = create("scepter", new ScepterItem(gen().rarity(Rarity.RARE).maxCount(1).maxDamage(64)));
-	public static final Item CADUCEUS = create("caduceus", new CaduceusItem(ToolMaterials.DIAMOND, 3, -2.4f, gen().rarity(Rarity.RARE).maxCount(1)));
 	//material_item
 	public static final Item CLEANSING_BALM = create("cleansing_balm", new Item(gen().recipeRemainder(Items.GLASS_BOTTLE)));
 	public static final Item GRIM_ELIXIR = create("grim_elixir", new Item(gen().recipeRemainder(Items.GLASS_BOTTLE)));
