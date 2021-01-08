@@ -1,11 +1,14 @@
 package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.interfaces.HasSigil;
+import moriyashiine.bewitchment.common.registry.BWSigils;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BedBlock;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
@@ -29,6 +32,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+@SuppressWarnings("ConstantConditions")
 public class TaglockItem extends Item {
 	public TaglockItem(Settings settings) {
 		super(settings);
@@ -79,7 +83,15 @@ public class TaglockItem extends Item {
 	private ActionResult useTaglock(PlayerEntity user, LivingEntity entity, Hand hand, boolean checkVisibility) {
 		ItemStack stack = user.getStackInHand(hand);
 		if (entity.isAlive() && !BWTags.BOSSES.contains(entity.getType()) && !hasTaglock(stack)) {
-			if (checkVisibility) {
+			boolean failed = false;
+			BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(entity.getBlockPos(), 16, currentPos -> user.world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) user.world.getBlockEntity(currentPos)).getSigil() == BWSigils.SLIPPERY);
+			if (sigilPos != null) {
+				BlockEntity sigil = user.world.getBlockEntity(sigilPos);
+				((HasSigil) sigil).setUses(((HasSigil) sigil).getUses() - 1);
+				sigil.markDirty();
+				failed = true;
+			}
+			else if (checkVisibility) {
 				double targetYaw = entity.getHeadYaw() % 360;
 				double userYaw = user.getHeadYaw() % 360;
 				if (userYaw < 0) {
@@ -88,13 +100,14 @@ public class TaglockItem extends Item {
 				if (targetYaw < 0) {
 					targetYaw += 360;
 				}
-				if (Math.abs(targetYaw - userYaw) > 120) {
-					if (entity instanceof PlayerEntity) {
-						((PlayerEntity) entity).sendMessage(new TranslatableText("bewitchment.taglock_fail", user.getDisplayName().getString()), false);
-					}
-					user.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_PLING, SoundCategory.PLAYERS, 1, 1);
-					return ActionResult.FAIL;
+				failed = Math.abs(targetYaw - userYaw) > 120;
+			}
+			if (failed) {
+				if (entity instanceof PlayerEntity) {
+					((PlayerEntity) entity).sendMessage(new TranslatableText("bewitchment.taglock_fail", user.getDisplayName().getString()), false);
 				}
+				user.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_PLING, SoundCategory.PLAYERS, 1, 1);
+				return ActionResult.FAIL;
 			}
 			boolean client = user.world.isClient;
 			if (!client) {

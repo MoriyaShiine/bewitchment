@@ -1,7 +1,10 @@
 package moriyashiine.bewitchment.common.block;
 
+import moriyashiine.bewitchment.api.interfaces.HasSigil;
+import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWProperties;
+import moriyashiine.bewitchment.common.registry.BWRegistries;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
@@ -28,7 +31,7 @@ public class SigilBlock extends HorizontalFacingBlock implements BlockEntityProv
 	@Nullable
 	@Override
 	public BlockEntity createBlockEntity(BlockView world) {
-		return null;
+		return new SigilBlockEntity();
 	}
 	
 	@Override
@@ -50,7 +53,13 @@ public class SigilBlock extends HorizontalFacingBlock implements BlockEntityProv
 	@Environment(EnvType.CLIENT)
 	@Override
 	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
-		return new ItemStack(BWObjects.SIGIL_ITEM);
+		ItemStack stack = new ItemStack(BWObjects.SIGIL_ITEM);
+		stack.getOrCreateTag().putInt("Type", state.get(BWProperties.TYPE));
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if (blockEntity instanceof HasSigil) {
+			stack.getOrCreateTag().putString("Sigil", BWRegistries.SIGILS.getId(((HasSigil) blockEntity).getSigil()).toString());
+		}
+		return stack;
 	}
 	
 	@Override

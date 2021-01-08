@@ -39,6 +39,31 @@ public class BewitchmentAPI {
 	@SuppressWarnings("InstantiationOfUtilityClass")
 	public static final EntityGroup DEMON = new EntityGroup();
 	
+	public static List<BlockPos> getBlockPoses(BlockPos origin, int radius, Predicate<BlockPos> provider) {
+		List<BlockPos> blockPoses = new ArrayList<>();
+		BlockPos.Mutable mutable = new BlockPos.Mutable();
+		for (int x = -radius; x <= radius; x++) {
+			for (int y = -radius; y <= radius; y++) {
+				for (int z = -radius; z <= radius; z++) {
+					if (provider.test(mutable.set(origin.getX() + x, origin.getY() + y, origin.getZ() + z))) {
+						blockPoses.add(mutable.toImmutable());
+					}
+				}
+			}
+		}
+		return blockPoses;
+	}
+	
+	public static BlockPos getClosestBlockPos(BlockPos origin, int radius, Predicate<BlockPos> provider) {
+		BlockPos pos = null;
+		for (BlockPos foundPos : getBlockPoses(origin, radius, provider)) {
+			if (pos == null || foundPos.getSquaredDistance(origin) < pos.getSquaredDistance(origin)) {
+				pos = foundPos;
+			}
+		}
+		return pos;
+	}
+	
 	public static LivingEntity getTaglockOwner(World world, ItemStack taglock) {
 		if (world instanceof ServerWorld && taglock.getItem() instanceof TaglockItem && taglock.hasTag() && taglock.getOrCreateTag().contains("OwnerUUID")) {
 			UUID ownerUUID = taglock.getOrCreateTag().getUuid("OwnerUUID");

@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.block;
+package moriyashiine.bewitchment.common.block.dragonsblood;
 
 import com.terraformersmc.terraform.wood.block.StrippableLogBlock;
 import moriyashiine.bewitchment.common.item.tool.AthameItem;

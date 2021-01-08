@@ -1,10 +1,7 @@
 package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.BloodAccessor;
-import moriyashiine.bewitchment.api.interfaces.ContractAccessor;
-import moriyashiine.bewitchment.api.interfaces.FortuneAccessor;
-import moriyashiine.bewitchment.api.interfaces.MasterAccessor;
+import moriyashiine.bewitchment.api.interfaces.*;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.client.network.packet.SpawnExplosionParticlesPacket;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
@@ -26,6 +23,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
@@ -144,6 +142,15 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				}
 			}
 		}
+		if (source == DamageSource.FALL) {
+			BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) world.getBlockEntity(currentPos)).getSigil() == BWSigils.HEAVY);
+			if (sigilPos != null) {
+				BlockEntity sigil = world.getBlockEntity(sigilPos);
+				((HasSigil) sigil).setUses(((HasSigil) sigil).getUses() - 1);
+				sigil.markDirty();
+				amount *= 3;
+			}
+		}
 		if (((Object) this instanceof PlayerEntity) && hasContract(BWContracts.FAMINE)) {
 			amount *= (1 - (0.025f * (20 - ((PlayerEntity) (Object) this).getHungerManager().getFoodLevel())));
 		}
@@ -212,30 +219,12 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		}
 	}
 	
-	@Inject(method = "isAffectedBySplashPotions", at = @At("HEAD"), cancellable = true)
-	private void isAffectedBySplashPotions(CallbackInfoReturnable<Boolean> callbackInfo) {
-		MasterAccessor.of(this).ifPresent(masterAccessor -> {
-			if (masterAccessor.getMasterUUID() != null) {
-				callbackInfo.setReturnValue(false);
-			}
-		});
-	}
-	
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!source.isOutOfWorld()) {
-			BlockPos.Mutable mutable = new BlockPos.Mutable();
-			int radius = 16;
-			for (int x = -radius; x <= radius; x++) {
-				for (int y = -radius; y <= radius; y++) {
-					for (int z = -radius; z <= radius; z++) {
-						BlockEntity blockEntity = world.getBlockEntity(mutable.set(getX() + x, getY() + y, getZ() + z));
-						if (blockEntity instanceof GlyphBlockEntity && ((GlyphBlockEntity) blockEntity).ritualFunction == BWRitualFunctions.PREVENT_DAMAGE) {
-							callbackInfo.setReturnValue(false);
-							return;
-						}
-					}
-				}
+			if (!BewitchmentAPI.getBlockPoses(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity && ((GlyphBlockEntity) world.getBlockEntity(currentPos)).ritualFunction == BWRitualFunctions.PREVENT_DAMAGE).isEmpty()) {
+				callbackInfo.setReturnValue(false);
+				return;
 			}
 		}
 		Entity attacker = source.getSource();
@@ -273,9 +262,38 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		}
 	}
 	
+	@Inject(method = "isAffectedBySplashPotions", at = @At("HEAD"), cancellable = true)
+	private void isAffectedBySplashPotions(CallbackInfoReturnable<Boolean> callbackInfo) {
+		MasterAccessor.of(this).ifPresent(masterAccessor -> {
+			if (masterAccessor.getMasterUUID() != null) {
+				callbackInfo.setReturnValue(false);
+			}
+		});
+	}
+	
+	@Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
+	private void canHaveStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
+		if (((StatusEffectAccessor) effect.getEffectType()).bw_getType() != StatusEffectType.HARMFUL) {
+			BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) world.getBlockEntity(currentPos)).getSigil() == BWSigils.RUIN);
+			if (sigilPos != null) {
+				BlockEntity sigil = world.getBlockEntity(sigilPos);
+				((HasSigil) sigil).setUses(((HasSigil) sigil).getUses() - 1);
+				sigil.markDirty();
+				callbackInfo.setReturnValue(false);
+			}
+		}
+	}
+	
 	@Inject(method = "canBreatheInWater", at = @At("HEAD"), cancellable = true)
 	private void canBreatheInWater(CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (hasStatusEffect(BWStatusEffects.GILLS)) {
+			callbackInfo.setReturnValue(true);
+		}
+	}
+	
+	@Inject(method = "isClimbing", at = @At("HEAD"), cancellable = true)
+	private void isClimbing(CallbackInfoReturnable<Boolean> callbackInfo) {
+		if (hasStatusEffect(BWStatusEffects.CLIMBING) && horizontalCollision) {
 			callbackInfo.setReturnValue(true);
 		}
 	}
@@ -317,27 +335,12 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				PlayerEntity player = (PlayerEntity) attacker;
 				ItemStack stack = player.getMainHandStack();
 				if (stack.getItem() instanceof AthameItem && player.preferredHand == Hand.MAIN_HAND) {
-					BlockPos.Mutable mutable = new BlockPos.Mutable();
-					int radius = 6;
-					for (int x = -radius; x <= radius; x++) {
-						for (int y = -radius; y <= radius; y++) {
-							for (int z = -radius; z <= radius; z++) {
-								if (world.getBlockEntity(mutable.set(getX() + x, getY() + y, getZ() + z)) instanceof GlyphBlockEntity) {
-									((GlyphBlockEntity) world.getBlockEntity(mutable)).onUse(world, mutable, player, Hand.MAIN_HAND, (LivingEntity) (Object) this);
-									return;
-								}
-							}
-						}
+					BlockPos glyph = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 6, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity);
+					if (glyph != null) {
+						((GlyphBlockEntity) world.getBlockEntity(glyph)).onUse(world, glyph, player, Hand.MAIN_HAND, (LivingEntity) (Object) this);
 					}
 				}
 			}
-		}
-	}
-	
-	@Inject(method = "isClimbing", at = @At("HEAD"), cancellable = true)
-	private void isClimbing(CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (hasStatusEffect(BWStatusEffects.CLIMBING) && horizontalCollision) {
-			callbackInfo.setReturnValue(true);
 		}
 	}
 	

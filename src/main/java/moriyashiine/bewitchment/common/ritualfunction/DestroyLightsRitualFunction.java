@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.ritualfunction;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.Inventory;
@@ -16,16 +17,8 @@ public class DestroyLightsRitualFunction extends RitualFunction {
 	
 	@Override
 	public void start(ServerWorld world, BlockPos pos, Inventory inventory) {
-		BlockPos.Mutable mutable = new BlockPos.Mutable();
-		int radius = 8;
-		for (int x = -radius; x <= radius; x++) {
-			for (int y = -radius; y <= radius; y++) {
-				for (int z = -radius; z <= radius; z++) {
-					if (world.getBlockState(mutable.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z)).getLuminance() > 0 && world.getBlockState(mutable).getHardness(world, mutable) == 0) {
-						world.breakBlock(mutable, true);
-					}
-				}
-			}
+		for (BlockPos light : BewitchmentAPI.getBlockPoses(pos, 8, currentPos -> world.getBlockState(currentPos).getLuminance() > 0 && world.getBlockState(currentPos).getHardness(world, currentPos) == 0)) {
+			world.breakBlock(light, true);
 		}
 		super.start(world, pos, inventory);
 	}

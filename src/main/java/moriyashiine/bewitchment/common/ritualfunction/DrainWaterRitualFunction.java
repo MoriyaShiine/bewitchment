@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.ritualfunction;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
@@ -18,16 +19,8 @@ public class DrainWaterRitualFunction extends RitualFunction {
 	
 	@Override
 	public void start(ServerWorld world, BlockPos pos, Inventory inventory) {
-		BlockPos.Mutable mutable = new BlockPos.Mutable();
-		int radius = 6;
-		for (int x = -radius; x <= radius; x++) {
-			for (int y = -radius; y <= radius; y++) {
-				for (int z = -radius; z <= radius; z++) {
-					if (world.getFluidState(mutable.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z)).getFluid() == Fluids.WATER) {
-						world.setBlockState(mutable, Blocks.AIR.getDefaultState());
-					}
-				}
-			}
+		for (BlockPos water : BewitchmentAPI.getBlockPoses(pos, 8, currentPos -> world.getFluidState(currentPos).getFluid() == Fluids.WATER)) {
+			world.setBlockState(water, Blocks.AIR.getDefaultState());
 		}
 		super.start(world, pos, inventory);
 	}

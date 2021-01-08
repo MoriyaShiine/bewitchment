@@ -177,17 +177,10 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 				worldState.potentialCandelabras.add(pos.asLong());
 				worldState.markDirty();
 			}
-			BlockPos.Mutable mutable = new BlockPos.Mutable();
-			for (int x = -24; x <= 24; x++) {
-				for (int y = -24; y <= 24; y++) {
-					for (int z = -24; z <= 24; z++) {
-						BlockEntity blockEntity = world.getBlockEntity(mutable.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z));
-						if (blockEntity instanceof UsesAltarPower) {
-							((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, mutable.toImmutable()));
-							blockEntity.markDirty();
-						}
-					}
-				}
+			for (BlockPos usesAltarPower : BewitchmentAPI.getBlockPoses(pos, 24, currentPos -> world.getBlockEntity(currentPos) instanceof UsesAltarPower)) {
+				BlockEntity blockEntity = world.getBlockEntity(usesAltarPower);
+				((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, pos));
+				blockEntity.markDirty();
 			}
 		}
 	}
@@ -209,17 +202,10 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);
 		if (!world.isClient && state.getBlock() != newState.getBlock()) {
-			BlockPos.Mutable mutable = new BlockPos.Mutable();
-			for (int x = -24; x <= 24; x++) {
-				for (int y = -24; y <= 24; y++) {
-					for (int z = -24; z <= 24; z++) {
-						BlockEntity blockEntity = world.getBlockEntity(mutable.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z));
-						if (blockEntity instanceof UsesAltarPower) {
-							((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, mutable.toImmutable()));
-							blockEntity.markDirty();
-						}
-					}
-				}
+			for (BlockPos usesAltarPower : BewitchmentAPI.getBlockPoses(pos, 24, currentPos -> world.getBlockEntity(currentPos) instanceof UsesAltarPower)) {
+				BlockEntity blockEntity = world.getBlockEntity(usesAltarPower);
+				((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, usesAltarPower));
+				blockEntity.markDirty();
 			}
 		}
 	}
@@ -231,18 +217,7 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 	
 	@Nullable
 	public static BlockPos getClosestAltarPos(World world, BlockPos pos) {
-		BlockPos closest = null;
-		BlockPos.Mutable mutable = new BlockPos.Mutable();
-		for (int x = -24; x <= 24; x++) {
-			for (int y = -24; y <= 24; y++) {
-				for (int z = -24; z <= 24; z++) {
-					if (world.getBlockEntity(mutable.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z)) instanceof WitchAltarBlockEntity && (closest == null || pos.getSquaredDistance(mutable.toImmutable()) < pos.getSquaredDistance(closest))) {
-						closest = mutable.toImmutable();
-					}
-				}
-			}
-		}
-		return closest;
+		return BewitchmentAPI.getClosestBlockPos(pos, 24, currentPos -> world.getBlockEntity(currentPos) instanceof WitchAltarBlockEntity);
 	}
 	
 	private static int calculateLuminance(WitchAltarBlockEntity blockEntity) {

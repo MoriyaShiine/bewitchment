@@ -60,7 +60,7 @@ public class GhostEntity extends BWHostileEntity {
 			if (type == 0) {
 				type = random.nextInt(getVariants() - 1) + 1;
 			}
-			getTarget().addStatusEffect(new StatusEffectInstance(type == 1 ? StatusEffects.HUNGER : type == 2 ? StatusEffects.BLINDNESS : type == 3 ? StatusEffects.SLOWNESS : StatusEffects.NAUSEA, 100));
+			getTarget().addStatusEffect(getEffect(type));
 		}
 		if (!world.isClient && !hasCustomName() && world.isDay() && !world.isRaining() && world.isSkyVisibleAllowingSea(getBlockPos())) {
 			PlayerLookup.tracking(this).forEach(playerEntity -> SpawnSmokeParticlesPacket.send(playerEntity, this));
@@ -141,6 +141,10 @@ public class GhostEntity extends BWHostileEntity {
 		targetSelector.add(2, new FollowTargetGoal<>(this, PlayerEntity.class, true));
 	}
 	
+	public static StatusEffectInstance getEffect(int type) {
+		return new StatusEffectInstance(type == 1 ? StatusEffects.HUNGER : type == 2 ? StatusEffects.BLINDNESS : type == 3 ? StatusEffects.SLOWNESS : StatusEffects.NAUSEA, 100);
+	}
+	
 	private class GhostMoveControl extends MoveControl {
 		public GhostMoveControl(MobEntity entity) {
 			super(entity);
@@ -209,7 +213,7 @@ public class GhostEntity extends BWHostileEntity {
 		}
 		
 		private BlockPos findTarget(BlockPos.Mutable target, int tries) {
-			if (tries <= 16) {
+			if (tries <= 8) {
 				while (world.getBlockState(target).getMaterial().isSolid()) {
 					target.set(target.getX(), target.getY() + 1, target.getZ());
 				}

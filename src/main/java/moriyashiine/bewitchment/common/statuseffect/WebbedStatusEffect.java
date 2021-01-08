@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.statuseffect;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
@@ -20,17 +21,8 @@ public class WebbedStatusEffect extends StatusEffect {
 	@Override
 	public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
 		if (!entity.world.isClient) {
-			int radius = Math.min(3, amplifier + 1);
-			BlockPos.Mutable mutable = new BlockPos.Mutable();
-			for (int x = -radius; x <= radius; x++) {
-				for (int y = -radius; y <= radius; y++) {
-					for (int z = -radius; z <= radius; z++) {
-						mutable.set(entity.getX() + x, entity.getY() + y, entity.getZ() + z);
-						if (entity.world.getBlockState(mutable).isAir()) {
-							entity.world.setBlockState(mutable, BWObjects.TEMPORARY_COBWEB.getDefaultState());
-						}
-					}
-				}
+			for (BlockPos air : BewitchmentAPI.getBlockPoses(entity.getBlockPos(), Math.min(3, amplifier + 1), currentPos -> entity.world.getBlockState(currentPos).isAir())) {
+				entity.world.setBlockState(air, BWObjects.TEMPORARY_COBWEB.getDefaultState());
 			}
 		}
 	}
