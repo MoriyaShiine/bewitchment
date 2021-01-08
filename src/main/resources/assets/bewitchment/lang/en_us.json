@@ -362,6 +362,7 @@
   "contract.contractNotFound": "Unknown contract: %s",
   "bewitchment.insufficent_altar_power": "Your source of magic is not strong enough",
   "bewitchment.invalid_entity": "Cannot find an entity named '%s'",
+  "bewitchment.found_block": "Found %s block of %s",
   "bewitchment.found_blocks": "Found %s blocks of %s",
   "bewitchment.invalid_cauldron": "Cannot find a cauldron named '%s'",
   "bewitchment.has_fortune": "You already have a fortune",

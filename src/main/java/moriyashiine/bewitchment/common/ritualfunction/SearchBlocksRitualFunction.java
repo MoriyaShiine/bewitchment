@@ -23,7 +23,8 @@ public class SearchBlocksRitualFunction extends RitualFunction {
 		PlayerEntity closestPlayer = world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 8, false);
 		if (closestPlayer != null) {
 			Block block = world.getBlockState(pos.down(2)).getBlock();
-			closestPlayer.sendMessage(new TranslatableText("bewitchment.found_blocks", BewitchmentAPI.getBlockPoses(pos, 16, currentPos -> world.getBlockState(currentPos).getBlock() == block).size(), block.getName()), true);
+			int blocks = BewitchmentAPI.getBlockPoses(pos, 16, currentPos -> world.getBlockState(currentPos).getBlock() == block).size();
+			closestPlayer.sendMessage(new TranslatableText("bewitchment.found_block" + (blocks == 1 ? "" : "s"), blocks, block.getName()), true);
 		}
 		super.start(world, pos, inventory);
 	}
