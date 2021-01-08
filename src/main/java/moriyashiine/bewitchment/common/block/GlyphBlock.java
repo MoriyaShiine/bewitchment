@@ -52,7 +52,7 @@ public class GlyphBlock extends HorizontalFacingBlock implements BlockEntityProv
 	
 	@Override
 	public PistonBehavior getPistonBehavior(BlockState state) {
-		return this == BWObjects.GOLDEN_GLYPH ? PistonBehavior.BLOCK : PistonBehavior.DESTROY;
+		return PistonBehavior.DESTROY;
 	}
 	
 	@Override
@@ -87,6 +87,11 @@ public class GlyphBlock extends HorizontalFacingBlock implements BlockEntityProv
 	@Override
 	public boolean canReplace(BlockState state, ItemPlacementContext context) {
 		return this != BWObjects.GOLDEN_GLYPH;
+	}
+	
+	@Override
+	public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+		BWObjects.SALT_LINE.neighborUpdate(state, world, pos, block, fromPos, notify);
 	}
 	
 	@Override
