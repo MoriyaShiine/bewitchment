@@ -1,6 +1,8 @@
 package moriyashiine.bewitchment.common.ritualfunction;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.interfaces.CurseAccessor;
+import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.mixin.ZombieVillagerEntityAccessor;
@@ -49,6 +51,13 @@ public class CleanseRitualFunction extends RitualFunction {
 		}
 		if (taglock != null) {
 			LivingEntity livingEntity = BewitchmentAPI.getTaglockOwner(world, taglock);
+			CurseAccessor.of(livingEntity).ifPresent(curseAccessor -> {
+				for (Curse.Instance instance : curseAccessor.getCurses()) {
+					if (world.random.nextFloat() < (instance.curse.type == Curse.Type.LESSER ? 7 / 10f : 3 / 10f)) {
+						curseAccessor.removeCurse(instance.curse);
+					}
+				}
+			});
 			if (livingEntity instanceof ZombieVillagerEntity) {
 				((ZombieVillagerEntityAccessor) livingEntity).bw_finishConversion(world);
 			}
