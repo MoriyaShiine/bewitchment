@@ -1,20 +1,27 @@
 package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.interfaces.ContractAccessor;
+import moriyashiine.bewitchment.api.interfaces.CurseAccessor;
 import moriyashiine.bewitchment.api.interfaces.MasterAccessor;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.registry.BWContracts;
+import moriyashiine.bewitchment.common.registry.BWCurses;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.CaveSpiderEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.SpiderEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Box;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,10 +33,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.UUID;
 
+@SuppressWarnings("ConstantConditions")
 @Mixin(MobEntity.class)
 public abstract class MobEntityMixin extends LivingEntity implements MasterAccessor {
 	private UUID masterUUID = null;
 	private boolean affectByWar = false;
+	private boolean spawnedByArachnophobia = false;
 	
 	@Override
 	public UUID getMasterUUID() {
@@ -74,6 +83,33 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 		return target;
 	}
 	
+	@Inject(method = "dropLoot", at = @At("HEAD"))
+	private void dropLoot(DamageSource source, boolean causedByPlayer, CallbackInfo callbackInfo) {
+		if (!world.isClient && (Object) this instanceof SpiderEntity && !spawnedByArachnophobia) {
+			Entity attacker = source.getAttacker();
+			CurseAccessor.of(attacker).ifPresent(curseAccessor -> {
+				if (curseAccessor.hasCurse(BWCurses.ARACHNOPHOBIA)) {
+					for (int i = 0; i < random.nextInt(3) + 3; i++) {
+						SpiderEntity spider;
+						if (random.nextFloat() < 1 / 8192f) {
+							spider = EntityType.SPIDER.create(world);
+						}
+						else {
+							spider = EntityType.CAVE_SPIDER.create(world);
+							((MobEntityMixin) (Object) spider).spawnedByArachnophobia = true;
+						}
+						if (spider != null) {
+							spider.refreshPositionAndAngles(getX(), getY(), getZ(), 0, random.nextInt(360));
+							spider.initialize((ServerWorldAccess) world, world.getLocalDifficulty(getBlockPos()), SpawnReason.EVENT, null, null);
+							spider.setTarget((LivingEntity) attacker);
+							world.spawnEntity(spider);
+						}
+					}
+				}
+			});
+		}
+	}
+	
 	@Inject(method = "tick", at = @At("HEAD"))
 	private void tick(CallbackInfo callbackInfo) {
 		if (!world.isClient && getMasterUUID() != null) {
@@ -94,6 +130,9 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 			setMasterUUID(tag.getUuid("MasterUUID"));
 		}
 		affectByWar = tag.getBoolean("AffectedByWar");
+		if ((Object) this instanceof CaveSpiderEntity) {
+			spawnedByArachnophobia = tag.getBoolean("SpawnedByArachnophobia");
+		}
 	}
 	
 	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
@@ -102,5 +141,8 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 			tag.putUuid("MasterUUID", getMasterUUID());
 		}
 		tag.putBoolean("AffectedByWar", affectByWar);
+		if ((Object) this instanceof CaveSpiderEntity) {
+			tag.putBoolean("SpawnedByArachnophobia", spawnedByArachnophobia);
+		}
 	}
 }

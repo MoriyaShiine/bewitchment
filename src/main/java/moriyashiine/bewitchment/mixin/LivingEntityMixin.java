@@ -27,10 +27,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.sound.SoundCategory;
@@ -118,8 +115,17 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		return !world.isClient && !BewitchmentAPI.isPledged(world, BWPledges.BAPHOMET_UUID, getUuid());
 	}
 	
+	@ModifyVariable(method = "addStatusEffect", at = @At("HEAD"))
+	private StatusEffectInstance modifyStatusEffect(StatusEffectInstance effect) {
+		CurseAccessor curseAccessor = CurseAccessor.of(this).orElse(null);
+		if (curseAccessor.hasCurse(BWCurses.COMPROMISED) && ((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.HARMFUL) {
+			return new StatusEffectInstance(effect.getEffectType(), effect.getDuration(), effect.getAmplifier() + 1);
+		}
+		return effect;
+	}
+	
 	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 0, target = "Lnet/minecraft/entity/LivingEntity;getHealth()F"))
-	private float applyDamage(float amount, DamageSource source) {
+	private float modifyDamage(float amount, DamageSource source) {
 		if (BewitchmentAPI.isWeakToSilver((LivingEntity) (Object) this)) {
 			if (BewitchmentAPI.isSourceFromSilver(source)) {
 				return amount + 4;
@@ -157,6 +163,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				sigil.markDirty();
 				amount *= 3;
 			}
+		}
+		if (hasCurse(BWCurses.FORESTS_WRATH) && ((attacker instanceof LivingEntity && ((LivingEntity) attacker).getMainHandStack().getItem() instanceof AxeItem)) || source.isFire()) {
+			amount *= 2;
 		}
 		if (((Object) this instanceof PlayerEntity) && hasContract(BWContracts.FAMINE)) {
 			amount *= (1 - (0.025f * (20 - ((PlayerEntity) (Object) this).getHungerManager().getFoodLevel())));
@@ -288,7 +297,15 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
 	private void canHaveStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (((StatusEffectAccessor) effect.getEffectType()).bw_getType() != StatusEffectType.HARMFUL) {
+		StatusEffectType type = ((StatusEffectAccessor) effect.getEffectType()).bw_getType();
+		if (type == StatusEffectType.BENEFICIAL) {
+			CurseAccessor.of(this).ifPresent(curseAccessor -> {
+				if (curseAccessor.hasCurse(BWCurses.UNLUCKY) && random.nextBoolean()) {
+					callbackInfo.setReturnValue(false);
+				}
+			});
+		}
+		if (type != StatusEffectType.HARMFUL) {
 			BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) world.getBlockEntity(currentPos)).getSigil() == BWSigils.RUIN);
 			if (sigilPos != null) {
 				BlockEntity sigil = world.getBlockEntity(sigilPos);

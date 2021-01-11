@@ -23,7 +23,7 @@ public class Curse {
 		}
 	}
 	
-	enum Type {
+	public enum Type {
 		LESSER, GREATER
 	}
 }

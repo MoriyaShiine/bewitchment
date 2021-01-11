@@ -26,6 +26,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 				polymorphAccessor.setPolymorphUUID(oldPolymorphAccessor.getPolymorphUUID());
 				polymorphAccessor.setPolymorphName(oldPolymorphAccessor.getPolymorphName());
 			}));
+			RespawnTimerAccessor.of(this).ifPresent(respawnTimerAccessor -> RespawnTimerAccessor.of(oldPlayer).ifPresent(oldRespawnTimerAccessor -> respawnTimerAccessor.setRespawnTimer(oldRespawnTimerAccessor.getRespawnTimer())));
 		}
 		FortuneAccessor.of(this).ifPresent(fortuneAccessor -> FortuneAccessor.of(oldPlayer).ifPresent(oldFortuneAccessor -> fortuneAccessor.setFortune(oldFortuneAccessor.getFortune())));
 		CurseAccessor.of(this).ifPresent(curseAccessor -> CurseAccessor.of(oldPlayer).ifPresent(oldCurseAccessor -> curseAccessor.getCurses().addAll(oldCurseAccessor.getCurses())));
