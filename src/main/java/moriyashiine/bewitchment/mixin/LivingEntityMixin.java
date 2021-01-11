@@ -117,8 +117,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@ModifyVariable(method = "addStatusEffect", at = @At("HEAD"))
 	private StatusEffectInstance modifyStatusEffect(StatusEffectInstance effect) {
-		CurseAccessor curseAccessor = CurseAccessor.of(this).orElse(null);
-		if (curseAccessor.hasCurse(BWCurses.COMPROMISED) && ((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.HARMFUL) {
+		if (hasCurse(BWCurses.COMPROMISED) && ((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.HARMFUL) {
 			return new StatusEffectInstance(effect.getEffectType(), effect.getDuration(), effect.getAmplifier() + 1);
 		}
 		return effect;
@@ -299,11 +298,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	private void canHaveStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
 		StatusEffectType type = ((StatusEffectAccessor) effect.getEffectType()).bw_getType();
 		if (type == StatusEffectType.BENEFICIAL) {
-			CurseAccessor.of(this).ifPresent(curseAccessor -> {
-				if (curseAccessor.hasCurse(BWCurses.UNLUCKY) && random.nextBoolean()) {
-					callbackInfo.setReturnValue(false);
-				}
-			});
+			if (hasCurse(BWCurses.UNLUCKY) && random.nextBoolean()) {
+				callbackInfo.setReturnValue(false);
+			}
 		}
 		if (type != StatusEffectType.HARMFUL) {
 			BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) world.getBlockEntity(currentPos)).getSigil() == BWSigils.RUIN);

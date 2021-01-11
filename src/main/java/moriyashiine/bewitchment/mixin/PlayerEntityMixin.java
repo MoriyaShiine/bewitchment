@@ -31,7 +31,7 @@ import java.util.UUID;
 
 @SuppressWarnings("ConstantConditions")
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity implements MagicAccessor, PolymorphAccessor, FortuneAccessor, RespawnTimerAccessor {
+public abstract class PlayerEntityMixin extends LivingEntity implements MagicAccessor, PolymorphAccessor, FortuneAccessor, ContractAccessor, RespawnTimerAccessor {
 	private static final TrackedData<Integer> MAGIC = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	private static final TrackedData<Integer> MAGIC_TIMER = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	
@@ -143,18 +143,16 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		FoodComponent foodComponent = stack.getItem().getFoodComponent();
 		if (foodComponent != null) {
 			if (BWTags.WITCHBERRY_FOODS.contains(stack.getItem())) {
-				MagicAccessor.of(this).ifPresent(magicAccessor -> magicAccessor.fillMagic(foodComponent.getHunger() * 100, false));
+				fillMagic(foodComponent.getHunger() * 100, false);
 			}
-			ContractAccessor.of(this).ifPresent(contractAccessor -> {
-				if (contractAccessor.hasContract(BWContracts.GLUTTONY)) {
-					if (contractAccessor.hasNegativeEffects() && random.nextFloat() < 1 / 10f) {
-						getHungerManager().add(-foodComponent.getHunger(), foodComponent.getSaturationModifier());
-					}
-					else {
-						getHungerManager().add(foodComponent.getHunger(), 0);
-					}
+			if (hasContract(BWContracts.GLUTTONY)) {
+				if (hasNegativeEffects() && random.nextFloat() < 1 / 10f) {
+					getHungerManager().add(-foodComponent.getHunger(), foodComponent.getSaturationModifier());
 				}
-			});
+				else {
+					getHungerManager().add(foodComponent.getHunger(), 0);
+				}
+			}
 		}
 	}
 	
