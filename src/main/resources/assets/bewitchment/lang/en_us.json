@@ -360,6 +360,7 @@
   "death.attack.wednesday": "%s realized what day it is",
   "death.attack.wednesday.player": "%s realized what day it is while vibing with %s",
   "fortune.fortuneNotFound": "Unknown fortune: %s",
+  "curse.curseNotFound": "Unknown curse: %s",
   "contract.contractNotFound": "Unknown contract: %s",
   "bewitchment.insufficent_altar_power": "Your source of magic is not strong enough",
   "bewitchment.invalid_entity": "Cannot find an entity named '%s'",

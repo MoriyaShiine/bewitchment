@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.mixin;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.*;
 import moriyashiine.bewitchment.api.registry.Contract;
+import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.client.network.packet.SpawnExplosionParticlesPacket;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.item.tool.AthameItem;
@@ -55,9 +56,10 @@ import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity implements BloodAccessor, ContractAccessor {
+public abstract class LivingEntityMixin extends Entity implements BloodAccessor, CurseAccessor, ContractAccessor {
 	private static final TrackedData<Integer> BLOOD = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	
+	private final List<Curse.Instance> curses = new ArrayList<>();
 	private final List<Contract.Instance> contracts = new ArrayList<>();
 	
 	@Shadow
@@ -99,6 +101,11 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		if (BWTags.HAS_BLOOD.contains(getType())) {
 			dataTracker.set(BLOOD, blood);
 		}
+	}
+	
+	@Override
+	public List<Curse.Instance> getCurses() {
+		return curses;
 	}
 	
 	@Override
@@ -206,6 +213,14 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				}
 				if (damage > 0) {
 					damage(DamageSource.MAGIC, damage);
+				}
+			}
+			for (int i = curses.size() - 1; i >= 0; i--) {
+				Curse.Instance instance = curses.get(i);
+				instance.curse.tick(livingEntity);
+				instance.duration--;
+				if (instance.duration <= 0) {
+					curses.remove(i);
 				}
 			}
 			for (int i = contracts.size() - 1; i >= 0; i--) {
@@ -349,6 +364,11 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		if (BWTags.HAS_BLOOD.contains(getType())) {
 			setBlood(tag.getInt("Blood"));
 		}
+		ListTag curses = tag.getList("Curses", NbtType.COMPOUND);
+		for (int i = 0; i < curses.size(); i++) {
+			CompoundTag curse = curses.getCompound(i);
+			addCurse(new Curse.Instance(BWRegistries.CURSES.get(new Identifier(curse.getString("Curse"))), curse.getInt("Duration")));
+		}
 		ListTag contracts = tag.getList("Contracts", NbtType.COMPOUND);
 		for (int i = 0; i < contracts.size(); i++) {
 			CompoundTag contract = contracts.getCompound(i);
@@ -361,6 +381,14 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		if (BWTags.HAS_BLOOD.contains(getType())) {
 			tag.putInt("Blood", getBlood());
 		}
+		ListTag curses = new ListTag();
+		for (Curse.Instance instance : getCurses()) {
+			CompoundTag curseTag = new CompoundTag();
+			curseTag.putString("Curse", BWRegistries.CURSES.getId(instance.curse).toString());
+			curseTag.putInt("Duration", instance.duration);
+			curses.add(curseTag);
+		}
+		tag.put("Curses", curses);
 		ListTag contracts = new ListTag();
 		for (Contract.Instance instance : getContracts()) {
 			CompoundTag contractTag = new CompoundTag();
