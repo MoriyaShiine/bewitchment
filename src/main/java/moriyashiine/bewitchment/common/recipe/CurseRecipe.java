@@ -73,7 +73,7 @@ public class CurseRecipe implements Recipe<Inventory> {
 			if (ingredients.isEmpty()) {
 				throw new JsonParseException("No ingredients for curse recipe");
 			}
-			else if (ingredients.size() > 6) {
+			else if (ingredients.size() > 4) {
 				throw new JsonParseException("Too many ingredients for curse recipe");
 			}
 			return new CurseRecipe(id, ingredients, BWRegistries.CURSES.get(new Identifier(JsonHelper.getString(json, "curse"))), JsonHelper.getInt(json, "cost"));
