@@ -38,7 +38,7 @@ import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("ConstantConditions")
-public class WitchAltarBlock extends Block implements BlockEntityProvider, Waterloggable {
+public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntityProvider, Waterloggable {
 	private static final VoxelShape SHAPE = VoxelShapes.union(createCuboidShape(0, 0, 0, 16, 2, 16), createCuboidShape(1, 2, 1, 15, 5, 15), createCuboidShape(2, 5, 2, 14, 10, 14), createCuboidShape(1, 10, 1, 15, 12, 15), createCuboidShape(0, 12, 0, 16, 16, 16));
 	
 	private final Block unformed;
@@ -77,9 +77,9 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 					if (!player.isCreative()) {
 						stack.decrement(1);
 					}
-					Direction facing = world.getBlockState(pos).get(Properties.HORIZONTAL_FACING);
+					Direction facing = world.getBlockState(pos).get(FACING);
 					world.breakBlock(pos, false);
-					world.setBlockState(pos, entry.formed.getPlacementState(new ItemPlacementContext(player, hand, stack, hit)).with(Properties.HORIZONTAL_FACING, facing));
+					world.setBlockState(pos, entry.formed.getPlacementState(new ItemPlacementContext(player, hand, stack, hit)).with(FACING, facing));
 				}
 				return ActionResult.success(client);
 			}
@@ -133,7 +133,7 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 	@Nullable
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		return super.getPlacementState(ctx).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER).with(Properties.HORIZONTAL_FACING, ctx.getPlayerFacing());
+		return super.getPlacementState(ctx).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER).with(FACING, ctx.getPlayerFacing());
 	}
 	
 	@Override
@@ -212,7 +212,7 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 	
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-		builder.add(Properties.WATERLOGGED, Properties.HORIZONTAL_FACING, Properties.LEVEL_15);
+		super.appendProperties(builder.add(Properties.WATERLOGGED, FACING, Properties.LEVEL_15));
 	}
 	
 	@Nullable
