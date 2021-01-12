@@ -1,0 +1,19 @@
+{
+  "type": "bewitchment:curse_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:taglock"
+	},
+	{
+	  "item": "bewitchment:bottle_of_blood"
+	},
+	{
+	  "item": "bewitchment:belladonna"
+	},
+	{
+	  "item": "bewitchment:mandrake_root"
+	}
+  ],
+  "curse": "bewitchment:compromised",
+  "cost": 400
+}

@@ -1,0 +1,19 @@
+{
+  "type": "bewitchment:curse_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:taglock"
+	},
+	{
+	  "item": "bewitchment:cleansing_balm"
+	},
+	{
+	  "item": "gold_ingot"
+	},
+	{
+	  "item": "bewitchment:belladonna"
+	}
+  ],
+  "curse": "bewitchment:solar_hatred",
+  "cost": 400
+}

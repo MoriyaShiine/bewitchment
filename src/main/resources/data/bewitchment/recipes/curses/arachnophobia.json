@@ -1,0 +1,19 @@
+{
+  "type": "bewitchment:curse_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:taglock"
+	},
+	{
+	  "item": "bewitchment:demon_horn"
+	},
+	{
+	  "item": "bewitchment:mandrake_root"
+	},
+	{
+	  "item": "fermented_spider_eye"
+	}
+  ],
+  "curse": "bewitchment:arachnophobia",
+  "cost": 400
+}

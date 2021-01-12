@@ -1,0 +1,19 @@
+{
+  "type": "bewitchment:curse_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:taglock"
+	},
+	{
+	  "item": "bewitchment:demon_heart"
+	},
+	{
+	  "item": "bewitchment:belladonna"
+	},
+	{
+	  "item": "bewitchment:mandrake_root"
+	}
+  ],
+  "curse": "bewitchment:susceptibility",
+  "cost": 800
+}

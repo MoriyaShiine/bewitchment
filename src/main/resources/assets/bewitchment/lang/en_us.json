@@ -299,6 +299,19 @@
   "sigil.bewitchment.smelly": "Smelly",
   "sigil.bewitchment.ruin": "Ruin",
   "sigil.bewitchment.heavy": "Heavy",
+  "curse.bewitchment.curses.solar_hatred": "Solar Hatred",
+  "curse.bewitchment.curses.misfortune": "Misfortune",
+  "curse.bewitchment.curses.weak_lungs": "Weak Lungs",
+  "curse.bewitchment.curses.outrage": "Outrage",
+  "curse.bewitchment.curses.forests_wrath": "Forest's Wrath",
+  "curse.bewitchment.curses.lightning_rod": "Lightning Rod",
+  "curse.bewitchment.curses.unlucky": "Unlucky",
+  "curse.bewitchment.curses.compromised": "Compromised",
+  "curse.bewitchment.curses.army_of_worms": "Army of Worms",
+  "curse.bewitchment.curses.arachnophobia": "Arachnophobia",
+  "curse.bewitchment.curses.insanity": "Insanity",
+  "curse.bewitchment.curses.susceptibility": "Susceptibility",
+  "curse.bewitchment.curses.apathy": "Apathy",
   "contract.bewitchment.lust": "Lust",
   "contract.bewitchment.gluttony": "Gluttony",
   "contract.bewitchment.greed": "Greed",
@@ -375,5 +388,6 @@
   "rei.bewitchment.athame_drops": "Athame Drops",
   "rei.bewitchment.rituals": "Rituals",
   "rei.bewitchment.oil_crafting": "Oil Crafting",
-  "rei.bewitchment.cauldron_brewing": "Cauldron Brewing"
+  "rei.bewitchment.cauldron_brewing": "Cauldron Brewing",
+  "rei.bewitchment.curses": "Curses"
 }

@@ -1,0 +1,19 @@
+{
+  "type": "bewitchment:curse_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:taglock"
+	},
+	{
+	  "item": "bewitchment:demon_horn"
+	},
+	{
+	  "item": "bewitchment:spanish_moss"
+	},
+	{
+	  "item": "bewitchment:aconite"
+	}
+  ],
+  "curse": "bewitchment:army_of_worms",
+  "cost": 400
+}
