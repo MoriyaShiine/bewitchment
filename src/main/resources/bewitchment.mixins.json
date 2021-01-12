@@ -12,11 +12,13 @@
 	"DamageEnchantmentMixin",
 	"EntityMixin",
 	"EntityShapeContextMixin",
+	"EscapeDangerGoalMixin",
 	"FollowTargetGoalMixin",
 	"ItemStackMixin",
 	"LandPathNodeMakerMixin",
 	"LivingEntityAccessor",
 	"LivingEntityMixin",
+	"MerchantMixin",
 	"MobEntityMixin",
 	"PlayerEntityMixin",
 	"PotionItemMixin",
@@ -25,6 +27,7 @@
 	"ServerWorldMixin",
 	"SpawnHelperMixin",
 	"StatusEffectAccessor",
+	"StatusEffectMixin",
 	"TreeDecoratorTypeAccessor",
 	"VillagerEntityMixin",
 	"ZombieVillagerEntityAccessor"
@@ -34,6 +37,7 @@
 	"client.ClientWorldMixin",
 	"client.HeldItemFeatureRendererMixin",
 	"client.InGameHudMixin",
+	"client.MobEntityRendererMixin",
 	"client.TexturedRenderLayersMixin"
   ],
   "injectors": {

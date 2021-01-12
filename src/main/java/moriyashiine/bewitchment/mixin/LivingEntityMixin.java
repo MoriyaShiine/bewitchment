@@ -15,6 +15,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -124,7 +125,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	}
 	
 	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 0, target = "Lnet/minecraft/entity/LivingEntity;getHealth()F"))
-	private float modifyDamage(float amount, DamageSource source) {
+	private float modifyDamage0(float amount, DamageSource source) {
 		if (BewitchmentAPI.isWeakToSilver((LivingEntity) (Object) this)) {
 			if (BewitchmentAPI.isSourceFromSilver(source)) {
 				return amount + 4;
@@ -134,7 +135,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	}
 	
 	@ModifyVariable(method = "damage", at = @At("HEAD"))
-	private float damage(float amount, DamageSource source) {
+	private float modifyDamage1(float amount, DamageSource source) {
 		Entity attacker = source.getSource();
 		if (attacker instanceof LivingEntity && ((LivingEntity) attacker).hasStatusEffect(BWStatusEffects.ENCHANTED)) {
 			amount /= 4 + ((LivingEntity) attacker).getStatusEffect(BWStatusEffects.ENCHANTED).getAmplifier();
@@ -164,6 +165,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			}
 		}
 		if (hasCurse(BWCurses.FORESTS_WRATH) && ((attacker instanceof LivingEntity && ((LivingEntity) attacker).getMainHandStack().getItem() instanceof AxeItem)) || source.isFire()) {
+			amount *= 2;
+		}
+		if (hasCurse(BWCurses.SUSCEPTIBILITY) && (source.isFire() || (attacker instanceof LivingEntity && (((LivingEntity) attacker).getGroup() == EntityGroup.AQUATIC || ((LivingEntity) attacker).getGroup() == BewitchmentAPI.DEMON)))) {
 			amount *= 2;
 		}
 		if (((Object) this instanceof PlayerEntity) && hasContract(BWContracts.FAMINE)) {
@@ -268,7 +272,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				attacker.damage(DamageSource.thorns(attacker), 2 * (getStatusEffect(BWStatusEffects.THORNS).getAmplifier() + 1));
 			}
 			if (amount > 0 && hasStatusEffect(BWStatusEffects.VOLATILITY) && !source.isExplosive()) {
-				for (LivingEntity entity : world.getEntitiesByClass(LivingEntity.class, getBoundingBox().expand(3), livingEntity -> true)) {
+				for (LivingEntity entity : world.getEntitiesByClass(LivingEntity.class, getBoundingBox().expand(3), LivingEntity::isAlive)) {
 					entity.damage(DamageSource.explosion(((LivingEntity) (Object) this)), 4 * (getStatusEffect(BWStatusEffects.VOLATILITY).getAmplifier() + 1));
 				}
 				world.playSound(null, getBlockPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1, 1);
@@ -279,6 +283,11 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				removeStatusEffect(BWStatusEffects.VOLATILITY);
 			}
 		}
+		InsanityTargetAccessor.of(this).ifPresent(insanityTargetAccessor -> {
+			if (insanityTargetAccessor.getInsanityTargetUUID().isPresent()) {
+				callbackInfo.setReturnValue(false);
+			}
+		});
 		if (amount > 0 && attacker instanceof ContractAccessor && ((ContractAccessor) attacker).hasContract(BWContracts.PESTILENCE)) {
 			addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100));
 			addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100));

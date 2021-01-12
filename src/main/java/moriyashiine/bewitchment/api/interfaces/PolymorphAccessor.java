@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.api.interfaces;
 import java.util.Optional;
 import java.util.UUID;
 
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public interface PolymorphAccessor {
 	static Optional<PolymorphAccessor> of(Object entity) {
 		if (entity instanceof PolymorphAccessor) {
@@ -13,7 +14,6 @@ public interface PolymorphAccessor {
 	
 	Optional<UUID> getPolymorphUUID();
 	
-	@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 	void setPolymorphUUID(Optional<UUID> uuid);
 	
 	String getPolymorphName();

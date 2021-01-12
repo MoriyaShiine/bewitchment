@@ -2,9 +2,7 @@ package moriyashiine.bewitchment.common.registry;
 
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.common.Bewitchment;
-import moriyashiine.bewitchment.common.curse.MisfortuneCurse;
-import moriyashiine.bewitchment.common.curse.SolarHatredCurse;
-import moriyashiine.bewitchment.common.curse.WeakLungsCurse;
+import moriyashiine.bewitchment.common.curse.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -24,6 +22,10 @@ public class BWCurses {
 	public static final Curse ARMY_OF_WORMS = create("army_of_worms", new Curse(Curse.Type.LESSER));
 	public static final Curse COMPROMISED = create("compromised", new Curse(Curse.Type.LESSER));
 	public static final Curse ARACHNOPHOBIA = create("arachnophobia", new Curse(Curse.Type.LESSER));
+	
+	public static final Curse INSANITY = create("insanity", new Curse(Curse.Type.GREATER));
+	public static final Curse SUSCEPTIBILITY = create("susceptibility", new SusceptibilityCurse(Curse.Type.GREATER));
+	public static final Curse APATHY = create("apathy", new ApathyCurse(Curse.Type.GREATER));
 	
 	private static <T extends Curse> T create(String name, T curse) {
 		CURSES.put(curse, new Identifier(Bewitchment.MODID, name));

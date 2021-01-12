@@ -104,7 +104,7 @@ public abstract class BlockMixin {
 					}
 					if (foundOre && contractAccessor.hasNegativeEffects() && world.random.nextFloat() < 1 / 16f) {
 						world.createExplosion(entity, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 3, Explosion.DestructionType.BREAK);
-						world.getEntitiesByClass(LivingEntity.class, new Box(pos).expand(4), livingEntity -> true).forEach(livingEntity -> livingEntity.damage(DamageSource.explosion((LivingEntity) entity), 12));
+						world.getEntitiesByClass(LivingEntity.class, new Box(pos).expand(4), LivingEntity::isAlive).forEach(livingEntity -> livingEntity.damage(DamageSource.explosion((LivingEntity) entity), 12));
 					}
 				}
 			});
