@@ -15,6 +15,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.UUID;
+
 @SuppressWarnings("ConstantConditions")
 @Environment(EnvType.CLIENT)
 @Mixin(MobEntityRenderer.class)
@@ -26,7 +28,8 @@ public abstract class MobEntityRendererMixin<T extends MobEntity, M extends Enti
 	@Inject(method = "shouldRender", at = @At("HEAD"), cancellable = true)
 	private void shouldRender(T mobEntity, Frustum frustum, double d, double e, double f, CallbackInfoReturnable<Boolean> callbackInfo) {
 		InsanityTargetAccessor.of(mobEntity).ifPresent(insanityTargetAccessor -> {
-			if (!MinecraftClient.getInstance().player.getUuid().equals(insanityTargetAccessor.getInsanityTargetUUID().orElse(null))) {
+			UUID targetUUID = insanityTargetAccessor.getInsanityTargetUUID().orElse(null);
+			if (targetUUID != null && !MinecraftClient.getInstance().player.getUuid().equals(targetUUID)) {
 				callbackInfo.setReturnValue(false);
 			}
 		});
