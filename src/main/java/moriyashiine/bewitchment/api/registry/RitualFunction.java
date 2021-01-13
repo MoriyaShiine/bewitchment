@@ -1,8 +1,5 @@
 package moriyashiine.bewitchment.api.registry;
 
-import moriyashiine.bewitchment.common.item.WaystoneItem;
-import moriyashiine.bewitchment.common.item.tool.AthameItem;
-import moriyashiine.bewitchment.common.registry.BWMaterials;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
@@ -34,15 +31,9 @@ public class RitualFunction {
 	public void start(ServerWorld world, BlockPos pos, Inventory inventory) {
 		for (int i = 0; i < inventory.size(); i++) {
 			ItemStack stack = inventory.getStack(i);
-			if (stack.getItem() instanceof AthameItem) {
-				stack.damage(50, world.random, null);
-				if (stack.getDamage() == BWMaterials.SILVER_TOOL.getDurability()) {
-					stack.decrement(1);
-				}
-			}
-			else if (stack.getItem() instanceof WaystoneItem) {
+			if (stack.isDamageable()) {
 				stack.damage(1, world.random, null);
-				if (stack.getDamage() == 3) {
+				if (stack.getDamage() == stack.getMaxDamage()) {
 					stack.decrement(1);
 				}
 			}

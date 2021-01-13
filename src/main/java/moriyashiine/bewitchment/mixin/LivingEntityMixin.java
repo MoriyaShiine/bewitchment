@@ -5,9 +5,11 @@ import moriyashiine.bewitchment.api.interfaces.*;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.client.network.packet.SpawnExplosionParticlesPacket;
+import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.item.tool.AthameItem;
 import moriyashiine.bewitchment.common.recipe.AthameDropRecipe;
+import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.util.NbtType;
@@ -248,6 +250,11 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
+		InsanityTargetAccessor.of(this).ifPresent(insanityTargetAccessor -> {
+			if (insanityTargetAccessor.getInsanityTargetUUID().isPresent()) {
+				callbackInfo.setReturnValue(false);
+			}
+		});
 		if (!source.isOutOfWorld()) {
 			if (!BewitchmentAPI.getBlockPoses(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity && ((GlyphBlockEntity) world.getBlockEntity(currentPos)).ritualFunction == BWRitualFunctions.PREVENT_DAMAGE).isEmpty()) {
 				callbackInfo.setReturnValue(false);
@@ -255,7 +262,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			}
 		}
 		Entity attacker = source.getSource();
-		if (source != DamageSource.OUT_OF_WORLD && (hasStatusEffect(BWStatusEffects.ETHEREAL) || (attacker instanceof LivingEntity && ((LivingEntity) attacker).hasStatusEffect(BWStatusEffects.ETHEREAL)))) {
+		if (!source.isOutOfWorld() && (hasStatusEffect(BWStatusEffects.ETHEREAL) || (attacker instanceof LivingEntity && ((LivingEntity) attacker).hasStatusEffect(BWStatusEffects.ETHEREAL)))) {
 			callbackInfo.setReturnValue(false);
 		}
 		else if (hasStatusEffect(BWStatusEffects.DEFLECTION) && attacker != null && EntityTypeTags.ARROWS.contains(attacker.getType())) {
@@ -264,14 +271,14 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			attacker.setVelocity(velocity.getX() * 2 * amplifier, velocity.getY() * 2 * amplifier, velocity.getZ() * 2 * amplifier);
 			callbackInfo.setReturnValue(false);
 		}
-		else {
-			if (amount > 0 && hasStatusEffect(BWStatusEffects.LEECHING)) {
+		else if (amount > 0) {
+			if (hasStatusEffect(BWStatusEffects.LEECHING)) {
 				heal(amount * (getStatusEffect(BWStatusEffects.LEECHING).getAmplifier() + 1) / 4);
 			}
-			if (amount > 0 && hasStatusEffect(BWStatusEffects.THORNS) && !(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns())) {
+			if (hasStatusEffect(BWStatusEffects.THORNS) && !(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns())) {
 				attacker.damage(DamageSource.thorns(attacker), 2 * (getStatusEffect(BWStatusEffects.THORNS).getAmplifier() + 1));
 			}
-			if (amount > 0 && hasStatusEffect(BWStatusEffects.VOLATILITY) && !source.isExplosive()) {
+			if (hasStatusEffect(BWStatusEffects.VOLATILITY) && !source.isExplosive()) {
 				for (LivingEntity entity : world.getEntitiesByClass(LivingEntity.class, getBoundingBox().expand(3), LivingEntity::isAlive)) {
 					entity.damage(DamageSource.explosion(((LivingEntity) (Object) this)), 4 * (getStatusEffect(BWStatusEffects.VOLATILITY).getAmplifier() + 1));
 				}
@@ -282,15 +289,10 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				}
 				removeStatusEffect(BWStatusEffects.VOLATILITY);
 			}
-		}
-		InsanityTargetAccessor.of(this).ifPresent(insanityTargetAccessor -> {
-			if (insanityTargetAccessor.getInsanityTargetUUID().isPresent()) {
-				callbackInfo.setReturnValue(false);
+			if (attacker instanceof ContractAccessor && ((ContractAccessor) attacker).hasContract(BWContracts.PESTILENCE)) {
+				addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100));
+				addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100));
 			}
-		});
-		if (amount > 0 && attacker instanceof ContractAccessor && ((ContractAccessor) attacker).hasContract(BWContracts.PESTILENCE)) {
-			addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100));
-			addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100));
 		}
 	}
 	
@@ -379,6 +381,16 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					}
 				}
 			}
+		}
+	}
+	
+	@Inject(method = "wakeUp", at = @At("TAIL"))
+	private void wakeUp(CallbackInfo callbackInfo) {
+		if (!world.isClient) {
+			BewitchmentAPI.getBlockPoses(getBlockPos(), 12, foundPos -> world.getBlockEntity(foundPos) instanceof BrazierBlockEntity && ((BrazierBlockEntity) world.getBlockEntity(foundPos)).incenseRecipe != null).forEach(foundPos -> {
+				IncenseRecipe recipe = ((BrazierBlockEntity) world.getBlockEntity(foundPos)).incenseRecipe;
+				addStatusEffect(new StatusEffectInstance(recipe.effect, 24000, recipe.amplifier));
+			});
 		}
 	}
 	

@@ -332,6 +332,7 @@
   "bewitchment.subtitles.block.glyph.pling": "Glyph plings",
   "bewitchment.subtitles.block.crystal_ball.fire": "Crystal Ball fires",
   "bewitchment.subtitles.block.crystal_ball.fail": "Crystal Ball fails",
+  "bewitchment.subtitles.block.brazier.fire": "Brazier fires",
   "bewitchment.subtitles.item.athame.strip": "Athame scrapes",
   "bewitchment.subtitles.item.contract.use": "Contract applies",
   "bewitchment.subtitles.entity.generic.teleport": "Entity teleports",
@@ -389,5 +390,6 @@
   "rei.bewitchment.rituals": "Rituals",
   "rei.bewitchment.oil_crafting": "Oil Crafting",
   "rei.bewitchment.cauldron_brewing": "Cauldron Brewing",
+  "rei.bewitchment.incenses": "Incenses",
   "rei.bewitchment.curses": "Curses"
 }

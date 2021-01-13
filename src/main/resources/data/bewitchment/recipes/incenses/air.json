@@ -1,0 +1,16 @@
+{
+  "type": "bewitchment:incense_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:heaven_extract"
+	},
+	{
+	  "item": "bewitchment:wood_ash"
+	},
+	{
+	  "item": "bewitchment:spanish_moss"
+	}
+  ],
+  "effect": "speed",
+  "amplifier": 1
+}

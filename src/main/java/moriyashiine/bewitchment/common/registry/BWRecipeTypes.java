@@ -31,6 +31,9 @@ public class BWRecipeTypes {
 	public static final RecipeSerializer<CauldronBrewingRecipe> CAULDRON_BREWING_RECIPE_SERIALIZER = create("cauldron_brewing_recipe", new CauldronBrewingRecipe.Serializer());
 	public static final RecipeType<CauldronBrewingRecipe> CAULDRON_BREWING_RECIPE_TYPE = create("cauldron_brewing_recipe");
 	
+	public static final RecipeSerializer<IncenseRecipe> INCENSE_RECIPE_SERIALIZER = create("incense_recipe", new IncenseRecipe.Serializer());
+	public static final RecipeType<IncenseRecipe> INCENSE_RECIPE_TYPE = create("incense_recipe");
+	
 	public static final RecipeSerializer<CurseRecipe> CURSE_RECIPE_SERIALIZER = create("curse_recipe", new CurseRecipe.Serializer());
 	public static final RecipeType<CurseRecipe> CURSE_RECIPE_TYPE = create("curse_recipe");
 	
