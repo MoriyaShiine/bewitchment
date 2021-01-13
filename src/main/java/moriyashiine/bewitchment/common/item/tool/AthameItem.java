@@ -1,5 +1,8 @@
 package moriyashiine.bewitchment.common.item.tool;
 
+import com.google.common.collect.LinkedHashMultimap;
+import com.google.common.collect.Multimap;
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import moriyashiine.bewitchment.common.block.dragonsblood.DragonsBloodLogBlock;
 import moriyashiine.bewitchment.common.recipe.AthameStrippingRecipe;
 import moriyashiine.bewitchment.common.registry.BWMaterials;
@@ -11,6 +14,9 @@ import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.PillarBlock;
 import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.block.dispenser.FallibleItemDispenserBehavior;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -23,7 +29,11 @@ import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.UUID;
+
 public class AthameItem extends SwordItem {
+	private static final EntityAttributeModifier REACH_MODIFIER = new EntityAttributeModifier(UUID.fromString("1f362972-c5c5-4e9d-b69f-1fd13bd269e3"), "Weapon modifier", -1, EntityAttributeModifier.Operation.ADDITION);
+	
 	private static final DispenserBehavior DISPENSER_BEHAVIOR = new FallibleItemDispenserBehavior() {
 		@Override
 		protected ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
@@ -63,6 +73,15 @@ public class AthameItem extends SwordItem {
 			return ActionResult.success(world.isClient);
 		}
 		return super.useOnBlock(context);
+	}
+	
+	@Override
+	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
+		Multimap<EntityAttribute, EntityAttributeModifier> map = LinkedHashMultimap.create(super.getAttributeModifiers(slot));
+		if (slot == EquipmentSlot.MAINHAND) {
+			map.put(ReachEntityAttributes.ATTACK_RANGE, REACH_MODIFIER);
+		}
+		return map;
 	}
 	
 	private static boolean cutLog(World world, BlockPos pos, ItemStack stack) {
