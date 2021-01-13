@@ -11,6 +11,7 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.property.Properties;
 import net.minecraft.world.World;
 
 @Environment(EnvType.CLIENT)
@@ -26,7 +27,8 @@ public class BrazierBlockEntityRenderer extends BlockEntityRenderer<BrazierBlock
 			ItemStack one = entity.getStack(0);
 			if (!one.isEmpty()) {
 				matrices.push();
-				matrices.translate(0.5, 0.95, 0.5);
+				double yOffset = entity.getCachedState().get(Properties.HANGING) ? -0.815 : 0;
+				matrices.translate(0.5, 0.925 + yOffset, 0.5);
 				matrices.scale(0.5f, 0.5f, 0.5f);
 				matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
 				MinecraftClient.getInstance().getItemRenderer().renderItem(one, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers);
@@ -34,7 +36,7 @@ public class BrazierBlockEntityRenderer extends BlockEntityRenderer<BrazierBlock
 				ItemStack two = entity.getStack(1);
 				if (!two.isEmpty()) {
 					matrices.push();
-					matrices.translate(0.5, 0.98, 0.5);
+					matrices.translate(0.5, 0.955 + yOffset, 0.5);
 					matrices.scale(0.5f, 0.5f, 0.5f);
 					matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(270));
 					matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(90));
@@ -43,7 +45,7 @@ public class BrazierBlockEntityRenderer extends BlockEntityRenderer<BrazierBlock
 					ItemStack three = entity.getStack(2);
 					if (!three.isEmpty()) {
 						matrices.push();
-						matrices.translate(0.5, 1.01, 0.5);
+						matrices.translate(0.5, 0.985 + yOffset, 0.5);
 						matrices.scale(0.5f, 0.5f, 0.5f);
 						matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
 						matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(180));
@@ -52,7 +54,7 @@ public class BrazierBlockEntityRenderer extends BlockEntityRenderer<BrazierBlock
 						ItemStack four = entity.getStack(3);
 						if (!four.isEmpty()) {
 							matrices.push();
-							matrices.translate(0.5, 1.04, 0.5);
+							matrices.translate(0.5, 1.015 + yOffset, 0.5);
 							matrices.scale(0.5f, 0.5f, 0.5f);
 							matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(270));
 							matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(270));
