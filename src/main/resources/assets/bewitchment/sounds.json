@@ -46,6 +46,12 @@
 	],
 	"subtitle": "bewitchment.subtitles.block.brazier.fire"
   },
+  "block.brazier.fail": {
+	"sounds": [
+	  "note/snare"
+	],
+	"subtitle": "bewitchment.subtitles.block.brazier.fail"
+  },
   "item.athame.strip": {
 	"sounds": [
 	  {

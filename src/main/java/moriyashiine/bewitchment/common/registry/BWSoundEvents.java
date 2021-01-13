@@ -18,6 +18,7 @@ public class BWSoundEvents {
 	public static final SoundEvent BLOCK_CRYSTAL_BALL_FIRE = create("block.crystal_ball.fire");
 	public static final SoundEvent BLOCK_CRYSTAL_BALL_FAIL = create("block.crystal_ball.fail");
 	public static final SoundEvent BLOCK_BRAZIER_FIRE = create("block.brazier.fire");
+	public static final SoundEvent BLOCK_BRAZIER_FAIL = create("block.brazier.fail");
 	public static final SoundEvent ITEM_ATHAME_STRIP = create("item.athame.strip");
 	public static final SoundEvent ITEM_CONTRACT_USE = create("item.contract.use");
 	public static final SoundEvent ENTITY_GENERIC_TELEPORT = create("entity.generic.teleport");

@@ -333,6 +333,7 @@
   "bewitchment.subtitles.block.crystal_ball.fire": "Crystal Ball fires",
   "bewitchment.subtitles.block.crystal_ball.fail": "Crystal Ball fails",
   "bewitchment.subtitles.block.brazier.fire": "Brazier fires",
+  "bewitchment.subtitles.block.brazier.fail": "Brazier fails",
   "bewitchment.subtitles.item.athame.strip": "Athame scrapes",
   "bewitchment.subtitles.item.contract.use": "Contract applies",
   "bewitchment.subtitles.entity.generic.teleport": "Entity teleports",

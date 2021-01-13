@@ -6,6 +6,8 @@ import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.client.network.packet.SyncBrazierBlockEntity;
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
+import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.recipe.CurseRecipe;
 import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
@@ -29,6 +31,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.Tickable;
@@ -36,6 +39,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+@SuppressWarnings("ConstantConditions")
 public class BrazierBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Tickable, Inventory, UsesAltarPower {
 	private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
 	
@@ -113,11 +117,40 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 				}
 				else {
 					if (timer == 0) {
+						boolean clear = false;
 						if (curseRecipe != null) {
-							CurseAccessor.of(getTarget()).ifPresent(curseAccessor -> curseAccessor.addCurse(new Curse.Instance(curseRecipe.curse, 168000)));
-							world.playSound(null, pos, BWSoundEvents.BLOCK_BRAZIER_FIRE, SoundCategory.BLOCKS, 1, 1);
+							if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain(curseRecipe.cost, false)) {
+								CurseAccessor curseAccessor = CurseAccessor.of(getTarget()).orElse(null);
+								if (curseAccessor != null) {
+									curseAccessor.addCurse(new Curse.Instance(curseRecipe.curse, 168000));
+									world.playSound(null, pos, BWSoundEvents.BLOCK_BRAZIER_FIRE, SoundCategory.BLOCKS, 1, 1);
+									clear = true;
+								}
+								else {
+									PlayerEntity closestPlayer = world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 12, false);
+									if (closestPlayer != null) {
+										String entityName = "";
+										for (int i = 0; i < size(); i++) {
+											ItemStack stack = getStack(i);
+											if (stack.getItem() instanceof TaglockItem && stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID")) {
+												entityName = stack.getOrCreateTag().getString("OwnerName");
+												break;
+											}
+										}
+										world.playSound(null, pos, BWSoundEvents.BLOCK_BRAZIER_FAIL, SoundCategory.BLOCKS, 1, 1);
+										closestPlayer.sendMessage(new TranslatableText(Bewitchment.MODID + ".invalid_entity", entityName), true);
+									}
+								}
+							}
+							else {
+								PlayerEntity closestPlayer = world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 12, false);
+								if (closestPlayer != null) {
+									world.playSound(null, pos, BWSoundEvents.BLOCK_BRAZIER_FAIL, SoundCategory.BLOCKS, 1, 1);
+									closestPlayer.sendMessage(new TranslatableText(Bewitchment.MODID + ".insufficent_altar_power"), true);
+								}
+							}
 						}
-						reset(true);
+						reset(clear);
 						syncBrazier();
 					}
 				}
@@ -205,7 +238,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 					}
 					else {
 						CurseRecipe foundCurseRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CURSE_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
-						if (foundCurseRecipe != null) {
+						if (foundCurseRecipe != null && getTarget() != null) {
 							curseRecipe = foundCurseRecipe;
 							timer = -100;
 							syncBrazier();
