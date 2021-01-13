@@ -7,6 +7,7 @@ import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.client.network.packet.SpawnExplosionParticlesPacket;
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
+import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.item.tool.AthameItem;
 import moriyashiine.bewitchment.common.recipe.AthameDropRecipe;
 import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
@@ -389,7 +390,16 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		if (!world.isClient) {
 			BewitchmentAPI.getBlockPoses(getBlockPos(), 12, foundPos -> world.getBlockEntity(foundPos) instanceof BrazierBlockEntity && ((BrazierBlockEntity) world.getBlockEntity(foundPos)).incenseRecipe != null).forEach(foundPos -> {
 				IncenseRecipe recipe = ((BrazierBlockEntity) world.getBlockEntity(foundPos)).incenseRecipe;
-				addStatusEffect(new StatusEffectInstance(recipe.effect, 24000, recipe.amplifier, true, false));
+				int durationMultiplier = 1;
+				BlockPos nearestSigil = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, foundSigil -> world.getBlockEntity(foundSigil) instanceof SigilBlockEntity && ((SigilBlockEntity) world.getBlockEntity(foundSigil)).getSigil() == BWSigils.EXTENDING);
+				if (nearestSigil != null) {
+					BlockEntity blockEntity = world.getBlockEntity(nearestSigil);
+					HasSigil sigil = ((HasSigil) blockEntity);
+					sigil.setUses(sigil.getUses() - 1);
+					blockEntity.markDirty();
+					durationMultiplier = 2;
+				}
+				addStatusEffect(new StatusEffectInstance(recipe.effect, 24000 * durationMultiplier, recipe.amplifier, true, false));
 			});
 		}
 	}
