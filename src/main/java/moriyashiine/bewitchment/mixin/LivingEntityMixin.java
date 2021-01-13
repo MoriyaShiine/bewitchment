@@ -389,7 +389,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		if (!world.isClient) {
 			BewitchmentAPI.getBlockPoses(getBlockPos(), 12, foundPos -> world.getBlockEntity(foundPos) instanceof BrazierBlockEntity && ((BrazierBlockEntity) world.getBlockEntity(foundPos)).incenseRecipe != null).forEach(foundPos -> {
 				IncenseRecipe recipe = ((BrazierBlockEntity) world.getBlockEntity(foundPos)).incenseRecipe;
-				addStatusEffect(new StatusEffectInstance(recipe.effect, 24000, recipe.amplifier));
+				addStatusEffect(new StatusEffectInstance(recipe.effect, 24000, recipe.amplifier, true, false));
 			});
 		}
 	}
