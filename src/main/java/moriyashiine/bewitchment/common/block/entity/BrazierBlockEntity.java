@@ -4,6 +4,7 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.CurseAccessor;
 import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
 import moriyashiine.bewitchment.api.registry.Curse;
+import moriyashiine.bewitchment.client.network.packet.SyncBrazierBlockEntity;
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.recipe.CurseRecipe;
 import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
@@ -166,7 +167,10 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 	
 	public void syncBrazier() {
 		if (world instanceof ServerWorld) {
-			PlayerLookup.tracking(this).forEach(playerEntity -> SyncClientSerializableBlockEntity.send(playerEntity, this));
+			PlayerLookup.tracking(this).forEach(playerEntity -> {
+				SyncClientSerializableBlockEntity.send(playerEntity, this);
+				SyncBrazierBlockEntity.send(playerEntity, this);
+			});
 		}
 	}
 	
