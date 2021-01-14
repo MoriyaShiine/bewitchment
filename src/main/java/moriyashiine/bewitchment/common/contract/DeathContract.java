@@ -25,7 +25,7 @@ public class DeathContract extends Contract {
 			CurseAccessor.of(user).ifPresent(curseAccessor -> {
 				Curse curse = null;
 				while (curse == null || curse.type != Curse.Type.LESSER) {
-					curse = BWRegistries.CURSES.get(BWRegistries.CURSES.getEntries().size());
+					curse = BWRegistries.CURSES.get(user.getRandom().nextInt(BWRegistries.CURSES.getEntries().size()));
 				}
 				curseAccessor.addCurse(new Curse.Instance(curse, 24000));
 			});
