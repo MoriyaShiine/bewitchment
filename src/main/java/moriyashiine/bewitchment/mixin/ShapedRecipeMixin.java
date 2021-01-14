@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin;
 
-import moriyashiine.bewitchment.common.item.SigilItem;
+import moriyashiine.bewitchment.api.item.SigilItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.ShapedRecipe;
 import org.spongepowered.asm.mixin.Mixin;

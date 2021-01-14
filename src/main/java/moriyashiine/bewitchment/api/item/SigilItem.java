@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.item;
+package moriyashiine.bewitchment.api.item;
 
 import moriyashiine.bewitchment.api.interfaces.HasSigil;
 import moriyashiine.bewitchment.api.registry.Sigil;

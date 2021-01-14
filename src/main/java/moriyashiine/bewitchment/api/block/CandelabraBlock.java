@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.block;
+package moriyashiine.bewitchment.api.block;
 
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.api.EnvType;

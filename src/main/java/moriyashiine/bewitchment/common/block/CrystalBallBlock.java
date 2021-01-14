@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.block;
 
+import moriyashiine.bewitchment.api.block.WitchAltarBlock;
 import moriyashiine.bewitchment.api.interfaces.CurseAccessor;
 import moriyashiine.bewitchment.api.interfaces.FortuneAccessor;
 import moriyashiine.bewitchment.api.registry.Fortune;
