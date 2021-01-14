@@ -56,19 +56,21 @@ public class AthameItem extends SwordItem {
 		World world = context.getWorld();
 		BlockPos pos = context.getBlockPos();
 		BlockEntity blockEntity = world.getBlockEntity(pos);
+		PlayerEntity player = context.getPlayer();
 		boolean client = world.isClient;
 		if (blockEntity instanceof HasSigil) {
 			HasSigil sigil = (HasSigil) blockEntity;
-			boolean whitelist = sigil.getModeOnWhitelist();
-			world.playSound(null, pos, BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.BLOCKS, 1, whitelist ? 0.5f : 1);
-			sigil.setModeOnWhitelist(!whitelist);
-			blockEntity.markDirty();
-			return ActionResult.success(client);
+			if (player != null && player.getUuid().equals(sigil.getOwner())) {
+				boolean whitelist = sigil.getModeOnWhitelist();
+				world.playSound(null, pos, BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.BLOCKS, 1, whitelist ? 0.5f : 1);
+				sigil.setModeOnWhitelist(!whitelist);
+				blockEntity.markDirty();
+				return ActionResult.success(client);
+			}
 		}
 		BlockState state = world.getBlockState(pos);
 		AthameStrippingRecipe entry = world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_STRIPPING_RECIPE_TYPE).stream().filter(recipe -> recipe.log == state.getBlock()).findFirst().orElse(null);
 		if (entry != null) {
-			PlayerEntity player = context.getPlayer();
 			world.playSound(player, pos, BWSoundEvents.ITEM_ATHAME_STRIP, SoundCategory.BLOCKS, 1, 1);
 			if (!client) {
 				world.setBlockState(pos, entry.strippedLog.getDefaultState().with(PillarBlock.AXIS, state.get(PillarBlock.AXIS)), 11);

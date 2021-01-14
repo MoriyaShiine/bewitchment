@@ -22,6 +22,12 @@ import java.util.UUID;
 
 @SuppressWarnings("ConstantConditions")
 public interface HasSigil {
+	List<UUID> getEntities();
+	
+	UUID getOwner();
+	
+	void setOwner(UUID owner);
+	
 	Sigil getSigil();
 	
 	void setSigil(Sigil sigil);
@@ -29,8 +35,6 @@ public interface HasSigil {
 	int getUses();
 	
 	void setUses(int uses);
-	
-	List<UUID> getEntities();
 	
 	boolean getModeOnWhitelist();
 	
@@ -40,6 +44,9 @@ public interface HasSigil {
 		ListTag entities = tag.getList("Entities", NbtType.STRING);
 		for (int i = 0; i < entities.size(); i++) {
 			getEntities().add(UUID.fromString(entities.getString(i)));
+		}
+		if (tag.contains("Owner")) {
+			setOwner(tag.getUuid("Owner"));
 		}
 		setSigil(BWRegistries.SIGILS.get(new Identifier(tag.getString("Sigil"))));
 		setUses(tag.getInt("Uses"));
@@ -52,6 +59,9 @@ public interface HasSigil {
 			entities.add(StringTag.of(getEntities().get(i).toString()));
 		}
 		tag.put("Entities", entities);
+		if (getOwner() != null) {
+			tag.putUuid("Owner", getOwner());
+		}
 		if (getSigil() != null) {
 			tag.putString("Sigil", BWRegistries.SIGILS.getId(getSigil()).toString());
 		}

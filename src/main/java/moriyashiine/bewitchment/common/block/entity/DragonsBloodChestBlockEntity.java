@@ -14,6 +14,7 @@ import java.util.UUID;
 
 public class DragonsBloodChestBlockEntity extends BWChestBlockEntity implements Tickable, HasSigil {
 	private final List<UUID> entities = new ArrayList<>();
+	private UUID owner = null;
 	private Sigil sigil = null;
 	private int uses = 0;
 	private boolean modeOnWhitelist = false;
@@ -29,6 +30,16 @@ public class DragonsBloodChestBlockEntity extends BWChestBlockEntity implements 
 	@Override
 	public List<UUID> getEntities() {
 		return entities;
+	}
+	
+	@Override
+	public UUID getOwner() {
+		return owner;
+	}
+	
+	@Override
+	public void setOwner(UUID owner) {
+		this.owner = owner;
 	}
 	
 	@Override

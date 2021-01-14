@@ -61,6 +61,7 @@ public class SigilItem extends Item {
 					blockEntity = world.getBlockEntity(pos);
 					((HasSigil) blockEntity).setSigil(sigil);
 					((HasSigil) blockEntity).setUses(sigil.uses);
+					((HasSigil) blockEntity).setOwner(player.getUuid());
 					((SigilBlockEntity) blockEntity).syncSigil();
 					blockEntity.markDirty();
 					if (player instanceof ServerPlayerEntity) {
@@ -80,6 +81,7 @@ public class SigilItem extends Item {
 			if (((HasSigil) blockEntity).getSigil() == null) {
 				((HasSigil) blockEntity).setSigil(sigil);
 				((HasSigil) blockEntity).setUses(sigil.uses);
+				((HasSigil) blockEntity).setOwner(player.getUuid());
 				blockEntity.markDirty();
 				if (!player.isCreative()) {
 					stack.decrement(1);
