@@ -14,12 +14,11 @@ import java.util.Random;
 public class ShapedRecipeMixin {
 	private static final Random RANDOM = new Random();
 	
-	@Inject(method = "craft", at = @At("RETURN"), cancellable = true)
+	@Inject(method = "craft", at = @At("RETURN"))
 	private void craft(CallbackInfoReturnable<ItemStack> callbackInfo) {
 		ItemStack stack = callbackInfo.getReturnValue();
 		if (stack.getItem() instanceof SigilItem) {
 			stack.getOrCreateTag().putInt("Type", RANDOM.nextInt(10));
-			callbackInfo.setReturnValue(stack);
 		}
 	}
 }
