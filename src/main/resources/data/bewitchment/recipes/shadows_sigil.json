@@ -1,0 +1,25 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	"ARB",
+	"RPR",
+	"BRA"
+  ],
+  "key": {
+	"R": {
+	  "item": "bewitchment:dragons_blood_resin"
+	},
+	"P": {
+	  "item": "paper"
+	},
+	"A": {
+	  "item": "bewitchment:elder_bark"
+	},
+	"B": {
+	  "item": "bewitchment:snake_tongue"
+	}
+  },
+  "result": {
+	"item": "bewitchment:shadows_sigil"
+  }
+}

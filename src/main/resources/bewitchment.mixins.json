@@ -25,6 +25,7 @@
 	"PounceAtTargetGoalMixin",
 	"ServerPlayerEntityMixin",
 	"ServerWorldMixin",
+	"ShapedRecipeMixin",
 	"SpawnHelperMixin",
 	"StatusEffectAccessor",
 	"StatusEffectMixin",

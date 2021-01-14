@@ -1,0 +1,25 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	"ARB",
+	"RPR",
+	"BRA"
+  ],
+  "key": {
+	"R": {
+	  "item": "bewitchment:dragons_blood_resin"
+	},
+	"P": {
+	  "item": "paper"
+	},
+	"A": {
+	  "item": "iron_ingot"
+	},
+	"B": {
+	  "item": "bewitchment:belladonna"
+	}
+  },
+  "result": {
+	"item": "bewitchment:heavy_sigil"
+  }
+}
