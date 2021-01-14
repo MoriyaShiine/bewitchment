@@ -180,20 +180,20 @@ public class BewitchmentAPI {
 	
 	public static void attemptTeleport(Entity entity, BlockPos origin, int distance) {
 		for (int i = 0; i < 32; i++) {
-			BlockPos.Mutable mutable = new BlockPos.Mutable(origin.getX() + 0.5 + MathHelper.nextDouble(entity.world.random, -distance, distance), origin.getY() + 0.5 + MathHelper.nextDouble(entity.world.random, -distance / 2f, distance / 2f), origin.getZ() + 0.5 + MathHelper.nextDouble(entity.world.random, -distance, distance));
+			BlockPos.Mutable mutable = new BlockPos.Mutable(origin.getX()+ MathHelper.nextDouble(entity.world.random, -distance, distance), origin.getY() + MathHelper.nextDouble(entity.world.random, -distance / 2f, distance / 2f), origin.getZ() + MathHelper.nextDouble(entity.world.random, -distance, distance));
 			if (!entity.world.getBlockState(mutable).getMaterial().isSolid()) {
 				while (mutable.getY() > 0 && !entity.world.getBlockState(mutable).getMaterial().isSolid()) {
 					mutable.move(Direction.DOWN);
 				}
 				if (entity.world.getBlockState(mutable).getMaterial().blocksMovement()) {
-					teleport(entity, mutable);
+					teleport(entity, mutable.getX() + 0.5, mutable.getY() + 0.5, mutable.getZ() + 0.5);
 					break;
 				}
 			}
 		}
 	}
 	
-	public static void teleport(Entity entity, BlockPos target) {
+	public static void teleport(Entity entity, double x, double y, double z) {
 		if (!entity.isSilent()) {
 			entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, SoundCategory.NEUTRAL, 1, 1);
 		}
@@ -201,7 +201,7 @@ public class BewitchmentAPI {
 		if (entity instanceof PlayerEntity) {
 			SpawnPortalParticlesPacket.send((PlayerEntity) entity, entity);
 		}
-		entity.teleport(target.getX(), target.getY() + 1, target.getZ());
+		entity.teleport(x, y + 0.5, z);
 		if (!entity.isSilent()) {
 			entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, SoundCategory.NEUTRAL, 1, 1);
 		}

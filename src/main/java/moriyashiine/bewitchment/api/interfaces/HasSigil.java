@@ -105,7 +105,7 @@ public interface HasSigil {
 	
 	static ActionResult onUse(World world, BlockPos pos, LivingEntity user, Hand hand) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity instanceof HasSigil) {
+		if (blockEntity instanceof HasSigil && ((HasSigil) blockEntity).test(user)) {
 			return ((HasSigil) blockEntity).use(world, pos, user, hand);
 		}
 		return ActionResult.PASS;
