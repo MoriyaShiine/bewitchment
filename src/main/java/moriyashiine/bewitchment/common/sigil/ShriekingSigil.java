@@ -17,7 +17,7 @@ public class ShriekingSigil extends Sigil {
 	@Override
 	public ActionResult use(World world, BlockPos pos, LivingEntity user, Hand hand) {
 		if (!world.isClient) {
-			world.playSound(null, pos, world.random.nextBoolean() ? SoundEvents.ENTITY_GHAST_HURT : SoundEvents.ENTITY_GHAST_SCREAM, SoundCategory.BLOCKS, 1, 1);
+			world.playSound(null, pos, SoundEvents.ENTITY_GHAST_HURT, SoundCategory.BLOCKS, 1, 1);
 		}
 		return ActionResult.SUCCESS;
 	}
