@@ -117,7 +117,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 				}
 				else {
 					if (timer == 0) {
-						boolean clear = false;
+						boolean clear = incenseRecipe != null;
 						if (curseRecipe != null) {
 							if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain(curseRecipe.cost, false)) {
 								CurseAccessor curseAccessor = CurseAccessor.of(getTarget()).orElse(null);
