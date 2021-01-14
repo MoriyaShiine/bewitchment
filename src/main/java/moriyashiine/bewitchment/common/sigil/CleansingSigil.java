@@ -16,7 +16,11 @@ public class CleansingSigil extends Sigil {
 	
 	@Override
 	public ActionResult use(World world, BlockPos pos, LivingEntity user, Hand hand) {
-		if (user.addStatusEffect(new StatusEffectInstance(BWStatusEffects.ABSENCE, 1, 1, true, false))) {
+		StatusEffectInstance effect = new StatusEffectInstance(BWStatusEffects.ABSENCE, 1, 0, true, false);
+		if (user.canHaveStatusEffect(effect)) {
+			if (!world.isClient) {
+				user.addStatusEffect(effect);
+			}
 			return ActionResult.SUCCESS;
 		}
 		return super.use(world, pos, user, hand);

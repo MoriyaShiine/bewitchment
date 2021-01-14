@@ -60,11 +60,13 @@ public class AthameItem extends SwordItem {
 		boolean client = world.isClient;
 		if (blockEntity instanceof HasSigil) {
 			HasSigil sigil = (HasSigil) blockEntity;
-			if (!sigil.getEntities().isEmpty() && player != null && player.getUuid().equals(sigil.getOwner())) {
-				boolean whitelist = sigil.getModeOnWhitelist();
-				world.playSound(null, pos, BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.BLOCKS, 1, whitelist ? 0.5f : 1);
-				sigil.setModeOnWhitelist(!whitelist);
-				blockEntity.markDirty();
+			if (player != null && player.getUuid().equals(sigil.getOwner())) {
+				if (!sigil.getEntities().isEmpty()) {
+					boolean whitelist = sigil.getModeOnWhitelist();
+					world.playSound(null, pos, BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.BLOCKS, 1, whitelist ? 0.5f : 1);
+					sigil.setModeOnWhitelist(!whitelist);
+					blockEntity.markDirty();
+				}
 				return ActionResult.success(client);
 			}
 		}

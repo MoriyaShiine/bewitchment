@@ -2,7 +2,6 @@ package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.api.interfaces.HasSigil;
 import moriyashiine.bewitchment.api.registry.Sigil;
-import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import net.fabricmc.api.EnvType;
@@ -62,7 +61,6 @@ public class SigilItem extends Item {
 					((HasSigil) blockEntity).setSigil(sigil);
 					((HasSigil) blockEntity).setUses(sigil.uses);
 					((HasSigil) blockEntity).setOwner(player.getUuid());
-					((SigilBlockEntity) blockEntity).syncSigil();
 					blockEntity.markDirty();
 					if (player instanceof ServerPlayerEntity) {
 						Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity) player, pos, stack);

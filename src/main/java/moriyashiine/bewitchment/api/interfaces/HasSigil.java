@@ -82,7 +82,7 @@ public interface HasSigil {
 	}
 	
 	default void tick(World world, BlockPos pos, BlockEntity blockEntity) {
-		if (world != null) {
+		if (world != null && !world.isClient) {
 			if (getSigil() != null) {
 				if (!getSigil().active) {
 					int used = getSigil().tick(world, pos);

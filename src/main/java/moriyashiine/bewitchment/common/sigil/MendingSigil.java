@@ -17,10 +17,18 @@ public class MendingSigil extends Sigil {
 	@Override
 	public ActionResult use(World world, BlockPos pos, LivingEntity user, Hand hand) {
 		ActionResult result = super.use(world, pos, user, hand);
-		if (user.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 200))) {
+		StatusEffectInstance regeneration = new StatusEffectInstance(StatusEffects.REGENERATION, 200);
+		if (user.canHaveStatusEffect(regeneration)) {
+			if (!world.isClient) {
+				user.addStatusEffect(regeneration);
+			}
 			result = ActionResult.SUCCESS;
 		}
-		if (user.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 200))) {
+		StatusEffectInstance resistance = new StatusEffectInstance(StatusEffects.RESISTANCE, 200);
+		if (user.canHaveStatusEffect(resistance)) {
+			if (!world.isClient) {
+				user.addStatusEffect(resistance);
+			}
 			result = ActionResult.SUCCESS;
 		}
 		return result;

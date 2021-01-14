@@ -2,15 +2,12 @@ package moriyashiine.bewitchment.common.block.entity;
 
 import moriyashiine.bewitchment.api.interfaces.HasSigil;
 import moriyashiine.bewitchment.api.registry.Sigil;
-import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Tickable;
 
 import java.util.ArrayList;
@@ -102,11 +99,5 @@ public class SigilBlockEntity extends BlockEntity implements BlockEntityClientSe
 	@Override
 	public void tick() {
 		tick(world, pos, this);
-	}
-	
-	public void syncSigil() {
-		if (world instanceof ServerWorld) {
-			PlayerLookup.tracking(this).forEach(playerEntity -> SyncClientSerializableBlockEntity.send(playerEntity, this));
-		}
 	}
 }

@@ -180,7 +180,7 @@ public class BewitchmentAPI {
 	
 	public static void attemptTeleport(Entity entity, BlockPos origin, int distance) {
 		for (int i = 0; i < 32; i++) {
-			BlockPos.Mutable mutable = new BlockPos.Mutable(origin.getX()+ MathHelper.nextDouble(entity.world.random, -distance, distance), origin.getY() + MathHelper.nextDouble(entity.world.random, -distance / 2f, distance / 2f), origin.getZ() + MathHelper.nextDouble(entity.world.random, -distance, distance));
+			BlockPos.Mutable mutable = new BlockPos.Mutable(origin.getX() + MathHelper.nextDouble(entity.world.random, -distance, distance), origin.getY() + MathHelper.nextDouble(entity.world.random, -distance / 2f, distance / 2f), origin.getZ() + MathHelper.nextDouble(entity.world.random, -distance, distance));
 			if (!entity.world.getBlockState(mutable).getMaterial().isSolid()) {
 				while (mutable.getY() > 0 && !entity.world.getBlockState(mutable).getMaterial().isSolid()) {
 					mutable.move(Direction.DOWN);
