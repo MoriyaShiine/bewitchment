@@ -2,18 +2,20 @@ package moriyashiine.bewitchment.common.block;
 
 import moriyashiine.bewitchment.api.interfaces.HasSigil;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
+import moriyashiine.bewitchment.common.item.SigilItem;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWProperties;
-import moriyashiine.bewitchment.common.registry.BWRegistries;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -53,13 +55,19 @@ public class SigilBlock extends HorizontalFacingBlock implements BlockEntityProv
 	@Environment(EnvType.CLIENT)
 	@Override
 	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
-		ItemStack stack = new ItemStack(BWObjects.SIGIL_ITEM);
-		stack.getOrCreateTag().putInt("Type", state.get(BWProperties.TYPE));
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity instanceof HasSigil) {
-			stack.getOrCreateTag().putString("Sigil", BWRegistries.SIGILS.getId(((HasSigil) blockEntity).getSigil()).toString());
+			for (Item sigil : Registry.ITEM) {
+				if (sigil instanceof SigilItem) {
+					if (((HasSigil) blockEntity).getSigil() == ((SigilItem) sigil).sigil) {
+						ItemStack stack = new ItemStack(sigil);
+						stack.getOrCreateTag().putInt("Type", state.get(BWProperties.TYPE));
+						return stack;
+					}
+				}
+			}
 		}
-		return stack;
+		return ItemStack.EMPTY;
 	}
 	
 	@Override

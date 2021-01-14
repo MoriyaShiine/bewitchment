@@ -231,7 +231,18 @@ public class BWObjects {
 	public static final Item ELDRITCH_CHALK = create("eldritch_chalk", new ChalkItem(gen().maxDamage(128), ELDRITCH_GLYPH));
 	public static final Item TAGLOCK = create("taglock", new TaglockItem(gen().recipeRemainder(Items.GLASS_BOTTLE)));
 	public static final Item WAYSTONE = create("waystone", new WaystoneItem(gen().maxDamage(3)));
-	public static final Item SIGIL_ITEM = create("sigil", new SigilItem(gen()));
+	public static final Item MENDING_SIGIL = create("mending_sigil", new SigilItem(gen(), BWSigils.MENDING));
+	public static final Item CLEANSING_SIGIL = create("cleansing_sigil", new SigilItem(gen(), BWSigils.CLEANSING));
+	public static final Item JUDGMENT_SIGIL = create("judgment_sigil", new SigilItem(gen(), BWSigils.JUDGMENT));
+	public static final Item DECAY_SIGIL = create("decay_sigil", new SigilItem(gen(), BWSigils.DECAY));
+	public static final Item SHRIEKING_SIGIL = create("shrieking_sigil", new SigilItem(gen(), BWSigils.SHRIEKING));
+	public static final Item SENTINEL_SIGIL = create("sentinel_sigil", new SigilItem(gen(), BWSigils.SENTINEL));
+	public static final Item SLIPPERY_SIGIL = create("slippery_sigil", new SigilItem(gen(), BWSigils.SLIPPERY));
+	public static final Item SHADOWS_SIGIL = create("shadows_sigil", new SigilItem(gen(), BWSigils.SHADOWS));
+	public static final Item EXTENDING_SIGIL = create("extending_sigil", new SigilItem(gen(), BWSigils.EXTENDING));
+	public static final Item SMELLY_SIGIL = create("smelly_sigil", new SigilItem(gen(), BWSigils.SMELLY));
+	public static final Item RUIN_SIGIL = create("ruin_sigil", new SigilItem(gen(), BWSigils.RUIN));
+	public static final Item HEAVY_SIGIL = create("heavy_sigil", new SigilItem(gen(), BWSigils.HEAVY));
 	public static final Item DEMONIC_CONTRACT = create("demonic_contract", new ContractItem(gen().rarity(Rarity.RARE).maxCount(1)));
 	//material_item
 	public static final Item CLEANSING_BALM = create("cleansing_balm", new Item(gen().recipeRemainder(Items.GLASS_BOTTLE)));

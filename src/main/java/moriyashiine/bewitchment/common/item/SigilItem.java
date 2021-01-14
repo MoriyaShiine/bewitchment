@@ -22,7 +22,6 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -33,8 +32,11 @@ import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
 public class SigilItem extends Item {
-	public SigilItem(Settings settings) {
+	public final Sigil sigil;
+	
+	public SigilItem(Settings settings, Sigil sigil) {
 		super(settings);
+		this.sigil = sigil;
 	}
 	
 	@Override
@@ -43,7 +45,6 @@ public class SigilItem extends Item {
 		BlockPos pos = context.getBlockPos();
 		ItemStack stack = context.getStack();
 		PlayerEntity player = context.getPlayer();
-		Sigil sigil = BWRegistries.SIGILS.get(new Identifier(stack.getOrCreateTag().getString("Sigil")));
 		boolean client = world.isClient;
 		BlockState state = world.getBlockState(pos);
 		BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -97,20 +98,15 @@ public class SigilItem extends Item {
 	@Override
 	public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
 		if (isIn(group)) {
-			BWRegistries.SIGILS.forEach(sigil -> {
-				ItemStack stack = new ItemStack(this);
-				stack.getOrCreateTag().putString("Sigil", BWRegistries.SIGILS.getId(sigil).toString());
-				stack.getOrCreateTag().putInt("Type", RANDOM.nextInt(10));
-				stacks.add(stack);
-			});
+			ItemStack stack = new ItemStack(this);
+			stack.getOrCreateTag().putInt("Type", RANDOM.nextInt(10));
+			stacks.add(stack);
 		}
 	}
 	
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		if (stack.hasTag() && stack.getOrCreateTag().contains("Sigil")) {
-			tooltip.add(new TranslatableText("sigil." + stack.getOrCreateTag().getString("Sigil").replace(":", ".")).setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
-		}
+		tooltip.add(new TranslatableText("sigil." + BWRegistries.SIGILS.getId(sigil).toString().replace(":", ".")).setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
 	}
 }
