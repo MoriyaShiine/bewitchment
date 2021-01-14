@@ -13,9 +13,15 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Tickable;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 public class SigilBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Tickable, HasSigil {
+	private final List<UUID> entities = new ArrayList<>();
 	private Sigil sigil = null;
 	private int uses = 0;
+	private boolean modeOnWhitelist = false;
 	
 	public SigilBlockEntity(BlockEntityType<?> type) {
 		super(type);
@@ -23,6 +29,11 @@ public class SigilBlockEntity extends BlockEntity implements BlockEntityClientSe
 	
 	public SigilBlockEntity() {
 		this(BWBlockEntityTypes.SIGIL);
+	}
+	
+	@Override
+	public List<UUID> getEntities() {
+		return entities;
 	}
 	
 	@Override
@@ -43,6 +54,16 @@ public class SigilBlockEntity extends BlockEntity implements BlockEntityClientSe
 	@Override
 	public void setUses(int uses) {
 		this.uses = uses;
+	}
+	
+	@Override
+	public boolean getModeOnWhitelist() {
+		return modeOnWhitelist;
+	}
+	
+	@Override
+	public void setModeOnWhitelist(boolean modeOnWhitelist) {
+		this.modeOnWhitelist = modeOnWhitelist;
 	}
 	
 	@Override

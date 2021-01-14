@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.common.item.tool;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+import moriyashiine.bewitchment.api.interfaces.HasSigil;
 import moriyashiine.bewitchment.common.block.dragonsblood.DragonsBloodLogBlock;
 import moriyashiine.bewitchment.common.recipe.AthameStrippingRecipe;
 import moriyashiine.bewitchment.common.registry.BWMaterials;
@@ -14,6 +15,7 @@ import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.PillarBlock;
 import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.block.dispenser.FallibleItemDispenserBehavior;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -53,12 +55,22 @@ public class AthameItem extends SwordItem {
 	public ActionResult useOnBlock(ItemUsageContext context) {
 		World world = context.getWorld();
 		BlockPos pos = context.getBlockPos();
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		boolean client = world.isClient;
+		if (blockEntity instanceof HasSigil) {
+			HasSigil sigil = (HasSigil) blockEntity;
+			boolean whitelist = sigil.getModeOnWhitelist();
+			world.playSound(null, pos, BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.BLOCKS, 1, whitelist ? 0.5f : 1);
+			sigil.setModeOnWhitelist(!whitelist);
+			blockEntity.markDirty();
+			return ActionResult.success(client);
+		}
 		BlockState state = world.getBlockState(pos);
 		AthameStrippingRecipe entry = world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_STRIPPING_RECIPE_TYPE).stream().filter(recipe -> recipe.log == state.getBlock()).findFirst().orElse(null);
 		if (entry != null) {
 			PlayerEntity player = context.getPlayer();
 			world.playSound(player, pos, BWSoundEvents.ITEM_ATHAME_STRIP, SoundCategory.BLOCKS, 1, 1);
-			if (!world.isClient) {
+			if (!client) {
 				world.setBlockState(pos, entry.strippedLog.getDefaultState().with(PillarBlock.AXIS, state.get(PillarBlock.AXIS)), 11);
 				if (player != null) {
 					context.getStack().damage(1, player, (user) -> user.sendToolBreakStatus(context.getHand()));
@@ -70,7 +82,7 @@ public class AthameItem extends SwordItem {
 					}
 				}
 			}
-			return ActionResult.success(world.isClient);
+			return ActionResult.success(client);
 		}
 		return super.useOnBlock(context);
 	}

@@ -42,10 +42,11 @@ public class TaglockItem extends Item {
 	public ActionResult useOnBlock(ItemUsageContext context) {
 		World world = context.getWorld();
 		BlockPos pos = context.getBlockPos();
+		PlayerEntity player = context.getPlayer();
+		boolean client = world.isClient;
 		if (world.getBlockState(pos).getBlock() instanceof BedBlock) {
-			boolean client = world.isClient;
 			if (!client) {
-				PlayerEntity player = context.getPlayer();
+				
 				if (player != null && player.isSneaking()) {
 					MinecraftServer server = world.getServer();
 					if (server != null) {
@@ -63,6 +64,26 @@ public class TaglockItem extends Item {
 				}
 			}
 			return ActionResult.success(client);
+		}
+		else {
+			BlockEntity blockEntity = world.getBlockEntity(pos);
+			if (blockEntity instanceof HasSigil) {
+				ItemStack stack = context.getStack();
+				if (stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID")) {
+					if (!client) {
+						HasSigil sigil = (HasSigil) blockEntity;
+						if (sigil.getEntities().isEmpty()) {
+							sigil.setModeOnWhitelist(true);
+						}
+						sigil.getEntities().add(stack.getOrCreateTag().getUuid("OwnerUUID"));
+						if (!player.isCreative()) {
+							stack.decrement(1);
+						}
+						blockEntity.markDirty();
+					}
+					return ActionResult.success(client);
+				}
+			}
 		}
 		return super.useOnBlock(context);
 	}
@@ -86,10 +107,13 @@ public class TaglockItem extends Item {
 			boolean failed = false;
 			BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(entity.getBlockPos(), 16, currentPos -> user.world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) user.world.getBlockEntity(currentPos)).getSigil() == BWSigils.SLIPPERY);
 			if (sigilPos != null) {
-				BlockEntity sigil = user.world.getBlockEntity(sigilPos);
-				((HasSigil) sigil).setUses(((HasSigil) sigil).getUses() - 1);
-				sigil.markDirty();
-				failed = true;
+				BlockEntity blockEntity = user.world.getBlockEntity(sigilPos);
+				HasSigil sigil = (HasSigil) blockEntity;
+				if (sigil.test(entity)) {
+					sigil.setUses(sigil.getUses() - 1);
+					blockEntity.markDirty();
+					failed = true;
+				}
 			}
 			else if (checkVisibility) {
 				double targetYaw = entity.getHeadYaw() % 360;

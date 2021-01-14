@@ -8,9 +8,15 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Tickable;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 public class DragonsBloodChestBlockEntity extends BWChestBlockEntity implements Tickable, HasSigil {
+	private final List<UUID> entities = new ArrayList<>();
 	private Sigil sigil = null;
 	private int uses = 0;
+	private boolean modeOnWhitelist = false;
 	
 	public DragonsBloodChestBlockEntity() {
 		super(BWBlockEntityTypes.DRAGONS_BLOOD_CHEST, Type.DRAGONS_BLOOD, false);
@@ -18,6 +24,11 @@ public class DragonsBloodChestBlockEntity extends BWChestBlockEntity implements 
 	
 	public DragonsBloodChestBlockEntity(BlockEntityType<?> blockEntityType, boolean trapped) {
 		super(blockEntityType, Type.DRAGONS_BLOOD, trapped);
+	}
+	
+	@Override
+	public List<UUID> getEntities() {
+		return entities;
 	}
 	
 	@Override
@@ -38,6 +49,16 @@ public class DragonsBloodChestBlockEntity extends BWChestBlockEntity implements 
 	@Override
 	public void setUses(int uses) {
 		this.uses = uses;
+	}
+	
+	@Override
+	public boolean getModeOnWhitelist() {
+		return modeOnWhitelist;
+	}
+	
+	@Override
+	public void setModeOnWhitelist(boolean modeOnWhitelist) {
+		this.modeOnWhitelist = modeOnWhitelist;
 	}
 	
 	@Override

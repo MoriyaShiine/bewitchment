@@ -52,6 +52,12 @@
 	],
 	"subtitle": "bewitchment.subtitles.block.brazier.fail"
   },
+  "block.sigil.pling": {
+	"sounds": [
+	  "random/orb"
+	],
+	"subtitle": "bewitchment.subtitles.block.sigil.pling"
+  },
   "item.athame.strip": {
 	"sounds": [
 	  {

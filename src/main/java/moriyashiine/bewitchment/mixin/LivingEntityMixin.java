@@ -161,10 +161,13 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		if (source == DamageSource.FALL) {
 			BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) world.getBlockEntity(currentPos)).getSigil() == BWSigils.HEAVY);
 			if (sigilPos != null) {
-				BlockEntity sigil = world.getBlockEntity(sigilPos);
-				((HasSigil) sigil).setUses(((HasSigil) sigil).getUses() - 1);
-				sigil.markDirty();
-				amount *= 3;
+				BlockEntity blockEntity = world.getBlockEntity(sigilPos);
+				HasSigil sigil = (HasSigil) blockEntity;
+				if (sigil.test(this)) {
+					sigil.setUses(sigil.getUses() - 1);
+					blockEntity.markDirty();
+					amount *= 3;
+				}
 			}
 		}
 		if (hasCurse(BWCurses.FORESTS_WRATH) && ((attacker instanceof LivingEntity && ((LivingEntity) attacker).getMainHandStack().getItem() instanceof AxeItem)) || source.isFire()) {
@@ -317,10 +320,13 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		if (type != StatusEffectType.HARMFUL) {
 			BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) world.getBlockEntity(currentPos)).getSigil() == BWSigils.RUIN);
 			if (sigilPos != null) {
-				BlockEntity sigil = world.getBlockEntity(sigilPos);
-				((HasSigil) sigil).setUses(((HasSigil) sigil).getUses() - 1);
-				sigil.markDirty();
-				callbackInfo.setReturnValue(false);
+				BlockEntity blockEntity = world.getBlockEntity(sigilPos);
+				HasSigil sigil = (HasSigil) blockEntity;
+				if (sigil.test(this)) {
+					sigil.setUses(sigil.getUses() - 1);
+					blockEntity.markDirty();
+					callbackInfo.setReturnValue(false);
+				}
 			}
 		}
 	}
@@ -395,9 +401,11 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				if (nearestSigil != null) {
 					BlockEntity blockEntity = world.getBlockEntity(nearestSigil);
 					HasSigil sigil = ((HasSigil) blockEntity);
-					sigil.setUses(sigil.getUses() - 1);
-					blockEntity.markDirty();
-					durationMultiplier = 2;
+					if (sigil.test(this)) {
+						sigil.setUses(sigil.getUses() - 1);
+						blockEntity.markDirty();
+						durationMultiplier = 2;
+					}
 				}
 				addStatusEffect(new StatusEffectInstance(recipe.effect, 24000 * durationMultiplier, recipe.amplifier, true, false));
 			});
