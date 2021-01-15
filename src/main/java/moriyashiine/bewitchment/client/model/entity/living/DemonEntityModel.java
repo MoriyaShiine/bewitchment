@@ -326,12 +326,10 @@ public class DemonEntityModel<T extends DemonEntity> extends BipedEntityModel<T>
 		
 		@Override
 		public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-		
 		}
 		
 		@Override
 		public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
-		
 		}
 	}
 	
@@ -643,12 +641,10 @@ public class DemonEntityModel<T extends DemonEntity> extends BipedEntityModel<T>
 		
 		@Override
 		public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-		
 		}
 		
 		@Override
 		public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
-		
 		}
 	}
 }

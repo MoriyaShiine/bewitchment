@@ -3,8 +3,6 @@ package moriyashiine.bewitchment.client.network.packet;
 import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.common.Bewitchment;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-import net.fabricmc.fabric.api.network.PacketContext;
-import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.entity.BlockEntity;

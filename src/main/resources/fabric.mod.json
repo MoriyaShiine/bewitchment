@@ -7,12 +7,12 @@
   "authors": [
 	"MoriyaShiine",
 	"cybercat5555",
-    "Aelpecyem",
+	"Aelpecyem",
 	"Sunconure11"
   ],
   "contact": {
-	"website": "https://github.com/MoriyaShiine/bewitchment",
-	"repo": "todo"
+	"website": "todo",
+	"repo": "https://github.com/MoriyaShiine/bewitchment"
   },
   "license": "GPL-3.0",
   "icon": "assets/bewitchment/icon.png",
@@ -32,8 +32,8 @@
 	"bewitchment.mixins.json"
   ],
   "depends": {
-	"fabricloader": ">=0.10.8",
+	"fabricloader": ">=0.11.0",
 	"fabric": "*",
-	"minecraft": "1.16.4"
+	"minecraft": "1.16.5"
   }
 }

@@ -55,6 +55,7 @@ public class CauldronBubbleParticle extends SpriteBillboardParticle {
 			this.spriteProvider = spriteProvider;
 		}
 		
+		@Override
 		public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ) {
 			CauldronBubbleParticle particle = new CauldronBubbleParticle(clientWorld, posX, posY, posZ, velocityX, velocityY, velocityZ);
 			particle.setSprite(spriteProvider);

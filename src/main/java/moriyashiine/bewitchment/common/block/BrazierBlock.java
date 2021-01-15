@@ -91,7 +91,7 @@ public class BrazierBlock extends LanternBlock implements BlockEntityProvider {
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!world.isClient && state.getBlock() != newState.getBlock()) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof Inventory) {
+			if (blockEntity instanceof BrazierBlockEntity && ((BrazierBlockEntity) blockEntity).incenseRecipe == null) {
 				ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
 			}
 		}
