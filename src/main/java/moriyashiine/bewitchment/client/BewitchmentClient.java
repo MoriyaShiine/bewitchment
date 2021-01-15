@@ -47,14 +47,14 @@ import net.minecraft.util.Identifier;
 public class BewitchmentClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
-		ClientSidePacketRegistry.INSTANCE.register(CreateNonLivingEntityPacket.ID, CreateNonLivingEntityPacket::handle);
-		ClientSidePacketRegistry.INSTANCE.register(SyncWitchAltarBlockEntity.ID, SyncWitchAltarBlockEntity::handle);
-		ClientSidePacketRegistry.INSTANCE.register(SyncBrazierBlockEntity.ID, SyncBrazierBlockEntity::handle);
-		ClientSidePacketRegistry.INSTANCE.register(SyncPoppetShelfBlockEntity.ID, SyncPoppetShelfBlockEntity::handle);
-		ClientSidePacketRegistry.INSTANCE.register(SyncClientSerializableBlockEntity.ID, SyncClientSerializableBlockEntity::handle);
-		ClientSidePacketRegistry.INSTANCE.register(SpawnSmokeParticlesPacket.ID, SpawnSmokeParticlesPacket::handle);
-		ClientSidePacketRegistry.INSTANCE.register(SpawnPortalParticlesPacket.ID, SpawnPortalParticlesPacket::handle);
-		ClientSidePacketRegistry.INSTANCE.register(SpawnExplosionParticlesPacket.ID, SpawnExplosionParticlesPacket::handle);
+		ClientPlayNetworking.registerGlobalReceiver(CreateNonLivingEntityPacket.ID, CreateNonLivingEntityPacket::handle);
+		ClientPlayNetworking.registerGlobalReceiver(SyncWitchAltarBlockEntity.ID, SyncWitchAltarBlockEntity::handle);
+		ClientPlayNetworking.registerGlobalReceiver(SyncBrazierBlockEntity.ID, SyncBrazierBlockEntity::handle);
+		ClientPlayNetworking.registerGlobalReceiver(SyncPoppetShelfBlockEntity.ID, SyncPoppetShelfBlockEntity::handle);
+		ClientPlayNetworking.registerGlobalReceiver(SyncClientSerializableBlockEntity.ID, SyncClientSerializableBlockEntity::handle);
+		ClientPlayNetworking.registerGlobalReceiver(SpawnSmokeParticlesPacket.ID, SpawnSmokeParticlesPacket::handle);
+		ClientPlayNetworking.registerGlobalReceiver(SpawnPortalParticlesPacket.ID, SpawnPortalParticlesPacket::handle);
+		ClientPlayNetworking.registerGlobalReceiver(SpawnExplosionParticlesPacket.ID, SpawnExplosionParticlesPacket::handle);
 		ClientPlayNetworking.registerGlobalReceiver(SpawnBrazierParticlesPacket.ID, SpawnBrazierParticlesPacket::handle);
 
 		ParticleFactoryRegistry.getInstance().register(BWParticleTypes.CAULDRON_BUBBLE, CauldronBubbleParticle.Factory::new);
