@@ -151,7 +151,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		}
 		if (amount > 0 && attacker instanceof FortuneAccessor && ((FortuneAccessor) attacker).getFortune() != null && ((FortuneAccessor) attacker).getFortune().fortune == BWFortunes.HAWKEYE && source.isProjectile()) {
 			((FortuneAccessor) attacker).getFortune().duration = 0;
-			amount *= 4;
+			amount *= 3;
 		}
 		attacker = source.getSource();
 		if (source.isFire() || source == DamageSource.DROWN || source == DamageSource.FALL || source == DamageSource.FLY_INTO_WALL) {
