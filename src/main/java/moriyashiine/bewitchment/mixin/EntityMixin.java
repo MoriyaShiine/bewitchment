@@ -41,6 +41,9 @@ public abstract class EntityMixin implements WetAccessor {
 	@Final
 	protected Random random;
 	
+	@Shadow
+	public abstract boolean isOnFire();
+	
 	@Override
 	public int getWetTimer() {
 		return wetTimer;
@@ -91,13 +94,13 @@ public abstract class EntityMixin implements WetAccessor {
 		}
 	}
 	
-	@Inject(method = "setFireTicks", at = @At("HEAD"))
-	private void setFireTicks(int ticks, CallbackInfo callbackInfo) {
-		if (ticks > 0 && (Object) this instanceof PlayerEntity) {
+	@Inject(method = "setOnFireFor", at = @At("HEAD"))
+	private void setOnFireFor(int seconds, CallbackInfo callbackInfo) {
+		if (seconds > 0 && !isOnFire() && (Object) this instanceof PlayerEntity) {
 			ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_POPPET, null, (PlayerEntity) (Object) this);
 			if (!poppet.isEmpty()) {
 				LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
-				if (!owner.getUuid().equals(getUuid())) {
+				if (!owner.getUuid().equals(getUuid()) && !owner.isOnFire()) {
 					if (poppet.damage(1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
 						poppet.decrement(1);
 					}
@@ -108,7 +111,7 @@ public abstract class EntityMixin implements WetAccessor {
 						}
 						return;
 					}
-					owner.setFireTicks(ticks);
+					owner.setOnFireFor(seconds);
 				}
 			}
 		}
