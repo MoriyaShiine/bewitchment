@@ -115,7 +115,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 				}
 				else {
 					if (timer == 0) {
-						boolean clear = incenseRecipe != null;
+						boolean clear = false;
 						if (curseRecipe != null) {
 							if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain(curseRecipe.cost, false)) {
 								Entity target = getTarget();
@@ -230,7 +230,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 			if (getCachedState().get(Properties.LIT)) {
 				world.setBlockState(pos, getCachedState().with(Properties.LIT, false));
 				world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1, 2);
-				reset(incenseRecipe != null);
+				reset(false);
 				syncBrazier();
 			}
 			else {
@@ -242,6 +242,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 					if (foundIncenseRecipe != null) {
 						incenseRecipe = foundIncenseRecipe;
 						timer = -6000;
+						cleanInventory();
 						syncBrazier();
 					}
 					else {
@@ -261,7 +262,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 					}
 				}
 				else {
-					reset(incenseRecipe != null);
+					reset(false);
 					syncBrazier();
 				}
 			}
@@ -283,23 +284,27 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 	private void reset(boolean clear) {
 		if (world != null) {
 			if (clear) {
-				for (int i = 0; i < inventory.size(); i++) {
-					ItemStack stack = getStack(i);
-					if (stack.isDamageable()) {
-						if (stack.damage(1, world.random, null) && stack.getDamage() == stack.getMaxDamage()) {
-							stack.decrement(1);
-						}
-					}
-					else {
-						Item item = stack.getItem();
-						setStack(i, item.hasRecipeRemainder() ? new ItemStack(item.getRecipeRemainder()) : ItemStack.EMPTY);
-					}
-				}
+				cleanInventory();
 			}
 			ItemScatterer.spawn(world, pos.up(getCachedState().get(Properties.HANGING) ? 0 : 1), this);
 			incenseRecipe = null;
 			curseRecipe = null;
 			timer = 0;
+		}
+	}
+	
+	private void cleanInventory() {
+		for (int i = 0; i < inventory.size(); i++) {
+			ItemStack stack = getStack(i);
+			if (stack.isDamageable()) {
+				if (stack.damage(1, world.random, null) && stack.getDamage() == stack.getMaxDamage()) {
+					stack.decrement(1);
+				}
+			}
+			else {
+				Item item = stack.getItem();
+				setStack(i, item.hasRecipeRemainder() ? new ItemStack(item.getRecipeRemainder()) : ItemStack.EMPTY);
+			}
 		}
 	}
 }
