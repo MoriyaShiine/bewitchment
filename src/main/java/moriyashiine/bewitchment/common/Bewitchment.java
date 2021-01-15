@@ -19,7 +19,8 @@ public class Bewitchment implements ModInitializer {
 	public static BWConfig config;
 	
 	public static final ItemGroup BEWITCHMENT_GROUP = FabricItemGroupBuilder.build(new Identifier(MODID, MODID), () -> new ItemStack(BWObjects.ATHAME));
-	
+
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onInitialize() {
 		AutoConfig.register(BWConfig.class, GsonConfigSerializer::new);
