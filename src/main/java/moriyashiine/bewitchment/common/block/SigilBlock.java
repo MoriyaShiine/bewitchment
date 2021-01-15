@@ -49,7 +49,7 @@ public class SigilBlock extends HorizontalFacingBlock implements BlockEntityProv
 	@Nullable
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		return super.getPlacementState(ctx).with(FACING, ctx.getPlayerFacing()).with(BWProperties.TYPE, ctx.getStack().hasTag() && ctx.getStack().getOrCreateTag().contains("Type") ? ctx.getStack().getOrCreateTag().getInt("Type") : 0);
+		return super.getPlacementState(ctx).with(FACING, ctx.getPlayerFacing()).with(BWProperties.TYPE, ctx.getWorld().random.nextInt(10));
 	}
 	
 	@Environment(EnvType.CLIENT)
@@ -60,9 +60,7 @@ public class SigilBlock extends HorizontalFacingBlock implements BlockEntityProv
 			for (Item sigil : Registry.ITEM) {
 				if (sigil instanceof SigilItem) {
 					if (((HasSigil) blockEntity).getSigil() == ((SigilItem) sigil).sigil) {
-						ItemStack stack = new ItemStack(sigil);
-						stack.getOrCreateTag().putInt("Type", state.get(BWProperties.TYPE));
-						return stack;
+						return new ItemStack(sigil);
 					}
 				}
 			}

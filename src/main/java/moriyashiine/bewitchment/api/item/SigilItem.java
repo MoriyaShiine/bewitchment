@@ -13,7 +13,10 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsageContext;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Style;
@@ -21,7 +24,6 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -93,15 +95,6 @@ public class SigilItem extends Item {
 	@Override
 	public String getTranslationKey() {
 		return BWObjects.SIGIL.getTranslationKey();
-	}
-	
-	@Override
-	public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
-		if (isIn(group)) {
-			ItemStack stack = new ItemStack(this);
-			stack.getOrCreateTag().putInt("Type", RANDOM.nextInt(10));
-			stacks.add(stack);
-		}
 	}
 	
 	@Environment(EnvType.CLIENT)
