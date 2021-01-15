@@ -1,0 +1,25 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	" S ",
+	"AHB",
+	" S "
+  ],
+  "key": {
+	"S": {
+	  "item": "bewitchment:spanish_moss"
+	},
+	"H": {
+	  "item": "hay_block"
+	},
+	"A": {
+	  "item": "diamond"
+	},
+	"B": {
+	  "item": "bewitchment:garlic"
+	}
+  },
+  "result": {
+	"item": "bewitchment:mending_poppet"
+  }
+}

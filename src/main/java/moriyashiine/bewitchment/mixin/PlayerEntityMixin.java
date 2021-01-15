@@ -1,15 +1,11 @@
 package moriyashiine.bewitchment.mixin;
 
-import moriyashiine.bewitchment.api.interfaces.ContractAccessor;
-import moriyashiine.bewitchment.api.interfaces.FortuneAccessor;
-import moriyashiine.bewitchment.api.interfaces.MagicAccessor;
-import moriyashiine.bewitchment.api.interfaces.PolymorphAccessor;
+import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.interfaces.*;
 import moriyashiine.bewitchment.api.registry.Fortune;
-import moriyashiine.bewitchment.common.registry.BWContracts;
-import moriyashiine.bewitchment.common.registry.BWRegistries;
-import moriyashiine.bewitchment.common.registry.BWStatusEffects;
-import moriyashiine.bewitchment.common.registry.BWTags;
+import moriyashiine.bewitchment.common.registry.*;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -34,7 +30,7 @@ import java.util.UUID;
 
 @SuppressWarnings("ConstantConditions")
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity implements MagicAccessor, PolymorphAccessor, FortuneAccessor {
+public abstract class PlayerEntityMixin extends LivingEntity implements MagicAccessor, PolymorphAccessor, FortuneAccessor, ContractAccessor, RespawnTimerAccessor {
 	private static final TrackedData<Integer> MAGIC = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	private static final TrackedData<Integer> MAGIC_TIMER = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	
@@ -42,6 +38,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	private static final TrackedData<String> POLYMORPH_NAME = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.STRING);
 	
 	private Fortune.Instance fortune = null;
+	
+	private int respawnTimer = 400;
 	
 	@Shadow
 	public abstract HungerManager getHungerManager();
@@ -100,6 +98,16 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		dataTracker.set(POLYMORPH_NAME, name);
 	}
 	
+	@Override
+	public int getRespawnTimer() {
+		return respawnTimer;
+	}
+	
+	@Override
+	public void setRespawnTimer(int respawnTimer) {
+		this.respawnTimer = respawnTimer;
+	}
+	
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo callbackInfo) {
 		if (getMagicTimer() > 0) {
@@ -121,6 +129,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 				}
 			}
 		}
+		if (getRespawnTimer() > 0) {
+			setRespawnTimer(getRespawnTimer() - 1);
+		}
 	}
 	
 	@Inject(method = "eatFood", at = @At("HEAD"))
@@ -131,18 +142,36 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		FoodComponent foodComponent = stack.getItem().getFoodComponent();
 		if (foodComponent != null) {
 			if (BWTags.WITCHBERRY_FOODS.contains(stack.getItem())) {
-				MagicAccessor.of(this).ifPresent(magicAccessor -> magicAccessor.fillMagic(foodComponent.getHunger() * 100, false));
+				fillMagic(foodComponent.getHunger() * 100, false);
 			}
-			ContractAccessor.of(this).ifPresent(contractAccessor -> {
-				if (contractAccessor.hasContract(BWContracts.GLUTTONY)) {
-					if (contractAccessor.hasNegativeEffects() && random.nextFloat() < 1 / 10f) {
-						getHungerManager().add(-foodComponent.getHunger(), foodComponent.getSaturationModifier());
-					}
-					else {
-						getHungerManager().add(foodComponent.getHunger(), 0);
-					}
+			if (hasContract(BWContracts.GLUTTONY)) {
+				if (hasNegativeEffects() && random.nextFloat() < 1 / 10f) {
+					getHungerManager().add(-foodComponent.getHunger(), foodComponent.getSaturationModifier());
 				}
-			});
+				else {
+					getHungerManager().add(foodComponent.getHunger(), 0);
+				}
+			}
+		}
+	}
+	
+	@Inject(method = "dropItem(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/ItemEntity;", at = @At("HEAD"))
+	private void dropItem(ItemStack stack, boolean throwRandomly, boolean retainOwnership, CallbackInfoReturnable<ItemEntity> callbackInfo) {
+		if (stack.getItem() == BWObjects.VOODOO_POPPET) {
+			LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, stack);
+			if (owner != null && !owner.getUuid().equals(getUuid())) {
+				if (stack.damage(1, random, null) && stack.getDamage() >= stack.getMaxDamage()) {
+					stack.decrement(1);
+				}
+				ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
+				if (!potentialPoppet.isEmpty()) {
+					if (potentialPoppet.damage(1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
+						potentialPoppet.decrement(1);
+					}
+					return;
+				}
+				owner.addVelocity(getRotationVector().x / 2, getRotationVector().y / 2, getRotationVector().z / 2);
+			}
 		}
 	}
 	
@@ -154,6 +183,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		}
 		setPolymorphUUID(tag.getString("PolymorphUUID").isEmpty() ? Optional.empty() : Optional.of(UUID.fromString(tag.getString("PolymorphUUID"))));
 		setPolymorphName(tag.getString("PolymorphName"));
+		setRespawnTimer(tag.getInt("RespawnTimer"));
 	}
 	
 	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
@@ -165,6 +195,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		}
 		tag.putString("PolymorphUUID", getPolymorphUUID().isPresent() ? getPolymorphUUID().get().toString() : "");
 		tag.putString("PolymorphName", getPolymorphName());
+		tag.putInt("RespawnTimer", getRespawnTimer());
 	}
 	
 	@Inject(method = "initDataTracker", at = @At("TAIL"))

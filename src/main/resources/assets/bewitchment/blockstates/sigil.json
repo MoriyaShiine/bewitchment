@@ -1,0 +1,154 @@
+{
+  "variants": {
+	"type=0,facing=north": {
+	  "model": "bewitchment:block/sigil_0"
+	},
+	"type=1,facing=north": {
+	  "model": "bewitchment:block/sigil_1"
+	},
+	"type=2,facing=north": {
+	  "model": "bewitchment:block/sigil_2"
+	},
+	"type=3,facing=north": {
+	  "model": "bewitchment:block/sigil_3"
+	},
+	"type=4,facing=north": {
+	  "model": "bewitchment:block/sigil_4"
+	},
+	"type=5,facing=north": {
+	  "model": "bewitchment:block/sigil_5"
+	},
+	"type=6,facing=north": {
+	  "model": "bewitchment:block/sigil_6"
+	},
+	"type=7,facing=north": {
+	  "model": "bewitchment:block/sigil_7"
+	},
+	"type=8,facing=north": {
+	  "model": "bewitchment:block/sigil_8"
+	},
+	"type=9,facing=north": {
+	  "model": "bewitchment:block/sigil_9"
+	},
+	"type=0,facing=south": {
+	  "model": "bewitchment:block/sigil_0",
+	  "y": 180
+	},
+	"type=1,facing=south": {
+	  "model": "bewitchment:block/sigil_1",
+	  "y": 180
+	},
+	"type=2,facing=south": {
+	  "model": "bewitchment:block/sigil_2",
+	  "y": 180
+	},
+	"type=3,facing=south": {
+	  "model": "bewitchment:block/sigil_3",
+	  "y": 180
+	},
+	"type=4,facing=south": {
+	  "model": "bewitchment:block/sigil_4",
+	  "y": 180
+	},
+	"type=5,facing=south": {
+	  "model": "bewitchment:block/sigil_5",
+	  "y": 180
+	},
+	"type=6,facing=south": {
+	  "model": "bewitchment:block/sigil_6",
+	  "y": 180
+	},
+	"type=7,facing=south": {
+	  "model": "bewitchment:block/sigil_7",
+	  "y": 180
+	},
+	"type=8,facing=south": {
+	  "model": "bewitchment:block/sigil_8",
+	  "y": 180
+	},
+	"type=9,facing=south": {
+	  "model": "bewitchment:block/sigil_9",
+	  "y": 180
+	},
+	"type=0,facing=east": {
+	  "model": "bewitchment:block/sigil_0",
+	  "y": 90
+	},
+	"type=1,facing=east": {
+	  "model": "bewitchment:block/sigil_1",
+	  "y": 90
+	},
+	"type=2,facing=east": {
+	  "model": "bewitchment:block/sigil_2",
+	  "y": 90
+	},
+	"type=3,facing=east": {
+	  "model": "bewitchment:block/sigil_3",
+	  "y": 90
+	},
+	"type=4,facing=east": {
+	  "model": "bewitchment:block/sigil_4",
+	  "y": 90
+	},
+	"type=5,facing=east": {
+	  "model": "bewitchment:block/sigil_5",
+	  "y": 90
+	},
+	"type=6,facing=east": {
+	  "model": "bewitchment:block/sigil_6",
+	  "y": 90
+	},
+	"type=7,facing=east": {
+	  "model": "bewitchment:block/sigil_7",
+	  "y": 90
+	},
+	"type=8,facing=east": {
+	  "model": "bewitchment:block/sigil_8",
+	  "y": 90
+	},
+	"type=9,facing=east": {
+	  "model": "bewitchment:block/sigil_9",
+	  "y": 90
+	},
+	"type=0,facing=west": {
+	  "model": "bewitchment:block/sigil_0",
+	  "y": 270
+	},
+	"type=1,facing=west": {
+	  "model": "bewitchment:block/sigil_1",
+	  "y": 270
+	},
+	"type=2,facing=west": {
+	  "model": "bewitchment:block/sigil_2",
+	  "y": 270
+	},
+	"type=3,facing=west": {
+	  "model": "bewitchment:block/sigil_3",
+	  "y": 270
+	},
+	"type=4,facing=west": {
+	  "model": "bewitchment:block/sigil_4",
+	  "y": 270
+	},
+	"type=5,facing=west": {
+	  "model": "bewitchment:block/sigil_5",
+	  "y": 270
+	},
+	"type=6,facing=west": {
+	  "model": "bewitchment:block/sigil_6",
+	  "y": 270
+	},
+	"type=7,facing=west": {
+	  "model": "bewitchment:block/sigil_7",
+	  "y": 270
+	},
+	"type=8,facing=west": {
+	  "model": "bewitchment:block/sigil_8",
+	  "y": 270
+	},
+	"type=9,facing=west": {
+	  "model": "bewitchment:block/sigil_9",
+	  "y": 270
+	}
+  }
+}

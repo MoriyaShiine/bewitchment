@@ -1,0 +1,19 @@
+{
+  "type": "bewitchment:curse_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:taglock"
+	},
+	{
+	  "item": "bewitchment:aqua_cerate"
+	},
+	{
+	  "item": "prismarine_crystals"
+	},
+	{
+	  "item": "bewitchment:belladonna"
+	}
+  ],
+  "curse": "bewitchment:weak_lungs",
+  "cost": 400
+}

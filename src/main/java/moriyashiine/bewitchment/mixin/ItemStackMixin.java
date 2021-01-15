@@ -1,6 +1,9 @@
 package moriyashiine.bewitchment.mixin;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.registry.BWObjects;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -12,7 +15,10 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.function.Consumer;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
@@ -27,6 +33,15 @@ public abstract class ItemStackMixin {
 	@Shadow
 	public abstract Item getItem();
 	
+	@Shadow
+	public abstract void setDamage(int damage);
+	
+	@Shadow
+	public abstract int getDamage();
+	
+	@Shadow
+	public abstract int getMaxDamage();
+	
 	@Inject(method = "getName", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 0, target = "Lnet/minecraft/item/ItemStack;getItem()Lnet/minecraft/item/Item;"), cancellable = true)
 	private void getName(CallbackInfoReturnable<Text> callbackInfo) {
 		CompoundTag tag = getTag();
@@ -39,6 +54,20 @@ public abstract class ItemStackMixin {
 			}
 			else if (getItem() == Items.LINGERING_POTION) {
 				callbackInfo.setReturnValue(LINGERING_POTION);
+			}
+		}
+	}
+	
+	@Inject(method = "damage(ILnet/minecraft/entity/LivingEntity;Ljava/util/function/Consumer;)V", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V"), cancellable = true)
+	private <T extends LivingEntity> void damage(int amount, T entity, Consumer<T> breakCallback, CallbackInfo callbackInfo) {
+		if (getDamage() == getMaxDamage()) {
+			ItemStack poppet = BewitchmentAPI.getPoppet(entity.world, BWObjects.MENDING_POPPET, entity, null);
+			if (!poppet.isEmpty()) {
+				if (poppet.damage(1, entity.getRandom(), null) && poppet.getDamage() == poppet.getMaxDamage()) {
+					poppet.decrement(1);
+				}
+				setDamage(0);
+				callbackInfo.cancel();
 			}
 		}
 	}

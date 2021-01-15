@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.recipe;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
@@ -16,6 +17,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RitualRecipe implements Recipe<Inventory> {
 	private final Identifier identifier;
@@ -36,7 +40,7 @@ public class RitualRecipe implements Recipe<Inventory> {
 	
 	@Override
 	public boolean matches(Inventory inv, World world) {
-		return OilRecipe.matches(inv, input);
+		return matches(inv, input);
 	}
 	
 	@Override
@@ -69,11 +73,38 @@ public class RitualRecipe implements Recipe<Inventory> {
 		return BWRecipeTypes.RITUAL_RECIPE_TYPE;
 	}
 	
+	public static boolean matches(Inventory inv, DefaultedList<Ingredient> input) {
+		List<ItemStack> checklist = new ArrayList<>();
+		for (int i = 0; i < inv.size(); i++) {
+			ItemStack stack = inv.getStack(i);
+			if (!stack.isEmpty()) {
+				checklist.add(stack);
+			}
+		}
+		if (input.size() != checklist.size()) {
+			return false;
+		}
+		for (Ingredient ingredient : input) {
+			boolean found = false;
+			for (ItemStack stack : checklist) {
+				if (ingredient.test(stack)) {
+					found = true;
+					checklist.remove(stack);
+					break;
+				}
+			}
+			if (!found) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	@SuppressWarnings("ConstantConditions")
 	public static class Serializer implements RecipeSerializer<RitualRecipe> {
 		@Override
 		public RitualRecipe read(Identifier id, JsonObject json) {
-			DefaultedList<Ingredient> ingredients = OilRecipe.Serializer.getIngredients(JsonHelper.getArray(json, "ingredients"));
+			DefaultedList<Ingredient> ingredients = getIngredients(JsonHelper.getArray(json, "ingredients"));
 			if (ingredients.isEmpty()) {
 				throw new JsonParseException("No ingredients for ritual recipe");
 			}
@@ -107,6 +138,17 @@ public class RitualRecipe implements Recipe<Inventory> {
 			buf.writeString(BWRegistries.RITUAL_FUNCTIONS.getId(recipe.ritualFunction).toString());
 			buf.writeInt(recipe.cost);
 			buf.writeInt(recipe.runningTime);
+		}
+		
+		public static DefaultedList<Ingredient> getIngredients(JsonArray json) {
+			DefaultedList<Ingredient> ingredients = DefaultedList.of();
+			for (int i = 0; i < json.size(); i++) {
+				Ingredient ingredient = Ingredient.fromJson(json.get(i));
+				if (!ingredient.isEmpty()) {
+					ingredients.add(ingredient);
+				}
+			}
+			return ingredients;
 		}
 	}
 }

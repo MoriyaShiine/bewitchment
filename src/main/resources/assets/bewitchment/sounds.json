@@ -37,6 +37,18 @@
 	],
 	"subtitle": "bewitchment.subtitles.block.crystal_ball.fail"
   },
+  "block.brazier.fail": {
+	"sounds": [
+	  "note/snare"
+	],
+	"subtitle": "bewitchment.subtitles.block.brazier.fail"
+  },
+  "block.sigil.pling": {
+	"sounds": [
+	  "random/orb"
+	],
+	"subtitle": "bewitchment.subtitles.block.sigil.pling"
+  },
   "item.athame.strip": {
 	"sounds": [
 	  {
@@ -111,6 +123,15 @@
 	  "mob/wither/spawn"
 	],
 	"subtitle": "bewitchment.subtitles.entity.generic.pledge"
+  },
+  "entity.generic.curse": {
+	"sounds": [
+	  {
+		"name": "mob/wither/spawn",
+		"pitch": 0.5
+	  }
+	],
+	"subtitle": "bewitchment.subtitles.entity.generic.curse"
   },
   "entity.owl.ambient": {
 	"sounds": [

@@ -42,30 +42,6 @@
 	  "model": "bewitchment:block/glyph_5",
 	  "y": 180
 	},
-	"age=0,facing=west": {
-	  "model": "bewitchment:block/glyph_0",
-	  "y": 270
-	},
-	"age=1,facing=west": {
-	  "model": "bewitchment:block/glyph_1",
-	  "y": 270
-	},
-	"age=2,facing=west": {
-	  "model": "bewitchment:block/glyph_2",
-	  "y": 270
-	},
-	"age=3,facing=west": {
-	  "model": "bewitchment:block/glyph_3",
-	  "y": 270
-	},
-	"age=4,facing=west": {
-	  "model": "bewitchment:block/glyph_4",
-	  "y": 270
-	},
-	"age=5,facing=west": {
-	  "model": "bewitchment:block/glyph_5",
-	  "y": 270
-	},
 	"age=0,facing=east": {
 	  "model": "bewitchment:block/glyph_0",
 	  "y": 90
@@ -89,6 +65,30 @@
 	"age=5,facing=east": {
 	  "model": "bewitchment:block/glyph_5",
 	  "y": 90
+	},
+	"age=0,facing=west": {
+	  "model": "bewitchment:block/glyph_0",
+	  "y": 270
+	},
+	"age=1,facing=west": {
+	  "model": "bewitchment:block/glyph_1",
+	  "y": 270
+	},
+	"age=2,facing=west": {
+	  "model": "bewitchment:block/glyph_2",
+	  "y": 270
+	},
+	"age=3,facing=west": {
+	  "model": "bewitchment:block/glyph_3",
+	  "y": 270
+	},
+	"age=4,facing=west": {
+	  "model": "bewitchment:block/glyph_4",
+	  "y": 270
+	},
+	"age=5,facing=west": {
+	  "model": "bewitchment:block/glyph_5",
+	  "y": 270
 	}
   }
 }

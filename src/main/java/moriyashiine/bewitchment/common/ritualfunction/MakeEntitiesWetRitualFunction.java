@@ -20,7 +20,7 @@ public class MakeEntitiesWetRitualFunction extends RitualFunction {
 	@Override
 	public void start(ServerWorld world, BlockPos pos, Inventory inventory) {
 		int radius = 2;
-		world.getEntitiesByClass(Entity.class, new Box(pos).expand(radius), entity -> true).forEach(entity -> WetAccessor.of(entity).ifPresent(wetAccessor -> wetAccessor.setWetTimer(6000)));
+		world.getEntitiesByClass(Entity.class, new Box(pos).expand(radius), Entity::isAlive).forEach(entity -> WetAccessor.of(entity).ifPresent(wetAccessor -> wetAccessor.setWetTimer(6000)));
 		super.start(world, pos, inventory);
 	}
 }

@@ -25,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+@SuppressWarnings("ConstantConditions")
 public class ChalkItem extends Item {
 	private final Block glyph;
 	
@@ -43,7 +44,7 @@ public class ChalkItem extends Item {
 		}
 		PlayerEntity player = context.getPlayer();
 		BlockState chalk = glyph.getPlacementState(placementContext);
-		if (chalk != null && chalk.canPlaceAt(world, pos)) {
+		if (chalk.canPlaceAt(world, pos)) {
 			if (!world.isClient) {
 				world.playSound(null, pos, chalk.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS, 1, MathHelper.nextFloat(world.random, 0.8f, 1.2f));
 				world.setBlockState(pos, chalk);

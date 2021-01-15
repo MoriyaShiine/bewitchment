@@ -1,0 +1,19 @@
+{
+  "type": "bewitchment:curse_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:taglock"
+	},
+	{
+	  "item": "bewitchment:demon_horn"
+	},
+	{
+	  "item": "bewitchment:silver_ingot"
+	},
+	{
+	  "item": "bewitchment:snake_tongue"
+	}
+  ],
+  "curse": "bewitchment:unlucky",
+  "cost": 400
+}

@@ -1,0 +1,15 @@
+{
+  "type": "bewitchment:incense_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:earth_ichor"
+	},
+	{
+	  "item": "bewitchment:wood_ash"
+	},
+	{
+	  "item": "bewitchment:spanish_moss"
+	}
+  ],
+  "effect": "resistance"
+}

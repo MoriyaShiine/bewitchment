@@ -1,13 +1,16 @@
 package moriyashiine.bewitchment.api;
 
+import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
 import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
+import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
 import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
+import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -16,6 +19,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -39,8 +43,33 @@ public class BewitchmentAPI {
 	@SuppressWarnings("InstantiationOfUtilityClass")
 	public static final EntityGroup DEMON = new EntityGroup();
 	
+	public static List<BlockPos> getBlockPoses(BlockPos origin, int radius, Predicate<BlockPos> provider) {
+		List<BlockPos> blockPoses = new ArrayList<>();
+		BlockPos.Mutable mutable = new BlockPos.Mutable();
+		for (int x = -radius; x <= radius; x++) {
+			for (int y = -radius; y <= radius; y++) {
+				for (int z = -radius; z <= radius; z++) {
+					if (provider.test(mutable.set(origin.getX() + x, origin.getY() + y, origin.getZ() + z))) {
+						blockPoses.add(mutable.toImmutable());
+					}
+				}
+			}
+		}
+		return blockPoses;
+	}
+	
+	public static BlockPos getClosestBlockPos(BlockPos origin, int radius, Predicate<BlockPos> provider) {
+		BlockPos pos = null;
+		for (BlockPos foundPos : getBlockPoses(origin, radius, provider)) {
+			if (pos == null || foundPos.getSquaredDistance(origin) < pos.getSquaredDistance(origin)) {
+				pos = foundPos;
+			}
+		}
+		return pos;
+	}
+	
 	public static LivingEntity getTaglockOwner(World world, ItemStack taglock) {
-		if (world instanceof ServerWorld && taglock.getItem() instanceof TaglockItem && taglock.hasTag() && taglock.getOrCreateTag().contains("OwnerUUID")) {
+		if (world instanceof ServerWorld && (taglock.getItem() instanceof TaglockItem || taglock.getItem() instanceof PoppetItem) && taglock.hasTag() && taglock.getOrCreateTag().contains("OwnerUUID")) {
 			UUID ownerUUID = taglock.getOrCreateTag().getUuid("OwnerUUID");
 			for (ServerWorld serverWorld : world.getServer().getWorlds()) {
 				Entity entity = serverWorld.getEntity(ownerUUID);
@@ -50,6 +79,48 @@ public class BewitchmentAPI {
 			}
 		}
 		return null;
+	}
+	
+	public static ItemStack getPoppet(World world, PoppetItem item, Entity owner, PlayerEntity specificInventory) {
+		if (!world.isClient) {
+			List<ItemStack> toSearch = new ArrayList<>();
+			if (specificInventory != null) {
+				for (int i = 0; i < specificInventory.inventory.size(); i++) {
+					toSearch.add(specificInventory.inventory.getStack(i));
+				}
+			}
+			else {
+				for (long longPos : BWWorldState.get(world).poppetShelves) {
+					Inventory inventory = ((PoppetShelfBlockEntity) world.getBlockEntity(BlockPos.fromLong(longPos)));
+					for (int i = 0; i < inventory.size(); i++) {
+						toSearch.add(inventory.getStack(i));
+					}
+				}
+				for (PlayerEntity player : ((ServerWorld) world).getPlayers()) {
+					for (int i = 0; i < player.inventory.size(); i++) {
+						toSearch.add(player.inventory.getStack(i));
+					}
+				}
+			}
+			for (ItemStack stack : toSearch) {
+				if (stack.getItem() == item && stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID")) {
+					UUID uuid = null;
+					if (owner != null) {
+						uuid = owner.getUuid();
+					}
+					else {
+						LivingEntity taglockOwner = getTaglockOwner(world, stack);
+						if (taglockOwner != null) {
+							uuid = taglockOwner.getUuid();
+						}
+					}
+					if (stack.getOrCreateTag().getUuid("OwnerUUID").equals(uuid)) {
+						return stack;
+					}
+				}
+			}
+		}
+		return ItemStack.EMPTY;
 	}
 	
 	public static boolean isSourceFromSilver(DamageSource source) {
@@ -155,20 +226,20 @@ public class BewitchmentAPI {
 	
 	public static void attemptTeleport(Entity entity, BlockPos origin, int distance) {
 		for (int i = 0; i < 32; i++) {
-			BlockPos.Mutable mutable = new BlockPos.Mutable(origin.getX() + 0.5 + MathHelper.nextDouble(entity.world.random, -distance, distance), origin.getY() + 0.5 + MathHelper.nextDouble(entity.world.random, -distance / 2f, distance / 2f), origin.getZ() + 0.5 + MathHelper.nextDouble(entity.world.random, -distance, distance));
+			BlockPos.Mutable mutable = new BlockPos.Mutable(origin.getX() + MathHelper.nextDouble(entity.world.random, -distance, distance), origin.getY() + MathHelper.nextDouble(entity.world.random, -distance / 2f, distance / 2f), origin.getZ() + MathHelper.nextDouble(entity.world.random, -distance, distance));
 			if (!entity.world.getBlockState(mutable).getMaterial().isSolid()) {
 				while (mutable.getY() > 0 && !entity.world.getBlockState(mutable).getMaterial().isSolid()) {
 					mutable.move(Direction.DOWN);
 				}
 				if (entity.world.getBlockState(mutable).getMaterial().blocksMovement()) {
-					teleport(entity, mutable);
+					teleport(entity, mutable.getX() + 0.5, mutable.getY() + 0.5, mutable.getZ() + 0.5);
 					break;
 				}
 			}
 		}
 	}
 	
-	public static void teleport(Entity entity, BlockPos target) {
+	public static void teleport(Entity entity, double x, double y, double z) {
 		if (!entity.isSilent()) {
 			entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, SoundCategory.NEUTRAL, 1, 1);
 		}
@@ -176,7 +247,7 @@ public class BewitchmentAPI {
 		if (entity instanceof PlayerEntity) {
 			SpawnPortalParticlesPacket.send((PlayerEntity) entity, entity);
 		}
-		entity.teleport(target.getX(), target.getY() + 1, target.getZ());
+		entity.teleport(x, y + 0.5, z);
 		if (!entity.isSilent()) {
 			entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, SoundCategory.NEUTRAL, 1, 1);
 		}

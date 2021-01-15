@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.ritualfunction;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
 import net.minecraft.block.Block;
 import net.minecraft.entity.LivingEntity;
@@ -19,22 +20,11 @@ public class SearchBlocksRitualFunction extends RitualFunction {
 	
 	@Override
 	public void start(ServerWorld world, BlockPos pos, Inventory inventory) {
-		Block block = world.getBlockState(pos.down(2)).getBlock();
-		int found = 0;
-		BlockPos.Mutable mutable = new BlockPos.Mutable();
-		int radius = 16;
-		for (int x = -radius; x <= radius; x++) {
-			for (int y = -radius; y <= radius; y++) {
-				for (int z = -radius; z <= radius; z++) {
-					if (world.getBlockState(mutable.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z)).getBlock() == block) {
-						found++;
-					}
-				}
-			}
-		}
 		PlayerEntity closestPlayer = world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 8, false);
 		if (closestPlayer != null) {
-			closestPlayer.sendMessage(new TranslatableText("bewitchment.found_blocks", found, block.getName()), true);
+			Block block = world.getBlockState(pos.down(2)).getBlock();
+			int blocks = BewitchmentAPI.getBlockPoses(pos, 16, currentPos -> world.getBlockState(currentPos).getBlock() == block).size();
+			closestPlayer.sendMessage(new TranslatableText("bewitchment.found_block" + (blocks == 1 ? "" : "s"), blocks, block.getName()), true);
 		}
 		super.start(world, pos, inventory);
 	}

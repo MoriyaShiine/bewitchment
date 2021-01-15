@@ -14,6 +14,7 @@ import java.util.List;
 public class BWWorldState extends PersistentState {
 	public final List<Long> potentialCandelabras = new ArrayList<>();
 	public final List<Long> witchCauldrons = new ArrayList<>();
+	public final List<Long> poppetShelves = new ArrayList<>();
 	public final List<Long> glowingBrambles = new ArrayList<>();
 	
 	public BWWorldState(String key) {
@@ -36,6 +37,13 @@ public class BWWorldState extends PersistentState {
 			witchCauldrons.add(posTag);
 		}
 		tag.put("WitchCauldrons", witchCauldrons);
+		ListTag poppetShelves = new ListTag();
+		for (long pos : this.poppetShelves) {
+			CompoundTag posTag = new CompoundTag();
+			posTag.putLong("Pos", pos);
+			poppetShelves.add(posTag);
+		}
+		tag.put("PoppetShelves", poppetShelves);
 		ListTag glowingBrambles = new ListTag();
 		for (long pos : this.glowingBrambles) {
 			CompoundTag posTag = new CompoundTag();
@@ -57,6 +65,11 @@ public class BWWorldState extends PersistentState {
 		for (int i = 0; i < witchCauldrons.size(); i++) {
 			CompoundTag posTag = witchCauldrons.getCompound(i);
 			this.witchCauldrons.add(posTag.getLong("Pos"));
+		}
+		ListTag poppetShelves = tag.getList("PoppetShelves", NbtType.COMPOUND);
+		for (int i = 0; i < poppetShelves.size(); i++) {
+			CompoundTag posTag = poppetShelves.getCompound(i);
+			this.poppetShelves.add(posTag.getLong("Pos"));
 		}
 		ListTag glowingBrambles = tag.getList("GlowingBrambles", NbtType.COMPOUND);
 		for (int i = 0; i < glowingBrambles.size(); i++) {

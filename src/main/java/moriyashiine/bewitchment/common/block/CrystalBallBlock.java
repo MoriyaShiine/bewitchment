@@ -1,9 +1,12 @@
 package moriyashiine.bewitchment.common.block;
 
+import moriyashiine.bewitchment.api.block.WitchAltarBlock;
+import moriyashiine.bewitchment.api.interfaces.CurseAccessor;
 import moriyashiine.bewitchment.api.interfaces.FortuneAccessor;
 import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
+import moriyashiine.bewitchment.common.registry.BWCurses;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.minecraft.block.Block;
@@ -52,6 +55,12 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 				if (fortuneAccessor.getFortune() == null) {
 					world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE, SoundCategory.BLOCKS, 1, 1);
 					Fortune fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
+					CurseAccessor curseAccessor = CurseAccessor.of(player).orElse(null);
+					if (curseAccessor.hasCurse(BWCurses.UNLUCKY)) {
+						while (fortune.positive) {
+							fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
+						}
+					}
 					fortuneAccessor.setFortune(new Fortune.Instance(fortune, world.random.nextInt(120000)));
 					player.sendMessage(new TranslatableText("fortune." + BWRegistries.FORTUNES.getId(fortune).toString().replace(":", ".")), true);
 					

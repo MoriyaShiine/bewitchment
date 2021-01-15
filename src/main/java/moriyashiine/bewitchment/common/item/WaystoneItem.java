@@ -28,7 +28,7 @@ public class WaystoneItem extends Item {
 			World world = context.getWorld();
 			boolean client = world.isClient;
 			if (!client) {
-				context.getStack().getOrCreateTag().putLong("LocationPos", context.getBlockPos().offset(context.getPlayerFacing()).asLong());
+				context.getStack().getOrCreateTag().putLong("LocationPos", context.getBlockPos().offset(context.getSide()).asLong());
 				context.getStack().getOrCreateTag().putString("LocationWorld", world.getRegistryKey().getValue().toString());
 			}
 			return ActionResult.success(client);

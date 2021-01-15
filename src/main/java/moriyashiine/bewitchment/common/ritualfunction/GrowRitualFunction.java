@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.ritualfunction;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Fertilizable;
 import net.minecraft.block.GrassBlock;
 import net.minecraft.entity.LivingEntity;
@@ -31,16 +31,8 @@ public class GrowRitualFunction extends RitualFunction {
 						passiveEntity.growUp(world.random.nextInt(), true);
 					}
 				}
-				BlockPos.Mutable mutable = new BlockPos.Mutable();
-				for (int x = -radius; x <= radius; x++) {
-					for (int y = -radius; y <= radius; y++) {
-						for (int z = -radius; z <= radius; z++) {
-							BlockState state = world.getBlockState(mutable.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z));
-							if (!(state.getBlock() instanceof GrassBlock) && state.getBlock() instanceof Fertilizable && ((Fertilizable) state.getBlock()).canGrow(world, world.random, mutable, state) && world.random.nextFloat() < 1 / 4f) {
-								((Fertilizable) state.getBlock()).grow((ServerWorld) world, world.random, mutable, state);
-							}
-						}
-					}
+				for (BlockPos growable : BewitchmentAPI.getBlockPoses(pos, radius, currentPos -> !(world.getBlockState(currentPos).getBlock() instanceof GrassBlock) && world.getBlockState(currentPos).getBlock() instanceof Fertilizable && ((Fertilizable) world.getBlockState(currentPos).getBlock()).canGrow(world, world.random, currentPos, world.getBlockState(currentPos)))) {
+					((Fertilizable) world.getBlockState(growable).getBlock()).grow((ServerWorld) world, world.random, growable, world.getBlockState(growable));
 				}
 			}
 		}

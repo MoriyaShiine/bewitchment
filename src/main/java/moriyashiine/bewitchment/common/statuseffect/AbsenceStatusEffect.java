@@ -20,7 +20,7 @@ public class AbsenceStatusEffect extends StatusEffect {
 	@Override
 	public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
 		Registry.STATUS_EFFECT.stream().forEach(effect -> {
-			if (amplifier == 0 || (amplifier > 0 && ((StatusEffectAccessor) effect).bw_getType() == StatusEffectType.HARMFUL)) {
+			if (effect != this && (amplifier == 0 || (amplifier > 0 && ((StatusEffectAccessor) effect).bw_getType() == StatusEffectType.HARMFUL))) {
 				entity.removeStatusEffect(effect);
 			}
 		});

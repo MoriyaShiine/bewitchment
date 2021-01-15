@@ -2,6 +2,7 @@ package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.api.interfaces.MagicAccessor;
 import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
@@ -45,7 +46,7 @@ public class ScepterItem extends Item {
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		MagicAccessor.of(user).ifPresent(magicAccessor -> {
-			if (!world.isClient && ((user instanceof PlayerEntity && ((PlayerEntity) user).isCreative()) || magicAccessor.drainMagic(250, false))) {
+			if (!world.isClient && !user.hasStatusEffect(BWStatusEffects.INHIBITED) && ((user instanceof PlayerEntity && ((PlayerEntity) user).isCreative()) || magicAccessor.drainMagic(250, false))) {
 				PotionEntity potion = new PotionEntity(world, user);
 				List<StatusEffectInstance> effects = PotionUtil.getCustomPotionEffects(stack);
 				ItemStack potionStack = PotionUtil.setCustomPotionEffects(new ItemStack(Items.SPLASH_POTION), effects);

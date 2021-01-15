@@ -1,0 +1,15 @@
+{
+  "type": "bewitchment:incense_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:fiery_serum"
+	},
+	{
+	  "item": "bewitchment:wood_ash"
+	},
+	{
+	  "item": "bewitchment:spanish_moss"
+	}
+  ],
+  "effect": "strength"
+}

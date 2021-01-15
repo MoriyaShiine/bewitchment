@@ -174,8 +174,7 @@ public class BrambleBlock extends SugarCaneBlock {
 		
 		@Override
 		protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-			super.appendProperties(builder);
-			builder.add(Properties.LEVEL_15, BWProperties.HAS_FRUIT);
+			super.appendProperties(builder.add(Properties.LEVEL_15, BWProperties.HAS_FRUIT));
 		}
 	}
 }

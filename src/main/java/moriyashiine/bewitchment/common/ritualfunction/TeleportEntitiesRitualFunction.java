@@ -28,7 +28,7 @@ public class TeleportEntitiesRitualFunction extends RitualFunction {
 			ItemStack stack = inventory.getStack(i);
 			if (stack.getItem() instanceof TaglockItem && stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID")) {
 				LivingEntity livingEntity = BewitchmentAPI.getTaglockOwner(world, stack);
-				if (livingEntity != null) {
+				if (livingEntity != null && world.getRegistryKey().equals(livingEntity.getEntityWorld().getRegistryKey())) {
 					location = livingEntity.getBlockPos();
 					break;
 				}
@@ -41,7 +41,7 @@ public class TeleportEntitiesRitualFunction extends RitualFunction {
 		if (location != null) {
 			int radius = 3;
 			for (Entity entity : world.getNonSpectatingEntities(Entity.class, new Box(pos).expand(radius))) {
-				BewitchmentAPI.teleport(entity, location);
+				BewitchmentAPI.teleport(entity, location.getX() + 0.5, location.getY() - 0.5, location.getZ() + 0.5);
 			}
 		}
 		else {

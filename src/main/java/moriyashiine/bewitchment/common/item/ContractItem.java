@@ -51,14 +51,16 @@ public class ContractItem extends Item {
 					if (entity != null) {
 						Contract contract = BWRegistries.CONTRACTS.get(new Identifier(stack.getOrCreateTag().getString("Contract")));
 						if (contract != null) {
-							((ContractAccessor) entity).addContract(new Contract.Instance(contract, 168000));
-							contract.finishUsing(user, ((ContractAccessor) user).hasNegativeEffects());
-							world.playSound(null, user.getBlockPos(), BWSoundEvents.ITEM_CONTRACT_USE, SoundCategory.PLAYERS, 1, 1);
-							if (!(user instanceof PlayerEntity && ((PlayerEntity) user).isCreative())) {
-								stack.decrement(1);
-							}
+							ContractAccessor.of(entity).ifPresent(contractAccessor -> {
+								contractAccessor.addContract(new Contract.Instance(contract, 168000));
+								contract.finishUsing(user, ((ContractAccessor) user).hasNegativeEffects());
+								world.playSound(null, user.getBlockPos(), BWSoundEvents.ITEM_CONTRACT_USE, SoundCategory.PLAYERS, 1, 1);
+								if (!(user instanceof PlayerEntity && ((PlayerEntity) user).isCreative())) {
+									stack.decrement(1);
+								}
+							});
+							return stack;
 						}
-						return stack;
 					}
 				}
 				if (user instanceof PlayerEntity) {

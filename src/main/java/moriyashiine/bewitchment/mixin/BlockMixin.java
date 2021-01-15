@@ -20,6 +20,7 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -76,32 +77,34 @@ public abstract class BlockMixin {
 			});
 			ContractAccessor.of(entity).ifPresent(contractAccessor -> {
 				if (contractAccessor.hasContract(BWContracts.GREED)) {
-					if (contractAccessor.hasNegativeEffects() && world.random.nextFloat() < 1 / 8f) {
-						drops.clear();
-					}
-					else {
-						for (int i = 0; i < drops.size(); i++) {
-							if (BWTags.ORES.contains(state.getBlock().asItem())) {
-								drops.set(i, new ItemStack(drops.get(i).getItem(), drops.get(i).getCount() * 2));
-							}
+					boolean foundOre = false;
+					for (int i = 0; i < drops.size(); i++) {
+						if (BWTags.ORES.contains(state.getBlock().asItem())) {
+							drops.set(i, new ItemStack(drops.get(i).getItem(), drops.get(i).getCount() * 2));
+							foundOre = true;
 						}
+					}
+					if (foundOre && contractAccessor.hasNegativeEffects() && world.random.nextFloat() < 1 / 8f) {
+						drops.clear();
 					}
 				}
 				if (contractAccessor.hasContract(BWContracts.PRIDE)) {
-					world.getRecipeManager().listAllOfType(RecipeType.SMELTING).forEach(smeltingRecipe -> {
+					boolean foundOre = false;
+					for (Recipe<?> smeltingRecipe : world.getRecipeManager().listAllOfType(RecipeType.SMELTING)) {
 						for (int i = 0; i < drops.size(); i++) {
 							if (BWTags.ORES.contains(drops.get(i).getItem())) {
 								for (Ingredient ingredient : smeltingRecipe.getPreviewInputs()) {
 									if (ingredient.test(drops.get(i))) {
 										drops.set(i, new ItemStack(smeltingRecipe.getOutput().getItem(), smeltingRecipe.getOutput().getCount() * drops.get(i).getCount()));
+										foundOre = true;
 									}
 								}
 							}
 						}
-					});
-					if (contractAccessor.hasNegativeEffects() && world.random.nextFloat() < 1 / 16f) {
+					}
+					if (foundOre && contractAccessor.hasNegativeEffects() && world.random.nextFloat() < 1 / 16f) {
 						world.createExplosion(entity, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 3, Explosion.DestructionType.BREAK);
-						world.getEntitiesByClass(LivingEntity.class, new Box(pos).expand(4), livingEntity -> true).forEach(livingEntity -> livingEntity.damage(DamageSource.explosion((LivingEntity) entity), 12));
+						world.getEntitiesByClass(LivingEntity.class, new Box(pos).expand(4), LivingEntity::isAlive).forEach(livingEntity -> livingEntity.damage(DamageSource.explosion((LivingEntity) entity), 12));
 					}
 				}
 			});

@@ -8,7 +8,6 @@ import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -20,17 +19,17 @@ public class SyncWitchAltarBlockEntity {
 	public static void send(PlayerEntity player, WitchAltarBlockEntity blockEntity) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		buf.writeLong(blockEntity.getPos().asLong());
-		buf.writeCompoundTag(blockEntity.getStack(0).toTag(new CompoundTag()));
-		buf.writeCompoundTag(blockEntity.getStack(1).toTag(new CompoundTag()));
-		buf.writeCompoundTag(blockEntity.getStack(2).toTag(new CompoundTag()));
+		buf.writeItemStack(blockEntity.getStack(0));
+		buf.writeItemStack(blockEntity.getStack(1));
+		buf.writeItemStack(blockEntity.getStack(2));
 		ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, ID, buf);
 	}
 	
 	public static void handle(PacketContext context, PacketByteBuf buf) {
 		BlockPos pos = BlockPos.fromLong(buf.readLong());
-		ItemStack sword = ItemStack.fromTag(buf.readCompoundTag());
-		ItemStack pentacle = ItemStack.fromTag(buf.readCompoundTag());
-		ItemStack wand = ItemStack.fromTag(buf.readCompoundTag());
+		ItemStack sword = buf.readItemStack();
+		ItemStack pentacle = buf.readItemStack();
+		ItemStack wand = buf.readItemStack();
 		//noinspection Convert2Lambda
 		context.getTaskQueue().submit(new Runnable() {
 			@Override

@@ -1,0 +1,19 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	"I I",
+	"BIB",
+	"BIB"
+  ],
+  "key": {
+	"I": {
+	  "tag": "c:silver_ingots"
+	},
+	"B": {
+	  "item": "iron_bars"
+	}
+  },
+  "result": {
+	"item": "bewitchment:brazier"
+  }
+}

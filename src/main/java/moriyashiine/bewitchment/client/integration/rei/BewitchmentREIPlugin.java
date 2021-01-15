@@ -27,6 +27,8 @@ public class BewitchmentREIPlugin implements REIPluginV0 {
 		recipeHelper.registerCategory(new RitualCategory());
 		recipeHelper.registerCategory(new OilCraftingCategory());
 		recipeHelper.registerCategory(new CauldronBrewingCategory());
+		recipeHelper.registerCategory(new IncenseCategory());
+		recipeHelper.registerCategory(new CurseCategory());
 	}
 	
 	@Override
@@ -38,6 +40,8 @@ public class BewitchmentREIPlugin implements REIPluginV0 {
 			world.getRecipeManager().listAllOfType(BWRecipeTypes.RITUAL_RECIPE_TYPE).forEach(recipe -> recipeHelper.registerDisplay(new RitualCategory.Display(recipe)));
 			world.getRecipeManager().listAllOfType(BWRecipeTypes.OIL_RECIPE_TYPE).forEach(recipe -> recipeHelper.registerDisplay(new OilCraftingCategory.Display(recipe)));
 			world.getRecipeManager().listAllOfType(BWRecipeTypes.CAULDRON_BREWING_RECIPE_TYPE).forEach(recipe -> recipeHelper.registerDisplay(new CauldronBrewingCategory.Display(recipe)));
+			world.getRecipeManager().listAllOfType(BWRecipeTypes.INCENSE_RECIPE_TYPE).forEach(recipe -> recipeHelper.registerDisplay(new IncenseCategory.Display(recipe)));
+			world.getRecipeManager().listAllOfType(BWRecipeTypes.CURSE_RECIPE_TYPE).forEach(recipe -> recipeHelper.registerDisplay(new CurseCategory.Display(recipe)));
 		}
 	}
 	
@@ -48,5 +52,7 @@ public class BewitchmentREIPlugin implements REIPluginV0 {
 		recipeHelper.registerWorkingStations(RitualCategory.IDENTIFIER, RitualCategory.LOGO);
 		recipeHelper.registerWorkingStations(OilCraftingCategory.IDENTIFIER, OilCraftingCategory.LOGO);
 		recipeHelper.registerWorkingStations(CauldronBrewingCategory.IDENTIFIER, CauldronBrewingCategory.LOGO);
+		recipeHelper.registerWorkingStations(IncenseCategory.IDENTIFIER, IncenseCategory.LOGO);
+		recipeHelper.registerWorkingStations(CurseCategory.IDENTIFIER, CurseCategory.LOGO);
 	}
 }

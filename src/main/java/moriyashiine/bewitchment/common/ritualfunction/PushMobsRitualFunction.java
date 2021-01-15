@@ -21,7 +21,7 @@ public class PushMobsRitualFunction extends RitualFunction {
 		if (!world.isClient) {
 			int radius = 8;
 			if (world.getTime() % 5 == 0) {
-				for (HostileEntity hostileEntity : world.getEntitiesByClass(HostileEntity.class, new Box(pos).expand(radius, 0, radius), entity -> true)) {
+				for (HostileEntity hostileEntity : world.getEntitiesByClass(HostileEntity.class, new Box(pos).expand(radius, 0, radius), LivingEntity::isAlive)) {
 					double distanceX = pos.getX() - hostileEntity.getX();
 					double distanceZ = pos.getZ() - hostileEntity.getZ();
 					double max = MathHelper.absMax(distanceX, distanceZ);

@@ -30,22 +30,24 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
 			ContractAccessor.of(attackingPlayer).ifPresent(contractAccessor -> {
 				if (contractAccessor.hasContract(BWContracts.ENVY)) {
 					VillagerEntity villager = (VillagerEntity) (Object) this;
-					for (TradeOffer offer : villager.getOffers()) {
-						if (!offer.isDisabled()) {
-							ItemScatterer.spawn(world, getX() + 0.5, getY() + 0.5, getZ() + 0.5, offer.getSellItem());
+					if (!villager.getOffers().isEmpty()) {
+						for (TradeOffer offer : villager.getOffers()) {
+							if (!offer.isDisabled()) {
+								ItemScatterer.spawn(world, getX() + 0.5, getY() + 0.5, getZ() + 0.5, offer.getSellItem());
+							}
 						}
-					}
-					if (contractAccessor.hasNegativeEffects() && random.nextBoolean()) {
-						for (int i = 0; i < 3; i++) {
-							VindicatorEntity vindicator = EntityType.VINDICATOR.create(world);
-							if (vindicator != null) {
-								vindicator.refreshPositionAndAngles(getBlockPos(), 0, random.nextInt(360));
-								vindicator.initialize((ServerWorldAccess) world, world.getLocalDifficulty(getBlockPos()), SpawnReason.EVENT, null, null);
-								vindicator.setTarget(attackingPlayer);
-								vindicator.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, Integer.MAX_VALUE, 1));
-								vindicator.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE, 1));
-								vindicator.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, Integer.MAX_VALUE, 1));
-								world.spawnEntity(vindicator);
+						if (contractAccessor.hasNegativeEffects() && random.nextBoolean()) {
+							for (int i = 0; i < 3; i++) {
+								VindicatorEntity vindicator = EntityType.VINDICATOR.create(world);
+								if (vindicator != null) {
+									vindicator.refreshPositionAndAngles(getBlockPos(), 0, random.nextInt(360));
+									vindicator.initialize((ServerWorldAccess) world, world.getLocalDifficulty(getBlockPos()), SpawnReason.EVENT, null, null);
+									vindicator.setTarget(attackingPlayer);
+									vindicator.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, Integer.MAX_VALUE));
+									vindicator.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE, 1));
+									vindicator.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, Integer.MAX_VALUE, 1));
+									world.spawnEntity(vindicator);
+								}
 							}
 						}
 					}

@@ -1,0 +1,19 @@
+{
+  "type": "bewitchment:curse_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:taglock"
+	},
+	{
+	  "item": "bewitchment:earth_ichor"
+	},
+	{
+	  "item": "bewitchment:spanish_moss"
+	},
+	{
+	  "item": "fire_charge"
+	}
+  ],
+  "curse": "bewitchment:forests_wrath",
+  "cost": 400
+}

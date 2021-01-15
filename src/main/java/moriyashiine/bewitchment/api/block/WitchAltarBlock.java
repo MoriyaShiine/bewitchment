@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.block;
+package moriyashiine.bewitchment.api.block;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
@@ -38,7 +38,7 @@ import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("ConstantConditions")
-public class WitchAltarBlock extends Block implements BlockEntityProvider, Waterloggable {
+public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntityProvider, Waterloggable {
 	private static final VoxelShape SHAPE = VoxelShapes.union(createCuboidShape(0, 0, 0, 16, 2, 16), createCuboidShape(1, 2, 1, 15, 5, 15), createCuboidShape(2, 5, 2, 14, 10, 14), createCuboidShape(1, 10, 1, 15, 12, 15), createCuboidShape(0, 12, 0, 16, 16, 16));
 	
 	private final Block unformed;
@@ -77,9 +77,9 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 					if (!player.isCreative()) {
 						stack.decrement(1);
 					}
-					Direction facing = world.getBlockState(pos).get(Properties.HORIZONTAL_FACING);
+					Direction facing = world.getBlockState(pos).get(FACING);
 					world.breakBlock(pos, false);
-					world.setBlockState(pos, entry.formed.getPlacementState(new ItemPlacementContext(player, hand, stack, hit)).with(Properties.HORIZONTAL_FACING, facing));
+					world.setBlockState(pos, entry.formed.getPlacementState(new ItemPlacementContext(player, hand, stack, hit)).with(FACING, facing));
 				}
 				return ActionResult.success(client);
 			}
@@ -133,7 +133,7 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 	@Nullable
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		return super.getPlacementState(ctx).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER).with(Properties.HORIZONTAL_FACING, ctx.getPlayerFacing());
+		return super.getPlacementState(ctx).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER).with(FACING, ctx.getPlayerFacing());
 	}
 	
 	@Override
@@ -177,17 +177,10 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 				worldState.potentialCandelabras.add(pos.asLong());
 				worldState.markDirty();
 			}
-			BlockPos.Mutable mutable = new BlockPos.Mutable();
-			for (int x = -24; x <= 24; x++) {
-				for (int y = -24; y <= 24; y++) {
-					for (int z = -24; z <= 24; z++) {
-						BlockEntity blockEntity = world.getBlockEntity(mutable.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z));
-						if (blockEntity instanceof UsesAltarPower) {
-							((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, mutable.toImmutable()));
-							blockEntity.markDirty();
-						}
-					}
-				}
+			for (BlockPos usesAltarPower : BewitchmentAPI.getBlockPoses(pos, 24, currentPos -> world.getBlockEntity(currentPos) instanceof UsesAltarPower)) {
+				BlockEntity blockEntity = world.getBlockEntity(usesAltarPower);
+				((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, pos));
+				blockEntity.markDirty();
 			}
 		}
 	}
@@ -209,40 +202,22 @@ public class WitchAltarBlock extends Block implements BlockEntityProvider, Water
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);
 		if (!world.isClient && state.getBlock() != newState.getBlock()) {
-			BlockPos.Mutable mutable = new BlockPos.Mutable();
-			for (int x = -24; x <= 24; x++) {
-				for (int y = -24; y <= 24; y++) {
-					for (int z = -24; z <= 24; z++) {
-						BlockEntity blockEntity = world.getBlockEntity(mutable.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z));
-						if (blockEntity instanceof UsesAltarPower) {
-							((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, mutable.toImmutable()));
-							blockEntity.markDirty();
-						}
-					}
-				}
+			for (BlockPos usesAltarPower : BewitchmentAPI.getBlockPoses(pos, 24, currentPos -> world.getBlockEntity(currentPos) instanceof UsesAltarPower)) {
+				BlockEntity blockEntity = world.getBlockEntity(usesAltarPower);
+				((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, usesAltarPower));
+				blockEntity.markDirty();
 			}
 		}
 	}
 	
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-		builder.add(Properties.WATERLOGGED, Properties.HORIZONTAL_FACING, Properties.LEVEL_15);
+		builder.add(Properties.WATERLOGGED, FACING, Properties.LEVEL_15);
 	}
 	
 	@Nullable
 	public static BlockPos getClosestAltarPos(World world, BlockPos pos) {
-		BlockPos closest = null;
-		BlockPos.Mutable mutable = new BlockPos.Mutable();
-		for (int x = -24; x <= 24; x++) {
-			for (int y = -24; y <= 24; y++) {
-				for (int z = -24; z <= 24; z++) {
-					if (world.getBlockEntity(mutable.set(pos.getX() + x, pos.getY() + y, pos.getZ() + z)) instanceof WitchAltarBlockEntity && (closest == null || pos.getSquaredDistance(mutable.toImmutable()) < pos.getSquaredDistance(closest))) {
-						closest = mutable.toImmutable();
-					}
-				}
-			}
-		}
-		return closest;
+		return BewitchmentAPI.getClosestBlockPos(pos, 24, currentPos -> world.getBlockEntity(currentPos) instanceof WitchAltarBlockEntity);
 	}
 	
 	private static int calculateLuminance(WitchAltarBlockEntity blockEntity) {

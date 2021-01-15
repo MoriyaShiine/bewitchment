@@ -1,0 +1,19 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	"SSS",
+	"MMM",
+	"SSS"
+  ],
+  "key": {
+	"S": {
+	  "item": "dark_oak_slab"
+	},
+	"M": {
+	  "item": "bewitchment:spanish_moss"
+	}
+  },
+  "result": {
+	"item": "bewitchment:dark_oak_poppet_shelf"
+  }
+}

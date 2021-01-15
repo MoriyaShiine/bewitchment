@@ -22,7 +22,7 @@ public class GrotestqueStew extends Item {
 		if (!world.isClient) {
 			if (!BewitchmentAPI.hasPledge(world, user.getUuid())) {
 				LivingEntity closest = null;
-				for (LivingEntity livingEntity : world.getEntitiesByClass(LivingEntity.class, new Box(user.getBlockPos()).expand(8), entity -> entity instanceof Pledgeable)) {
+				for (LivingEntity livingEntity : world.getEntitiesByClass(LivingEntity.class, new Box(user.getBlockPos()).expand(8), entity -> entity.isAlive() && entity instanceof Pledgeable)) {
 					if (closest == null || user.distanceTo(livingEntity) < user.distanceTo(closest)) {
 						closest = livingEntity;
 					}

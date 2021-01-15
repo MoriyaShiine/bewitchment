@@ -1,0 +1,19 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	"SSS",
+	"MMM",
+	"SSS"
+  ],
+  "key": {
+	"S": {
+	  "item": "acacia_slab"
+	},
+	"M": {
+	  "item": "bewitchment:spanish_moss"
+	}
+  },
+  "result": {
+	"item": "bewitchment:acacia_poppet_shelf"
+  }
+}
