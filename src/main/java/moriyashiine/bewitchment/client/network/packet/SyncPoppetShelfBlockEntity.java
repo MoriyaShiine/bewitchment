@@ -5,10 +5,14 @@ import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
@@ -28,10 +32,10 @@ public class SyncPoppetShelfBlockEntity {
 		buf.writeItemStack(blockEntity.getStack(6));
 		buf.writeItemStack(blockEntity.getStack(7));
 		buf.writeItemStack(blockEntity.getStack(8));
-		ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, ID, buf);
+		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
 	}
 	
-	public static void handle(PacketContext context, PacketByteBuf buf) {
+	public static void handle(MinecraftClient client, ClientPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
 		BlockPos pos = BlockPos.fromLong(buf.readLong());
 		ItemStack one = buf.readItemStack();
 		ItemStack two = buf.readItemStack();
@@ -42,21 +46,17 @@ public class SyncPoppetShelfBlockEntity {
 		ItemStack seven = buf.readItemStack();
 		ItemStack eight = buf.readItemStack();
 		ItemStack nine = buf.readItemStack();
-		//noinspection Convert2Lambda
-		context.getTaskQueue().submit(new Runnable() {
-			@Override
-			public void run() {
-				PoppetShelfBlockEntity poppetShelf = (PoppetShelfBlockEntity) MinecraftClient.getInstance().world.getBlockEntity(pos);
-				poppetShelf.setStack(0, one);
-				poppetShelf.setStack(1, two);
-				poppetShelf.setStack(2, three);
-				poppetShelf.setStack(3, four);
-				poppetShelf.setStack(4, five);
-				poppetShelf.setStack(5, six);
-				poppetShelf.setStack(6, seven);
-				poppetShelf.setStack(7, eight);
-				poppetShelf.setStack(8, nine);
-			}
+		client.execute(() -> {
+			PoppetShelfBlockEntity poppetShelf = (PoppetShelfBlockEntity) client.world.getBlockEntity(pos);
+			poppetShelf.setStack(0, one);
+			poppetShelf.setStack(1, two);
+			poppetShelf.setStack(2, three);
+			poppetShelf.setStack(3, four);
+			poppetShelf.setStack(4, five);
+			poppetShelf.setStack(5, six);
+			poppetShelf.setStack(6, seven);
+			poppetShelf.setStack(7, eight);
+			poppetShelf.setStack(8, nine);
 		});
 	}
 }

@@ -9,8 +9,14 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayNetworkHandler;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 public class Bewitchment implements ModInitializer {
@@ -24,7 +30,7 @@ public class Bewitchment implements ModInitializer {
 	public void onInitialize() {
 		AutoConfig.register(BWConfig.class, GsonConfigSerializer::new);
 		config = AutoConfig.getConfigHolder(BWConfig.class).getConfig();
-		ServerSidePacketRegistry.INSTANCE.register(CauldronTeleportPacket.ID, CauldronTeleportPacket::handle);
+		ServerPlayNetworking.registerGlobalReceiver(CauldronTeleportPacket.ID, CauldronTeleportPacket::handle);
 		BWObjects.init();
 		BWBlockEntityTypes.init();
 		BWEntityTypes.init();

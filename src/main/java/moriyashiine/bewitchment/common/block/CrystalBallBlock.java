@@ -7,16 +7,16 @@ import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWCurses;
+import moriyashiine.bewitchment.common.registry.BWParticleTypes;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.Waterloggable;
+import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.particle.DustParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
@@ -50,6 +50,10 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		boolean client = world.isClient;
 		BlockPos nearestAltarPos = WitchAltarBlock.getClosestAltarPos(world, pos);
+		for (int i = 0; i < 10; i++) {
+			world.addParticle(new DustParticleEffect(1, 1, 1, 1.0F), (double)pos.getX() + world.random.nextFloat(), (double)pos.getY() + world.random.nextFloat(), (double)pos.getZ() + world.random.nextFloat(), 0, 0, 0);
+		}
+
 		if (nearestAltarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(nearestAltarPos)).drain(500, false)) {
 			FortuneAccessor.of(player).ifPresent(fortuneAccessor -> {
 				if (fortuneAccessor.getFortune() == null) {

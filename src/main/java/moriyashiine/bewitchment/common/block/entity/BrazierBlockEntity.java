@@ -4,6 +4,8 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.CurseAccessor;
 import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
 import moriyashiine.bewitchment.api.registry.Curse;
+import moriyashiine.bewitchment.client.network.packet.SpawnBrazierParticlesPacket;
+import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
 import moriyashiine.bewitchment.client.network.packet.SyncBrazierBlockEntity;
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.Bewitchment;
@@ -24,6 +26,7 @@ import net.minecraft.item.FlintAndSteelItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -108,9 +111,9 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 			}
 			if (timer < 0) {
 				timer++;
-				if (world.isClient) {
+				if (!world.isClient) {
 					if (world.random.nextBoolean()) {
-						world.addParticle(ParticleTypes.LARGE_SMOKE, pos.getX() + 0.5, pos.getY() + (getCachedState().get(Properties.HANGING) ? 0.4 : 1.25), pos.getZ() + 0.5, 0, 0.05, 0);
+						PlayerLookup.tracking(this).forEach(playerEntity -> SpawnBrazierParticlesPacket.send(playerEntity, this));
 					}
 				}
 				else {

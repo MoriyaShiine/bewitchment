@@ -4,7 +4,10 @@ import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.common.Bewitchment;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -29,10 +32,10 @@ public class CreateNonLivingEntityPacket {
 		buf.writeDouble(entity.getZ());
 		buf.writeByte(MathHelper.floor(entity.pitch * 256 / 360));
 		buf.writeByte(MathHelper.floor(entity.yaw * 256 / 360));
-		return ServerSidePacketRegistry.INSTANCE.toPacket(ID, buf);
+		return ServerPlayNetworking.createS2CPacket(ID, buf); //ServerSidePacketRegistry.INSTANCE.toPacket(ID, buf);
 	}
 	
-	public static void handle(PacketContext context, PacketByteBuf buf) {
+	public static void handle(MinecraftClient client, ClientPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
 		EntityType<?> type = Registry.ENTITY_TYPE.get(new Identifier(buf.readString()));
 		UUID uuid = buf.readUuid();
 		int id = buf.readInt();
@@ -41,22 +44,18 @@ public class CreateNonLivingEntityPacket {
 		double z = buf.readDouble();
 		float pitch = (buf.readByte() * 360) / 256f;
 		float yaw = (buf.readByte() * 360) / 256f;
-		//noinspection Convert2Lambda
-		context.getTaskQueue().submit(new Runnable() {
-			@Override
-			public void run() {
-				ClientWorld world = MinecraftClient.getInstance().world;
-				if (world != null) {
-					Entity entity = type.create(world);
-					if (entity != null) {
-						entity.updatePosition(x, y, z);
-						entity.updateTrackedPosition(x, y, z);
-						entity.pitch = pitch;
-						entity.yaw = yaw;
-						entity.setEntityId(id);
-						entity.setUuid(uuid);
-						world.addEntity(id, entity);
-					}
+		client.execute(() -> {
+			ClientWorld world = client.world;
+			if (world != null) {
+				Entity entity = type.create(world);
+				if (entity != null) {
+					entity.updatePosition(x, y, z);
+					entity.updateTrackedPosition(x, y, z);
+					entity.pitch = pitch;
+					entity.yaw = yaw;
+					entity.setEntityId(id);
+					entity.setUuid(uuid);
+					world.addEntity(id, entity);
 				}
 			}
 		});

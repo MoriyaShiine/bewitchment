@@ -5,11 +5,15 @@ import moriyashiine.bewitchment.common.Bewitchment;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
@@ -22,19 +26,13 @@ public class SyncClientSerializableBlockEntity {
 		if (blockEntity instanceof BlockEntity) {
 			buf.writeLong(((BlockEntity) blockEntity).getPos().asLong());
 			buf.writeCompoundTag(blockEntity.toClientTag(new CompoundTag()));
-			ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, ID, buf);
+			ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
 		}
 	}
 	
-	public static void handle(PacketContext context, PacketByteBuf buf) {
+	public static void handle(MinecraftClient client, ClientPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
 		BlockPos pos = BlockPos.fromLong(buf.readLong());
 		CompoundTag tag = buf.readCompoundTag();
-		//noinspection Convert2Lambda
-		context.getTaskQueue().submit(new Runnable() {
-			@Override
-			public void run() {
-				((BlockEntityClientSerializable) MinecraftClient.getInstance().world.getBlockEntity(pos)).fromClientTag(tag);
-			}
-		});
+		client.execute(() -> ((BlockEntityClientSerializable) client.world.getBlockEntity(pos)).fromClientTag(tag));
 	}
 }
