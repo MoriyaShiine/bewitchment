@@ -6,6 +6,7 @@ import moriyashiine.bewitchment.client.model.armor.WitchArmorModel;
 import moriyashiine.bewitchment.client.network.packet.*;
 import moriyashiine.bewitchment.client.particle.CauldronBubbleParticle;
 import moriyashiine.bewitchment.client.renderer.blockentity.BrazierBlockEntityRenderer;
+import moriyashiine.bewitchment.client.renderer.blockentity.PoppetShelfBlockEntityRenderer;
 import moriyashiine.bewitchment.client.renderer.blockentity.WitchAltarBlockEntityRenderer;
 import moriyashiine.bewitchment.client.renderer.blockentity.WitchCauldronBlockEntityRenderer;
 import moriyashiine.bewitchment.client.renderer.entity.SilverArrowEntityRenderer;
@@ -45,6 +46,7 @@ public class BewitchmentClient implements ClientModInitializer {
 		ClientSidePacketRegistry.INSTANCE.register(CreateNonLivingEntityPacket.ID, CreateNonLivingEntityPacket::handle);
 		ClientSidePacketRegistry.INSTANCE.register(SyncWitchAltarBlockEntity.ID, SyncWitchAltarBlockEntity::handle);
 		ClientSidePacketRegistry.INSTANCE.register(SyncBrazierBlockEntity.ID, SyncBrazierBlockEntity::handle);
+		ClientSidePacketRegistry.INSTANCE.register(SyncPoppetShelfBlockEntity.ID, SyncPoppetShelfBlockEntity::handle);
 		ClientSidePacketRegistry.INSTANCE.register(SyncClientSerializableBlockEntity.ID, SyncClientSerializableBlockEntity::handle);
 		ClientSidePacketRegistry.INSTANCE.register(SpawnSmokeParticlesPacket.ID, SpawnSmokeParticlesPacket::handle);
 		ClientSidePacketRegistry.INSTANCE.register(SpawnPortalParticlesPacket.ID, SpawnPortalParticlesPacket::handle);
@@ -84,6 +86,7 @@ public class BewitchmentClient implements ClientModInitializer {
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.WITCH_ALTAR, WitchAltarBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.WITCH_CAULDRON, WitchCauldronBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.BRAZIER, BrazierBlockEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.POPPET_SHELF, PoppetShelfBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.DRAGONS_BLOOD_CHEST, ChestBlockEntityRenderer::new);
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.JUNIPER_BOAT, (dispatcher, context) -> new BoatEntityRenderer(dispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.CYPRESS_BOAT, (dispatcher, context) -> new BoatEntityRenderer(dispatcher));

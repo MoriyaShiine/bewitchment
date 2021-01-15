@@ -6,6 +6,7 @@ import com.terraformersmc.terraform.sign.block.TerraformSignBlock;
 import com.terraformersmc.terraform.sign.block.TerraformWallSignBlock;
 import com.terraformersmc.terraform.wood.block.*;
 import moriyashiine.bewitchment.api.block.CandelabraBlock;
+import moriyashiine.bewitchment.api.block.PoppetShelfBlock;
 import moriyashiine.bewitchment.api.block.WitchAltarBlock;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.item.SigilItem;
@@ -203,6 +204,18 @@ public class BWObjects {
 	public static final Block WITCH_CAULDRON = create("witch_cauldron", new WitchCauldronBlock(copyOf(Blocks.CAULDRON)), true);
 	public static final Block CRYSTAL_BALL = create("crystal_ball", new CrystalBallBlock(copyOf(SILVER_BLOCK).sounds(BlockSoundGroup.GLASS)), true);
 	public static final Block BRAZIER = create("brazier", new BrazierBlock(copyOf(SILVER_BLOCK).luminance(blockState -> blockState.get(Properties.LIT) ? 15 : 0)), true);
+	public static final Block OAK_POPPET_SHELF = create("oak_poppet_shelf", new PoppetShelfBlock(copyOf(Blocks.OAK_PLANKS).nonOpaque()), true);
+	public static final Block SPRUCE_POPPET_SHELF = create("spruce_poppet_shelf", new PoppetShelfBlock(copyOf(Blocks.SPRUCE_PLANKS).nonOpaque()), true);
+	public static final Block BIRCH_POPPET_SHELF = create("birch_poppet_shelf", new PoppetShelfBlock(copyOf(Blocks.BIRCH_PLANKS).nonOpaque()), true);
+	public static final Block JUNGLE_POPPET_SHELF = create("jungle_poppet_shelf", new PoppetShelfBlock(copyOf(Blocks.JUNGLE_PLANKS).nonOpaque()), true);
+	public static final Block ACACIA_POPPET_SHELF = create("acacia_poppet_shelf", new PoppetShelfBlock(copyOf(Blocks.ACACIA_PLANKS).nonOpaque()), true);
+	public static final Block DARK_OAK_POPPET_SHELF = create("dark_oak_poppet_shelf", new PoppetShelfBlock(copyOf(Blocks.DARK_OAK_PLANKS).nonOpaque()), true);
+	public static final Block CRIMSON_POPPET_SHELF = create("crimson_poppet_shelf", new PoppetShelfBlock(copyOf(Blocks.CRIMSON_PLANKS).nonOpaque()), true);
+	public static final Block WARPED_POPPET_SHELF = create("warped_poppet_shelf", new PoppetShelfBlock(copyOf(Blocks.WARPED_PLANKS).nonOpaque()), true);
+	public static final Block JUNIPER_POPPET_SHELF = create("juniper_poppet_shelf", new PoppetShelfBlock(copyOf(JUNIPER_PLANKS).nonOpaque()), true);
+	public static final Block CYPRESS_POPPET_SHELF = create("cypress_poppet_shelf", new PoppetShelfBlock(copyOf(CYPRESS_PLANKS).nonOpaque()), true);
+	public static final Block ELDER_POPPET_SHELF = create("elder_poppet_shelf", new PoppetShelfBlock(copyOf(ELDER_PLANKS).nonOpaque()), true);
+	public static final Block DRAGONS_BLOOD_POPPET_SHELF = create("dragons_blood_poppet_shelf", new PoppetShelfBlock(copyOf(DRAGONS_BLOOD_PLANKS).nonOpaque()), true);
 	//armor
 	public static final Item SILVER_HELMET = create("silver_helmet", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.HEAD, gen()));
 	public static final Item SILVER_CHESTPLATE = create("silver_chestplate", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.CHEST, gen()));

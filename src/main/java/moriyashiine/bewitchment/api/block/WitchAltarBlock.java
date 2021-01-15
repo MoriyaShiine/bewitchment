@@ -212,7 +212,7 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 	
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-		super.appendProperties(builder.add(Properties.WATERLOGGED, FACING, Properties.LEVEL_15));
+		builder.add(Properties.WATERLOGGED, FACING, Properties.LEVEL_15);
 	}
 	
 	@Nullable

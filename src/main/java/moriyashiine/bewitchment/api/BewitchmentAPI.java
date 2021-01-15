@@ -3,12 +3,14 @@ package moriyashiine.bewitchment.api;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
 import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
+import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
 import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
+import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -17,6 +19,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -80,30 +83,39 @@ public class BewitchmentAPI {
 	
 	public static ItemStack getPoppet(World world, PoppetItem item, Entity owner, PlayerEntity specificInventory) {
 		if (!world.isClient) {
-			List<PlayerEntity> toSearch = new ArrayList<>();
+			List<ItemStack> toSearch = new ArrayList<>();
 			if (specificInventory != null) {
-				toSearch.add(specificInventory);
+				for (int i = 0; i < specificInventory.inventory.size(); i++) {
+					toSearch.add(specificInventory.inventory.getStack(i));
+				}
 			}
 			else {
-				toSearch.addAll(((ServerWorld) world).getPlayers());
+				for (long longPos : BWWorldState.get(world).poppetShelves) {
+					Inventory inventory = ((PoppetShelfBlockEntity) world.getBlockEntity(BlockPos.fromLong(longPos)));
+					for (int i = 0; i < inventory.size(); i++) {
+						toSearch.add(inventory.getStack(i));
+					}
+				}
+				for (PlayerEntity player : ((ServerWorld) world).getPlayers()) {
+					for (int i = 0; i < player.inventory.size(); i++) {
+						toSearch.add(player.inventory.getStack(i));
+					}
+				}
 			}
-			for (PlayerEntity player : toSearch) {
-				for (int i = 0; i < player.inventory.size(); i++) {
-					ItemStack stack = player.inventory.getStack(i);
-					if (stack.getItem() == item && stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID")) {
-						UUID uuid = null;
-						if (owner != null) {
-							uuid = owner.getUuid();
+			for (ItemStack stack : toSearch) {
+				if (stack.getItem() == item && stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID")) {
+					UUID uuid = null;
+					if (owner != null) {
+						uuid = owner.getUuid();
+					}
+					else {
+						LivingEntity taglockOwner = getTaglockOwner(world, stack);
+						if (taglockOwner != null) {
+							uuid = taglockOwner.getUuid();
 						}
-						else {
-							LivingEntity taglockOwner = getTaglockOwner(world, stack);
-							if (taglockOwner != null) {
-								uuid = taglockOwner.getUuid();
-							}
-						}
-						if (stack.getOrCreateTag().getUuid("OwnerUUID").equals(uuid)) {
-							return stack;
-						}
+					}
+					if (stack.getOrCreateTag().getUuid("OwnerUUID").equals(uuid)) {
+						return stack;
 					}
 				}
 			}
