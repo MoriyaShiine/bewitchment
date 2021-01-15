@@ -20,7 +20,7 @@ import net.minecraft.world.BlockView;
 import java.util.function.Supplier;
 
 public class BWChestBlock extends ChestBlock {
-	private final boolean trapped;
+	protected final boolean trapped;
 	
 	public BWChestBlock(Settings settings, Supplier<BlockEntityType<? extends ChestBlockEntity>> supplier, boolean trapped) {
 		super(settings, supplier);

@@ -1,0 +1,15 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:heaven_extract"
+	},
+	{
+	  "item": "water_bucket"
+	}
+  ],
+  "inner": "normal",
+  "outer": "fiery",
+  "ritual_function": "bewitchment:spawn_lightning",
+  "cost": 150
+}

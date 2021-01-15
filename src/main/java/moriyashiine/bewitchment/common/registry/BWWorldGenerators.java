@@ -2,6 +2,7 @@ package moriyashiine.bewitchment.common.registry;
 
 import com.google.common.collect.ImmutableList;
 import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.entity.living.HellhoundEntity;
 import moriyashiine.bewitchment.common.world.generator.tree.decorator.LeaveSpanishMossTreeDecorator;
 import moriyashiine.bewitchment.mixin.TreeDecoratorTypeAccessor;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
@@ -9,13 +10,16 @@ import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import net.fabricmc.fabric.impl.biome.modification.BiomeModificationImpl;
+import net.fabricmc.fabric.mixin.object.builder.SpawnRestrictionAccessor;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.entry.LootTableEntry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.UniformIntDistribution;
@@ -52,9 +56,9 @@ public class BWWorldGenerators {
 	public static final ConfiguredFeature<?, ?> SILVER_ORE = create("silver_ore", Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, BWObjects.SILVER_ORE.getDefaultState(), Bewitchment.config.silverSize)).rangeOf(Bewitchment.config.silverMaxHeight).spreadHorizontally().repeat(Bewitchment.config.silverCount));
 	public static final ConfiguredFeature<?, ?> SALT_ORE = create("salt_ore", Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, BWObjects.SALT_ORE.getDefaultState(), Bewitchment.config.saltSize)).rangeOf(Bewitchment.config.saltMaxHeight).spreadHorizontally().repeat(Bewitchment.config.saltCount));
 	
-	public static TreeDecoratorType<LeaveSpanishMossTreeDecorator> LEAVE_SPANISH_MOSS = TreeDecoratorTypeAccessor.callRegister("leave_spanish_moss", LeaveSpanishMossTreeDecorator.CODEC);
+	public static final TreeDecoratorType<LeaveSpanishMossTreeDecorator> LEAVE_SPANISH_MOSS = TreeDecoratorTypeAccessor.callRegister("leave_spanish_moss", LeaveSpanishMossTreeDecorator.CODEC);
 	
-	private static <F extends FeatureConfig> ConfiguredFeature<F, ?> create(String name, ConfiguredFeature<F, ?> configuredFeature) {
+	private static <T extends FeatureConfig> ConfiguredFeature<T, ?> create(String name, ConfiguredFeature<T, ?> configuredFeature) {
 		CONFIGURED_FEATURES.put(configuredFeature, new Identifier(Bewitchment.MODID, name));
 		return configuredFeature;
 	}
@@ -75,6 +79,10 @@ public class BWWorldGenerators {
 		BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> Bewitchment.config.ravenBiomeCategories.contains(context.getBiome().getCategory().getName())), BWEntityTypes.RAVEN.getSpawnGroup(), BWEntityTypes.RAVEN, Bewitchment.config.ravenWeight, Bewitchment.config.ravenMinGroupCount, Bewitchment.config.ravenMaxGroupCount);
 		BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> Bewitchment.config.snakeBiomeCategories.contains(context.getBiome().getCategory().getName())), BWEntityTypes.SNAKE.getSpawnGroup(), BWEntityTypes.SNAKE, Bewitchment.config.snakeWeight, Bewitchment.config.snakeMinGroupCount, Bewitchment.config.snakeMaxGroupCount);
 		BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> Bewitchment.config.toadBiomeCategories.contains(context.getBiome().getCategory().getName())), BWEntityTypes.TOAD.getSpawnGroup(), BWEntityTypes.TOAD, Bewitchment.config.toadWeight, Bewitchment.config.toadMinGroupCount, Bewitchment.config.toadMaxGroupCount);
+		BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> !context.getBiome().getSpawnSettings().getSpawnEntry(BWEntityTypes.GHOST.getSpawnGroup()).isEmpty() && context.getBiome().getCategory() != Biome.Category.OCEAN), BWEntityTypes.GHOST.getSpawnGroup(), BWEntityTypes.GHOST, Bewitchment.config.ghostWeight, Bewitchment.config.ghostMinGroupCount, Bewitchment.config.ghostMaxGroupCount);
+		BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> !context.getBiome().getSpawnSettings().getSpawnEntry(BWEntityTypes.BLACK_DOG.getSpawnGroup()).isEmpty() && context.getBiome().getCategory() != Biome.Category.OCEAN), BWEntityTypes.BLACK_DOG.getSpawnGroup(), BWEntityTypes.BLACK_DOG, Bewitchment.config.blackDogWeight, Bewitchment.config.blackDogMinGroupCount, Bewitchment.config.blackDogMaxGroupCount);
+		BiomeModifications.addSpawn(BiomeSelectors.foundInTheNether().and(context -> !context.getBiome().getSpawnSettings().getSpawnEntry(BWEntityTypes.HELLHOUND.getSpawnGroup()).isEmpty()), BWEntityTypes.HELLHOUND.getSpawnGroup(), BWEntityTypes.HELLHOUND, Bewitchment.config.hellhoundWeight, Bewitchment.config.hellhoundMinGroupCount, Bewitchment.config.hellhoundMaxGroupCount);
+		SpawnRestrictionAccessor.callRegister(BWEntityTypes.HELLHOUND, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HellhoundEntity::canSpawn);
 		LootTableLoadingCallback.EVENT.register((resourceManager, lootManager, identifier, fabricLootSupplierBuilder, lootTableSetter) -> {
 			Identifier seeds = new Identifier(Bewitchment.MODID, "inject/seeds");
 			Identifier nether_fortress = new Identifier(Bewitchment.MODID, "inject/nether_fortress");

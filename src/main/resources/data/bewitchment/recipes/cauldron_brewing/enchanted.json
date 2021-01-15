@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "lapis_block"
+  },
+  "effect": "bewitchment:enchanted",
+  "time": 1200
+}

@@ -134,7 +134,7 @@ public class SnakeEntityModel<T extends SnakeEntity> extends AnimalModel<T> {
 			tail06.yaw = 1.075f;
 		}
 		else {
-			bodyBase.yaw = MathHelper.cos(entity.curve + entity.getEntityId());
+			bodyBase.yaw = MathHelper.cos(limbAngle + entity.getEntityId());
 			neck00.yaw = -bodyBase.yaw / 3;
 			neck01.yaw = neck00.yaw;
 			tail01.yaw = neck01.yaw;

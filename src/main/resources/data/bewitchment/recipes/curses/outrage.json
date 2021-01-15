@@ -1,0 +1,19 @@
+{
+  "type": "bewitchment:curse_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:taglock"
+	},
+	{
+	  "item": "bewitchment:fiery_serum"
+	},
+	{
+	  "item": "quartz"
+	},
+	{
+	  "item": "nether_wart"
+	}
+  ],
+  "curse": "bewitchment:outrage",
+  "cost": 400
+}

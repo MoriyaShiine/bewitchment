@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+	"layer0": "bewitchment:item/taglock"
+  },
+  "overrides": [
+	{
+	  "predicate": {
+		"bewitchment:variant": 1
+	  },
+	  "model": "bewitchment:item/taglock_variant"
+	}
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "feather"
+  },
+  "effect": "slow_falling",
+  "time": 1200
+}

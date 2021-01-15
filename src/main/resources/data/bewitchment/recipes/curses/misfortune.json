@@ -1,0 +1,19 @@
+{
+  "type": "bewitchment:curse_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:taglock"
+	},
+	{
+	  "item": "bewitchment:grim_elixir"
+	},
+	{
+	  "item": "bewitchment:bottle_of_blood"
+	},
+	{
+	  "item": "bewitchment:mandrake_root"
+	}
+  ],
+  "curse": "bewitchment:misfortune",
+  "cost": 400
+}

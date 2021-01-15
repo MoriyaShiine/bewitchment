@@ -1,0 +1,12 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "slime_ball"
+	}
+  ],
+  "inner": "any",
+  "ritual_function": "bewitchment:wednesday",
+  "cost": 555,
+  "running_time": 600
+}

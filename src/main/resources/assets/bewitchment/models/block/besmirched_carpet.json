@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/carpet",
+  "parent": "block/carpet",
   "textures": {
 	"wool": "bewitchment:block/besmirched_wool"
   }

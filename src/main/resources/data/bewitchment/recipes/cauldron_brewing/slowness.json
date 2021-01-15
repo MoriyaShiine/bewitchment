@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "slime_ball"
+  },
+  "effect": "slowness",
+  "time": 1200
+}

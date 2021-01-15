@@ -24,8 +24,7 @@
 			16,
 			16
 		  ],
-		  "texture": "#line",
-		  "tintindex": 0
+		  "texture": "#line"
 		},
 		"down": {
 		  "uv": [
@@ -34,8 +33,7 @@
 			16,
 			8
 		  ],
-		  "texture": "#line",
-		  "tintindex": 0
+		  "texture": "#line"
 		}
 	  }
 	}

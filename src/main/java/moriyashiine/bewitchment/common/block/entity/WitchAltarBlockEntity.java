@@ -1,9 +1,12 @@
 package moriyashiine.bewitchment.common.block.entity;
 
 import com.mojang.authlib.GameProfile;
+import moriyashiine.bewitchment.api.interfaces.MagicAccessor;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
+import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -57,6 +60,14 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 	}
 	
 	@Override
+	public void fromClientTag(CompoundTag tag) {
+		Inventories.fromTag(tag, inventory);
+		power = tag.getInt("Power");
+		maxPower = tag.getInt("MaxPower");
+		gain = tag.getInt("Gain");
+	}
+	
+	@Override
 	public CompoundTag toClientTag(CompoundTag tag) {
 		Inventories.toTag(tag, inventory);
 		tag.putInt("Power", power);
@@ -66,11 +77,9 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 	}
 	
 	@Override
-	public void fromClientTag(CompoundTag tag) {
-		Inventories.fromTag(tag, inventory);
-		power = tag.getInt("Power");
-		maxPower = tag.getInt("MaxPower");
-		gain = tag.getInt("Gain");
+	public void fromTag(BlockState state, CompoundTag tag) {
+		fromClientTag(tag);
+		super.fromTag(state, tag);
 	}
 	
 	@Override
@@ -79,24 +88,22 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 	}
 	
 	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
-		fromClientTag(tag);
-		super.fromTag(state, tag);
-	}
-	
-	@Override
 	public void tick() {
 		if (world != null && !world.isClient) {
 			if (loadingTimer > 0) {
 				loadingTimer--;
 				if (loadingTimer == 0) {
-					markDirty();
 					MinecraftServer server = world.getServer();
-					//noinspection ConstantConditions
-					ServerWorld overworld = server.getOverworld();
-					fakePlayer = new ServerPlayerEntity(server, overworld, FAKE_PLAYER_PROFILE, new ServerPlayerInteractionManager(overworld));
-					fakePlayer.setStackInHand(Hand.MAIN_HAND, new ItemStack(Items.WOODEN_AXE));
-					markedForScan = true;
+					if (server != null) {
+						markDirty();
+						ServerWorld overworld = server.getOverworld();
+						fakePlayer = new ServerPlayerEntity(server, overworld, FAKE_PLAYER_PROFILE, new ServerPlayerInteractionManager(overworld));
+						fakePlayer.setStackInHand(Hand.MAIN_HAND, new ItemStack(Items.WOODEN_AXE));
+						markedForScan = true;
+					}
+					else {
+						loadingTimer = 20;
+					}
 				}
 			}
 			else {
@@ -108,7 +115,18 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 				}
 				scan(80);
 				if (world.getTime() % 20 == 0) {
-					power = Math.min(power + gain, maxPower);
+					if (world.getBlockState(pos.up()).getBlock() == BWObjects.BLESSED_STONE) {
+						power = Integer.MAX_VALUE;
+					}
+					else {
+						power = Math.min(power + gain, maxPower);
+					}
+					PlayerLookup.around((ServerWorld) world, Vec3d.of(pos), 24).forEach(playerEntity -> MagicAccessor.of(playerEntity).ifPresent(magicAccessor -> {
+						if (magicAccessor.fillMagic(100, true) && drain(10, true)) {
+							magicAccessor.fillMagic(100, false);
+							drain(10, false);
+						}
+					}));
 				}
 			}
 		}
@@ -154,9 +172,11 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 		inventory.clear();
 	}
 	
-	public boolean drain(int amount) {
+	public boolean drain(int amount, boolean simulate) {
 		if (power - amount >= 0) {
-			power -= amount;
+			if (!simulate) {
+				power -= amount;
+			}
 			return true;
 		}
 		return false;
@@ -170,14 +190,13 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 				int x = counter & 31;
 				int y = (counter >> 5) & 31;
 				int z = (counter >> 10) & 31;
-				checking.set(pos.getX() + x - 15, pos.getY() + y - 15, pos.getZ() + z - 15);
-				Block checkedBlock = world.getBlockState(checking).getBlock();
+				Block checkedBlock = world.getBlockState(checking.set(pos.getX() + x - 15, pos.getY() + y - 15, pos.getZ() + z - 15)).getBlock();
 				if (BWTags.GIVES_ALTAR_POWER.contains(checkedBlock)) {
 					boolean strippedLog = false;
 					if (BlockTags.LOGS.contains(checkedBlock)) {
 						MinecraftServer server = getWorld().getServer();
 						ServerWorld overworld = server.getOverworld();
-						checking.set(0, 0, 0);
+						checking.set(BlockPos.ORIGIN);
 						BlockState original = overworld.getBlockState(checking);
 						overworld.setBlockState(checking, checkedBlock.getDefaultState());
 						BlockState checkingState = overworld.getBlockState(checking);

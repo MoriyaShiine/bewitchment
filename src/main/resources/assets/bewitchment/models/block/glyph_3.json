@@ -1,0 +1,6 @@
+{
+  "parent": "bewitchment:block/glyph_0",
+  "textures": {
+	"particle": "bewitchment:block/glyph_3"
+  }
+}

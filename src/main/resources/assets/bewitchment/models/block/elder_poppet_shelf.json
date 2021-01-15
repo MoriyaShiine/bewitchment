@@ -1,0 +1,6 @@
+{
+  "parent": "bewitchment:block/oak_poppet_shelf",
+  "textures": {
+	"particle": "bewitchment:block/elder_planks"
+  }
+}

@@ -1,31 +1,31 @@
 {
-  "parent": "minecraft:recipes/root",
+  "parent": "recipes/root",
   "rewards": {
 	"recipes": [
-	  "bewitchment:cypress_sign"
+	  "bewitchment:elder_sign"
 	]
   },
   "criteria": {
-	"has_cypress_planks": {
-	  "trigger": "minecraft:inventory_changed",
+	"has_item": {
+	  "trigger": "inventory_changed",
 	  "conditions": {
 		"items": [
 		  {
-			"item": "bewitchment:cypress_planks"
+			"item": "bewitchment:elder_planks"
 		  }
 		]
 	  }
 	},
 	"has_the_recipe": {
-	  "trigger": "minecraft:recipe_unlocked",
+	  "trigger": "recipe_unlocked",
 	  "conditions": {
-		"recipe": "bewitchment:cypress_sign"
+		"recipe": "bewitchment:elder_sign"
 	  }
 	}
   },
   "requirements": [
 	[
-	  "has_cypress_planks",
+	  "has_item",
 	  "has_the_recipe"
 	]
   ]

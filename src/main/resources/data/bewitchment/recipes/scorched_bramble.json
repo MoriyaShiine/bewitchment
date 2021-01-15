@@ -1,0 +1,24 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "sugar_cane"
+	},
+	{
+	  "item": "sugar_cane"
+	},
+	{
+	  "item": "sugar_cane"
+	},
+	{
+	  "item": "bewitchment:fiery_serum"
+	},
+	{
+	  "item": "blaze_powder"
+	}
+  ],
+  "result": {
+	"item": "bewitchment:scorched_bramble",
+	"count": 3
+  }
+}

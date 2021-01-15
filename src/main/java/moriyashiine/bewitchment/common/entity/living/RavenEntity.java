@@ -2,6 +2,7 @@ package moriyashiine.bewitchment.common.entity.living;
 
 import moriyashiine.bewitchment.common.entity.living.util.BWTameableEntity;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
+import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
@@ -12,6 +13,7 @@ import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -19,11 +21,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("ConstantConditions")
 public class RavenEntity extends BWTameableEntity {
 	public RavenEntity(EntityType<? extends TameableEntity> type, World world) {
 		super(type, world);
@@ -68,6 +72,22 @@ public class RavenEntity extends BWTameableEntity {
 		return birdNavigation;
 	}
 	
+	@Nullable
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return BWSoundEvents.ENTITY_RAVEN_AMBIENT;
+	}
+	
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return BWSoundEvents.ENTITY_RAVEN_HURT;
+	}
+	
+	@Override
+	protected SoundEvent getDeathSound() {
+		return BWSoundEvents.ENTITY_RAVEN_DEATH;
+	}
+	
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
 		return stack.getItem() == Items.WHEAT_SEEDS;
@@ -80,7 +100,7 @@ public class RavenEntity extends BWTameableEntity {
 	
 	@Override
 	protected float playFlySound(float distance) {
-		playSound(SoundEvents.ENTITY_PARROT_FLY, 0.15f, 1);
+		playSound(BWSoundEvents.ENTITY_RAVEN_FLY, 0.15f, 1);
 		return distance;
 	}
 	
@@ -98,7 +118,6 @@ public class RavenEntity extends BWTameableEntity {
 	protected void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition) {
 	}
 	
-	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void setTamed(boolean tamed) {
 		super.setTamed(tamed);
@@ -117,16 +136,16 @@ public class RavenEntity extends BWTameableEntity {
 	
 	@Override
 	protected void initGoals() {
-		goalSelector.add(1, new SwimGoal(this));
-		goalSelector.add(2, new SitGoal(this));
-		goalSelector.add(3, new MeleeAttackGoal(this, 1, true));
-		goalSelector.add(4, new FollowOwnerGoal(this, 1, 10, 2, false));
-		goalSelector.add(5, new AnimalMateGoal(this, 1));
-		goalSelector.add(6, new WanderAroundFarGoal(this, 1));
-		goalSelector.add(7, new LookAtEntityGoal(this, PlayerEntity.class, 8));
-		goalSelector.add(7, new LookAroundGoal(this));
-		targetSelector.add(1, new TrackOwnerAttackerGoal(this));
-		targetSelector.add(2, new AttackWithOwnerGoal(this));
-		targetSelector.add(3, (new RevengeGoal(this)).setGroupRevenge());
+		goalSelector.add(0, new SwimGoal(this));
+		goalSelector.add(1, new SitGoal(this));
+		goalSelector.add(2, new MeleeAttackGoal(this, 1, true));
+		goalSelector.add(3, new FollowOwnerGoal(this, 1, 10, 2, false));
+		goalSelector.add(4, new AnimalMateGoal(this, 1));
+		goalSelector.add(5, new WanderAroundFarGoal(this, 1));
+		goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8));
+		goalSelector.add(6, new LookAroundGoal(this));
+		targetSelector.add(0, new TrackOwnerAttackerGoal(this));
+		targetSelector.add(1, new AttackWithOwnerGoal(this));
+		targetSelector.add(2, new RevengeGoal(this).setGroupRevenge());
 	}
 }

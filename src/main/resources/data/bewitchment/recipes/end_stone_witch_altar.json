@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "crafting_shaped",
   "pattern": [
 	"MBM",
 	" M ",
@@ -7,7 +7,7 @@
   ],
   "key": {
 	"M": {
-	  "item": "minecraft:end_stone"
+	  "item": "end_stone"
 	},
 	"B": {
 	  "tag": "bewitchment:barks"

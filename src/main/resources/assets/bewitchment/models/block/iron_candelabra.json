@@ -1,6 +1,6 @@
 {
   "credit": "Made with Blockbench",
-  "parent": "minecraft:block/block",
+  "parent": "block/block",
   "ambientocclusion": false,
   "texture_size": [
 	32,

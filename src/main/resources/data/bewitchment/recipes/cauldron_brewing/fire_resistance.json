@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "nether_wart"
+  },
+  "effect": "fire_resistance",
+  "time": 3000
+}

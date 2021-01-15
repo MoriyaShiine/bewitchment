@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "bewitchment:ectoplasm"
+  },
+  "effect": "bewitchment:ethereal",
+  "time": 200
+}

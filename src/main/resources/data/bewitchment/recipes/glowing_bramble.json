@@ -1,0 +1,24 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "sugar_cane"
+	},
+	{
+	  "item": "sugar_cane"
+	},
+	{
+	  "item": "sugar_cane"
+	},
+	{
+	  "item": "bewitchment:cleansing_balm"
+	},
+	{
+	  "item": "glowstone_dust"
+	}
+  ],
+  "result": {
+	"item": "bewitchment:glowing_bramble",
+	"count": 3
+  }
+}

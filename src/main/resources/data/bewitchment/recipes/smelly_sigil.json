@@ -1,0 +1,25 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	"ARB",
+	"RPR",
+	"BRA"
+  ],
+  "key": {
+	"R": {
+	  "item": "bewitchment:dragons_blood_resin"
+	},
+	"P": {
+	  "item": "paper"
+	},
+	"A": {
+	  "item": "rotten_flesh"
+	},
+	"B": {
+	  "item": "bewitchment:oak_bark"
+	}
+  },
+  "result": {
+	"item": "bewitchment:smelly_sigil"
+  }
+}

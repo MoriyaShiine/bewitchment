@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:cauldron_brewing_recipe",
+  "ingredient": {
+	"item": "ink_sac"
+  },
+  "effect": "blindness",
+  "time": 300
+}

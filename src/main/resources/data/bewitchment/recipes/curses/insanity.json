@@ -1,0 +1,19 @@
+{
+  "type": "bewitchment:curse_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:taglock"
+	},
+	{
+	  "item": "bewitchment:demon_heart"
+	},
+	{
+	  "item": "bewitchment:aconite"
+	},
+	{
+	  "item": "phantom_membrane"
+	}
+  ],
+  "curse": "bewitchment:insanity",
+  "cost": 800
+}

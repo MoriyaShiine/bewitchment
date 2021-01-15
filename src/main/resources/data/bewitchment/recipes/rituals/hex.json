@@ -1,0 +1,18 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:grim_elixir"
+	},
+	{
+	  "item": "ender_pearl"
+	},
+	{
+	  "item": "blaze_rod"
+	}
+  ],
+  "inner": "fiery",
+  "outer": "eldritch",
+  "ritual_function": "bewitchment:clear_enchantments",
+  "cost": 600
+}

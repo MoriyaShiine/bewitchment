@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "crafting_shaped",
   "pattern": [
 	"TTT",
 	"NIN",
@@ -7,7 +7,7 @@
   ],
   "key": {
 	"T": {
-	  "item": "minecraft:torch"
+	  "item": "torch"
 	},
 	"N": {
 	  "tag": "c:silver_nuggets"

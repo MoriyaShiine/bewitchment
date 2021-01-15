@@ -1,0 +1,24 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "sugar_cane"
+	},
+	{
+	  "item": "sugar_cane"
+	},
+	{
+	  "item": "sugar_cane"
+	},
+	{
+	  "item": "bewitchment:heaven_extract"
+	},
+	{
+	  "item": "phantom_membrane"
+	}
+  ],
+  "result": {
+	"item": "bewitchment:fleeting_bramble",
+	"count": 3
+  }
+}

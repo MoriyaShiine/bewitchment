@@ -2,26 +2,36 @@ package moriyashiine.bewitchment.common.entity.living;
 
 import moriyashiine.bewitchment.common.entity.living.util.BWTameableEntity;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
+import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("ConstantConditions")
 public class ToadEntity extends BWTameableEntity {
+	public boolean isFromWednesdayRitual = false;
+	
 	public ToadEntity(EntityType<? extends TameableEntity> type, World world) {
 		super(type, world);
+		setPathfindingPenalty(PathNodeType.WATER, -1);
+		setPathfindingPenalty(PathNodeType.WATER_BORDER, -1);
 	}
 	
 	public static DefaultAttributeContainer.Builder createAttributes() {
@@ -62,6 +72,27 @@ public class ToadEntity extends BWTameableEntity {
 	}
 	
 	@Override
+	protected boolean shouldDropLoot() {
+		return super.shouldDropLoot() && !isFromWednesdayRitual;
+	}
+	
+	@Nullable
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return BWSoundEvents.ENTITY_TOAD_AMBIENT;
+	}
+	
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return BWSoundEvents.ENTITY_TOAD_HURT;
+	}
+	
+	@Override
+	protected SoundEvent getDeathSound() {
+		return BWSoundEvents.ENTITY_TOAD_DEATH;
+	}
+	
+	@Override
 	public boolean isBreedingItem(ItemStack stack) {
 		return stack.getItem() == Items.SPIDER_EYE;
 	}
@@ -75,7 +106,6 @@ public class ToadEntity extends BWTameableEntity {
 	protected void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition) {
 	}
 	
-	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void setTamed(boolean tamed) {
 		super.setTamed(tamed);
@@ -90,13 +120,25 @@ public class ToadEntity extends BWTameableEntity {
 	}
 	
 	@Override
+	public void readCustomDataFromTag(CompoundTag tag) {
+		super.readCustomDataFromTag(tag);
+		isFromWednesdayRitual = tag.getBoolean("IsFromWednesdayRitual");
+	}
+	
+	@Override
+	public void writeCustomDataToTag(CompoundTag tag) {
+		super.writeCustomDataToTag(tag);
+		tag.putBoolean("IsFromWednesdayRitual", isFromWednesdayRitual);
+	}
+	
+	@Override
 	protected void initGoals() {
-		goalSelector.add(1, new SwimGoal(this));
-		goalSelector.add(2, new SitGoal(this));
-		goalSelector.add(3, new FollowOwnerGoal(this, 1, 10, 2, false));
-		goalSelector.add(4, new AnimalMateGoal(this, 1));
-		goalSelector.add(5, new WanderAroundFarGoal(this, 1));
-		goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8));
-		goalSelector.add(6, new LookAroundGoal(this));
+		goalSelector.add(0, new SwimGoal(this));
+		goalSelector.add(1, new SitGoal(this));
+		goalSelector.add(2, new FollowOwnerGoal(this, 1, 10, 2, false));
+		goalSelector.add(3, new AnimalMateGoal(this, 1));
+		goalSelector.add(4, new WanderAroundFarGoal(this, 1));
+		goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 8));
+		goalSelector.add(5, new LookAroundGoal(this));
 	}
 }

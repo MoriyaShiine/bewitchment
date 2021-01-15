@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/outer_stairs",
+  "parent": "block/outer_stairs",
   "textures": {
 	"bottom": "bewitchment:block/dragons_blood_planks",
 	"top": "bewitchment:block/dragons_blood_planks",

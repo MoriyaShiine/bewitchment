@@ -11,7 +11,10 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-    jcenter()
+    maven {
+        name = "reach"
+        url = "https://maven.jamieswhiteshirt.com/libs-release"
+    }
 }
 
 dependencies {
@@ -29,6 +32,8 @@ dependencies {
     include "me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}"
     modImplementation "com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraform_wood_api_version}"
     include "com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraform_wood_api_version}"
+    modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${project.reach_version}"
+    include "com.jamieswhiteshirt:reach-entity-attributes:${project.reach_version}"
 
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
     modRuntime "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"

@@ -1,0 +1,18 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:aqua_cerate"
+	},
+	{
+	  "item": "lapis_block"
+	},
+	{
+	  "item": "book"
+	}
+  ],
+  "inner": "normal",
+  "outer": "eldritch",
+  "ritual_function": "bewitchment:enchant",
+  "cost": 600
+}

@@ -1,0 +1,14 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:grim_elixir"
+	},
+	{
+	  "tag": "c:silver_ingots"
+	}
+  ],
+  "inner": "normal",
+  "ritual_function": "bewitchment:turn_to_night",
+  "cost": 150
+}

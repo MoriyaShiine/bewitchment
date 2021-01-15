@@ -1,0 +1,22 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	"GGG",
+	"GDG",
+	"S S"
+  ],
+  "key": {
+	"G": {
+	  "item": "glass"
+	},
+	"D": {
+	  "item": "diamond"
+	},
+	"S": {
+	  "tag": "c:silver_ingots"
+	}
+  },
+  "result": {
+	"item": "bewitchment:crystal_ball"
+  }
+}

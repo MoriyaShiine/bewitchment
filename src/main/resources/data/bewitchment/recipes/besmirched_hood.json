@@ -1,0 +1,15 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	"###",
+	"# #"
+  ],
+  "key": {
+	"#": {
+	  "item": "bewitchment:besmirched_wool"
+	}
+  },
+  "result": {
+	"item": "bewitchment:besmirched_hood"
+  }
+}

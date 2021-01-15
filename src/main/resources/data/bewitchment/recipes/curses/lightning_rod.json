@@ -1,0 +1,19 @@
+{
+  "type": "bewitchment:curse_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:taglock"
+	},
+	{
+	  "item": "bewitchment:heaven_extract"
+	},
+	{
+	  "item": "iron_ingot"
+	},
+	{
+	  "item": "bewitchment:aconite"
+	}
+  ],
+  "curse": "bewitchment:lightning_rod",
+  "cost": 400
+}

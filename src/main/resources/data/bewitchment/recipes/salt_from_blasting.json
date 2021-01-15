@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:blasting",
+  "type": "blasting",
   "ingredient": {
 	"item": "bewitchment:salt_ore"
   },

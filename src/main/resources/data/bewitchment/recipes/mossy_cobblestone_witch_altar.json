@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "crafting_shaped",
   "pattern": [
 	"MBM",
 	" M ",
@@ -7,7 +7,7 @@
   ],
   "key": {
 	"M": {
-	  "item": "minecraft:mossy_cobblestone"
+	  "item": "mossy_cobblestone"
 	},
 	"B": {
 	  "tag": "bewitchment:barks"

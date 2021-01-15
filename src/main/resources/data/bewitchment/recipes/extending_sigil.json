@@ -1,0 +1,25 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	"ARB",
+	"RPR",
+	"BRA"
+  ],
+  "key": {
+	"R": {
+	  "item": "bewitchment:dragons_blood_resin"
+	},
+	"P": {
+	  "item": "paper"
+	},
+	"A": {
+	  "item": "bewitchment:mandrake_root"
+	},
+	"B": {
+	  "item": "bewitchment:garlic"
+	}
+  },
+  "result": {
+	"item": "bewitchment:extending_sigil"
+  }
+}

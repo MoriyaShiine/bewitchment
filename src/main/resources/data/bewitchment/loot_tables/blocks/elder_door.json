@@ -1,14 +1,14 @@
 {
-  "type": "minecraft:block",
+  "type": "block",
   "pools": [
 	{
 	  "rolls": 1,
 	  "entries": [
 		{
-		  "type": "minecraft:item",
+		  "type": "item",
 		  "conditions": [
 			{
-			  "condition": "minecraft:block_state_property",
+			  "condition": "block_state_property",
 			  "block": "bewitchment:elder_door",
 			  "properties": {
 				"half": "lower"
@@ -20,7 +20,7 @@
 	  ],
 	  "conditions": [
 		{
-		  "condition": "minecraft:survives_explosion"
+		  "condition": "survives_explosion"
 		}
 	  ]
 	}

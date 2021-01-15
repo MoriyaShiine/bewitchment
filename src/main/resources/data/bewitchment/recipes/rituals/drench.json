@@ -1,0 +1,17 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:aqua_cerate"
+	},
+	{
+	  "item": "lily_pad"
+	},
+	{
+	  "tag": "fishes"
+	}
+  ],
+  "inner": "normal",
+  "ritual_function": "bewitchment:make_entities_wet",
+  "cost": 300
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+	"has_fruit=false": {
+	  "model": "bewitchment:block/fruiting_bramble"
+	},
+	"has_fruit=true": {
+	  "model": "bewitchment:block/fruiting_bramble_has_fruit"
+	}
+  }
+}

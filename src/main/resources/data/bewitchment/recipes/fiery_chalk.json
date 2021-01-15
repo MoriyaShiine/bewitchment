@@ -1,0 +1,17 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "bewitchment:chalk"
+	},
+	{
+	  "item": "bewitchment:fiery_serum"
+	},
+	{
+	  "item": "bewitchment:heaven_extract"
+	}
+  ],
+  "result": {
+	"item": "bewitchment:fiery_chalk"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+	"layer0": "bewitchment:item/hedgewitch_hat"
+  },
+  "overrides": [
+	{
+	  "predicate": {
+		"bewitchment:variant": 1
+	  },
+	  "model": "bewitchment:item/witch_hat_variant"
+	}
+  ]
+}

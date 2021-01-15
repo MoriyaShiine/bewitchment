@@ -25,8 +25,7 @@
 			16,
 			16
 		  ],
-		  "texture": "#line",
-		  "tintindex": 0
+		  "texture": "#line"
 		},
 		"north": {
 		  "uv": [
@@ -35,8 +34,7 @@
 			0,
 			16
 		  ],
-		  "texture": "#line",
-		  "tintindex": 0
+		  "texture": "#line"
 		}
 	  }
 	}

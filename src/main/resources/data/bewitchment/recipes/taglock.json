@@ -1,0 +1,14 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "glass_bottle"
+	},
+	{
+	  "item": "bone"
+	}
+  ],
+  "result": {
+	"item": "bewitchment:taglock"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "diamond"
+	},
+	{
+	  "item": "bewitchment:snake_tongue"
+	},
+	{
+	  "item": "bewitchment:demon_horn"
+	},
+	{
+	  "item": "bewitchment:aconite"
+	},
+	{
+	  "item": "bewitchment:belladonna"
+	}
+  ],
+  "inner": "fiery",
+  "outer": "fiery",
+  "ritual_function": "bewitchment:summon_demon",
+  "cost": 666
+}
