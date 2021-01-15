@@ -10,6 +10,7 @@ import me.shedaniel.rei.gui.widget.Widget;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.recipe.CurseRecipe;
 import moriyashiine.bewitchment.common.registry.BWObjects;
+import moriyashiine.bewitchment.common.registry.BWRegistries;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.resource.language.I18n;
@@ -71,6 +72,7 @@ public class CurseCategory implements RecipeCategory<CurseCategory.Display> {
 		return widgets;
 	}
 	
+	@SuppressWarnings("ConstantConditions")
 	public static class Display implements RecipeDisplay {
 		private final List<List<EntryStack>> input;
 		private final List<List<EntryStack>> output;
@@ -85,7 +87,7 @@ public class CurseCategory implements RecipeCategory<CurseCategory.Display> {
 				input.add(entries);
 			}
 			this.input = input;
-			ItemStack brazier = new ItemStack(BWObjects.BRAZIER).setCustomName(new TranslatableText("curse." + recipe.getId().toString().replaceAll(":", ".").replaceAll("/", ".")));
+			ItemStack brazier = new ItemStack(BWObjects.BRAZIER).setCustomName(new TranslatableText("curse." + BWRegistries.CURSES.getId(recipe.curse).toString().replace(":", ".")));
 			brazier.getOrCreateTag().putInt("Cost", recipe.cost);
 			output = Collections.singletonList(Collections.singletonList(EntryStack.create(brazier)));
 		}

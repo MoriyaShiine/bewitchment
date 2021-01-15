@@ -37,15 +37,6 @@
 	],
 	"subtitle": "bewitchment.subtitles.block.crystal_ball.fail"
   },
-  "block.brazier.fire": {
-	"sounds": [
-	  {
-		"name": "mob/wither/spawn",
-		"pitch": 0.5
-	  }
-	],
-	"subtitle": "bewitchment.subtitles.block.brazier.fire"
-  },
   "block.brazier.fail": {
 	"sounds": [
 	  "note/snare"
@@ -132,6 +123,15 @@
 	  "mob/wither/spawn"
 	],
 	"subtitle": "bewitchment.subtitles.entity.generic.pledge"
+  },
+  "entity.generic.curse": {
+	"sounds": [
+	  {
+		"name": "mob/wither/spawn",
+		"pitch": 0.5
+	  }
+	],
+	"subtitle": "bewitchment.subtitles.entity.generic.curse"
   },
   "entity.owl.ambient": {
 	"sounds": [

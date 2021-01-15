@@ -115,7 +115,7 @@ public class TaglockItem extends Item {
 					failed = true;
 				}
 			}
-			else if (checkVisibility) {
+			else if (checkVisibility && !entity.isSleeping()) {
 				double targetYaw = entity.getHeadYaw() % 360;
 				double userYaw = user.getHeadYaw() % 360;
 				if (userYaw < 0) {

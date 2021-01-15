@@ -4,14 +4,18 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.MasterAccessor;
 import moriyashiine.bewitchment.api.interfaces.Pledgeable;
 import moriyashiine.bewitchment.api.interfaces.WetAccessor;
+import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.util.Pair;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,6 +23,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Random;
 import java.util.UUID;
 
 @SuppressWarnings("ConstantConditions")
@@ -31,6 +36,10 @@ public abstract class EntityMixin implements WetAccessor {
 	
 	@Shadow
 	public World world;
+	
+	@Shadow
+	@Final
+	protected Random random;
 	
 	@Override
 	public int getWetTimer() {
@@ -79,6 +88,29 @@ public abstract class EntityMixin implements WetAccessor {
 	private void tick(CallbackInfo callbackInfo) {
 		if (getWetTimer() > 0) {
 			setWetTimer(getWetTimer() - 1);
+		}
+	}
+	
+	@Inject(method = "setFireTicks", at = @At("HEAD"))
+	private void setFireTicks(int ticks, CallbackInfo callbackInfo) {
+		if (ticks > 0 && (Object) this instanceof PlayerEntity) {
+			ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_POPPET, null, (PlayerEntity) (Object) this);
+			if (!poppet.isEmpty()) {
+				LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
+				if (!owner.getUuid().equals(getUuid())) {
+					if (poppet.damage(1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+						poppet.decrement(1);
+					}
+					ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
+					if (!potentialPoppet.isEmpty()) {
+						if (potentialPoppet.damage(1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
+							potentialPoppet.decrement(1);
+						}
+						return;
+					}
+					owner.setFireTicks(ticks);
+				}
+			}
 		}
 	}
 	

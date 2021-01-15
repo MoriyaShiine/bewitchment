@@ -1,12 +1,11 @@
 package moriyashiine.bewitchment.mixin;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.*;
 import moriyashiine.bewitchment.api.registry.Fortune;
-import moriyashiine.bewitchment.common.registry.BWContracts;
-import moriyashiine.bewitchment.common.registry.BWRegistries;
-import moriyashiine.bewitchment.common.registry.BWStatusEffects;
-import moriyashiine.bewitchment.common.registry.BWTags;
+import moriyashiine.bewitchment.common.registry.*;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -152,6 +151,26 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 				else {
 					getHungerManager().add(foodComponent.getHunger(), 0);
 				}
+			}
+		}
+	}
+	
+	@Inject(method = "dropItem(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/ItemEntity;", at = @At("HEAD"))
+	private void dropItem(ItemStack stack, boolean throwRandomly, boolean retainOwnership, CallbackInfoReturnable<ItemEntity> callbackInfo) {
+		if (stack.getItem() == BWObjects.VOODOO_POPPET) {
+			LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, stack);
+			if (owner != null && !owner.getUuid().equals(getUuid())) {
+				if (stack.damage(1, random, null) && stack.getDamage() >= stack.getMaxDamage()) {
+					stack.decrement(1);
+				}
+				ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
+				if (!potentialPoppet.isEmpty()) {
+					if (potentialPoppet.damage(1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
+						potentialPoppet.decrement(1);
+					}
+					return;
+				}
+				owner.addVelocity(getRotationVector().x / 2, getRotationVector().y / 2, getRotationVector().z / 2);
 			}
 		}
 	}

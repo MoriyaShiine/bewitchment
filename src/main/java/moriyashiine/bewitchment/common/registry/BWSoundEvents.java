@@ -17,7 +17,6 @@ public class BWSoundEvents {
 	public static final SoundEvent BLOCK_GLYPH_PLING = create("block.glyph.pling");
 	public static final SoundEvent BLOCK_CRYSTAL_BALL_FIRE = create("block.crystal_ball.fire");
 	public static final SoundEvent BLOCK_CRYSTAL_BALL_FAIL = create("block.crystal_ball.fail");
-	public static final SoundEvent BLOCK_BRAZIER_FIRE = create("block.brazier.fire");
 	public static final SoundEvent BLOCK_BRAZIER_FAIL = create("block.brazier.fail");
 	public static final SoundEvent BLOCK_SIGIL_PLING = create("block.sigil.pling");
 	public static final SoundEvent ITEM_ATHAME_STRIP = create("item.athame.strip");
@@ -26,6 +25,7 @@ public class BWSoundEvents {
 	public static final SoundEvent ENTITY_GENERIC_PLING = create("entity.generic.pling");
 	public static final SoundEvent ENTITY_GENERIC_SHOOT = create("entity.generic.shoot");
 	public static final SoundEvent ENTITY_GENERIC_PLEDGE = create("entity.generic.pledge");
+	public static final SoundEvent ENTITY_GENERIC_CURSE = create("entity.generic.curse");
 	public static final SoundEvent ENTITY_OWL_AMBIENT = create("entity.owl.ambient");
 	public static final SoundEvent ENTITY_OWL_HURT = create("entity.owl.hurt");
 	public static final SoundEvent ENTITY_OWL_DEATH = create("entity.owl.death");

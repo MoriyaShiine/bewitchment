@@ -10,9 +10,7 @@ import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.recipe.CurseRecipe;
 import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
-import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
-import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
-import moriyashiine.bewitchment.common.registry.BWSoundEvents;
+import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.BlockState;
@@ -120,10 +118,20 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 						boolean clear = incenseRecipe != null;
 						if (curseRecipe != null) {
 							if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain(curseRecipe.cost, false)) {
-								CurseAccessor curseAccessor = CurseAccessor.of(getTarget()).orElse(null);
+								Entity target = getTarget();
+								CurseAccessor curseAccessor = CurseAccessor.of(target).orElse(null);
 								if (curseAccessor != null) {
-									curseAccessor.addCurse(new Curse.Instance(curseRecipe.curse, 168000));
-									world.playSound(null, pos, BWSoundEvents.BLOCK_BRAZIER_FIRE, SoundCategory.BLOCKS, 1, 1);
+									ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, target, null);
+									if (!poppet.isEmpty() && !poppet.getOrCreateTag().getBoolean("Cursed")) {
+										poppet.getOrCreateTag().putString("Curse", BWRegistries.CURSES.getId(curseRecipe.curse).toString());
+										poppet.getOrCreateTag().putBoolean("Cursed", true);
+										poppet.getOrCreateTag().remove("OwnerUUID");
+										poppet.getOrCreateTag().remove("OwnerName");
+									}
+									else {
+										curseAccessor.addCurse(new Curse.Instance(curseRecipe.curse, 168000));
+									}
+									world.playSound(null, pos, BWSoundEvents.ENTITY_GENERIC_CURSE, SoundCategory.BLOCKS, 1, 1);
 									clear = true;
 								}
 								else {
@@ -278,8 +286,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 				for (int i = 0; i < inventory.size(); i++) {
 					ItemStack stack = getStack(i);
 					if (stack.isDamageable()) {
-						stack.damage(1, world.random, null);
-						if (stack.getDamage() == stack.getMaxDamage()) {
+						if (stack.damage(1, world.random, null) && stack.getDamage() == stack.getMaxDamage()) {
 							stack.decrement(1);
 						}
 					}

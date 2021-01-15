@@ -32,8 +32,7 @@ public class RitualFunction {
 		for (int i = 0; i < inventory.size(); i++) {
 			ItemStack stack = inventory.getStack(i);
 			if (stack.isDamageable()) {
-				stack.damage(1, world.random, null);
-				if (stack.getDamage() == stack.getMaxDamage()) {
+				if (stack.damage(1, world.random, null) && stack.getDamage() == stack.getMaxDamage()) {
 					stack.decrement(1);
 				}
 			}

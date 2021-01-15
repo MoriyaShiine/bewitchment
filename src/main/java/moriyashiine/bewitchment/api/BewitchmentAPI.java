@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.api;
 
+import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
 import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
 import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
@@ -65,7 +66,7 @@ public class BewitchmentAPI {
 	}
 	
 	public static LivingEntity getTaglockOwner(World world, ItemStack taglock) {
-		if (world instanceof ServerWorld && taglock.getItem() instanceof TaglockItem && taglock.hasTag() && taglock.getOrCreateTag().contains("OwnerUUID")) {
+		if (world instanceof ServerWorld && (taglock.getItem() instanceof TaglockItem || taglock.getItem() instanceof PoppetItem) && taglock.hasTag() && taglock.getOrCreateTag().contains("OwnerUUID")) {
 			UUID ownerUUID = taglock.getOrCreateTag().getUuid("OwnerUUID");
 			for (ServerWorld serverWorld : world.getServer().getWorlds()) {
 				Entity entity = serverWorld.getEntity(ownerUUID);
@@ -75,6 +76,39 @@ public class BewitchmentAPI {
 			}
 		}
 		return null;
+	}
+	
+	public static ItemStack getPoppet(World world, PoppetItem item, Entity owner, PlayerEntity specificInventory) {
+		if (!world.isClient) {
+			List<PlayerEntity> toSearch = new ArrayList<>();
+			if (specificInventory != null) {
+				toSearch.add(specificInventory);
+			}
+			else {
+				toSearch.addAll(((ServerWorld) world).getPlayers());
+			}
+			for (PlayerEntity player : toSearch) {
+				for (int i = 0; i < player.inventory.size(); i++) {
+					ItemStack stack = player.inventory.getStack(i);
+					if (stack.getItem() == item && stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID")) {
+						UUID uuid = null;
+						if (owner != null) {
+							uuid = owner.getUuid();
+						}
+						else {
+							LivingEntity taglockOwner = getTaglockOwner(world, stack);
+							if (taglockOwner != null) {
+								uuid = taglockOwner.getUuid();
+							}
+						}
+						if (stack.getOrCreateTag().getUuid("OwnerUUID").equals(uuid)) {
+							return stack;
+						}
+					}
+				}
+			}
+		}
+		return ItemStack.EMPTY;
 	}
 	
 	public static boolean isSourceFromSilver(DamageSource source) {

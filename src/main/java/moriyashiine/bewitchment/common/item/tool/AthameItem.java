@@ -6,7 +6,6 @@ import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import moriyashiine.bewitchment.api.interfaces.HasSigil;
 import moriyashiine.bewitchment.common.block.dragonsblood.DragonsBloodLogBlock;
 import moriyashiine.bewitchment.common.recipe.AthameStrippingRecipe;
-import moriyashiine.bewitchment.common.registry.BWMaterials;
 import moriyashiine.bewitchment.common.registry.BWProperties;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
@@ -105,8 +104,7 @@ public class AthameItem extends SwordItem {
 		if (state.getBlock() instanceof DragonsBloodLogBlock && state.get(BWProperties.NATURAL) && !state.get(BWProperties.CUT)) {
 			world.playSound(null, pos, BWSoundEvents.ITEM_ATHAME_STRIP, SoundCategory.BLOCKS, 1, 1);
 			world.setBlockState(pos, state.with(BWProperties.CUT, true));
-			stack.damage(1, world.random, null);
-			if (stack.getDamage() == BWMaterials.SILVER_TOOL.getDurability()) {
+			if (stack.damage(1, world.random, null) && stack.getDamage() >= stack.getMaxDamage()) {
 				stack.decrement(1);
 			}
 			return true;
