@@ -2,8 +2,6 @@ package moriyashiine.bewitchment.client.network.packet;
 
 import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.common.Bewitchment;
-import net.fabricmc.fabric.api.network.PacketContext;
-import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
@@ -32,7 +30,7 @@ public class CreateNonLivingEntityPacket {
 		buf.writeDouble(entity.getZ());
 		buf.writeByte(MathHelper.floor(entity.pitch * 256 / 360));
 		buf.writeByte(MathHelper.floor(entity.yaw * 256 / 360));
-		return ServerPlayNetworking.createS2CPacket(ID, buf); //ServerSidePacketRegistry.INSTANCE.toPacket(ID, buf);
+		return ServerPlayNetworking.createS2CPacket(ID, buf);
 	}
 	
 	public static void handle(MinecraftClient client, ClientPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
