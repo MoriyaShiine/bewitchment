@@ -1,0 +1,25 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	" S ",
+	"AHB",
+	" S "
+  ],
+  "key": {
+	"S": {
+	  "item": "bewitchment:spanish_moss"
+	},
+	"H": {
+	  "item": "hay_block"
+	},
+	"A": {
+	  "item": "iron_block"
+	},
+	"B": {
+	  "item": "bewitchment:spruce_bark"
+	}
+  },
+  "result": {
+	"item": "bewitchment:protection_poppet"
+  }
+}
