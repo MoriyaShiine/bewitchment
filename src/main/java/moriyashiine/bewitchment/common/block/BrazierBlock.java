@@ -103,9 +103,7 @@ public class BrazierBlock extends LanternBlock implements BlockEntityProvider {
 	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
 		if (state.get(Properties.LIT)) {
 			double y = pos.getY() + (state.get(Properties.HANGING) ? 0.3 : 1.15);
-			for (int i = 0; i < 4; i++) {
-				world.addParticle(ParticleTypes.FLAME, pos.getX() + 0.5 + MathHelper.nextDouble(random, -0.2, 0.2), y, pos.getZ() + 0.5 + MathHelper.nextDouble(random, -0.2, 0.2), 0, 0, 0);
-			}
+			world.addParticle(ParticleTypes.FLAME, pos.getX() + 0.5 + MathHelper.nextDouble(random, -0.2, 0.2), y, pos.getZ() + 0.5 + MathHelper.nextDouble(random, -0.2, 0.2), 0, 0, 0);
 		}
 	}
 	
