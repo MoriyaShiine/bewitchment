@@ -99,68 +99,65 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 	
 	@Override
 	public void tick() {
-		if (world != null) {
+		if (world != null && !world.isClient) {
 			if (!loaded) {
 				markDirty();
 				incenseRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.INCENSE_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
 				curseRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CURSE_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
+				syncBrazier();
 				loaded = true;
 			}
 			if (timer < 0) {
 				timer++;
-				if (!world.isClient) {
-					if (world.random.nextBoolean()) {
-						PlayerLookup.tracking(this).forEach(playerEntity -> SpawnBrazierParticlesPacket.send(playerEntity, this));
-					}
+				if (world.random.nextBoolean()) {
+					PlayerLookup.tracking(this).forEach(playerEntity -> SpawnBrazierParticlesPacket.send(playerEntity, this));
 				}
-				else {
-					if (timer == 0) {
-						boolean clear = false;
-						if (curseRecipe != null) {
-							if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain(curseRecipe.cost, false)) {
-								Entity target = getTarget();
-								CurseAccessor curseAccessor = CurseAccessor.of(target).orElse(null);
-								if (curseAccessor != null) {
-									ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, target, null);
-									if (!poppet.isEmpty() && !poppet.getOrCreateTag().getBoolean("Cursed")) {
-										poppet.getOrCreateTag().putString("Curse", BWRegistries.CURSES.getId(curseRecipe.curse).toString());
-										poppet.getOrCreateTag().putBoolean("Cursed", true);
-										poppet.getOrCreateTag().remove("OwnerUUID");
-										poppet.getOrCreateTag().remove("OwnerName");
-									}
-									else {
-										curseAccessor.addCurse(new Curse.Instance(curseRecipe.curse, 168000));
-									}
-									world.playSound(null, pos, BWSoundEvents.ENTITY_GENERIC_CURSE, SoundCategory.BLOCKS, 1, 1);
-									clear = true;
+				if (timer == 0) {
+					boolean clear = incenseRecipe != null;
+					if (curseRecipe != null) {
+						if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain(curseRecipe.cost, false)) {
+							Entity target = getTarget();
+							CurseAccessor curseAccessor = CurseAccessor.of(target).orElse(null);
+							if (curseAccessor != null) {
+								ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, target, null);
+								if (!poppet.isEmpty() && !poppet.getOrCreateTag().getBoolean("Cursed")) {
+									poppet.getOrCreateTag().putString("Curse", BWRegistries.CURSES.getId(curseRecipe.curse).toString());
+									poppet.getOrCreateTag().putBoolean("Cursed", true);
+									poppet.getOrCreateTag().remove("OwnerUUID");
+									poppet.getOrCreateTag().remove("OwnerName");
 								}
 								else {
-									PlayerEntity closestPlayer = world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 12, false);
-									if (closestPlayer != null) {
-										String entityName = "";
-										for (int i = 0; i < size(); i++) {
-											ItemStack stack = getStack(i);
-											if (stack.getItem() instanceof TaglockItem && stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID")) {
-												entityName = stack.getOrCreateTag().getString("OwnerName");
-												break;
-											}
-										}
-										world.playSound(null, pos, BWSoundEvents.BLOCK_BRAZIER_FAIL, SoundCategory.BLOCKS, 1, 1);
-										closestPlayer.sendMessage(new TranslatableText(Bewitchment.MODID + ".invalid_entity", entityName), true);
-									}
+									curseAccessor.addCurse(new Curse.Instance(curseRecipe.curse, 168000));
 								}
+								world.playSound(null, pos, BWSoundEvents.ENTITY_GENERIC_CURSE, SoundCategory.BLOCKS, 1, 1);
+								clear = true;
 							}
 							else {
 								PlayerEntity closestPlayer = world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 12, false);
 								if (closestPlayer != null) {
+									String entityName = "";
+									for (int i = 0; i < size(); i++) {
+										ItemStack stack = getStack(i);
+										if (stack.getItem() instanceof TaglockItem && stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID")) {
+											entityName = stack.getOrCreateTag().getString("OwnerName");
+											break;
+										}
+									}
 									world.playSound(null, pos, BWSoundEvents.BLOCK_BRAZIER_FAIL, SoundCategory.BLOCKS, 1, 1);
-									closestPlayer.sendMessage(new TranslatableText(Bewitchment.MODID + ".insufficent_altar_power"), true);
+									closestPlayer.sendMessage(new TranslatableText(Bewitchment.MODID + ".invalid_entity", entityName), true);
 								}
 							}
 						}
-						reset(clear);
-						syncBrazier();
+						else {
+							PlayerEntity closestPlayer = world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 12, false);
+							if (closestPlayer != null) {
+								world.playSound(null, pos, BWSoundEvents.BLOCK_BRAZIER_FAIL, SoundCategory.BLOCKS, 1, 1);
+								closestPlayer.sendMessage(new TranslatableText(Bewitchment.MODID + ".insufficent_altar_power"), true);
+							}
+						}
 					}
+					reset(clear);
+					syncBrazier();
 				}
 			}
 		}
@@ -230,7 +227,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 			if (getCachedState().get(Properties.LIT)) {
 				world.setBlockState(pos, getCachedState().with(Properties.LIT, false));
 				world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1, 2);
-				reset(false);
+				reset(incenseRecipe != null);
 				syncBrazier();
 			}
 			else {
@@ -242,7 +239,6 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 					if (foundIncenseRecipe != null) {
 						incenseRecipe = foundIncenseRecipe;
 						timer = -6000;
-						cleanInventory();
 						syncBrazier();
 					}
 					else {
@@ -262,7 +258,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 					}
 				}
 				else {
-					reset(false);
+					reset(incenseRecipe != null);
 					syncBrazier();
 				}
 			}
