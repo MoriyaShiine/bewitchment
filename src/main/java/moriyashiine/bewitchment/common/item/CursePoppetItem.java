@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.item.tool;
+package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.api.interfaces.CurseAccessor;
 import moriyashiine.bewitchment.api.item.PoppetItem;

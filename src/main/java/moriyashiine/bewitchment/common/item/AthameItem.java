@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.item.tool;
+package moriyashiine.bewitchment.common.item;
 
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
