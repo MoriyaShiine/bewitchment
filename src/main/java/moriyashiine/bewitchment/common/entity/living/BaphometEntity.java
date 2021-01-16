@@ -162,8 +162,9 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 				lookAtEntity(target, 360, 360);
 				if (timer % 60 == 0) {
 					for (int i = -1; i <= 1; i++) {
-						FireballEntity fireball = new FireballEntity(world, this, target.getX() - getX() + i, target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ() + i);
+						FireballEntity fireball = new FireballEntity(world, this, target.getX() - getX() + (i * 2), target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ() + (i * 2));
 						fireball.updatePosition(fireball.getX(), getBodyY(0.5), fireball.getZ());
+						fireball.setOwner(this);
 						world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_SHOOT, SoundCategory.HOSTILE, 1, 1);
 						world.spawnEntity(fireball);
 					}
