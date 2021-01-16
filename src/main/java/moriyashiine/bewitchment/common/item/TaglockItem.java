@@ -73,16 +73,18 @@ public class TaglockItem extends Item {
 				if (stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID")) {
 					if (!client) {
 						HasSigil sigil = (HasSigil) blockEntity;
-						if (sigil.getEntities().isEmpty()) {
-							sigil.setModeOnWhitelist(true);
-						}
-						UUID uuid = stack.getOrCreateTag().getUuid("OwnerUUID");
-						if (!sigil.getEntities().contains(uuid)) {
-							sigil.getEntities().add(uuid);
-							if (!player.isCreative()) {
-								stack.decrement(1);
+						if (sigil.getSigil() != null) {
+							if (sigil.getEntities().isEmpty()) {
+								sigil.setModeOnWhitelist(true);
 							}
-							blockEntity.markDirty();
+							UUID uuid = stack.getOrCreateTag().getUuid("OwnerUUID");
+							if (!sigil.getEntities().contains(uuid)) {
+								sigil.getEntities().add(uuid);
+								if (!player.isCreative()) {
+									stack.decrement(1);
+								}
+								blockEntity.markDirty();
+							}
 						}
 					}
 					return ActionResult.success(client);
