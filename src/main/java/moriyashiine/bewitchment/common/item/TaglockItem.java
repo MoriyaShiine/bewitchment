@@ -31,6 +31,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.UUID;
 
 @SuppressWarnings("ConstantConditions")
 public class TaglockItem extends Item {
@@ -75,11 +76,14 @@ public class TaglockItem extends Item {
 						if (sigil.getEntities().isEmpty()) {
 							sigil.setModeOnWhitelist(true);
 						}
-						sigil.getEntities().add(stack.getOrCreateTag().getUuid("OwnerUUID"));
-						if (!player.isCreative()) {
-							stack.decrement(1);
+						UUID uuid = stack.getOrCreateTag().getUuid("OwnerUUID");
+						if (!sigil.getEntities().contains(uuid)) {
+							sigil.getEntities().add(uuid);
+							if (!player.isCreative()) {
+								stack.decrement(1);
+							}
+							blockEntity.markDirty();
 						}
-						blockEntity.markDirty();
 					}
 					return ActionResult.success(client);
 				}
