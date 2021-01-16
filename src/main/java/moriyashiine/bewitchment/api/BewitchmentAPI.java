@@ -213,14 +213,11 @@ public class BewitchmentAPI {
 		return amount;
 	}
 	
-	public static void addItemToInventoryAndConsume(LivingEntity entity, Hand hand, ItemStack toAdd) {
-		ItemStack stack = entity.getStackInHand(hand);
-		stack.decrement(entity instanceof PlayerEntity && !((PlayerEntity) entity).isCreative() ? 1 : 0);
-		if (stack.isEmpty()) {
-			entity.setStackInHand(hand, toAdd);
-		}
-		else if (!(entity instanceof PlayerEntity) || !((PlayerEntity) entity).inventory.insertStack(toAdd)) {
-			entity.dropStack(toAdd);
+	public static void addItemToInventoryAndConsume(PlayerEntity player, Hand hand, ItemStack toAdd) {
+		ItemStack stack = player.getStackInHand(hand);
+		stack.decrement(player.isCreative() ? 0 : 1);
+		if (!player.inventory.insertStack(toAdd)) {
+			player.dropItem(stack, false, true);
 		}
 	}
 	

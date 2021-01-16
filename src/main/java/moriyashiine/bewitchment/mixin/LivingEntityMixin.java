@@ -429,12 +429,12 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 							ItemScatterer.spawn(world, getX() + 0.5, getY() + 0.5, getZ() + 0.5, drop);
 						}
 					}
-					if (livingAttacker.getOffHandStack().getItem() == Items.GLASS_BOTTLE && getBlood() > 30) {
+					if (livingAttacker instanceof PlayerEntity && livingAttacker.getOffHandStack().getItem() == Items.GLASS_BOTTLE && getBlood() > 30) {
 						world.playSound(null, attacker.getBlockPos(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1, 0.5f);
 						ItemStack bloodBottle = new ItemStack(BWObjects.BOTTLE_OF_BLOOD);
 						bloodBottle.getOrCreateTag().putUuid("OwnerUUID", getUuid());
 						bloodBottle.getOrCreateTag().putString("OwnerName", getDisplayName().getString());
-						BewitchmentAPI.addItemToInventoryAndConsume(livingAttacker, Hand.OFF_HAND, bloodBottle);
+						BewitchmentAPI.addItemToInventoryAndConsume((PlayerEntity) livingAttacker, Hand.OFF_HAND, bloodBottle);
 					}
 				}
 			}
