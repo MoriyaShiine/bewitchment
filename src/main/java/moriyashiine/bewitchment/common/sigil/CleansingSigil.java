@@ -2,8 +2,11 @@ package moriyashiine.bewitchment.common.sigil;
 
 import moriyashiine.bewitchment.api.registry.Sigil;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
+import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
+import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -16,12 +19,18 @@ public class CleansingSigil extends Sigil {
 	
 	@Override
 	public ActionResult use(World world, BlockPos pos, LivingEntity user, Hand hand) {
-		StatusEffectInstance effect = new StatusEffectInstance(BWStatusEffects.ABSENCE, 1, 1, false, false);
-		if (user.canHaveStatusEffect(effect)) {
-			if (!world.isClient) {
-				user.addStatusEffect(effect);
+		boolean flag = true;
+		if (world.getBlockState(pos).getBlock() instanceof PressurePlateBlock) {
+			flag = user.age % 20 == 0;
+		}
+		if (flag && user.getStatusEffects().stream().anyMatch(effect -> ((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.HARMFUL)) {
+			StatusEffectInstance effect = new StatusEffectInstance(BWStatusEffects.ABSENCE, 1, 1, false, false);
+			if (user.canHaveStatusEffect(effect)) {
+				if (!world.isClient) {
+					user.addStatusEffect(effect);
+				}
+				return ActionResult.SUCCESS;
 			}
-			return ActionResult.SUCCESS;
 		}
 		return super.use(world, pos, user, hand);
 	}

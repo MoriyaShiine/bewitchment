@@ -84,13 +84,15 @@ public class SigilItem extends Item {
 				blockEntity = world.getBlockEntity(pos.down());
 			}
 			if (((HasSigil) blockEntity).getSigil() == null) {
-				((HasSigil) blockEntity).setSigil(sigil);
-				((HasSigil) blockEntity).setUses(sigil.uses);
-				((HasSigil) blockEntity).setOwner(player.getUuid());
-				((BlockEntityClientSerializable) blockEntity).sync();
-				blockEntity.markDirty();
-				if (!player.isCreative()) {
-					stack.decrement(1);
+				if (!client) {
+					((HasSigil) blockEntity).setSigil(sigil);
+					((HasSigil) blockEntity).setUses(sigil.uses);
+					((HasSigil) blockEntity).setOwner(player.getUuid());
+					((BlockEntityClientSerializable) blockEntity).sync();
+					blockEntity.markDirty();
+					if (!player.isCreative()) {
+						stack.decrement(1);
+					}
 				}
 				return ActionResult.success(client);
 			}

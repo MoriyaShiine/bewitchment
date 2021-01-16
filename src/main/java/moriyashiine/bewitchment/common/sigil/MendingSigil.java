@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.common.sigil;
 
 import moriyashiine.bewitchment.api.registry.Sigil;
+import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -17,19 +18,25 @@ public class MendingSigil extends Sigil {
 	@Override
 	public ActionResult use(World world, BlockPos pos, LivingEntity user, Hand hand) {
 		ActionResult result = super.use(world, pos, user, hand);
-		StatusEffectInstance regeneration = new StatusEffectInstance(StatusEffects.REGENERATION, 200);
-		if (user.canHaveStatusEffect(regeneration)) {
-			if (!world.isClient) {
-				user.addStatusEffect(regeneration);
-			}
-			result = ActionResult.SUCCESS;
+		boolean flag = true;
+		if (world.getBlockState(pos).getBlock() instanceof PressurePlateBlock) {
+			flag = user.age % 20 == 0;
 		}
-		StatusEffectInstance resistance = new StatusEffectInstance(StatusEffects.RESISTANCE, 200);
-		if (user.canHaveStatusEffect(resistance)) {
-			if (!world.isClient) {
-				user.addStatusEffect(resistance);
+		if (flag) {
+			StatusEffectInstance regeneration = new StatusEffectInstance(StatusEffects.REGENERATION, 200);
+			if (user.canHaveStatusEffect(regeneration)) {
+				if (!world.isClient) {
+					user.addStatusEffect(regeneration);
+				}
+				result = ActionResult.SUCCESS;
 			}
-			result = ActionResult.SUCCESS;
+			StatusEffectInstance resistance = new StatusEffectInstance(StatusEffects.RESISTANCE, 200);
+			if (user.canHaveStatusEffect(resistance)) {
+				if (!world.isClient) {
+					user.addStatusEffect(resistance);
+				}
+				result = ActionResult.SUCCESS;
+			}
 		}
 		return result;
 	}
