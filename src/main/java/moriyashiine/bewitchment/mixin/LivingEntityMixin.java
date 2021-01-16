@@ -143,10 +143,13 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		if (amount > 0 && (Object) this instanceof PlayerEntity) {
 			ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VAMPIRIC_POPPET, null, (PlayerEntity) (Object) this);
 			if (!poppet.isEmpty()) {
-				if (BewitchmentAPI.getTaglockOwner(world, poppet).damage(BWDamageSources.VAMPIRE, amount) && poppet.damage((int) amount, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
-					poppet.decrement(1);
+				LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
+				if (!getUuid().equals(owner.getUuid()) && owner.damage(BWDamageSources.VAMPIRE, amount)) {
+					if (poppet.damage((int) amount, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+						poppet.decrement(1);
+					}
+					return 0;
 				}
-				return 0;
 			}
 		}
 		if (amount > 0 && attacker instanceof FortuneAccessor && ((FortuneAccessor) attacker).getFortune() != null && ((FortuneAccessor) attacker).getFortune().fortune == BWFortunes.HAWKEYE && source.isProjectile()) {
