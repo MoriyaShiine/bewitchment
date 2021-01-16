@@ -22,9 +22,11 @@ import java.util.Random;
 public class CropBlockMixin {
 	@Inject(method = "canGrow", at = @At("HEAD"), cancellable = true)
 	private void canGrow(World world, Random random, BlockPos pos, BlockState state, CallbackInfoReturnable<Boolean> callbackInfo) {
-		for (int i = 0; i < world.getEntitiesByClass(LivingEntity.class, new Box(pos).expand(24), entity -> entity.isAlive() && CurseAccessor.of(entity).orElse(null).hasCurse(BWCurses.ARMY_OF_WORMS)).size(); i++) {
-			if (random.nextFloat() < 2 / 3f) {
-				callbackInfo.setReturnValue(false);
+		if (!world.isClient) {
+			for (int i = 0; i < world.getEntitiesByClass(LivingEntity.class, new Box(pos).expand(24), entity -> entity.isAlive() && CurseAccessor.of(entity).orElse(null).hasCurse(BWCurses.ARMY_OF_WORMS)).size(); i++) {
+				if (random.nextFloat() < 2 / 3f) {
+					callbackInfo.setReturnValue(false);
+				}
 			}
 		}
 	}

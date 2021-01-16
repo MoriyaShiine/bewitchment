@@ -25,7 +25,7 @@ public abstract class MerchantMixin extends LivingEntity {
 	
 	@Inject(method = "getOffers", at = @At("HEAD"), cancellable = true)
 	private void getOffers(CallbackInfoReturnable<TradeOfferList> callbackInfo) {
-		if (!world.getEntitiesByClass(LivingEntity.class, new Box(getBlockPos()).expand(8), entity -> canSee(entity) && entity.isAlive() && CurseAccessor.of(entity).orElse(null).hasCurse(BWCurses.APATHY)).isEmpty()) {
+		if (!world.isClient && !world.getEntitiesByClass(LivingEntity.class, new Box(getBlockPos()).expand(8), entity -> canSee(entity) && entity.isAlive() && CurseAccessor.of(entity).orElse(null).hasCurse(BWCurses.APATHY)).isEmpty()) {
 			callbackInfo.setReturnValue(EMPTY);
 		}
 	}

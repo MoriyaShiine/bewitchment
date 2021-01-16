@@ -110,46 +110,50 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo callbackInfo) {
-		if (getMagicTimer() > 0) {
-			setMagicTimer(getMagicTimer() - 1);
-		}
-		if (!world.isClient && getFortune() != null) {
-			if (getFortune().fortune.tick((ServerWorld) world, (PlayerEntity) (Object) this)) {
-				getFortune().duration = 0;
+		if (!world.isClient) {
+			if (getMagicTimer() > 0) {
+				setMagicTimer(getMagicTimer() - 1);
 			}
-			else {
-				getFortune().duration--;
-			}
-			if (getFortune().duration <= 0) {
-				if (getFortune().fortune.finish((ServerWorld) world, (PlayerEntity) (Object) this)) {
-					setFortune(null);
+			if (getFortune() != null) {
+				if (getFortune().fortune.tick((ServerWorld) world, (PlayerEntity) (Object) this)) {
+					getFortune().duration = 0;
 				}
 				else {
-					getFortune().duration = world.random.nextInt(120000);
+					getFortune().duration--;
+				}
+				if (getFortune().duration <= 0) {
+					if (getFortune().fortune.finish((ServerWorld) world, (PlayerEntity) (Object) this)) {
+						setFortune(null);
+					}
+					else {
+						getFortune().duration = world.random.nextInt(120000);
+					}
 				}
 			}
-		}
-		if (getRespawnTimer() > 0) {
-			setRespawnTimer(getRespawnTimer() - 1);
+			if (getRespawnTimer() > 0) {
+				setRespawnTimer(getRespawnTimer() - 1);
+			}
 		}
 	}
 	
 	@Inject(method = "eatFood", at = @At("HEAD"))
 	private void eatFood(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> callbackInfo) {
-		if (hasStatusEffect(BWStatusEffects.NOURISHING)) {
-			getHungerManager().add(getStatusEffect(BWStatusEffects.NOURISHING).getAmplifier() + 2, 0.5f);
-		}
-		FoodComponent foodComponent = stack.getItem().getFoodComponent();
-		if (foodComponent != null) {
-			if (BWTags.WITCHBERRY_FOODS.contains(stack.getItem())) {
-				fillMagic(foodComponent.getHunger() * 100, false);
+		if (!world.isClient) {
+			if (hasStatusEffect(BWStatusEffects.NOURISHING)) {
+				getHungerManager().add(getStatusEffect(BWStatusEffects.NOURISHING).getAmplifier() + 2, 0.5f);
 			}
-			if (hasContract(BWContracts.GLUTTONY)) {
-				if (hasNegativeEffects() && random.nextFloat() < 1 / 10f) {
-					getHungerManager().add(-foodComponent.getHunger(), foodComponent.getSaturationModifier());
+			FoodComponent foodComponent = stack.getItem().getFoodComponent();
+			if (foodComponent != null) {
+				if (BWTags.WITCHBERRY_FOODS.contains(stack.getItem())) {
+					fillMagic(foodComponent.getHunger() * 100, false);
 				}
-				else {
-					getHungerManager().add(foodComponent.getHunger(), 0);
+				if (hasContract(BWContracts.GLUTTONY)) {
+					if (hasNegativeEffects() && random.nextFloat() < 1 / 10f) {
+						getHungerManager().add(-foodComponent.getHunger(), foodComponent.getSaturationModifier());
+					}
+					else {
+						getHungerManager().add(foodComponent.getHunger(), 0);
+					}
 				}
 			}
 		}
@@ -157,7 +161,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	
 	@Inject(method = "dropItem(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/ItemEntity;", at = @At("HEAD"))
 	private void dropItem(ItemStack stack, boolean throwRandomly, boolean retainOwnership, CallbackInfoReturnable<ItemEntity> callbackInfo) {
-		if (stack.getItem() == BWObjects.VOODOO_POPPET) {
+		if (!world.isClient && stack.getItem() == BWObjects.VOODOO_POPPET) {
 			LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, stack);
 			if (owner != null && !owner.getUuid().equals(getUuid())) {
 				if (stack.damage(1, random, null) && stack.getDamage() >= stack.getMaxDamage()) {

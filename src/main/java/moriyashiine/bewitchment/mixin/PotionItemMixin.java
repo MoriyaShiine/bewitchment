@@ -19,20 +19,22 @@ import java.util.UUID;
 public abstract class PotionItemMixin {
 	@Inject(method = "finishUsing", at = @At("HEAD"))
 	private void finishUsing(ItemStack stack, World world, LivingEntity user, CallbackInfoReturnable<ItemStack> callbackInfo) {
-		try {
-			if (user instanceof PlayerEntity) {
-				CompoundTag tag = stack.getTag();
-				if (tag != null) {
-					String name = tag.getString("PolymorphName");
-					if (!name.isEmpty()) {
-						PolymorphAccessor.of(user).ifPresent(polymorphAccessor -> {
-							polymorphAccessor.setPolymorphUUID(Optional.of(UUID.fromString(tag.getString("PolymorphUUID"))));
-							polymorphAccessor.setPolymorphName(name);
-						});
+		if (!world.isClient) {
+			try {
+				if (user instanceof PlayerEntity) {
+					CompoundTag tag = stack.getTag();
+					if (tag != null) {
+						String name = tag.getString("PolymorphName");
+						if (!name.isEmpty()) {
+							PolymorphAccessor.of(user).ifPresent(polymorphAccessor -> {
+								polymorphAccessor.setPolymorphUUID(Optional.of(UUID.fromString(tag.getString("PolymorphUUID"))));
+								polymorphAccessor.setPolymorphName(name);
+							});
+						}
 					}
 				}
+			} catch (Exception ignored) {
 			}
-		} catch (Exception ignored) {
 		}
 	}
 }

@@ -70,7 +70,7 @@ public abstract class EntityMixin implements WetAccessor {
 	
 	@Inject(method = "isInvulnerableTo", at = @At("HEAD"), cancellable = true)
 	private void isInvulnerableTo(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if ((Object) this instanceof LivingEntity) {
+		if (!world.isClient && (Object) this instanceof LivingEntity) {
 			Entity attacker = source.getAttacker();
 			if (attacker instanceof LivingEntity) {
 				MasterAccessor.of(this).ifPresent(masterAccessor -> {
@@ -89,14 +89,14 @@ public abstract class EntityMixin implements WetAccessor {
 	
 	@Inject(method = "tick", at = @At("HEAD"))
 	private void tick(CallbackInfo callbackInfo) {
-		if (getWetTimer() > 0) {
+		if (!world.isClient && getWetTimer() > 0) {
 			setWetTimer(getWetTimer() - 1);
 		}
 	}
 	
 	@Inject(method = "setOnFireFor", at = @At("HEAD"))
 	private void setOnFireFor(int seconds, CallbackInfo callbackInfo) {
-		if (seconds > 0 && !isOnFire() && (Object) this instanceof PlayerEntity) {
+		if (!world.isClient && seconds > 0 && !isOnFire() && (Object) this instanceof PlayerEntity) {
 			ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_POPPET, null, (PlayerEntity) (Object) this);
 			if (!poppet.isEmpty()) {
 				LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
