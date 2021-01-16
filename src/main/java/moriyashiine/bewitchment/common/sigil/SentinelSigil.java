@@ -16,7 +16,7 @@ public class SentinelSigil extends Sigil {
 	
 	@Override
 	public ActionResult use(World world, BlockPos pos, LivingEntity user, Hand hand) {
-		StatusEffectInstance effect = GhostEntity.getEffect(world.random.nextInt(4));
+		StatusEffectInstance effect = GhostEntity.getEffect(world.random.nextInt(4), 300);
 		if (user.canHaveStatusEffect(effect)) {
 			if (!world.isClient) {
 				user.addStatusEffect(effect);
