@@ -59,7 +59,7 @@ public class TaglockItem extends Item {
 							}
 						}
 						if (earliestSleeper != null) {
-							return useTaglock(player, earliestSleeper, context.getHand(), false);
+							return useTaglock(player, earliestSleeper, context.getHand(), false, true);
 						}
 					}
 				}
@@ -96,7 +96,7 @@ public class TaglockItem extends Item {
 	
 	@Override
 	public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
-		return useTaglock(user, entity, hand, true);
+		return useTaglock(user, entity, hand, true, false);
 	}
 	
 	@Environment(EnvType.CLIENT)
@@ -107,11 +107,14 @@ public class TaglockItem extends Item {
 		}
 	}
 	
-	private ActionResult useTaglock(PlayerEntity user, LivingEntity entity, Hand hand, boolean checkVisibility) {
+	private ActionResult useTaglock(PlayerEntity user, LivingEntity entity, Hand hand, boolean checkVisibility, boolean bed) {
 		ItemStack stack = user.getStackInHand(hand);
 		if (entity.isAlive() && !BWTags.BOSSES.contains(entity.getType()) && !hasTaglock(stack)) {
 			boolean failed = false;
 			BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(entity.getBlockPos(), 16, currentPos -> user.world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) user.world.getBlockEntity(currentPos)).getSigil() == BWSigils.SLIPPERY);
+			if (sigilPos == null && bed) {
+				sigilPos = BewitchmentAPI.getClosestBlockPos(user.getBlockPos(), 16, currentPos -> user.world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) user.world.getBlockEntity(currentPos)).getSigil() == BWSigils.SLIPPERY);
+			}
 			if (sigilPos != null) {
 				BlockEntity blockEntity = user.world.getBlockEntity(sigilPos);
 				HasSigil sigil = (HasSigil) blockEntity;
