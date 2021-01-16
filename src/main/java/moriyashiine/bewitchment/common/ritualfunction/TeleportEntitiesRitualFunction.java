@@ -22,7 +22,7 @@ public class TeleportEntitiesRitualFunction extends RitualFunction {
 	}
 	
 	@Override
-	public void start(ServerWorld world, BlockPos pos, Inventory inventory) {
+	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory) {
 		BlockPos location = null;
 		for (int i = 0; i < inventory.size(); i++) {
 			ItemStack stack = inventory.getStack(i);
@@ -40,13 +40,13 @@ public class TeleportEntitiesRitualFunction extends RitualFunction {
 		}
 		if (location != null) {
 			int radius = 3;
-			for (Entity entity : world.getNonSpectatingEntities(Entity.class, new Box(pos).expand(radius))) {
+			for (Entity entity : world.getNonSpectatingEntities(Entity.class, new Box(effectivePos).expand(radius))) {
 				BewitchmentAPI.teleport(entity, location.getX() + 0.5, location.getY() - 0.5, location.getZ() + 0.5);
 			}
 		}
 		else {
-			ItemScatterer.spawn(world, pos, inventory);
+			ItemScatterer.spawn(world, glyphPos, inventory);
 		}
-		super.start(world, pos, inventory);
+		super.start(world, glyphPos, effectivePos, inventory);
 	}
 }

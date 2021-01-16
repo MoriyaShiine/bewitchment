@@ -25,10 +25,10 @@ public class TurnToDayRitualFunction extends RitualFunction {
 	}
 	
 	@Override
-	public void start(ServerWorld world, BlockPos pos, Inventory inventory) {
+	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory) {
 		while (world.getTimeOfDay() % 24000 != 0) {
 			world.setTimeOfDay(world.getTimeOfDay() + 1);
 		}
-		super.start(world, pos, inventory);
+		super.start(world, glyphPos, effectivePos, inventory);
 	}
 }

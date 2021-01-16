@@ -18,10 +18,10 @@ public class DrainWaterRitualFunction extends RitualFunction {
 	}
 	
 	@Override
-	public void start(ServerWorld world, BlockPos pos, Inventory inventory) {
-		for (BlockPos water : BewitchmentAPI.getBlockPoses(pos, 8, currentPos -> world.getFluidState(currentPos).getFluid() == Fluids.WATER)) {
+	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory) {
+		for (BlockPos water : BewitchmentAPI.getBlockPoses(effectivePos, 8, currentPos -> world.getFluidState(currentPos).getFluid() == Fluids.WATER)) {
 			world.setBlockState(water, Blocks.AIR.getDefaultState());
 		}
-		super.start(world, pos, inventory);
+		super.start(world, glyphPos, effectivePos, inventory);
 	}
 }

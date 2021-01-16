@@ -133,10 +133,10 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 					}
 				}
 				if (timer >= 0) {
-					ritualFunction.tick(world, targetPos);
+					ritualFunction.tick(world, pos, targetPos);
 					if (!world.isClient) {
 						if (timer == 0) {
-							ritualFunction.start((ServerWorld) world, targetPos, this);
+							ritualFunction.start((ServerWorld) world, pos, targetPos, this);
 							world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_PLING, SoundCategory.BLOCKS, 1, 1);
 							ItemScatterer.spawn(world, pos, this);
 						}
