@@ -54,11 +54,14 @@ public class SigilItem extends Item {
 			if (!state.canReplace(placementContext)) {
 				pos = pos.offset(context.getSide());
 			}
-			BlockState sigilBlock = BWObjects.SIGIL.getPlacementState(placementContext);
-			if (sigilBlock.canPlaceAt(world, pos)) {
+			if (!world.getBlockState(pos).canReplace(placementContext)) {
+				return ActionResult.PASS;
+			}
+			BlockState sigilState = BWObjects.SIGIL.getPlacementState(placementContext);
+			if (sigilState.canPlaceAt(world, pos)) {
 				if (!client) {
-					world.playSound(null, pos, sigilBlock.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS, 1, MathHelper.nextFloat(world.random, 0.8f, 1.2f));
-					world.setBlockState(pos, sigilBlock);
+					world.playSound(null, pos, sigilState.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS, 1, MathHelper.nextFloat(world.random, 0.8f, 1.2f));
+					world.setBlockState(pos, sigilState);
 					blockEntity = world.getBlockEntity(pos);
 					((HasSigil) blockEntity).setSigil(sigil);
 					((HasSigil) blockEntity).setUses(sigil.uses);
