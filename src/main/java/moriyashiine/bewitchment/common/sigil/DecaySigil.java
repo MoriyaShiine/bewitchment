@@ -16,7 +16,7 @@ public class DecaySigil extends Sigil {
 	
 	@Override
 	public ActionResult use(World world, BlockPos pos, LivingEntity user, Hand hand) {
-		StatusEffectInstance effect = new StatusEffectInstance(StatusEffects.WITHER, 200);
+		StatusEffectInstance effect = new StatusEffectInstance(StatusEffects.WITHER, 200, 1);
 		if (user.canHaveStatusEffect(effect)) {
 			if (!world.isClient) {
 				user.addStatusEffect(effect);
