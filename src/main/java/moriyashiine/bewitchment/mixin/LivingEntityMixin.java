@@ -373,21 +373,23 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
 	private void canHaveStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
-		StatusEffectType type = ((StatusEffectAccessor) effect.getEffectType()).bw_getType();
-		if (type == StatusEffectType.BENEFICIAL) {
-			if (hasCurse(BWCurses.UNLUCKY) && random.nextBoolean()) {
-				callbackInfo.setReturnValue(false);
-			}
-		}
-		if (type != StatusEffectType.HARMFUL) {
-			BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) world.getBlockEntity(currentPos)).getSigil() == BWSigils.RUIN);
-			if (sigilPos != null) {
-				BlockEntity blockEntity = world.getBlockEntity(sigilPos);
-				HasSigil sigil = (HasSigil) blockEntity;
-				if (sigil.test(this)) {
-					sigil.setUses(sigil.getUses() - 1);
-					blockEntity.markDirty();
+		if (!effect.isAmbient()) {
+			StatusEffectType type = ((StatusEffectAccessor) effect.getEffectType()).bw_getType();
+			if (type == StatusEffectType.BENEFICIAL) {
+				if (hasCurse(BWCurses.UNLUCKY) && random.nextBoolean()) {
 					callbackInfo.setReturnValue(false);
+				}
+			}
+			if (type != StatusEffectType.HARMFUL) {
+				BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) world.getBlockEntity(currentPos)).getSigil() == BWSigils.RUIN);
+				if (sigilPos != null) {
+					BlockEntity blockEntity = world.getBlockEntity(sigilPos);
+					HasSigil sigil = (HasSigil) blockEntity;
+					if (sigil.test(this)) {
+						sigil.setUses(sigil.getUses() - 1);
+						blockEntity.markDirty();
+						callbackInfo.setReturnValue(false);
+					}
 				}
 			}
 		}
@@ -469,7 +471,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 						durationMultiplier = 2;
 					}
 				}
-				addStatusEffect(new StatusEffectInstance(recipe.effect, 24000 * durationMultiplier, recipe.amplifier, true, false));
+				addStatusEffect(new StatusEffectInstance(recipe.effect, 24000 * durationMultiplier, recipe.amplifier, false, false));
 			});
 		}
 	}
