@@ -11,7 +11,7 @@ public class WisdomFortune extends Fortune {
 	
 	@Override
 	public boolean finish(ServerWorld world, PlayerEntity target) {
-		target.addExperienceLevels(30);
+		target.addExperience(551);
 		return super.finish(world, target);
 	}
 }
