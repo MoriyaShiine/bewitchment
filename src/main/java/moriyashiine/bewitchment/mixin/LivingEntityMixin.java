@@ -90,10 +90,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	@Shadow
 	public abstract void heal(float amount);
 	
-	@Shadow
-	@Nullable
-	private LivingEntity attacker;
-	
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
@@ -179,8 +175,13 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					return 0;
 				}
 			}
-			if (directSource instanceof FireballEntity && trueSource instanceof BaphometEntity) {
-				amount *= 3;
+			if (directSource instanceof FireballEntity) {
+				if (trueSource instanceof PlayerEntity && ((CaduceusFireballAccessor) directSource).getFromCaduceus()) {
+					amount *= 2;
+				}
+				if (trueSource instanceof BaphometEntity) {
+					amount *= 3;
+				}
 			}
 			if (amount > 0 && trueSource instanceof FortuneAccessor && ((FortuneAccessor) trueSource).getFortune() != null && ((FortuneAccessor) trueSource).getFortune().fortune == BWFortunes.HAWKEYE && source.isProjectile()) {
 				((FortuneAccessor) trueSource).getFortune().duration = 0;
