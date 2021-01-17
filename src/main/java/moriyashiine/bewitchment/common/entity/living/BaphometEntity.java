@@ -249,7 +249,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 			for (int i = 0; i < MathHelper.nextInt(random, 2, 3); i++) {
 				BlazeEntity blaze = EntityType.BLAZE.create(world);
 				if (blaze != null) {
-					BewitchmentAPI.attemptTeleport(blaze, getBlockPos(), 3);
+					BewitchmentAPI.attemptTeleport(blaze, getBlockPos().up(), 3);
 					blaze.pitch = random.nextInt(360);
 					blaze.setTarget(getTarget());
 					MasterAccessor.of(blaze).ifPresent(masterAccessor -> masterAccessor.setMasterUUID(getUuid()));
