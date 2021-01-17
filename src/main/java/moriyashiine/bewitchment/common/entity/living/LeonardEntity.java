@@ -140,6 +140,9 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 					summonMinions();
 				}
 			}
+			else {
+				heal(8);
+			}
 		}
 	}
 	

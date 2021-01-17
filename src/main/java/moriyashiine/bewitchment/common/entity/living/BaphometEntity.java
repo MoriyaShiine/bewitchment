@@ -174,6 +174,9 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 					summonMinions();
 				}
 			}
+			else {
+				heal(8);
+			}
 		}
 	}
 	
