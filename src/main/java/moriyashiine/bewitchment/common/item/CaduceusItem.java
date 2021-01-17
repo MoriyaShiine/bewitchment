@@ -51,6 +51,6 @@ public class CaduceusItem extends SwordItem {
 	
 	@Override
 	public int getMaxUseTime(ItemStack stack) {
-		return 16;
+		return 24;
 	}
 }
