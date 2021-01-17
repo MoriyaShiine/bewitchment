@@ -57,7 +57,7 @@ public class CauldronTeleportPacket {
 					}
 				}
 				if (pledgedToLeonard || hasPower) {
-					BewitchmentAPI.teleport(player, closest.getX() + 0.5, closest.getY() - 0.5, closest.getZ() + 0.5);
+					BewitchmentAPI.teleport(player, closest.getX() + 0.5, closest.getY() - 0.5, closest.getZ() + 0.5, true);
 				}
 				else {
 					player.sendMessage(new TranslatableText(Bewitchment.MODID + ".insufficent_altar_power", message), true);

@@ -215,7 +215,7 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 			for (int i = 0; i < MathHelper.nextInt(random, 2, 3); i++) {
 				WitchEntity witch = EntityType.WITCH.create(world);
 				if (witch != null) {
-					BewitchmentAPI.attemptTeleport(witch, getBlockPos().up(), 3);
+					BewitchmentAPI.attemptTeleport(witch, getBlockPos().up(), 3, true);
 					witch.pitch = random.nextInt(360);
 					witch.setTarget(getTarget());
 					MasterAccessor.of(witch).ifPresent(masterAccessor -> masterAccessor.setMasterUUID(getUuid()));

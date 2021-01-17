@@ -221,7 +221,7 @@ public class BewitchmentAPI {
 		}
 	}
 	
-	public static void attemptTeleport(Entity entity, BlockPos origin, int distance) {
+	public static void attemptTeleport(Entity entity, BlockPos origin, int distance, boolean hasEffects) {
 		for (int i = 0; i < 32; i++) {
 			BlockPos.Mutable mutable = new BlockPos.Mutable(origin.getX() + MathHelper.nextDouble(entity.world.random, -distance, distance), origin.getY() + MathHelper.nextDouble(entity.world.random, -distance / 2f, distance / 2f), origin.getZ() + MathHelper.nextDouble(entity.world.random, -distance, distance));
 			if (!entity.world.getBlockState(mutable).getMaterial().isSolid()) {
@@ -229,28 +229,32 @@ public class BewitchmentAPI {
 					mutable.move(Direction.DOWN);
 				}
 				if (entity.world.getBlockState(mutable).getMaterial().blocksMovement()) {
-					teleport(entity, mutable.getX() + 0.5, mutable.getY() + 0.5, mutable.getZ() + 0.5);
+					teleport(entity, mutable.getX() + 0.5, mutable.getY() + 0.5, mutable.getZ() + 0.5, hasEffects);
 					break;
 				}
 			}
 		}
 	}
 	
-	public static void teleport(Entity entity, double x, double y, double z) {
-		if (!entity.isSilent()) {
-			entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, SoundCategory.NEUTRAL, 1, 1);
-		}
-		PlayerLookup.tracking(entity).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, entity));
-		if (entity instanceof PlayerEntity) {
-			SpawnPortalParticlesPacket.send((PlayerEntity) entity, entity);
+	public static void teleport(Entity entity, double x, double y, double z, boolean hasEffects) {
+		if (hasEffects) {
+			if (!entity.isSilent()) {
+				entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, SoundCategory.NEUTRAL, 1, 1);
+			}
+			PlayerLookup.tracking(entity).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, entity));
+			if (entity instanceof PlayerEntity) {
+				SpawnPortalParticlesPacket.send((PlayerEntity) entity, entity);
+			}
 		}
 		entity.teleport(x, y + 0.5, z);
-		if (!entity.isSilent()) {
-			entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, SoundCategory.NEUTRAL, 1, 1);
-		}
-		PlayerLookup.tracking(entity).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, entity));
-		if (entity instanceof PlayerEntity) {
-			SpawnPortalParticlesPacket.send((PlayerEntity) entity, entity);
+		if (hasEffects) {
+			if (!entity.isSilent()) {
+				entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, SoundCategory.NEUTRAL, 1, 1);
+			}
+			PlayerLookup.tracking(entity).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, entity));
+			if (entity instanceof PlayerEntity) {
+				SpawnPortalParticlesPacket.send((PlayerEntity) entity, entity);
+			}
 		}
 	}
 	
