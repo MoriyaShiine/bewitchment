@@ -21,7 +21,6 @@
 	"LandPathNodeMakerMixin",
 	"LivingEntityAccessor",
 	"LivingEntityMixin",
-	"MerchantMixin",
 	"MobEntityMixin",
 	"PlayerEntityMixin",
 	"PotionItemMixin",
