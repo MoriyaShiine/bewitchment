@@ -128,12 +128,12 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 			LivingEntity target = getTarget();
 			int timer = age + getEntityId();
 			if (timer % 300 == 0 && getHealth() < getMaxHealth() && (target == null || distanceTo(target) < 4)) {
-				spawnPotion(getBlockPos(), Potions.STRONG_HEALING);
+				spawnPotion(getBlockPos(), Potions.AWKWARD);
 				addStatusEffect(new StatusEffectInstance(StatusEffects.INSTANT_HEALTH, 1, 1));
 			}
 			if (target != null) {
 				lookAtEntity(target, 360, 360);
-				if (timer % 80 == 0) {
+				if (timer % 40 == 0) {
 					spawnPotion(target.getBlockPos(), target.isUndead() ? Potions.STRONG_HEALING : Potions.STRONG_HARMING);
 				}
 				if (timer % 600 == 0 && world.getEntitiesByType(EntityType.WITCH, new Box(getBlockPos()).expand(32), entity -> getUuid().equals(((MasterAccessor) entity).getMasterUUID())).size() < 3) {
