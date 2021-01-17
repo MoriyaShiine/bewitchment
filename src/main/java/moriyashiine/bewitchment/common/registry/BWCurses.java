@@ -23,7 +23,7 @@ public class BWCurses {
 	public static final Curse ARMY_OF_WORMS = create("army_of_worms", new Curse(Curse.Type.LESSER));
 	public static final Curse ARACHNOPHOBIA = create("arachnophobia", new Curse(Curse.Type.LESSER));
 	
-	public static final Curse INSANITY = create("insanity", new Curse(Curse.Type.GREATER));
+	public static final Curse INSANITY = create("insanity", new InsanityCurse(Curse.Type.GREATER));
 	public static final Curse SUSCEPTIBILITY = create("susceptibility", new SusceptibilityCurse(Curse.Type.GREATER));
 	public static final Curse APATHY = create("apathy", new ApathyCurse(Curse.Type.GREATER));
 	

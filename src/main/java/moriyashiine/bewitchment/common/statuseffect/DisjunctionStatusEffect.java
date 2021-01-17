@@ -19,7 +19,7 @@ public class DisjunctionStatusEffect extends StatusEffect {
 	@Override
 	public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
 		if (!entity.world.isClient) {
-			BewitchmentAPI.attemptTeleport(entity, entity.getBlockPos(), 8 * (amplifier + 1));
+			BewitchmentAPI.attemptTeleport(entity, entity.getBlockPos(), 8 * (amplifier + 1), true);
 		}
 	}
 }

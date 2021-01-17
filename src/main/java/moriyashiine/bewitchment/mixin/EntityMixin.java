@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.interfaces.InsanityTargetAccessor;
 import moriyashiine.bewitchment.api.interfaces.MasterAccessor;
 import moriyashiine.bewitchment.api.interfaces.Pledgeable;
 import moriyashiine.bewitchment.api.interfaces.WetAccessor;
@@ -101,26 +102,33 @@ public abstract class EntityMixin implements WetAccessor {
 		}
 	}
 	
-	@Inject(method = "setOnFireFor", at = @At("HEAD"))
+	@Inject(method = "setOnFireFor", at = @At("HEAD"), cancellable = true)
 	private void setOnFireFor(int seconds, CallbackInfo callbackInfo) {
-		if (!world.isClient && seconds > 0 && !isOnFire() && (Object) this instanceof PlayerEntity) {
-			ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_POPPET, null, (PlayerEntity) (Object) this);
-			if (!poppet.isEmpty()) {
-				LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
-				if (!owner.getUuid().equals(getUuid()) && !owner.isOnFire()) {
-					if (poppet.damage(1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
-						poppet.decrement(1);
-					}
-					ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
-					if (!potentialPoppet.isEmpty()) {
-						if (potentialPoppet.damage(1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
-							potentialPoppet.decrement(1);
+		if (!world.isClient) {
+			if (seconds > 0 && !isOnFire() && (Object) this instanceof PlayerEntity) {
+				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_POPPET, null, (PlayerEntity) (Object) this);
+				if (!poppet.isEmpty()) {
+					LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
+					if (!owner.getUuid().equals(getUuid()) && !owner.isOnFire()) {
+						if (poppet.damage(1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+							poppet.decrement(1);
 						}
-						return;
+						ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
+						if (!potentialPoppet.isEmpty()) {
+							if (potentialPoppet.damage(1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
+								potentialPoppet.decrement(1);
+							}
+							return;
+						}
+						owner.setOnFireFor(seconds);
 					}
-					owner.setOnFireFor(seconds);
 				}
 			}
+			InsanityTargetAccessor.of(this).ifPresent(insanityTargetAccessor -> {
+				if (insanityTargetAccessor.getInsanityTargetUUID().isPresent()) {
+					callbackInfo.cancel();
+				}
+			});
 		}
 	}
 	
