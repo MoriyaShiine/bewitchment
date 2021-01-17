@@ -149,7 +149,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 					fillMagic(foodComponent.getHunger() * 100, false);
 				}
 				if (hasContract(BWContracts.GLUTTONY)) {
-					getHungerManager().add(foodComponent.getHunger() / 2, 0);
+					getHungerManager().add(foodComponent.getHunger(), foodComponent.getSaturationModifier());
 				}
 			}
 		}
@@ -159,7 +159,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	private float addExhaustion(float exhaustion) {
 		ContractAccessor contractAccessor = ContractAccessor.of(this).orElse(null);
 		if (!world.isClient && contractAccessor != null && contractAccessor.hasNegativeEffects() && contractAccessor.hasContract(BWContracts.GLUTTONY)) {
-			return exhaustion * 2;
+			return exhaustion * 1.5f;
 		}
 		return exhaustion;
 	}
