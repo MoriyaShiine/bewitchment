@@ -60,7 +60,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 	}
 	
 	public static DefaultAttributeContainer.Builder createAttributes() {
-		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 375).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12).add(EntityAttributes.GENERIC_ARMOR, 6).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.75);
+		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 375).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12).add(EntityAttributes.GENERIC_ARMOR, 6).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.75).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 32);
 	}
 	
 	@Override
@@ -174,6 +174,9 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 					summonMinions();
 				}
 			}
+			else {
+				heal(8);
+			}
 		}
 	}
 	
@@ -246,7 +249,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 			for (int i = 0; i < MathHelper.nextInt(random, 2, 3); i++) {
 				BlazeEntity blaze = EntityType.BLAZE.create(world);
 				if (blaze != null) {
-					BewitchmentAPI.attemptTeleport(blaze, getBlockPos(), 3);
+					BewitchmentAPI.attemptTeleport(blaze, getBlockPos().up(), 3);
 					blaze.pitch = random.nextInt(360);
 					blaze.setTarget(getTarget());
 					MasterAccessor.of(blaze).ifPresent(masterAccessor -> masterAccessor.setMasterUUID(getUuid()));

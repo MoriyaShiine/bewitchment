@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.item;
 
+import moriyashiine.bewitchment.api.interfaces.CaduceusFireballAccessor;
 import moriyashiine.bewitchment.api.interfaces.MagicAccessor;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
@@ -16,6 +17,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
+@SuppressWarnings("ConstantConditions")
 public class CaduceusItem extends SwordItem {
 	public CaduceusItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
 		super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -33,6 +35,7 @@ public class CaduceusItem extends SwordItem {
 				FireballEntity fireball = new FireballEntity(world, user, user.getRotationVector().x, user.getRotationVector().y, user.getRotationVector().z);
 				fireball.setOwner(user);
 				fireball.setPos(fireball.getX(), fireball.getY() + 1, fireball.getZ());
+				((CaduceusFireballAccessor) fireball).setFromCaduceus(true);
 				world.playSound(null, user.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_SHOOT, SoundCategory.HOSTILE, 1, 1);
 				world.spawnEntity(fireball);
 				stack.damage(1, user, stackUser -> stackUser.sendToolBreakStatus(user.getActiveHand()));
@@ -48,6 +51,6 @@ public class CaduceusItem extends SwordItem {
 	
 	@Override
 	public int getMaxUseTime(ItemStack stack) {
-		return 32;
+		return 16;
 	}
 }
