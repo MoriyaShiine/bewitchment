@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.common.sigil;
 
 import moriyashiine.bewitchment.api.registry.Sigil;
+import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -16,9 +17,16 @@ public class ShriekingSigil extends Sigil {
 	
 	@Override
 	public ActionResult use(World world, BlockPos pos, LivingEntity user, Hand hand) {
-		if (!world.isClient) {
-			world.playSound(null, pos, SoundEvents.ENTITY_GHAST_HURT, SoundCategory.BLOCKS, 1, 1);
+		boolean flag = true;
+		if (world.getBlockState(pos).getBlock() instanceof PressurePlateBlock) {
+			flag = user.age % 20 == 0;
 		}
-		return ActionResult.SUCCESS;
+		if (flag) {
+			if (!world.isClient) {
+				world.playSound(null, pos, SoundEvents.ENTITY_GHAST_HURT, SoundCategory.BLOCKS, 1, 1);
+			}
+			return ActionResult.SUCCESS;
+		}
+		return super.use(world, pos, user, hand);
 	}
 }

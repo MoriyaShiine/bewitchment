@@ -25,11 +25,11 @@ public class SmeltItemsRitualFunction extends RitualFunction {
 	}
 	
 	@Override
-	public void tick(World world, BlockPos pos) {
+	public void tick(World world, BlockPos glyphPos, BlockPos effectivePos) {
 		int radius = 3;
 		if (!world.isClient) {
 			if (world.getTime() % 20 == 0) {
-				for (ItemEntity itemEntity : world.getEntitiesByType(EntityType.ITEM, new Box(pos).expand(radius, 0, radius), entity -> true)) {
+				for (ItemEntity itemEntity : world.getEntitiesByType(EntityType.ITEM, new Box(effectivePos).expand(radius, 0, radius), entity -> true)) {
 					if (world.random.nextFloat() < 1 / 4f) {
 						world.getRecipeManager().listAllOfType(RecipeType.SMELTING).forEach(smeltingRecipe -> {
 							for (Ingredient ingredient : smeltingRecipe.getPreviewInputs()) {
@@ -46,7 +46,7 @@ public class SmeltItemsRitualFunction extends RitualFunction {
 			}
 		}
 		else {
-			world.addParticle(ParticleTypes.FLAME, pos.getX() + MathHelper.nextDouble(world.random, -radius, radius), pos.getY() + 0.5, pos.getZ() + MathHelper.nextDouble(world.random, -radius, radius), 0, 0, 0);
+			world.addParticle(ParticleTypes.FLAME, effectivePos.getX() + MathHelper.nextDouble(world.random, -radius, radius), effectivePos.getY() + 0.5, effectivePos.getZ() + MathHelper.nextDouble(world.random, -radius, radius), 0, 0, 0);
 		}
 	}
 }

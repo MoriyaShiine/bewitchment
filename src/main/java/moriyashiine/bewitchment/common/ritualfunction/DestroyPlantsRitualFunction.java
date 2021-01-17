@@ -18,10 +18,10 @@ public class DestroyPlantsRitualFunction extends RitualFunction {
 	}
 	
 	@Override
-	public void start(ServerWorld world, BlockPos pos, Inventory inventory) {
-		for (BlockPos plant : BewitchmentAPI.getBlockPoses(pos, 8, currentPos -> world.getBlockState(currentPos).getBlock() instanceof PlantBlock || world.getBlockState(currentPos).getBlock() instanceof LeavesBlock)) {
+	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory) {
+		for (BlockPos plant : BewitchmentAPI.getBlockPoses(effectivePos, 8, currentPos -> world.getBlockState(currentPos).getBlock() instanceof PlantBlock || world.getBlockState(currentPos).getBlock() instanceof LeavesBlock)) {
 			world.breakBlock(plant, true);
 		}
-		super.start(world, pos, inventory);
+		super.start(world, glyphPos, effectivePos, inventory);
 	}
 }

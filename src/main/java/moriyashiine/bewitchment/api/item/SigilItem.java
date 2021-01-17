@@ -6,6 +6,7 @@ import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DoorBlock;
@@ -54,15 +55,19 @@ public class SigilItem extends Item {
 			if (!state.canReplace(placementContext)) {
 				pos = pos.offset(context.getSide());
 			}
-			BlockState sigilBlock = BWObjects.SIGIL.getPlacementState(placementContext);
-			if (sigilBlock.canPlaceAt(world, pos)) {
+			if (!world.getBlockState(pos).canReplace(placementContext)) {
+				return ActionResult.PASS;
+			}
+			BlockState sigilState = BWObjects.SIGIL.getPlacementState(placementContext);
+			if (sigilState.canPlaceAt(world, pos)) {
 				if (!client) {
-					world.playSound(null, pos, sigilBlock.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS, 1, MathHelper.nextFloat(world.random, 0.8f, 1.2f));
-					world.setBlockState(pos, sigilBlock);
+					world.playSound(null, pos, sigilState.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS, 1, MathHelper.nextFloat(world.random, 0.8f, 1.2f));
+					world.setBlockState(pos, sigilState);
 					blockEntity = world.getBlockEntity(pos);
 					((HasSigil) blockEntity).setSigil(sigil);
 					((HasSigil) blockEntity).setUses(sigil.uses);
 					((HasSigil) blockEntity).setOwner(player.getUuid());
+					((BlockEntityClientSerializable) blockEntity).sync();
 					blockEntity.markDirty();
 					if (player instanceof ServerPlayerEntity) {
 						Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity) player, pos, stack);
@@ -79,12 +84,15 @@ public class SigilItem extends Item {
 				blockEntity = world.getBlockEntity(pos.down());
 			}
 			if (((HasSigil) blockEntity).getSigil() == null) {
-				((HasSigil) blockEntity).setSigil(sigil);
-				((HasSigil) blockEntity).setUses(sigil.uses);
-				((HasSigil) blockEntity).setOwner(player.getUuid());
-				blockEntity.markDirty();
-				if (!player.isCreative()) {
-					stack.decrement(1);
+				if (!client) {
+					((HasSigil) blockEntity).setSigil(sigil);
+					((HasSigil) blockEntity).setUses(sigil.uses);
+					((HasSigil) blockEntity).setOwner(player.getUuid());
+					((BlockEntityClientSerializable) blockEntity).sync();
+					blockEntity.markDirty();
+					if (!player.isCreative()) {
+						stack.decrement(1);
+					}
 				}
 				return ActionResult.success(client);
 			}

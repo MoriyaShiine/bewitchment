@@ -22,22 +22,22 @@ public class GrowRitualFunction extends RitualFunction {
 	}
 	
 	@Override
-	public void tick(World world, BlockPos pos) {
+	public void tick(World world, BlockPos glyphPos, BlockPos effectivePos) {
 		int radius = 3;
 		if (!world.isClient) {
 			if (world.getTime() % 20 == 0) {
-				for (PassiveEntity passiveEntity : world.getEntitiesByClass(PassiveEntity.class, new Box(pos).expand(radius, 0, radius), PassiveEntity::isBaby)) {
+				for (PassiveEntity passiveEntity : world.getEntitiesByClass(PassiveEntity.class, new Box(effectivePos).expand(radius, 0, radius), PassiveEntity::isBaby)) {
 					if (world.random.nextFloat() < 1 / 4f) {
 						passiveEntity.growUp(world.random.nextInt(), true);
 					}
 				}
-				for (BlockPos growable : BewitchmentAPI.getBlockPoses(pos, radius, currentPos -> !(world.getBlockState(currentPos).getBlock() instanceof GrassBlock) && world.getBlockState(currentPos).getBlock() instanceof Fertilizable && ((Fertilizable) world.getBlockState(currentPos).getBlock()).canGrow(world, world.random, currentPos, world.getBlockState(currentPos)))) {
+				for (BlockPos growable : BewitchmentAPI.getBlockPoses(effectivePos, radius, currentPos -> !(world.getBlockState(currentPos).getBlock() instanceof GrassBlock) && world.getBlockState(currentPos).getBlock() instanceof Fertilizable && ((Fertilizable) world.getBlockState(currentPos).getBlock()).canGrow(world, world.random, currentPos, world.getBlockState(currentPos)))) {
 					((Fertilizable) world.getBlockState(growable).getBlock()).grow((ServerWorld) world, world.random, growable, world.getBlockState(growable));
 				}
 			}
 		}
 		else {
-			world.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX() + MathHelper.nextDouble(world.random, -radius, radius), pos.getY() + 0.5, pos.getZ() + MathHelper.nextDouble(world.random, -radius, radius), 0, 0, 0);
+			world.addParticle(ParticleTypes.HAPPY_VILLAGER, effectivePos.getX() + MathHelper.nextDouble(world.random, -radius, radius), effectivePos.getY() + 0.5, effectivePos.getZ() + MathHelper.nextDouble(world.random, -radius, radius), 0, 0, 0);
 		}
 	}
 }

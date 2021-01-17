@@ -14,5 +14,6 @@
   "inner": "normal",
   "outer": "normal",
   "ritual_function": "bewitchment:grow",
-  "cost": 300
+  "cost": 300,
+  "running_time": 6000
 }

@@ -40,7 +40,7 @@ public class CleanseRitualFunction extends RitualFunction {
 	}
 	
 	@Override
-	public void start(ServerWorld world, BlockPos pos, Inventory inventory) {
+	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory) {
 		ItemStack taglock = null;
 		for (int i = 0; i < inventory.size(); i++) {
 			ItemStack stack = inventory.getStack(i);
@@ -62,6 +62,6 @@ public class CleanseRitualFunction extends RitualFunction {
 				((ZombieVillagerEntityAccessor) livingEntity).bw_finishConversion(world);
 			}
 		}
-		super.start(world, pos, inventory);
+		super.start(world, glyphPos, effectivePos, inventory);
 	}
 }

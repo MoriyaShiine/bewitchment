@@ -28,7 +28,7 @@ public class RitualFunction {
 		return sacrifice == null;
 	}
 	
-	public void start(ServerWorld world, BlockPos pos, Inventory inventory) {
+	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory) {
 		for (int i = 0; i < inventory.size(); i++) {
 			ItemStack stack = inventory.getStack(i);
 			if (stack.isDamageable()) {
@@ -43,6 +43,6 @@ public class RitualFunction {
 		}
 	}
 	
-	public void tick(World world, BlockPos pos) {
+	public void tick(World world, BlockPos glyphPos, BlockPos effectivePos) {
 	}
 }

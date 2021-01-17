@@ -35,14 +35,14 @@ public class WednesdayRitualFunction extends RitualFunction {
 	}
 	
 	@Override
-	public void tick(World world, BlockPos pos) {
+	public void tick(World world, BlockPos glyphPos, BlockPos effectivePos) {
 		if (!world.isClient) {
 			if (world.getTime() % 20 == 0) {
 				for (int i = 0; i < world.random.nextInt(4) + 1; i++) {
 					ToadEntity entity = BWEntityTypes.TOAD.create(world);
 					if (entity != null) {
-						entity.initialize((ServerWorldAccess) world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
-						entity.refreshPositionAndAngles(pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -3, 3), pos.getY() + 3, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -3, 3), 0, world.random.nextInt(360));
+						entity.initialize((ServerWorldAccess) world, world.getLocalDifficulty(effectivePos), SpawnReason.EVENT, null, null);
+						entity.refreshPositionAndAngles(effectivePos.getX() + 0.5 + MathHelper.nextDouble(world.random, -3, 3), effectivePos.getY() + 3, effectivePos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -3, 3), 0, world.random.nextInt(360));
 						entity.addStatusEffect(new StatusEffectInstance(BWStatusEffects.WEDNESDAY, world.random.nextInt(100)));
 						entity.isFromWednesdayRitual = true;
 						world.spawnEntity(entity);

@@ -23,7 +23,7 @@ public abstract class EscapeDangerGoalMixin extends Goal {
 	
 	@Inject(method = "canStart", at = @At("HEAD"), cancellable = true)
 	private void canStart(CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (mob.age % 20 == 0 && !mob.world.getEntitiesByClass(LivingEntity.class, new Box(mob.getBlockPos()).expand(8), entity -> mob.canSee(entity) && entity.isAlive() && CurseAccessor.of(entity).orElse(null).hasCurse(BWCurses.APATHY)).isEmpty()) {
+		if (!mob.world.isClient && mob.age % 20 == 0 && !mob.world.getEntitiesByClass(LivingEntity.class, new Box(mob.getBlockPos()).expand(8), entity -> mob.canSee(entity) && entity.isAlive() && CurseAccessor.of(entity).orElse(null).hasCurse(BWCurses.APATHY)).isEmpty()) {
 			callbackInfo.setReturnValue(true);
 		}
 	}

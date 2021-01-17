@@ -92,8 +92,11 @@ public interface HasSigil {
 					}
 				}
 				if (getUses() <= 0) {
+					getEntities().clear();
+					setOwner(null);
 					setSigil(null);
 					setUses(0);
+					setModeOnWhitelist(false);
 					blockEntity.markDirty();
 					if (blockEntity.getCachedState().getBlock() == BWObjects.SIGIL) {
 						world.setBlockState(pos, Blocks.AIR.getDefaultState());

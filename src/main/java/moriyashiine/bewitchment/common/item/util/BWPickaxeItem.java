@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.item.tool.util;
+package moriyashiine.bewitchment.common.item.util;
 
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ToolMaterial;

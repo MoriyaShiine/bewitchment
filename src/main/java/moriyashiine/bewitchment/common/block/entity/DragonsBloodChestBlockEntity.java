@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.common.block.entity;
 import moriyashiine.bewitchment.api.interfaces.HasSigil;
 import moriyashiine.bewitchment.api.registry.Sigil;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class DragonsBloodChestBlockEntity extends BWChestBlockEntity implements Tickable, HasSigil {
+public class DragonsBloodChestBlockEntity extends BWChestBlockEntity implements BlockEntityClientSerializable, Tickable, HasSigil {
 	private final List<UUID> entities = new ArrayList<>();
 	private UUID owner = null;
 	private Sigil sigil = null;
@@ -73,15 +74,25 @@ public class DragonsBloodChestBlockEntity extends BWChestBlockEntity implements 
 	}
 	
 	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
+	public void fromClientTag(CompoundTag tag) {
 		fromTagSigil(tag);
+	}
+	
+	@Override
+	public CompoundTag toClientTag(CompoundTag tag) {
+		toTagSigil(tag);
+		return tag;
+	}
+	
+	@Override
+	public void fromTag(BlockState state, CompoundTag tag) {
+		fromClientTag(tag);
 		super.fromTag(state, tag);
 	}
 	
 	@Override
 	public CompoundTag toTag(CompoundTag tag) {
-		toTagSigil(tag);
-		return super.toTag(tag);
+		return super.toTag(toClientTag(tag));
 	}
 	
 	@Override

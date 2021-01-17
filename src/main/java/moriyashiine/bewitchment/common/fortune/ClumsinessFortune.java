@@ -11,6 +11,6 @@ public class ClumsinessFortune extends Fortune {
 	
 	@Override
 	public boolean finish(ServerWorld world, PlayerEntity target) {
-		return target.dropStack(target.getMainHandStack()) != null;
+		return target.dropItem(target.getMainHandStack(), false, true) != null;
 	}
 }

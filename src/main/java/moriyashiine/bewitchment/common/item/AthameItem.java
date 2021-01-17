@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.item.tool;
+package moriyashiine.bewitchment.common.item;
 
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
@@ -60,7 +60,7 @@ public class AthameItem extends SwordItem {
 		if (blockEntity instanceof HasSigil) {
 			HasSigil sigil = (HasSigil) blockEntity;
 			if (player != null && player.getUuid().equals(sigil.getOwner())) {
-				if (!sigil.getEntities().isEmpty()) {
+				if (!client && !sigil.getEntities().isEmpty()) {
 					boolean whitelist = sigil.getModeOnWhitelist();
 					world.playSound(null, pos, BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.BLOCKS, 1, whitelist ? 0.5f : 1);
 					sigil.setModeOnWhitelist(!whitelist);

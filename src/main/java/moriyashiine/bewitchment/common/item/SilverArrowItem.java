@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.item.tool;
+package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;

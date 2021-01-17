@@ -36,25 +36,31 @@ public class ChalkItem extends Item {
 	
 	@Override
 	public ActionResult useOnBlock(ItemUsageContext context) {
-		ItemPlacementContext placementContext = new ItemPlacementContext(context);
 		World world = context.getWorld();
 		BlockPos pos = context.getBlockPos();
+		boolean client = world.isClient;
+		ItemPlacementContext placementContext = new ItemPlacementContext(context);
 		if (!world.getBlockState(pos).canReplace(placementContext)) {
 			pos = pos.offset(context.getSide());
 		}
-		PlayerEntity player = context.getPlayer();
-		BlockState chalk = glyph.getPlacementState(placementContext);
-		if (chalk.canPlaceAt(world, pos)) {
-			if (!world.isClient) {
-				world.playSound(null, pos, chalk.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS, 1, MathHelper.nextFloat(world.random, 0.8f, 1.2f));
-				world.setBlockState(pos, chalk);
+		if (!world.getBlockState(pos).canReplace(placementContext)) {
+			return ActionResult.PASS;
+		}
+		BlockState state = glyph.getPlacementState(placementContext);
+		if (state.canPlaceAt(world, pos)) {
+			if (!client) {
+				PlayerEntity player = context.getPlayer();
 				ItemStack stack = context.getStack();
+				world.playSound(null, pos, state.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS, 1, MathHelper.nextFloat(world.random, 0.8f, 1.2f));
+				world.setBlockState(pos, state);
 				if (player instanceof ServerPlayerEntity) {
 					Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity) player, pos, stack);
-					stack.damage(1, player, user -> user.sendToolBreakStatus(context.getHand()));
+					if (!player.isCreative()) {
+						stack.decrement(1);
+					}
 				}
 			}
-			return ActionResult.success(world.isClient);
+			return ActionResult.success(client);
 		}
 		return super.useOnBlock(context);
 	}

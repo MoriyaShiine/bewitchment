@@ -9,6 +9,9 @@ import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -29,7 +32,7 @@ import java.util.UUID;
 @SuppressWarnings("ConstantConditions")
 @Mixin(Entity.class)
 public abstract class EntityMixin implements WetAccessor {
-	private int wetTimer = 0;
+	private static final TrackedData<Integer> WET_TIMER = DataTracker.registerData(Entity.class, TrackedDataHandlerRegistry.INTEGER);
 	
 	@Shadow
 	public abstract UUID getUuid();
@@ -44,14 +47,18 @@ public abstract class EntityMixin implements WetAccessor {
 	@Shadow
 	public abstract boolean isOnFire();
 	
+	@Shadow
+	@Final
+	protected DataTracker dataTracker;
+	
 	@Override
 	public int getWetTimer() {
-		return wetTimer;
+		return dataTracker.get(WET_TIMER);
 	}
 	
 	@Override
 	public void setWetTimer(int wetTimer) {
-		this.wetTimer = wetTimer;
+		dataTracker.set(WET_TIMER, wetTimer);
 	}
 	
 	@Inject(method = "isWet", at = @At("HEAD"), cancellable = true)
@@ -70,7 +77,7 @@ public abstract class EntityMixin implements WetAccessor {
 	
 	@Inject(method = "isInvulnerableTo", at = @At("HEAD"), cancellable = true)
 	private void isInvulnerableTo(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if ((Object) this instanceof LivingEntity) {
+		if (!world.isClient && (Object) this instanceof LivingEntity) {
 			Entity attacker = source.getAttacker();
 			if (attacker instanceof LivingEntity) {
 				MasterAccessor.of(this).ifPresent(masterAccessor -> {
@@ -89,14 +96,14 @@ public abstract class EntityMixin implements WetAccessor {
 	
 	@Inject(method = "tick", at = @At("HEAD"))
 	private void tick(CallbackInfo callbackInfo) {
-		if (getWetTimer() > 0) {
+		if (!world.isClient && getWetTimer() > 0) {
 			setWetTimer(getWetTimer() - 1);
 		}
 	}
 	
 	@Inject(method = "setOnFireFor", at = @At("HEAD"))
 	private void setOnFireFor(int seconds, CallbackInfo callbackInfo) {
-		if (seconds > 0 && !isOnFire() && (Object) this instanceof PlayerEntity) {
+		if (!world.isClient && seconds > 0 && !isOnFire() && (Object) this instanceof PlayerEntity) {
 			ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_POPPET, null, (PlayerEntity) (Object) this);
 			if (!poppet.isEmpty()) {
 				LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
@@ -140,5 +147,10 @@ public abstract class EntityMixin implements WetAccessor {
 	@Inject(method = "toTag", at = @At("TAIL"))
 	private void writeCustomDataToTag(CompoundTag tag, CallbackInfoReturnable<Tag> callbackInfo) {
 		tag.putInt("WetTimer", getWetTimer());
+	}
+	
+	@Inject(method = "<init>", at = @At("RETURN"))
+	private void initDataTracker(CallbackInfo callbackInfo) {
+		dataTracker.startTracking(WET_TIMER, 0);
 	}
 }

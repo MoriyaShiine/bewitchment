@@ -1,11 +1,9 @@
 package moriyashiine.bewitchment.common.entity.living;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.interfaces.CurseAccessor;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
-import moriyashiine.bewitchment.common.registry.BWMaterials;
-import moriyashiine.bewitchment.common.registry.BWObjects;
-import moriyashiine.bewitchment.common.registry.BWRegistries;
-import moriyashiine.bewitchment.common.registry.BWSoundEvents;
+import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.util.NbtType;
@@ -32,6 +30,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.village.Merchant;
 import net.minecraft.village.TradeOffer;
@@ -45,7 +44,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@SuppressWarnings("ConstantConditions")
 public class DemonEntity extends BWHostileEntity implements Merchant {
+	public static final TradeOfferList EMPTY = new TradeOfferList();
+	
 	public static final TrackedData<Boolean> MALE = DataTracker.registerData(DemonEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
 	private TradeOfferList tradeOffers = null;
@@ -102,13 +104,19 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	
 	@Override
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
-		if (isAlive() && !getOffers().isEmpty() && getCurrentCustomer() == null && getTarget() == null) {
-			boolean client = world.isClient;
-			if (!client) {
-				setCurrentCustomer(player);
-				sendOffers(player, getDisplayName(), 0);
+		if (isAlive()) {
+			TradeOfferList offers = getOffers();
+			if (rejectTrades(this)) {
+				offers = EMPTY;
 			}
-			return ActionResult.success(client);
+			if (!offers.isEmpty() && getCurrentCustomer() == null && getTarget() == null) {
+				boolean client = world.isClient;
+				if (!client) {
+					setCurrentCustomer(player);
+					sendOffers(player, getDisplayName(), 0);
+				}
+				return ActionResult.success(client);
+			}
 		}
 		return super.interactMob(player, hand);
 	}
@@ -263,6 +271,10 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 		goalSelector.add(3, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this));
 		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> entity.getGroup() != BewitchmentAPI.DEMON && BewitchmentAPI.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3));
+	}
+	
+	public static boolean rejectTrades(LivingEntity merchant) {
+		return !merchant.world.getEntitiesByClass(LivingEntity.class, new Box(merchant.getBlockPos()).expand(8), entity -> merchant.canSee(entity) && entity.isAlive() && CurseAccessor.of(entity).orElse(null).hasCurse(BWCurses.APATHY)).isEmpty();
 	}
 	
 	@SuppressWarnings("ConstantConditions")

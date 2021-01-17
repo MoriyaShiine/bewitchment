@@ -73,7 +73,7 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 	
 	@ModifyVariable(method = "setTarget", at = @At("HEAD"))
 	private LivingEntity setTarget(LivingEntity target) {
-		if (target != null) {
+		if (!world.isClient && target != null) {
 			UUID insanityTargetUUID = getInsanityTargetUUID().orElse(null);
 			if (insanityTargetUUID != null && !target.getUuid().equals(insanityTargetUUID)) {
 				return null;

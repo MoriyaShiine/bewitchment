@@ -99,7 +99,13 @@ public class BrambleBlock extends SugarCaneBlock {
 			entity.slowMovement(state, new Vec3d(0.25, 0.5, 0.25));
 		}
 		if (this == BWObjects.FLEETING_BRAMBLE) {
-			entity.addVelocity(0, 0.4, 0);
+			if (entity.isInSneakingPose()) {
+				entity.setVelocity(entity.getVelocity().multiply(1, 0.5, 1));
+				entity.fallDistance = 0;
+			}
+			else {
+				entity.addVelocity(0, 0.4, 0);
+			}
 		}
 	}
 	

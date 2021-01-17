@@ -17,13 +17,13 @@ public class PushMobsRitualFunction extends RitualFunction {
 	}
 	
 	@Override
-	public void tick(World world, BlockPos pos) {
+	public void tick(World world, BlockPos glyphPos, BlockPos effectivePos) {
 		if (!world.isClient) {
 			int radius = 8;
 			if (world.getTime() % 5 == 0) {
-				for (HostileEntity hostileEntity : world.getEntitiesByClass(HostileEntity.class, new Box(pos).expand(radius, 0, radius), LivingEntity::isAlive)) {
-					double distanceX = pos.getX() - hostileEntity.getX();
-					double distanceZ = pos.getZ() - hostileEntity.getZ();
+				for (HostileEntity hostileEntity : world.getEntitiesByClass(HostileEntity.class, new Box(effectivePos).expand(radius, 0, radius), LivingEntity::isAlive)) {
+					double distanceX = effectivePos.getX() - hostileEntity.getX();
+					double distanceZ = effectivePos.getZ() - hostileEntity.getZ();
 					double max = MathHelper.absMax(distanceX, distanceZ);
 					if (max >= 0) {
 						max = MathHelper.sqrt(max);

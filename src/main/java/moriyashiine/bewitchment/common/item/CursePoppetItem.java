@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.item.tool;
+package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.api.interfaces.CurseAccessor;
 import moriyashiine.bewitchment.api.item.PoppetItem;
@@ -32,7 +32,8 @@ public class CursePoppetItem extends PoppetItem {
 	
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-		return ItemUsage.consumeHeldItem(world, user, hand);
+		ItemStack stack = user.getStackInHand(hand);
+		return stack.hasTag() && stack.getOrCreateTag().getBoolean("Cursed") && stack.getOrCreateTag().contains("OwnerUUID") ? ItemUsage.consumeHeldItem(world, user, hand) : super.use(world, user, hand);
 	}
 	
 	@Override
@@ -67,7 +68,7 @@ public class CursePoppetItem extends PoppetItem {
 	
 	@Override
 	public UseAction getUseAction(ItemStack stack) {
-		return stack.hasTag() && stack.getOrCreateTag().getBoolean("Cursed") ? UseAction.BOW : super.getUseAction(stack);
+		return stack.hasTag() && stack.getOrCreateTag().getBoolean("Cursed") && stack.getOrCreateTag().contains("OwnerUUID") ? UseAction.BOW : super.getUseAction(stack);
 	}
 	
 	@Override

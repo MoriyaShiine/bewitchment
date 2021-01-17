@@ -60,7 +60,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 	}
 	
 	public static DefaultAttributeContainer.Builder createAttributes() {
-		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 375).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 8).add(EntityAttributes.GENERIC_ARMOR, 6).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.75);
+		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 375).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12).add(EntityAttributes.GENERIC_ARMOR, 6).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.75);
 	}
 	
 	@Override
@@ -106,7 +106,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 			if (!client) {
 				if (BewitchmentAPI.isPledged(world, getPledgeUUID(), player.getUuid())) {
 					ContractAccessor.of(player).ifPresent(contractAccessor -> {
-						if (player.experienceLevel >= 30 || player.isCreative()) {
+						if (player.experienceLevel >= 20 || player.isCreative()) {
 							Contract contract = null;
 							while (contract == null || !contract.canBeGiven) {
 								contract = BWRegistries.CONTRACTS.get(random.nextInt(BWRegistries.CONTRACTS.getEntries().size()));
@@ -115,7 +115,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 							contractAccessor.addContract(instance);
 							player.sendMessage(new TranslatableText(Bewitchment.MODID + ".baphomet_contract", new TranslatableText("contract." + BWRegistries.CONTRACTS.getId(contract).toString().replace(":", "."))), true);
 							if (!player.isCreative()) {
-								player.addExperienceLevels(-30);
+								player.addExperience(-551);
 								world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1, 0.5f);
 							}
 						}
@@ -162,8 +162,9 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 				lookAtEntity(target, 360, 360);
 				if (timer % 60 == 0) {
 					for (int i = -1; i <= 1; i++) {
-						FireballEntity fireball = new FireballEntity(world, this, target.getX() - getX() + i, target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ() + i);
+						FireballEntity fireball = new FireballEntity(world, this, target.getX() - getX() + (i * 2), target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ() + (i * 2));
 						fireball.updatePosition(fireball.getX(), getBodyY(0.5), fireball.getZ());
+						fireball.setOwner(this);
 						world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_SHOOT, SoundCategory.HOSTILE, 1, 1);
 						world.spawnEntity(fireball);
 					}

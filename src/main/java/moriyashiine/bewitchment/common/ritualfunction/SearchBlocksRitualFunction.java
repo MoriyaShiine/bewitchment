@@ -19,13 +19,13 @@ public class SearchBlocksRitualFunction extends RitualFunction {
 	}
 	
 	@Override
-	public void start(ServerWorld world, BlockPos pos, Inventory inventory) {
-		PlayerEntity closestPlayer = world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 8, false);
+	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory) {
+		PlayerEntity closestPlayer = world.getClosestPlayer(glyphPos.getX() + 0.5, glyphPos.getY() + 0.5, glyphPos.getZ() + 0.5, 8, false);
 		if (closestPlayer != null) {
-			Block block = world.getBlockState(pos.down(2)).getBlock();
-			int blocks = BewitchmentAPI.getBlockPoses(pos, 16, currentPos -> world.getBlockState(currentPos).getBlock() == block).size();
+			Block block = world.getBlockState(glyphPos.down(2)).getBlock();
+			int blocks = BewitchmentAPI.getBlockPoses(effectivePos, 16, currentPos -> world.getBlockState(currentPos).getBlock() == block).size();
 			closestPlayer.sendMessage(new TranslatableText("bewitchment.found_block" + (blocks == 1 ? "" : "s"), blocks, block.getName()), true);
 		}
-		super.start(world, pos, inventory);
+		super.start(world, glyphPos, effectivePos, inventory);
 	}
 }

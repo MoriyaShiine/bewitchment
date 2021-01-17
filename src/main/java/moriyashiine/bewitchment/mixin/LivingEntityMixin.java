@@ -8,7 +8,8 @@ import moriyashiine.bewitchment.client.network.packet.SpawnExplosionParticlesPac
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
-import moriyashiine.bewitchment.common.item.tool.AthameItem;
+import moriyashiine.bewitchment.common.entity.living.BaphometEntity;
+import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.recipe.AthameDropRecipe;
 import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
 import moriyashiine.bewitchment.common.registry.*;
@@ -31,6 +32,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -88,6 +90,10 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	@Shadow
 	public abstract void heal(float amount);
 	
+	@Shadow
+	@Nullable
+	private LivingEntity attacker;
+	
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
@@ -121,7 +127,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@ModifyVariable(method = "addStatusEffect", at = @At("HEAD"))
 	private StatusEffectInstance modifyStatusEffect(StatusEffectInstance effect) {
-		if (hasCurse(BWCurses.COMPROMISED) && ((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.HARMFUL) {
+		if (!world.isClient && hasCurse(BWCurses.COMPROMISED) && ((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.HARMFUL) {
 			return new StatusEffectInstance(effect.getEffectType(), effect.getDuration(), effect.getAmplifier() + 1);
 		}
 		return effect;
@@ -129,7 +135,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/entity/LivingEntity;getHealth()F"))
 	private float modifyDamage0(float amount, DamageSource source) {
-		if (BewitchmentAPI.isWeakToSilver((LivingEntity) (Object) this)) {
+		if (!world.isClient && BewitchmentAPI.isWeakToSilver((LivingEntity) (Object) this)) {
 			if (BewitchmentAPI.isSourceFromSilver(source)) {
 				return amount + 4;
 			}
@@ -139,113 +145,122 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
 	private float modifyDamage1(float amount, DamageSource source) {
-		Entity attacker = source.getAttacker();
-		if (amount > 0 && (Object) this instanceof PlayerEntity) {
-			ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VAMPIRIC_POPPET, null, (PlayerEntity) (Object) this);
-			if (!poppet.isEmpty()) {
-				if (BewitchmentAPI.getTaglockOwner(world, poppet).damage(BWDamageSources.VAMPIRE, amount) && poppet.damage((int) amount, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
-					poppet.decrement(1);
-				}
-				return 0;
-			}
-		}
-		if (amount > 0 && attacker instanceof FortuneAccessor && ((FortuneAccessor) attacker).getFortune() != null && ((FortuneAccessor) attacker).getFortune().fortune == BWFortunes.HAWKEYE && source.isProjectile()) {
-			((FortuneAccessor) attacker).getFortune().duration = 0;
-			amount *= 4;
-		}
-		attacker = source.getSource();
-		if (source.isFire() || source == DamageSource.DROWN || source == DamageSource.FALL || source == DamageSource.FLY_INTO_WALL) {
-			ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.PROTECTION_POPPET, this, null);
-			if (!poppet.isEmpty()) {
-				if (poppet.damage((int) amount, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
-					poppet.decrement(1);
-				}
-				return 0;
-			}
-		}
-		if (getHealth() - amount <= 0) {
-			ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.DEATH_PROTECTION_POPPET, this, null);
-			if (!poppet.isEmpty()) {
-				if (poppet.damage(1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
-					poppet.decrement(1);
-				}
-				heal(Float.MAX_VALUE);
-				return 0;
-			}
-		}
-		if (attacker instanceof PlayerEntity && BewitchmentAPI.isWeakToSilver((LivingEntity) attacker)) {
-			ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.JUDGMENT_POPPET, this, null);
-			if (!poppet.isEmpty()) {
-				if (poppet.damage(1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
-					poppet.decrement(1);
-				}
-				amount /= 4;
-			}
-		}
-		if (attacker instanceof LivingEntity) {
-			ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.FATIGUE_POPPET, this, null);
-			if (!poppet.isEmpty() && ((LivingEntity) attacker).addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 60, 1)) && poppet.damage(1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
-				poppet.decrement(1);
-			}
-		}
-		if (attacker instanceof LivingEntity && ((LivingEntity) attacker).hasStatusEffect(BWStatusEffects.ENCHANTED)) {
-			amount /= 4 + ((LivingEntity) attacker).getStatusEffect(BWStatusEffects.ENCHANTED).getAmplifier();
-		}
-		if (hasStatusEffect(BWStatusEffects.MAGIC_RESISTANCE) && source.getMagic()) {
-			amount *= (1 - (0.2f * (getStatusEffect(BWStatusEffects.MAGIC_RESISTANCE).getAmplifier() + 1)));
-		}
-		if (!(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns())) {
-			if (attacker instanceof LivingEntity) {
-				LivingEntity livingAttacker = (LivingEntity) attacker;
-				if (BewitchmentAPI.isWeakToSilver(livingAttacker)) {
-					int armorPieces = BewitchmentAPI.getArmorPieces(livingAttacker, stack -> BWTags.SILVER_ARMOR.contains(stack.getItem()));
-					if (armorPieces > 0) {
-						attacker.damage(DamageSource.thorns(this), armorPieces);
+		if (!world.isClient) {
+			Entity trueSource = source.getAttacker();
+			Entity directSource = source.getSource();
+			if (amount > 0 && (Object) this instanceof PlayerEntity) {
+				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VAMPIRIC_POPPET, null, (PlayerEntity) (Object) this);
+				if (!poppet.isEmpty()) {
+					LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
+					if (!getUuid().equals(owner.getUuid()) && owner.damage(BWDamageSources.VAMPIRE, amount)) {
+						if (poppet.damage((int) amount, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+							poppet.decrement(1);
+						}
+						return 0;
 					}
-					amount *= (1 - (0.125f * armorPieces));
 				}
 			}
-		}
-		if (source == DamageSource.FALL) {
-			BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) world.getBlockEntity(currentPos)).getSigil() == BWSigils.HEAVY);
-			if (sigilPos != null) {
-				BlockEntity blockEntity = world.getBlockEntity(sigilPos);
-				HasSigil sigil = (HasSigil) blockEntity;
-				if (sigil.test(this)) {
-					sigil.setUses(sigil.getUses() - 1);
-					blockEntity.markDirty();
-					amount *= 3;
+			if (source.isFire() || source == DamageSource.DROWN || source == DamageSource.FALL || source == DamageSource.FLY_INTO_WALL) {
+				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.PROTECTION_POPPET, this, null);
+				if (!poppet.isEmpty()) {
+					if (poppet.damage((int) amount, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+						poppet.decrement(1);
+					}
+					return 0;
 				}
 			}
-		}
-		if (hasCurse(BWCurses.FORESTS_WRATH) && (((attacker instanceof LivingEntity && ((LivingEntity) attacker).getMainHandStack().getItem() instanceof AxeItem)) || source.isFire())) {
-			amount *= 2;
-		}
-		if (hasCurse(BWCurses.SUSCEPTIBILITY) && (source.isFire() || (attacker instanceof LivingEntity && (((LivingEntity) attacker).getGroup() == EntityGroup.AQUATIC || ((LivingEntity) attacker).getGroup() == BewitchmentAPI.DEMON)))) {
-			amount *= 2;
-		}
-		if (((Object) this instanceof PlayerEntity) && hasContract(BWContracts.FAMINE)) {
-			amount *= (1 - (0.025f * (20 - ((PlayerEntity) (Object) this).getHungerManager().getFoodLevel())));
-		}
-		if (attacker instanceof PlayerEntity && ((ContractAccessor) attacker).hasNegativeEffects() && ((ContractAccessor) attacker).hasContract(BWContracts.FAMINE)) {
-			amount *= (1 - (0.025f * (20 - ((PlayerEntity) attacker).getHungerManager().getFoodLevel())));
-		}
-		if (attacker instanceof LivingEntity && ((ContractAccessor) attacker).hasContract(BWContracts.WRATH)) {
-			amount *= (1 + (0.025f * (((LivingEntity) attacker).getMaxHealth() - ((LivingEntity) attacker).getHealth())));
-		}
-		if (hasNegativeEffects() && hasContract(BWContracts.WRATH)) {
-			amount *= (1 + (0.025f * (getMaxHealth() - getHealth())));
-		}
-		if (source.getMagic() && (Object) this instanceof LivingEntity) {
-			int armorPieces = BewitchmentAPI.getArmorPieces((LivingEntity) (Object) this, stack -> {
-				if (stack.getItem() instanceof ArmorItem) {
-					ArmorMaterial material = ((ArmorItem) stack.getItem()).getMaterial();
-					return material == BWMaterials.HEDGEWITCH_ARMOR || material == BWMaterials.ALCHEMIST_ARMOR || material == BWMaterials.BESMIRCHED_ARMOR;
+			if (getHealth() - amount <= 0) {
+				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.DEATH_PROTECTION_POPPET, this, null);
+				if (!poppet.isEmpty()) {
+					if (poppet.damage(1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+						poppet.decrement(1);
+					}
+					heal(Float.MAX_VALUE);
+					return 0;
 				}
-				return false;
-			});
-			if (armorPieces > 0) {
-				amount *= (1 - (0.2f * armorPieces));
+			}
+			if (directSource instanceof FireballEntity && trueSource instanceof BaphometEntity) {
+				amount *= 3;
+			}
+			if (amount > 0 && trueSource instanceof FortuneAccessor && ((FortuneAccessor) trueSource).getFortune() != null && ((FortuneAccessor) trueSource).getFortune().fortune == BWFortunes.HAWKEYE && source.isProjectile()) {
+				((FortuneAccessor) trueSource).getFortune().duration = 0;
+				amount *= 3;
+			}
+			if (trueSource instanceof PlayerEntity && BewitchmentAPI.isWeakToSilver((LivingEntity) trueSource)) {
+				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.JUDGMENT_POPPET, this, null);
+				if (!poppet.isEmpty()) {
+					if (poppet.damage(1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+						poppet.decrement(1);
+					}
+					amount /= 4;
+				}
+			}
+			if (directSource instanceof LivingEntity) {
+				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.FATIGUE_POPPET, this, null);
+				if (!poppet.isEmpty() && ((LivingEntity) directSource).addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 60, 1)) && poppet.damage(1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+					poppet.decrement(1);
+				}
+			}
+			if (directSource instanceof LivingEntity && ((LivingEntity) directSource).hasStatusEffect(BWStatusEffects.ENCHANTED)) {
+				amount /= 4;
+				amount += ((LivingEntity) directSource).getStatusEffect(BWStatusEffects.ENCHANTED).getAmplifier();
+			}
+			if (hasStatusEffect(BWStatusEffects.MAGIC_RESISTANCE) && source.getMagic()) {
+				amount *= (1 - (0.2f * (getStatusEffect(BWStatusEffects.MAGIC_RESISTANCE).getAmplifier() + 1)));
+			}
+			if (!(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns())) {
+				if (directSource instanceof LivingEntity) {
+					LivingEntity livingAttacker = (LivingEntity) directSource;
+					if (BewitchmentAPI.isWeakToSilver(livingAttacker)) {
+						int armorPieces = BewitchmentAPI.getArmorPieces(livingAttacker, stack -> BWTags.SILVER_ARMOR.contains(stack.getItem()));
+						if (armorPieces > 0) {
+							directSource.damage(DamageSource.thorns(this), armorPieces);
+						}
+						amount *= (1 - (0.125f * armorPieces));
+					}
+				}
+			}
+			if (source == DamageSource.FALL) {
+				BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) world.getBlockEntity(currentPos)).getSigil() == BWSigils.HEAVY);
+				if (sigilPos != null) {
+					BlockEntity blockEntity = world.getBlockEntity(sigilPos);
+					HasSigil sigil = (HasSigil) blockEntity;
+					if (sigil.test(this)) {
+						sigil.setUses(sigil.getUses() - 1);
+						blockEntity.markDirty();
+						amount *= 3;
+					}
+				}
+			}
+			if (hasCurse(BWCurses.FORESTS_WRATH) && (source.isFire() || ((directSource instanceof LivingEntity && ((LivingEntity) directSource).getMainHandStack().getItem() instanceof AxeItem)))) {
+				amount *= 2;
+			}
+			if (hasCurse(BWCurses.SUSCEPTIBILITY) && (source.isFire() || (directSource instanceof LivingEntity && (((LivingEntity) directSource).getGroup() == EntityGroup.AQUATIC || ((LivingEntity) directSource).getGroup() == BewitchmentAPI.DEMON)))) {
+				amount *= 2;
+			}
+			if (((Object) this instanceof PlayerEntity) && hasContract(BWContracts.FAMINE)) {
+				amount *= (1 - (0.025f * (20 - ((PlayerEntity) (Object) this).getHungerManager().getFoodLevel())));
+			}
+			if (directSource instanceof PlayerEntity && ((ContractAccessor) directSource).hasNegativeEffects() && ((ContractAccessor) directSource).hasContract(BWContracts.FAMINE)) {
+				amount *= (1 - (0.025f * (20 - ((PlayerEntity) directSource).getHungerManager().getFoodLevel())));
+			}
+			if (directSource instanceof LivingEntity && ((ContractAccessor) directSource).hasContract(BWContracts.WRATH)) {
+				amount *= (1 + (0.025f * (((LivingEntity) directSource).getMaxHealth() - ((LivingEntity) directSource).getHealth())));
+			}
+			if (hasNegativeEffects() && hasContract(BWContracts.WRATH)) {
+				amount *= (1 + (0.025f * (getMaxHealth() - getHealth())));
+			}
+			if (source.getMagic() && (Object) this instanceof LivingEntity) {
+				int armorPieces = BewitchmentAPI.getArmorPieces((LivingEntity) (Object) this, stack -> {
+					if (stack.getItem() instanceof ArmorItem) {
+						ArmorMaterial material = ((ArmorItem) stack.getItem()).getMaterial();
+						return material == BWMaterials.HEDGEWITCH_ARMOR || material == BWMaterials.ALCHEMIST_ARMOR || material == BWMaterials.BESMIRCHED_ARMOR;
+					}
+					return false;
+				});
+				if (armorPieces > 0) {
+					amount *= (1 - (0.2f * armorPieces));
+				}
 			}
 		}
 		return amount;
@@ -253,9 +268,11 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@ModifyVariable(method = "damage", at = @At("HEAD"))
 	private DamageSource modifyDamageSource(DamageSource source) {
-		Entity attacker = source.getSource();
-		if (attacker instanceof LivingEntity && ((LivingEntity) attacker).hasStatusEffect(BWStatusEffects.ENCHANTED)) {
-			return DamageSource.MAGIC;
+		if (!world.isClient) {
+			Entity attacker = source.getSource();
+			if (attacker instanceof LivingEntity && ((LivingEntity) attacker).hasStatusEffect(BWStatusEffects.ENCHANTED)) {
+				return attacker instanceof PlayerEntity ? new BWDamageSources.MagicPlayer(attacker) : new BWDamageSources.MagicMob(attacker);
+			}
 		}
 		return source;
 	}
@@ -297,65 +314,67 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
-		InsanityTargetAccessor insanityTargetAccessor = InsanityTargetAccessor.of(this).orElse(null);
-		if (insanityTargetAccessor != null && insanityTargetAccessor.getInsanityTargetUUID().isPresent()) {
-			callbackInfo.setReturnValue(false);
-			return;
-		}
-		if (!source.isOutOfWorld()) {
-			if (!BewitchmentAPI.getBlockPoses(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity && ((GlyphBlockEntity) world.getBlockEntity(currentPos)).ritualFunction == BWRitualFunctions.PREVENT_DAMAGE).isEmpty()) {
+		if (!world.isClient) {
+			InsanityTargetAccessor insanityTargetAccessor = InsanityTargetAccessor.of(this).orElse(null);
+			if (insanityTargetAccessor != null && insanityTargetAccessor.getInsanityTargetUUID().isPresent()) {
 				callbackInfo.setReturnValue(false);
 				return;
 			}
-		}
-		Entity attacker = source.getSource();
-		if (!source.isOutOfWorld() && (hasStatusEffect(BWStatusEffects.ETHEREAL) || (attacker instanceof LivingEntity && ((LivingEntity) attacker).hasStatusEffect(BWStatusEffects.ETHEREAL)))) {
-			callbackInfo.setReturnValue(false);
-		}
-		else if (hasStatusEffect(BWStatusEffects.DEFLECTION) && attacker != null && EntityTypeTags.ARROWS.contains(attacker.getType())) {
-			int amplifier = getStatusEffect(BWStatusEffects.DEFLECTION).getAmplifier() + 1;
-			Vec3d velocity = attacker.getVelocity();
-			attacker.setVelocity(velocity.getX() * 2 * amplifier, velocity.getY() * 2 * amplifier, velocity.getZ() * 2 * amplifier);
-			callbackInfo.setReturnValue(false);
-		}
-		else if (amount > 0) {
-			if (hasStatusEffect(BWStatusEffects.LEECHING)) {
-				heal(amount * (getStatusEffect(BWStatusEffects.LEECHING).getAmplifier() + 1) / 4);
-			}
-			if (hasStatusEffect(BWStatusEffects.THORNS) && !(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns())) {
-				attacker.damage(DamageSource.thorns(attacker), 2 * (getStatusEffect(BWStatusEffects.THORNS).getAmplifier() + 1));
-			}
-			if (hasStatusEffect(BWStatusEffects.VOLATILITY) && !source.isExplosive()) {
-				for (LivingEntity entity : world.getEntitiesByClass(LivingEntity.class, getBoundingBox().expand(3), LivingEntity::isAlive)) {
-					entity.damage(DamageSource.explosion(((LivingEntity) (Object) this)), 4 * (getStatusEffect(BWStatusEffects.VOLATILITY).getAmplifier() + 1));
+			if (!source.isOutOfWorld()) {
+				if (!BewitchmentAPI.getBlockPoses(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity && ((GlyphBlockEntity) world.getBlockEntity(currentPos)).ritualFunction == BWRitualFunctions.PREVENT_DAMAGE).isEmpty()) {
+					callbackInfo.setReturnValue(false);
+					return;
 				}
-				world.playSound(null, getBlockPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1, 1);
-				PlayerLookup.tracking(this).forEach(playerEntity -> SpawnExplosionParticlesPacket.send(playerEntity, this));
-				if (((Object) this) instanceof PlayerEntity) {
-					SpawnExplosionParticlesPacket.send((PlayerEntity) (Object) this, this);
+			}
+			Entity attacker = source.getSource();
+			if (!source.isOutOfWorld() && (hasStatusEffect(BWStatusEffects.ETHEREAL) || (attacker instanceof LivingEntity && ((LivingEntity) attacker).hasStatusEffect(BWStatusEffects.ETHEREAL)))) {
+				callbackInfo.setReturnValue(false);
+			}
+			else if (hasStatusEffect(BWStatusEffects.DEFLECTION) && attacker != null && EntityTypeTags.ARROWS.contains(attacker.getType())) {
+				int amplifier = getStatusEffect(BWStatusEffects.DEFLECTION).getAmplifier() + 1;
+				Vec3d velocity = attacker.getVelocity();
+				attacker.setVelocity(velocity.getX() * 2 * amplifier, velocity.getY() * 2 * amplifier, velocity.getZ() * 2 * amplifier);
+				callbackInfo.setReturnValue(false);
+			}
+			else if (amount > 0) {
+				if (hasStatusEffect(BWStatusEffects.LEECHING)) {
+					heal(amount * (getStatusEffect(BWStatusEffects.LEECHING).getAmplifier() + 1) / 4);
 				}
-				removeStatusEffect(BWStatusEffects.VOLATILITY);
-			}
-			if (attacker instanceof ContractAccessor && ((ContractAccessor) attacker).hasContract(BWContracts.PESTILENCE)) {
-				addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100));
-				addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100));
-			}
-			if (source == DamageSource.DROWN && (Object) this instanceof PlayerEntity) {
-				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_POPPET, null, (PlayerEntity) (Object) this);
-				if (!poppet.isEmpty()) {
-					LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
-					if (!owner.getUuid().equals(getUuid())) {
-						if (poppet.damage(1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
-							poppet.decrement(1);
-						}
-						ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
-						if (!potentialPoppet.isEmpty()) {
-							if (potentialPoppet.damage(1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
-								potentialPoppet.decrement(1);
+				if (hasStatusEffect(BWStatusEffects.THORNS) && !(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns())) {
+					attacker.damage(DamageSource.thorns(attacker), 2 * (getStatusEffect(BWStatusEffects.THORNS).getAmplifier() + 1));
+				}
+				if (hasStatusEffect(BWStatusEffects.VOLATILITY) && !source.isExplosive()) {
+					for (LivingEntity entity : world.getEntitiesByClass(LivingEntity.class, getBoundingBox().expand(3), LivingEntity::isAlive)) {
+						entity.damage(DamageSource.explosion(((LivingEntity) (Object) this)), 4 * (getStatusEffect(BWStatusEffects.VOLATILITY).getAmplifier() + 1));
+					}
+					world.playSound(null, getBlockPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1, 1);
+					PlayerLookup.tracking(this).forEach(playerEntity -> SpawnExplosionParticlesPacket.send(playerEntity, this));
+					if (((Object) this) instanceof PlayerEntity) {
+						SpawnExplosionParticlesPacket.send((PlayerEntity) (Object) this, this);
+					}
+					removeStatusEffect(BWStatusEffects.VOLATILITY);
+				}
+				if (attacker instanceof ContractAccessor && ((ContractAccessor) attacker).hasContract(BWContracts.PESTILENCE)) {
+					addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100));
+					addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100));
+				}
+				if (source == DamageSource.DROWN && (Object) this instanceof PlayerEntity) {
+					ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_POPPET, null, (PlayerEntity) (Object) this);
+					if (!poppet.isEmpty()) {
+						LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
+						if (!owner.getUuid().equals(getUuid())) {
+							if (poppet.damage(1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+								poppet.decrement(1);
 							}
-							return;
+							ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
+							if (!potentialPoppet.isEmpty()) {
+								if (potentialPoppet.damage(1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
+									potentialPoppet.decrement(1);
+								}
+								return;
+							}
+							owner.damage(source, amount);
 						}
-						owner.damage(source, amount);
 					}
 				}
 			}
@@ -364,30 +383,34 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "isAffectedBySplashPotions", at = @At("HEAD"), cancellable = true)
 	private void isAffectedBySplashPotions(CallbackInfoReturnable<Boolean> callbackInfo) {
-		MasterAccessor.of(this).ifPresent(masterAccessor -> {
-			if (masterAccessor.getMasterUUID() != null) {
-				callbackInfo.setReturnValue(false);
-			}
-		});
+		if (!world.isClient) {
+			MasterAccessor.of(this).ifPresent(masterAccessor -> {
+				if (masterAccessor.getMasterUUID() != null) {
+					callbackInfo.setReturnValue(false);
+				}
+			});
+		}
 	}
 	
 	@Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
 	private void canHaveStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
-		StatusEffectType type = ((StatusEffectAccessor) effect.getEffectType()).bw_getType();
-		if (type == StatusEffectType.BENEFICIAL) {
-			if (hasCurse(BWCurses.UNLUCKY) && random.nextBoolean()) {
-				callbackInfo.setReturnValue(false);
-			}
-		}
-		if (type != StatusEffectType.HARMFUL) {
-			BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) world.getBlockEntity(currentPos)).getSigil() == BWSigils.RUIN);
-			if (sigilPos != null) {
-				BlockEntity blockEntity = world.getBlockEntity(sigilPos);
-				HasSigil sigil = (HasSigil) blockEntity;
-				if (sigil.test(this)) {
-					sigil.setUses(sigil.getUses() - 1);
-					blockEntity.markDirty();
+		if (!world.isClient && !effect.isAmbient()) {
+			StatusEffectType type = ((StatusEffectAccessor) effect.getEffectType()).bw_getType();
+			if (type == StatusEffectType.BENEFICIAL) {
+				if (hasCurse(BWCurses.UNLUCKY) && random.nextBoolean()) {
 					callbackInfo.setReturnValue(false);
+				}
+			}
+			if (type != StatusEffectType.HARMFUL) {
+				BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) world.getBlockEntity(currentPos)).getSigil() == BWSigils.RUIN);
+				if (sigilPos != null) {
+					BlockEntity blockEntity = world.getBlockEntity(sigilPos);
+					HasSigil sigil = (HasSigil) blockEntity;
+					if (sigil.test(this)) {
+						sigil.setUses(sigil.getUses() - 1);
+						blockEntity.markDirty();
+						callbackInfo.setReturnValue(false);
+					}
 				}
 			}
 		}
@@ -395,7 +418,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "canBreatheInWater", at = @At("HEAD"), cancellable = true)
 	private void canBreatheInWater(CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (hasStatusEffect(BWStatusEffects.GILLS)) {
+		if (!world.isClient && hasStatusEffect(BWStatusEffects.GILLS)) {
 			callbackInfo.setReturnValue(true);
 		}
 	}
@@ -424,12 +447,12 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 							ItemScatterer.spawn(world, getX() + 0.5, getY() + 0.5, getZ() + 0.5, drop);
 						}
 					}
-					if (livingAttacker.getOffHandStack().getItem() == Items.GLASS_BOTTLE && getBlood() > 30) {
+					if (livingAttacker instanceof PlayerEntity && livingAttacker.getOffHandStack().getItem() == Items.GLASS_BOTTLE && getBlood() > 30) {
 						world.playSound(null, attacker.getBlockPos(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1, 0.5f);
 						ItemStack bloodBottle = new ItemStack(BWObjects.BOTTLE_OF_BLOOD);
 						bloodBottle.getOrCreateTag().putUuid("OwnerUUID", getUuid());
 						bloodBottle.getOrCreateTag().putString("OwnerName", getDisplayName().getString());
-						BewitchmentAPI.addItemToInventoryAndConsume(livingAttacker, Hand.OFF_HAND, bloodBottle);
+						BewitchmentAPI.addItemToInventoryAndConsume((PlayerEntity) livingAttacker, Hand.OFF_HAND, bloodBottle);
 					}
 				}
 			}
@@ -469,14 +492,14 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 						durationMultiplier = 2;
 					}
 				}
-				addStatusEffect(new StatusEffectInstance(recipe.effect, 24000 * durationMultiplier, recipe.amplifier, true, false));
+				addStatusEffect(new StatusEffectInstance(recipe.effect, 24000 * durationMultiplier, recipe.amplifier, false, false));
 			});
 		}
 	}
 	
 	@Inject(method = "addStatusEffect", at = @At("HEAD"))
 	private void addStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if ((Object) this instanceof PlayerEntity) {
+		if (!world.isClient && (Object) this instanceof PlayerEntity) {
 			ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_POPPET, null, (PlayerEntity) (Object) this);
 			if (!poppet.isEmpty()) {
 				LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
