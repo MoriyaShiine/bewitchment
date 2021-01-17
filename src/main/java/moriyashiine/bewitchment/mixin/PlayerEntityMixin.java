@@ -22,6 +22,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -137,7 +138,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	}
 	
 	@Inject(method = "eatFood", at = @At("HEAD"))
-	private void eatFood(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> callbackInfo) {
+	private void eat(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> callbackInfo) {
 		if (!world.isClient) {
 			if (hasStatusEffect(BWStatusEffects.NOURISHING)) {
 				getHungerManager().add(getStatusEffect(BWStatusEffects.NOURISHING).getAmplifier() + 2, 0.5f);
@@ -148,15 +149,22 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 					fillMagic(foodComponent.getHunger() * 100, false);
 				}
 				if (hasContract(BWContracts.GLUTTONY)) {
-					if (hasNegativeEffects() && random.nextFloat() < 1 / 10f) {
-						getHungerManager().add(-foodComponent.getHunger(), foodComponent.getSaturationModifier());
+					if (hasNegativeEffects() && random.nextFloat() < 1 / 4f) {
+						return;
 					}
-					else {
-						getHungerManager().add(foodComponent.getHunger(), 0);
-					}
+					getHungerManager().add(foodComponent.getHunger() / 2, 0);
 				}
 			}
 		}
+	}
+	
+	@ModifyVariable(method = "addExhaustion", at = @At("HEAD"))
+	private float addExhaustion(float exhaustion) {
+		ContractAccessor contractAccessor = ContractAccessor.of(this).orElse(null);
+		if (!world.isClient && contractAccessor != null && contractAccessor.hasNegativeEffects() && contractAccessor.hasContract(BWContracts.GLUTTONY)) {
+			return exhaustion * 2;
+		}
+		return exhaustion;
 	}
 	
 	@Inject(method = "dropItem(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/ItemEntity;", at = @At("HEAD"))
