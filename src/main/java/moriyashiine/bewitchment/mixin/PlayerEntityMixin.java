@@ -149,9 +149,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 					fillMagic(foodComponent.getHunger() * 100, false);
 				}
 				if (hasContract(BWContracts.GLUTTONY)) {
-					if (hasNegativeEffects() && random.nextFloat() < 1 / 4f) {
-						return;
-					}
 					getHungerManager().add(foodComponent.getHunger() / 2, 0);
 				}
 			}
