@@ -7,13 +7,12 @@ import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.Tickable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class DragonsBloodChestBlockEntity extends BWChestBlockEntity implements BlockEntityClientSerializable, Tickable, HasSigil {
+public class DragonsBloodChestBlockEntity extends BWChestBlockEntity implements BlockEntityClientSerializable, HasSigil {
 	private final List<UUID> entities = new ArrayList<>();
 	private UUID owner = null;
 	private Sigil sigil = null;
