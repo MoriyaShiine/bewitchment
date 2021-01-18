@@ -84,7 +84,7 @@ public abstract class BlockMixin {
 							foundOre = true;
 						}
 					}
-					if (foundOre && contractAccessor.hasNegativeEffects() && world.random.nextBoolean()) {
+					if (foundOre && contractAccessor.hasNegativeEffects() && world.random.nextFloat() < 1/3f) {
 						drops.clear();
 					}
 				}
