@@ -17,7 +17,7 @@ public class PestilenceContract extends Contract {
 	
 	public void tick(LivingEntity target, boolean includeNegative) {
 		if (includeNegative && target.age % 100 == 0) {
-			target.world.getEntitiesByType(EntityType.VILLAGER, new Box(target.getBlockPos()).expand(8), villagerEntity -> true).forEach(villagerEntity -> {
+			target.world.getEntitiesByType(EntityType.VILLAGER, new Box(target.getBlockPos()).expand(4), villagerEntity -> true).forEach(villagerEntity -> {
 				if (target.getRandom().nextFloat() < 1 / 40f) {
 					ZombieVillagerEntity zombieVillager = villagerEntity.method_29243(EntityType.ZOMBIE_VILLAGER, false);
 					if (zombieVillager != null) {
