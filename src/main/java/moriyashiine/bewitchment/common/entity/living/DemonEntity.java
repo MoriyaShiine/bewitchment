@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.common.entity.living;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.CurseAccessor;
 import moriyashiine.bewitchment.api.interfaces.Pledgeable;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.api.EnvType;
@@ -140,8 +141,10 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 		if (!world.isClient) {
 			refreshTimer++;
 			if (refreshTimer >= 168000) {
-				for (TradeOffer offer : getOffers()) {
-					offer.resetUses();
+				if (Bewitchment.config.doDemonTradesRefresh) {
+					for (TradeOffer offer : getOffers()) {
+						offer.resetUses();
+					}
 				}
 				refreshTimer = 0;
 			}

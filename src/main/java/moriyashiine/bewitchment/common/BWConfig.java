@@ -48,4 +48,6 @@ public class BWConfig implements ConfigData {
 	public final int hellhoundWeight = 6;
 	public final int hellhoundMinGroupCount = 1;
 	public final int hellhoundMaxGroupCount = 1;
+	
+	public final boolean doDemonTradesRefresh = true;
 }
