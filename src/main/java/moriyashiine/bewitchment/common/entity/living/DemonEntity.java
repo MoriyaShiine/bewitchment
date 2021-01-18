@@ -51,10 +51,12 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	
 	public static final TrackedData<Boolean> MALE = DataTracker.registerData(DemonEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
+	private final SimpleInventory inventory = new SimpleInventory(6);
+	
 	private TradeOfferList tradeOffers = null;
 	private PlayerEntity customer = null;
 	
-	private final SimpleInventory inventory = new SimpleInventory(6);
+	private int refreshTimer = 0;
 	
 	public DemonEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
@@ -136,6 +138,13 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	public void tick() {
 		super.tick();
 		if (!world.isClient) {
+			refreshTimer++;
+			if (refreshTimer >= 168000) {
+				for (TradeOffer offer : getOffers()) {
+					offer.resetUses();
+				}
+				refreshTimer = 0;
+			}
 			if (customer != null) {
 				navigation.stop();
 			}
@@ -241,20 +250,22 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	public void readCustomDataFromTag(CompoundTag tag) {
 		super.readCustomDataFromTag(tag);
 		dataTracker.set(MALE, tag.getBoolean("Male"));
+		inventory.readTags(tag.getList("Inventory", NbtType.COMPOUND));
 		if (tag.contains("Offers")) {
 			tradeOffers = new TradeOfferList(tag.getCompound("Offers"));
 		}
-		inventory.readTags(tag.getList("Inventory", NbtType.COMPOUND));
+		refreshTimer = tag.getInt("RefreshTimer");
 	}
 	
 	@Override
 	public void writeCustomDataToTag(CompoundTag tag) {
 		super.writeCustomDataToTag(tag);
 		tag.putBoolean("Male", dataTracker.get(MALE));
+		tag.put("Inventory", inventory.getTags());
 		if (!getOffers().isEmpty()) {
 			tag.put("Offers", tradeOffers.toTag());
 		}
-		tag.put("Inventory", inventory.getTags());
+		tag.putInt("RefreshTimer", refreshTimer);
 	}
 	
 	@Override
