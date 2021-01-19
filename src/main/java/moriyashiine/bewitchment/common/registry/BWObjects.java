@@ -13,6 +13,8 @@ import moriyashiine.bewitchment.api.item.SigilItem;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.*;
 import moriyashiine.bewitchment.common.block.dragonsblood.*;
+import moriyashiine.bewitchment.common.block.elder.*;
+import moriyashiine.bewitchment.common.block.juniper.*;
 import moriyashiine.bewitchment.common.block.util.BWCarpetBlock;
 import moriyashiine.bewitchment.common.block.util.BWCropBlock;
 import moriyashiine.bewitchment.common.block.util.BWOreBlock;
@@ -44,6 +46,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings.copyOf;
+import static net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings.of;
 
 public class BWObjects {
 	private static final Map<Block, Identifier> BLOCKS = new LinkedHashMap<>();
@@ -74,14 +77,14 @@ public class BWObjects {
 	public static final Block JUNIPER_STAIRS = create("juniper_stairs", new TerraformStairsBlock(JUNIPER_PLANKS, copyOf(Blocks.OAK_STAIRS)), true);
 	public static final Block JUNIPER_SLAB = create("juniper_slab", new SlabBlock(copyOf(Blocks.OAK_SLAB)), true);
 	public static final Block JUNIPER_FENCE = create("juniper_fence", new FenceBlock(copyOf(Blocks.OAK_FENCE)), true);
-	public static final Block JUNIPER_FENCE_GATE = create("juniper_fence_gate", new FenceGateBlock(copyOf(Blocks.OAK_FENCE_GATE)), true);
-	public static final Block JUNIPER_PRESSURE_PLATE = create("juniper_pressure_plate", new TerraformPressurePlateBlock(copyOf(Blocks.OAK_PRESSURE_PLATE)), true);
-	public static final Block JUNIPER_BUTTON = create("juniper_button", new TerraformButtonBlock(copyOf(Blocks.OAK_BUTTON)), true);
-	public static final Block JUNIPER_TRAPDOOR = create("juniper_trapdoor", new TerraformTrapdoorBlock(copyOf(Blocks.OAK_TRAPDOOR)), true);
-	public static final Block JUNIPER_DOOR = create("juniper_door", new TerraformDoorBlock(copyOf(Blocks.OAK_DOOR)), false);
+	public static final Block JUNIPER_FENCE_GATE = create("juniper_fence_gate", new JuniperFenceGateBlock(copyOf(Blocks.OAK_FENCE_GATE)), true);
+	public static final Block JUNIPER_PRESSURE_PLATE = create("juniper_pressure_plate", new JuniperPressurePlateBlock(copyOf(Blocks.OAK_PRESSURE_PLATE)), true);
+	public static final Block JUNIPER_BUTTON = create("juniper_button", new JuniperButtonBlock(copyOf(Blocks.OAK_BUTTON)), true);
+	public static final Block JUNIPER_TRAPDOOR = create("juniper_trapdoor", new JuniperTrapdoorBlock(copyOf(Blocks.OAK_TRAPDOOR)), true);
+	public static final Block JUNIPER_DOOR = create("juniper_door", new JuniperDoorBlock(copyOf(Blocks.OAK_DOOR)), false);
 	public static final Item JUNIPER_DOOR_ITEM = create("juniper_door", new TallBlockItem(JUNIPER_DOOR, gen()));
-	public static final Block JUNIPER_CHEST = create("juniper_chest", new BWChestBlock(copyOf(Blocks.CHEST), () -> BWBlockEntityTypes.BW_CHEST, false), true);
-	public static final Block TRAPPED_JUNIPER_CHEST = create("trapped_juniper_chest", new BWChestBlock(copyOf(Blocks.CHEST), () -> BWBlockEntityTypes.BW_CHEST, true), true);
+	public static final Block JUNIPER_CHEST = create("juniper_chest", new JuniperChestBlock(copyOf(Blocks.CHEST), () -> BWBlockEntityTypes.JUNIPER_CHEST, false), true);
+	public static final Block TRAPPED_JUNIPER_CHEST = create("trapped_juniper_chest", new JuniperChestBlock(copyOf(Blocks.CHEST), () -> BWBlockEntityTypes.JUNIPER_CHEST, true), true);
 	private static final Identifier JUNIPER_SIGN_TEXTURE = new Identifier(Bewitchment.MODID, "entity/sign/juniper");
 	public static final TerraformSignBlock JUNIPER_SIGN = create("juniper_sign", new TerraformSignBlock(JUNIPER_SIGN_TEXTURE, copyOf(Blocks.OAK_SIGN)), false);
 	public static final Block JUNIPER_WALL_SIGN = create("juniper_wall_sign", new TerraformWallSignBlock(JUNIPER_SIGN_TEXTURE, copyOf(Blocks.OAK_WALL_SIGN)), false);
@@ -124,14 +127,14 @@ public class BWObjects {
 	public static final Block ELDER_STAIRS = create("elder_stairs", new TerraformStairsBlock(ELDER_PLANKS, copyOf(JUNIPER_STAIRS)), true);
 	public static final Block ELDER_SLAB = create("elder_slab", new SlabBlock(copyOf(JUNIPER_SLAB)), true);
 	public static final Block ELDER_FENCE = create("elder_fence", new FenceBlock(copyOf(JUNIPER_FENCE)), true);
-	public static final Block ELDER_FENCE_GATE = create("elder_fence_gate", new FenceGateBlock(copyOf(JUNIPER_FENCE_GATE)), true);
-	public static final Block ELDER_PRESSURE_PLATE = create("elder_pressure_plate", new TerraformPressurePlateBlock(copyOf(JUNIPER_PRESSURE_PLATE)), true);
-	public static final Block ELDER_BUTTON = create("elder_button", new TerraformButtonBlock(copyOf(JUNIPER_BUTTON)), true);
-	public static final Block ELDER_TRAPDOOR = create("elder_trapdoor", new TerraformTrapdoorBlock(copyOf(JUNIPER_TRAPDOOR)), true);
-	public static final Block ELDER_DOOR = create("elder_door", new TerraformDoorBlock(copyOf(JUNIPER_DOOR)), false);
+	public static final Block ELDER_FENCE_GATE = create("elder_fence_gate", new ElderFenceGateBlock(copyOf(JUNIPER_FENCE_GATE)), true);
+	public static final Block ELDER_PRESSURE_PLATE = create("elder_pressure_plate", new ElderPressurePlateBlock(copyOf(JUNIPER_PRESSURE_PLATE)), true);
+	public static final Block ELDER_BUTTON = create("elder_button", new ElderButtonBlock(copyOf(JUNIPER_BUTTON)), true);
+	public static final Block ELDER_TRAPDOOR = create("elder_trapdoor", new ElderTrapdoorBlock(copyOf(JUNIPER_TRAPDOOR)), true);
+	public static final Block ELDER_DOOR = create("elder_door", new ElderDoorBlock(copyOf(JUNIPER_DOOR)), false);
 	public static final Item ELDER_DOOR_ITEM = create("elder_door", new TallBlockItem(ELDER_DOOR, gen()));
-	public static final Block ELDER_CHEST = create("elder_chest", new BWChestBlock(copyOf(JUNIPER_CHEST), () -> BWBlockEntityTypes.BW_CHEST, false), true);
-	public static final Block TRAPPED_ELDER_CHEST = create("trapped_elder_chest", new BWChestBlock(copyOf(JUNIPER_CHEST), () -> BWBlockEntityTypes.BW_CHEST, true), true);
+	public static final Block ELDER_CHEST = create("elder_chest", new ElderChestBlock(copyOf(JUNIPER_CHEST), () -> BWBlockEntityTypes.ELDER_CHEST, false), true);
+	public static final Block TRAPPED_ELDER_CHEST = create("trapped_elder_chest", new ElderChestBlock(copyOf(JUNIPER_CHEST), () -> BWBlockEntityTypes.ELDER_CHEST, true), true);
 	private static final Identifier ELDER_SIGN_TEXTURE = new Identifier(Bewitchment.MODID, "entity/sign/elder");
 	public static final TerraformSignBlock ELDER_SIGN = create("elder_sign", new TerraformSignBlock(ELDER_SIGN_TEXTURE, copyOf(JUNIPER_SIGN)), false);
 	public static final Block ELDER_WALL_SIGN = create("elder_wall_sign", new TerraformWallSignBlock(ELDER_SIGN_TEXTURE, copyOf(JUNIPER_WALL_SIGN)), false);
@@ -164,8 +167,8 @@ public class BWObjects {
 	public static final TerraformBoatItem DRAGONS_BLOOD_BOAT = create("dragons_blood_boat", new TerraformBoatItem(() -> BWEntityTypes.DRAGONS_BLOOD_BOAT, gen().maxCount(1)));
 	//other_plants
 	public static final Block SPANISH_MOSS = create("spanish_moss", new VineBlock(copyOf(Blocks.VINE)), true);
-	public static final Block GLOWING_BRAMBLE = create("glowing_bramble", new BrambleBlock(copyOf(JUNIPER_PLANKS).sounds(BlockSoundGroup.GRASS).noCollision().ticksRandomly().luminance(15)), true);
-	public static final Block ENDER_BRAMBLE = create("ender_bramble", new BrambleBlock(copyOf(JUNIPER_PLANKS).sounds(BlockSoundGroup.GRASS).noCollision().ticksRandomly()), true);
+	public static final Block GLOWING_BRAMBLE = create("glowing_bramble", new BrambleBlock(of(Material.PLANT).sounds(BlockSoundGroup.GRASS).strength(2, 3).noCollision().ticksRandomly().luminance(15)), true);
+	public static final Block ENDER_BRAMBLE = create("ender_bramble", new BrambleBlock(of(Material.PLANT).sounds(BlockSoundGroup.GRASS).strength(2, 3).noCollision().ticksRandomly()), true);
 	public static final Block FRUITING_BRAMBLE = create("fruiting_bramble", new BrambleBlock.Fruiting(copyOf(ENDER_BRAMBLE)), true);
 	public static final Block SCORCHED_BRAMBLE = create("scorched_bramble", new BrambleBlock(copyOf(ENDER_BRAMBLE)), true);
 	public static final Block THICK_BRAMBLE = create("thick_bramble", new BrambleBlock(copyOf(ENDER_BRAMBLE)), true);

@@ -1,19 +1,18 @@
 package moriyashiine.bewitchment.common.block.entity;
 
-import moriyashiine.bewitchment.api.interfaces.HasSigil;
+import moriyashiine.bewitchment.api.interfaces.misc.SigilHolder;
 import moriyashiine.bewitchment.api.registry.Sigil;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.Tickable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class DragonsBloodChestBlockEntity extends BWChestBlockEntity implements BlockEntityClientSerializable, Tickable, HasSigil {
+public class DragonsBloodChestBlockEntity extends BWChestBlockEntity implements BlockEntityClientSerializable, SigilHolder {
 	private final List<UUID> entities = new ArrayList<>();
 	private UUID owner = null;
 	private Sigil sigil = null;

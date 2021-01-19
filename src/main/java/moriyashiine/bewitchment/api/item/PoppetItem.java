@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.api.item;
 
+import moriyashiine.bewitchment.common.item.TaglockItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
@@ -30,8 +31,8 @@ public class PoppetItem extends Item {
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		if (stack.hasTag() && stack.getOrCreateTag().contains("OwnerName")) {
-			tooltip.add(new LiteralText(stack.getOrCreateTag().getString("OwnerName")).setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
+		if (TaglockItem.hasTaglock(stack)) {
+			tooltip.add(new LiteralText(TaglockItem.getTaglockName(stack)).setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
 		}
 	}
 }

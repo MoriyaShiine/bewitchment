@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.fortune;
 
-import moriyashiine.bewitchment.api.interfaces.MagicAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.api.registry.Fortune;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;

@@ -1,15 +1,21 @@
 package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.HasSigil;
+import moriyashiine.bewitchment.api.interfaces.misc.Lockable;
+import moriyashiine.bewitchment.api.interfaces.misc.SigilHolder;
+import moriyashiine.bewitchment.api.interfaces.misc.TaglockHolder;
 import moriyashiine.bewitchment.common.registry.BWSigils;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BedBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.DoorBlock;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -43,46 +49,81 @@ public class TaglockItem extends Item {
 	public ActionResult useOnBlock(ItemUsageContext context) {
 		World world = context.getWorld();
 		BlockPos pos = context.getBlockPos();
+		BlockState state = world.getBlockState(pos);
 		PlayerEntity player = context.getPlayer();
 		boolean client = world.isClient;
-		if (world.getBlockState(pos).getBlock() instanceof BedBlock) {
-			if (!client) {
-				
-				if (player != null && player.isSneaking()) {
-					MinecraftServer server = world.getServer();
-					if (server != null) {
-						PlayerEntity earliestSleeper = null;
-						for (ServerPlayerEntity playerEntity : server.getPlayerManager().getPlayerList()) {
-							BlockPos bedPos = playerEntity.getSpawnPointPosition();
-							if (bedPos != null && bedPos.equals(pos) && (earliestSleeper == null || playerEntity.getSleepTimer() < earliestSleeper.getSleepTimer())) {
-								earliestSleeper = playerEntity;
-							}
+		if (state.getBlock() instanceof BedBlock) {
+			if (!client && player != null && player.isSneaking()) {
+				MinecraftServer server = world.getServer();
+				if (server != null) {
+					PlayerEntity earliestSleeper = null;
+					for (ServerPlayerEntity playerEntity : server.getPlayerManager().getPlayerList()) {
+						BlockPos bedPos = playerEntity.getSpawnPointPosition();
+						if (bedPos != null && bedPos.equals(pos) && (earliestSleeper == null || playerEntity.getSleepTimer() < earliestSleeper.getSleepTimer())) {
+							earliestSleeper = playerEntity;
 						}
-						if (earliestSleeper != null) {
-							return useTaglock(player, earliestSleeper, context.getHand(), false, true);
-						}
+					}
+					if (earliestSleeper != null) {
+						return useTaglock(player, earliestSleeper, context.getHand(), false, true);
 					}
 				}
 			}
 			return ActionResult.success(client);
 		}
 		else {
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof HasSigil) {
-				ItemStack stack = context.getStack();
-				if (stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID")) {
-					if (!client) {
-						HasSigil sigil = (HasSigil) blockEntity;
-						if (sigil.getSigil() != null) {
-							if (sigil.getEntities().isEmpty()) {
-								sigil.setModeOnWhitelist(true);
-							}
-							UUID uuid = stack.getOrCreateTag().getUuid("OwnerUUID");
-							if (!sigil.getEntities().contains(uuid)) {
-								sigil.getEntities().add(uuid);
+			ItemStack stack = context.getStack();
+			BlockEntity blockEntity = world.getBlockEntity(state.getBlock() instanceof DoorBlock && state.get(DoorBlock.HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos);
+			if (blockEntity instanceof TaglockHolder) {
+				TaglockHolder taglockHolder = (TaglockHolder) blockEntity;
+				if (player.getUuid().equals(taglockHolder.getOwner())) {
+					int firstEmpty = taglockHolder.getFirstEmptySlot();
+					if (firstEmpty != -1) {
+						if (!client) {
+							taglockHolder.getTaglockInventory().set(firstEmpty, stack.split(1));
+							taglockHolder.syncTaglockHolder(world, blockEntity);
+							blockEntity.markDirty();
+						}
+						return ActionResult.success(client);
+					}
+				}
+			}
+			else if (blockEntity instanceof Lockable) {
+				if (hasTaglock(stack)) {
+					Lockable lockable = (Lockable) blockEntity;
+					if (player.getUuid().equals(lockable.getOwner()) && lockable.getLocked()) {
+						UUID uuid = getTaglockUUID(stack);
+						if (!lockable.getEntities().contains(uuid)) {
+							if (!client) {
+								if (lockable.getEntities().isEmpty()) {
+									lockable.setModeOnWhitelist(true);
+								}
+								lockable.getEntities().add(uuid);
 								if (!player.isCreative()) {
 									stack.decrement(1);
 								}
+								lockable.syncLockable(world, blockEntity);
+								blockEntity.markDirty();
+							}
+							return ActionResult.success(client);
+						}
+					}
+				}
+			}
+			else if (blockEntity instanceof SigilHolder) {
+				if (hasTaglock(stack)) {
+					if (!client) {
+						SigilHolder sigilHolder = (SigilHolder) blockEntity;
+						if (sigilHolder.getSigil() != null) {
+							UUID uuid = getTaglockUUID(stack);
+							if (!sigilHolder.getEntities().contains(uuid)) {
+								if (sigilHolder.getEntities().isEmpty()) {
+									sigilHolder.setModeOnWhitelist(true);
+								}
+								sigilHolder.getEntities().add(uuid);
+								if (!player.isCreative()) {
+									stack.decrement(1);
+								}
+								sigilHolder.syncSigilHolder(world, blockEntity);
 								blockEntity.markDirty();
 							}
 						}
@@ -102,8 +143,8 @@ public class TaglockItem extends Item {
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		if (stack.hasTag() && stack.getOrCreateTag().contains("OwnerName")) {
-			tooltip.add(new LiteralText(stack.getOrCreateTag().getString("OwnerName")).setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
+		if (hasTaglock(stack)) {
+			tooltip.add(new LiteralText(getTaglockName(stack)).setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
 		}
 	}
 	
@@ -111,13 +152,13 @@ public class TaglockItem extends Item {
 		ItemStack stack = user.getStackInHand(hand);
 		if (entity.isAlive() && !BWTags.BOSSES.contains(entity.getType()) && !hasTaglock(stack)) {
 			boolean failed = false;
-			BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(entity.getBlockPos(), 16, currentPos -> user.world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) user.world.getBlockEntity(currentPos)).getSigil() == BWSigils.SLIPPERY);
+			BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(entity.getBlockPos(), 16, currentPos -> user.world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) user.world.getBlockEntity(currentPos)).getSigil() == BWSigils.SLIPPERY);
 			if (sigilPos == null && bed) {
-				sigilPos = BewitchmentAPI.getClosestBlockPos(user.getBlockPos(), 16, currentPos -> user.world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) user.world.getBlockEntity(currentPos)).getSigil() == BWSigils.SLIPPERY);
+				sigilPos = BewitchmentAPI.getClosestBlockPos(user.getBlockPos(), 16, currentPos -> user.world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) user.world.getBlockEntity(currentPos)).getSigil() == BWSigils.SLIPPERY);
 			}
 			if (sigilPos != null) {
 				BlockEntity blockEntity = user.world.getBlockEntity(sigilPos);
-				HasSigil sigil = (HasSigil) blockEntity;
+				SigilHolder sigil = (SigilHolder) blockEntity;
 				if (sigil.test(entity)) {
 					sigil.setUses(sigil.getUses() - 1);
 					blockEntity.markDirty();
@@ -147,18 +188,56 @@ public class TaglockItem extends Item {
 				if (entity instanceof MobEntity) {
 					((MobEntity) entity).setPersistent();
 				}
-				ItemStack taglock = new ItemStack(this);
-				taglock.getOrCreateTag().putUuid("OwnerUUID", entity.getUuid());
-				taglock.getOrCreateTag().putString("OwnerName", entity.getDisplayName().getString());
-				taglock.getOrCreateTag().putBoolean("FromPlayer", entity instanceof PlayerEntity);
-				BewitchmentAPI.addItemToInventoryAndConsume(user, hand, taglock);
+				BewitchmentAPI.addItemToInventoryAndConsume(user, hand, putTaglock(new ItemStack(this), entity));
 			}
 			return ActionResult.success(client);
 		}
 		return ActionResult.FAIL;
 	}
 	
+	public static ItemStack copyTo(ItemStack from, ItemStack to) {
+		if (hasTaglock(from)) {
+			to.getOrCreateTag().putUuid("OwnerUUID", from.getOrCreateTag().getUuid("OwnerUUID"));
+			to.getOrCreateTag().putString("OwnerName", from.getOrCreateTag().getString("OwnerName"));
+			to.getOrCreateTag().putBoolean("FromPlayer", from.getOrCreateTag().getBoolean("FromPlayer"));
+		}
+		return to;
+	}
+	
 	public static boolean hasTaglock(ItemStack stack) {
-		return stack.hasTag() && !stack.getOrCreateTag().getString("OwnerName").isEmpty();
+		return stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID");
+	}
+	
+	public static ItemStack putTaglock(ItemStack stack, Entity entity) {
+		stack.getOrCreateTag().putUuid("OwnerUUID", entity.getUuid());
+		stack.getOrCreateTag().putString("OwnerName", entity.getDisplayName().getString());
+		stack.getOrCreateTag().putBoolean("FromPlayer", entity instanceof PlayerEntity);
+		return stack;
+	}
+	
+	public static void removeTaglock(ItemStack stack) {
+		if (stack.hasTag()) {
+			stack.getOrCreateTag().remove("OwnerUUID");
+			stack.getOrCreateTag().remove("OwnerName");
+			stack.getOrCreateTag().remove("FromPlayer");
+		}
+	}
+	
+	public static UUID getTaglockUUID(ItemStack stack) {
+		if (hasTaglock(stack)) {
+			return stack.getOrCreateTag().getUuid("OwnerUUID");
+		}
+		return null;
+	}
+	
+	public static String getTaglockName(ItemStack stack) {
+		if (hasTaglock(stack)) {
+			return stack.getOrCreateTag().getString("OwnerName");
+		}
+		return "";
+	}
+	
+	public static boolean isTaglockFromPlayer(ItemStack stack) {
+		return hasTaglock(stack) && stack.getOrCreateTag().getBoolean("FromPlayer");
 	}
 }

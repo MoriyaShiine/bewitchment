@@ -14,6 +14,7 @@ import moriyashiine.bewitchment.client.renderer.entity.SilverArrowEntityRenderer
 import moriyashiine.bewitchment.client.renderer.entity.living.*;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.BWChestBlockEntity;
+import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWObjects;
@@ -45,10 +46,11 @@ public class BewitchmentClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		ClientPlayNetworking.registerGlobalReceiver(CreateNonLivingEntityPacket.ID, CreateNonLivingEntityPacket::handle);
+		ClientPlayNetworking.registerGlobalReceiver(SyncClientSerializableBlockEntity.ID, SyncClientSerializableBlockEntity::handle);
 		ClientPlayNetworking.registerGlobalReceiver(SyncWitchAltarBlockEntity.ID, SyncWitchAltarBlockEntity::handle);
 		ClientPlayNetworking.registerGlobalReceiver(SyncBrazierBlockEntity.ID, SyncBrazierBlockEntity::handle);
 		ClientPlayNetworking.registerGlobalReceiver(SyncPoppetShelfBlockEntity.ID, SyncPoppetShelfBlockEntity::handle);
-		ClientPlayNetworking.registerGlobalReceiver(SyncClientSerializableBlockEntity.ID, SyncClientSerializableBlockEntity::handle);
+		ClientPlayNetworking.registerGlobalReceiver(SyncTaglockHolderBlockEntity.ID, SyncTaglockHolderBlockEntity::handle);
 		ClientPlayNetworking.registerGlobalReceiver(SpawnSmokeParticlesPacket.ID, SpawnSmokeParticlesPacket::handle);
 		ClientPlayNetworking.registerGlobalReceiver(SpawnPortalParticlesPacket.ID, SpawnPortalParticlesPacket::handle);
 		ClientPlayNetworking.registerGlobalReceiver(SpawnExplosionParticlesPacket.ID, SpawnExplosionParticlesPacket::handle);
@@ -62,9 +64,9 @@ public class BewitchmentClient implements ClientModInitializer {
 		FabricModelPredicateProviderRegistry.register(BWObjects.HEDGEWITCH_HAT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.getName().asString().toLowerCase().contains("faith") ? 1 : 0);
 		FabricModelPredicateProviderRegistry.register(BWObjects.ALCHEMIST_HAT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.getName().asString().toLowerCase().contains("faith") ? 1 : 0);
 		FabricModelPredicateProviderRegistry.register(BWObjects.BESMIRCHED_HAT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.getName().asString().toLowerCase().contains("faith") ? 1 : 0);
-		FabricModelPredicateProviderRegistry.register(BWObjects.TAGLOCK, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID") ? 1 : 0);
+		FabricModelPredicateProviderRegistry.register(BWObjects.TAGLOCK, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> TaglockItem.hasTaglock(stack) ? 1 : 0);
 		FabricModelPredicateProviderRegistry.register(BWObjects.WAYSTONE, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.hasTag() && stack.getOrCreateTag().contains("LocationPos") ? 1 : 0);
-		FabricModelPredicateProviderRegistry.register(BWObjects.DEMONIC_CONTRACT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID") ? 1 : 0);
+		FabricModelPredicateProviderRegistry.register(BWObjects.DEMONIC_CONTRACT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> TaglockItem.hasTaglock(stack) ? 1 : 0);
 		ArmorRenderingRegistry.registerModel((livingEntity, itemStack, equipmentSlot, bipedEntityModel) -> new WitchArmorModel<>(equipmentSlot, itemStack.getItem() == BWObjects.HEDGEWITCH_HOOD || itemStack.getItem() == BWObjects.ALCHEMIST_HOOD || itemStack.getItem() == BWObjects.BESMIRCHED_HOOD, !livingEntity.getEquippedStack(EquipmentSlot.FEET).isEmpty()), BWObjects.HEDGEWITCH_HOOD, BWObjects.HEDGEWITCH_HAT, BWObjects.HEDGEWITCH_ROBES, BWObjects.HEDGEWITCH_PANTS, BWObjects.ALCHEMIST_HOOD, BWObjects.ALCHEMIST_HAT, BWObjects.ALCHEMIST_ROBES, BWObjects.ALCHEMIST_PANTS, BWObjects.BESMIRCHED_HOOD, BWObjects.BESMIRCHED_HAT, BWObjects.BESMIRCHED_ROBES, BWObjects.BESMIRCHED_PANTS);
 		Identifier WITCH_HAT_VARIANT = new Identifier(Bewitchment.MODID, "textures/entity/armor/witch_hat_variant.png");
 		Identifier HEDGEWITCH = new Identifier(Bewitchment.MODID, "textures/entity/armor/hedgewitch.png");
@@ -78,6 +80,8 @@ public class BewitchmentClient implements ClientModInitializer {
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.WITCH_CAULDRON, WitchCauldronBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.BRAZIER, BrazierBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.POPPET_SHELF, PoppetShelfBlockEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.JUNIPER_CHEST, ChestBlockEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.ELDER_CHEST, ChestBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.DRAGONS_BLOOD_CHEST, ChestBlockEntityRenderer::new);
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.JUNIPER_BOAT, (dispatcher, context) -> new BoatEntityRenderer(dispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.CYPRESS_BOAT, (dispatcher, context) -> new BoatEntityRenderer(dispatcher));

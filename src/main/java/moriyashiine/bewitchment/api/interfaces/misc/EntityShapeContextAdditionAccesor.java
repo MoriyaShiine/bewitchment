@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.api.interfaces;
+package moriyashiine.bewitchment.api.interfaces.misc;
 
 import net.minecraft.entity.Entity;
 

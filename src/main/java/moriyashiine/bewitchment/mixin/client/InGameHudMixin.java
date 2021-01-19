@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.mixin.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import moriyashiine.bewitchment.api.interfaces.MagicAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.common.Bewitchment;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

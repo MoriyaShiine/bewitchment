@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin;
 
-import moriyashiine.bewitchment.api.interfaces.CurseAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.common.registry.BWCurses;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.EscapeDangerGoal;

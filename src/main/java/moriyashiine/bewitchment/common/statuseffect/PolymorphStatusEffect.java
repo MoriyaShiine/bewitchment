@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.statuseffect;
 
-import moriyashiine.bewitchment.api.interfaces.PolymorphAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.PolymorphAccessor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;

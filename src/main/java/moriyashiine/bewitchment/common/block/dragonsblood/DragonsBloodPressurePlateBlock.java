@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.block.dragonsblood;
 
 import com.terraformersmc.terraform.wood.block.TerraformPressurePlateBlock;
-import moriyashiine.bewitchment.api.interfaces.HasSigil;
+import moriyashiine.bewitchment.api.interfaces.misc.SigilHolder;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -28,7 +28,7 @@ public class DragonsBloodPressurePlateBlock extends TerraformPressurePlateBlock 
 	
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (entity instanceof LivingEntity && HasSigil.onUse(world, pos, (LivingEntity) entity, Hand.MAIN_HAND) == ActionResult.FAIL) {
+		if (entity instanceof LivingEntity && SigilHolder.onUse(world, pos, (LivingEntity) entity, Hand.MAIN_HAND) == ActionResult.FAIL) {
 			return;
 		}
 		super.onEntityCollision(state, world, pos, entity);

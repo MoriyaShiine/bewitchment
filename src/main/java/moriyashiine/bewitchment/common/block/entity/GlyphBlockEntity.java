@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.block.entity;
 
-import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
+import moriyashiine.bewitchment.api.interfaces.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;

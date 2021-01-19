@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.curse;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.InsanityTargetAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.InsanityTargetAccessor;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.entity.Entity;

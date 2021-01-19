@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.ContractAccessor;
-import moriyashiine.bewitchment.api.interfaces.FortuneAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.FortuneAccessor;
 import moriyashiine.bewitchment.common.registry.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -84,7 +84,7 @@ public abstract class BlockMixin {
 							foundOre = true;
 						}
 					}
-					if (foundOre && contractAccessor.hasNegativeEffects() && world.random.nextFloat() < 1 / 8f) {
+					if (foundOre && contractAccessor.hasNegativeEffects() && world.random.nextFloat() < 1 / 3f) {
 						drops.clear();
 					}
 				}
@@ -102,7 +102,7 @@ public abstract class BlockMixin {
 							}
 						}
 					}
-					if (foundOre && contractAccessor.hasNegativeEffects() && world.random.nextFloat() < 1 / 16f) {
+					if (foundOre && contractAccessor.hasNegativeEffects() && world.random.nextFloat() < 1 / 8f) {
 						world.createExplosion(entity, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 3, Explosion.DestructionType.BREAK);
 						world.getEntitiesByClass(LivingEntity.class, new Box(pos).expand(4), LivingEntity::isAlive).forEach(livingEntity -> livingEntity.damage(DamageSource.explosion((LivingEntity) entity), 12));
 					}

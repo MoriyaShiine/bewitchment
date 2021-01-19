@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin;
 
-import moriyashiine.bewitchment.api.interfaces.ContractAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.common.entity.living.HellhoundEntity;
 import moriyashiine.bewitchment.common.registry.BWContracts;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+@SuppressWarnings("ConstantConditions")
 @Mixin(AnimalMateGoal.class)
 public abstract class AnimalMateGoalMixin extends Goal {
 	@Shadow
@@ -29,26 +30,24 @@ public abstract class AnimalMateGoalMixin extends Goal {
 	@Inject(method = "breed", at = @At("HEAD"))
 	private void breed(CallbackInfo callbackInfo) {
 		ServerPlayerEntity player = animal.getLovingPlayer();
-		if (player != null) {
-			ContractAccessor.of(player).ifPresent(contractAccessor -> {
-				if (contractAccessor.hasContract(BWContracts.LUST)) {
-					if (contractAccessor.hasNegativeEffects() && player.getRandom().nextFloat() < 1 / 4f) {
-						for (int i = 0; i < 3; i++) {
-							HellhoundEntity hellhound = BWEntityTypes.HELLHOUND.create(player.world);
-							if (hellhound != null) {
-								hellhound.initialize((ServerWorldAccess) player.world, player.world.getLocalDifficulty(animal.getBlockPos()), SpawnReason.EVENT, null, null);
-								hellhound.refreshPositionAndAngles(animal.getX(), animal.getY(), animal.getZ(), 0, animal.getRandom().nextInt(360));
-								hellhound.setTarget(player);
-								player.world.spawnEntity(hellhound);
-							}
+		ContractAccessor.of(player).ifPresent(contractAccessor -> {
+			if (contractAccessor.hasContract(BWContracts.LUST)) {
+				if (contractAccessor.hasNegativeEffects() && player.getRandom().nextFloat() < 1 / 4f) {
+					for (int i = 0; i < 3; i++) {
+						HellhoundEntity hellhound = BWEntityTypes.HELLHOUND.create(player.world);
+						if (hellhound != null) {
+							hellhound.initialize((ServerWorldAccess) player.world, player.world.getLocalDifficulty(animal.getBlockPos()), SpawnReason.EVENT, null, null);
+							hellhound.refreshPositionAndAngles(animal.getX(), animal.getY(), animal.getZ(), 0, animal.getRandom().nextInt(360));
+							hellhound.setTarget(player);
+							player.world.spawnEntity(hellhound);
 						}
 					}
-					else {
-						animal.breed(player.getServerWorld(), mate);
-						animal.breed(player.getServerWorld(), mate);
-					}
 				}
-			});
-		}
+				else {
+					animal.breed(player.getServerWorld(), mate);
+					animal.breed(player.getServerWorld(), mate);
+				}
+			}
+		});
 	}
 }

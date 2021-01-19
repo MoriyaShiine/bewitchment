@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin;
 
-import moriyashiine.bewitchment.api.interfaces.CaduceusFireballAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.CaduceusFireballAccessor;
 import moriyashiine.bewitchment.common.entity.living.BaphometEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

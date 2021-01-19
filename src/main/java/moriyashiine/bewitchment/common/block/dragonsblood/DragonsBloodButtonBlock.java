@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.block.dragonsblood;
 
 import com.terraformersmc.terraform.wood.block.TerraformButtonBlock;
-import moriyashiine.bewitchment.api.interfaces.HasSigil;
+import moriyashiine.bewitchment.api.interfaces.misc.SigilHolder;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -28,7 +28,7 @@ public class DragonsBloodButtonBlock extends TerraformButtonBlock implements Blo
 	
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		ActionResult result = HasSigil.onUse(world, pos, player, hand);
+		ActionResult result = SigilHolder.onUse(world, pos, player, hand);
 		if (result == ActionResult.FAIL) {
 			return ActionResult.FAIL;
 		}

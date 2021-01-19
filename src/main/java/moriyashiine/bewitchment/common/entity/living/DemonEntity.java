@@ -1,7 +1,9 @@
 package moriyashiine.bewitchment.common.entity.living;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.CurseAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.api.EnvType;
@@ -50,10 +52,12 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	
 	public static final TrackedData<Boolean> MALE = DataTracker.registerData(DemonEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
+	private final SimpleInventory inventory = new SimpleInventory(6);
+	
 	private TradeOfferList tradeOffers = null;
 	private PlayerEntity customer = null;
 	
-	private final SimpleInventory inventory = new SimpleInventory(6);
+	private int refreshTimer = 0;
 	
 	public DemonEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
@@ -135,6 +139,15 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	public void tick() {
 		super.tick();
 		if (!world.isClient) {
+			refreshTimer++;
+			if (refreshTimer >= 168000) {
+				if (Bewitchment.config.doDemonTradesRefresh) {
+					for (TradeOffer offer : getOffers()) {
+						offer.resetUses();
+					}
+				}
+				refreshTimer = 0;
+			}
 			if (customer != null) {
 				navigation.stop();
 			}
@@ -240,20 +253,22 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	public void readCustomDataFromTag(CompoundTag tag) {
 		super.readCustomDataFromTag(tag);
 		dataTracker.set(MALE, tag.getBoolean("Male"));
+		inventory.readTags(tag.getList("Inventory", NbtType.COMPOUND));
 		if (tag.contains("Offers")) {
 			tradeOffers = new TradeOfferList(tag.getCompound("Offers"));
 		}
-		inventory.readTags(tag.getList("Inventory", NbtType.COMPOUND));
+		refreshTimer = tag.getInt("RefreshTimer");
 	}
 	
 	@Override
 	public void writeCustomDataToTag(CompoundTag tag) {
 		super.writeCustomDataToTag(tag);
 		tag.putBoolean("Male", dataTracker.get(MALE));
+		tag.put("Inventory", inventory.getTags());
 		if (!getOffers().isEmpty()) {
 			tag.put("Offers", tradeOffers.toTag());
 		}
-		tag.put("Inventory", inventory.getTags());
+		tag.putInt("RefreshTimer", refreshTimer);
 	}
 	
 	@Override
@@ -270,7 +285,7 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 		goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8));
 		goalSelector.add(3, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this));
-		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> entity.getGroup() != BewitchmentAPI.DEMON && BewitchmentAPI.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3));
+		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> !(entity instanceof Pledgeable) && BewitchmentAPI.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3));
 	}
 	
 	public static boolean rejectTrades(LivingEntity merchant) {

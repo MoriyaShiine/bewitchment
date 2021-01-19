@@ -1,7 +1,8 @@
 package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.*;
+import moriyashiine.bewitchment.api.interfaces.entity.*;
+import moriyashiine.bewitchment.api.interfaces.misc.SigilHolder;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.client.network.packet.SpawnExplosionParticlesPacket;
@@ -222,10 +223,10 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				}
 			}
 			if (source == DamageSource.FALL) {
-				BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) world.getBlockEntity(currentPos)).getSigil() == BWSigils.HEAVY);
+				BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.HEAVY);
 				if (sigilPos != null) {
 					BlockEntity blockEntity = world.getBlockEntity(sigilPos);
-					HasSigil sigil = (HasSigil) blockEntity;
+					SigilHolder sigil = (SigilHolder) blockEntity;
 					if (sigil.test(this)) {
 						sigil.setUses(sigil.getUses() - 1);
 						blockEntity.markDirty();
@@ -403,10 +404,10 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				}
 			}
 			if (type != StatusEffectType.HARMFUL) {
-				BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) world.getBlockEntity(currentPos)).getSigil() == BWSigils.RUIN);
+				BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.RUIN);
 				if (sigilPos != null) {
 					BlockEntity blockEntity = world.getBlockEntity(sigilPos);
-					HasSigil sigil = (HasSigil) blockEntity;
+					SigilHolder sigil = (SigilHolder) blockEntity;
 					if (sigil.test(this)) {
 						sigil.setUses(sigil.getUses() - 1);
 						blockEntity.markDirty();
@@ -486,7 +487,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				BlockPos nearestSigil = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, foundSigil -> world.getBlockEntity(foundSigil) instanceof SigilBlockEntity && ((SigilBlockEntity) world.getBlockEntity(foundSigil)).getSigil() == BWSigils.EXTENDING);
 				if (nearestSigil != null) {
 					BlockEntity blockEntity = world.getBlockEntity(nearestSigil);
-					HasSigil sigil = ((HasSigil) blockEntity);
+					SigilHolder sigil = ((SigilHolder) blockEntity);
 					if (sigil.test(this)) {
 						sigil.setUses(sigil.getUses() - 1);
 						blockEntity.markDirty();

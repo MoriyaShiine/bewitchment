@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.block.dragonsblood;
 
-import moriyashiine.bewitchment.api.interfaces.HasSigil;
+import moriyashiine.bewitchment.api.interfaces.misc.SigilHolder;
 import moriyashiine.bewitchment.common.block.BWChestBlock;
 import moriyashiine.bewitchment.common.block.entity.DragonsBloodChestBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
@@ -32,7 +32,7 @@ public class DragonsBloodChestBlock extends BWChestBlock {
 	
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		ActionResult result = HasSigil.onUse(world, pos, player, hand);
+		ActionResult result = SigilHolder.onUse(world, pos, player, hand);
 		if (result == ActionResult.FAIL) {
 			return ActionResult.FAIL;
 		}

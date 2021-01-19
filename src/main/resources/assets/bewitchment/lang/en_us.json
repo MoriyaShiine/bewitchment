@@ -396,6 +396,8 @@
   "bewitchment.subtitles.entity.baphomet.death": "Bapohmet dies",
   "death.attack.wednesday": "%s realized what day it is",
   "death.attack.wednesday.player": "%s realized what day it is while vibing with %s",
+  "death.attack.death": "%s was claimed by the reaper",
+  "death.attack.death.player": "%s was claimed by the reaper while fighting %s",
   "death.attack.vampire": "%s had their life drained",
   "death.attack.vampire.player": "%s had their life drained while fighting %s",
   "fortune.fortuneNotFound": "Unknown fortune: %s",

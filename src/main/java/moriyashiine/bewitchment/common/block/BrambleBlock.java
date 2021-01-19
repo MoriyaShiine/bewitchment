@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.block;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.EntityShapeContextAdditionAccesor;
+import moriyashiine.bewitchment.api.interfaces.misc.EntityShapeContextAdditionAccesor;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWProperties;
 import moriyashiine.bewitchment.common.world.BWWorldState;
