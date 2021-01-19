@@ -4,9 +4,9 @@ import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.api.registry.Curse;
+import moriyashiine.bewitchment.common.registry.BWDamageSources;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 
 public class DeathContract extends Contract {
 	public DeathContract(boolean canBeGiven) {
@@ -14,7 +14,7 @@ public class DeathContract extends Contract {
 	}
 	
 	public void tick(LivingEntity target, boolean includeNegative) {
-		if (target.damage(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE)) {
+		if (target.damage(BWDamageSources.DEATH, Float.MAX_VALUE)) {
 			ContractAccessor.of(target).ifPresent(contractAccessor -> contractAccessor.removeContract(this));
 		}
 	}

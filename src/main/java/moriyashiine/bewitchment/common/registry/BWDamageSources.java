@@ -7,7 +7,32 @@ import org.jetbrains.annotations.Nullable;
 
 public class BWDamageSources {
 	public static final DamageSource WEDNESDAY = new WednesdayDamageSource("wednesday");
+	public static final DamageSource DEATH = new DeathDamageSource("death");
 	public static final DamageSource VAMPIRE = new EmptyDamageSource("vampire");
+	
+	private static class WednesdayDamageSource extends DamageSource {
+		protected WednesdayDamageSource(String name) {
+			super(name);
+			setBypassesArmor();
+			setUnblockable();
+			setOutOfWorld();
+		}
+	}
+	
+	private static class DeathDamageSource extends DamageSource {
+		protected DeathDamageSource(String name) {
+			super(name);
+			setBypassesArmor();
+			setUnblockable();
+			setOutOfWorld();
+		}
+	}
+	
+	private static class EmptyDamageSource extends DamageSource {
+		public EmptyDamageSource(String name) {
+			super(name);
+		}
+	}
 	
 	public static class MagicMob extends EntityDamageSource {
 		public MagicMob(@Nullable Entity source) {
@@ -22,21 +47,6 @@ public class BWDamageSources {
 			super("player", source);
 			setUsesMagic();
 			setBypassesArmor();
-		}
-	}
-	
-	private static class WednesdayDamageSource extends DamageSource {
-		protected WednesdayDamageSource(String name) {
-			super(name);
-			setBypassesArmor();
-			setUnblockable();
-			setOutOfWorld();
-		}
-	}
-	
-	private static class EmptyDamageSource extends DamageSource {
-		public EmptyDamageSource(String name) {
-			super(name);
 		}
 	}
 }
