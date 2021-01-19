@@ -14,7 +14,7 @@ public class DeathContract extends Contract {
 	}
 	
 	public void tick(LivingEntity target, boolean includeNegative) {
-		if (target.damage(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE) && target.isDead()) {
+		if (target.damage(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE)) {
 			ContractAccessor.of(target).ifPresent(contractAccessor -> contractAccessor.removeContract(this));
 		}
 	}
