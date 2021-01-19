@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.block.juniper;
 
 import com.terraformersmc.terraform.wood.block.TerraformDoorBlock;
-import moriyashiine.bewitchment.api.interfaces.misc.CanHoldTaglocks;
+import moriyashiine.bewitchment.api.interfaces.misc.TaglockHolder;
 import moriyashiine.bewitchment.common.block.entity.TaglockHolderBlockEntity;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -33,7 +33,7 @@ public class JuniperDoorBlock extends TerraformDoorBlock implements BlockEntityP
 	
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		ActionResult result = CanHoldTaglocks.onUse(world, state.get(HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos, player, hand);
+		ActionResult result = TaglockHolder.onUse(world, state.get(HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos, player);
 		if (result != ActionResult.PASS) {
 			return result;
 		}
@@ -45,7 +45,7 @@ public class JuniperDoorBlock extends TerraformDoorBlock implements BlockEntityP
 		super.onPlaced(world, pos, state, placer, itemStack);
 		if (!world.isClient && placer != null) {
 			BlockEntity blockEntity = world.getBlockEntity(state.get(HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos);
-			CanHoldTaglocks taglockHolder = (CanHoldTaglocks) blockEntity;
+			TaglockHolder taglockHolder = (TaglockHolder) blockEntity;
 			taglockHolder.setOwner(placer.getUuid());
 			taglockHolder.syncTaglockHolder(world, blockEntity);
 			blockEntity.markDirty();
@@ -56,8 +56,8 @@ public class JuniperDoorBlock extends TerraformDoorBlock implements BlockEntityP
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!world.isClient && state.getBlock() != newState.getBlock()) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof CanHoldTaglocks) {
-				ItemScatterer.spawn(world, pos, ((CanHoldTaglocks) blockEntity).getTaglockInventory());
+			if (blockEntity instanceof TaglockHolder) {
+				ItemScatterer.spawn(world, pos, ((TaglockHolder) blockEntity).getTaglockInventory());
 			}
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);

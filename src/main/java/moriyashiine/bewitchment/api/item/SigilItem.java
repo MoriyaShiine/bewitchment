@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.api.item;
 
-import moriyashiine.bewitchment.api.interfaces.misc.HasSigil;
+import moriyashiine.bewitchment.api.interfaces.misc.SigilHolder;
 import moriyashiine.bewitchment.api.registry.Sigil;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
@@ -64,9 +64,9 @@ public class SigilItem extends Item {
 					world.playSound(null, pos, sigilState.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS, 1, MathHelper.nextFloat(world.random, 0.8f, 1.2f));
 					world.setBlockState(pos, sigilState);
 					blockEntity = world.getBlockEntity(pos);
-					((HasSigil) blockEntity).setSigil(sigil);
-					((HasSigil) blockEntity).setUses(sigil.uses);
-					((HasSigil) blockEntity).setOwner(player.getUuid());
+					((SigilHolder) blockEntity).setSigil(sigil);
+					((SigilHolder) blockEntity).setUses(sigil.uses);
+					((SigilHolder) blockEntity).setOwner(player.getUuid());
 					((BlockEntityClientSerializable) blockEntity).sync();
 					blockEntity.markDirty();
 					if (player instanceof ServerPlayerEntity) {
@@ -79,15 +79,15 @@ public class SigilItem extends Item {
 				return ActionResult.success(client);
 			}
 		}
-		else if (blockEntity instanceof HasSigil && state.getBlock() != BWObjects.SIGIL) {
+		else if (blockEntity instanceof SigilHolder && state.getBlock() != BWObjects.SIGIL) {
 			if (state.getBlock() instanceof DoorBlock && state.get(DoorBlock.HALF) == DoubleBlockHalf.UPPER) {
 				blockEntity = world.getBlockEntity(pos.down());
 			}
-			if (((HasSigil) blockEntity).getSigil() == null) {
+			if (((SigilHolder) blockEntity).getSigil() == null) {
 				if (!client) {
-					((HasSigil) blockEntity).setSigil(sigil);
-					((HasSigil) blockEntity).setUses(sigil.uses);
-					((HasSigil) blockEntity).setOwner(player.getUuid());
+					((SigilHolder) blockEntity).setSigil(sigil);
+					((SigilHolder) blockEntity).setUses(sigil.uses);
+					((SigilHolder) blockEntity).setOwner(player.getUuid());
 					((BlockEntityClientSerializable) blockEntity).sync();
 					blockEntity.markDirty();
 					if (!player.isCreative()) {

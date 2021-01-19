@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.block.entity;
 
-import moriyashiine.bewitchment.api.interfaces.misc.CanHoldTaglocks;
+import moriyashiine.bewitchment.api.interfaces.misc.TaglockHolder;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
@@ -11,7 +11,7 @@ import net.minecraft.util.collection.DefaultedList;
 
 import java.util.UUID;
 
-public class JuniperChestBlockEntity extends BWChestBlockEntity implements BlockEntityClientSerializable, CanHoldTaglocks {
+public class JuniperChestBlockEntity extends BWChestBlockEntity implements BlockEntityClientSerializable, TaglockHolder {
 	private final DefaultedList<ItemStack> taglockInventory = DefaultedList.ofSize(3, ItemStack.EMPTY);
 	private UUID owner = null;
 	

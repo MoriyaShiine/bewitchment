@@ -2,7 +2,6 @@ package moriyashiine.bewitchment.api.interfaces.misc;
 
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.client.network.packet.SyncTaglockHolderBlockEntity;
-import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
@@ -14,8 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -23,7 +20,7 @@ import net.minecraft.world.World;
 import java.util.UUID;
 
 @SuppressWarnings("ConstantConditions")
-public interface CanHoldTaglocks {
+public interface TaglockHolder {
 	DefaultedList<ItemStack> getTaglockInventory();
 	
 	UUID getOwner();
@@ -44,32 +41,8 @@ public interface CanHoldTaglocks {
 		}
 	}
 	
-	default ActionResult use(World world, BlockPos pos, LivingEntity user, Hand hand) {
-		if (user.getUuid().equals(getOwner())) {
-			boolean client = world.isClient;
-			int firstEmpty = getFirstEmptySlot();
-			ItemStack stack = user.getStackInHand(hand);
-			if (stack.getItem() instanceof TaglockItem) {
-				
-				if (firstEmpty != -1) {
-					if (!client) {
-						getTaglockInventory().set(firstEmpty, stack.split(1));
-						syncTaglockHolder(world, world.getBlockEntity(pos));
-						world.getBlockEntity(pos).markDirty();
-					}
-					return ActionResult.success(client);
-				}
-			}
-			else if (stack.getItem() instanceof AthameItem && firstEmpty == -1) {
-				if (!client) {
-					ItemScatterer.spawn(world, pos, getTaglockInventory());
-					syncTaglockHolder(world, world.getBlockEntity(pos));
-					world.getBlockEntity(pos).markDirty();
-				}
-				return ActionResult.success(client);
-			}
-		}
-		else {
+	default ActionResult use(World world, BlockPos pos, LivingEntity user) {
+		if (!user.getUuid().equals(getOwner())) {
 			addTaglock(world, pos, user);
 		}
 		return ActionResult.PASS;
@@ -77,7 +50,7 @@ public interface CanHoldTaglocks {
 	
 	default void addTaglock(World world, BlockPos pos, Entity entity) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		CanHoldTaglocks taglockHolder = (CanHoldTaglocks) blockEntity;
+		TaglockHolder taglockHolder = (TaglockHolder) blockEntity;
 		boolean found = false;
 		for (ItemStack stack : taglockHolder.getTaglockInventory()) {
 			if (stack.getItem() instanceof TaglockItem && TaglockItem.hasTaglock(stack) && entity.getUuid().equals(TaglockItem.getTaglockUUID(stack))) {
@@ -118,10 +91,10 @@ public interface CanHoldTaglocks {
 		}
 	}
 	
-	static ActionResult onUse(World world, BlockPos pos, LivingEntity user, Hand hand) {
+	static ActionResult onUse(World world, BlockPos pos, LivingEntity user) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity instanceof CanHoldTaglocks) {
-			return ((CanHoldTaglocks) blockEntity).use(world, pos, user, hand);
+		if (blockEntity instanceof TaglockHolder) {
+			return ((TaglockHolder) blockEntity).use(world, pos, user);
 		}
 		return ActionResult.PASS;
 	}

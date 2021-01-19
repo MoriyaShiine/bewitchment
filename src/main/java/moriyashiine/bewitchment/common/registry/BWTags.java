@@ -23,8 +23,9 @@ public class BWTags {
 	public static final Tag<Item> SILVER_ARMOR = TagRegistry.item(new Identifier(Bewitchment.MODID, "silver_armor"));
 	public static final Tag<Item> SILVER_TOOLS = TagRegistry.item(new Identifier(Bewitchment.MODID, "silver_tools"));
 	
-	public static final Tag<Item> BARKS = TagRegistry.item(new Identifier(Bewitchment.MODID, "barks"));
+	public static final Tag<Item> SILVER_INGOTS = TagRegistry.item(new Identifier("c", "silver_ingots"));
 	public static final Tag<Item> SILVER_NUGGETS = TagRegistry.item(new Identifier("c", "silver_nuggets"));
+	public static final Tag<Item> BARKS = TagRegistry.item(new Identifier(Bewitchment.MODID, "barks"));
 	public static final Tag<Item> WITCHBERRY_FOODS = TagRegistry.item(new Identifier(Bewitchment.MODID, "witchberry_foods"));
 	
 	public static final Tag<Item> SWORDS = TagRegistry.item(new Identifier(Bewitchment.MODID, "swords"));

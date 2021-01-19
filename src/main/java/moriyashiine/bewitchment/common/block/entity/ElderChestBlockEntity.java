@@ -1,32 +1,27 @@
 package moriyashiine.bewitchment.common.block.entity;
 
-import moriyashiine.bewitchment.api.interfaces.misc.SigilHolder;
-import moriyashiine.bewitchment.api.registry.Sigil;
+import moriyashiine.bewitchment.api.interfaces.misc.Lockable;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.Tickable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class SigilBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Tickable, SigilHolder {
+public class ElderChestBlockEntity extends BWChestBlockEntity implements BlockEntityClientSerializable, Lockable {
 	private final List<UUID> entities = new ArrayList<>();
 	private UUID owner = null;
-	private Sigil sigil = null;
-	private int uses = 0;
-	private boolean modeOnWhitelist = false;
+	private boolean modeOnWhitelist = false, locked = false;
 	
-	public SigilBlockEntity(BlockEntityType<?> type) {
-		super(type);
+	public ElderChestBlockEntity() {
+		super(BWBlockEntityTypes.ELDER_CHEST, Type.ELDER, false);
 	}
 	
-	public SigilBlockEntity() {
-		this(BWBlockEntityTypes.SIGIL);
+	public ElderChestBlockEntity(BlockEntityType<?> blockEntityType, boolean trapped) {
+		super(blockEntityType, Type.ELDER, trapped);
 	}
 	
 	@Override
@@ -45,26 +40,6 @@ public class SigilBlockEntity extends BlockEntity implements BlockEntityClientSe
 	}
 	
 	@Override
-	public Sigil getSigil() {
-		return sigil;
-	}
-	
-	@Override
-	public void setSigil(Sigil sigil) {
-		this.sigil = sigil;
-	}
-	
-	@Override
-	public int getUses() {
-		return uses;
-	}
-	
-	@Override
-	public void setUses(int uses) {
-		this.uses = uses;
-	}
-	
-	@Override
 	public boolean getModeOnWhitelist() {
 		return modeOnWhitelist;
 	}
@@ -75,13 +50,23 @@ public class SigilBlockEntity extends BlockEntity implements BlockEntityClientSe
 	}
 	
 	@Override
+	public boolean getLocked() {
+		return locked;
+	}
+	
+	@Override
+	public void setLocked(boolean locked) {
+		this.locked = locked;
+	}
+	
+	@Override
 	public void fromClientTag(CompoundTag tag) {
-		fromTagSigil(tag);
+		fromTagLockable(tag);
 	}
 	
 	@Override
 	public CompoundTag toClientTag(CompoundTag tag) {
-		toTagSigil(tag);
+		toTagLockable(tag);
 		return tag;
 	}
 	
@@ -94,10 +79,5 @@ public class SigilBlockEntity extends BlockEntity implements BlockEntityClientSe
 	@Override
 	public CompoundTag toTag(CompoundTag tag) {
 		return super.toTag(toClientTag(tag));
-	}
-	
-	@Override
-	public void tick() {
-		tick(world, pos, this);
 	}
 }

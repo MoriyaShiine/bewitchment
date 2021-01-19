@@ -1,14 +1,19 @@
 package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.misc.HasSigil;
+import moriyashiine.bewitchment.api.interfaces.misc.Lockable;
+import moriyashiine.bewitchment.api.interfaces.misc.SigilHolder;
+import moriyashiine.bewitchment.api.interfaces.misc.TaglockHolder;
 import moriyashiine.bewitchment.common.registry.BWSigils;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BedBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.DoorBlock;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -44,9 +49,10 @@ public class TaglockItem extends Item {
 	public ActionResult useOnBlock(ItemUsageContext context) {
 		World world = context.getWorld();
 		BlockPos pos = context.getBlockPos();
+		BlockState state = world.getBlockState(pos);
 		PlayerEntity player = context.getPlayer();
 		boolean client = world.isClient;
-		if (world.getBlockState(pos).getBlock() instanceof BedBlock) {
+		if (state.getBlock() instanceof BedBlock) {
 			if (!client && player != null && player.isSneaking()) {
 				MinecraftServer server = world.getServer();
 				if (server != null) {
@@ -65,22 +71,59 @@ public class TaglockItem extends Item {
 			return ActionResult.success(client);
 		}
 		else {
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof HasSigil) {
-				ItemStack stack = context.getStack();
+			ItemStack stack = context.getStack();
+			BlockEntity blockEntity = world.getBlockEntity(state.getBlock() instanceof DoorBlock && state.get(DoorBlock.HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos);
+			if (blockEntity instanceof TaglockHolder) {
+				TaglockHolder taglockHolder = (TaglockHolder) blockEntity;
+				if (player.getUuid().equals(taglockHolder.getOwner())) {
+					int firstEmpty = taglockHolder.getFirstEmptySlot();
+					if (firstEmpty != -1) {
+						if (!client) {
+							taglockHolder.getTaglockInventory().set(firstEmpty, stack.split(1));
+							taglockHolder.syncTaglockHolder(world, blockEntity);
+							blockEntity.markDirty();
+						}
+						return ActionResult.success(client);
+					}
+				}
+			}
+			else if (blockEntity instanceof Lockable) {
 				if (hasTaglock(stack)) {
-					if (!client) {
-						HasSigil sigil = (HasSigil) blockEntity;
-						if (sigil.getSigil() != null) {
-							if (sigil.getEntities().isEmpty()) {
-								sigil.setModeOnWhitelist(true);
-							}
-							UUID uuid = getTaglockUUID(stack);
-							if (!sigil.getEntities().contains(uuid)) {
-								sigil.getEntities().add(uuid);
+					Lockable lockable = (Lockable) blockEntity;
+					if (player.getUuid().equals(lockable.getOwner()) && lockable.getLocked()) {
+						UUID uuid = getTaglockUUID(stack);
+						if (!lockable.getEntities().contains(uuid)) {
+							if (!client) {
+								if (lockable.getEntities().isEmpty()) {
+									lockable.setModeOnWhitelist(true);
+								}
+								lockable.getEntities().add(uuid);
 								if (!player.isCreative()) {
 									stack.decrement(1);
 								}
+								lockable.syncLockable(world, blockEntity);
+								blockEntity.markDirty();
+							}
+							return ActionResult.success(client);
+						}
+					}
+				}
+			}
+			else if (blockEntity instanceof SigilHolder) {
+				if (hasTaglock(stack)) {
+					if (!client) {
+						SigilHolder sigilHolder = (SigilHolder) blockEntity;
+						if (sigilHolder.getSigil() != null) {
+							UUID uuid = getTaglockUUID(stack);
+							if (!sigilHolder.getEntities().contains(uuid)) {
+								if (sigilHolder.getEntities().isEmpty()) {
+									sigilHolder.setModeOnWhitelist(true);
+								}
+								sigilHolder.getEntities().add(uuid);
+								if (!player.isCreative()) {
+									stack.decrement(1);
+								}
+								sigilHolder.syncSigilHolder(world, blockEntity);
 								blockEntity.markDirty();
 							}
 						}
@@ -109,13 +152,13 @@ public class TaglockItem extends Item {
 		ItemStack stack = user.getStackInHand(hand);
 		if (entity.isAlive() && !BWTags.BOSSES.contains(entity.getType()) && !hasTaglock(stack)) {
 			boolean failed = false;
-			BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(entity.getBlockPos(), 16, currentPos -> user.world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) user.world.getBlockEntity(currentPos)).getSigil() == BWSigils.SLIPPERY);
+			BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(entity.getBlockPos(), 16, currentPos -> user.world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) user.world.getBlockEntity(currentPos)).getSigil() == BWSigils.SLIPPERY);
 			if (sigilPos == null && bed) {
-				sigilPos = BewitchmentAPI.getClosestBlockPos(user.getBlockPos(), 16, currentPos -> user.world.getBlockEntity(currentPos) instanceof HasSigil && ((HasSigil) user.world.getBlockEntity(currentPos)).getSigil() == BWSigils.SLIPPERY);
+				sigilPos = BewitchmentAPI.getClosestBlockPos(user.getBlockPos(), 16, currentPos -> user.world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) user.world.getBlockEntity(currentPos)).getSigil() == BWSigils.SLIPPERY);
 			}
 			if (sigilPos != null) {
 				BlockEntity blockEntity = user.world.getBlockEntity(sigilPos);
-				HasSigil sigil = (HasSigil) blockEntity;
+				SigilHolder sigil = (SigilHolder) blockEntity;
 				if (sigil.test(entity)) {
 					sigil.setUses(sigil.getUses() - 1);
 					blockEntity.markDirty();

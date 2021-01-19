@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.client.network.packet;
 
 import io.netty.buffer.Unpooled;
-import moriyashiine.bewitchment.api.interfaces.misc.CanHoldTaglocks;
+import moriyashiine.bewitchment.api.interfaces.misc.TaglockHolder;
 import moriyashiine.bewitchment.common.Bewitchment;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -22,9 +22,9 @@ public class SyncTaglockHolderBlockEntity {
 	public static void send(PlayerEntity player, BlockEntity blockEntity) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		buf.writeLong(blockEntity.getPos().asLong());
-		buf.writeItemStack(((CanHoldTaglocks) blockEntity).getTaglockInventory().get(0));
-		buf.writeItemStack(((CanHoldTaglocks) blockEntity).getTaglockInventory().get(1));
-		buf.writeItemStack(((CanHoldTaglocks) blockEntity).getTaglockInventory().get(2));
+		buf.writeItemStack(((TaglockHolder) blockEntity).getTaglockInventory().get(0));
+		buf.writeItemStack(((TaglockHolder) blockEntity).getTaglockInventory().get(1));
+		buf.writeItemStack(((TaglockHolder) blockEntity).getTaglockInventory().get(2));
 		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
 	}
 	
@@ -34,7 +34,7 @@ public class SyncTaglockHolderBlockEntity {
 		ItemStack two = buf.readItemStack();
 		ItemStack three = buf.readItemStack();
 		client.execute(() -> {
-			CanHoldTaglocks taglockHolder = (CanHoldTaglocks) client.world.getBlockEntity(pos);
+			TaglockHolder taglockHolder = (TaglockHolder) client.world.getBlockEntity(pos);
 			taglockHolder.getTaglockInventory().set(0, one);
 			taglockHolder.getTaglockInventory().set(1, two);
 			taglockHolder.getTaglockInventory().set(2, three);

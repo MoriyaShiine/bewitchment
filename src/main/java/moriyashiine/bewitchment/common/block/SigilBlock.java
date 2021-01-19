@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.block;
 
-import moriyashiine.bewitchment.api.interfaces.misc.HasSigil;
+import moriyashiine.bewitchment.api.interfaces.misc.SigilHolder;
 import moriyashiine.bewitchment.api.item.SigilItem;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWObjects;
@@ -56,10 +56,10 @@ public class SigilBlock extends HorizontalFacingBlock implements BlockEntityProv
 	@Override
 	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity instanceof HasSigil) {
+		if (blockEntity instanceof SigilHolder) {
 			for (Item sigil : Registry.ITEM) {
 				if (sigil instanceof SigilItem) {
-					if (((HasSigil) blockEntity).getSigil() == ((SigilItem) sigil).sigil) {
+					if (((SigilHolder) blockEntity).getSigil() == ((SigilItem) sigil).sigil) {
 						return new ItemStack(sigil);
 					}
 				}

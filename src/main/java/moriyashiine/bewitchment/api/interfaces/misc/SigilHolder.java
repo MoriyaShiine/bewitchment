@@ -1,8 +1,11 @@
 package moriyashiine.bewitchment.api.interfaces.misc;
 
 import moriyashiine.bewitchment.api.registry.Sigil;
+import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -11,6 +14,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -21,7 +25,7 @@ import java.util.List;
 import java.util.UUID;
 
 @SuppressWarnings("ConstantConditions")
-public interface HasSigil {
+public interface SigilHolder {
 	List<UUID> getEntities();
 	
 	UUID getOwner();
@@ -73,8 +77,10 @@ public interface HasSigil {
 		if (getSigil() != null && getSigil().active && test(user)) {
 			ActionResult result = getSigil().use(world, pos, user, hand);
 			if (result.isAccepted() || result == ActionResult.FAIL) {
+				BlockEntity blockEntity = world.getBlockEntity(pos);
 				setUses(getUses() - 1);
-				world.getBlockEntity(pos).markDirty();
+				syncSigilHolder(world, blockEntity);
+				blockEntity.markDirty();
 			}
 			return result;
 		}
@@ -88,6 +94,7 @@ public interface HasSigil {
 					int used = getSigil().tick(world, pos);
 					if (used > 0) {
 						setUses(getUses() - used);
+						syncSigilHolder(world, blockEntity);
 						blockEntity.markDirty();
 					}
 				}
@@ -97,6 +104,7 @@ public interface HasSigil {
 					setSigil(null);
 					setUses(0);
 					setModeOnWhitelist(false);
+					syncSigilHolder(world, blockEntity);
 					blockEntity.markDirty();
 					if (blockEntity.getCachedState().getBlock() == BWObjects.SIGIL) {
 						world.setBlockState(pos, Blocks.AIR.getDefaultState());
@@ -116,10 +124,20 @@ public interface HasSigil {
 		return true;
 	}
 	
+	default void syncSigilHolder(World world, BlockEntity blockEntity) {
+		if (world instanceof ServerWorld) {
+			PlayerLookup.tracking(blockEntity).forEach(playerEntity -> {
+				if (blockEntity instanceof BlockEntityClientSerializable) {
+					SyncClientSerializableBlockEntity.send(playerEntity, (BlockEntityClientSerializable) blockEntity);
+				}
+			});
+		}
+	}
+	
 	static ActionResult onUse(World world, BlockPos pos, LivingEntity user, Hand hand) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity instanceof HasSigil && ((HasSigil) blockEntity).test(user)) {
-			return ((HasSigil) blockEntity).use(world, pos, user, hand);
+		if (blockEntity instanceof SigilHolder && ((SigilHolder) blockEntity).test(user)) {
+			return ((SigilHolder) blockEntity).use(world, pos, user, hand);
 		}
 		return ActionResult.PASS;
 	}

@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.sigil;
 
-import moriyashiine.bewitchment.api.interfaces.misc.HasSigil;
+import moriyashiine.bewitchment.api.interfaces.misc.SigilHolder;
 import moriyashiine.bewitchment.api.registry.Sigil;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.entity.LivingEntity;
@@ -20,7 +20,7 @@ public class SmellySigil extends Sigil {
 	public int tick(World world, BlockPos pos) {
 		int amount = 0;
 		if (world.getTime() % 20 == 0) {
-			HasSigil sigil = ((HasSigil) world.getBlockEntity(pos));
+			SigilHolder sigil = ((SigilHolder) world.getBlockEntity(pos));
 			double x = pos.getX() + 0.5, y = pos.getY() + 0.5, z = pos.getZ() + 0.5;
 			for (HostileEntity entity : world.getEntitiesByClass(HostileEntity.class, new Box(pos).expand(16, 6, 16), LivingEntity::isAlive)) {
 				if (sigil.test(entity)) {

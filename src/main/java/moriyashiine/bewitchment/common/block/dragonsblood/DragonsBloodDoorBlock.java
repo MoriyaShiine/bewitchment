@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.block.dragonsblood;
 
 import com.terraformersmc.terraform.wood.block.TerraformDoorBlock;
-import moriyashiine.bewitchment.api.interfaces.misc.HasSigil;
+import moriyashiine.bewitchment.api.interfaces.misc.SigilHolder;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -29,7 +29,7 @@ public class DragonsBloodDoorBlock extends TerraformDoorBlock implements BlockEn
 	
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		ActionResult result = HasSigil.onUse(world, state.get(HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos, player, hand);
+		ActionResult result = SigilHolder.onUse(world, state.get(HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos, player, hand);
 		if (result == ActionResult.FAIL) {
 			return ActionResult.FAIL;
 		}

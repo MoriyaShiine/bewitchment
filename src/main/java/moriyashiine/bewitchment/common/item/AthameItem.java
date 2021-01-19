@@ -3,7 +3,9 @@ package moriyashiine.bewitchment.common.item;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
-import moriyashiine.bewitchment.api.interfaces.misc.HasSigil;
+import moriyashiine.bewitchment.api.interfaces.misc.Lockable;
+import moriyashiine.bewitchment.api.interfaces.misc.SigilHolder;
+import moriyashiine.bewitchment.api.interfaces.misc.TaglockHolder;
 import moriyashiine.bewitchment.common.block.dragonsblood.DragonsBloodLogBlock;
 import moriyashiine.bewitchment.common.recipe.AthameStrippingRecipe;
 import moriyashiine.bewitchment.common.registry.BWProperties;
@@ -11,10 +13,12 @@ import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.DoorBlock;
 import net.minecraft.block.PillarBlock;
 import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.block.dispenser.FallibleItemDispenserBehavior;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -26,6 +30,7 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -54,22 +59,9 @@ public class AthameItem extends SwordItem {
 	public ActionResult useOnBlock(ItemUsageContext context) {
 		World world = context.getWorld();
 		BlockPos pos = context.getBlockPos();
-		BlockEntity blockEntity = world.getBlockEntity(pos);
+		BlockState state = world.getBlockState(pos);
 		PlayerEntity player = context.getPlayer();
 		boolean client = world.isClient;
-		if (blockEntity instanceof HasSigil) {
-			HasSigil sigil = (HasSigil) blockEntity;
-			if (player != null && player.getUuid().equals(sigil.getOwner())) {
-				if (!client && !sigil.getEntities().isEmpty()) {
-					boolean whitelist = sigil.getModeOnWhitelist();
-					world.playSound(null, pos, BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.BLOCKS, 1, whitelist ? 0.5f : 1);
-					sigil.setModeOnWhitelist(!whitelist);
-					blockEntity.markDirty();
-				}
-				return ActionResult.success(client);
-			}
-		}
-		BlockState state = world.getBlockState(pos);
 		AthameStrippingRecipe entry = world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_STRIPPING_RECIPE_TYPE).stream().filter(recipe -> recipe.log == state.getBlock()).findFirst().orElse(null);
 		if (entry != null) {
 			world.playSound(player, pos, BWSoundEvents.ITEM_ATHAME_STRIP, SoundCategory.BLOCKS, 1, 1);
@@ -86,6 +78,42 @@ public class AthameItem extends SwordItem {
 				}
 			}
 			return ActionResult.success(client);
+		}
+		BlockEntity blockEntity = world.getBlockEntity(state.getBlock() instanceof DoorBlock && state.get(DoorBlock.HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos);
+		if (blockEntity instanceof SigilHolder) {
+			SigilHolder sigil = (SigilHolder) blockEntity;
+			if (player != null && player.getUuid().equals(sigil.getOwner())) {
+				if (!client && !sigil.getEntities().isEmpty()) {
+					boolean whitelist = sigil.getModeOnWhitelist();
+					world.playSound(null, pos, BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.BLOCKS, 1, whitelist ? 0.5f : 1);
+					sigil.setModeOnWhitelist(!whitelist);
+					blockEntity.markDirty();
+				}
+				return ActionResult.success(client);
+			}
+		}
+		else if (blockEntity instanceof TaglockHolder) {
+			TaglockHolder taglockHolder = (TaglockHolder) blockEntity;
+			if (player != null && player.getUuid().equals(taglockHolder.getOwner()) && taglockHolder.getFirstEmptySlot() != 0) {
+				if (!client) {
+					ItemScatterer.spawn(world, pos, taglockHolder.getTaglockInventory());
+					taglockHolder.syncTaglockHolder(world, blockEntity);
+					blockEntity.markDirty();
+				}
+				return ActionResult.success(client);
+			}
+		}
+		else if (blockEntity instanceof Lockable) {
+			Lockable lockable = (Lockable) blockEntity;
+			if (player != null && player.getUuid().equals(lockable.getOwner()) && !lockable.getEntities().isEmpty()) {
+				if (!client) {
+					boolean whitelist = lockable.getModeOnWhitelist();
+					world.playSound(null, pos, BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.BLOCKS, 1, whitelist ? 0.5f : 1);
+					lockable.setModeOnWhitelist(!whitelist);
+					blockEntity.markDirty();
+				}
+				return ActionResult.success(client);
+			}
 		}
 		return super.useOnBlock(context);
 	}
