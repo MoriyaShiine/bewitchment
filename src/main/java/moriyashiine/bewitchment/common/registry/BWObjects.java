@@ -46,6 +46,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings.copyOf;
+import static net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings.of;
 
 public class BWObjects {
 	private static final Map<Block, Identifier> BLOCKS = new LinkedHashMap<>();
@@ -166,8 +167,8 @@ public class BWObjects {
 	public static final TerraformBoatItem DRAGONS_BLOOD_BOAT = create("dragons_blood_boat", new TerraformBoatItem(() -> BWEntityTypes.DRAGONS_BLOOD_BOAT, gen().maxCount(1)));
 	//other_plants
 	public static final Block SPANISH_MOSS = create("spanish_moss", new VineBlock(copyOf(Blocks.VINE)), true);
-	public static final Block GLOWING_BRAMBLE = create("glowing_bramble", new BrambleBlock(copyOf(JUNIPER_PLANKS).sounds(BlockSoundGroup.GRASS).noCollision().ticksRandomly().luminance(15)), true);
-	public static final Block ENDER_BRAMBLE = create("ender_bramble", new BrambleBlock(copyOf(JUNIPER_PLANKS).sounds(BlockSoundGroup.GRASS).noCollision().ticksRandomly()), true);
+	public static final Block GLOWING_BRAMBLE = create("glowing_bramble", new BrambleBlock(of(Material.PLANT).sounds(BlockSoundGroup.GRASS).strength(2, 3).noCollision().ticksRandomly().luminance(15)), true);
+	public static final Block ENDER_BRAMBLE = create("ender_bramble", new BrambleBlock(of(Material.PLANT).sounds(BlockSoundGroup.GRASS).strength(2, 3).noCollision().ticksRandomly()), true);
 	public static final Block FRUITING_BRAMBLE = create("fruiting_bramble", new BrambleBlock.Fruiting(copyOf(ENDER_BRAMBLE)), true);
 	public static final Block SCORCHED_BRAMBLE = create("scorched_bramble", new BrambleBlock(copyOf(ENDER_BRAMBLE)), true);
 	public static final Block THICK_BRAMBLE = create("thick_bramble", new BrambleBlock(copyOf(ENDER_BRAMBLE)), true);
