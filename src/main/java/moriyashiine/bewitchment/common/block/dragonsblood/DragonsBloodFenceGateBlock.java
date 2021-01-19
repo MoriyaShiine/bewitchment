@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.block.dragonsblood;
 
-import moriyashiine.bewitchment.api.interfaces.block.entity.HasSigil;
+import moriyashiine.bewitchment.api.interfaces.misc.HasSigil;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;

@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.block.juniper;
 
 import com.terraformersmc.terraform.wood.block.TerraformPressurePlateBlock;
-import moriyashiine.bewitchment.api.interfaces.block.entity.CanHoldTaglocks;
+import moriyashiine.bewitchment.api.interfaces.misc.CanHoldTaglocks;
 import moriyashiine.bewitchment.common.block.entity.TaglockHolderBlockEntity;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;

@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.block.dragonsblood;
 
-import moriyashiine.bewitchment.api.interfaces.block.entity.HasSigil;
+import moriyashiine.bewitchment.api.interfaces.misc.HasSigil;
 import moriyashiine.bewitchment.common.block.BWChestBlock;
 import moriyashiine.bewitchment.common.block.entity.DragonsBloodChestBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;

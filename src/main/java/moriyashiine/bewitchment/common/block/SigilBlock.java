@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.block;
 
-import moriyashiine.bewitchment.api.interfaces.block.entity.HasSigil;
+import moriyashiine.bewitchment.api.interfaces.misc.HasSigil;
 import moriyashiine.bewitchment.api.item.SigilItem;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWObjects;
