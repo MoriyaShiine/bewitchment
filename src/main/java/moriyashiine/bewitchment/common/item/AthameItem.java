@@ -3,7 +3,7 @@ package moriyashiine.bewitchment.common.item;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
-import moriyashiine.bewitchment.api.interfaces.HasSigil;
+import moriyashiine.bewitchment.api.interfaces.block.entity.HasSigil;
 import moriyashiine.bewitchment.common.block.dragonsblood.DragonsBloodLogBlock;
 import moriyashiine.bewitchment.common.recipe.AthameStrippingRecipe;
 import moriyashiine.bewitchment.common.registry.BWProperties;

@@ -2,7 +2,7 @@ package moriyashiine.bewitchment.common.network.packet;
 
 import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
+import moriyashiine.bewitchment.api.interfaces.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;

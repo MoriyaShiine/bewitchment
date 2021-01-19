@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.api.block;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
+import moriyashiine.bewitchment.api.interfaces.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
 import moriyashiine.bewitchment.client.network.packet.SyncWitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;

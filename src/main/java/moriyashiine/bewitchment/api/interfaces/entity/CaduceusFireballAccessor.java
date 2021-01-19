@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.api.interfaces;
+package moriyashiine.bewitchment.api.interfaces.entity;
 
 public interface CaduceusFireballAccessor {
 	boolean getFromCaduceus();

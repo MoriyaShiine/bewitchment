@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.common.entity.living;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.CurseAccessor;
-import moriyashiine.bewitchment.api.interfaces.Pledgeable;
+import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.registry.*;

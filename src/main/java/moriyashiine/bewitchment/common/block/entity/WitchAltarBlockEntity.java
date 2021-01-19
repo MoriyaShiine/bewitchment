@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.block.entity;
 
 import com.mojang.authlib.GameProfile;
-import moriyashiine.bewitchment.api.interfaces.MagicAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWTags;

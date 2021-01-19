@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.ritualfunction;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.CurseAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
 import moriyashiine.bewitchment.common.item.TaglockItem;
@@ -31,7 +31,7 @@ public class CleanseRitualFunction extends RitualFunction {
 		ItemStack taglock = null;
 		for (int i = 0; i < inventory.size(); i++) {
 			ItemStack stack = inventory.getStack(i);
-			if (inventory.getStack(i).getItem() instanceof TaglockItem && stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID")) {
+			if (inventory.getStack(i).getItem() instanceof TaglockItem && TaglockItem.hasTaglock(stack)) {
 				taglock = stack;
 				break;
 			}
@@ -44,7 +44,7 @@ public class CleanseRitualFunction extends RitualFunction {
 		ItemStack taglock = null;
 		for (int i = 0; i < inventory.size(); i++) {
 			ItemStack stack = inventory.getStack(i);
-			if (inventory.getStack(i).getItem() instanceof TaglockItem && stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID")) {
+			if (inventory.getStack(i).getItem() instanceof TaglockItem) {
 				taglock = stack;
 				break;
 			}

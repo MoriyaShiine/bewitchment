@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.contract;
 
-import moriyashiine.bewitchment.api.interfaces.ContractAccessor;
-import moriyashiine.bewitchment.api.interfaces.CurseAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.common.registry.BWRegistries;

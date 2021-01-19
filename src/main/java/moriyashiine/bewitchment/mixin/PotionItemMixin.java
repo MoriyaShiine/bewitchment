@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin;
 
-import moriyashiine.bewitchment.api.interfaces.PolymorphAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.PolymorphAccessor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;

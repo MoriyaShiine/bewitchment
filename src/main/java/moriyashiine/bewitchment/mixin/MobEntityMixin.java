@@ -1,9 +1,9 @@
 package moriyashiine.bewitchment.mixin;
 
-import moriyashiine.bewitchment.api.interfaces.ContractAccessor;
-import moriyashiine.bewitchment.api.interfaces.CurseAccessor;
-import moriyashiine.bewitchment.api.interfaces.InsanityTargetAccessor;
-import moriyashiine.bewitchment.api.interfaces.MasterAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.InsanityTargetAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.MasterAccessor;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.registry.BWContracts;
 import moriyashiine.bewitchment.common.registry.BWCurses;

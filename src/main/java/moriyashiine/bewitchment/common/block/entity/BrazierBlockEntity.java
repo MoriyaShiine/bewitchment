@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.common.block.entity;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.CurseAccessor;
-import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
+import moriyashiine.bewitchment.api.interfaces.block.entity.UsesAltarPower;
+import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.client.network.packet.SpawnBrazierParticlesPacket;
 import moriyashiine.bewitchment.client.network.packet.SyncBrazierBlockEntity;
@@ -123,8 +123,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 								if (!poppet.isEmpty() && !poppet.getOrCreateTag().getBoolean("Cursed")) {
 									poppet.getOrCreateTag().putString("Curse", BWRegistries.CURSES.getId(curseRecipe.curse).toString());
 									poppet.getOrCreateTag().putBoolean("Cursed", true);
-									poppet.getOrCreateTag().remove("OwnerUUID");
-									poppet.getOrCreateTag().remove("OwnerName");
+									TaglockItem.removeTaglock(poppet);
 								}
 								else {
 									curseAccessor.addCurse(new Curse.Instance(curseRecipe.curse, 168000));
@@ -138,8 +137,8 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 									String entityName = "";
 									for (int i = 0; i < size(); i++) {
 										ItemStack stack = getStack(i);
-										if (stack.getItem() instanceof TaglockItem && stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID")) {
-											entityName = stack.getOrCreateTag().getString("OwnerName");
+										if (stack.getItem() instanceof TaglockItem && TaglockItem.hasTaglock(stack)) {
+											entityName = TaglockItem.getTaglockName(stack);
 											break;
 										}
 									}

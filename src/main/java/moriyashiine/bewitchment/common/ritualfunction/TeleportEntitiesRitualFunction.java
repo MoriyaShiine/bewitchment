@@ -26,7 +26,7 @@ public class TeleportEntitiesRitualFunction extends RitualFunction {
 		BlockPos location = null;
 		for (int i = 0; i < inventory.size(); i++) {
 			ItemStack stack = inventory.getStack(i);
-			if (stack.getItem() instanceof TaglockItem && stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID")) {
+			if (stack.getItem() instanceof TaglockItem && TaglockItem.hasTaglock(stack)) {
 				LivingEntity livingEntity = BewitchmentAPI.getTaglockOwner(world, stack);
 				if (livingEntity != null && world.getRegistryKey().equals(livingEntity.getEntityWorld().getRegistryKey())) {
 					location = livingEntity.getBlockPos();

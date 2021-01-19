@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.curse;
 
-import moriyashiine.bewitchment.api.interfaces.RespawnTimerAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.RespawnTimerAccessor;
 import moriyashiine.bewitchment.api.registry.Curse;
 import net.minecraft.entity.LivingEntity;
 

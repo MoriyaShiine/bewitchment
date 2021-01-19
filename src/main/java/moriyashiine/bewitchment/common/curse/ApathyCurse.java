@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.curse;
 
-import moriyashiine.bewitchment.api.interfaces.MagicAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.api.registry.Curse;
 import net.minecraft.entity.LivingEntity;
 

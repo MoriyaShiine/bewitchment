@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.ContractAccessor;
-import moriyashiine.bewitchment.api.interfaces.FortuneAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.FortuneAccessor;
 import moriyashiine.bewitchment.common.registry.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -84,7 +84,7 @@ public abstract class BlockMixin {
 							foundOre = true;
 						}
 					}
-					if (foundOre && contractAccessor.hasNegativeEffects() && world.random.nextFloat() < 1/3f) {
+					if (foundOre && contractAccessor.hasNegativeEffects() && world.random.nextFloat() < 1 / 3f) {
 						drops.clear();
 					}
 				}

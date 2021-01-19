@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.item;
 
-import moriyashiine.bewitchment.api.interfaces.CurseAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.common.Bewitchment;
@@ -41,7 +41,7 @@ public class CursePoppetItem extends PoppetItem {
 		if (!world.isClient && stack.hasTag()) {
 			MinecraftServer server = world.getServer();
 			if (server != null && stack.getOrCreateTag().contains("Cursed")) {
-				UUID uuid = stack.getOrCreateTag().getUuid("OwnerUUID");
+				UUID uuid = TaglockItem.getTaglockUUID(stack);
 				for (ServerWorld serverWorld : server.getWorlds()) {
 					Entity entity = serverWorld.getEntity(uuid);
 					if (entity != null) {

@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.item;
 
-import moriyashiine.bewitchment.api.interfaces.ContractAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
@@ -18,6 +18,7 @@ import net.minecraft.item.ItemUsage;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -44,27 +45,29 @@ public class ContractItem extends Item {
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (!world.isClient && stack.hasTag()) {
 			MinecraftServer server = world.getServer();
-			if (server != null && stack.getOrCreateTag().contains("OwnerUUID")) {
-				UUID uuid = stack.getOrCreateTag().getUuid("OwnerUUID");
-				for (ServerWorld serverWorld : server.getWorlds()) {
-					Entity entity = serverWorld.getEntity(uuid);
-					if (entity != null) {
-						Contract contract = BWRegistries.CONTRACTS.get(new Identifier(stack.getOrCreateTag().getString("Contract")));
-						if (contract != null) {
-							ContractAccessor.of(entity).ifPresent(contractAccessor -> {
-								contractAccessor.addContract(new Contract.Instance(contract, 168000));
-								contract.finishUsing(user, ((ContractAccessor) user).hasNegativeEffects());
-								world.playSound(null, user.getBlockPos(), BWSoundEvents.ITEM_CONTRACT_USE, SoundCategory.PLAYERS, 1, 1);
-								if (!(user instanceof PlayerEntity && ((PlayerEntity) user).isCreative())) {
-									stack.decrement(1);
-								}
-							});
-							return stack;
+			if (server != null) {
+				UUID uuid = TaglockItem.getTaglockUUID(stack);
+				if (uuid != null) {
+					for (ServerWorld serverWorld : server.getWorlds()) {
+						Entity entity = serverWorld.getEntity(uuid);
+						if (entity != null) {
+							Contract contract = BWRegistries.CONTRACTS.get(new Identifier(stack.getOrCreateTag().getString("Contract")));
+							if (contract != null) {
+								ContractAccessor.of(entity).ifPresent(contractAccessor -> {
+									contractAccessor.addContract(new Contract.Instance(contract, 168000));
+									contract.finishUsing(user, ((ContractAccessor) user).hasNegativeEffects());
+									world.playSound(null, user.getBlockPos(), BWSoundEvents.ITEM_CONTRACT_USE, SoundCategory.PLAYERS, 1, 1);
+									if (!(user instanceof PlayerEntity && ((PlayerEntity) user).isCreative())) {
+										stack.decrement(1);
+									}
+								});
+								return stack;
+							}
 						}
 					}
-				}
-				if (user instanceof PlayerEntity) {
-					((PlayerEntity) user).sendMessage(new TranslatableText(Bewitchment.MODID + ".invalid_entity", stack.getOrCreateTag().getString("OwnerName")), true);
+					if (user instanceof PlayerEntity) {
+						((PlayerEntity) user).sendMessage(new TranslatableText(Bewitchment.MODID + ".invalid_entity", TaglockItem.getTaglockName(stack)), true);
+					}
 				}
 			}
 		}
@@ -73,7 +76,7 @@ public class ContractItem extends Item {
 	
 	@Override
 	public UseAction getUseAction(ItemStack stack) {
-		return stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID") ? UseAction.BOW : UseAction.NONE;
+		return TaglockItem.hasTaglock(stack) ? UseAction.BOW : UseAction.NONE;
 	}
 	
 	@Override
@@ -95,6 +98,9 @@ public class ContractItem extends Item {
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+		if (TaglockItem.hasTaglock(stack)) {
+			tooltip.add(new LiteralText(TaglockItem.getTaglockName(stack)).setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
+		}
 		if (stack.hasTag() && stack.getOrCreateTag().contains("Contract")) {
 			tooltip.add(new TranslatableText("contract." + stack.getOrCreateTag().getString("Contract").replace(":", ".")).setStyle(Style.EMPTY.withColor(Formatting.DARK_RED)));
 		}

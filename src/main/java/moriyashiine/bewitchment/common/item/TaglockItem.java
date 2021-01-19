@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.HasSigil;
+import moriyashiine.bewitchment.api.interfaces.block.entity.HasSigil;
 import moriyashiine.bewitchment.common.registry.BWSigils;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.registry.BWTags;
@@ -10,6 +10,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -46,21 +47,18 @@ public class TaglockItem extends Item {
 		PlayerEntity player = context.getPlayer();
 		boolean client = world.isClient;
 		if (world.getBlockState(pos).getBlock() instanceof BedBlock) {
-			if (!client) {
-				
-				if (player != null && player.isSneaking()) {
-					MinecraftServer server = world.getServer();
-					if (server != null) {
-						PlayerEntity earliestSleeper = null;
-						for (ServerPlayerEntity playerEntity : server.getPlayerManager().getPlayerList()) {
-							BlockPos bedPos = playerEntity.getSpawnPointPosition();
-							if (bedPos != null && bedPos.equals(pos) && (earliestSleeper == null || playerEntity.getSleepTimer() < earliestSleeper.getSleepTimer())) {
-								earliestSleeper = playerEntity;
-							}
+			if (!client && player != null && player.isSneaking()) {
+				MinecraftServer server = world.getServer();
+				if (server != null) {
+					PlayerEntity earliestSleeper = null;
+					for (ServerPlayerEntity playerEntity : server.getPlayerManager().getPlayerList()) {
+						BlockPos bedPos = playerEntity.getSpawnPointPosition();
+						if (bedPos != null && bedPos.equals(pos) && (earliestSleeper == null || playerEntity.getSleepTimer() < earliestSleeper.getSleepTimer())) {
+							earliestSleeper = playerEntity;
 						}
-						if (earliestSleeper != null) {
-							return useTaglock(player, earliestSleeper, context.getHand(), false, true);
-						}
+					}
+					if (earliestSleeper != null) {
+						return useTaglock(player, earliestSleeper, context.getHand(), false, true);
 					}
 				}
 			}
@@ -70,14 +68,14 @@ public class TaglockItem extends Item {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof HasSigil) {
 				ItemStack stack = context.getStack();
-				if (stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID")) {
+				if (hasTaglock(stack)) {
 					if (!client) {
 						HasSigil sigil = (HasSigil) blockEntity;
 						if (sigil.getSigil() != null) {
 							if (sigil.getEntities().isEmpty()) {
 								sigil.setModeOnWhitelist(true);
 							}
-							UUID uuid = stack.getOrCreateTag().getUuid("OwnerUUID");
+							UUID uuid = getTaglockUUID(stack);
 							if (!sigil.getEntities().contains(uuid)) {
 								sigil.getEntities().add(uuid);
 								if (!player.isCreative()) {
@@ -102,8 +100,8 @@ public class TaglockItem extends Item {
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		if (stack.hasTag() && stack.getOrCreateTag().contains("OwnerName")) {
-			tooltip.add(new LiteralText(stack.getOrCreateTag().getString("OwnerName")).setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
+		if (hasTaglock(stack)) {
+			tooltip.add(new LiteralText(getTaglockName(stack)).setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
 		}
 	}
 	
@@ -147,18 +145,56 @@ public class TaglockItem extends Item {
 				if (entity instanceof MobEntity) {
 					((MobEntity) entity).setPersistent();
 				}
-				ItemStack taglock = new ItemStack(this);
-				taglock.getOrCreateTag().putUuid("OwnerUUID", entity.getUuid());
-				taglock.getOrCreateTag().putString("OwnerName", entity.getDisplayName().getString());
-				taglock.getOrCreateTag().putBoolean("FromPlayer", entity instanceof PlayerEntity);
-				BewitchmentAPI.addItemToInventoryAndConsume(user, hand, taglock);
+				BewitchmentAPI.addItemToInventoryAndConsume(user, hand, putTaglock(new ItemStack(this), entity));
 			}
 			return ActionResult.success(client);
 		}
 		return ActionResult.FAIL;
 	}
 	
+	public static ItemStack copyTo(ItemStack from, ItemStack to) {
+		if (hasTaglock(from)) {
+			to.getOrCreateTag().putUuid("OwnerUUID", from.getOrCreateTag().getUuid("OwnerUUID"));
+			to.getOrCreateTag().putString("OwnerName", from.getOrCreateTag().getString("OwnerName"));
+			to.getOrCreateTag().putBoolean("FromPlayer", from.getOrCreateTag().getBoolean("FromPlayer"));
+		}
+		return to;
+	}
+	
 	public static boolean hasTaglock(ItemStack stack) {
-		return stack.hasTag() && !stack.getOrCreateTag().getString("OwnerName").isEmpty();
+		return stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID");
+	}
+	
+	public static ItemStack putTaglock(ItemStack stack, Entity entity) {
+		stack.getOrCreateTag().putUuid("OwnerUUID", entity.getUuid());
+		stack.getOrCreateTag().putString("OwnerName", entity.getDisplayName().getString());
+		stack.getOrCreateTag().putBoolean("FromPlayer", entity instanceof PlayerEntity);
+		return stack;
+	}
+	
+	public static void removeTaglock(ItemStack stack) {
+		if (stack.hasTag()) {
+			stack.getOrCreateTag().remove("OwnerUUID");
+			stack.getOrCreateTag().remove("OwnerName");
+			stack.getOrCreateTag().remove("FromPlayer");
+		}
+	}
+	
+	public static UUID getTaglockUUID(ItemStack stack) {
+		if (hasTaglock(stack)) {
+			return stack.getOrCreateTag().getUuid("OwnerUUID");
+		}
+		return null;
+	}
+	
+	public static String getTaglockName(ItemStack stack) {
+		if (hasTaglock(stack)) {
+			return stack.getOrCreateTag().getString("OwnerName");
+		}
+		return "";
+	}
+	
+	public static boolean isTaglockFromPlayer(ItemStack stack) {
+		return hasTaglock(stack) && stack.getOrCreateTag().getBoolean("FromPlayer");
 	}
 }

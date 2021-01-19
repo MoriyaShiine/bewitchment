@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.block.entity;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.UsesAltarPower;
+import moriyashiine.bewitchment.api.interfaces.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.recipe.CauldronBrewingRecipe;
@@ -333,9 +333,9 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 			int redstone = 0, glowstone = 0;
 			for (int i = 0; i < size(); i++) {
 				ItemStack stackInSlot = getStack(i);
-				if (stackInSlot.getItem() instanceof TaglockItem && TaglockItem.hasTaglock(stackInSlot) && stackInSlot.getOrCreateTag().getBoolean("FromPlayer")) {
-					stack.getOrCreateTag().putUuid("PolymorphUUID", stackInSlot.getOrCreateTag().getUuid("OwnerUUID"));
-					stack.getOrCreateTag().putString("PolymorphName", stackInSlot.getOrCreateTag().getString("OwnerName"));
+				if (stackInSlot.getItem() instanceof TaglockItem && TaglockItem.isTaglockFromPlayer(stackInSlot)) {
+					stack.getOrCreateTag().putUuid("PolymorphUUID", TaglockItem.getTaglockUUID(stackInSlot));
+					stack.getOrCreateTag().putString("PolymorphName", TaglockItem.getTaglockName(stackInSlot));
 				}
 				CauldronBrewingRecipe cauldronBrewingRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CAULDRON_BREWING_RECIPE_TYPE).stream().filter(recipe -> recipe.input.test(stackInSlot)).findFirst().orElse(null);
 				if (cauldronBrewingRecipe != null) {

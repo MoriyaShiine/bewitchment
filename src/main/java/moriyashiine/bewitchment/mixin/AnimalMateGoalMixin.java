@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin;
 
-import moriyashiine.bewitchment.api.interfaces.ContractAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.common.entity.living.HellhoundEntity;
 import moriyashiine.bewitchment.common.registry.BWContracts;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
@@ -32,7 +32,7 @@ public abstract class AnimalMateGoalMixin extends Goal {
 		ServerPlayerEntity player = animal.getLovingPlayer();
 		ContractAccessor.of(player).ifPresent(contractAccessor -> {
 			if (contractAccessor.hasContract(BWContracts.LUST)) {
-				if (contractAccessor.hasNegativeEffects()) {// && player.getRandom().nextFloat() < 1 / 4f) {
+				if (contractAccessor.hasNegativeEffects() && player.getRandom().nextFloat() < 1 / 4f) {
 					for (int i = 0; i < 3; i++) {
 						HellhoundEntity hellhound = BWEntityTypes.HELLHOUND.create(player.world);
 						if (hellhound != null) {

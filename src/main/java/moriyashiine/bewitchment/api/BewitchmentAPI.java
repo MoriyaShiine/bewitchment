@@ -69,8 +69,8 @@ public class BewitchmentAPI {
 	}
 	
 	public static LivingEntity getTaglockOwner(World world, ItemStack taglock) {
-		if (world instanceof ServerWorld && (taglock.getItem() instanceof TaglockItem || taglock.getItem() instanceof PoppetItem) && taglock.hasTag() && taglock.getOrCreateTag().contains("OwnerUUID")) {
-			UUID ownerUUID = taglock.getOrCreateTag().getUuid("OwnerUUID");
+		if (world instanceof ServerWorld && (taglock.getItem() instanceof TaglockItem || taglock.getItem() instanceof PoppetItem) && TaglockItem.hasTaglock(taglock)) {
+			UUID ownerUUID = TaglockItem.getTaglockUUID(taglock);
 			for (ServerWorld serverWorld : world.getServer().getWorlds()) {
 				Entity entity = serverWorld.getEntity(ownerUUID);
 				if (entity instanceof LivingEntity) {
@@ -103,7 +103,7 @@ public class BewitchmentAPI {
 				}
 			}
 			for (ItemStack stack : toSearch) {
-				if (stack.getItem() == item && stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID")) {
+				if (stack.getItem() == item && TaglockItem.hasTaglock(stack)) {
 					UUID uuid = null;
 					if (owner != null) {
 						uuid = owner.getUuid();
@@ -114,7 +114,7 @@ public class BewitchmentAPI {
 							uuid = taglockOwner.getUuid();
 						}
 					}
-					if (stack.getOrCreateTag().getUuid("OwnerUUID").equals(uuid)) {
+					if (TaglockItem.getTaglockUUID(stack).equals(uuid)) {
 						return stack;
 					}
 				}

@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.sigil;
 
-import moriyashiine.bewitchment.api.interfaces.HasSigil;
+import moriyashiine.bewitchment.api.interfaces.block.entity.HasSigil;
 import moriyashiine.bewitchment.api.registry.Sigil;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.entity.LivingEntity;

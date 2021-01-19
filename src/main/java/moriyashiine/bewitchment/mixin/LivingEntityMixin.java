@@ -1,7 +1,8 @@
 package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.*;
+import moriyashiine.bewitchment.api.interfaces.block.entity.HasSigil;
+import moriyashiine.bewitchment.api.interfaces.entity.*;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.client.network.packet.SpawnExplosionParticlesPacket;

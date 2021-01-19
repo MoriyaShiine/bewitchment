@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.item;
 
-import moriyashiine.bewitchment.api.interfaces.MagicAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import net.fabricmc.api.EnvType;

@@ -1,10 +1,10 @@
 package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.InsanityTargetAccessor;
-import moriyashiine.bewitchment.api.interfaces.MasterAccessor;
-import moriyashiine.bewitchment.api.interfaces.Pledgeable;
-import moriyashiine.bewitchment.api.interfaces.WetAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.InsanityTargetAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.MasterAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
+import moriyashiine.bewitchment.api.interfaces.entity.WetAccessor;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.minecraft.entity.Entity;
