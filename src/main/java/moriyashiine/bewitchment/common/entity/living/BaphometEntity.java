@@ -176,6 +176,8 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 				}
 				if (timer % 600 == 0 && world.getEntitiesByType(EntityType.BLAZE, new Box(getBlockPos()).expand(32), entity -> getUuid().equals(((MasterAccessor) entity).getMasterUUID())).size() < 3) {
 					summonMinions();
+					world.playSound(null, getBlockPos(), SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.HOSTILE, 1, 1);
+					swingHand(Hand.OFF_HAND);
 				}
 			}
 			else {
