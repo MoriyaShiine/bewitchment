@@ -14,6 +14,29 @@
 		  "condition": "survives_explosion"
 		}
 	  ]
+	},
+	{
+	  "rolls": 1,
+	  "entries": [
+		{
+		  "type": "item",
+		  "conditions": [
+			{
+			  "condition": "block_state_property",
+			  "block": "bewitchment:fruiting_bramble",
+			  "properties": {
+				"level": "8"
+			  }
+			}
+		  ],
+		  "name": "bewitchment:witchberry"
+		}
+	  ],
+	  "conditions": [
+		{
+		  "condition": "survives_explosion"
+		}
+	  ]
 	}
   ]
 }
