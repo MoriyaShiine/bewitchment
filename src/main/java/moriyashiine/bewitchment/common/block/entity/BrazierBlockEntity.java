@@ -117,6 +117,10 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 					if (curseRecipe != null) {
 						if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain(curseRecipe.cost, false)) {
 							Entity target = getTarget();
+							PlayerEntity closestPlayer = world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 24, false);
+							if (target instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) target) == BWEntityTypes.RAVEN && world.random.nextBoolean()) {
+								target = closestPlayer;
+							}
 							CurseAccessor curseAccessor = CurseAccessor.of(target).orElse(null);
 							if (curseAccessor != null) {
 								ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, target, null);
@@ -126,13 +130,16 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 									TaglockItem.removeTaglock(poppet);
 								}
 								else {
-									curseAccessor.addCurse(new Curse.Instance(curseRecipe.curse, 168000));
+									int duration = 168000;
+									if (closestPlayer != null && BewitchmentAPI.getFamiliar(closestPlayer) == BWEntityTypes.RAVEN) {
+										duration *= 2;
+									}
+									curseAccessor.addCurse(new Curse.Instance(curseRecipe.curse, duration));
 								}
 								world.playSound(null, pos, BWSoundEvents.ENTITY_GENERIC_CURSE, SoundCategory.BLOCKS, 1, 1);
 								clear = true;
 							}
 							else {
-								PlayerEntity closestPlayer = world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 12, false);
 								if (closestPlayer != null) {
 									String entityName = "";
 									for (int i = 0; i < size(); i++) {
