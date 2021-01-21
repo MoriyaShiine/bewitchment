@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.common.ritualfunction;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.interfaces.entity.FamiliarAccessor;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
@@ -59,6 +60,7 @@ public class BindFamiliarRitualFunction extends RitualFunction {
 					CompoundTag entityTag = new CompoundTag();
 					livingEntity.saveSelfToTag(entityTag);
 					if (closestPlayer.getUuid().equals(entityTag.getUuid("Owner"))) {
+						FamiliarAccessor.of(livingEntity).ifPresent(familiarAccessor -> familiarAccessor.setFamiliar(true));
 						BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
 						worldState.familiars.add(new Pair<>(closestPlayer.getUuid(), entityTag));
 						worldState.markDirty();

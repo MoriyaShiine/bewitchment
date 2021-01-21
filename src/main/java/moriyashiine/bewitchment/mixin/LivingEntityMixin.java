@@ -39,14 +39,15 @@ import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.EntityTypeTags;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -60,12 +61,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity implements BloodAccessor, CurseAccessor, ContractAccessor {
+public abstract class LivingEntityMixin extends Entity implements BloodAccessor, FamiliarAccessor, CurseAccessor, ContractAccessor {
 	private static final TrackedData<Integer> BLOOD = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
+	private static final TrackedData<Boolean> IS_FAMILIAR = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
 	private final List<Curse.Instance> curses = new ArrayList<>();
 	private final List<Contract.Instance> contracts = new ArrayList<>();
@@ -112,6 +113,16 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		if (BWTags.HAS_BLOOD.contains(getType())) {
 			dataTracker.set(BLOOD, blood);
 		}
+	}
+	
+	@Override
+	public boolean getFamiliar() {
+		return dataTracker.get(IS_FAMILIAR);
+	}
+	
+	@Override
+	public void setFamiliar(boolean familiar) {
+		dataTracker.set(IS_FAMILIAR, familiar);
 	}
 	
 	@Override
@@ -274,7 +285,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					amount *= (1 - (0.2f * armorPieces));
 				}
 			}
-			if (isFamiliar()) {
+			if (getFamiliar()) {
 				amount /= 8;
 			}
 		}
@@ -324,8 +335,15 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					contracts.remove(i);
 				}
 			}
-			if (age % 100 == 0 && isFamiliar()) {
-				heal(1);
+		}
+		if (getFamiliar()) {
+			if (!world.isClient) {
+				if (age % 100 == 0) {
+					heal(1);
+				}
+			}
+			else {
+				world.addParticle(ParticleTypes.ENCHANT, getParticleX(getWidth()), getY() + MathHelper.nextFloat(random, 0, getHeight()), getParticleZ(getWidth()), 0, 0, 0);
 			}
 		}
 	}
@@ -568,6 +586,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		if (BWTags.HAS_BLOOD.contains(getType())) {
 			setBlood(tag.getInt("Blood"));
 		}
+		setFamiliar(tag.getBoolean("IsFamiliar"));
 		ListTag curses = tag.getList("Curses", NbtType.COMPOUND);
 		for (int i = 0; i < curses.size(); i++) {
 			CompoundTag curse = curses.getCompound(i);
@@ -585,6 +604,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		if (BWTags.HAS_BLOOD.contains(getType())) {
 			tag.putInt("Blood", getBlood());
 		}
+		tag.putBoolean("IsFamiliar", getFamiliar());
 		ListTag curses = new ListTag();
 		for (Curse.Instance instance : getCurses()) {
 			CompoundTag curseTag = new CompoundTag();
@@ -608,16 +628,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		if (BWTags.HAS_BLOOD.contains(getType())) {
 			dataTracker.startTracking(BLOOD, MAX_BLOOD);
 		}
-	}
-	
-	private boolean isFamiliar() {
-		if (!world.isClient) {
-			for (Pair<UUID, CompoundTag> pair : BWUniversalWorldState.get(world).familiars) {
-				if (getUuid().equals(pair.getRight().getUuid("UUID"))) {
-					return true;
-				}
-			}
-		}
-		return false;
+		dataTracker.startTracking(IS_FAMILIAR, false);
 	}
 }
