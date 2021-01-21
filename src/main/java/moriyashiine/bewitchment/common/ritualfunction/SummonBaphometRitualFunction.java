@@ -22,7 +22,7 @@ public class SummonBaphometRitualFunction extends RitualFunction {
 		BaphometEntity entity = BWEntityTypes.BAPHOMET.create(world);
 		if (entity != null) {
 			entity.initialize(world, world.getLocalDifficulty(glyphPos), SpawnReason.EVENT, null, null);
-			entity.updatePositionAndAngles(effectivePos.getX() + 0.5, effectivePos.getY(), effectivePos.getZ() + 0.5, 0, world.random.nextInt(360));
+			entity.updatePositionAndAngles(effectivePos.getX() + 0.5, effectivePos.getY(), effectivePos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
 			world.spawnEntity(entity);
 		}
 		super.start(world, glyphPos, effectivePos, inventory, catFamiliar);

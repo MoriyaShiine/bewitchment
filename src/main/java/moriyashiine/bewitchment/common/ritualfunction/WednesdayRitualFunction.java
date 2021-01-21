@@ -16,8 +16,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
 import java.util.function.Predicate;
 
 public class WednesdayRitualFunction extends RitualFunction {
@@ -32,7 +30,8 @@ public class WednesdayRitualFunction extends RitualFunction {
 	
 	@Override
 	public boolean isValid(ServerWorld world, BlockPos pos, Inventory inventory) {
-		return LocalDateTime.now().getDayOfWeek() == DayOfWeek.WEDNESDAY;
+		return true;
+//		return LocalDateTime.now().getDayOfWeek() == DayOfWeek.WEDNESDAY;
 	}
 	
 	@Override
@@ -44,7 +43,7 @@ public class WednesdayRitualFunction extends RitualFunction {
 					if (entity != null) {
 						entity.initialize((ServerWorldAccess) world, world.getLocalDifficulty(effectivePos), SpawnReason.EVENT, null, null);
 						entity.getDataTracker().set(BWTameableEntity.VARIANT, 0);
-						entity.refreshPositionAndAngles(effectivePos.getX() + 0.5 + MathHelper.nextDouble(world.random, -3, 3), effectivePos.getY() + 3, effectivePos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -3, 3), 0, world.random.nextInt(360));
+						entity.updatePositionAndAngles(effectivePos.getX() + 0.5 + MathHelper.nextDouble(world.random, -3, 3), effectivePos.getY() + 3, effectivePos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -3, 3), world.random.nextFloat() * 360, 0);
 						entity.addStatusEffect(new StatusEffectInstance(BWStatusEffects.WEDNESDAY, world.random.nextInt(100)));
 						entity.isFromWednesdayRitual = true;
 						world.spawnEntity(entity);

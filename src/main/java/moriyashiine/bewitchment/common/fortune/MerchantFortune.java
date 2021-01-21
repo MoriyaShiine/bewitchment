@@ -22,7 +22,7 @@ public class MerchantFortune extends Fortune {
 				BlockPos pos = target.getBlockPos().add(MathHelper.nextInt(world.random, -3, 3), 0, MathHelper.nextInt(world.random, -3, 3));
 				if (!world.getBlockState(pos).getMaterial().blocksMovement()) {
 					entity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
-					entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, world.random.nextInt(360));
+					entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
 					world.spawnEntity(entity);
 					break;
 				}

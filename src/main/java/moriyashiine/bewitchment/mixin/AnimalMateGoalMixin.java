@@ -37,7 +37,7 @@ public abstract class AnimalMateGoalMixin extends Goal {
 						HellhoundEntity hellhound = BWEntityTypes.HELLHOUND.create(player.world);
 						if (hellhound != null) {
 							hellhound.initialize((ServerWorldAccess) player.world, player.world.getLocalDifficulty(animal.getBlockPos()), SpawnReason.EVENT, null, null);
-							hellhound.refreshPositionAndAngles(animal.getX(), animal.getY(), animal.getZ(), 0, animal.getRandom().nextInt(360));
+							hellhound.updatePositionAndAngles(animal.getX(), animal.getY(), animal.getZ(), animal.getRandom().nextFloat() * 360, 0);
 							hellhound.setTarget(player);
 							player.world.spawnEntity(hellhound);
 						}

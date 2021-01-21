@@ -15,7 +15,7 @@ public class ThunderboltFortune extends Fortune {
 	public boolean finish(ServerWorld world, PlayerEntity target) {
 		LightningEntity entity = EntityType.LIGHTNING_BOLT.create(world);
 		if (entity != null) {
-			entity.updatePositionAndAngles(target.getX(), target.getY(), target.getZ(), 0, world.random.nextInt(360));
+			entity.updatePositionAndAngles(target.getX(), target.getY(), target.getZ(), world.random.nextFloat() * 360, 0);
 			world.spawnEntity(entity);
 		}
 		return super.finish(world, target);

@@ -32,7 +32,7 @@ public class SpawnLightningRitualFunction extends RitualFunction {
 	private void summonLightning(World world, BlockPos pos) {
 		LightningEntity entity = EntityType.LIGHTNING_BOLT.create(world);
 		if (entity != null) {
-			entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, world.random.nextInt(360));
+			entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
 			world.spawnEntity(entity);
 		}
 	}

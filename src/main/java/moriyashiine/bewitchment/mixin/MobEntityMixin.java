@@ -120,7 +120,7 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 							((MobEntityMixin) (Object) spider).spawnedByArachnophobia = true;
 						}
 						if (spider != null) {
-							spider.refreshPositionAndAngles(getX(), getY(), getZ(), 0, random.nextInt(360));
+							spider.updatePositionAndAngles(getX(), getY(), getZ(), random.nextFloat() * 360, 0);
 							spider.initialize((ServerWorldAccess) world, world.getLocalDifficulty(getBlockPos()), SpawnReason.EVENT, null, null);
 							spider.setTarget((LivingEntity) attacker);
 							world.spawnEntity(spider);

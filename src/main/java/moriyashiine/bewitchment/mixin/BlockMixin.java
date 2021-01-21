@@ -68,7 +68,7 @@ public abstract class BlockMixin {
 						SilverfishEntity silverfishEntity = EntityType.SILVERFISH.create(world);
 						if (silverfishEntity != null) {
 							silverfishEntity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
-							silverfishEntity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0, world.random.nextInt(360));
+							silverfishEntity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
 							world.spawnEntity(silverfishEntity);
 							fortuneAccessor.getFortune().duration = 0;
 						}

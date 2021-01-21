@@ -25,7 +25,7 @@ public class ServerWorldMixin {
 				}
 			}
 			if (closest != null) {
-				entity.updatePositionAndAngles(closest.getX(), closest.getY(), closest.getZ(), 0, entity.world.random.nextInt(360));
+				entity.updatePositionAndAngles(closest.getX(), closest.getY(), closest.getZ(), entity.world.random.nextFloat() * 360, 0);
 			}
 		}
 	}
