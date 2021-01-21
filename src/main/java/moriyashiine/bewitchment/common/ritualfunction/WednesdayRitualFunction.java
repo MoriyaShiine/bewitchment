@@ -2,6 +2,7 @@ package moriyashiine.bewitchment.common.ritualfunction;
 
 import moriyashiine.bewitchment.api.registry.RitualFunction;
 import moriyashiine.bewitchment.common.entity.living.ToadEntity;
+import moriyashiine.bewitchment.common.entity.living.util.BWTameableEntity;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import net.minecraft.entity.LivingEntity;
@@ -42,6 +43,7 @@ public class WednesdayRitualFunction extends RitualFunction {
 					ToadEntity entity = BWEntityTypes.TOAD.create(world);
 					if (entity != null) {
 						entity.initialize((ServerWorldAccess) world, world.getLocalDifficulty(effectivePos), SpawnReason.EVENT, null, null);
+						entity.getDataTracker().set(BWTameableEntity.VARIANT, 0);
 						entity.refreshPositionAndAngles(effectivePos.getX() + 0.5 + MathHelper.nextDouble(world.random, -3, 3), effectivePos.getY() + 3, effectivePos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -3, 3), 0, world.random.nextInt(360));
 						entity.addStatusEffect(new StatusEffectInstance(BWStatusEffects.WEDNESDAY, world.random.nextInt(100)));
 						entity.isFromWednesdayRitual = true;
