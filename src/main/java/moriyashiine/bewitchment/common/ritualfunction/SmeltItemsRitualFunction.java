@@ -25,8 +25,8 @@ public class SmeltItemsRitualFunction extends RitualFunction {
 	}
 	
 	@Override
-	public void tick(World world, BlockPos glyphPos, BlockPos effectivePos) {
-		int radius = 3;
+	public void tick(World world, BlockPos glyphPos, BlockPos effectivePos, boolean catFamiliar) {
+		int radius = catFamiliar ? 9 : 3;
 		if (!world.isClient) {
 			if (world.getTime() % 20 == 0) {
 				for (ItemEntity itemEntity : world.getEntitiesByType(EntityType.ITEM, new Box(effectivePos).expand(radius, 0, radius), entity -> true)) {

@@ -25,10 +25,10 @@ public class TurnToNightRitualFunction extends RitualFunction {
 	}
 	
 	@Override
-	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory) {
+	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
 		while (world.getTimeOfDay() % 24000 < 13000) {
 			world.setTimeOfDay(world.getTimeOfDay() + 1);
 		}
-		super.start(world, glyphPos, effectivePos, inventory);
+		super.start(world, glyphPos, effectivePos, inventory, catFamiliar);
 	}
 }

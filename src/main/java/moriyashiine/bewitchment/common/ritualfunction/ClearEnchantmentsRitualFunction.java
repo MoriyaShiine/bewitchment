@@ -23,7 +23,7 @@ public class ClearEnchantmentsRitualFunction extends RitualFunction {
 	}
 	
 	@Override
-	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory) {
+	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
 		for (ItemEntity itemEntity : world.getEntitiesByType(EntityType.ITEM, new Box(effectivePos).expand(2, 0, 2), entity -> entity.getStack().hasEnchantments())) {
 			ItemStack stack = itemEntity.getStack();
 			int enchantments = 0;
@@ -32,12 +32,12 @@ public class ClearEnchantmentsRitualFunction extends RitualFunction {
 			}
 			EnchantmentHelper.set(new HashMap<>(), stack);
 			if (stack.isDamaged()) {
-				stack.setDamage(Math.max(0, stack.getDamage() - (enchantments * 64)));
+				stack.setDamage(Math.max(0, stack.getDamage() - (enchantments * (catFamiliar ? 192 : 64))));
 			}
 			stack.setRepairCost(0);
 			ItemScatterer.spawn(world, effectivePos.getX() + 0.5, effectivePos.getY() + 0.5, effectivePos.getZ() + 0.5, stack.copy());
 			stack.decrement(1);
 		}
-		super.start(world, glyphPos, effectivePos, inventory);
+		super.start(world, glyphPos, effectivePos, inventory, catFamiliar);
 	}
 }

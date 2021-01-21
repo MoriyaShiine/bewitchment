@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.block.entity;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
@@ -52,6 +53,8 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 	public RitualFunction ritualFunction = null;
 	private int timer = 0, endTime = 0;
 	
+	private boolean catFamiliar = false;
+	
 	private boolean loaded = false;
 	
 	public GlyphBlockEntity(BlockEntityType<?> type) {
@@ -74,6 +77,7 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 		ritualFunction = BWRegistries.RITUAL_FUNCTIONS.get(new Identifier(tag.getString("RitualFunction")));
 		timer = tag.getInt("Timer");
 		endTime = tag.getInt("EndTime");
+		catFamiliar = tag.getBoolean("CatFamiliar");
 	}
 	
 	@Override
@@ -90,6 +94,7 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 		}
 		tag.putInt("Timer", timer);
 		tag.putInt("EndTime", endTime);
+		tag.putBoolean("CatFamiliar", catFamiliar);
 		return tag;
 	}
 	
@@ -133,10 +138,10 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 					}
 				}
 				if (timer >= 0) {
-					ritualFunction.tick(world, pos, targetPos);
+					ritualFunction.tick(world, pos, targetPos, catFamiliar);
 					if (!world.isClient) {
 						if (timer == 0) {
-							ritualFunction.start((ServerWorld) world, pos, targetPos, this);
+							ritualFunction.start((ServerWorld) world, pos, targetPos, this, catFamiliar);
 							world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_PLING, SoundCategory.BLOCKS, 1, 1);
 							ItemScatterer.spawn(world, pos, this);
 						}
@@ -145,6 +150,7 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 							ritualFunction = null;
 							timer = 0;
 							endTime = 0;
+							catFamiliar = false;
 							syncGlyph();
 						}
 					}
@@ -216,7 +222,8 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 				RitualRecipe recipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.RITUAL_RECIPE_TYPE).stream().filter(ritualRecipe -> ritualRecipe.matches(test, world)).findFirst().orElse(null);
 				if (recipe != null && recipe.input.size() == items.size() && hasValidChalk(recipe)) {
 					if (recipe.ritualFunction.isValid((ServerWorld) world, pos, test) || (recipe.ritualFunction.sacrifice != null && sacrifice != null && recipe.ritualFunction.sacrifice.test(sacrifice))) {
-						if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain(recipe.cost, false)) {
+						boolean cat = BewitchmentAPI.getFamiliar(player) == EntityType.CAT;
+						if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain((int) (recipe.cost * (cat ? 0.75f : 1)), false)) {
 							world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FIRE, SoundCategory.BLOCKS, 1, 1);
 							player.sendMessage(new TranslatableText("ritual." + recipe.getId().toString().replace(":", ".").replace("/", ".")), true);
 							for (int i = 0; i < items.size(); i++) {
@@ -229,6 +236,7 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 							ritualFunction = recipe.ritualFunction;
 							timer = -100;
 							endTime = recipe.runningTime;
+							catFamiliar = cat;
 							syncGlyph();
 							return;
 						}
@@ -250,6 +258,7 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 				ritualFunction = null;
 				timer = 0;
 				endTime = 0;
+				catFamiliar = false;
 				syncGlyph();
 			}
 		}

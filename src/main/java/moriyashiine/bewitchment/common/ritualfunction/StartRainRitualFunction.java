@@ -25,8 +25,8 @@ public class StartRainRitualFunction extends RitualFunction {
 	}
 	
 	@Override
-	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory) {
-		world.setWeather(0, world.random.nextInt(6000) + 6000, true, false);
-		super.start(world, glyphPos, effectivePos, inventory);
+	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
+		world.setWeather(0, world.random.nextInt(6000) + (catFamiliar ? 18000 : 6000), true, catFamiliar);
+		super.start(world, glyphPos, effectivePos, inventory, catFamiliar);
 	}
 }

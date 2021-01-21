@@ -16,10 +16,10 @@ public class DestroyLightsRitualFunction extends RitualFunction {
 	}
 	
 	@Override
-	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory) {
-		for (BlockPos light : BewitchmentAPI.getBlockPoses(effectivePos, 8, currentPos -> world.getBlockState(currentPos).getLuminance() > 0 && world.getBlockState(currentPos).getHardness(world, currentPos) == 0)) {
+	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
+		for (BlockPos light : BewitchmentAPI.getBlockPoses(effectivePos, catFamiliar ? 24 : 8, currentPos -> world.getBlockState(currentPos).getLuminance() > 0 && world.getBlockState(currentPos).getHardness(world, currentPos) == 0)) {
 			world.breakBlock(light, true);
 		}
-		super.start(world, glyphPos, effectivePos, inventory);
+		super.start(world, glyphPos, effectivePos, inventory, catFamiliar);
 	}
 }

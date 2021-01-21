@@ -40,7 +40,7 @@ public class CleanseRitualFunction extends RitualFunction {
 	}
 	
 	@Override
-	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory) {
+	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
 		ItemStack taglock = null;
 		for (int i = 0; i < inventory.size(); i++) {
 			ItemStack stack = inventory.getStack(i);
@@ -53,7 +53,7 @@ public class CleanseRitualFunction extends RitualFunction {
 			LivingEntity livingEntity = BewitchmentAPI.getTaglockOwner(world, taglock);
 			CurseAccessor.of(livingEntity).ifPresent(curseAccessor -> {
 				for (Curse.Instance instance : curseAccessor.getCurses()) {
-					if (world.random.nextFloat() < (instance.curse.type == Curse.Type.LESSER ? 7 / 10f : 3 / 10f)) {
+					if (catFamiliar || (world.random.nextFloat() < (instance.curse.type == Curse.Type.LESSER ? 7.5f / 10f : 5 / 10f))) {
 						curseAccessor.removeCurse(instance.curse);
 					}
 				}
@@ -62,6 +62,6 @@ public class CleanseRitualFunction extends RitualFunction {
 				((ZombieVillagerEntityAccessor) livingEntity).bw_finishConversion(world);
 			}
 		}
-		super.start(world, glyphPos, effectivePos, inventory);
+		super.start(world, glyphPos, effectivePos, inventory, catFamiliar);
 	}
 }

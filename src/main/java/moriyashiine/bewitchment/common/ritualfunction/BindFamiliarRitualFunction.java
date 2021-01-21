@@ -41,7 +41,7 @@ public class BindFamiliarRitualFunction extends RitualFunction {
 	}
 	
 	@Override
-	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory) {
+	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
 		boolean succeeded = false;
 		ItemStack taglock = null;
 		for (int i = 0; i < inventory.size(); i++) {
@@ -54,7 +54,7 @@ public class BindFamiliarRitualFunction extends RitualFunction {
 		if (taglock != null) {
 			LivingEntity livingEntity = BewitchmentAPI.getTaglockOwner(world, taglock);
 			if (livingEntity != null) {
-				PlayerEntity closestPlayer = world.getClosestPlayer(livingEntity, 8);
+				PlayerEntity closestPlayer = world.getClosestPlayer(effectivePos.getX() + 0.5, effectivePos.getY() + 0.5, effectivePos.getZ() + 0.5, 8, false);
 				if (closestPlayer != null) {
 					CompoundTag entityTag = new CompoundTag();
 					livingEntity.saveSelfToTag(entityTag);
@@ -70,6 +70,6 @@ public class BindFamiliarRitualFunction extends RitualFunction {
 		if (!succeeded) {
 			ItemScatterer.spawn(world, glyphPos, inventory);
 		}
-		super.start(world, glyphPos, effectivePos, inventory);
+		super.start(world, glyphPos, effectivePos, inventory, catFamiliar);
 	}
 }

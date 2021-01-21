@@ -6,6 +6,12 @@
 	},
 	{
 	  "item": "bewitchment:demon_heart"
+	},
+	{
+	  "item": "bewitchment:mandrake_root"
+	},
+	{
+	  "item": "bewitchment:ectoplasm"
 	}
   ],
   "inner": "fiery",

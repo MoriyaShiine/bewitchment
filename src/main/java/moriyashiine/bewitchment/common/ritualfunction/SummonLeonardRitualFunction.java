@@ -18,13 +18,13 @@ public class SummonLeonardRitualFunction extends RitualFunction {
 	}
 	
 	@Override
-	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory) {
+	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
 		LeonardEntity entity = BWEntityTypes.LEONARD.create(world);
 		if (entity != null) {
 			entity.initialize(world, world.getLocalDifficulty(effectivePos), SpawnReason.EVENT, null, null);
 			entity.updatePositionAndAngles(effectivePos.getX() + 0.5, effectivePos.getY(), effectivePos.getZ() + 0.5, 0, world.random.nextInt(360));
 			world.spawnEntity(entity);
 		}
-		super.start(world, glyphPos, effectivePos, inventory);
+		super.start(world, glyphPos, effectivePos, inventory, catFamiliar);
 	}
 }

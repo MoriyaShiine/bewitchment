@@ -21,10 +21,10 @@ public class MakeEntitiesWetRitualFunction extends RitualFunction {
 	}
 	
 	@Override
-	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory) {
-		int radius = 3;
-		world.getEntitiesByClass(Entity.class, new Box(effectivePos).expand(radius), Entity::isAlive).forEach(entity -> WetAccessor.of(entity).ifPresent(wetAccessor -> wetAccessor.setWetTimer(6000)));
+	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
+		int radius = catFamiliar ? 9 : 3;
+		world.getEntitiesByClass(Entity.class, new Box(effectivePos).expand(radius), Entity::isAlive).forEach(entity -> WetAccessor.of(entity).ifPresent(wetAccessor -> wetAccessor.setWetTimer(6000 * (catFamiliar ? 3 : 1))));
 		BewitchmentAPI.getBlockPoses(effectivePos, radius, foundPos -> world.getBlockState(foundPos).getBlock() instanceof AbstractFireBlock).forEach(foundPos -> world.setBlockState(foundPos, Blocks.AIR.getDefaultState()));
-		super.start(world, glyphPos, effectivePos, inventory);
+		super.start(world, glyphPos, effectivePos, inventory, catFamiliar);
 	}
 }

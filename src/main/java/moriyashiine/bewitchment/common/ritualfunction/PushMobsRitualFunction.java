@@ -17,9 +17,9 @@ public class PushMobsRitualFunction extends RitualFunction {
 	}
 	
 	@Override
-	public void tick(World world, BlockPos glyphPos, BlockPos effectivePos) {
+	public void tick(World world, BlockPos glyphPos, BlockPos effectivePos, boolean catFamiliar) {
 		if (!world.isClient) {
-			int radius = 8;
+			int radius = catFamiliar ? 24 : 8;
 			if (world.getTime() % 5 == 0) {
 				for (HostileEntity hostileEntity : world.getEntitiesByClass(HostileEntity.class, new Box(effectivePos).expand(radius, 0, radius), LivingEntity::isAlive)) {
 					double distanceX = effectivePos.getX() - hostileEntity.getX();
