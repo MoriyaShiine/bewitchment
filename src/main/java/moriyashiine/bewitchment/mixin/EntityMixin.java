@@ -8,6 +8,7 @@ import moriyashiine.bewitchment.api.interfaces.entity.WetAccessor;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -110,12 +111,12 @@ public abstract class EntityMixin implements WetAccessor {
 				if (!poppet.isEmpty()) {
 					LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
 					if (!owner.getUuid().equals(getUuid()) && !owner.isOnFire()) {
-						if (poppet.damage(1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+						if (poppet.damage(BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
 							poppet.decrement(1);
 						}
 						ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
 						if (!potentialPoppet.isEmpty()) {
-							if (potentialPoppet.damage(1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
+							if (potentialPoppet.damage(owner instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) owner) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
 								potentialPoppet.decrement(1);
 							}
 							return;

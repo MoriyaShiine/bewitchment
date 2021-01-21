@@ -154,7 +154,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				if (!poppet.isEmpty()) {
 					LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
 					if (!getUuid().equals(owner.getUuid()) && owner.damage(BWDamageSources.VAMPIRE, amount)) {
-						if (poppet.damage((int) amount, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+						if (poppet.damage((int) (amount * (BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0.5f : 1)), random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
 							poppet.decrement(1);
 						}
 						return 0;
@@ -164,7 +164,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			if (source.isFire() || source == DamageSource.DROWN || source == DamageSource.FALL || source == DamageSource.FLY_INTO_WALL) {
 				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.PROTECTION_POPPET, this, null);
 				if (!poppet.isEmpty()) {
-					if (poppet.damage((int) amount, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+					if (poppet.damage((int) (amount * ((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0.5f : 1)), random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
 						poppet.decrement(1);
 					}
 					return 0;
@@ -173,7 +173,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			if (getHealth() - amount <= 0) {
 				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.DEATH_PROTECTION_POPPET, this, null);
 				if (!poppet.isEmpty()) {
-					if (poppet.damage(1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+					if (poppet.damage((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
 						poppet.decrement(1);
 					}
 					heal(Float.MAX_VALUE);
@@ -195,7 +195,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			if (trueSource instanceof PlayerEntity && BewitchmentAPI.isWeakToSilver((LivingEntity) trueSource)) {
 				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.JUDGMENT_POPPET, this, null);
 				if (!poppet.isEmpty()) {
-					if (poppet.damage(1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+					if (poppet.damage((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
 						poppet.decrement(1);
 					}
 					amount /= 4;
@@ -203,7 +203,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			}
 			if (directSource instanceof LivingEntity) {
 				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.FATIGUE_POPPET, this, null);
-				if (!poppet.isEmpty() && ((LivingEntity) directSource).addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 60, 1)) && poppet.damage(1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+				if (!poppet.isEmpty() && ((LivingEntity) directSource).addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 60, 1)) && poppet.damage((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
 					poppet.decrement(1);
 				}
 			}
@@ -383,12 +383,12 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					if (!poppet.isEmpty()) {
 						LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
 						if (!owner.getUuid().equals(getUuid())) {
-							if (poppet.damage(1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+							if (poppet.damage(BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
 								poppet.decrement(1);
 							}
 							ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
 							if (!potentialPoppet.isEmpty()) {
-								if (potentialPoppet.damage(1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
+								if (potentialPoppet.damage(owner instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) owner) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
 									potentialPoppet.decrement(1);
 								}
 								return;
@@ -532,12 +532,12 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			if (!poppet.isEmpty()) {
 				LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
 				if (!owner.getUuid().equals(getUuid())) {
-					if (poppet.damage(1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+					if (poppet.damage(BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
 						poppet.decrement(1);
 					}
 					ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
 					if (!potentialPoppet.isEmpty()) {
-						if (potentialPoppet.damage(1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
+						if (potentialPoppet.damage(owner instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) owner) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
 							potentialPoppet.decrement(1);
 						}
 						return;

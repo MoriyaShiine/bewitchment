@@ -7,7 +7,9 @@ import moriyashiine.bewitchment.common.registry.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -137,6 +139,16 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 			if (getRespawnTimer() > 0) {
 				setRespawnTimer(getRespawnTimer() - 1);
 			}
+			if (age % 20 == 0) {
+				boolean shouldHave = BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF;
+				EntityAttributeInstance armorAttribute = getAttributeInstance(EntityAttributes.GENERIC_ARMOR);
+				if (shouldHave && !armorAttribute.hasModifier(WOLF_FAMILIAR_ARMOR_BONUS)) {
+					armorAttribute.addPersistentModifier(WOLF_FAMILIAR_ARMOR_BONUS);
+				}
+				else if (!shouldHave && armorAttribute.hasModifier(WOLF_FAMILIAR_ARMOR_BONUS)) {
+					armorAttribute.removeModifier(WOLF_FAMILIAR_ARMOR_BONUS);
+				}
+			}
 		}
 	}
 	
@@ -172,12 +184,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		if (!world.isClient && stack.getItem() == BWObjects.VOODOO_POPPET) {
 			LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, stack);
 			if (owner != null && !owner.getUuid().equals(getUuid())) {
-				if (stack.damage(1, random, null) && stack.getDamage() >= stack.getMaxDamage()) {
+				if (stack.damage(BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && stack.getDamage() >= stack.getMaxDamage()) {
 					stack.decrement(1);
 				}
 				ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
 				if (!potentialPoppet.isEmpty()) {
-					if (potentialPoppet.damage(1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
+					if (potentialPoppet.damage(owner instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) owner) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
 						potentialPoppet.decrement(1);
 					}
 					return;
