@@ -55,9 +55,7 @@ public class ChalkItem extends Item {
 				world.setBlockState(pos, state);
 				if (player instanceof ServerPlayerEntity) {
 					Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity) player, pos, stack);
-					if (!player.isCreative()) {
-						stack.decrement(1);
-					}
+					stack.damage(1, player, stackUser -> stackUser.sendToolBreakStatus(context.getHand()));
 				}
 			}
 			return ActionResult.success(client);
