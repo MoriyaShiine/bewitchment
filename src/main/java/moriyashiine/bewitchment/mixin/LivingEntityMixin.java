@@ -349,14 +349,20 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			}
 			if (!source.isOutOfWorld() && (hasStatusEffect(BWStatusEffects.ETHEREAL) || (attacker instanceof LivingEntity && ((LivingEntity) attacker).hasStatusEffect(BWStatusEffects.ETHEREAL)))) {
 				callbackInfo.setReturnValue(false);
+				return;
 			}
-			else if (hasStatusEffect(BWStatusEffects.DEFLECTION) && attacker != null && EntityTypeTags.ARROWS.contains(attacker.getType())) {
+			if (source == DamageSource.FALL && (Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == BWEntityTypes.OWL) {
+				callbackInfo.setReturnValue(false);
+				return;
+			}
+			if (hasStatusEffect(BWStatusEffects.DEFLECTION) && attacker != null && EntityTypeTags.ARROWS.contains(attacker.getType())) {
 				int amplifier = getStatusEffect(BWStatusEffects.DEFLECTION).getAmplifier() + 1;
 				Vec3d velocity = attacker.getVelocity();
 				attacker.setVelocity(velocity.getX() * 2 * amplifier, velocity.getY() * 2 * amplifier, velocity.getZ() * 2 * amplifier);
 				callbackInfo.setReturnValue(false);
+				return;
 			}
-			else if (amount > 0) {
+			if (amount > 0) {
 				if (hasStatusEffect(BWStatusEffects.LEECHING)) {
 					heal(amount * (getStatusEffect(BWStatusEffects.LEECHING).getAmplifier() + 1) / 4);
 				}
