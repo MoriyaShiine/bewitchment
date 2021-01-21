@@ -71,6 +71,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	private final List<Contract.Instance> contracts = new ArrayList<>();
 	
 	@Shadow
+	public abstract EntityGroup getGroup();
+	
+	@Shadow
 	@Nullable
 	public abstract StatusEffectInstance getStatusEffect(StatusEffect effect);
 	
@@ -128,8 +131,11 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@ModifyVariable(method = "addStatusEffect", at = @At("HEAD"))
 	private StatusEffectInstance modifyStatusEffect(StatusEffectInstance effect) {
-		if (!world.isClient && hasCurse(BWCurses.COMPROMISED) && ((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.HARMFUL) {
-			return new StatusEffectInstance(effect.getEffectType(), effect.getDuration(), effect.getAmplifier() + 1);
+		if (!world.isClient) {
+			StatusEffectType type = ((StatusEffectAccessor) effect.getEffectType()).bw_getType();
+			if ((type == StatusEffectType.HARMFUL && hasCurse(BWCurses.COMPROMISED)) || (type == StatusEffectType.BENEFICIAL && (Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == BWEntityTypes.TOAD)) {
+				return new StatusEffectInstance(effect.getEffectType(), effect.getDuration(), effect.getAmplifier() + 1);
+			}
 		}
 		return effect;
 	}
@@ -497,6 +503,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					if (glyph != null) {
 						((GlyphBlockEntity) world.getBlockEntity(glyph)).onUse(world, glyph, player, Hand.MAIN_HAND, (LivingEntity) (Object) this);
 					}
+				}
+				if (getGroup() == EntityGroup.ARTHROPOD && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.TOAD) {
+					player.heal(player.getMaxHealth() * 1 / 4f);
 				}
 			}
 			BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
