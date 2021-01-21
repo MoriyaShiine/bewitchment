@@ -29,7 +29,6 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Box;
@@ -221,7 +220,7 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	
 	@Override
 	public void onSellingItem(ItemStack stack) {
-		world.playSound(null, getBlockPos(), SoundEvents.ENTITY_ZOMBIE_AMBIENT, SoundCategory.HOSTILE, 1, getSoundPitch());
+		world.playSound(null, getBlockPos(), getAmbientSound(), SoundCategory.HOSTILE, 1, getSoundPitch());
 	}
 	
 	@Override
