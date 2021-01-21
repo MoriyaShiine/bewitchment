@@ -5,7 +5,10 @@
 	  "item": "bewitchment:heaven_extract"
 	},
 	{
-	  "item": "water_bucket"
+	  "item": "iron_ingot"
+	},
+	{
+	  "item": "redstone"
 	}
   ],
   "inner": "normal",
