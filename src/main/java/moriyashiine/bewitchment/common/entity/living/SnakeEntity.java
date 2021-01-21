@@ -5,6 +5,7 @@ import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -25,6 +26,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -94,6 +96,10 @@ public class SnakeEntity extends BWTameableEntity {
 	@Override
 	protected SoundEvent getDeathSound() {
 		return BWSoundEvents.ENTITY_SNAKE_DEATH;
+	}
+	
+	@Override
+	protected void playStepSound(BlockPos pos, BlockState state) {
 	}
 	
 	@Override
