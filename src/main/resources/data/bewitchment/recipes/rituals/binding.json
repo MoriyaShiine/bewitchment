@@ -1,0 +1,15 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:taglock"
+	},
+	{
+	  "item": "bewitchment:demon_heart"
+	}
+  ],
+  "inner": "fiery",
+  "outer": "eldritch",
+  "ritual_function": "bewitchment:bind_familiar",
+  "cost": 850
+}

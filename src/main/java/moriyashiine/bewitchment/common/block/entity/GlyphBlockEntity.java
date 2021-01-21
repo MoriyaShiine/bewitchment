@@ -215,7 +215,7 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 				}
 				RitualRecipe recipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.RITUAL_RECIPE_TYPE).stream().filter(ritualRecipe -> ritualRecipe.matches(test, world)).findFirst().orElse(null);
 				if (recipe != null && recipe.input.size() == items.size() && hasValidChalk(recipe)) {
-					if (recipe.ritualFunction.isValid((ServerWorld) world, pos, this) || (recipe.ritualFunction.sacrifice != null && sacrifice != null && recipe.ritualFunction.sacrifice.test(sacrifice))) {
+					if (recipe.ritualFunction.isValid((ServerWorld) world, pos, test) || (recipe.ritualFunction.sacrifice != null && sacrifice != null && recipe.ritualFunction.sacrifice.test(sacrifice))) {
 						if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain(recipe.cost, false)) {
 							world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FIRE, SoundCategory.BLOCKS, 1, 1);
 							player.sendMessage(new TranslatableText("ritual." + recipe.getId().toString().replace(":", ".").replace("/", ".")), true);

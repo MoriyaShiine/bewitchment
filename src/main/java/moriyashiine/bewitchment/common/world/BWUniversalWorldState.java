@@ -16,6 +16,7 @@ import java.util.UUID;
 public class BWUniversalWorldState extends PersistentState {
 	public final List<Pair<UUID, List<UUID>>> pledges = new ArrayList<>();
 	public final List<Pair<UUID, UUID>> specificPledges = new ArrayList<>();
+	public final List<Pair<UUID, CompoundTag>> familiars = new ArrayList<>();
 	
 	public BWUniversalWorldState(String key) {
 		super(key);
@@ -24,21 +25,19 @@ public class BWUniversalWorldState extends PersistentState {
 	@Override
 	public CompoundTag toTag(CompoundTag tag) {
 		ListTag pledges = new ListTag();
-		for (Pair<UUID, List<UUID>> pledgeable : this.pledges) {
+		for (Pair<UUID, List<UUID>> pair : this.pledges) {
 			CompoundTag pledgeTag = new CompoundTag();
-			pledgeTag.putUuid("PledgeUUID", pledgeable.getLeft());
+			pledgeTag.putUuid("PledgeUUID", pair.getLeft());
 			ListTag players = new ListTag();
-			for (int i = 0; i < pledgeable.getRight().size(); i++) {
+			for (int i = 0; i < pair.getRight().size(); i++) {
 				CompoundTag playerTag = new CompoundTag();
-				playerTag.putUuid("PlayerUUID" + i, pledgeable.getRight().get(i));
+				playerTag.putUuid("PlayerUUID" + i, pair.getRight().get(i));
 				players.add(playerTag);
 			}
 			pledgeTag.put("Players", players);
 			pledges.add(pledgeTag);
 		}
 		tag.put("Pledges", pledges);
-		
-		
 		ListTag specificPledges = new ListTag();
 		for (Pair<UUID, UUID> pair : this.specificPledges) {
 			CompoundTag pledgeTag = new CompoundTag();
@@ -47,6 +46,14 @@ public class BWUniversalWorldState extends PersistentState {
 			specificPledges.add(pledgeTag);
 		}
 		tag.put("SpecificPledges", specificPledges);
+		ListTag familiars = new ListTag();
+		for (Pair<UUID, CompoundTag> pair : this.familiars) {
+			CompoundTag familiarTag = new CompoundTag();
+			familiarTag.putUuid("PlayerUUID", pair.getLeft());
+			familiarTag.put("Familiar", pair.getRight());
+			familiars.add(familiarTag);
+		}
+		tag.put("Familiars", familiars);
 		return tag;
 	}
 	
@@ -67,6 +74,11 @@ public class BWUniversalWorldState extends PersistentState {
 		for (int i = 0; i < specificPledges.size(); i++) {
 			CompoundTag pledgeTag = specificPledges.getCompound(i);
 			this.specificPledges.add(new Pair<>(pledgeTag.getUuid("PlayerUUID"), pledgeTag.getUuid("PledgeUUID")));
+		}
+		ListTag familiars = tag.getList("Familiars", NbtType.COMPOUND);
+		for (int i = 0; i < familiars.size(); i++) {
+			CompoundTag familiarTag = familiars.getCompound(i);
+			this.familiars.add(new Pair<>(familiarTag.getUuid("PlayerUUID"), familiarTag.getCompound("Familiar")));
 		}
 	}
 	

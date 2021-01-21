@@ -4,6 +4,7 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.misc.Lockable;
 import moriyashiine.bewitchment.api.interfaces.misc.SigilHolder;
 import moriyashiine.bewitchment.api.interfaces.misc.TaglockHolder;
+import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWSigils;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.registry.BWTags;
@@ -148,7 +149,7 @@ public class TaglockItem extends Item {
 		}
 	}
 	
-	private ActionResult useTaglock(PlayerEntity user, LivingEntity entity, Hand hand, boolean checkVisibility, boolean bed) {
+	public static ActionResult useTaglock(PlayerEntity user, LivingEntity entity, Hand hand, boolean checkVisibility, boolean bed) {
 		ItemStack stack = user.getStackInHand(hand);
 		if (entity.isAlive() && !BWTags.BOSSES.contains(entity.getType()) && !hasTaglock(stack)) {
 			boolean failed = false;
@@ -188,7 +189,7 @@ public class TaglockItem extends Item {
 				if (entity instanceof MobEntity) {
 					((MobEntity) entity).setPersistent();
 				}
-				BewitchmentAPI.addItemToInventoryAndConsume(user, hand, putTaglock(new ItemStack(this), entity));
+				BewitchmentAPI.addItemToInventoryAndConsume(user, hand, putTaglock(new ItemStack(BWObjects.TAGLOCK), entity));
 			}
 			return ActionResult.success(client);
 		}

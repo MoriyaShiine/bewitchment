@@ -7,6 +7,7 @@ import moriyashiine.bewitchment.common.registry.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -37,6 +38,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	
 	private static final TrackedData<Optional<UUID>> POLYMORPH_UUID = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
 	private static final TrackedData<String> POLYMORPH_NAME = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.STRING);
+	
+	private static final EntityAttributeModifier WOLF_FAMILIAR_ARMOR_BONUS = new EntityAttributeModifier(UUID.fromString("1b2866e6-ca04-43e4-b643-1142c0791e6d"), "Familiar bonus", 4, EntityAttributeModifier.Operation.ADDITION);
 	
 	private Fortune.Instance fortune = null;
 	

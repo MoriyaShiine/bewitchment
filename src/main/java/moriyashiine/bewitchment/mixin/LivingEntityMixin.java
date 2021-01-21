@@ -11,9 +11,11 @@ import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.entity.living.BaphometEntity;
 import moriyashiine.bewitchment.common.item.AthameItem;
+import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.recipe.AthameDropRecipe;
 import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
 import moriyashiine.bewitchment.common.registry.*;
+import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.entity.BlockEntity;
@@ -43,6 +45,7 @@ import net.minecraft.tag.EntityTypeTags;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -57,6 +60,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
@@ -264,6 +268,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					amount *= (1 - (0.2f * armorPieces));
 				}
 			}
+			if (isFamiliar()) {
+				amount /= 8;
+			}
 		}
 		return amount;
 	}
@@ -311,12 +318,24 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					contracts.remove(i);
 				}
 			}
+			if (age % 100 == 0 && isFamiliar()) {
+				heal(1);
+			}
 		}
 	}
 	
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
+			Entity attacker = source.getSource();
+			if (attacker instanceof PlayerEntity) {
+				ItemStack stack = ((PlayerEntity) attacker).getMainHandStack();
+				if (stack.getItem() instanceof TaglockItem) {
+					TaglockItem.useTaglock((PlayerEntity) attacker, (LivingEntity) (Object) this, Hand.MAIN_HAND, true, false);
+					callbackInfo.setReturnValue(false);
+					return;
+				}
+			}
 			InsanityTargetAccessor insanityTargetAccessor = InsanityTargetAccessor.of(this).orElse(null);
 			if (insanityTargetAccessor != null && insanityTargetAccessor.getInsanityTargetUUID().isPresent()) {
 				callbackInfo.setReturnValue(false);
@@ -328,7 +347,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					return;
 				}
 			}
-			Entity attacker = source.getSource();
 			if (!source.isOutOfWorld() && (hasStatusEffect(BWStatusEffects.ETHEREAL) || (attacker instanceof LivingEntity && ((LivingEntity) attacker).hasStatusEffect(BWStatusEffects.ETHEREAL)))) {
 				callbackInfo.setReturnValue(false);
 			}
@@ -475,6 +493,14 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					}
 				}
 			}
+			BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
+			for (int i = worldState.familiars.size() - 1; i >= 0; i--) {
+				if (getUuid().equals(worldState.familiars.get(i).getRight().getUuid("UUID"))) {
+					worldState.familiars.remove(i);
+					worldState.markDirty();
+					break;
+				}
+			}
 		}
 	}
 	
@@ -567,5 +593,16 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		if (BWTags.HAS_BLOOD.contains(getType())) {
 			dataTracker.startTracking(BLOOD, MAX_BLOOD);
 		}
+	}
+	
+	private boolean isFamiliar() {
+		if (!world.isClient) {
+			for (Pair<UUID, CompoundTag> pair : BWUniversalWorldState.get(world).familiars) {
+				if (getUuid().equals(pair.getRight().getUuid("UUID"))) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

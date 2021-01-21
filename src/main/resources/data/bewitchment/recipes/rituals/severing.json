@@ -1,0 +1,15 @@
+{
+  "type": "bewitchment:ritual_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:taglock"
+	},
+	{
+	  "tag": "c:silver_ingots"
+	}
+  ],
+  "inner": "normal",
+  "outer": "eldritch",
+  "ritual_function": "bewitchment:unbind_familiar",
+  "cost": 850
+}

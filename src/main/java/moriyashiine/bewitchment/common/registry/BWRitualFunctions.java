@@ -33,6 +33,8 @@ public class BWRitualFunctions {
 	public static final RitualFunction PUSH_MOBS = create("push_mobs", new PushMobsRitualFunction(ParticleTypes.CLOUD, null));
 	public static final RitualFunction DESTROY_PLANTS = create("destroy_plants", new DestroyPlantsRitualFunction(ParticleTypes.CLOUD, null));
 	
+	public static final RitualFunction BIND_FAMILIAR = create("bind_familiar", new BindFamiliarRitualFunction(ParticleTypes.PORTAL, null));
+	public static final RitualFunction UNBIND_FAMILIAR = create("unbind_familiar", new UnbindFamiliarRitualFunction(ParticleTypes.PORTAL, null));
 	public static final RitualFunction SUMMON_WITHER = create("summon_wither", new SummonWitherRitualFunction(ParticleTypes.FLAME, null));
 	public static final RitualFunction SUMMON_DEMON = create("summon_demon", new SummonDemonRitualFunction(ParticleTypes.FLAME, livingEntity -> BWTags.HAS_BLOOD.contains(livingEntity.getType())));
 	public static final RitualFunction SUMMON_LEONARD = create("summon_leonard", new SummonLeonardRitualFunction(ParticleTypes.FLAME, livingEntity -> livingEntity instanceof SheepEntity));
