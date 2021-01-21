@@ -54,7 +54,7 @@ public class UnbindFamiliarRitualFunction extends RitualFunction {
 			LivingEntity livingEntity = BewitchmentAPI.getTaglockOwner(world, taglock);
 			if (livingEntity != null) {
 				PlayerEntity closestPlayer = world.getClosestPlayer(effectivePos.getX() + 0.5, effectivePos.getY() + 0.5, effectivePos.getZ() + 0.5, 8, false);
-				if (closestPlayer != null) {
+				if (closestPlayer != null && BewitchmentAPI.getFamiliar(closestPlayer) != null) {
 					CompoundTag entityTag = new CompoundTag();
 					livingEntity.saveSelfToTag(entityTag);
 					if (closestPlayer.getUuid().equals(entityTag.getUuid("Owner"))) {
