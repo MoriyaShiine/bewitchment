@@ -1,7 +1,9 @@
 package moriyashiine.bewitchment.api.item;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.misc.SigilHolder;
 import moriyashiine.bewitchment.api.registry.Sigil;
+import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import net.fabricmc.api.EnvType;
@@ -65,7 +67,7 @@ public class SigilItem extends Item {
 					world.setBlockState(pos, sigilState);
 					blockEntity = world.getBlockEntity(pos);
 					((SigilHolder) blockEntity).setSigil(sigil);
-					((SigilHolder) blockEntity).setUses(sigil.uses);
+					((SigilHolder) blockEntity).setUses(sigil.uses * (BewitchmentAPI.getFamiliar(player) == BWEntityTypes.SNAKE ? 2 : 1));
 					((SigilHolder) blockEntity).setOwner(player.getUuid());
 					((BlockEntityClientSerializable) blockEntity).sync();
 					blockEntity.markDirty();
@@ -86,7 +88,7 @@ public class SigilItem extends Item {
 			if (((SigilHolder) blockEntity).getSigil() == null) {
 				if (!client) {
 					((SigilHolder) blockEntity).setSigil(sigil);
-					((SigilHolder) blockEntity).setUses(sigil.uses);
+					((SigilHolder) blockEntity).setUses(sigil.uses * (BewitchmentAPI.getFamiliar(player) == BWEntityTypes.SNAKE ? 2 : 1));
 					((SigilHolder) blockEntity).setOwner(player.getUuid());
 					((BlockEntityClientSerializable) blockEntity).sync();
 					blockEntity.markDirty();
