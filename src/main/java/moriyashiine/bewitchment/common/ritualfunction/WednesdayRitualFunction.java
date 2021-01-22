@@ -31,7 +31,7 @@ public class WednesdayRitualFunction extends RitualFunction {
 	@Override
 	public boolean isValid(ServerWorld world, BlockPos pos, Inventory inventory) {
 		return true;
-//		return LocalDateTime.now().getDayOfWeek() == DayOfWeek.WEDNESDAY;
+		//		return LocalDateTime.now().getDayOfWeek() == DayOfWeek.WEDNESDAY;
 	}
 	
 	@Override

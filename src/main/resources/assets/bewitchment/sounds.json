@@ -245,21 +245,6 @@
 	],
 	"subtitle": "bewitchment.subtitles.entity.ghost.death"
   },
-  "entity.black_dog.ambient": {
-	"sounds": [
-	],
-	"subtitle": "bewitchment.subtitles.entity.black_dog.ambient"
-  },
-  "entity.black_dog.hurt": {
-	"sounds": [
-	],
-	"subtitle": "bewitchment.subtitles.entity.black_dog.hurt"
-  },
-  "entity.black_dog.death": {
-	"sounds": [
-	],
-	"subtitle": "bewitchment.subtitles.entity.black_dog.death"
-  },
   "entity.hellhound.ambient": {
 	"sounds": [
 	  "bewitchment:mob/hellhound/say1",
