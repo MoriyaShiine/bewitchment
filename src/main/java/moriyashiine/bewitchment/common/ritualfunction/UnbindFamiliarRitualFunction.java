@@ -59,7 +59,7 @@ public class UnbindFamiliarRitualFunction extends RitualFunction {
 					CompoundTag entityTag = new CompoundTag();
 					livingEntity.saveSelfToTag(entityTag);
 					if (closestPlayer.getUuid().equals(entityTag.getUuid("Owner"))) {
-						FamiliarAccessor.of(livingEntity).ifPresent(familiarAccessor -> familiarAccessor.setFamiliar(true));
+						FamiliarAccessor.of(livingEntity).ifPresent(familiarAccessor -> familiarAccessor.setFamiliar(false));
 						BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
 						for (int i = worldState.familiars.size() - 1; i >= 0; i--) {
 							if (livingEntity.getUuid().equals(worldState.familiars.get(i).getRight().getUuid("UUID"))) {
