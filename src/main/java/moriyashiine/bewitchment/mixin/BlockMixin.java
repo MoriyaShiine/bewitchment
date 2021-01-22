@@ -51,12 +51,16 @@ public abstract class BlockMixin {
 							switch (world.random.nextInt(4)) {
 								case 0:
 									treasure.add(new ItemStack(Items.DIAMOND, MathHelper.nextInt(world.random, 1, 3)));
+									break;
 								case 1:
 									treasure.add(new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(world.random, 1, 5)));
+									break;
 								case 2:
 									treasure.add(new ItemStack(Items.IRON_INGOT, MathHelper.nextInt(world.random, 2, 10)));
+									break;
 								case 3:
 									treasure.add(new ItemStack(BWObjects.SILVER_INGOT, MathHelper.nextInt(world.random, 1, 5)));
+									break;
 								default:
 									treasure.add(ItemStack.EMPTY);
 							}
