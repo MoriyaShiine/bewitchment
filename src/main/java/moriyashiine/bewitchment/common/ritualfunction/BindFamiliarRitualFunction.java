@@ -65,7 +65,6 @@ public class BindFamiliarRitualFunction extends RitualFunction {
 						BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
 						CompoundTag familiarTag = new CompoundTag();
 						familiarTag.putUuid("UUID", entityTag.getUuid("UUID"));
-						familiarTag.putUuid("Owner", entityTag.getUuid("Owner"));
 						familiarTag.putString("id", Registry.ENTITY_TYPE.getId(livingEntity.getType()).toString());
 						worldState.familiars.add(new Pair<>(closestPlayer.getUuid(), familiarTag));
 						worldState.markDirty();
