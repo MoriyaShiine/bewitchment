@@ -166,7 +166,6 @@ public class BWObjects {
 	public static final Item DRAGONS_BLOOD_SIGN_ITEM = create("dragons_blood_sign", new SignItem(gen().maxCount(16), DRAGONS_BLOOD_SIGN, DRAGONS_BLOOD_WALL_SIGN));
 	public static final TerraformBoatItem DRAGONS_BLOOD_BOAT = create("dragons_blood_boat", new TerraformBoatItem(() -> BWEntityTypes.DRAGONS_BLOOD_BOAT, gen().maxCount(1)));
 	//other_plants
-	public static final Block SPANISH_MOSS = create("spanish_moss", new VineBlock(copyOf(Blocks.VINE)), true);
 	public static final Block GLOWING_BRAMBLE = create("glowing_bramble", new BrambleBlock(of(Material.PLANT).sounds(BlockSoundGroup.GRASS).strength(2, 3).noCollision().ticksRandomly().luminance(15)), true);
 	public static final Block ENDER_BRAMBLE = create("ender_bramble", new BrambleBlock(of(Material.PLANT).sounds(BlockSoundGroup.GRASS).strength(2, 3).noCollision().ticksRandomly()), true);
 	public static final Block FRUITING_BRAMBLE = create("fruiting_bramble", new BrambleBlock.Fruiting(copyOf(ENDER_BRAMBLE)), true);
@@ -404,7 +403,6 @@ public class BWObjects {
 		flammableRegistry.add(DRAGONS_BLOOD_SLAB, 5, 20);
 		flammableRegistry.add(DRAGONS_BLOOD_FENCE, 5, 20);
 		flammableRegistry.add(DRAGONS_BLOOD_FENCE_GATE, 5, 20);
-		flammableRegistry.add(SPANISH_MOSS, 15, 100);
 		flammableRegistry.add(HEDGEWITCH_WOOL, 30, 60);
 		flammableRegistry.add(ALCHEMIST_WOOL, 30, 60);
 		flammableRegistry.add(BESMIRCHED_WOOL, 30, 60);
@@ -420,7 +418,6 @@ public class BWObjects {
 		compostRegistry.add(ELDER_SAPLING, 0.3f);
 		compostRegistry.add(DRAGONS_BLOOD_LEAVES, 0.3f);
 		compostRegistry.add(DRAGONS_BLOOD_SAPLING, 0.3f);
-		compostRegistry.add(SPANISH_MOSS, 0.5f);
 		compostRegistry.add(ACONITE, 0.65f);
 		compostRegistry.add(ACONITE_SEEDS, 0.3f);
 		compostRegistry.add(BELLADONNA, 0.65f);

@@ -1,16 +1,19 @@
 {
   "type": "crafting_shaped",
   "pattern": [
-	" S ",
+	" V ",
 	"AHB",
-	" S "
+	" K "
   ],
   "key": {
-	"S": {
-	  "item": "bewitchment:spanish_moss"
+	"V": {
+	  "item": "vine"
 	},
 	"H": {
 	  "item": "hay_block"
+	},
+	"K": {
+	  "item": "dried_kelp"
 	},
 	"A": {
 	  "item": "bewitchment:oak_bark"

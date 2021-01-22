@@ -2,15 +2,15 @@
   "type": "crafting_shaped",
   "pattern": [
 	"SSS",
-	"MMM",
+	" E ",
 	"SSS"
   ],
   "key": {
 	"S": {
 	  "item": "bewitchment:cypress_slab"
 	},
-	"M": {
-	  "item": "bewitchment:spanish_moss"
+	"E": {
+	  "item": "bewitchment:ectoplasm"
 	}
   },
   "result": {
