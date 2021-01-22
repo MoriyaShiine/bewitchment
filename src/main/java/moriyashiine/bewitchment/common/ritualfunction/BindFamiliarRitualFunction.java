@@ -15,6 +15,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 
 import java.util.function.Predicate;
 
@@ -62,7 +63,11 @@ public class BindFamiliarRitualFunction extends RitualFunction {
 					if (closestPlayer.getUuid().equals(entityTag.getUuid("Owner"))) {
 						FamiliarAccessor.of(livingEntity).ifPresent(familiarAccessor -> familiarAccessor.setFamiliar(true));
 						BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-						worldState.familiars.add(new Pair<>(closestPlayer.getUuid(), entityTag));
+						CompoundTag familiarTag = new CompoundTag();
+						familiarTag.putUuid("UUID", entityTag.getUuid("UUID"));
+						familiarTag.putUuid("Owner", entityTag.getUuid("Owner"));
+						familiarTag.putString("id", Registry.ENTITY_TYPE.getId(livingEntity.getType()).toString());
+						worldState.familiars.add(new Pair<>(closestPlayer.getUuid(), familiarTag));
 						worldState.markDirty();
 						succeeded = true;
 					}
