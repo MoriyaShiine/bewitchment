@@ -153,10 +153,8 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/entity/LivingEntity;getHealth()F"))
 	private float modifyDamage0(float amount, DamageSource source) {
-		if (!world.isClient && BewitchmentAPI.isWeakToSilver((LivingEntity) (Object) this)) {
-			if (BewitchmentAPI.isSourceFromSilver(source)) {
-				return amount + 4;
-			}
+		if (!world.isClient && BewitchmentAPI.isWeakToSilver((LivingEntity) (Object) this) && BewitchmentAPI.isSourceFromSilver(source)) {
+			return amount + 4;
 		}
 		return amount;
 	}
