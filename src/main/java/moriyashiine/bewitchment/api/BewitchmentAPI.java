@@ -141,7 +141,10 @@ public class BewitchmentAPI {
 	
 	public static boolean isSourceFromSilver(DamageSource source) {
 		Entity attacker = source.getAttacker();
-		return !(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns()) && (attacker instanceof LivingEntity && isHoldingSilver((LivingEntity) attacker, Hand.MAIN_HAND)) || attacker instanceof SilverArrowEntity;
+		if (source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns()) {
+			return false;
+		}
+		return (attacker instanceof LivingEntity && isHoldingSilver((LivingEntity) attacker, Hand.MAIN_HAND)) || attacker instanceof SilverArrowEntity;
 	}
 	
 	public static boolean isHoldingSilver(LivingEntity livingEntity, Hand hand) {
