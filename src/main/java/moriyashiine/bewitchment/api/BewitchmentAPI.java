@@ -149,10 +149,10 @@ public class BewitchmentAPI {
 	}
 	
 	public static boolean isWeakToSilver(LivingEntity livingEntity) {
-		if (livingEntity.isUndead() || livingEntity.getGroup() == DEMON) {
-			return true;
+		if (BWTags.IMMUNE_TO_SILVER.contains(livingEntity.getType())) {
+			return false;
 		}
-		return BWTags.ADDITIONAL_SILVER_WEAKNESSES.contains(livingEntity.getType());
+		return livingEntity.isUndead() || livingEntity.getGroup() == DEMON || BWTags.VULNERABLE_TO_SILVER.contains(livingEntity.getType());
 	}
 	
 	public static boolean hasPledge(World world, UUID entity) {
