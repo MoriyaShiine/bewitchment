@@ -7,8 +7,7 @@ import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -191,7 +190,7 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 				int y = (counter >> 5) & 31;
 				int z = (counter >> 10) & 31;
 				Block checkedBlock = world.getBlockState(checking.set(pos.getX() + x - 15, pos.getY() + y - 15, pos.getZ() + z - 15)).getBlock();
-				if (BWTags.GIVES_ALTAR_POWER.contains(checkedBlock)) {
+				if (givesAltarPower(checkedBlock)) {
 					boolean strippedLog = false;
 					if (BlockTags.LOGS.contains(checkedBlock)) {
 						MinecraftServer server = getWorld().getServer();
@@ -226,6 +225,13 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 				}
 			}
 		}
+	}
+	
+	private static boolean givesAltarPower(Block block) {
+		if (block instanceof PlantBlock || block instanceof MushroomBlock || block instanceof Fertilizable && !(block instanceof GrassBlock || block instanceof NyliumBlock)) {
+			return true;
+		}
+		return BWTags.GIVES_ALTAR_POWER.contains(block);
 	}
 	
 	private static float getSwordValue(Item item) {
