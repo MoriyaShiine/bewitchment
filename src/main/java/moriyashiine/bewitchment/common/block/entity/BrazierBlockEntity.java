@@ -4,7 +4,6 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.registry.Curse;
-import moriyashiine.bewitchment.client.network.packet.SpawnBrazierParticlesPacket;
 import moriyashiine.bewitchment.client.network.packet.SyncBrazierBlockEntity;
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.Bewitchment;
@@ -25,6 +24,8 @@ import net.minecraft.item.FlintAndSteelItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -35,6 +36,7 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 @SuppressWarnings("ConstantConditions")
@@ -47,7 +49,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 	public CurseRecipe curseRecipe = null;
 	private int timer = 0;
 	
-	private boolean loaded = false;
+	private boolean loaded = false, hasIncense;
 	
 	public BrazierBlockEntity(BlockEntityType<?> type) {
 		super(type);
@@ -64,6 +66,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 		}
 		Inventories.fromTag(tag, inventory);
 		timer = tag.getInt("Timer");
+		hasIncense = tag.getBoolean("HasIncense");
 	}
 	
 	@Override
@@ -73,6 +76,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 		}
 		Inventories.toTag(tag, inventory);
 		tag.putInt("Timer", timer);
+		tag.putBoolean("HasIncense", hasIncense);
 		return tag;
 	}
 	
@@ -99,21 +103,26 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 	
 	@Override
 	public void tick() {
-		if (world != null && !world.isClient) {
+		if (world != null) {
 			if (!loaded) {
-				markDirty();
-				incenseRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.INCENSE_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
-				curseRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CURSE_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
-				syncBrazier();
+				if (!world.isClient) {
+					markDirty();
+					incenseRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.INCENSE_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
+					curseRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CURSE_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
+					hasIncense = incenseRecipe != null;
+					syncBrazier();
+				}
 				loaded = true;
 			}
 			if (timer < 0) {
 				timer++;
-				if (world.random.nextBoolean()) {
-					PlayerLookup.tracking(this).forEach(playerEntity -> SpawnBrazierParticlesPacket.send(playerEntity, this));
+				if (world.isClient) {
+					if (world.random.nextBoolean()) {
+						world.addParticle(hasIncense ? (ParticleEffect) BWParticleTypes.INCENSE_SMOKE : ParticleTypes.LARGE_SMOKE, pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -0.2, 0.2), pos.getY() + (getCachedState().get(Properties.HANGING) ? 0.4 : 1.25), pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -0.2, 0.2), 0, 0.05, 0);
+					}
 				}
-				if (timer == 0) {
-					boolean clear = incenseRecipe != null;
+				else if (timer == 0) {
+					boolean clear = hasIncense;
 					if (curseRecipe != null) {
 						if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain(curseRecipe.cost, false)) {
 							Entity target = getTarget();
@@ -233,7 +242,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 			if (getCachedState().get(Properties.LIT)) {
 				world.setBlockState(pos, getCachedState().with(Properties.LIT, false));
 				world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1, 2);
-				reset(incenseRecipe != null);
+				reset(hasIncense);
 				syncBrazier();
 			}
 			else {
@@ -245,6 +254,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 					if (foundIncenseRecipe != null) {
 						incenseRecipe = foundIncenseRecipe;
 						timer = -6000;
+						hasIncense = true;
 						syncBrazier();
 					}
 					else {
@@ -264,7 +274,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 					}
 				}
 				else {
-					reset(incenseRecipe != null);
+					reset(hasIncense);
 					syncBrazier();
 				}
 			}
@@ -292,6 +302,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 			incenseRecipe = null;
 			curseRecipe = null;
 			timer = 0;
+			hasIncense = false;
 		}
 	}
 	
