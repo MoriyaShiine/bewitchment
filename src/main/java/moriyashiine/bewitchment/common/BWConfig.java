@@ -45,6 +45,10 @@ public class BWConfig implements ConfigData {
 	public final int hellhoundMinGroupCount = 1;
 	public final int hellhoundMaxGroupCount = 1;
 	
+	public final int vampireWeight = 10;
+	public final int vampireMinGroupCount = 1;
+	public final int vampireMaxGroupCount = 1;
+	
 	public final int werewolfWeight = 10;
 	public final int werewolfMinGroupCount = 1;
 	public final int werewolfMaxGroupCount = 1;

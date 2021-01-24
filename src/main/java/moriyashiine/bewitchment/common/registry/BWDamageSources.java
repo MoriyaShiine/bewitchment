@@ -9,6 +9,7 @@ public class BWDamageSources {
 	public static final DamageSource WEDNESDAY = new WednesdayDamageSource("wednesday");
 	public static final DamageSource DEATH = new DeathDamageSource("death");
 	public static final DamageSource VAMPIRE = new EmptyDamageSource("vampire");
+	public static final DamageSource SUN = new SunDamageSource("onFire");
 	
 	private static class WednesdayDamageSource extends DamageSource {
 		protected WednesdayDamageSource(String name) {
@@ -25,6 +26,14 @@ public class BWDamageSources {
 			setBypassesArmor();
 			setUnblockable();
 			setOutOfWorld();
+		}
+	}
+	
+	private static class SunDamageSource extends DamageSource {
+		protected SunDamageSource(String name) {
+			super(name);
+			setBypassesArmor();
+			setUnblockable();
 		}
 	}
 	

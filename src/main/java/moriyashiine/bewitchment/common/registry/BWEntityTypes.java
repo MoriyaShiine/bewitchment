@@ -31,8 +31,8 @@ public class BWEntityTypes {
 	public static final EntityType<ToadEntity> TOAD = create("toad", ToadEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ToadEntity::new).dimensions(EntityDimensions.changing(0.5f, 0.5f)).build());
 	
 	public static final EntityType<GhostEntity> GHOST = create("ghost", GhostEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, GhostEntity::new).dimensions(EntityDimensions.fixed(0.6f, 1.8f)).fireImmune().build());
-	
 	public static final EntityType<HellhoundEntity> HELLHOUND = create("hellhound", HellhoundEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, HellhoundEntity::new).dimensions(EntityType.WOLF.getDimensions()).fireImmune().build());
+	public static final EntityType<VampireEntity> VAMPIRE = create("vampire", VampireEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, VampireEntity::new).dimensions(EntityType.PILLAGER.getDimensions()).build());
 	public static final EntityType<WerewolfEntity> WEREWOLF = create("werewolf", WerewolfEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, WerewolfEntity::new).dimensions(EntityDimensions.fixed(0.8f, 2.8f)).build());
 	public static final EntityType<DemonEntity> DEMON = create("demon", DemonEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DemonEntity::new).dimensions(EntityDimensions.fixed(0.8f, 2.4f)).fireImmune().build());
 	

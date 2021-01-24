@@ -1,0 +1,31 @@
+{
+  "type": "entity",
+  "pools": [
+	{
+	  "rolls": 1,
+	  "entries": [
+		{
+		  "type": "item",
+		  "functions": [
+			{
+			  "function": "set_count",
+			  "count": {
+				"min": 1.0,
+				"max": 3.0,
+				"type": "uniform"
+			  }
+			},
+			{
+			  "function": "looting_enchant",
+			  "count": {
+				"min": 0.0,
+				"max": 1.0
+			  }
+			}
+		  ],
+		  "name": "bewitchment:bottle_of_blood"
+		}
+	  ]
+	}
+  ]
+}

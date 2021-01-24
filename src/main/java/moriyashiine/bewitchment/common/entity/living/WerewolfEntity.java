@@ -4,7 +4,6 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.DespawnAccessor;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -18,7 +17,6 @@ import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
@@ -78,19 +76,10 @@ public class WerewolfEntity extends BWHostileEntity {
 	
 	@Override
 	public boolean damage(DamageSource source, float amount) {
-		if (!BewitchmentAPI.isSourceFromSilver(source)) {
+		if (!VampireEntity.isEffective(source)) {
 			amount /= 6;
 		}
 		return super.damage(source, amount);
-	}
-	
-	@Override
-	public boolean tryAttack(Entity target) {
-		boolean flag = super.tryAttack(target);
-		if (flag) {
-			swingHand(Hand.MAIN_HAND);
-		}
-		return flag;
 	}
 	
 	@Override

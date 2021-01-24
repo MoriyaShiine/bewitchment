@@ -46,6 +46,9 @@ public class BWSoundEvents {
 	public static final SoundEvent ENTITY_HELLHOUND_AMBIENT = create("entity.hellhound.ambient");
 	public static final SoundEvent ENTITY_HELLHOUND_HURT = create("entity.hellhound.hurt");
 	public static final SoundEvent ENTITY_HELLHOUND_DEATH = create("entity.hellhound.death");
+	public static final SoundEvent ENTITY_VAMPIRE_AMBIENT = create("entity.vampire.ambient");
+	public static final SoundEvent ENTITY_VAMPIRE_HURT = create("entity.vampire.hurt");
+	public static final SoundEvent ENTITY_VAMPIRE_DEATH = create("entity.vampire.death");
 	public static final SoundEvent ENTITY_WEREWOLF_AMBIENT = create("entity.werewolf.ambient");
 	public static final SoundEvent ENTITY_WEREWOLF_HURT = create("entity.werewolf.hurt");
 	public static final SoundEvent ENTITY_WEREWOLF_DEATH = create("entity.werewolf.death");
