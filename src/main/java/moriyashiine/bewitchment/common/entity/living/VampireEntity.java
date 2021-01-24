@@ -86,18 +86,7 @@ public class VampireEntity extends BWHostileEntity {
 			source = BWDamageSources.SUN;
 			amount *= 2;
 		}
-		if (!isEffective(source)) {
-			if (getHealth() - amount < 1) {
-				BloodAccessor bloodAccessor = BloodAccessor.of(this).orElse(null);
-				if (bloodAccessor != null) {
-					while (getHealth() - amount < 1 && bloodAccessor.getBlood() > 0) {
-						amount--;
-						bloodAccessor.drainBlood(1, false);
-					}
-				}
-			}
-		}
-		return super.damage(source, amount);
+		return super.damage(source, handleAmount(this, source, amount));
 	}
 	
 	@Override
@@ -137,6 +126,21 @@ public class VampireEntity extends BWHostileEntity {
 			}
 		}
 		return source == BWDamageSources.SUN || BewitchmentAPI.isSourceFromSilver(source);
+	}
+	
+	public static float handleAmount(LivingEntity entity, DamageSource source, float amount) {
+		if (!isEffective(source)) {
+			if (entity.getHealth() - amount < 1) {
+				BloodAccessor bloodAccessor = BloodAccessor.of(entity).orElse(null);
+				if (bloodAccessor != null) {
+					while (entity.getHealth() - amount < 1 && bloodAccessor.getBlood() > 0) {
+						amount--;
+						bloodAccessor.drainBlood(1, false);
+					}
+				}
+			}
+		}
+		return amount;
 	}
 	
 	public static boolean canSpawn(EntityType<VampireEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
