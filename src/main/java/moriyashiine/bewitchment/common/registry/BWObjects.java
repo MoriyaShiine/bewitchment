@@ -299,7 +299,7 @@ public class BWObjects {
 	public static final Item ECTOPLASM = create("ectoplasm", new Item(gen()));
 	public static final Item DEMON_HORN = create("demon_horn", new Item(gen().fireproof()));
 	public static final Item DEMON_HEART = create("demon_heart", new Item(gen().food(BWFoodComponents.DEMON_HEART).rarity(Rarity.UNCOMMON).fireproof()));
-	public static final Item BOTTLE_OF_BLOOD = create("bottle_of_blood", new BottleOfBloodItem(gen().maxCount(1).recipeRemainder(Items.GLASS_BOTTLE)));
+	public static final Item BOTTLE_OF_BLOOD = create("bottle_of_blood", new BottleOfBloodItem(gen().maxCount(16).recipeRemainder(Items.GLASS_BOTTLE)));
 	public static final Item GRILLED_GARLIC = create("grilled_garlic", new Item(gen().food(FoodComponents.BAKED_POTATO)));
 	public static final Item GARLIC_BREAD = create("garlic_bread", new Item(gen().food(FoodComponents.PUMPKIN_PIE)));
 	public static final Item WITCHBERRY = create("witchberry", new Item(gen().food(BWFoodComponents.WITCHBERRY)));
