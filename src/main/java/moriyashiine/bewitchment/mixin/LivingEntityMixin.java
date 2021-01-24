@@ -349,11 +349,15 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
-			Entity attacker = source.getSource();
-			if (attacker instanceof PlayerEntity) {
-				ItemStack stack = ((PlayerEntity) attacker).getMainHandStack();
+			Entity trueSource = source.getAttacker();
+			if (trueSource instanceof BaphometEntity) {
+				removeStatusEffect(StatusEffects.FIRE_RESISTANCE);
+			}
+			Entity directSource = source.getSource();
+			if (directSource instanceof PlayerEntity) {
+				ItemStack stack = ((PlayerEntity) directSource).getMainHandStack();
 				if (stack.getItem() instanceof TaglockItem) {
-					TaglockItem.useTaglock((PlayerEntity) attacker, (LivingEntity) (Object) this, Hand.MAIN_HAND, true, false);
+					TaglockItem.useTaglock((PlayerEntity) directSource, (LivingEntity) (Object) this, Hand.MAIN_HAND, true, false);
 					callbackInfo.setReturnValue(false);
 					return;
 				}
@@ -369,7 +373,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					return;
 				}
 			}
-			if (!source.isOutOfWorld() && (hasStatusEffect(BWStatusEffects.ETHEREAL) || (attacker instanceof LivingEntity && ((LivingEntity) attacker).hasStatusEffect(BWStatusEffects.ETHEREAL)))) {
+			if (!source.isOutOfWorld() && (hasStatusEffect(BWStatusEffects.ETHEREAL) || (directSource instanceof LivingEntity && ((LivingEntity) directSource).hasStatusEffect(BWStatusEffects.ETHEREAL)))) {
 				callbackInfo.setReturnValue(false);
 				return;
 			}
@@ -377,10 +381,10 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				callbackInfo.setReturnValue(false);
 				return;
 			}
-			if (hasStatusEffect(BWStatusEffects.DEFLECTION) && attacker != null && EntityTypeTags.ARROWS.contains(attacker.getType())) {
+			if (hasStatusEffect(BWStatusEffects.DEFLECTION) && directSource != null && EntityTypeTags.ARROWS.contains(directSource.getType())) {
 				int amplifier = getStatusEffect(BWStatusEffects.DEFLECTION).getAmplifier() + 1;
-				Vec3d velocity = attacker.getVelocity();
-				attacker.setVelocity(velocity.getX() * 2 * amplifier, velocity.getY() * 2 * amplifier, velocity.getZ() * 2 * amplifier);
+				Vec3d velocity = directSource.getVelocity();
+				directSource.setVelocity(velocity.getX() * 2 * amplifier, velocity.getY() * 2 * amplifier, velocity.getZ() * 2 * amplifier);
 				callbackInfo.setReturnValue(false);
 				return;
 			}
@@ -389,7 +393,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					heal(amount * (getStatusEffect(BWStatusEffects.LEECHING).getAmplifier() + 1) / 4);
 				}
 				if (hasStatusEffect(BWStatusEffects.THORNS) && !(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns())) {
-					attacker.damage(DamageSource.thorns(attacker), 2 * (getStatusEffect(BWStatusEffects.THORNS).getAmplifier() + 1));
+					directSource.damage(DamageSource.thorns(directSource), 2 * (getStatusEffect(BWStatusEffects.THORNS).getAmplifier() + 1));
 				}
 				if (hasStatusEffect(BWStatusEffects.VOLATILITY) && !source.isExplosive()) {
 					for (LivingEntity entity : world.getEntitiesByClass(LivingEntity.class, getBoundingBox().expand(3), LivingEntity::isAlive)) {
@@ -402,7 +406,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					}
 					removeStatusEffect(BWStatusEffects.VOLATILITY);
 				}
-				if (attacker instanceof ContractAccessor && ((ContractAccessor) attacker).hasContract(BWContracts.PESTILENCE)) {
+				if (directSource instanceof ContractAccessor && ((ContractAccessor) directSource).hasContract(BWContracts.PESTILENCE)) {
 					addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100));
 					addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100));
 				}
