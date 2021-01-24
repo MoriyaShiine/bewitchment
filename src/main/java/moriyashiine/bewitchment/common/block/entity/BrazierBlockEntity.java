@@ -124,31 +124,34 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 				else if (timer == 0) {
 					boolean clear = hasIncense;
 					if (curseRecipe != null) {
+						PlayerEntity closestPlayer = world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 24, false);
 						if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain(curseRecipe.cost, false)) {
-							Entity target = getTarget();
-							PlayerEntity closestPlayer = world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 24, false);
-							if (target instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) target) == BWEntityTypes.RAVEN && world.random.nextBoolean()) {
-								target = closestPlayer;
-							}
-							CurseAccessor curseAccessor = CurseAccessor.of(target).orElse(null);
-							if (curseAccessor != null) {
-								ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, target, null);
-								if (!poppet.isEmpty() && !poppet.getOrCreateTag().getBoolean("Cursed")) {
-									poppet.getOrCreateTag().putString("Curse", BWRegistries.CURSES.getId(curseRecipe.curse).toString());
-									poppet.getOrCreateTag().putBoolean("Cursed", true);
-									TaglockItem.removeTaglock(poppet);
+							if (closestPlayer != null) {
+								Entity target = getTarget();
+								if (target instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) target) == BWEntityTypes.RAVEN && world.random.nextBoolean()) {
+									target = closestPlayer;
 								}
-								else {
-									int duration = 168000;
-									if (closestPlayer != null && BewitchmentAPI.getFamiliar(closestPlayer) == BWEntityTypes.RAVEN) {
-										duration *= 2;
+								CurseAccessor curseAccessor = CurseAccessor.of(target).orElse(null);
+								if (curseAccessor != null) {
+									ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, target, null);
+									if (!poppet.isEmpty() && !poppet.getOrCreateTag().getBoolean("Cursed")) {
+										poppet.getOrCreateTag().putString("Curse", BWRegistries.CURSES.getId(curseRecipe.curse).toString());
+										poppet.getOrCreateTag().putBoolean("Cursed", true);
+										TaglockItem.removeTaglock(poppet);
 									}
-									curseAccessor.addCurse(new Curse.Instance(curseRecipe.curse, duration));
+									else {
+										int duration = 168000;
+										if (closestPlayer != null && BewitchmentAPI.getFamiliar(closestPlayer) == BWEntityTypes.RAVEN) {
+											duration *= 2;
+										}
+										curseAccessor.addCurse(new Curse.Instance(curseRecipe.curse, duration));
+									}
+									world.playSound(null, pos, BWSoundEvents.ENTITY_GENERIC_CURSE, SoundCategory.BLOCKS, 1, 1);
+									clear = true;
 								}
-								world.playSound(null, pos, BWSoundEvents.ENTITY_GENERIC_CURSE, SoundCategory.BLOCKS, 1, 1);
-								clear = true;
 							}
 							else {
+								world.playSound(null, pos, BWSoundEvents.BLOCK_BRAZIER_FAIL, SoundCategory.BLOCKS, 1, 1);
 								if (closestPlayer != null) {
 									String entityName = "";
 									for (int i = 0; i < size(); i++) {
@@ -158,13 +161,11 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 											break;
 										}
 									}
-									world.playSound(null, pos, BWSoundEvents.BLOCK_BRAZIER_FAIL, SoundCategory.BLOCKS, 1, 1);
 									closestPlayer.sendMessage(new TranslatableText(Bewitchment.MODID + ".invalid_entity", entityName), true);
 								}
 							}
 						}
 						else {
-							PlayerEntity closestPlayer = world.getClosestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 12, false);
 							if (closestPlayer != null) {
 								world.playSound(null, pos, BWSoundEvents.BLOCK_BRAZIER_FAIL, SoundCategory.BLOCKS, 1, 1);
 								closestPlayer.sendMessage(new TranslatableText(Bewitchment.MODID + ".insufficent_altar_power"), true);
