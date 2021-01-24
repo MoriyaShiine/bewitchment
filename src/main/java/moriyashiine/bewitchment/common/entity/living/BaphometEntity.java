@@ -66,6 +66,39 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 	}
 	
 	@Override
+	public void tick() {
+		super.tick();
+		flameIndex = ++flameIndex % 8;
+		if (!world.isClient) {
+			bossBar.setPercent(getHealth() / getMaxHealth());
+			LivingEntity target = getTarget();
+			int timer = age + getEntityId();
+			if (timer % 20 == 0) {
+				heal(1);
+			}
+			if (target != null) {
+				lookAtEntity(target, 360, 360);
+				if (timer % 60 == 0) {
+					for (int i = -1; i <= 1; i++) {
+						FireballEntity fireball = new FireballEntity(world, this, target.getX() - getX() + (i * 2), target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ() + (i * 2));
+						fireball.updatePosition(fireball.getX(), getBodyY(0.5), fireball.getZ());
+						fireball.setOwner(this);
+						world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_SHOOT, SoundCategory.HOSTILE, 1, 1);
+						world.spawnEntity(fireball);
+					}
+					swingHand(Hand.MAIN_HAND);
+				}
+				if (timer % 600 == 0 && world.getEntitiesByType(EntityType.BLAZE, new Box(getBlockPos()).expand(32), entity -> getUuid().equals(((MasterAccessor) entity).getMasterUUID())).size() < 3) {
+					summonMinions();
+				}
+			}
+			else {
+				heal(8);
+			}
+		}
+	}
+	
+	@Override
 	public UUID getPledgeUUID() {
 		return BWPledges.BAPHOMET_UUID;
 	}
@@ -150,39 +183,6 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 	}
 	
 	@Override
-	public void tick() {
-		super.tick();
-		flameIndex = ++flameIndex % 8;
-		if (!world.isClient) {
-			bossBar.setPercent(getHealth() / getMaxHealth());
-			LivingEntity target = getTarget();
-			int timer = age + getEntityId();
-			if (timer % 20 == 0) {
-				heal(1);
-			}
-			if (target != null) {
-				lookAtEntity(target, 360, 360);
-				if (timer % 60 == 0) {
-					for (int i = -1; i <= 1; i++) {
-						FireballEntity fireball = new FireballEntity(world, this, target.getX() - getX() + (i * 2), target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ() + (i * 2));
-						fireball.updatePosition(fireball.getX(), getBodyY(0.5), fireball.getZ());
-						fireball.setOwner(this);
-						world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_SHOOT, SoundCategory.HOSTILE, 1, 1);
-						world.spawnEntity(fireball);
-					}
-					swingHand(Hand.MAIN_HAND);
-				}
-				if (timer % 600 == 0 && world.getEntitiesByType(EntityType.BLAZE, new Box(getBlockPos()).expand(32), entity -> getUuid().equals(((MasterAccessor) entity).getMasterUUID())).size() < 3) {
-					summonMinions();
-				}
-			}
-			else {
-				heal(8);
-			}
-		}
-	}
-	
-	@Override
 	public boolean tryAttack(Entity target) {
 		boolean flag = super.tryAttack(target);
 		if (flag && target instanceof LivingEntity) {
@@ -191,15 +191,6 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 			swingHand(Hand.MAIN_HAND);
 		}
 		return flag;
-	}
-	
-	@Override
-	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
-		return false;
-	}
-	
-	@Override
-	protected void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition) {
 	}
 	
 	@Override
@@ -216,6 +207,15 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 			}
 		}
 		super.setTarget(target);
+	}
+	
+	@Override
+	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
+		return false;
+	}
+	
+	@Override
+	protected void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition) {
 	}
 	
 	@Override
@@ -261,7 +261,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 				BlazeEntity blaze = EntityType.BLAZE.create(world);
 				if (blaze != null) {
 					BewitchmentAPI.attemptTeleport(blaze, getBlockPos().up(), 3, true);
-					blaze.pitch = random.nextInt(360);
+					blaze.pitch = random.nextFloat() * 360;
 					blaze.setTarget(getTarget());
 					MasterAccessor.of(blaze).ifPresent(masterAccessor -> masterAccessor.setMasterUUID(getUuid()));
 					blaze.setPersistent();

@@ -263,6 +263,21 @@
 	],
 	"subtitle": "bewitchment.subtitles.entity.hellhound.death"
   },
+  "entity.werewolf.ambient": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.werewolf.ambient"
+  },
+  "entity.werewolf.hurt": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.werewolf.hurt"
+  },
+  "entity.werewolf.death": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.werewolf.death"
+  },
   "entity.demon.ambient": {
 	"sounds": [
 	],

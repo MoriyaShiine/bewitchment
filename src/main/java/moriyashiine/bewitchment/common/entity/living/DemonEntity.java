@@ -69,6 +69,36 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	}
 	
 	@Override
+	public void tick() {
+		super.tick();
+		if (!world.isClient) {
+			refreshTimer++;
+			if (refreshTimer >= 168000) {
+				if (Bewitchment.config.doDemonTradesRefresh) {
+					for (TradeOffer offer : getOffers()) {
+						offer.resetUses();
+					}
+				}
+				refreshTimer = 0;
+			}
+			if (customer != null) {
+				navigation.stop();
+			}
+			LivingEntity target = getTarget();
+			if (target != null) {
+				lookAtEntity(target, 360, 360);
+				if ((age + getEntityId()) % 40 == 0) {
+					SmallFireballEntity fireball = new SmallFireballEntity(world, this, target.getX() - getX(), target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ());
+					fireball.updatePosition(fireball.getX(), getBodyY(0.5), fireball.getZ());
+					world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_SHOOT, SoundCategory.HOSTILE, 1, 1);
+					world.spawnEntity(fireball);
+					swingHand(Hand.MAIN_HAND);
+				}
+			}
+		}
+	}
+	
+	@Override
 	protected boolean hasShiny() {
 		return true;
 	}
@@ -131,36 +161,6 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	@Override
 	public boolean cannotDespawn() {
 		return true;
-	}
-	
-	@Override
-	public void tick() {
-		super.tick();
-		if (!world.isClient) {
-			refreshTimer++;
-			if (refreshTimer >= 168000) {
-				if (Bewitchment.config.doDemonTradesRefresh) {
-					for (TradeOffer offer : getOffers()) {
-						offer.resetUses();
-					}
-				}
-				refreshTimer = 0;
-			}
-			if (customer != null) {
-				navigation.stop();
-			}
-			LivingEntity target = getTarget();
-			if (target != null) {
-				lookAtEntity(target, 360, 360);
-				if ((age + getEntityId()) % 40 == 0) {
-					SmallFireballEntity fireball = new SmallFireballEntity(world, this, target.getX() - getX(), target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ());
-					fireball.updatePosition(fireball.getX(), getBodyY(0.5), fireball.getZ());
-					world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_SHOOT, SoundCategory.HOSTILE, 1, 1);
-					world.spawnEntity(fireball);
-					swingHand(Hand.MAIN_HAND);
-				}
-			}
-		}
 	}
 	
 	@Override

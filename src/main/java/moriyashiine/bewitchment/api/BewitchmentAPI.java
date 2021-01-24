@@ -36,6 +36,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -233,6 +234,10 @@ public class BewitchmentAPI {
 			}
 		}
 		return amount;
+	}
+	
+	public static int getMoonPhase(WorldAccess world) {
+		return world.getDimension().getMoonPhase(world.getLunarTime());
 	}
 	
 	public static void addItemToInventoryAndConsume(PlayerEntity player, Hand hand, ItemStack toAdd) {

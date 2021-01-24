@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.DespawnAccessor;
 import moriyashiine.bewitchment.common.entity.living.DemonEntity;
 import moriyashiine.bewitchment.common.registry.BWContracts;
 import net.minecraft.entity.EntityType;
@@ -11,6 +12,7 @@ import net.minecraft.entity.mob.VindicatorEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.village.TradeOffer;
@@ -26,12 +28,28 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @SuppressWarnings("ConstantConditions")
 @Mixin(VillagerEntity.class)
-public abstract class VillagerEntityMixin extends MerchantEntity {
+public abstract class VillagerEntityMixin extends MerchantEntity implements DespawnAccessor {
+	private int despawnTimer = 0;
+	
 	@Shadow
 	protected abstract void sayNo();
 	
 	public VillagerEntityMixin(EntityType<? extends MerchantEntity> entityType, World world) {
 		super(entityType, world);
+	}
+	
+	@Override
+	public void setDespawnTimer(int despawnTimer) {
+		this.despawnTimer = despawnTimer;
+	}
+	
+	@Inject(method = "tick", at = @At("HEAD"))
+	private void getOffers(CallbackInfo callbackInfo) {
+		if (!world.isClient) {
+			if (despawnTimer > 0 && --despawnTimer == 0) {
+				remove();
+			}
+		}
 	}
 	
 	@Inject(method = "interactMob", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/entity/passive/VillagerEntity;getOffers()Lnet/minecraft/village/TradeOfferList;"), cancellable = true)
@@ -72,5 +90,15 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
 				}
 			});
 		}
+	}
+	
+	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
+	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
+		despawnTimer = tag.getInt("DespawnTimer");
+	}
+	
+	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
+	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
+		tag.putInt("DespawnTimer", despawnTimer);
 	}
 }
