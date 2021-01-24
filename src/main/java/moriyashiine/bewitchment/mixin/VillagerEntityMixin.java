@@ -58,7 +58,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
 							for (int i = 0; i < 3; i++) {
 								VindicatorEntity vindicator = EntityType.VINDICATOR.create(world);
 								if (vindicator != null) {
-									vindicator.refreshPositionAndAngles(getBlockPos(), 0, random.nextInt(360));
+									vindicator.updatePositionAndAngles(getBlockPos().getX() + 0.5, getBlockPos().getY(), getBlockPos().getZ() + 0.5, world.random.nextFloat() * 360, 0);
 									vindicator.initialize((ServerWorldAccess) world, world.getLocalDifficulty(getBlockPos()), SpawnReason.EVENT, null, null);
 									vindicator.setTarget(attackingPlayer);
 									vindicator.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, Integer.MAX_VALUE));
