@@ -112,8 +112,8 @@ public class VampireEntity extends BWHostileEntity {
 		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> entity instanceof PlayerEntity || entity instanceof MerchantEntity || entity.getGroup() == EntityGroup.ILLAGER));
 	}
 	
-	public static boolean isEffective(DamageSource source, boolean includeSmite) {
-		if (source.isOutOfWorld()) {
+	public static boolean isEffective(DamageSource source, boolean vampire) {
+		if (source.isOutOfWorld() || (vampire && source == BWDamageSources.SUN)) {
 			return true;
 		}
 		Entity attacker = source.getSource();
@@ -121,11 +121,11 @@ public class VampireEntity extends BWHostileEntity {
 			if (BWTags.BOSSES.contains(attacker.getType()) || attacker instanceof VampireEntity || attacker instanceof WerewolfEntity) {
 				return true;
 			}
-			else if (includeSmite && attacker instanceof LivingEntity && EnchantmentHelper.getLevel(Enchantments.SMITE, ((LivingEntity) attacker).getMainHandStack()) > 0) {
+			else if (vampire && attacker instanceof LivingEntity && EnchantmentHelper.getLevel(Enchantments.SMITE, ((LivingEntity) attacker).getMainHandStack()) > 0) {
 				return true;
 			}
 		}
-		return source == BWDamageSources.SUN || BewitchmentAPI.isSourceFromSilver(source);
+		return BewitchmentAPI.isSourceFromSilver(source);
 	}
 	
 	public static float handleAmount(LivingEntity entity, DamageSource source, float amount) {
