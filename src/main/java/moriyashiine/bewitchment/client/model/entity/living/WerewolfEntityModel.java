@@ -380,13 +380,13 @@ public class WerewolfEntityModel<T extends WerewolfEntity> extends BipedEntityMo
 		BipedLeftArm.copyPositionAndRotation(super.leftArm);
 		BipedLeftArm.pitch -= 1 / 8f;
 		BipedLeftArm.pitch /= 2;
-		BipedLeftArm.roll -= 1 / 3f;
+		BipedLeftArm.roll -= 1 / 4f;
 		BipedLeftArm.pivotY -= 5;
 		BipedLeftArm.pivotZ += 2;
 		BipedRightArm.copyPositionAndRotation(super.rightArm);
 		BipedRightArm.pitch -= 1 / 8f;
 		BipedRightArm.pitch /= 2;
-		BipedRightArm.roll += 1 / 3f;
+		BipedRightArm.roll += 1 / 4f;
 		BipedRightArm.pivotY -= 5;
 		BipedRightArm.pivotZ += 2;
 		BipedRightLeg.pitch = MathHelper.cos(limbAngle * 2 / 3f) * limbDistance * 0.5f - 7 / 8f;
