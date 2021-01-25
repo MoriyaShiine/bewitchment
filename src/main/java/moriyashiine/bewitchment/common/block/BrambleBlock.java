@@ -89,7 +89,7 @@ public class BrambleBlock extends SugarCaneBlock {
 		if (!world.isClient && entity instanceof LivingEntity) {
 			LivingEntity livingEntity = (LivingEntity) entity;
 			if (this == BWObjects.ENDER_BRAMBLE) {
-				BewitchmentAPI.attemptTeleport(livingEntity, entity.getBlockPos(), 12, true);
+				BewitchmentAPI.attemptTeleport(livingEntity, entity.getBlockPos(), 64, true);
 			}
 			if (this == BWObjects.SCORCHED_BRAMBLE) {
 				livingEntity.setOnFireFor(10);
