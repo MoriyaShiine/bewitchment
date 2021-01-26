@@ -60,7 +60,7 @@ public class BindFamiliarRitualFunction extends RitualFunction {
 				if (closestPlayer != null && BewitchmentAPI.getFamiliar(closestPlayer) == null) {
 					CompoundTag entityTag = new CompoundTag();
 					livingEntity.saveSelfToTag(entityTag);
-					if (closestPlayer.getUuid().equals(entityTag.getUuid("Owner"))) {
+					if (entityTag.contains("Owner") && closestPlayer.getUuid().equals(entityTag.getUuid("Owner"))) {
 						FamiliarAccessor.of(livingEntity).ifPresent(familiarAccessor -> familiarAccessor.setFamiliar(true));
 						BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
 						CompoundTag familiarTag = new CompoundTag();
