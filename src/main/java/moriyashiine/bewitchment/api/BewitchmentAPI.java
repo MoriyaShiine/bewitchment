@@ -21,7 +21,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -89,26 +88,26 @@ public class BewitchmentAPI {
 	
 	public static ItemStack getPoppet(World world, PoppetItem item, Entity owner, PlayerEntity specificInventory) {
 		if (!world.isClient) {
-			List<ItemStack> toSearch = new ArrayList<>();
+			Map<ItemStack, PoppetShelfBlockEntity> toSearch = new HashMap<>();
 			if (specificInventory != null) {
 				for (int i = 0; i < specificInventory.inventory.size(); i++) {
-					toSearch.add(specificInventory.inventory.getStack(i));
+					toSearch.put(specificInventory.inventory.getStack(i), null);
 				}
 			}
 			else {
 				for (long longPos : BWWorldState.get(world).poppetShelves) {
-					Inventory inventory = ((PoppetShelfBlockEntity) world.getBlockEntity(BlockPos.fromLong(longPos)));
-					for (int i = 0; i < inventory.size(); i++) {
-						toSearch.add(inventory.getStack(i));
+					PoppetShelfBlockEntity poppetShelf = ((PoppetShelfBlockEntity) world.getBlockEntity(BlockPos.fromLong(longPos)));
+					for (int i = 0; i < poppetShelf.size(); i++) {
+						toSearch.put(poppetShelf.getStack(i), poppetShelf);
 					}
 				}
 				for (PlayerEntity player : ((ServerWorld) world).getPlayers()) {
 					for (int i = 0; i < player.inventory.size(); i++) {
-						toSearch.add(player.inventory.getStack(i));
+						toSearch.put(player.inventory.getStack(i), null);
 					}
 				}
 			}
-			for (ItemStack stack : toSearch) {
+			for (ItemStack stack : toSearch.keySet()) {
 				if (stack.getItem() == item && TaglockItem.hasTaglock(stack)) {
 					UUID uuid = null;
 					if (owner != null) {
@@ -121,6 +120,11 @@ public class BewitchmentAPI {
 						}
 					}
 					if (TaglockItem.getTaglockUUID(stack).equals(uuid)) {
+						PoppetShelfBlockEntity poppetShelf = toSearch.get(stack);
+						if (poppetShelf != null) {
+							poppetShelf.markedForSync = true;
+							poppetShelf.markDirty();
+						}
 						return stack;
 					}
 				}
