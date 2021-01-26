@@ -82,11 +82,14 @@ public class VampireEntity extends BWHostileEntity {
 	
 	@Override
 	public boolean damage(DamageSource source, float amount) {
-		if (source.isFire()) {
-			source = BWDamageSources.SUN;
-			amount *= 2;
+		if (!world.isClient) {
+			if (source.isFire()) {
+				source = BWDamageSources.SUN;
+				amount *= 2;
+			}
+			amount = handleAmount(this, source, amount);
 		}
-		return super.damage(source, handleAmount(this, source, amount));
+		return super.damage(source, amount);
 	}
 	
 	@Override

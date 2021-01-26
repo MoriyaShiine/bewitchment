@@ -76,7 +76,7 @@ public class WerewolfEntity extends BWHostileEntity {
 	
 	@Override
 	public boolean damage(DamageSource source, float amount) {
-		if (!VampireEntity.isEffective(source, false)) {
+		if (!world.isClient && !VampireEntity.isEffective(source, false)) {
 			amount /= 6;
 		}
 		return super.damage(source, amount);

@@ -142,7 +142,7 @@ public class BewitchmentAPI {
 	}
 	
 	public static boolean isSourceFromSilver(DamageSource source) {
-		Entity attacker = source.getAttacker();
+		Entity attacker = source.getSource();
 		if (source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns()) {
 			return false;
 		}
