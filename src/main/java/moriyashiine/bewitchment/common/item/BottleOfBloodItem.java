@@ -24,8 +24,8 @@ public class BottleOfBloodItem extends Item {
 	
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		user.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 200, 1));
-		user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200, 1));
+		user.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 200));
+		user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200));
 		return Items.POTION.finishUsing(stack, world, user);
 	}
 	
