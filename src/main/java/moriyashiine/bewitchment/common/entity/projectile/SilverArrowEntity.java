@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.common.entity.projectile;
 
 import moriyashiine.bewitchment.client.network.packet.CreateNonLivingEntityPacket;
+import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -16,6 +17,10 @@ public class SilverArrowEntity extends PersistentProjectileEntity {
 	
 	public SilverArrowEntity(EntityType<? extends PersistentProjectileEntity> type, LivingEntity owner, World world) {
 		super(type, owner, world);
+	}
+	
+	public SilverArrowEntity(World world, double x, double y, double z) {
+		super(BWEntityTypes.SILVER_ARROW, x, y, z, world);
 	}
 	
 	@Override
