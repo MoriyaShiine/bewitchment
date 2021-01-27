@@ -124,7 +124,7 @@ public class VampireEntity extends BWHostileEntity {
 			if (BWTags.BOSSES.contains(attacker.getType()) || attacker instanceof VampireEntity || attacker instanceof WerewolfEntity) {
 				return true;
 			}
-			else if (vampire && attacker instanceof LivingEntity && EnchantmentHelper.getLevel(Enchantments.SMITE, ((LivingEntity) attacker).getMainHandStack()) > 0) {
+			else if (vampire && attacker instanceof LivingEntity && EnchantmentHelper.getEquipmentLevel(Enchantments.SMITE, (LivingEntity) attacker) > 0) {
 				return true;
 			}
 		}
