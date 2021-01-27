@@ -4,6 +4,7 @@ import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
 import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
 import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
+import moriyashiine.bewitchment.common.entity.living.VampireEntity;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
 import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
@@ -145,6 +146,14 @@ public class BewitchmentAPI {
 		return null;
 	}
 	
+	public static boolean isVampire(Entity entity, boolean includeHumanForm) {
+		return entity instanceof VampireEntity;
+	}
+	
+	public static boolean isWerewolf(Entity entity, boolean includeHumanForm) {
+		return entity instanceof WerewolfEntity;
+	}
+	
 	public static boolean isSourceFromSilver(DamageSource source) {
 		Entity attacker = source.getSource();
 		if (source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns()) {
@@ -161,7 +170,7 @@ public class BewitchmentAPI {
 		if (BWTags.IMMUNE_TO_SILVER.contains(livingEntity.getType())) {
 			return false;
 		}
-		return livingEntity.isUndead() || livingEntity.getGroup() == DEMON || livingEntity instanceof WerewolfEntity || BWTags.VULNERABLE_TO_SILVER.contains(livingEntity.getType());
+		return livingEntity.isUndead() || livingEntity.getGroup() == DEMON || isWerewolf(livingEntity, true) || BWTags.VULNERABLE_TO_SILVER.contains(livingEntity.getType());
 	}
 	
 	public static boolean hasPledge(World world, UUID entity) {
