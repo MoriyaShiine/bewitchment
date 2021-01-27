@@ -276,9 +276,9 @@ public class LeonardEntityModel<T extends LeonardEntity> extends BipedEntityMode
 		leftArm.roll -= 1 / 8f;
 		rightArm.copyPositionAndRotation(super.rightArm);
 		rightArm.roll += 1 / 8f;
-		rightLeg.pitch = MathHelper.cos(limbAngle * 2 / 3f) * limbDistance;
-		leftLeg.pitch = -rightLeg.pitch;
-		frontLoincloth00.pitch = Math.min(leftLeg.pitch, rightLeg.pitch) - 0.1745f;
+		rightLeg.pitch = MathHelper.cos(limbAngle * 2 / 3f) * limbDistance - 0.0698f;
+		leftLeg.pitch = -rightLeg.pitch - 0.1396f;
+		frontLoincloth00.pitch = Math.min(leftLeg.pitch, rightLeg.pitch);
 		backLoincloth00.pitch = Math.max(leftLeg.pitch, rightLeg.pitch);
 	}
 	
