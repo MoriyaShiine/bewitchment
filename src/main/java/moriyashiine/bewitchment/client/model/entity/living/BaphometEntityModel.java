@@ -439,7 +439,7 @@ public class BaphometEntityModel<T extends BaphometEntity> extends BipedEntityMo
 		rightArm.roll += 1 / 8f;
 		rightLeg.pitch = MathHelper.cos(limbAngle * 2 / 3f) * limbDistance - 1 / 3f;
 		leftLeg.pitch = -rightLeg.pitch - 2 / 3f;
-		lWing01.yaw = MathHelper.cos(animationProgress / 8) / 3 + 1 / 3f;
+		lWing01.yaw = MathHelper.cos(animationProgress / 16) / 3 + 1 / 3f;
 		rWing01.yaw = -lWing01.yaw;
 		frontLoincloth.pitch = Math.min(leftLeg.pitch, rightLeg.pitch) + 1 / 3f - 0.3491f;
 		backLoincloth.pitch = Math.max(leftLeg.pitch, rightLeg.pitch) + 1 / 3f;
