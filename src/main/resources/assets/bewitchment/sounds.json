@@ -269,6 +269,30 @@
 	],
 	"subtitle": "bewitchment.subtitles.entity.hellhound.death"
   },
+  "entity.vampire.ambient": {
+	"sounds": [
+	  "mob/pillager/idle1",
+	  "mob/pillager/idle2",
+	  "mob/pillager/idle3",
+	  "mob/pillager/idle4"
+	],
+	"subtitle": "bewitchment.subtitles.entity.vampire.ambient"
+  },
+  "entity.vampire.hurt": {
+	"sounds": [
+	  "mob/pillager/hurt1",
+	  "mob/pillager/hurt2",
+	  "mob/pillager/hurt3"
+	],
+	"subtitle": "bewitchment.subtitles.entity.vampire.hurt"
+  },
+  "entity.vampire.death": {
+	"sounds": [
+	  "mob/pillager/death1",
+	  "mob/pillager/death2"
+	],
+	"subtitle": "bewitchment.subtitles.entity.vampire.death"
+  },
   "entity.werewolf.ambient": {
 	"sounds": [
 	],
