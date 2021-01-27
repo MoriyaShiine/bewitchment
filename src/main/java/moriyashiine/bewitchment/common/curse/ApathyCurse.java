@@ -11,10 +11,11 @@ public class ApathyCurse extends Curse {
 	
 	@Override
 	public void tick(LivingEntity target) {
-		MagicAccessor.of(target).ifPresent(magicAccessor -> {
+		if (target instanceof MagicAccessor) {
+			MagicAccessor magicAccessor = (MagicAccessor) target;
 			if (magicAccessor.getMagic() > 0) {
 				magicAccessor.setMagic(0);
 			}
-		});
+		}
 	}
 }

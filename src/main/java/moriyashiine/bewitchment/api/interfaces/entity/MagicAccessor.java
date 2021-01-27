@@ -1,16 +1,7 @@
 package moriyashiine.bewitchment.api.interfaces.entity;
 
-import java.util.Optional;
-
 public interface MagicAccessor {
 	int MAX_MAGIC = 10000;
-	
-	static Optional<MagicAccessor> of(Object entity) {
-		if (entity instanceof MagicAccessor) {
-			return Optional.of(((MagicAccessor) entity));
-		}
-		return Optional.empty();
-	}
 	
 	int getMagic();
 	

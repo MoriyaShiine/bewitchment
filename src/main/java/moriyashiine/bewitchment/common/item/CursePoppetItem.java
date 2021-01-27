@@ -44,16 +44,14 @@ public class CursePoppetItem extends PoppetItem {
 				UUID uuid = TaglockItem.getTaglockUUID(stack);
 				for (ServerWorld serverWorld : server.getWorlds()) {
 					Entity entity = serverWorld.getEntity(uuid);
-					if (entity != null) {
+					if (entity instanceof CurseAccessor) {
 						Curse curse = BWRegistries.CURSES.get(new Identifier(stack.getOrCreateTag().getString("Curse")));
 						if (curse != null) {
-							CurseAccessor.of(entity).ifPresent(curseAccessor -> {
-								curseAccessor.addCurse(new Curse.Instance(curse, 168000));
-								world.playSound(null, user.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, SoundCategory.PLAYERS, 1, 1);
-								if (!(user instanceof PlayerEntity && ((PlayerEntity) user).isCreative())) {
-									stack.decrement(1);
-								}
-							});
+							((CurseAccessor) entity).addCurse(new Curse.Instance(curse, 168000));
+							world.playSound(null, user.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, SoundCategory.PLAYERS, 1, 1);
+							if (!(user instanceof PlayerEntity && ((PlayerEntity) user).isCreative())) {
+								stack.decrement(1);
+							}
 							return stack;
 						}
 					}

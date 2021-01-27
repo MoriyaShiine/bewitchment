@@ -37,7 +37,7 @@ public class InsanityCurse extends Curse {
 			if (entity instanceof MobEntity) {
 				BewitchmentAPI.attemptTeleport(entity, target.getBlockPos(), 24, false);
 				((MobEntity) entity).initialize((ServerWorldAccess) target.world, target.world.getLocalDifficulty(target.getBlockPos()), SpawnReason.EVENT, null, null);
-				InsanityTargetAccessor.of(entity).ifPresent(insanityTargetAccessor -> insanityTargetAccessor.setInsanityTargetUUID(Optional.of(target.getUuid())));
+				((InsanityTargetAccessor) entity).setInsanityTargetUUID(Optional.of(target.getUuid()));
 				entity.setSilent(true);
 				target.world.spawnEntity(entity);
 			}

@@ -15,20 +15,18 @@ public class DeathContract extends Contract {
 	
 	public void tick(LivingEntity target, boolean includeNegative) {
 		if (target.damage(BWDamageSources.DEATH, Float.MAX_VALUE)) {
-			ContractAccessor.of(target).ifPresent(contractAccessor -> contractAccessor.removeContract(this));
+			((ContractAccessor) target).removeContract(this);
 		}
 	}
 	
 	@Override
 	public void finishUsing(LivingEntity user, boolean includeNegative) {
 		if (includeNegative) {
-			CurseAccessor.of(user).ifPresent(curseAccessor -> {
-				Curse curse = null;
-				while (curse == null || curse.type != Curse.Type.LESSER) {
-					curse = BWRegistries.CURSES.get(user.getRandom().nextInt(BWRegistries.CURSES.getEntries().size()));
-				}
-				curseAccessor.addCurse(new Curse.Instance(curse, 24000));
-			});
+			Curse curse = null;
+			while (curse == null || curse.type != Curse.Type.LESSER) {
+				curse = BWRegistries.CURSES.get(user.getRandom().nextInt(BWRegistries.CURSES.getEntries().size()));
+			}
+			((CurseAccessor) user).addCurse(new Curse.Instance(curse, 24000));
 		}
 	}
 }

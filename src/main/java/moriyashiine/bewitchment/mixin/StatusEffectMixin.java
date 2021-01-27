@@ -19,8 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class StatusEffectMixin {
 	@ModifyConstant(method = "applyUpdateEffect", constant = @Constant(floatValue = 1, ordinal = 2))
 	private float applyUpdateEffect(float value, LivingEntity entity) {
-		CurseAccessor curseAccessor = CurseAccessor.of(entity).orElse(null);
-		if (curseAccessor != null && curseAccessor.hasCurse(BWCurses.SUSCEPTIBILITY) && entity.getHealth() > 3) {
+		if (((CurseAccessor) entity).hasCurse(BWCurses.SUSCEPTIBILITY) && entity.getHealth() > 3) {
 			return 3;
 		}
 		return value;
@@ -29,9 +28,7 @@ public class StatusEffectMixin {
 	@Inject(method = "applyUpdateEffect", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 0, target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"), cancellable = true)
 	private void damage(LivingEntity entity, int amplifier, CallbackInfo callbackInfo) {
 		if (entity instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) entity) == BWEntityTypes.SNAKE) {
-			MagicAccessor.of(entity).ifPresent(magicAccessor -> {
-				magicAccessor.fillMagic(50, false);
-			});
+			((MagicAccessor) entity).fillMagic(50, false);
 			callbackInfo.cancel();
 		}
 	}

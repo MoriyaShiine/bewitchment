@@ -82,16 +82,16 @@ public abstract class EntityMixin implements WetAccessor {
 		if (!world.isClient && this instanceof MasterAccessor) {
 			Entity attacker = source.getAttacker();
 			if (attacker instanceof LivingEntity) {
-				MasterAccessor.of(this).ifPresent(masterAccessor -> {
-					if (attacker.getUuid().equals(masterAccessor.getMasterUUID())) {
+				if (this instanceof MasterAccessor) {
+					if (attacker.getUuid().equals(((MasterAccessor) this).getMasterUUID())) {
 						callbackInfo.setReturnValue(true);
 					}
-				});
-				MasterAccessor.of(attacker).ifPresent(masterAccessor -> {
-					if (getUuid().equals(masterAccessor.getMasterUUID())) {
+				}
+				if (attacker instanceof MasterAccessor) {
+					if (getUuid().equals(((MasterAccessor) attacker).getMasterUUID())) {
 						callbackInfo.setReturnValue(true);
 					}
-				});
+				}
 			}
 		}
 	}
@@ -125,11 +125,9 @@ public abstract class EntityMixin implements WetAccessor {
 					}
 				}
 			}
-			InsanityTargetAccessor.of(this).ifPresent(insanityTargetAccessor -> {
-				if (insanityTargetAccessor.getInsanityTargetUUID().isPresent()) {
-					callbackInfo.cancel();
-				}
-			});
+			if (this instanceof InsanityTargetAccessor && ((InsanityTargetAccessor) this).getInsanityTargetUUID().isPresent()) {
+				callbackInfo.cancel();
+			}
 		}
 	}
 	

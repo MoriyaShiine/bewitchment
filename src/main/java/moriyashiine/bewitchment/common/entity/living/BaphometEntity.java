@@ -147,21 +147,19 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 			boolean client = world.isClient;
 			if (!client) {
 				if (BewitchmentAPI.isPledged(world, getPledgeUUID(), player.getUuid())) {
-					ContractAccessor.of(player).ifPresent(contractAccessor -> {
-						if (player.experienceLevel >= 20 || player.isCreative()) {
-							Contract contract = null;
-							while (contract == null || !contract.canBeGiven) {
-								contract = BWRegistries.CONTRACTS.get(random.nextInt(BWRegistries.CONTRACTS.getEntries().size()));
-							}
-							Contract.Instance instance = new Contract.Instance(contract, 168000);
-							contractAccessor.addContract(instance);
-							player.sendMessage(new TranslatableText(Bewitchment.MODID + ".baphomet_contract", new TranslatableText("contract." + BWRegistries.CONTRACTS.getId(contract).toString().replace(":", "."))), true);
-							if (!player.isCreative()) {
-								player.addExperience(-551);
-								world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_PLAYER_LEVELUP, player.getSoundCategory(), 1, 0.5f);
-							}
+					if (player.experienceLevel >= 20 || player.isCreative()) {
+						Contract contract = null;
+						while (contract == null || !contract.canBeGiven) {
+							contract = BWRegistries.CONTRACTS.get(random.nextInt(BWRegistries.CONTRACTS.getEntries().size()));
 						}
-					});
+						Contract.Instance instance = new Contract.Instance(contract, 168000);
+						((ContractAccessor) player).addContract(instance);
+						player.sendMessage(new TranslatableText(Bewitchment.MODID + ".baphomet_contract", new TranslatableText("contract." + BWRegistries.CONTRACTS.getId(contract).toString().replace(":", "."))), true);
+						if (!player.isCreative()) {
+							player.addExperience(-551);
+							world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_PLAYER_LEVELUP, player.getSoundCategory(), 1, 0.5f);
+						}
+					}
 				}
 			}
 			return ActionResult.success(client);

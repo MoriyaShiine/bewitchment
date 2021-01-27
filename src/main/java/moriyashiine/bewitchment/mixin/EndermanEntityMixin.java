@@ -27,13 +27,9 @@ public abstract class EndermanEntityMixin extends HostileEntity {
 	
 	@Inject(method = "isPlayerStaring", at = @At("HEAD"), cancellable = true)
 	private void isPlayerStaring(PlayerEntity player, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!player.isCreative() && getTarget() == null) {
-			CurseAccessor.of(player).ifPresent(curseAccessor -> {
-				if (curseAccessor.hasCurse(BWCurses.OUTRAGE) && distanceTo(player) <= getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE) / 4 && canSee(player)) {
-					setTarget(player);
-					callbackInfo.setReturnValue(true);
-				}
-			});
+		if (!player.isCreative() && getTarget() == null && ((CurseAccessor) player).hasCurse(BWCurses.OUTRAGE) && distanceTo(player) <= getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE) / 4 && canSee(player)) {
+			setTarget(player);
+			callbackInfo.setReturnValue(true);
 		}
 	}
 }

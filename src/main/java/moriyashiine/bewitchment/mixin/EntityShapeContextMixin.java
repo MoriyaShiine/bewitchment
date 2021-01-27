@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin;
 
-import moriyashiine.bewitchment.api.interfaces.misc.EntityShapeContextAdditionAccesor;
+import moriyashiine.bewitchment.api.interfaces.misc.EntityShapeContextAdditionAccessor;
 import net.minecraft.block.EntityShapeContext;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntityShapeContext.class)
-public abstract class EntityShapeContextMixin implements ShapeContext, EntityShapeContextAdditionAccesor {
+public abstract class EntityShapeContextMixin implements ShapeContext, EntityShapeContextAdditionAccessor {
 	private Entity entity;
 	
 	@Override

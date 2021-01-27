@@ -36,17 +36,16 @@ public abstract class InGameHudMixin extends DrawableHelper {
 	@Inject(method = "render", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 0, target = "Lnet/minecraft/client/gui/hud/InGameHud;renderCrosshair(Lnet/minecraft/client/util/math/MatrixStack;)V"))
 	private void render(MatrixStack matrices, float tickDelta, CallbackInfo callbackInfo) {
 		PlayerEntity player = getCameraPlayer();
-		if (player != null) {
-			MagicAccessor.of(player).ifPresent(magicAccessor -> {
-				if (magicAccessor.getMagicTimer() > 0) {
-					client.getTextureManager().bindTexture(BEWITCHMENT_GUI_ICONS_TEXTURE);
-					RenderSystem.color4f(1, 1, 1, magicAccessor.getMagicTimer() / 10f);
-					drawTexture(matrices, 13, (scaledHeight - 74) / 2, 25, 0, 7, 74);
-					drawTexture(matrices, 13, (scaledHeight - 74) / 2, 32, 0, 7, (int) (74 - (magicAccessor.getMagic() * 74f / MagicAccessor.MAX_MAGIC)));
-					drawTexture(matrices, 4, (scaledHeight - 102) / 2, 0, 0, 25, 102);
-					client.getTextureManager().bindTexture(GUI_ICONS_TEXTURE);
-				}
-			});
+		if (player instanceof MagicAccessor) {
+			MagicAccessor magicAccessor = (MagicAccessor) player;
+			if (magicAccessor.getMagicTimer() > 0) {
+				client.getTextureManager().bindTexture(BEWITCHMENT_GUI_ICONS_TEXTURE);
+				RenderSystem.color4f(1, 1, 1, magicAccessor.getMagicTimer() / 10f);
+				drawTexture(matrices, 13, (scaledHeight - 74) / 2, 25, 0, 7, 74);
+				drawTexture(matrices, 13, (scaledHeight - 74) / 2, 32, 0, 7, (int) (74 - (magicAccessor.getMagic() * 74f / MagicAccessor.MAX_MAGIC)));
+				drawTexture(matrices, 4, (scaledHeight - 102) / 2, 0, 0, 25, 102);
+				client.getTextureManager().bindTexture(GUI_ICONS_TEXTURE);
+			}
 		}
 	}
 }

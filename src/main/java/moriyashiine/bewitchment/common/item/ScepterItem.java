@@ -45,8 +45,8 @@ public class ScepterItem extends Item {
 	
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		MagicAccessor.of(user).ifPresent(magicAccessor -> {
-			if (!world.isClient && !user.hasStatusEffect(BWStatusEffects.INHIBITED) && ((user instanceof PlayerEntity && ((PlayerEntity) user).isCreative()) || magicAccessor.drainMagic(250, false))) {
+		if (user instanceof MagicAccessor) {
+			if (!world.isClient && !user.hasStatusEffect(BWStatusEffects.INHIBITED) && ((user instanceof PlayerEntity && ((PlayerEntity) user).isCreative()) || ((MagicAccessor) user).drainMagic(250, false))) {
 				PotionEntity potion = new PotionEntity(world, user);
 				List<StatusEffectInstance> effects = PotionUtil.getCustomPotionEffects(stack);
 				ItemStack potionStack = PotionUtil.setCustomPotionEffects(new ItemStack(Items.SPLASH_POTION), effects);
@@ -63,7 +63,7 @@ public class ScepterItem extends Item {
 					stack.damage(1, user, stackUser -> stackUser.sendToolBreakStatus(user.getActiveHand()));
 				}
 			}
-		});
+		}
 		return stack;
 	}
 	

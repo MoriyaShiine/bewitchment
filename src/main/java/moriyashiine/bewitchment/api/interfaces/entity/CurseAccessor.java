@@ -3,16 +3,8 @@ package moriyashiine.bewitchment.api.interfaces.entity;
 import moriyashiine.bewitchment.api.registry.Curse;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CurseAccessor {
-	static Optional<CurseAccessor> of(Object entity) {
-		if (entity instanceof CurseAccessor) {
-			return Optional.of(((CurseAccessor) entity));
-		}
-		return Optional.empty();
-	}
-	
 	List<Curse.Instance> getCurses();
 	
 	default boolean hasCurse(Curse curse) {

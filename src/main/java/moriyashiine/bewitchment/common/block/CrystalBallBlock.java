@@ -58,25 +58,23 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 		else {
 			BlockPos nearestAltarPos = WitchAltarBlock.getClosestAltarPos(world, pos);
 			if (nearestAltarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(nearestAltarPos)).drain(500, false)) {
-				FortuneAccessor.of(player).ifPresent(fortuneAccessor -> {
-					if (fortuneAccessor.getFortune() == null) {
-						world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE, SoundCategory.BLOCKS, 1, 1);
-						Fortune fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
-						CurseAccessor curseAccessor = CurseAccessor.of(player).orElse(null);
-						if (curseAccessor.hasCurse(BWCurses.UNLUCKY)) {
-							while (fortune.positive) {
-								fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
-							}
+				FortuneAccessor fortuneAccessor = (FortuneAccessor) player;
+				if (fortuneAccessor.getFortune() == null) {
+					world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE, SoundCategory.BLOCKS, 1, 1);
+					Fortune fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
+					if (((CurseAccessor) player).hasCurse(BWCurses.UNLUCKY)) {
+						while (fortune.positive) {
+							fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
 						}
-						fortuneAccessor.setFortune(new Fortune.Instance(fortune, world.random.nextInt(120000)));
-						player.sendMessage(new TranslatableText("fortune." + BWRegistries.FORTUNES.getId(fortune).toString().replace(":", ".")), true);
-						
 					}
-					else {
-						world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FAIL, SoundCategory.BLOCKS, 1, 1);
-						player.sendMessage(new TranslatableText(Bewitchment.MODID + ".has_fortune"), true);
-					}
-				});
+					fortuneAccessor.setFortune(new Fortune.Instance(fortune, world.random.nextInt(120000)));
+					player.sendMessage(new TranslatableText("fortune." + BWRegistries.FORTUNES.getId(fortune).toString().replace(":", ".")), true);
+					
+				}
+				else {
+					world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FAIL, SoundCategory.BLOCKS, 1, 1);
+					player.sendMessage(new TranslatableText(Bewitchment.MODID + ".has_fortune"), true);
+				}
 			}
 			else {
 				world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FAIL, SoundCategory.BLOCKS, 1, 1);

@@ -134,12 +134,10 @@ public class VampireEntity extends BWHostileEntity {
 	public static float handleAmount(LivingEntity entity, DamageSource source, float amount) {
 		if (!isEffective(source, true)) {
 			if (entity.getHealth() - amount < 1) {
-				BloodAccessor bloodAccessor = BloodAccessor.of(entity).orElse(null);
-				if (bloodAccessor != null) {
-					while (entity.getHealth() - amount < 1 && bloodAccessor.getBlood() > 0) {
-						amount--;
-						bloodAccessor.drainBlood(1, false);
-					}
+				BloodAccessor bloodAccessor = (BloodAccessor) entity;
+				while (entity.getHealth() - amount < 1 && bloodAccessor.getBlood() > 0) {
+					amount--;
+					bloodAccessor.drainBlood(1, false);
 				}
 			}
 		}

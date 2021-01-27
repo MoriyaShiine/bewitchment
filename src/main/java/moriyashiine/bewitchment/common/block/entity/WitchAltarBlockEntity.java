@@ -120,12 +120,13 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 					else {
 						power = Math.min(power + gain, maxPower);
 					}
-					PlayerLookup.around((ServerWorld) world, Vec3d.of(pos), 24).forEach(playerEntity -> MagicAccessor.of(playerEntity).ifPresent(magicAccessor -> {
+					PlayerLookup.around((ServerWorld) world, Vec3d.of(pos), 24).forEach(playerEntity -> {
+						MagicAccessor magicAccessor = (MagicAccessor) playerEntity;
 						if (magicAccessor.fillMagic(100, true) && drain(10, true)) {
 							magicAccessor.fillMagic(100, false);
 							drain(10, false);
 						}
-					}));
+					});
 				}
 			}
 		}

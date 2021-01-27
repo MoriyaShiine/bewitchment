@@ -34,6 +34,9 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Desp
 	@Shadow
 	protected abstract void sayNo();
 	
+	@Shadow
+	protected abstract void initDataTracker();
+	
 	public VillagerEntityMixin(EntityType<? extends MerchantEntity> entityType, World world) {
 		super(entityType, world);
 	}
@@ -63,7 +66,8 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Desp
 	@Inject(method = "onDeath", at = @At("HEAD"))
 	private void onDeath(CallbackInfo callbackInfo) {
 		if (!world.isClient) {
-			ContractAccessor.of(attackingPlayer).ifPresent(contractAccessor -> {
+			if (attackingPlayer instanceof ContractAccessor) {
+				ContractAccessor contractAccessor = (ContractAccessor) attackingPlayer;
 				if (contractAccessor.hasContract(BWContracts.ENVY)) {
 					VillagerEntity villager = (VillagerEntity) (Object) this;
 					if (!villager.getOffers().isEmpty()) {
@@ -88,7 +92,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Desp
 						}
 					}
 				}
-			});
+			}
 		}
 	}
 	

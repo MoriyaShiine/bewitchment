@@ -17,7 +17,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@SuppressWarnings("ConstantConditions")
 @Mixin(AnimalMateGoal.class)
 public abstract class AnimalMateGoalMixin extends Goal {
 	@Shadow
@@ -30,7 +29,8 @@ public abstract class AnimalMateGoalMixin extends Goal {
 	@Inject(method = "breed", at = @At("HEAD"))
 	private void breed(CallbackInfo callbackInfo) {
 		ServerPlayerEntity player = animal.getLovingPlayer();
-		ContractAccessor.of(player).ifPresent(contractAccessor -> {
+		if (player instanceof ContractAccessor) {
+			ContractAccessor contractAccessor = (ContractAccessor) player;
 			if (contractAccessor.hasContract(BWContracts.LUST)) {
 				if (contractAccessor.hasNegativeEffects() && player.getRandom().nextFloat() < 1 / 4f) {
 					for (int i = 0; i < 3; i++) {
@@ -48,6 +48,6 @@ public abstract class AnimalMateGoalMixin extends Goal {
 					animal.breed(player.getServerWorld(), mate);
 				}
 			}
-		});
+		}
 	}
 }

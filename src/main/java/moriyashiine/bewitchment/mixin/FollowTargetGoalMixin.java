@@ -19,7 +19,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.function.Predicate;
 
-@SuppressWarnings("ConstantConditions")
 @Mixin(FollowTargetGoal.class)
 public abstract class FollowTargetGoalMixin<T extends LivingEntity> extends TrackTargetGoal {
 	@Shadow
@@ -35,7 +34,7 @@ public abstract class FollowTargetGoalMixin<T extends LivingEntity> extends Trac
 	@Inject(method = "<init>(Lnet/minecraft/entity/mob/MobEntity;Ljava/lang/Class;IZZLjava/util/function/Predicate;)V", at = @At("TAIL"))
 	private void init(MobEntity mob, Class<T> targetClass, int reciprocalChance, boolean checkVisibility, boolean checkCanNavigate, @Nullable Predicate<LivingEntity> predicate, CallbackInfo callbackInfo) {
 		if (predicate != null) {
-			targetPredicate.setPredicate(predicate.or(livingEntity -> CurseAccessor.of(livingEntity).orElse(null).hasCurse(BWCurses.OUTRAGE)));
+			targetPredicate.setPredicate(predicate.or(livingEntity -> ((CurseAccessor) livingEntity).hasCurse(BWCurses.OUTRAGE)));
 		}
 	}
 	

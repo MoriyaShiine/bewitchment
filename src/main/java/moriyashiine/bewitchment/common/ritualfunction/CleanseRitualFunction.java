@@ -51,13 +51,14 @@ public class CleanseRitualFunction extends RitualFunction {
 		}
 		if (taglock != null) {
 			LivingEntity livingEntity = BewitchmentAPI.getTaglockOwner(world, taglock);
-			CurseAccessor.of(livingEntity).ifPresent(curseAccessor -> {
+			if (livingEntity instanceof CurseAccessor) {
+				CurseAccessor curseAccessor = (CurseAccessor) livingEntity;
 				for (Curse.Instance instance : curseAccessor.getCurses()) {
 					if (catFamiliar || (world.random.nextFloat() < (instance.curse.type == Curse.Type.LESSER ? 7.5f / 10f : 5 / 10f))) {
 						curseAccessor.removeCurse(instance.curse);
 					}
 				}
-			});
+			}
 			if (livingEntity instanceof ZombieVillagerEntity) {
 				((ZombieVillagerEntityAccessor) livingEntity).bw_finishConversion(world);
 			}

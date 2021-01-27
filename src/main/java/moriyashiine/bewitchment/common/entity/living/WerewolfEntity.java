@@ -39,9 +39,9 @@ public class WerewolfEntity extends BWHostileEntity {
 		super.tick();
 		if (!world.isClient && despawns && age % 20 == 0 && BewitchmentAPI.getMoonPhase(world) != 0) {
 			VillagerEntity entity = EntityType.VILLAGER.create(world);
-			if (entity != null) {
+			if (entity instanceof DespawnAccessor) {
 				entity.updatePositionAndAngles(getX(), getY(), getZ(), random.nextFloat() * 360, 0);
-				DespawnAccessor.of(entity).ifPresent(despawnAccessor -> despawnAccessor.setDespawnTimer(1200));
+				((DespawnAccessor) entity).setDespawnTimer(1200);
 				world.spawnEntity(entity);
 				remove();
 			}

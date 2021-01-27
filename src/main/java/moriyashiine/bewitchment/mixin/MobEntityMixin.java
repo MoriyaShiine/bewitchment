@@ -90,8 +90,8 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 				}
 				pledgeable.summonMinions((MobEntity) (Object) this);
 			}
-			ContractAccessor contractAccessor = ContractAccessor.of(target).orElse(null);
-			if (contractAccessor != null && contractAccessor.hasContract(BWContracts.WAR)) {
+			ContractAccessor contractAccessor = (ContractAccessor) target;
+			if (contractAccessor.hasContract(BWContracts.WAR)) {
 				Entity nearest = null;
 				for (Entity entity : world.getEntitiesByType(getType(), new Box(getBlockPos()).expand(16), entity -> entity != this)) {
 					if (nearest == null || entity.distanceTo(this) < nearest.distanceTo(this)) {
@@ -116,26 +116,24 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 	private void dropLoot(DamageSource source, boolean causedByPlayer, CallbackInfo callbackInfo) {
 		if (!world.isClient && (Object) this instanceof SpiderEntity && !spawnedByArachnophobia) {
 			Entity attacker = source.getAttacker();
-			CurseAccessor.of(attacker).ifPresent(curseAccessor -> {
-				if (curseAccessor.hasCurse(BWCurses.ARACHNOPHOBIA)) {
-					for (int i = 0; i < random.nextInt(3) + 3; i++) {
-						SpiderEntity spider;
-						if (random.nextFloat() < 1 / 8192f) {
-							spider = EntityType.SPIDER.create(world);
-						}
-						else {
-							spider = EntityType.CAVE_SPIDER.create(world);
-							((MobEntityMixin) (Object) spider).spawnedByArachnophobia = true;
-						}
-						if (spider != null) {
-							spider.updatePositionAndAngles(getX(), getY(), getZ(), random.nextFloat() * 360, 0);
-							spider.initialize((ServerWorldAccess) world, world.getLocalDifficulty(getBlockPos()), SpawnReason.EVENT, null, null);
-							spider.setTarget((LivingEntity) attacker);
-							world.spawnEntity(spider);
-						}
+			if (attacker instanceof CurseAccessor && ((CurseAccessor) attacker).hasCurse(BWCurses.ARACHNOPHOBIA)) {
+				for (int i = 0; i < random.nextInt(3) + 3; i++) {
+					SpiderEntity spider;
+					if (random.nextFloat() < 1 / 8192f) {
+						spider = EntityType.SPIDER.create(world);
+					}
+					else {
+						spider = EntityType.CAVE_SPIDER.create(world);
+						((MobEntityMixin) (Object) spider).spawnedByArachnophobia = true;
+					}
+					if (spider != null) {
+						spider.updatePositionAndAngles(getX(), getY(), getZ(), random.nextFloat() * 360, 0);
+						spider.initialize((ServerWorldAccess) world, world.getLocalDifficulty(getBlockPos()), SpawnReason.EVENT, null, null);
+						spider.setTarget((LivingEntity) attacker);
+						world.spawnEntity(spider);
 					}
 				}
-			});
+			}
 		}
 	}
 	
@@ -162,11 +160,8 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 					if (random.nextFloat() < 1 / 100f) {
 						remove = true;
 					}
-					else {
-						CurseAccessor curseAccessor = CurseAccessor.of(entity).orElse(null);
-						if (curseAccessor != null && !curseAccessor.hasCurse(BWCurses.INSANITY)) {
-							remove = true;
-						}
+					else if (entity instanceof CurseAccessor && !((CurseAccessor) entity).hasCurse(BWCurses.INSANITY)) {
+						remove = true;
 					}
 					if (remove) {
 						remove();

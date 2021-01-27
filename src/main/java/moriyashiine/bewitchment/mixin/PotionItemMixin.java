@@ -2,7 +2,6 @@ package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.interfaces.entity.PolymorphAccessor;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PotionItem;
 import net.minecraft.nbt.CompoundTag;
@@ -21,15 +20,14 @@ public abstract class PotionItemMixin {
 	private void finishUsing(ItemStack stack, World world, LivingEntity user, CallbackInfoReturnable<ItemStack> callbackInfo) {
 		if (!world.isClient) {
 			try {
-				if (user instanceof PlayerEntity) {
+				if (user instanceof PolymorphAccessor) {
 					CompoundTag tag = stack.getTag();
 					if (tag != null) {
 						String name = tag.getString("PolymorphName");
 						if (!name.isEmpty()) {
-							PolymorphAccessor.of(user).ifPresent(polymorphAccessor -> {
-								polymorphAccessor.setPolymorphUUID(Optional.of(UUID.fromString(tag.getString("PolymorphUUID"))));
-								polymorphAccessor.setPolymorphName(name);
-							});
+							PolymorphAccessor polymorphAccessor = (PolymorphAccessor) user;
+							polymorphAccessor.setPolymorphUUID(Optional.of(UUID.fromString(tag.getString("PolymorphUUID"))));
+							polymorphAccessor.setPolymorphName(name);
 						}
 					}
 				}

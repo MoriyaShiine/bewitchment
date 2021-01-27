@@ -286,7 +286,7 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	}
 	
 	public static boolean rejectTrades(LivingEntity merchant) {
-		return !merchant.world.getEntitiesByClass(LivingEntity.class, new Box(merchant.getBlockPos()).expand(8), entity -> merchant.canSee(entity) && entity.isAlive() && CurseAccessor.of(entity).orElse(null).hasCurse(BWCurses.APATHY)).isEmpty();
+		return !merchant.world.getEntitiesByClass(LivingEntity.class, new Box(merchant.getBlockPos()).expand(8), entity -> merchant.canSee(entity) && entity.isAlive() && ((CurseAccessor) entity).hasCurse(BWCurses.APATHY)).isEmpty();
 	}
 	
 	@SuppressWarnings("ConstantConditions")

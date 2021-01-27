@@ -30,7 +30,7 @@ public interface Pledgeable {
 					mobEntity.initialize((ServerWorldAccess) pledgeableEntity.world, pledgeableEntity.world.getLocalDifficulty(pledgeableEntity.getBlockPos()), SpawnReason.EVENT, null, null);
 					mobEntity.pitch = pledgeableEntity.getRandom().nextFloat() * 360;
 					mobEntity.setTarget(pledgeableEntity.getTarget());
-					MasterAccessor.of(mobEntity).ifPresent(masterAccessor -> masterAccessor.setMasterUUID(pledgeableEntity.getUuid()));
+					((MasterAccessor) mobEntity).setMasterUUID(pledgeableEntity.getUuid());
 					mobEntity.setPersistent();
 					getMinionBuffs().forEach(mobEntity::addStatusEffect);
 					pledgeableEntity.world.spawnEntity(mobEntity);

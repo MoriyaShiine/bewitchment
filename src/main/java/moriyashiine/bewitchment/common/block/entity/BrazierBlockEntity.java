@@ -131,8 +131,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 								if (target instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) target) == BWEntityTypes.RAVEN && world.random.nextBoolean()) {
 									target = closestPlayer;
 								}
-								CurseAccessor curseAccessor = CurseAccessor.of(target).orElse(null);
-								if (curseAccessor != null) {
+								if (target instanceof CurseAccessor) {
 									ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, target, null);
 									if (!poppet.isEmpty() && !poppet.getOrCreateTag().getBoolean("Cursed")) {
 										poppet.getOrCreateTag().putString("Curse", BWRegistries.CURSES.getId(curseRecipe.curse).toString());
@@ -144,7 +143,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 										if (closestPlayer != null && BewitchmentAPI.getFamiliar(closestPlayer) == BWEntityTypes.RAVEN) {
 											duration *= 2;
 										}
-										curseAccessor.addCurse(new Curse.Instance(curseRecipe.curse, duration));
+										((CurseAccessor) target).addCurse(new Curse.Instance(curseRecipe.curse, duration));
 									}
 									world.playSound(null, pos, BWSoundEvents.ENTITY_GENERIC_CURSE, SoundCategory.BLOCKS, 1, 1);
 									clear = true;

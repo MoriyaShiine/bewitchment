@@ -61,7 +61,7 @@ public class BindFamiliarRitualFunction extends RitualFunction {
 					CompoundTag entityTag = new CompoundTag();
 					livingEntity.saveSelfToTag(entityTag);
 					if (entityTag.contains("Owner") && closestPlayer.getUuid().equals(entityTag.getUuid("Owner"))) {
-						FamiliarAccessor.of(livingEntity).ifPresent(familiarAccessor -> familiarAccessor.setFamiliar(true));
+						((FamiliarAccessor) livingEntity).setFamiliar(true);
 						BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
 						CompoundTag familiarTag = new CompoundTag();
 						familiarTag.putUuid("UUID", entityTag.getUuid("UUID"));

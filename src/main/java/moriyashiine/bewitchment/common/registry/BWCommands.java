@@ -32,9 +32,8 @@ public class BWCommands {
 	public static void init(CommandDispatcher<ServerCommandSource> dispatcher, boolean dedicated) {
 		dispatcher.register(CommandManager.literal("fortune").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.argument("target", EntityArgumentType.player()).then(CommandManager.literal("get").executes(context -> {
 			PlayerEntity target = EntityArgumentType.getPlayer(context, "target");
-			FortuneAccessor fortuneAccessor = FortuneAccessor.of(target).orElse(null);
-			if (fortuneAccessor != null) {
-				Fortune.Instance instance = fortuneAccessor.getFortune();
+			if (target instanceof FortuneAccessor) {
+				Fortune.Instance instance = ((FortuneAccessor) target).getFortune();
 				if (instance != null) {
 					context.getSource().sendFeedback(new LiteralText(target.getEntityName() + " has the following fortune: " + BWRegistries.FORTUNES.getId(instance.fortune).toString()), true);
 					return 1;
@@ -46,19 +45,17 @@ public class BWCommands {
 			return 0;
 		})).then(CommandManager.literal("set").then(CommandManager.argument("fortune", FortuneArgumentType.fortune()).executes(context -> {
 			PlayerEntity target = EntityArgumentType.getPlayer(context, "target");
-			FortuneAccessor fortuneAccessor = FortuneAccessor.of(target).orElse(null);
-			if (fortuneAccessor != null) {
+			if (target instanceof FortuneAccessor) {
 				Fortune fortune = FortuneArgumentType.getFortune(context, "fortune");
-				fortuneAccessor.setFortune(new Fortune.Instance(fortune, target.world.random.nextInt(120000)));
+				((FortuneAccessor) target).setFortune(new Fortune.Instance(fortune, target.world.random.nextInt(120000)));
 				context.getSource().sendFeedback(new LiteralText("Set " + target.getEntityName() + "'s fortune to " + BWRegistries.FORTUNES.getId(fortune).toString()), true);
 				return 1;
 			}
 			return 0;
 		}))).then(CommandManager.literal("remove").executes(context -> {
 			PlayerEntity target = EntityArgumentType.getPlayer(context, "target");
-			FortuneAccessor fortuneAccessor = FortuneAccessor.of(target).orElse(null);
-			if (fortuneAccessor != null) {
-				fortuneAccessor.setFortune(null);
+			if (target instanceof FortuneAccessor) {
+				((FortuneAccessor) target).setFortune(null);
 				context.getSource().sendFeedback(new LiteralText("Removed fortune from " + target.getEntityName()), true);
 				return 1;
 			}
@@ -66,8 +63,8 @@ public class BWCommands {
 		}))));
 		dispatcher.register(CommandManager.literal("curse").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.argument("target", EntityArgumentType.entity()).then(CommandManager.literal("get").executes(context -> {
 			Entity target = EntityArgumentType.getEntity(context, "target");
-			CurseAccessor curseAccessor = CurseAccessor.of(target).orElse(null);
-			if (curseAccessor != null) {
+			if (target instanceof CurseAccessor) {
+				CurseAccessor curseAccessor = (CurseAccessor) target;
 				if (!curseAccessor.getCurses().isEmpty()) {
 					StringBuilder curses = new StringBuilder();
 					for (Curse.Instance instance : curseAccessor.getCurses()) {
@@ -83,8 +80,8 @@ public class BWCommands {
 			return 0;
 		}).then(CommandManager.argument("curse", CurseArgumentType.curse()).executes(context -> {
 			Entity target = EntityArgumentType.getEntity(context, "target");
-			CurseAccessor curseAccessor = CurseAccessor.of(target).orElse(null);
-			if (curseAccessor != null) {
+			if (target instanceof CurseAccessor) {
+				CurseAccessor curseAccessor = (CurseAccessor) target;
 				Curse curse = CurseArgumentType.getCurse(context, "curse");
 				String curseName = BWRegistries.CURSES.getId(curse).toString();
 				if (curseAccessor.hasCurse(curse)) {
@@ -99,29 +96,27 @@ public class BWCommands {
 			return 0;
 		}))).then(CommandManager.literal("add").then(CommandManager.argument("curse", CurseArgumentType.curse()).executes(context -> {
 			Entity target = EntityArgumentType.getEntity(context, "target");
-			CurseAccessor curseAccessor = CurseAccessor.of(target).orElse(null);
-			if (curseAccessor != null) {
+			if (target instanceof CurseAccessor) {
 				Curse curse = CurseArgumentType.getCurse(context, "curse");
-				curseAccessor.addCurse(new Curse.Instance(curse, 168000));
+				((CurseAccessor) target).addCurse(new Curse.Instance(curse, 168000));
 				context.getSource().sendFeedback(new LiteralText("Added curse " + BWRegistries.CURSES.getId(curse).toString() + " to " + target.getEntityName() + " for 7 days"), true);
 				return 1;
 			}
 			return 0;
 		}).then(CommandManager.argument("days", IntegerArgumentType.integer(0, 365)).executes(context -> {
 			Entity target = EntityArgumentType.getEntity(context, "target");
-			CurseAccessor curseAccessor = CurseAccessor.of(target).orElse(null);
-			if (curseAccessor != null) {
+			if (target instanceof CurseAccessor) {
 				Curse curse = CurseArgumentType.getCurse(context, "curse");
 				int days = IntegerArgumentType.getInteger(context, "days");
-				curseAccessor.addCurse(new Curse.Instance(curse, days * 24000));
+				((CurseAccessor) target).addCurse(new Curse.Instance(curse, days * 24000));
 				context.getSource().sendFeedback(new LiteralText("Added curse " + BWRegistries.CURSES.getId(curse).toString() + " to " + target.getEntityName() + " for " + days + (days == 1 ? " day" : " days")), true);
 				return 1;
 			}
 			return 0;
 		})))).then(CommandManager.literal("remove").then(CommandManager.argument("curse", CurseArgumentType.curse()).executes(context -> {
 			Entity target = EntityArgumentType.getEntity(context, "target");
-			CurseAccessor curseAccessor = CurseAccessor.of(target).orElse(null);
-			if (curseAccessor != null) {
+			if (target instanceof CurseAccessor) {
+				CurseAccessor curseAccessor = (CurseAccessor) target;
 				Curse curse = CurseArgumentType.getCurse(context, "curse");
 				String curseName = BWRegistries.CURSES.getId(curse).toString();
 				if (curseAccessor.hasCurse(curse)) {
@@ -136,9 +131,8 @@ public class BWCommands {
 			return 0;
 		}))).then(CommandManager.literal("clear").executes(context -> {
 			Entity target = EntityArgumentType.getEntity(context, "target");
-			CurseAccessor curseAccessor = CurseAccessor.of(target).orElse(null);
-			if (curseAccessor != null) {
-				curseAccessor.getCurses().clear();
+			if (target instanceof CurseAccessor) {
+				((CurseAccessor) target).getCurses().clear();
 				context.getSource().sendFeedback(new LiteralText("Removed all curses from " + target.getEntityName()), true);
 				return 1;
 			}
@@ -146,8 +140,8 @@ public class BWCommands {
 		}))));
 		dispatcher.register(CommandManager.literal("contract").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.argument("target", EntityArgumentType.entity()).then(CommandManager.literal("get").executes(context -> {
 			Entity target = EntityArgumentType.getEntity(context, "target");
-			ContractAccessor contractAccessor = ContractAccessor.of(target).orElse(null);
-			if (contractAccessor != null) {
+			if (target instanceof ContractAccessor) {
+				ContractAccessor contractAccessor = (ContractAccessor) target;
 				if (!contractAccessor.getContracts().isEmpty()) {
 					StringBuilder contracts = new StringBuilder();
 					for (Contract.Instance instance : contractAccessor.getContracts()) {
@@ -163,8 +157,8 @@ public class BWCommands {
 			return 0;
 		}).then(CommandManager.argument("contract", ContractArgumentType.contract()).executes(context -> {
 			Entity target = EntityArgumentType.getEntity(context, "target");
-			ContractAccessor contractAccessor = ContractAccessor.of(target).orElse(null);
-			if (contractAccessor != null) {
+			if (target instanceof ContractAccessor) {
+				ContractAccessor contractAccessor = (ContractAccessor) target;
 				Contract contract = ContractArgumentType.getContract(context, "contract");
 				String contractName = BWRegistries.CONTRACTS.getId(contract).toString();
 				if (contractAccessor.hasContract(contract)) {
@@ -179,29 +173,27 @@ public class BWCommands {
 			return 0;
 		}))).then(CommandManager.literal("add").then(CommandManager.argument("contract", ContractArgumentType.contract()).executes(context -> {
 			Entity target = EntityArgumentType.getEntity(context, "target");
-			ContractAccessor contractAccessor = ContractAccessor.of(target).orElse(null);
-			if (contractAccessor != null) {
+			if (target instanceof ContractAccessor) {
 				Contract contract = ContractArgumentType.getContract(context, "contract");
-				contractAccessor.addContract(new Contract.Instance(contract, 168000));
+				((ContractAccessor) target).addContract(new Contract.Instance(contract, 168000));
 				context.getSource().sendFeedback(new LiteralText("Added contract " + BWRegistries.CONTRACTS.getId(contract).toString() + " to " + target.getEntityName() + " for 7 days"), true);
 				return 1;
 			}
 			return 0;
 		}).then(CommandManager.argument("days", IntegerArgumentType.integer(0, 365)).executes(context -> {
 			Entity target = EntityArgumentType.getEntity(context, "target");
-			ContractAccessor contractAccessor = ContractAccessor.of(target).orElse(null);
-			if (contractAccessor != null) {
+			if (target instanceof ContractAccessor) {
 				Contract contract = ContractArgumentType.getContract(context, "contract");
 				int days = IntegerArgumentType.getInteger(context, "days");
-				contractAccessor.addContract(new Contract.Instance(contract, days * 24000));
+				((ContractAccessor) target).addContract(new Contract.Instance(contract, days * 24000));
 				context.getSource().sendFeedback(new LiteralText("Added contract " + BWRegistries.CONTRACTS.getId(contract).toString() + " to " + target.getEntityName() + " for " + days + (days == 1 ? " day" : " days")), true);
 				return 1;
 			}
 			return 0;
 		})))).then(CommandManager.literal("remove").then(CommandManager.argument("contract", ContractArgumentType.contract()).executes(context -> {
 			Entity target = EntityArgumentType.getEntity(context, "target");
-			ContractAccessor contractAccessor = ContractAccessor.of(target).orElse(null);
-			if (contractAccessor != null) {
+			if (target instanceof ContractAccessor) {
+				ContractAccessor contractAccessor = (ContractAccessor) target;
 				Contract contract = ContractArgumentType.getContract(context, "contract");
 				String contractName = BWRegistries.CONTRACTS.getId(contract).toString();
 				if (contractAccessor.hasContract(contract)) {
@@ -216,9 +208,8 @@ public class BWCommands {
 			return 0;
 		}))).then(CommandManager.literal("clear").executes(context -> {
 			Entity target = EntityArgumentType.getEntity(context, "target");
-			ContractAccessor contractAccessor = ContractAccessor.of(target).orElse(null);
-			if (contractAccessor != null) {
-				contractAccessor.getContracts().clear();
+			if (target instanceof ContractAccessor) {
+				((ContractAccessor) target).getContracts().clear();
 				context.getSource().sendFeedback(new LiteralText("Removed all contracts from " + target.getEntityName()), true);
 				return 1;
 			}

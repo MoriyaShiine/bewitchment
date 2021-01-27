@@ -189,8 +189,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	
 	@ModifyVariable(method = "addExhaustion", at = @At("HEAD"))
 	private float addExhaustion(float exhaustion) {
-		ContractAccessor contractAccessor = ContractAccessor.of(this).orElse(null);
-		if (!world.isClient && contractAccessor != null && contractAccessor.hasNegativeEffects() && contractAccessor.hasContract(BWContracts.GLUTTONY)) {
+		if (!world.isClient && hasNegativeEffects() && hasContract(BWContracts.GLUTTONY)) {
 			return exhaustion * 1.5f;
 		}
 		return exhaustion;

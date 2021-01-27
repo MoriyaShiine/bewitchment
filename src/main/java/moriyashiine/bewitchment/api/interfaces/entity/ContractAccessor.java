@@ -3,16 +3,8 @@ package moriyashiine.bewitchment.api.interfaces.entity;
 import moriyashiine.bewitchment.api.registry.Contract;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ContractAccessor {
-	static Optional<ContractAccessor> of(Object entity) {
-		if (entity instanceof ContractAccessor) {
-			return Optional.of(((ContractAccessor) entity));
-		}
-		return Optional.empty();
-	}
-	
 	List<Contract.Instance> getContracts();
 	
 	default boolean hasContract(Contract contract) {

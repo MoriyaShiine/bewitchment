@@ -1,16 +1,7 @@
 package moriyashiine.bewitchment.api.interfaces.entity;
 
-import java.util.Optional;
-
 public interface BloodAccessor {
 	int MAX_BLOOD = 100;
-	
-	static Optional<BloodAccessor> of(Object entity) {
-		if (entity instanceof BloodAccessor) {
-			return Optional.of(((BloodAccessor) entity));
-		}
-		return Optional.empty();
-	}
 	
 	int getBlood();
 	

@@ -25,12 +25,13 @@ public class PolymorphStatusEffect extends StatusEffect {
 	
 	@Override
 	public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-		PolymorphAccessor.of(entity).ifPresent(polymorphAccessor -> {
+		if (entity instanceof PolymorphAccessor) {
+			PolymorphAccessor polymorphAccessor = (PolymorphAccessor) entity;
 			polymorphAccessor.setPolymorphUUID(Optional.empty());
 			polymorphAccessor.setPolymorphName("");
 			if (entity instanceof PlayerEntity) {
 				//			Impersonator.get((PlayerEntity) entity).stopImpersonation(IMPERSONATE_IDENTIFIER);
 			}
-		});
+		}
 	}
 }

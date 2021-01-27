@@ -239,9 +239,8 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			if (hasStatusEffect(BWStatusEffects.MAGIC_SPONGE) && source.getMagic()) {
 				float magicAmount = (0.3f + (0.1f * getStatusEffect(BWStatusEffects.MAGIC_SPONGE).getAmplifier()));
 				amount *= (1 - magicAmount);
-				MagicAccessor magicAccessor = MagicAccessor.of(this).orElse(null);
-				if (magicAccessor != null) {
-					magicAccessor.fillMagic((int) (amount * magicAmount * 100), false);
+				if (this instanceof MagicAccessor) {
+					((MagicAccessor) this).fillMagic((int) (amount * magicAmount * 100), false);
 				}
 			}
 			if (!(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns())) {
@@ -383,10 +382,11 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					return;
 				}
 			}
-			InsanityTargetAccessor insanityTargetAccessor = InsanityTargetAccessor.of(this).orElse(null);
-			if (insanityTargetAccessor != null && insanityTargetAccessor.getInsanityTargetUUID().isPresent()) {
-				callbackInfo.setReturnValue(false);
-				return;
+			if (this instanceof InsanityTargetAccessor) {
+				if (((InsanityTargetAccessor) this).getInsanityTargetUUID().isPresent()) {
+					callbackInfo.setReturnValue(false);
+					return;
+				}
 			}
 			if (!source.isOutOfWorld()) {
 				if (!BewitchmentAPI.getBlockPoses(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity && ((GlyphBlockEntity) world.getBlockEntity(currentPos)).ritualFunction == BWRitualFunctions.PREVENT_DAMAGE).isEmpty()) {
@@ -457,11 +457,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	@Inject(method = "isAffectedBySplashPotions", at = @At("HEAD"), cancellable = true)
 	private void isAffectedBySplashPotions(CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
-			MasterAccessor.of(this).ifPresent(masterAccessor -> {
-				if (masterAccessor.getMasterUUID() != null) {
-					callbackInfo.setReturnValue(false);
-				}
-			});
+			if (this instanceof MasterAccessor && ((MasterAccessor) this).getMasterUUID() != null) {
+				callbackInfo.setReturnValue(false);
+			}
 		}
 	}
 	
