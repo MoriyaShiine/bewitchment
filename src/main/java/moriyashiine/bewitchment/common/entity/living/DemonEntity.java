@@ -28,7 +28,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -90,7 +89,7 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 				if ((age + getEntityId()) % 40 == 0) {
 					SmallFireballEntity fireball = new SmallFireballEntity(world, this, target.getX() - getX(), target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ());
 					fireball.updatePosition(fireball.getX(), getBodyY(0.5), fireball.getZ());
-					world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_SHOOT, SoundCategory.HOSTILE, 1, 1);
+					world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_SHOOT, getSoundCategory(), getSoundVolume(), getSoundPitch());
 					world.spawnEntity(fireball);
 					swingHand(Hand.MAIN_HAND);
 				}
@@ -219,7 +218,7 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	
 	@Override
 	public void onSellingItem(ItemStack stack) {
-		world.playSound(null, getBlockPos(), getAmbientSound(), SoundCategory.HOSTILE, 1, getSoundPitch());
+		world.playSound(null, getBlockPos(), getAmbientSound(), getSoundCategory(), getSoundVolume(), getSoundPitch());
 	}
 	
 	@Override

@@ -31,7 +31,6 @@ import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -81,7 +80,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 						FireballEntity fireball = new FireballEntity(world, this, target.getX() - getX() + (i * 2), target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ() + (i * 2));
 						fireball.updatePosition(fireball.getX(), getBodyY(0.5), fireball.getZ());
 						fireball.setOwner(this);
-						world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_SHOOT, SoundCategory.HOSTILE, 1, 1);
+						world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_SHOOT, getSoundCategory(), getSoundVolume(), getSoundPitch());
 						world.spawnEntity(fireball);
 					}
 					swingHand(Hand.MAIN_HAND);
@@ -159,7 +158,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 							player.sendMessage(new TranslatableText(Bewitchment.MODID + ".baphomet_contract", new TranslatableText("contract." + BWRegistries.CONTRACTS.getId(contract).toString().replace(":", "."))), true);
 							if (!player.isCreative()) {
 								player.addExperience(-551);
-								world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1, 0.5f);
+								world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_PLAYER_LEVELUP, player.getSoundCategory(), 1, 0.5f);
 							}
 						}
 					});

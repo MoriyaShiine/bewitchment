@@ -36,7 +36,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -221,7 +220,7 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 		double targetY = target.getY() - 1 - getY();
 		double targetZ = target.getZ() - getZ();
 		potion.setVelocity(targetX, targetY + (MathHelper.sqrt(targetX * targetX + targetZ * targetZ) * 0.4), targetZ, 1, 0);
-		world.playSound(null, getBlockPos(), SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.HOSTILE, 1, 1);
+		world.playSound(null, getBlockPos(), SoundEvents.ENTITY_SPLASH_POTION_THROW, getSoundCategory(), getSoundVolume(), getSoundPitch());
 		world.spawnEntity(potion);
 		swingHand(Hand.MAIN_HAND);
 	}

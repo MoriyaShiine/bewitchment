@@ -27,7 +27,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -280,7 +279,7 @@ public class BewitchmentAPI {
 	public static void teleport(Entity entity, double x, double y, double z, boolean hasEffects) {
 		if (hasEffects) {
 			if (!entity.isSilent()) {
-				entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, SoundCategory.NEUTRAL, 1, 1);
+				entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, entity.getSoundCategory(), 1, 1);
 			}
 			PlayerLookup.tracking(entity).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, entity));
 			if (entity instanceof PlayerEntity) {
@@ -290,7 +289,7 @@ public class BewitchmentAPI {
 		entity.teleport(x, y + 0.5, z);
 		if (hasEffects) {
 			if (!entity.isSilent()) {
-				entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, SoundCategory.NEUTRAL, 1, 1);
+				entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, entity.getSoundCategory(), 1, 1);
 			}
 			PlayerLookup.tracking(entity).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, entity));
 			if (entity instanceof PlayerEntity) {

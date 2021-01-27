@@ -15,7 +15,6 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.BlockTags;
@@ -41,7 +40,7 @@ public class HellhoundEntity extends BWHostileEntity {
 		super.tick();
 		if (!world.isClient && isWet() && damage(DamageSource.MAGIC, 1)) {
 			PlayerLookup.tracking(this).forEach(playerEntity -> SpawnSmokeParticlesPacket.send(playerEntity, this));
-			world.playSound(null, getBlockPos(), SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.HOSTILE, 1, 1);
+			world.playSound(null, getBlockPos(), SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, getSoundCategory(), getSoundVolume(), getSoundPitch());
 		}
 	}
 	
