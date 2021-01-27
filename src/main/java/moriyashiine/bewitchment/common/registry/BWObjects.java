@@ -232,6 +232,7 @@ public class BWObjects {
 	public static final Item BESMIRCHED_HAT = create("besmirched_hat", new ArmorItem(BWMaterials.BESMIRCHED_ARMOR, EquipmentSlot.HEAD, gen()));
 	public static final Item BESMIRCHED_ROBES = create("besmirched_robes", new ArmorItem(BWMaterials.BESMIRCHED_ARMOR, EquipmentSlot.CHEST, gen()));
 	public static final Item BESMIRCHED_PANTS = create("besmirched_pants", new ArmorItem(BWMaterials.BESMIRCHED_ARMOR, EquipmentSlot.LEGS, gen()));
+	public static final Item HARBINGER = create("harbinger", new ArmorItem(BWMaterials.HARBINGER_ARMOR, EquipmentSlot.FEET, gen().rarity(Rarity.RARE).maxDamage(444).fireproof()));
 	//tool
 	public static final Item SILVER_SWORD = create("silver_sword", new SwordItem(BWMaterials.SILVER_TOOL, 3, -2.4f, gen()));
 	public static final Item SILVER_PICKAXE = create("silver_pickaxe", new BWPickaxeItem(BWMaterials.SILVER_TOOL, 1, -2.8f, gen()));

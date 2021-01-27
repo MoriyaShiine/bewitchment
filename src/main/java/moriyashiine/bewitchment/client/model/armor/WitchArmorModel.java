@@ -16,7 +16,9 @@ public class WitchArmorModel<T extends LivingEntity> extends BipedEntityModel<T>
 	private final ModelPart hat1;
 	private final ModelPart hood01;
 	private final ModelPart lowerLeftSkirt;
+	private final ModelPart armorLeftBoot;
 	private final ModelPart lowerRightSkirt;
+	private final ModelPart armorRightBoot;
 	
 	public WitchArmorModel(EquipmentSlot slot, boolean hood, boolean wearingBoots) {
 		super(RenderLayer::getArmorCutoutNoCull, 1, 0, 128, 128);
@@ -24,9 +26,13 @@ public class WitchArmorModel<T extends LivingEntity> extends BipedEntityModel<T>
 		this.hood = hood;
 		this.wearingBoots = wearingBoots;
 		
+		ModelPart armorHead = new ModelPart(this);
+		armorHead.setPivot(0.0F, 0.0F, 0.0F);
+		head.addChild(armorHead);
+		
 		hat1 = new ModelPart(this);
 		hat1.setPivot(0.0F, 0.0F, 0.0F);
-		head.addChild(hat1);
+		armorHead.addChild(hat1);
 		hat1.setTextureOffset(49, 111).addCuboid(-4.5F, -9.5F, -4.5F, 9.0F, 4.0F, 9.0F, 0.1F, false);
 		
 		ModelPart hat2 = new ModelPart(this);
@@ -49,7 +55,7 @@ public class WitchArmorModel<T extends LivingEntity> extends BipedEntityModel<T>
 		
 		hood01 = new ModelPart(this);
 		hood01.setPivot(0.0F, 0.0F, 0.0F);
-		head.addChild(hood01);
+		armorHead.addChild(hood01);
 		hood01.setTextureOffset(70, 0).addCuboid(-4.5F, -8.6F, -4.7F, 9.0F, 9.0F, 10.0F, 0.1F, false);
 		
 		ModelPart hoodFringe01 = new ModelPart(this);
@@ -113,13 +119,13 @@ public class WitchArmorModel<T extends LivingEntity> extends BipedEntityModel<T>
 		
 		ModelPart armorBody = new ModelPart(this);
 		armorBody.setPivot(0.0F, 0.0F, 0.0F);
-		armorBody.setTextureOffset(0, 81).addCuboid(-4.5F, -0.01F, -2.5F, 9.0F, 12.0F, 5.0F, 0.0F, false);
 		torso.addChild(armorBody);
+		armorBody.setTextureOffset(0, 81).addCuboid(-4.5F, -0.01F, -2.5F, 9.0F, 12.0F, 5.0F, 0.0F, false);
 		
 		ModelPart armorRightArm = new ModelPart(this);
 		armorRightArm.setPivot(1, 0.0F, 0.0F);
-		armorRightArm.setTextureOffset(47, 82).addCuboid(-4.5F, -2.9F, -2.5F, 5.0F, 12.0F, 5.0F, -0.1F, false);
 		rightArm.addChild(armorRightArm);
+		armorRightArm.setTextureOffset(47, 82).addCuboid(-4.5F, -2.9F, -2.5F, 5.0F, 12.0F, 5.0F, -0.1F, false);
 		
 		ModelPart rShoulder_r1 = new ModelPart(this);
 		rShoulder_r1.setPivot(0.0F, -1.0F, 0.0F);
@@ -135,8 +141,8 @@ public class WitchArmorModel<T extends LivingEntity> extends BipedEntityModel<T>
 		
 		ModelPart armorLeftArm = new ModelPart(this);
 		armorLeftArm.setPivot(-1, 0.0F, 0.0F);
-		armorLeftArm.setTextureOffset(47, 82).addCuboid(-0.5F, -2.9F, -2.5F, 5.0F, 12.0F, 5.0F, -0.1F, true);
 		leftArm.addChild(armorLeftArm);
+		armorLeftArm.setTextureOffset(47, 82).addCuboid(-0.5F, -2.9F, -2.5F, 5.0F, 12.0F, 5.0F, -0.1F, true);
 		
 		ModelPart lShoulder_r1 = new ModelPart(this);
 		lShoulder_r1.setPivot(0.0F, -1.0F, 0.0F);
@@ -227,6 +233,30 @@ public class WitchArmorModel<T extends LivingEntity> extends BipedEntityModel<T>
 		setRotationAngle(tunicLeftBack4, -0.2618F, 0.0F, 0.0F);
 		tunicLeftBack4.setTextureOffset(53, 77).addCuboid(-4.0F, 0.0F, -1.0F, 4.0F, 2.0F, 1.0F, 0.0F, false);
 		
+		armorLeftBoot = new ModelPart(this);
+		armorLeftBoot.setPivot(0, 0.0F, 0.0F);
+		armorLeftBoot.setTextureOffset(86, 81).addCuboid(-2.5F, 6.0F, -2.5F, 5.0F, 7.0F, 5.0F, -0.1F, false);
+		armorLeftBoot.setTextureOffset(110, 89).addCuboid(-2.5F, 11.0F, -4.25F, 5.0F, 2.0F, 2.0F, -0.1F, false);
+		leftLeg.addChild(armorLeftBoot);
+		
+		ModelPart lBootClaw03_r1 = new ModelPart(this);
+		lBootClaw03_r1.setPivot(-0.5F, 8.75F, -2.25F);
+		armorLeftBoot.addChild(lBootClaw03_r1);
+		setRotationAngle(lBootClaw03_r1, 0.6545F, 0.1745F, 0.0F);
+		lBootClaw03_r1.setTextureOffset(87, 94).addCuboid(-1.0F, 0.0F, -4.0F, 1.0F, 2.0F, 5.0F, -0.1F, false);
+		
+		ModelPart lBootClaw02_r1 = new ModelPart(this);
+		lBootClaw02_r1.setPivot(1.5F, 8.75F, -2.25F);
+		armorLeftBoot.addChild(lBootClaw02_r1);
+		setRotationAngle(lBootClaw02_r1, 0.6545F, -0.1745F, 0.0F);
+		lBootClaw02_r1.setTextureOffset(87, 94).addCuboid(-1.0F, 0.0F, -4.0F, 1.0F, 2.0F, 5.0F, -0.1F, false);
+		
+		ModelPart lBootClaw01_r1 = new ModelPart(this);
+		lBootClaw01_r1.setPivot(0.5F, 8.75F, -2.25F);
+		armorLeftBoot.addChild(lBootClaw01_r1);
+		setRotationAngle(lBootClaw01_r1, 0.6545F, 0.0F, 0.0F);
+		lBootClaw01_r1.setTextureOffset(87, 94).addCuboid(-1.0F, 0.0F, -4.25F, 1.0F, 2.0F, 5.0F, -0.1F, false);
+		
 		ModelPart armorRightLeg = new ModelPart(this);
 		armorRightLeg.setPivot(3.9f, 0.0F, 0.0F);
 		rightLeg.addChild(armorRightLeg);
@@ -248,6 +278,11 @@ public class WitchArmorModel<T extends LivingEntity> extends BipedEntityModel<T>
 		armorRightLeg.addChild(tunicRightBack);
 		setRotationAngle(tunicRightBack, 0.1222F, 0.0F, 0.0F);
 		tunicRightBack.setTextureOffset(53, 65).addCuboid(-4.0F, 0.0F, -1.0F, 4.0F, 7.0F, 1.0F, 0.0F, false);
+		
+		ModelPart tunicRightBack2 = new ModelPart(this);
+		tunicRightBack2.setPivot(0.01F, 10.0F, -1.0F);
+		tunicRightBack.addChild(tunicRightBack2);
+		setRotationAngle(tunicRightBack2, 0.2618F, 0.0F, 0.0F);
 		
 		lowerRightSkirt = new ModelPart(this);
 		lowerRightSkirt.setPivot(-4.0F, 0.0F, 0.0F);
@@ -288,6 +323,30 @@ public class WitchArmorModel<T extends LivingEntity> extends BipedEntityModel<T>
 		tunicRightBack3.addChild(tunicRightBack4);
 		setRotationAngle(tunicRightBack4, 0.2618F, 0.0F, 0.0F);
 		tunicRightBack4.setTextureOffset(53, 77).addCuboid(-4.0F, 0.0F, 0.0F, 4.0F, 2.0F, 1.0F, 0.0F, false);
+		
+		armorRightBoot = new ModelPart(this);
+		armorRightBoot.setPivot(0, 0.0F, 0.0F);
+		armorRightBoot.setTextureOffset(86, 81).addCuboid(-2.5F, 6.0F, -2.5F, 5.0F, 7.0F, 5.0F, -0.1F, true);
+		armorRightBoot.setTextureOffset(110, 89).addCuboid(-2.5F, 11.0F, -4.25F, 5.0F, 2.0F, 2.0F, -0.1F, true);
+		rightLeg.addChild(armorRightBoot);
+		
+		ModelPart rBootClaw03_r1 = new ModelPart(this);
+		rBootClaw03_r1.setPivot(0.5F, 8.75F, -2.25F);
+		armorRightBoot.addChild(rBootClaw03_r1);
+		setRotationAngle(rBootClaw03_r1, 0.6545F, -0.1745F, 0.0F);
+		rBootClaw03_r1.setTextureOffset(87, 94).addCuboid(0.0F, 0.0F, -4.0F, 1.0F, 2.0F, 5.0F, -0.1F, true);
+		
+		ModelPart rBootClaw02_r1 = new ModelPart(this);
+		rBootClaw02_r1.setPivot(-1.5F, 8.75F, -2.25F);
+		armorRightBoot.addChild(rBootClaw02_r1);
+		setRotationAngle(rBootClaw02_r1, 0.6545F, 0.1745F, 0.0F);
+		rBootClaw02_r1.setTextureOffset(87, 94).addCuboid(0.0F, 0.0F, -4.0F, 1.0F, 2.0F, 5.0F, -0.1F, true);
+		
+		ModelPart rBootClaw01_r1 = new ModelPart(this);
+		rBootClaw01_r1.setPivot(-0.5F, 8.75F, -2.25F);
+		armorRightBoot.addChild(rBootClaw01_r1);
+		setRotationAngle(rBootClaw01_r1, 0.6545F, 0.0F, 0.0F);
+		rBootClaw01_r1.setTextureOffset(87, 94).addCuboid(0.0F, 0.0F, -4.25F, 1.0F, 2.0F, 5.0F, -0.1F, true);
 	}
 	
 	@Override
@@ -299,8 +358,8 @@ public class WitchArmorModel<T extends LivingEntity> extends BipedEntityModel<T>
 		torso.visible = slot == EquipmentSlot.CHEST;
 		leftArm.visible = slot == EquipmentSlot.CHEST;
 		rightArm.visible = slot == EquipmentSlot.CHEST;
-		leftLeg.visible = slot == EquipmentSlot.LEGS;
-		rightLeg.visible = slot == EquipmentSlot.LEGS;
+		armorLeftBoot.visible = slot == EquipmentSlot.FEET;
+		armorRightBoot.visible = slot == EquipmentSlot.FEET;
 		lowerLeftSkirt.visible = !wearingBoots;
 		lowerRightSkirt.visible = !wearingBoots;
 		super.render(matrices, vertices, light, overlay, red, green, blue, alpha);

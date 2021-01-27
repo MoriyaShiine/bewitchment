@@ -286,7 +286,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				int armorPieces = BewitchmentAPI.getArmorPieces((LivingEntity) (Object) this, stack -> {
 					if (stack.getItem() instanceof ArmorItem) {
 						ArmorMaterial material = ((ArmorItem) stack.getItem()).getMaterial();
-						return material == BWMaterials.HEDGEWITCH_ARMOR || material == BWMaterials.ALCHEMIST_ARMOR || material == BWMaterials.BESMIRCHED_ARMOR;
+						return material == BWMaterials.HEDGEWITCH_ARMOR || material == BWMaterials.ALCHEMIST_ARMOR || material == BWMaterials.BESMIRCHED_ARMOR || material == BWMaterials.HARBINGER_ARMOR;
 					}
 					return false;
 				});

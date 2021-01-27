@@ -1,7 +1,10 @@
 package moriyashiine.bewitchment.mixin;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.MasterAccessor;
 import moriyashiine.bewitchment.common.registry.BWCurses;
+import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.FollowTargetGoal;
@@ -22,6 +25,9 @@ public abstract class FollowTargetGoalMixin<T extends LivingEntity> extends Trac
 	@Shadow
 	protected TargetPredicate targetPredicate;
 	
+	@Shadow
+	protected LivingEntity targetEntity;
+	
 	public FollowTargetGoalMixin(MobEntity mob, boolean checkVisibility) {
 		super(mob, checkVisibility);
 	}
@@ -30,6 +36,13 @@ public abstract class FollowTargetGoalMixin<T extends LivingEntity> extends Trac
 	private void init(MobEntity mob, Class<T> targetClass, int reciprocalChance, boolean checkVisibility, boolean checkCanNavigate, @Nullable Predicate<LivingEntity> predicate, CallbackInfo callbackInfo) {
 		if (predicate != null) {
 			targetPredicate.setPredicate(predicate.or(livingEntity -> CurseAccessor.of(livingEntity).orElse(null).hasCurse(BWCurses.OUTRAGE)));
+		}
+	}
+	
+	@Inject(method = "findClosestTarget", at = @At("TAIL"))
+	private void findClosestTarget(CallbackInfo callbackInfo) {
+		if (mob instanceof MasterAccessor && ((MasterAccessor) mob).getMasterUUID() == null && mob.isUndead() && targetEntity != null && BewitchmentAPI.getArmorPieces(targetEntity, stack -> stack.getItem() == BWObjects.HARBINGER) > 0) {
+			targetEntity = null;
 		}
 	}
 }

@@ -79,7 +79,7 @@ public abstract class EntityMixin implements WetAccessor {
 	
 	@Inject(method = "isInvulnerableTo", at = @At("HEAD"), cancellable = true)
 	private void isInvulnerableTo(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!world.isClient && (Object) this instanceof LivingEntity) {
+		if (!world.isClient && this instanceof MasterAccessor) {
 			Entity attacker = source.getAttacker();
 			if (attacker instanceof LivingEntity) {
 				MasterAccessor.of(this).ifPresent(masterAccessor -> {

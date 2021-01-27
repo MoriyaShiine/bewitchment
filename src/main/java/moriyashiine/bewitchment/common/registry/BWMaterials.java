@@ -177,6 +177,48 @@ public class BWMaterials {
 		}
 	};
 	
+	public static final ArmorMaterial HARBINGER_ARMOR = new ArmorMaterial() {
+		@Override
+		public int getDurability(EquipmentSlot slot) {
+			return ArmorMaterials.NETHERITE.getDurability(slot);
+		}
+		
+		@Override
+		public int getProtectionAmount(EquipmentSlot slot) {
+			return ArmorMaterials.NETHERITE.getProtectionAmount(slot);
+		}
+		
+		@Override
+		public int getEnchantability() {
+			return HEDGEWITCH_ARMOR.getEnchantability();
+		}
+		
+		@Override
+		public SoundEvent getEquipSound() {
+			return HEDGEWITCH_ARMOR.getEquipSound();
+		}
+		
+		@Override
+		public Ingredient getRepairIngredient() {
+			return ArmorMaterials.NETHERITE.getRepairIngredient();
+		}
+		
+		@Override
+		public String getName() {
+			return "harbinger";
+		}
+		
+		@Override
+		public float getToughness() {
+			return ArmorMaterials.NETHERITE.getToughness();
+		}
+		
+		@Override
+		public float getKnockbackResistance() {
+			return ArmorMaterials.NETHERITE.getKnockbackResistance();
+		}
+	};
+	
 	public static final ToolMaterial SILVER_TOOL = new ToolMaterial() {
 		@Override
 		public int getDurability() {
