@@ -10,6 +10,7 @@ import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.entity.living.BaphometEntity;
+import moriyashiine.bewitchment.common.entity.living.LeonardEntity;
 import moriyashiine.bewitchment.common.entity.living.LilithEntity;
 import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.item.TaglockItem;
@@ -231,8 +232,13 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				amount /= 4;
 				amount += ((LivingEntity) directSource).getStatusEffect(BWStatusEffects.ENCHANTED).getAmplifier();
 			}
-			if (hasStatusEffect(BWStatusEffects.MAGIC_RESISTANCE) && source.getMagic()) {
-				amount *= (1 - (0.2f * (getStatusEffect(BWStatusEffects.MAGIC_RESISTANCE).getAmplifier() + 1)));
+			if (hasStatusEffect(BWStatusEffects.MAGIC_SPONGE) && source.getMagic()) {
+				float magicAmount = (0.3f + (0.1f * getStatusEffect(BWStatusEffects.MAGIC_SPONGE).getAmplifier()));
+				amount *= (1 - magicAmount);
+				MagicAccessor magicAccessor = MagicAccessor.of(this).orElse(null);
+				if (magicAccessor != null) {
+					magicAccessor.fillMagic((int) (amount * magicAmount * 100), false);
+				}
 			}
 			if (!(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns())) {
 				if (directSource instanceof LivingEntity) {
@@ -355,6 +361,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
 			Entity trueSource = source.getAttacker();
+			if (trueSource instanceof LeonardEntity) {
+				removeStatusEffect(BWStatusEffects.MAGIC_SPONGE);
+			}
 			if (trueSource instanceof BaphometEntity) {
 				removeStatusEffect(StatusEffects.FIRE_RESISTANCE);
 			}

@@ -30,7 +30,7 @@ public class BWStatusEffects {
 	public static final StatusEffect INHIBITED = create("inhibited", new EmptyStatusEffect(StatusEffectType.HARMFUL, 0x383a41));
 	public static final StatusEffect INVIGORATING = create("invigorating", new InvigoratingStatusEffect(StatusEffectType.BENEFICIAL, 0xaa64b3));
 	public static final StatusEffect LEECHING = create("leeching", new EmptyStatusEffect(StatusEffectType.BENEFICIAL, 0x4a0000));
-	public static final StatusEffect MAGIC_RESISTANCE = create("magic_resistance", new EmptyStatusEffect(StatusEffectType.BENEFICIAL, 0xb03013));
+	public static final StatusEffect MAGIC_SPONGE = create("magic_sponge", new EmptyStatusEffect(StatusEffectType.BENEFICIAL, 0xa264aa));
 	public static final StatusEffect MORTAL_COIL = create("mortal_coil", new MortalCoilStatusEffect(StatusEffectType.HARMFUL, 0x2d2d2d));
 	public static final StatusEffect NOURISHING = create("nourishing", new EmptyStatusEffect(StatusEffectType.BENEFICIAL, 0x71bc78));
 	public static final StatusEffect POLYMORPH = create("polymorph", new PolymorphStatusEffect(StatusEffectType.NEUTRAL, 0xb154a9));

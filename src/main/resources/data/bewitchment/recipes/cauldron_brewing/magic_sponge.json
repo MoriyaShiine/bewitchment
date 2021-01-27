@@ -3,6 +3,6 @@
   "ingredient": {
 	"item": "bewitchment:dragons_blood_resin"
   },
-  "effect": "bewitchment:magic_resistance",
+  "effect": "bewitchment:magic_sponge",
   "time": 3000
 }

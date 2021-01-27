@@ -101,7 +101,7 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 	
 	@Override
 	public Collection<StatusEffectInstance> getMinionBuffs() {
-		return Sets.newHashSet(new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE), new StatusEffectInstance(BWStatusEffects.MAGIC_RESISTANCE, Integer.MAX_VALUE), new StatusEffectInstance(BWStatusEffects.HARDENING, Integer.MAX_VALUE, 1));
+		return Sets.newHashSet(new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE), new StatusEffectInstance(BWStatusEffects.HARDENING, Integer.MAX_VALUE, 1));
 	}
 	
 	@Override
