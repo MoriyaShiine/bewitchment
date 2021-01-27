@@ -1,6 +1,8 @@
 package moriyashiine.bewitchment.common.entity.projectile;
 
+import moriyashiine.bewitchment.api.interfaces.entity.MasterAccessor;
 import moriyashiine.bewitchment.client.network.packet.CreateNonLivingEntityPacket;
+import moriyashiine.bewitchment.common.entity.living.HerneEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -10,6 +12,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
+import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Packet;
@@ -19,6 +22,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("ConstantConditions")
 public class HornedSpearEntity extends PersistentProjectileEntity {
 	public ItemStack spear;
 	private boolean dealtDamage = false;
@@ -44,13 +48,16 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 	
 	@Override
 	protected void onEntityHit(EntityHitResult result) {
+		Entity owner = getOwner();
 		Entity entity = result.getEntity();
 		float damage = 9;
-		if (entity instanceof LivingEntity) {
+		if (entity instanceof LivingEntity && entity instanceof MasterAccessor && owner != null && !owner.getUuid().equals(((MasterAccessor) entity).getMasterUUID())) {
 			LivingEntity livingEntity = (LivingEntity) entity;
 			damage += EnchantmentHelper.getAttackDamage(spear, livingEntity.getGroup());
 		}
-		Entity owner = getOwner();
+		if (owner instanceof HerneEntity) {
+			damage *= 3;
+		}
 		dealtDamage = true;
 		if (entity.damage(DamageSource.trident(this, owner == null ? this : owner), damage)) {
 			if (entity.getType() == EntityType.ENDERMAN) {
@@ -71,13 +78,22 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 	@Nullable
 	@Override
 	protected EntityHitResult getEntityCollision(Vec3d currentPosition, Vec3d nextPosition) {
+		if (isOwnerAlive()) {
+			EntityHitResult collision = ProjectileUtil.getEntityCollision(this.world, this, currentPosition, nextPosition, getBoundingBox().stretch(getVelocity()).expand(1), this::method_26958);
+			if (collision != null) {
+				Entity entity = collision.getEntity();
+				if (entity instanceof MasterAccessor && getOwner().getUuid().equals(((MasterAccessor) entity).getMasterUUID())) {
+					return null;
+				}
+			}
+		}
 		return dealtDamage ? null : super.getEntityCollision(currentPosition, nextPosition);
 	}
 	
 	@Override
 	public void onPlayerCollision(PlayerEntity player) {
-		Entity entity = getOwner();
-		if (entity == null || entity.getUuid() == player.getUuid()) {
+		Entity owner = getOwner();
+		if (owner == null || owner.getUuid() == player.getUuid()) {
 			super.onPlayerCollision(player);
 		}
 	}

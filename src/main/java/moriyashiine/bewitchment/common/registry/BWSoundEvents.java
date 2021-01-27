@@ -21,6 +21,7 @@ public class BWSoundEvents {
 	public static final SoundEvent BLOCK_SIGIL_PLING = create("block.sigil.pling");
 	public static final SoundEvent ITEM_ATHAME_STRIP = create("item.athame.strip");
 	public static final SoundEvent ITEM_CONTRACT_USE = create("item.contract.use");
+	public static final SoundEvent ITEM_HORNED_SPEAR_USE = create("item.horned_spear.use");
 	public static final SoundEvent ENTITY_GENERIC_TELEPORT = create("entity.generic.teleport");
 	public static final SoundEvent ENTITY_GENERIC_PLING = create("entity.generic.pling");
 	public static final SoundEvent ENTITY_GENERIC_SHOOT = create("entity.generic.shoot");
@@ -64,6 +65,9 @@ public class BWSoundEvents {
 	public static final SoundEvent ENTITY_LILITH_AMBIENT = create("entity.lilith.ambient");
 	public static final SoundEvent ENTITY_LILITH_HURT = create("entity.lilith.hurt");
 	public static final SoundEvent ENTITY_LILITH_DEATH = create("entity.lilith.death");
+	public static final SoundEvent ENTITY_HERNE_AMBIENT = create("entity.herne.ambient");
+	public static final SoundEvent ENTITY_HERNE_HURT = create("entity.herne.hurt");
+	public static final SoundEvent ENTITY_HERNE_DEATH = create("entity.herne.death");
 	
 	private static SoundEvent create(String name) {
 		Identifier id = new Identifier(Bewitchment.MODID, name);

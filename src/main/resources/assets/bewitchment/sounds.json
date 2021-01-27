@@ -99,6 +99,12 @@
 	],
 	"subtitle": "bewitchment.subtitles.item.contract.use"
   },
+  "item.horned_spear.use": {
+	"sounds": [
+	  "random/bow"
+	],
+	"subtitle": "bewitchment.subtitles.item.horned_spear.use"
+  },
   "entity.generic.teleport": {
 	"sounds": [
 	  "mob/endermen/portal",

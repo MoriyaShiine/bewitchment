@@ -6,6 +6,7 @@ import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import moriyashiine.bewitchment.client.network.packet.SyncHornedSpearEntity;
 import moriyashiine.bewitchment.common.entity.projectile.HornedSpearEntity;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
+import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -18,7 +19,6 @@ import net.minecraft.item.ItemUsage;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -50,25 +50,13 @@ public class HornedSpearItem extends SwordItem {
 	
 	@Override
 	public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-		if (user instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) user;
-			int timer = getMaxUseTime(stack) - remainingUseTicks;
-			if (timer >= 10) {
-				if (!world.isClient) {
-					stack.damage(1, player, stackUser -> stackUser.sendToolBreakStatus(stackUser.getActiveHand()));
-					HornedSpearEntity spear = new HornedSpearEntity(BWEntityTypes.HORNED_SPEAR, player, world, stack.copy());
-					spear.setProperties(player, player.pitch, player.yaw, 0, 3, 1);
-					if (player.abilities.creativeMode) {
-						spear.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
-					}
-					world.spawnEntity(spear);
-					PlayerLookup.tracking(spear).forEach(serverPlayerEntity -> SyncHornedSpearEntity.send(serverPlayerEntity, spear));
-					world.playSoundFromEntity(null, spear, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1, 1);
-					if (!player.isCreative()) {
-						stack.decrement(1);
-					}
-				}
-				player.incrementStat(Stats.USED.getOrCreateStat(this));
+		int timer = getMaxUseTime(stack) - remainingUseTicks;
+		if (timer >= 10) {
+			if (!world.isClient) {
+				spawnEntity(world, user, stack);
+			}
+			if (user instanceof PlayerEntity) {
+				((PlayerEntity) user).incrementStat(Stats.USED.getOrCreateStat(this));
 			}
 		}
 	}
@@ -81,5 +69,25 @@ public class HornedSpearItem extends SwordItem {
 	@Override
 	public int getMaxUseTime(ItemStack stack) {
 		return 72000;
+	}
+	
+	public static void spawnEntity(World world, LivingEntity owner, ItemStack stack) {
+		stack.damage(1, owner, stackUser -> stackUser.sendToolBreakStatus(stackUser.getActiveHand()));
+		HornedSpearEntity spear = new HornedSpearEntity(BWEntityTypes.HORNED_SPEAR, owner, world, stack.copy());
+		spear.setProperties(owner, owner.pitch, owner.yaw, 0, 3, 1);
+		if (owner instanceof PlayerEntity) {
+			if (((PlayerEntity) owner).isCreative()) {
+				spear.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
+			}
+		}
+		else {
+			spear.pickupType = PersistentProjectileEntity.PickupPermission.DISALLOWED;
+		}
+		world.spawnEntity(spear);
+		PlayerLookup.tracking(spear).forEach(serverPlayerEntity -> SyncHornedSpearEntity.send(serverPlayerEntity, spear));
+		world.playSoundFromEntity(null, spear, BWSoundEvents.ITEM_HORNED_SPEAR_USE, SoundCategory.PLAYERS, 1, 1);
+		if (owner instanceof PlayerEntity && !((PlayerEntity) owner).isCreative()) {
+			stack.decrement(1);
+		}
 	}
 }
