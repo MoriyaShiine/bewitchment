@@ -22,7 +22,7 @@ public class BaphometEntityRenderer extends MobEntityRenderer<BaphometEntity, Ba
 	private static Identifier[] TEXTURES;
 	
 	public BaphometEntityRenderer(EntityRenderDispatcher entityRenderDispatcher) {
-		super(entityRenderDispatcher, new BaphometEntityModel<>(), 0.3f);
+		super(entityRenderDispatcher, new BaphometEntityModel<>(), 0.5f);
 		addFeature(new HeldItemFeatureRenderer<>(this));
 		addFeature(new FeatureRenderer<BaphometEntity, BaphometEntityModel<BaphometEntity>>(this) {
 			@Override

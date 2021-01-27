@@ -15,7 +15,7 @@ public class LeonardEntityRenderer extends MobEntityRenderer<LeonardEntity, Leon
 	private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/living/leonard.png");
 	
 	public LeonardEntityRenderer(EntityRenderDispatcher entityRenderDispatcher) {
-		super(entityRenderDispatcher, new LeonardEntityModel<>(), 0.3f);
+		super(entityRenderDispatcher, new LeonardEntityModel<>(), 0.5f);
 		addFeature(new HeldItemFeatureRenderer<>(this));
 	}
 	
