@@ -24,10 +24,7 @@ import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityGroup;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -37,6 +34,9 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.passive.ChickenEntity;
+import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.entity.projectile.WitherSkullEntity;
@@ -53,7 +53,10 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -537,6 +540,22 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					BlockPos glyph = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 6, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity);
 					if (glyph != null) {
 						((GlyphBlockEntity) world.getBlockEntity(glyph)).onUse(world, glyph, player, Hand.MAIN_HAND, (LivingEntity) (Object) this);
+					}
+					boolean chicken = (Object) this instanceof ChickenEntity;
+					if ((chicken && world.getBiome(getBlockPos()).getCategory() == Biome.Category.EXTREME_HILLS) || ((Object) this instanceof WolfEntity && world.getBiome(getBlockPos()).getCategory() == Biome.Category.FOREST)) {
+						BlockPos brazierPos = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 8, currentPos -> {
+							BlockEntity blockEntity = world.getBlockEntity(currentPos);
+							return blockEntity instanceof BrazierBlockEntity && ((BrazierBlockEntity) blockEntity).incenseRecipe.effect == BWStatusEffects.MORTAL_COIL;
+						});
+						if (brazierPos != null) {
+							world.createExplosion(this, brazierPos.getX() + 0.5, brazierPos.getY() + 0.5, brazierPos.getZ() + 0.5, 3, Explosion.DestructionType.DESTROY);
+							Entity entity = chicken ? BWEntityTypes.LILITH.create(world) : BWEntityTypes.HERNE.create(world);
+							if (entity instanceof MobEntity) {
+								((MobEntity) entity).initialize((ServerWorldAccess) world, world.getLocalDifficulty(brazierPos), SpawnReason.EVENT, null, null);
+								entity.updatePositionAndAngles(brazierPos.getX() + 0.5, brazierPos.getY(), brazierPos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
+								world.spawnEntity(entity);
+							}
+						}
 					}
 				}
 				if (getGroup() == EntityGroup.ARTHROPOD && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.TOAD) {

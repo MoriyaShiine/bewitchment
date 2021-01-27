@@ -1,0 +1,18 @@
+{
+  "type": "bewitchment:incense_recipe",
+  "ingredients": [
+	{
+	  "item": "bewitchment:demon_heart"
+	},
+	{
+	  "item": "bewitchment:garlic"
+	},
+	{
+	  "item": "bewitchment:aconite"
+	},
+	{
+	  "item": "bewitchment:mandrake_root"
+	}
+  ],
+  "effect": "bewitchment:mortal_coil"
+}
