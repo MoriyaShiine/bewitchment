@@ -10,6 +10,7 @@ import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.entity.living.BaphometEntity;
+import moriyashiine.bewitchment.common.entity.living.LilithEntity;
 import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.recipe.AthameDropRecipe;
@@ -36,6 +37,7 @@ import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
+import net.minecraft.entity.projectile.WitherSkullEntity;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -202,6 +204,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				if (trueSource instanceof BaphometEntity) {
 					amount *= 3;
 				}
+			}
+			if (directSource instanceof WitherSkullEntity && trueSource instanceof LilithEntity) {
+				amount *= 3;
 			}
 			if (amount > 0 && trueSource instanceof FortuneAccessor && ((FortuneAccessor) trueSource).getFortune() != null && ((FortuneAccessor) trueSource).getFortune().fortune == BWFortunes.HAWKEYE && source.isProjectile()) {
 				((FortuneAccessor) trueSource).getFortune().duration = 0;

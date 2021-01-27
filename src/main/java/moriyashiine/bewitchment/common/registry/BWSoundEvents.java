@@ -61,6 +61,9 @@ public class BWSoundEvents {
 	public static final SoundEvent ENTITY_BAPHOMET_AMBIENT = create("entity.baphomet.ambient");
 	public static final SoundEvent ENTITY_BAPHOMET_HURT = create("entity.baphomet.hurt");
 	public static final SoundEvent ENTITY_BAPHOMET_DEATH = create("entity.baphomet.death");
+	public static final SoundEvent ENTITY_LILITH_AMBIENT = create("entity.lilith.ambient");
+	public static final SoundEvent ENTITY_LILITH_HURT = create("entity.lilith.hurt");
+	public static final SoundEvent ENTITY_LILITH_DEATH = create("entity.lilith.death");
 	
 	private static SoundEvent create(String name) {
 		Identifier id = new Identifier(Bewitchment.MODID, name);

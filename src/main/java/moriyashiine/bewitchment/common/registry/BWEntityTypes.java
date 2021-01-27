@@ -38,6 +38,7 @@ public class BWEntityTypes {
 	
 	public static final EntityType<LeonardEntity> LEONARD = create("leonard", LeonardEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, LeonardEntity::new).dimensions(EntityDimensions.fixed(0.8f, 2.8f)).fireImmune().build());
 	public static final EntityType<BaphometEntity> BAPHOMET = create("baphomet", BaphometEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, BaphometEntity::new).dimensions(EntityDimensions.fixed(0.8f, 2.8f)).fireImmune().build());
+	public static final EntityType<LilithEntity> LILITH = create("lilith", LilithEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, LilithEntity::new).dimensions(EntityDimensions.fixed(0.8f, 2.8f)).fireImmune().build());
 	
 	private static <T extends LivingEntity> EntityType<T> create(String name, DefaultAttributeContainer.Builder attributes, EntityType<T> type) {
 		FabricDefaultAttributeRegistry.register(type, attributes);

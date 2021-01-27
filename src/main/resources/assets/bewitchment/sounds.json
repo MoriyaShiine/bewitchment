@@ -322,5 +322,20 @@
 	"sounds": [
 	],
 	"subtitle": "bewitchment.subtitles.entity.baphomet.death"
+  },
+  "entity.lilith.ambient": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.lilith.ambient"
+  },
+  "entity.lilith.hurt": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.lilith.hurt"
+  },
+  "entity.lilith.death": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.lilith.death"
   }
 }
