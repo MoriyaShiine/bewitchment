@@ -48,8 +48,8 @@ public class BewitchmentAPI {
 	@SuppressWarnings("InstantiationOfUtilityClass")
 	public static final EntityGroup DEMON = new EntityGroup();
 	
-	public static List<BlockPos> getBlockPoses(BlockPos origin, int radius, Predicate<BlockPos> provider) {
-		List<BlockPos> blockPoses = new ArrayList<>();
+	public static Set<BlockPos> getBlockPoses(BlockPos origin, int radius, Predicate<BlockPos> provider) {
+		Set<BlockPos> blockPoses = new HashSet<>();
 		BlockPos.Mutable mutable = new BlockPos.Mutable();
 		for (int x = -radius; x <= radius; x++) {
 			for (int y = -radius; y <= radius; y++) {
