@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.statuseffect;
 
+import moriyashiine.bewitchment.common.registry.BWDamageSources;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectType;
 
@@ -19,7 +19,7 @@ public class MortalCoilStatusEffect extends StatusEffect {
 	@Override
 	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
 		if (entity.getStatusEffect(this).getDuration() == 1) {
-			entity.damage(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
+			entity.damage(BWDamageSources.DEATH, Float.MAX_VALUE);
 		}
 	}
 }
