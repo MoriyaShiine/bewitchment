@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.entity.living;
 
+import com.google.common.collect.Sets;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.entity.MasterAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.registry.BWMaterials;
@@ -26,7 +26,6 @@ import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.WitchEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.thrown.PotionEntity;
 import net.minecraft.item.ArmorItem;
@@ -43,11 +42,11 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
 import java.util.UUID;
 
 public class LeonardEntity extends BWHostileEntity implements Pledgeable {
@@ -81,8 +80,8 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 				if (timer % 40 == 0) {
 					spawnPotion(target.getBlockPos(), target.isUndead() ? Potions.STRONG_HEALING : Potions.STRONG_HARMING);
 				}
-				if (timer % 600 == 0 && world.getEntitiesByType(EntityType.WITCH, new Box(getBlockPos()).expand(32), entity -> getUuid().equals(((MasterAccessor) entity).getMasterUUID())).size() < 3) {
-					summonMinions();
+				if (timer % 600 == 0) {
+					summonMinions(this);
 				}
 			}
 			else {
@@ -94,6 +93,16 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 	@Override
 	public UUID getPledgeUUID() {
 		return BWPledges.LEONARD_UUID;
+	}
+	
+	@Override
+	public EntityType<?> getMinionType() {
+		return EntityType.WITCH;
+	}
+	
+	@Override
+	public Collection<StatusEffectInstance> getMinionBuffs() {
+		return Sets.newHashSet(new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE), new StatusEffectInstance(BWStatusEffects.MAGIC_RESISTANCE, Integer.MAX_VALUE), new StatusEffectInstance(BWStatusEffects.HARDENING, Integer.MAX_VALUE, 1));
 	}
 	
 	@Override
@@ -159,22 +168,6 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 	}
 	
 	@Override
-	public void setTarget(@Nullable LivingEntity target) {
-		if (target != null) {
-			if (BewitchmentAPI.isPledged(world, getPledgeUUID(), target.getUuid())) {
-				BewitchmentAPI.unpledge(world, getPledgeUUID(), target.getUuid());
-			}
-			if (target instanceof MasterAccessor && getUuid().equals(((MasterAccessor) target).getMasterUUID())) {
-				return;
-			}
-			if (world.getOtherEntities(this, new Box(getBlockPos()).expand(16), entity -> entity instanceof WitchEntity && !entity.removed && getUuid().equals(((MasterAccessor) entity).getMasterUUID())).size() < 3) {
-				summonMinions();
-			}
-		}
-		super.setTarget(target);
-	}
-	
-	@Override
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		return false;
 	}
@@ -218,26 +211,6 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 		goalSelector.add(3, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this));
 		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> entity.getGroup() != BewitchmentAPI.DEMON && BewitchmentAPI.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3 && !(entity instanceof PlayerEntity && BewitchmentAPI.isPledged(world, getPledgeUUID(), entity.getUuid()))));
-	}
-	
-	private void summonMinions() {
-		if (!world.isClient) {
-			for (int i = 0; i < MathHelper.nextInt(random, 2, 3); i++) {
-				WitchEntity witch = EntityType.WITCH.create(world);
-				if (witch != null) {
-					BewitchmentAPI.attemptTeleport(witch, getBlockPos().up(), 3, true);
-					witch.pitch = random.nextFloat() * 360;
-					witch.setTarget(getTarget());
-					MasterAccessor.of(witch).ifPresent(masterAccessor -> masterAccessor.setMasterUUID(getUuid()));
-					witch.setPersistent();
-					witch.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE));
-					witch.addStatusEffect(new StatusEffectInstance(BWStatusEffects.MAGIC_RESISTANCE, Integer.MAX_VALUE));
-					witch.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, Integer.MAX_VALUE));
-					witch.addStatusEffect(new StatusEffectInstance(BWStatusEffects.HARDENING, Integer.MAX_VALUE, 1));
-					world.spawnEntity(witch);
-				}
-			}
-		}
 	}
 	
 	private void spawnPotion(BlockPos target, Potion potionType) {

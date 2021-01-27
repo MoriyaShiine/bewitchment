@@ -1,9 +1,7 @@
 package moriyashiine.bewitchment.mixin;
 
-import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
-import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
-import moriyashiine.bewitchment.api.interfaces.entity.InsanityTargetAccessor;
-import moriyashiine.bewitchment.api.interfaces.entity.MasterAccessor;
+import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.interfaces.entity.*;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.registry.BWContracts;
 import moriyashiine.bewitchment.common.registry.BWCurses;
@@ -81,6 +79,16 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 			UUID insanityTargetUUID = getInsanityTargetUUID().orElse(null);
 			if (insanityTargetUUID != null && !target.getUuid().equals(insanityTargetUUID)) {
 				return null;
+			}
+			if (this instanceof Pledgeable) {
+				if (target instanceof MasterAccessor && getUuid().equals(((MasterAccessor) target).getMasterUUID())) {
+					return null;
+				}
+				Pledgeable pledgeable = (Pledgeable) this;
+				if (BewitchmentAPI.isPledged(world, pledgeable.getPledgeUUID(), target.getUuid())) {
+					BewitchmentAPI.unpledge(world, pledgeable.getPledgeUUID(), target.getUuid());
+				}
+				pledgeable.summonMinions((MobEntity) (Object) this);
 			}
 			ContractAccessor contractAccessor = ContractAccessor.of(target).orElse(null);
 			if (contractAccessor != null && contractAccessor.hasContract(BWContracts.WAR)) {
