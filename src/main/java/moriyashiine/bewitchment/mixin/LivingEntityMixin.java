@@ -10,6 +10,7 @@ import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.entity.living.BaphometEntity;
+import moriyashiine.bewitchment.common.entity.living.HerneEntity;
 import moriyashiine.bewitchment.common.entity.living.LeonardEntity;
 import moriyashiine.bewitchment.common.entity.living.LilithEntity;
 import moriyashiine.bewitchment.common.item.AthameItem;
@@ -366,6 +367,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			}
 			if (trueSource instanceof BaphometEntity) {
 				removeStatusEffect(StatusEffects.FIRE_RESISTANCE);
+			}
+			if (trueSource instanceof LilithEntity || trueSource instanceof HerneEntity) {
+				removeStatusEffect(StatusEffects.RESISTANCE);
 			}
 			Entity directSource = source.getSource();
 			if (directSource instanceof PlayerEntity) {
