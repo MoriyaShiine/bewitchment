@@ -20,15 +20,20 @@ public class PurityStatusEffect extends StatusEffect {
 	
 	@Override
 	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-		if (entity.age % 20 == 0) {
+		if (!entity.world.isClient && entity.age % 20 == 0) {
 			Registry.STATUS_EFFECT.stream().forEach(effect -> {
 				if (((StatusEffectAccessor) effect).bw_getType() == StatusEffectType.HARMFUL && entity.hasStatusEffect(effect)) {
-					entity.removeStatusEffect(effect);
-					StatusEffectInstance current = entity.getStatusEffect(this);
-					StatusEffectInstance down = new StatusEffectInstance(this, current.getDuration(), amplifier - 1, current.isAmbient(), current.shouldShowParticles(), current.shouldShowIcon());
-					entity.removeStatusEffect(this);
-					if (amplifier > 0) {
-						entity.addStatusEffect(down);
+					StatusEffectInstance currentPurity = entity.getStatusEffect(this);
+					if (currentPurity != null) {
+						entity.removeStatusEffect(this);
+						if (currentPurity.getAmplifier() > 0) {
+							entity.addStatusEffect(new StatusEffectInstance(this, currentPurity.getDuration(), currentPurity.getAmplifier() - 1, currentPurity.isAmbient(), currentPurity.shouldShowParticles(), currentPurity.shouldShowIcon()));
+						}
+						StatusEffectInstance currentNegative = entity.getStatusEffect(effect);
+						entity.removeStatusEffect(effect);
+						if (currentNegative.getAmplifier() > 0) {
+							entity.addStatusEffect(new StatusEffectInstance(effect, currentNegative.getDuration(), currentNegative.getAmplifier() - 1, currentNegative.isAmbient(), currentNegative.shouldShowParticles(), currentNegative.shouldShowIcon()));
+						}
 					}
 				}
 			});
