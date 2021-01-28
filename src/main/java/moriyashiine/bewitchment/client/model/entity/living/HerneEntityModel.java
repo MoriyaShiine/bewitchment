@@ -14,7 +14,7 @@ import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
 public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T> {
-	private static final ItemStack HORNED_SPEAR = new ItemStack(BWObjects.HORNED_SPEAR);
+	public static final ItemStack HORNED_SPEAR = new ItemStack(BWObjects.HORNED_SPEAR);
 	
 	private final ModelPart chest;
 	private final ModelPart bipedLeftLeg;

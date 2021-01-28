@@ -19,7 +19,7 @@ import net.minecraft.util.math.BlockPos;
 
 @Environment(EnvType.CLIENT)
 public class GhostEntityRenderer extends MobEntityRenderer<GhostEntity, GhostEntityModel<GhostEntity>> {
-	private static final Identifier EMPTY = new Identifier("minecraft", "textures/block/redstone_dust_overlay.png");
+	public static final Identifier EMPTY = new Identifier("minecraft", "textures/block/redstone_dust_overlay.png");
 	private static Identifier[] TEXTURES;
 	
 	public GhostEntityRenderer(EntityRenderDispatcher entityRenderDispatcher) {

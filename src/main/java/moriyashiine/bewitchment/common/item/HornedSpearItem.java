@@ -45,6 +45,10 @@ public class HornedSpearItem extends SwordItem {
 	
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+		ItemStack stack = user.getStackInHand(hand);
+		if (stack.getDamage() >= stack.getMaxDamage() - 1) {
+			return TypedActionResult.fail(stack);
+		}
 		return ItemUsage.consumeHeldItem(world, user, hand);
 	}
 	
