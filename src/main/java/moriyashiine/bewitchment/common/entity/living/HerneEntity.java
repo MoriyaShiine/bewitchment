@@ -66,7 +66,7 @@ public class HerneEntity extends BWHostileEntity implements Pledgeable {
 			}
 			if (target != null) {
 				lookAtEntity(target, 360, 360);
-				if (timer % 30 == 0) {
+				if (timer % 80 == 0) {
 					HornedSpearItem.spawnEntity(world, this, new ItemStack(BWObjects.HORNED_SPEAR));
 					swingHand(Hand.MAIN_HAND);
 				}
