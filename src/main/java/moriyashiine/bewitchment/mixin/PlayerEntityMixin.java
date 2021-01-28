@@ -41,11 +41,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	private static final TrackedData<Optional<UUID>> POLYMORPH_UUID = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
 	private static final TrackedData<String> POLYMORPH_NAME = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.STRING);
 	
-	private static final EntityAttributeModifier WOLF_FAMILIAR_ARMOR_BONUS = new EntityAttributeModifier(UUID.fromString("1b2866e6-ca04-43e4-b643-1142c0791e6d"), "Familiar bonus", 4, EntityAttributeModifier.Operation.ADDITION);
-	private static final EntityAttributeModifier HERNE_ATTACK_DAMAGE_BONUS = new EntityAttributeModifier(UUID.fromString("96dcc5ab-ffc4-460e-ab62-435892413805"), "Pledge bonus", 2, EntityAttributeModifier.Operation.ADDITION);
-	private static final EntityAttributeModifier HERNE_ARMOR_BONUS = new EntityAttributeModifier(UUID.fromString("64548f0a-aaf2-4f80-bd37-2f94c32b5d21"), "Pledge bonus", 4, EntityAttributeModifier.Operation.ADDITION);
-	private static final EntityAttributeModifier HERNE_ARMOR_TOUGHNESS_BONUS = new EntityAttributeModifier(UUID.fromString("ec7f7a2e-d5c5-40c4-9338-c2808946f7c4"), "Pledge bonus", 4, EntityAttributeModifier.Operation.ADDITION);
-	
+	private static final EntityAttributeModifier WOLF_FAMILIAR_ARMOR_BONUS = new EntityAttributeModifier(UUID.fromString("1b2866e6-ca04-43e4-b643-1142c0791e6d"), "Familiar bonus", 6, EntityAttributeModifier.Operation.ADDITION);
+	private static final EntityAttributeModifier WOLF_FAMILIAR_ARMOR_TOUGHNESS_BONUS = new EntityAttributeModifier(UUID.fromString("ec7f7a2e-d5c5-40c4-9338-c2808946f7c4"), "Familiar bonus", 6, EntityAttributeModifier.Operation.ADDITION);
 	
 	private Fortune.Instance fortune = null;
 	
@@ -145,25 +142,15 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 			}
 			if (age % 20 == 0) {
 				boolean shouldHave = BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF;
-				EntityAttributeInstance attackDamageAttribute = getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
 				EntityAttributeInstance armorAttribute = getAttributeInstance(EntityAttributes.GENERIC_ARMOR);
 				EntityAttributeInstance armorToughnessAttribute = getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS);
 				if (shouldHave && !armorAttribute.hasModifier(WOLF_FAMILIAR_ARMOR_BONUS)) {
 					armorAttribute.addPersistentModifier(WOLF_FAMILIAR_ARMOR_BONUS);
+					armorToughnessAttribute.addPersistentModifier(WOLF_FAMILIAR_ARMOR_TOUGHNESS_BONUS);
 				}
 				else if (!shouldHave && armorAttribute.hasModifier(WOLF_FAMILIAR_ARMOR_BONUS)) {
 					armorAttribute.removeModifier(WOLF_FAMILIAR_ARMOR_BONUS);
-				}
-				shouldHave = BewitchmentAPI.isPledged(world, BWPledges.HERNE_UUID, getUuid());
-				if (shouldHave && !attackDamageAttribute.hasModifier(HERNE_ATTACK_DAMAGE_BONUS)) {
-					attackDamageAttribute.addPersistentModifier(HERNE_ATTACK_DAMAGE_BONUS);
-					armorAttribute.addPersistentModifier(HERNE_ARMOR_BONUS);
-					armorToughnessAttribute.addPersistentModifier(HERNE_ARMOR_TOUGHNESS_BONUS);
-				}
-				else if (!shouldHave && attackDamageAttribute.hasModifier(HERNE_ATTACK_DAMAGE_BONUS)) {
-					attackDamageAttribute.removeModifier(HERNE_ATTACK_DAMAGE_BONUS);
-					armorAttribute.removeModifier(HERNE_ARMOR_BONUS);
-					armorToughnessAttribute.removeModifier(HERNE_ARMOR_TOUGHNESS_BONUS);
+					armorToughnessAttribute.removeModifier(WOLF_FAMILIAR_ARMOR_TOUGHNESS_BONUS);
 				}
 			}
 		}
