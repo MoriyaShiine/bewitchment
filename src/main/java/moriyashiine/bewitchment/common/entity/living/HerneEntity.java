@@ -81,7 +81,9 @@ public class HerneEntity extends BWHostileEntity implements Pledgeable {
 				}
 			}
 			else {
-				heal(8);
+				if (getY() > -64) {
+					heal(8);
+				}
 				timeSinceLastAttack = 0;
 			}
 		}
