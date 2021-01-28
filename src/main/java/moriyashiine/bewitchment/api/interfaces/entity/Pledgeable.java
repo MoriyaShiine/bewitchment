@@ -19,6 +19,8 @@ public interface Pledgeable {
 	EntityType<?> getMinionType();
 	
 	Collection<StatusEffectInstance> getMinionBuffs();
+
+	void setTimeSinceLastAttack(int timeSinceLastAttack);
 	
 	default void summonMinions(MobEntity pledgeableEntity) {
 		if (!pledgeableEntity.world.isClient && pledgeableEntity.world.getEntitiesByType(getMinionType(), new Box(pledgeableEntity.getBlockPos()).expand(32), entity -> !entity.removed && pledgeableEntity.getUuid().equals(((MasterAccessor) entity).getMasterUUID())).size() < 3) {

@@ -376,6 +376,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			if (trueSource instanceof HerneEntity) {
 				removeStatusEffect(StatusEffects.RESISTANCE);
 			}
+			if (trueSource instanceof Pledgeable) {
+				((Pledgeable) trueSource).setTimeSinceLastAttack(0);
+			}
 			Entity directSource = source.getSource();
 			if (directSource instanceof PlayerEntity) {
 				ItemStack stack = ((PlayerEntity) directSource).getMainHandStack();

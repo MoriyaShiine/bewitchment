@@ -50,6 +50,7 @@ import java.util.UUID;
 
 public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 	private final ServerBossBar bossBar;
+	private int timeSinceLastAttack = 0;
 	
 	public LeonardEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
@@ -75,6 +76,11 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 				addStatusEffect(new StatusEffectInstance(StatusEffects.INSTANT_HEALTH, 1, 1));
 			}
 			if (target != null) {
+				timeSinceLastAttack++;
+				if (timeSinceLastAttack >= 600) {
+					BewitchmentAPI.teleport(this, target.getX(), target.getY(), target.getZ(), true);
+					timeSinceLastAttack = 0;
+				}
 				lookAtEntity(target, 360, 360);
 				if (timer % 40 == 0) {
 					spawnPotion(target.getBlockPos(), target.isUndead() ? Potions.STRONG_HEALING : Potions.STRONG_HARMING);
@@ -85,6 +91,7 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 			}
 			else {
 				heal(8);
+				timeSinceLastAttack = 0;
 			}
 		}
 	}
@@ -102,6 +109,11 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 	@Override
 	public Collection<StatusEffectInstance> getMinionBuffs() {
 		return Sets.newHashSet(new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE), new StatusEffectInstance(BWStatusEffects.HARDENING, Integer.MAX_VALUE, 1));
+	}
+	
+	@Override
+	public void setTimeSinceLastAttack(int timeSinceLastAttack) {
+		this.timeSinceLastAttack = timeSinceLastAttack;
 	}
 	
 	@Override
@@ -199,6 +211,13 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 		if (hasCustomName()) {
 			bossBar.setName(getDisplayName());
 		}
+		timeSinceLastAttack = tag.getInt("TimeSinceLastAttack");
+	}
+	
+	@Override
+	public void writeCustomDataToTag(CompoundTag tag) {
+		super.writeCustomDataToTag(tag);
+		tag.putInt("TimeSinceLastAttack", timeSinceLastAttack);
 	}
 	
 	@Override

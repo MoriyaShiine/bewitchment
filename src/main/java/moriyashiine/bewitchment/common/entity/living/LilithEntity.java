@@ -41,6 +41,7 @@ import java.util.UUID;
 
 public class LilithEntity extends BWHostileEntity implements Pledgeable {
 	private final ServerBossBar bossBar;
+	private int timeSinceLastAttack = 0;
 	
 	public LilithEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
@@ -65,6 +66,11 @@ public class LilithEntity extends BWHostileEntity implements Pledgeable {
 				heal(1);
 			}
 			if (target != null) {
+				timeSinceLastAttack++;
+				if (timeSinceLastAttack >= 600) {
+					BewitchmentAPI.teleport(this, target.getX(), target.getY(), target.getZ(), true);
+					timeSinceLastAttack = 0;
+				}
 				lookAtEntity(target, 360, 360);
 				if (timer % 40 == 0) {
 					for (int i = -1; i <= 1; i++) {
@@ -82,6 +88,7 @@ public class LilithEntity extends BWHostileEntity implements Pledgeable {
 			}
 			else {
 				heal(8);
+				timeSinceLastAttack = 0;
 			}
 		}
 	}
@@ -99,6 +106,11 @@ public class LilithEntity extends BWHostileEntity implements Pledgeable {
 	@Override
 	public Collection<StatusEffectInstance> getMinionBuffs() {
 		return Sets.newHashSet(new StatusEffectInstance(StatusEffects.STRENGTH, Integer.MAX_VALUE, 2), new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE, 1), new StatusEffectInstance(BWStatusEffects.HARDENING, Integer.MAX_VALUE, 1));
+	}
+	
+	@Override
+	public void setTimeSinceLastAttack(int timeSinceLastAttack) {
+		this.timeSinceLastAttack = timeSinceLastAttack;
 	}
 	
 	@Override
@@ -205,6 +217,13 @@ public class LilithEntity extends BWHostileEntity implements Pledgeable {
 		if (hasCustomName()) {
 			bossBar.setName(getDisplayName());
 		}
+		timeSinceLastAttack = tag.getInt("TimeSinceLastAttack");
+	}
+	
+	@Override
+	public void writeCustomDataToTag(CompoundTag tag) {
+		super.writeCustomDataToTag(tag);
+		tag.putInt("TimeSinceLastAttack", timeSinceLastAttack);
 	}
 	
 	@Override
