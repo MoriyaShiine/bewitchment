@@ -3,6 +3,6 @@
   "ingredient": {
 	"item": "bewitchment:birch_bark"
   },
-  "effect": "bewitchment:absence",
-  "time": 1
+  "effect": "bewitchment:purity",
+  "time": 2400
 }

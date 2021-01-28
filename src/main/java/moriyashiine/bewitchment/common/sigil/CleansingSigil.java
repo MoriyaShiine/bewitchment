@@ -24,7 +24,7 @@ public class CleansingSigil extends Sigil {
 			flag = user.age % 20 == 0;
 		}
 		if (flag && user.getStatusEffects().stream().anyMatch(effect -> ((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.HARMFUL)) {
-			StatusEffectInstance effect = new StatusEffectInstance(BWStatusEffects.ABSENCE, 1, 1, true, false);
+			StatusEffectInstance effect = new StatusEffectInstance(BWStatusEffects.PURITY, 1, 1, true, false);
 			if (user.canHaveStatusEffect(effect)) {
 				if (!world.isClient) {
 					user.addStatusEffect(effect);

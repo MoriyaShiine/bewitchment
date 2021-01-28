@@ -369,7 +369,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 			}
 			List<StatusEffectInstance> finalEffects = new ArrayList<>();
 			for (int i = effects.size() - 1; i >= 0; i--) {
-				if (effects.get(i).getEffectType() == BWStatusEffects.ABSENCE || effects.get(i).getEffectType() == BWStatusEffects.CORRUPTION) {
+				if (effects.get(i).getEffectType() == BWStatusEffects.CORRUPTION) {
 					finalEffects.add(effects.remove(i));
 				}
 			}

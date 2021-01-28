@@ -15,7 +15,6 @@ import java.util.Map;
 public class BWStatusEffects {
 	private static final Map<StatusEffect, Identifier> STATUS_EFFECTS = new LinkedHashMap<>();
 	
-	public static final StatusEffect ABSENCE = create("absence", new AbsenceStatusEffect(StatusEffectType.BENEFICIAL, 0xded3d5));
 	public static final StatusEffect CLIMBING = create("climbing", new EmptyStatusEffect(StatusEffectType.BENEFICIAL, 0x605448));
 	public static final StatusEffect CORROSION = create("corrosion", new EmptyStatusEffect(StatusEffectType.HARMFUL, 0x6fc536).addAttributeModifier(EntityAttributes.GENERIC_ARMOR, "5b5df91d-001a-464f-a773-ab4ccd62e09f", -3, EntityAttributeModifier.Operation.ADDITION));
 	public static final StatusEffect CORRUPTION = create("corruption", new CorruptionStatusEffect(StatusEffectType.HARMFUL, 0x600000));
@@ -34,6 +33,7 @@ public class BWStatusEffects {
 	public static final StatusEffect MORTAL_COIL = create("mortal_coil", new MortalCoilStatusEffect(StatusEffectType.HARMFUL, 0x2d2d2d));
 	public static final StatusEffect NOURISHING = create("nourishing", new EmptyStatusEffect(StatusEffectType.BENEFICIAL, 0x71bc78));
 	public static final StatusEffect POLYMORPH = create("polymorph", new PolymorphStatusEffect(StatusEffectType.NEUTRAL, 0xb154a9));
+	public static final StatusEffect PURITY = create("purity", new PurityStatusEffect(StatusEffectType.BENEFICIAL, 0xded3d5));
 	public static final StatusEffect SINKING = create("sinking", new SinkingStatusEffect(StatusEffectType.HARMFUL, 0x6c6c6c));
 	public static final StatusEffect SYNCHRONIZED = create("synchronized", new SynchronizedStatusEffect(StatusEffectType.NEUTRAL, 0x990404));
 	public static final StatusEffect THEFT = create("theft", new TheftStatusEffect(StatusEffectType.BENEFICIAL, 0x773b89));
