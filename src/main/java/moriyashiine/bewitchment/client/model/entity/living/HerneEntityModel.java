@@ -23,7 +23,7 @@ public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T>
 	private final ModelPart moss02;
 	private final ModelPart mossL;
 	private final ModelPart mossR;
-	private final ModelPart head;
+	private final ModelPart neck00;
 	private final ModelPart bipedLeftArm;
 	private final ModelPart bipedRightArm;
 	
@@ -159,7 +159,7 @@ public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T>
 		setRotationAngle(mossR, -0.1745F, 0.0F, -0.1745F);
 		mossR.setTextureOffset(111, 48).addCuboid(-0.5F, -0.7F, -3.5F, 1.0F, 9.0F, 7.0F, 0.0F, false);
 		
-		ModelPart neck00 = new ModelPart(this);
+		neck00 = new ModelPart(this);
 		neck00.setPivot(0.0F, -8.1F, -0.1F);
 		chest.addChild(neck00);
 		neck00.setTextureOffset(51, 0).addCuboid(-3.5F, -1.7F, -3.0F, 7.0F, 3.0F, 6.0F, 0.0F, false);
@@ -170,7 +170,7 @@ public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T>
 		setRotationAngle(neck01, 0.2182F, 0.0F, 0.0F);
 		neck01.setTextureOffset(28, 0).addCuboid(-3.11F, -3.0F, -2.5F, 6.0F, 3.0F, 5.0F, 0.0F, false);
 		
-		head = new ModelPart(this);
+		ModelPart head = new ModelPart(this);
 		head.setPivot(0.0F, -2.8F, 0.2F);
 		neck01.addChild(head);
 		setRotationAngle(head, -0.1396F, 0.0F, 0.0F);
@@ -486,7 +486,8 @@ public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T>
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 		super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
 		entity.setStackInHand(Hand.MAIN_HAND, HORNED_SPEAR);
-		head.copyPositionAndRotation(super.head);
+		neck00.copyPositionAndRotation(super.head);
+		neck00.pivotY = -8.1f;
 		bipedLeftArm.copyPositionAndRotation(super.leftArm);
 		bipedLeftArm.roll -= 1 / 8f;
 		bipedLeftArm.pivotX = 5.5f;
