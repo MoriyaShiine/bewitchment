@@ -45,36 +45,38 @@ public abstract class BlockMixin {
 			List<ItemStack> drops = callbackInfo.getReturnValue();
 			if (entity instanceof FortuneAccessor) {
 				FortuneAccessor fortuneAccessor = (FortuneAccessor) entity;
-				if (fortuneAccessor.getFortune().fortune == BWFortunes.TREASURE && world.random.nextFloat() < 1 / 25f) {
-					Set<ItemStack> treasure = new HashSet<>();
-					for (int i = 0; i < world.random.nextInt(1) + 1; i++) {
-						switch (world.random.nextInt(4)) {
-							case 0:
-								treasure.add(new ItemStack(Items.DIAMOND, MathHelper.nextInt(world.random, 1, 3)));
-								break;
-							case 1:
-								treasure.add(new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(world.random, 1, 5)));
-								break;
-							case 2:
-								treasure.add(new ItemStack(Items.IRON_INGOT, MathHelper.nextInt(world.random, 2, 10)));
-								break;
-							case 3:
-								treasure.add(new ItemStack(BWObjects.SILVER_INGOT, MathHelper.nextInt(world.random, 1, 5)));
-								break;
-							default:
-								treasure.add(ItemStack.EMPTY);
+				if (fortuneAccessor.getFortune() != null) {
+					if (fortuneAccessor.getFortune().fortune == BWFortunes.TREASURE && world.random.nextFloat() < 1 / 25f) {
+						Set<ItemStack> treasure = new HashSet<>();
+						for (int i = 0; i < world.random.nextInt(1) + 1; i++) {
+							switch (world.random.nextInt(4)) {
+								case 0:
+									treasure.add(new ItemStack(Items.DIAMOND, MathHelper.nextInt(world.random, 1, 3)));
+									break;
+								case 1:
+									treasure.add(new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(world.random, 1, 5)));
+									break;
+								case 2:
+									treasure.add(new ItemStack(Items.IRON_INGOT, MathHelper.nextInt(world.random, 2, 10)));
+									break;
+								case 3:
+									treasure.add(new ItemStack(BWObjects.SILVER_INGOT, MathHelper.nextInt(world.random, 1, 5)));
+									break;
+								default:
+									treasure.add(ItemStack.EMPTY);
+							}
 						}
-					}
-					drops.addAll(treasure);
-					fortuneAccessor.getFortune().duration = 0;
-				}
-				else if (fortuneAccessor.getFortune().fortune == BWFortunes.INFESTED && world.random.nextFloat() < 1 / 25f) {
-					SilverfishEntity silverfishEntity = EntityType.SILVERFISH.create(world);
-					if (silverfishEntity != null) {
-						silverfishEntity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
-						silverfishEntity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
-						world.spawnEntity(silverfishEntity);
+						drops.addAll(treasure);
 						fortuneAccessor.getFortune().duration = 0;
+					}
+					else if (fortuneAccessor.getFortune().fortune == BWFortunes.INFESTED && world.random.nextFloat() < 1 / 25f) {
+						SilverfishEntity silverfishEntity = EntityType.SILVERFISH.create(world);
+						if (silverfishEntity != null) {
+							silverfishEntity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
+							silverfishEntity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
+							world.spawnEntity(silverfishEntity);
+							fortuneAccessor.getFortune().duration = 0;
+						}
 					}
 				}
 			}
