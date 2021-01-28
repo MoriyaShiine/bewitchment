@@ -212,7 +212,12 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	
 	@Override
 	public boolean isEmpty() {
-		return inventory.isEmpty();
+		for (int i = 0; i < size(); i++) {
+			if (getStack(i).isEmpty()){
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	@Override
