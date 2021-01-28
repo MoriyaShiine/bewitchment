@@ -68,7 +68,8 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 	@Nullable
 	public abstract LivingEntity getTarget();
 	
-	@Shadow public abstract void setTarget(@Nullable LivingEntity target);
+	@Shadow
+	public abstract void setTarget(@Nullable LivingEntity target);
 	
 	protected MobEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
