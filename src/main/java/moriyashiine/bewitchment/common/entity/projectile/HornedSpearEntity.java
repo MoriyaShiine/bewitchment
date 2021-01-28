@@ -104,7 +104,7 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 			dealtDamage = true;
 		}
 		Entity entity = getOwner();
-		if ((dealtDamage || isNoClip() || getY() <= 0) && entity != null) {
+		if ((dealtDamage || isNoClip() || getY() <= 0) && entity instanceof PlayerEntity) {
 			if (!isOwnerAlive()) {
 				if (!world.isClient && pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED) {
 					dropStack(asItemStack(), 0.1f);
