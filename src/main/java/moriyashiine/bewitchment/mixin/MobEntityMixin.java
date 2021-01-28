@@ -17,7 +17,6 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.CaveSpiderEntity;
-import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.SpiderEntity;
 import net.minecraft.nbt.CompoundTag;
@@ -69,12 +68,14 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 	@Nullable
 	public abstract LivingEntity getTarget();
 	
+	@Shadow public abstract void setTarget(@Nullable LivingEntity target);
+	
 	protected MobEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
 	}
 	
 	@ModifyVariable(method = "setTarget", at = @At("HEAD"))
-	private LivingEntity setTarget(LivingEntity target) {
+	private LivingEntity modifyTarget(LivingEntity target) {
 		if (!world.isClient && target != null) {
 			UUID insanityTargetUUID = getInsanityTargetUUID().orElse(null);
 			if (insanityTargetUUID != null && !target.getUuid().equals(insanityTargetUUID)) {
@@ -142,8 +143,8 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 		if (!world.isClient) {
 			if (getMasterUUID() != null) {
 				Entity master = ((ServerWorld) world).getEntity(getMasterUUID());
-				if (master instanceof HostileEntity && !((HostileEntity) master).isDead() && ((HostileEntity) master).getTarget() != null) {
-					setTarget(((HostileEntity) master).getTarget());
+				if (master instanceof MobEntity && !((MobEntity) master).isDead() && ((MobEntity) master).getTarget() != null) {
+					setTarget(((MobEntity) master).getTarget());
 				}
 				else {
 					PlayerLookup.tracking(this).forEach(playerEntity -> SpawnSmokeParticlesPacket.send(playerEntity, this));
