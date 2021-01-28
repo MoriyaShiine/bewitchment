@@ -5,6 +5,7 @@ import moriyashiine.bewitchment.api.interfaces.entity.*;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.registry.BWContracts;
 import moriyashiine.bewitchment.common.registry.BWCurses;
+import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -91,6 +92,9 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 					BewitchmentAPI.unpledge(world, pledgeable.getPledgeUUID(), target.getUuid());
 				}
 				pledgeable.summonMinions((MobEntity) (Object) this);
+			}
+			if (isUndead() && !BewitchmentAPI.getBlockPoses(target.getBlockPos(), 2, foundPos -> BWTags.UNDEAD_MASK.contains(world.getBlockState(foundPos).getBlock())).isEmpty()) {
+				return null;
 			}
 			ContractAccessor contractAccessor = (ContractAccessor) target;
 			if (contractAccessor.hasContract(BWContracts.WAR)) {

@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+	"#bewitchment:cypress_logs",
+	"bewitchment:cypress_leaves",
+	"bewitchment:cypress_sapling",
+	"bewitchment:cypress_planks",
+	"bewitchment:cypress_stairs",
+	"bewitchment:cypress_slab",
+	"bewitchment:cypress_fence",
+	"bewitchment:cypress_fence_gate",
+	"bewitchment:cypress_pressure_plate",
+	"bewitchment:cypress_button",
+	"bewitchment:cypress_trapdoor",
+	"bewitchment:cypress_door",
+	"bewitchment:cypress_chest",
+	"bewitchment:trapped_cypress_chest",
+	"bewitchment:cypress_sign",
+	"bewitchment:cypress_poppet_shelf"
+  ]
+}

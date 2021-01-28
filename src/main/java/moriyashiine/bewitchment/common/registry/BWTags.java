@@ -21,6 +21,7 @@ public class BWTags {
 	public static final Tag<Item> ORES = TagRegistry.item(new Identifier("c", "ores"));
 	public static final Tag<Block> GIVES_ALTAR_POWER = TagRegistry.block(new Identifier(Bewitchment.MODID, "gives_altar_power"));
 	public static final Tag<Block> HEATS_CAULDRON = TagRegistry.block(new Identifier(Bewitchment.MODID, "heats_cauldron"));
+	public static final Tag<Block> UNDEAD_MASK = TagRegistry.block(new Identifier(Bewitchment.MODID, "undead_mask"));
 	
 	public static final Tag<Item> SILVER_ARMOR = TagRegistry.item(new Identifier(Bewitchment.MODID, "silver_armor"));
 	public static final Tag<Item> SILVER_TOOLS = TagRegistry.item(new Identifier(Bewitchment.MODID, "silver_tools"));
