@@ -2,8 +2,10 @@ package moriyashiine.bewitchment.common.entity.living;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.DespawnAccessor;
+import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -40,7 +42,11 @@ public class WerewolfEntity extends BWHostileEntity {
 		if (!world.isClient && despawns && age % 20 == 0 && BewitchmentAPI.getMoonPhase(world) != 0) {
 			VillagerEntity entity = EntityType.VILLAGER.create(world);
 			if (entity instanceof DespawnAccessor) {
+				PlayerLookup.tracking(this).forEach(player -> SpawnSmokeParticlesPacket.send(player, this));
 				entity.updatePositionAndAngles(getX(), getY(), getZ(), random.nextFloat() * 360, 0);
+				entity.setHealth(entity.getMaxHealth() * (getHealth() / getMaxHealth()));
+				entity.setFireTicks(getFireTicks());
+				getStatusEffects().forEach(entity::addStatusEffect);
 				((DespawnAccessor) entity).setDespawnTimer(1200);
 				world.spawnEntity(entity);
 				remove();
