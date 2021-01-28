@@ -3,7 +3,7 @@ package moriyashiine.bewitchment.common.block;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.misc.EntityShapeContextAdditionAccessor;
+import moriyashiine.bewitchment.common.misc.interfaces.EntityShapeContextAdditionAccessor;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

@@ -1,9 +1,9 @@
 package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.misc.Lockable;
-import moriyashiine.bewitchment.api.interfaces.misc.SigilHolder;
-import moriyashiine.bewitchment.api.interfaces.misc.TaglockHolder;
+import moriyashiine.bewitchment.common.block.entity.interfaces.Lockable;
+import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
+import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWSigils;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;

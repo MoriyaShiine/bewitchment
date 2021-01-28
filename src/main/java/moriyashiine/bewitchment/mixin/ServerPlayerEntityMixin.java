@@ -2,6 +2,8 @@ package moriyashiine.bewitchment.mixin;
 
 import com.mojang.authlib.GameProfile;
 import moriyashiine.bewitchment.api.interfaces.entity.*;
+import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
+import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;

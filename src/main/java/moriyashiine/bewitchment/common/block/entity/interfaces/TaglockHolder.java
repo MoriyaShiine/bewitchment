@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.api.interfaces.misc;
+package moriyashiine.bewitchment.common.block.entity.interfaces;
 
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.client.network.packet.SyncTaglockHolderBlockEntity;

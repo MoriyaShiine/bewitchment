@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.api.interfaces.entity;
+package moriyashiine.bewitchment.common.entity.interfaces;
 
 import java.util.UUID;
 

@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.entity.projectile;
 
-import moriyashiine.bewitchment.api.interfaces.entity.MasterAccessor;
+import moriyashiine.bewitchment.common.entity.interfaces.MasterAccessor;
 import moriyashiine.bewitchment.client.network.packet.CreateNonLivingEntityPacket;
 import moriyashiine.bewitchment.common.entity.living.HerneEntity;
 import net.fabricmc.api.EnvType;

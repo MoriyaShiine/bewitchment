@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.block.dragonsblood;
 
-import moriyashiine.bewitchment.api.interfaces.misc.SigilHolder;
+import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.block.BWChestBlock;
 import moriyashiine.bewitchment.common.block.entity.DragonsBloodChestBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;

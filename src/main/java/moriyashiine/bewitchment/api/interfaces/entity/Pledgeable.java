@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.api.interfaces.entity;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.common.entity.interfaces.MasterAccessor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;

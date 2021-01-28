@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.block.elder;
 
 import com.terraformersmc.terraform.wood.block.TerraformTrapdoorBlock;
-import moriyashiine.bewitchment.api.interfaces.misc.Lockable;
+import moriyashiine.bewitchment.common.block.entity.interfaces.Lockable;
 import moriyashiine.bewitchment.common.block.entity.LockableBlockEntity;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;

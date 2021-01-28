@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.client;
 
-import moriyashiine.bewitchment.api.interfaces.entity.InsanityTargetAccessor;
+import moriyashiine.bewitchment.common.entity.interfaces.InsanityTargetAccessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;

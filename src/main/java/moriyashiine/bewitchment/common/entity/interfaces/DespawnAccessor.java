@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.api.interfaces.entity;
+package moriyashiine.bewitchment.common.entity.interfaces;
 
 public interface DespawnAccessor {
 	void setDespawnTimer(int despawnTimer);

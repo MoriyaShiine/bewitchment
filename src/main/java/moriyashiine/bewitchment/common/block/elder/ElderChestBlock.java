@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.block.elder;
 
-import moriyashiine.bewitchment.api.interfaces.misc.Lockable;
+import moriyashiine.bewitchment.common.block.entity.interfaces.Lockable;
 import moriyashiine.bewitchment.common.block.BWChestBlock;
 import moriyashiine.bewitchment.common.block.entity.ElderChestBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;

@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.block.juniper;
 
-import moriyashiine.bewitchment.api.interfaces.misc.TaglockHolder;
+import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
 import moriyashiine.bewitchment.common.block.entity.TaglockHolderBlockEntity;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
