@@ -625,7 +625,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
 	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		if (BWTags.HAS_BLOOD.contains(getType())) {
+		if (BWTags.HAS_BLOOD.contains(getType()) && tag.contains("Blood")) {
 			setBlood(tag.getInt("Blood"));
 		}
 		setFamiliar(tag.getBoolean("IsFamiliar"));
