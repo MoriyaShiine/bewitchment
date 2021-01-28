@@ -370,7 +370,10 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			if (trueSource instanceof BaphometEntity) {
 				removeStatusEffect(StatusEffects.FIRE_RESISTANCE);
 			}
-			if (trueSource instanceof LilithEntity || trueSource instanceof HerneEntity) {
+			if (trueSource instanceof LilithEntity) {
+				removeStatusEffect(StatusEffects.STRENGTH);
+			}
+			if (trueSource instanceof HerneEntity) {
 				removeStatusEffect(StatusEffects.RESISTANCE);
 			}
 			Entity directSource = source.getSource();
