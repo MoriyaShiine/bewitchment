@@ -29,7 +29,7 @@ public class ScepterCraftingRecipe extends SpecialCraftingRecipe {
 				}
 				foundItems++;
 			}
-			else if (stack.getItem() instanceof SplashPotionItem && !PotionUtil.getCustomPotionEffects(stack).isEmpty()) {
+			else if (stack.getItem() instanceof SplashPotionItem && (!PotionUtil.getPotionEffects(stack).isEmpty() || !PotionUtil.getCustomPotionEffects(stack).isEmpty())) {
 				if (!foundPotion) {
 					foundPotion = true;
 				}
@@ -52,7 +52,7 @@ public class ScepterCraftingRecipe extends SpecialCraftingRecipe {
 			}
 		}
 		scepter.getOrCreateTag().putInt("PotionUses", 8);
-		PotionUtil.setCustomPotionEffects(scepter, PotionUtil.getCustomPotionEffects(potion));
+		PotionUtil.setCustomPotionEffects(scepter, !PotionUtil.getCustomPotionEffects(potion).isEmpty() ? PotionUtil.getCustomPotionEffects(potion) : PotionUtil.getPotionEffects(potion));
 		return scepter;
 	}
 	
