@@ -44,8 +44,17 @@ public class VampireEntity extends BWHostileEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		if (!world.isClient && !hasCustomName() && world.isDay() && !world.isRaining() && world.isSkyVisibleAllowingSea(getBlockPos())) {
-			setOnFireFor(8);
+		if (!world.isClient) {
+			BloodAccessor bloodAccessor = (BloodAccessor) this;
+			if (getHealth() < getMaxHealth() && (age + getEntityId()) % 40 == 0 && bloodAccessor.getBlood() > 0) {
+				heal(1);
+				if (random.nextFloat() < 1/4f) {
+					bloodAccessor.drainBlood(1, false);
+				}
+			}
+			if (!hasCustomName() && world.isDay() && !world.isRaining() && world.isSkyVisibleAllowingSea(getBlockPos())) {
+				setOnFireFor(8);
+			}
 		}
 	}
 	
