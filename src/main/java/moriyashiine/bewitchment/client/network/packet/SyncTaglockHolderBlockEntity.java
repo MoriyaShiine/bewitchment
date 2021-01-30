@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.client.network.packet;
 
 import io.netty.buffer.Unpooled;
-import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
 import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.entity.BlockEntity;

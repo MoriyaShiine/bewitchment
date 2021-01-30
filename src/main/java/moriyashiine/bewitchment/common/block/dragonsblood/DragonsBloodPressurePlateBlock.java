@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.common.block.dragonsblood;
 
 import com.terraformersmc.terraform.wood.block.TerraformPressurePlateBlock;
-import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
+import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;

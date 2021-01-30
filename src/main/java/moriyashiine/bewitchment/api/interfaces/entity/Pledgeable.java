@@ -20,7 +20,7 @@ public interface Pledgeable {
 	EntityType<?> getMinionType();
 	
 	Collection<StatusEffectInstance> getMinionBuffs();
-
+	
 	void setTimeSinceLastAttack(int timeSinceLastAttack);
 	
 	default void summonMinions(MobEntity pledgeableEntity) {

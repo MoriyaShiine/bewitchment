@@ -1,12 +1,16 @@
 package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.entity.*;
+import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.interfaces.InsanityTargetAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.MasterAccessor;
 import moriyashiine.bewitchment.common.registry.BWContracts;
 import moriyashiine.bewitchment.common.registry.BWCurses;
+import moriyashiine.bewitchment.common.registry.BWDamageSources;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.Entity;
@@ -22,8 +26,12 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.CaveSpiderEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.SpiderEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -34,6 +42,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -78,6 +87,40 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 		super(entityType, world);
 	}
 	
+	@Inject(method = "tick", at = @At("HEAD"))
+	private void tick(CallbackInfo callbackInfo) {
+		if (!world.isClient) {
+			if (getMasterUUID() != null) {
+				Entity master = ((ServerWorld) world).getEntity(getMasterUUID());
+				if (master instanceof MobEntity && !((MobEntity) master).isDead() && ((MobEntity) master).getTarget() != null) {
+					setTarget(((MobEntity) master).getTarget());
+				}
+				else {
+					PlayerLookup.tracking(this).forEach(playerEntity -> SpawnSmokeParticlesPacket.send(playerEntity, this));
+					remove();
+				}
+			}
+			getInsanityTargetUUID().ifPresent(uuid -> {
+				LivingEntity entity = (LivingEntity) ((ServerWorld) world).getEntity(uuid);
+				if (getTarget() == null || !getTarget().getUuid().equals(uuid)) {
+					setTarget(entity);
+				}
+				if (age % 20 == 0) {
+					boolean remove = false;
+					if (random.nextFloat() < 1 / 100f) {
+						remove = true;
+					}
+					else if (entity instanceof CurseAccessor && !((CurseAccessor) entity).hasCurse(BWCurses.INSANITY)) {
+						remove = true;
+					}
+					if (remove) {
+						remove();
+					}
+				}
+			});
+		}
+	}
+	
 	@ModifyVariable(method = "setTarget", at = @At("HEAD"))
 	private LivingEntity modifyTarget(LivingEntity target) {
 		if (!world.isClient && target != null) {
@@ -120,6 +163,25 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 		return target;
 	}
 	
+	@Inject(method = "interact", at = @At("HEAD"), cancellable = true)
+	private void interact(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> callbackInfo) {
+		if (isAlive() && BewitchmentAPI.isVampire(player, true) && BWTags.HAS_BLOOD.contains(getType())) {
+			BloodAccessor playerBlood = (BloodAccessor) player;
+			BloodAccessor thisBlood = (BloodAccessor) this;
+			if (playerBlood.fillBlood(5, true) && thisBlood.drainBlood(10, true)) {
+				if (hurtTime == 0) {
+					world.playSound(null, getBlockPos(), SoundEvents.ITEM_HONEY_BOTTLE_DRINK, getSoundCategory(), getSoundVolume(), 0.5f);
+					if (!isSleeping() || thisBlood.getBlood() < thisBlood.MAX_BLOOD / 2) {
+						damage(BWDamageSources.VAMPIRE, 2);
+					}
+					playerBlood.fillBlood(5, false);
+					thisBlood.drainBlood(10, false);
+				}
+				callbackInfo.setReturnValue(ActionResult.success(world.isClient));
+			}
+		}
+	}
+	
 	@Inject(method = "dropLoot", at = @At("HEAD"))
 	private void dropLoot(DamageSource source, boolean causedByPlayer, CallbackInfo callbackInfo) {
 		if (!world.isClient && (Object) this instanceof SpiderEntity && !spawnedByArachnophobia) {
@@ -142,40 +204,6 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 					}
 				}
 			}
-		}
-	}
-	
-	@Inject(method = "tick", at = @At("HEAD"))
-	private void tick(CallbackInfo callbackInfo) {
-		if (!world.isClient) {
-			if (getMasterUUID() != null) {
-				Entity master = ((ServerWorld) world).getEntity(getMasterUUID());
-				if (master instanceof MobEntity && !((MobEntity) master).isDead() && ((MobEntity) master).getTarget() != null) {
-					setTarget(((MobEntity) master).getTarget());
-				}
-				else {
-					PlayerLookup.tracking(this).forEach(playerEntity -> SpawnSmokeParticlesPacket.send(playerEntity, this));
-					remove();
-				}
-			}
-			getInsanityTargetUUID().ifPresent(uuid -> {
-				LivingEntity entity = (LivingEntity) ((ServerWorld) world).getEntity(uuid);
-				if (getTarget() == null || !getTarget().getUuid().equals(uuid)) {
-					setTarget(entity);
-				}
-				if (age % 20 == 0) {
-					boolean remove = false;
-					if (random.nextFloat() < 1 / 100f) {
-						remove = true;
-					}
-					else if (entity instanceof CurseAccessor && !((CurseAccessor) entity).hasCurse(BWCurses.INSANITY)) {
-						remove = true;
-					}
-					if (remove) {
-						remove();
-					}
-				}
-			});
 		}
 	}
 	

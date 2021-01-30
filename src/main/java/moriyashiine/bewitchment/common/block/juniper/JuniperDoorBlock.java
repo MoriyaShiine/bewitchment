@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.common.block.juniper;
 
 import com.terraformersmc.terraform.wood.block.TerraformDoorBlock;
-import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
 import moriyashiine.bewitchment.common.block.entity.TaglockHolderBlockEntity;
+import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;

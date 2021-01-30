@@ -213,7 +213,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	@Override
 	public boolean isEmpty() {
 		for (int i = 0; i < size(); i++) {
-			if (getStack(i).isEmpty()){
+			if (getStack(i).isEmpty()) {
 				return false;
 			}
 		}

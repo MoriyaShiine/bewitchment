@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.common.ritualfunction;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.common.entity.interfaces.WetAccessor;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
+import moriyashiine.bewitchment.common.entity.interfaces.WetAccessor;
 import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;

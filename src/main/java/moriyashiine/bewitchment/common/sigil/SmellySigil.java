@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.sigil;
 
-import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.api.registry.Sigil;
+import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.entity.LivingEntity;

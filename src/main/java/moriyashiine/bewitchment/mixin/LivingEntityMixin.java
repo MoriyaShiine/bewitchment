@@ -72,7 +72,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings({"ConstantConditions", "BooleanMethodIsAlwaysInverted"})
+@SuppressWarnings({"ConstantConditions"})
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements BloodAccessor, FamiliarAccessor, CurseAccessor, ContractAccessor {
 	private static final TrackedData<Integer> BLOOD = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
@@ -108,6 +108,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Shadow
 	public abstract void heal(float amount);
+	
+	@Shadow
+	public abstract boolean isSleeping();
 	
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
@@ -166,6 +169,11 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					damage(DamageSource.MAGIC, damage);
 				}
 			}
+			if (!BewitchmentAPI.isVampire(this, true) && BWTags.HAS_BLOOD.contains(getType())) {
+				if (random.nextFloat() < (isSleeping() ? 1 / 50f : 1 / 500f)) {
+					fillBlood(1, false);
+				}
+			}
 			for (int i = curses.size() - 1; i >= 0; i--) {
 				Curse.Instance instance = curses.get(i);
 				instance.curse.tick(livingEntity);
@@ -208,8 +216,8 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/entity/LivingEntity;getHealth()F"))
 	private float modifyDamage0(float amount, DamageSource source) {
-		if (!world.isClient && BewitchmentAPI.isWeakToSilver((LivingEntity) (Object) this) && BewitchmentAPI.isSourceFromSilver(source)) {
-			return amount + 4;
+		if (!world.isClient) {
+			amount = BWDamageSources.handleDamage((LivingEntity) (Object) this, source, amount);
 		}
 		return amount;
 	}
@@ -348,18 +356,12 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			if (getFamiliar()) {
 				amount /= 8;
 			}
-			if (BewitchmentAPI.isVampire(this, true)) {
-				amount = handleVampireDamage((LivingEntity) (Object) this, source, amount);
-			}
-			if (BewitchmentAPI.isWerewolf(this, false) && !isEffective(source, false)) {
-				amount /= 6;
-			}
 		}
 		return amount;
 	}
 	
 	@ModifyVariable(method = "damage", at = @At("HEAD"))
-	private DamageSource modifyDamageSource(DamageSource source) {
+	private DamageSource modifyDamage2(DamageSource source) {
 		if (!world.isClient) {
 			Entity attacker = source.getSource();
 			if (attacker instanceof LivingEntity && ((LivingEntity) attacker).hasStatusEffect(BWStatusEffects.ENCHANTED)) {
@@ -470,6 +472,13 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					}
 				}
 			}
+		}
+	}
+	
+	@Inject(method = "getGroup", at = @At("HEAD"), cancellable = true)
+	private void getGroup(CallbackInfoReturnable<EntityGroup> callbackInfo) {
+		if (((Object) this instanceof PlayerEntity) && BewitchmentAPI.isVampire(this, true)) {
+			callbackInfo.setReturnValue(EntityGroup.UNDEAD);
 		}
 	}
 	
@@ -684,34 +693,5 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			dataTracker.startTracking(BLOOD, MAX_BLOOD);
 		}
 		dataTracker.startTracking(IS_FAMILIAR, false);
-	}
-	
-	private static boolean isEffective(DamageSource source, boolean vampire) {
-		if (source.isOutOfWorld() || (vampire && source == BWDamageSources.SUN)) {
-			return true;
-		}
-		Entity attacker = source.getSource();
-		if (attacker != null) {
-			if (BWTags.BOSSES.contains(attacker.getType()) || BewitchmentAPI.isVampire(attacker, true) || BewitchmentAPI.isWerewolf(attacker, true)) {
-				return true;
-			}
-			else if (vampire && attacker instanceof LivingEntity && EnchantmentHelper.getEquipmentLevel(Enchantments.SMITE, (LivingEntity) attacker) > 0) {
-				return true;
-			}
-		}
-		return BewitchmentAPI.isSourceFromSilver(source);
-	}
-	
-	private static float handleVampireDamage(LivingEntity entity, DamageSource source, float amount) {
-		if (!isEffective(source, true)) {
-			if (entity.getHealth() - amount < 1) {
-				BloodAccessor bloodAccessor = (BloodAccessor) entity;
-				while (entity.getHealth() - amount <= 0 && bloodAccessor.getBlood() > 0) {
-					amount--;
-					bloodAccessor.drainBlood(1, false);
-				}
-			}
-		}
-		return amount;
 	}
 }

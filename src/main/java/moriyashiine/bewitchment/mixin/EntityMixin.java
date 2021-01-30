@@ -1,9 +1,9 @@
 package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
 import moriyashiine.bewitchment.common.entity.interfaces.InsanityTargetAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.MasterAccessor;
-import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
 import moriyashiine.bewitchment.common.entity.interfaces.WetAccessor;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;

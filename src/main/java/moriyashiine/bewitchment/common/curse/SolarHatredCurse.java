@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.curse;
 
-import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
 import moriyashiine.bewitchment.api.registry.Curse;
+import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
 import net.minecraft.entity.LivingEntity;
 
 public class SolarHatredCurse extends Curse {

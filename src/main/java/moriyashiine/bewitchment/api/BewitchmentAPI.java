@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.api;
 
+import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
 import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
@@ -11,6 +12,7 @@ import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.registry.BWTags;
+import moriyashiine.bewitchment.common.registry.BWTransformations;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
@@ -146,10 +148,16 @@ public class BewitchmentAPI {
 	}
 	
 	public static boolean isVampire(Entity entity, boolean includeHumanForm) {
+		if (entity instanceof TransformationAccessor && ((TransformationAccessor) entity).getTransformation() == BWTransformations.VAMPIRE) {
+			return includeHumanForm || ((TransformationAccessor) entity).getAlternateForm();
+		}
 		return entity instanceof VampireEntity;
 	}
 	
 	public static boolean isWerewolf(Entity entity, boolean includeHumanForm) {
+		if (entity instanceof TransformationAccessor && ((TransformationAccessor) entity).getTransformation() == BWTransformations.WEREWOLF) {
+			return includeHumanForm || ((TransformationAccessor) entity).getAlternateForm();
+		}
 		return entity instanceof WerewolfEntity;
 	}
 	

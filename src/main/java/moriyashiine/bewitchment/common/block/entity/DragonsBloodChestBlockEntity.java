@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.block.entity;
 
-import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.api.registry.Sigil;
+import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;

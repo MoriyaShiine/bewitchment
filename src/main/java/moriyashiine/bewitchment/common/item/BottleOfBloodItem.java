@@ -1,5 +1,7 @@
 package moriyashiine.bewitchment.common.item;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -24,8 +26,13 @@ public class BottleOfBloodItem extends Item {
 	
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		user.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 200));
-		user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200));
+		if (BewitchmentAPI.isVampire(user, true)) {
+			((BloodAccessor) user).fillBlood(5, false);
+		}
+		else {
+			user.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 200));
+			user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200));
+		}
 		return Items.POTION.finishUsing(stack, world, user);
 	}
 	

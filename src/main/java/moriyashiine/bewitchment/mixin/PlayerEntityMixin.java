@@ -12,9 +12,12 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FoodComponent;
@@ -36,15 +39,21 @@ import java.util.UUID;
 
 @SuppressWarnings("ConstantConditions")
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity implements MagicAccessor, PolymorphAccessor, FortuneAccessor, ContractAccessor, RespawnTimerAccessor {
+public abstract class PlayerEntityMixin extends LivingEntity implements MagicAccessor, PolymorphAccessor, FortuneAccessor, ContractAccessor, TransformationAccessor, RespawnTimerAccessor {
 	private static final TrackedData<Integer> MAGIC = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	private static final TrackedData<Integer> MAGIC_TIMER = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
+	
+	private static final TrackedData<String> TRANSFORMATION = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.STRING);
+	private static final TrackedData<Boolean> ALTERNATE_FORM = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
 	private static final TrackedData<Optional<UUID>> POLYMORPH_UUID = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
 	private static final TrackedData<String> POLYMORPH_NAME = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.STRING);
 	
 	private static final EntityAttributeModifier WOLF_FAMILIAR_ARMOR_BONUS = new EntityAttributeModifier(UUID.fromString("1b2866e6-ca04-43e4-b643-1142c0791e6d"), "Familiar bonus", 6, EntityAttributeModifier.Operation.ADDITION);
 	private static final EntityAttributeModifier WOLF_FAMILIAR_ARMOR_TOUGHNESS_BONUS = new EntityAttributeModifier(UUID.fromString("ec7f7a2e-d5c5-40c4-9338-c2808946f7c4"), "Familiar bonus", 6, EntityAttributeModifier.Operation.ADDITION);
+	
+	private static final EntityAttributeModifier VAMPIRE_ATTACK_DAMAGE_BONUS_0 = new EntityAttributeModifier(UUID.fromString("066862f6-989c-4f35-ac6d-2696b91a1a5b"), "Transformation bonus", 2, EntityAttributeModifier.Operation.ADDITION);
+	private static final EntityAttributeModifier VAMPIRE_MOVEMENT_SPEED_BONUS_0 = new EntityAttributeModifier(UUID.fromString("a782c03d-af7b-4eb7-b997-dd396bfdc7a0"), "Transformation bonus", 0.04, EntityAttributeModifier.Operation.ADDITION);
 	
 	private Fortune.Instance fortune = null;
 	
@@ -85,6 +94,26 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	@Override
 	public void setFortune(Fortune.Instance fortune) {
 		this.fortune = fortune;
+	}
+	
+	@Override
+	public Identifier getTransformation() {
+		return new Identifier(dataTracker.get(TRANSFORMATION));
+	}
+	
+	@Override
+	public void setTransformation(Identifier transformation) {
+		dataTracker.set(TRANSFORMATION, transformation.toString());
+	}
+	
+	@Override
+	public boolean getAlternateForm() {
+		return dataTracker.get(ALTERNATE_FORM);
+	}
+	
+	@Override
+	public void setAlternateForm(boolean alternateForm) {
+		dataTracker.set(ALTERNATE_FORM, alternateForm);
 	}
 	
 	@Override
@@ -139,13 +168,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 					}
 				}
 			}
-			if (getRespawnTimer() > 0) {
-				setRespawnTimer(getRespawnTimer() - 1);
-			}
+			boolean vampire = BewitchmentAPI.isVampire(this, true);
 			if (age % 20 == 0) {
 				boolean shouldHave = BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF;
+				EntityAttributeInstance attackDamageAttribute = getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
 				EntityAttributeInstance armorAttribute = getAttributeInstance(EntityAttributes.GENERIC_ARMOR);
 				EntityAttributeInstance armorToughnessAttribute = getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS);
+				EntityAttributeInstance movementSpeedAttribute = getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
 				if (shouldHave && !armorAttribute.hasModifier(WOLF_FAMILIAR_ARMOR_BONUS)) {
 					armorAttribute.addPersistentModifier(WOLF_FAMILIAR_ARMOR_BONUS);
 					armorToughnessAttribute.addPersistentModifier(WOLF_FAMILIAR_ARMOR_TOUGHNESS_BONUS);
@@ -154,7 +183,62 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 					armorAttribute.removeModifier(WOLF_FAMILIAR_ARMOR_BONUS);
 					armorToughnessAttribute.removeModifier(WOLF_FAMILIAR_ARMOR_TOUGHNESS_BONUS);
 				}
+				shouldHave = vampire;
+				if (shouldHave && !attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_BONUS_0)) {
+					attackDamageAttribute.addPersistentModifier(VAMPIRE_ATTACK_DAMAGE_BONUS_0);
+					movementSpeedAttribute.addPersistentModifier(VAMPIRE_MOVEMENT_SPEED_BONUS_0);
+				}
+				else if (!shouldHave && attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_BONUS_0)) {
+					attackDamageAttribute.removeModifier(VAMPIRE_ATTACK_DAMAGE_BONUS_0);
+					movementSpeedAttribute.removeModifier(VAMPIRE_MOVEMENT_SPEED_BONUS_0);
+				}
 			}
+			if (getRespawnTimer() > 0) {
+				setRespawnTimer(getRespawnTimer() - 1);
+			}
+			if (vampire) {
+				if (world.isDay() && world.isSkyVisible(getBlockPos())) {
+					setOnFireFor(8);
+				}
+				if (age % 40 == 0) {
+					HungerManager hungerManager = getHungerManager();
+					if (((BloodAccessor) this).getBlood() > 0) {
+						if (getHealth() < getMaxHealth()) {
+							heal(1);
+							hungerManager.addExhaustion(3);
+						}
+						if ((hungerManager.isNotFull() || hungerManager.getSaturationLevel() < 10) && ((BloodAccessor) this).drainBlood(1, false)) {
+							hungerManager.add(1, 20);
+						}
+					}
+					else {
+						hungerManager.addExhaustion(Float.MAX_VALUE);
+					}
+				}
+			}
+		}
+	}
+	
+	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 0, target = "Lnet/minecraft/entity/player/PlayerEntity;getHealth()F"))
+	private float modifyDamage(float amount, DamageSource source) {
+		if (!world.isClient) {
+			amount = BWDamageSources.handleDamage(this, source, amount);
+		}
+		return amount;
+	}
+	
+	@ModifyVariable(method = "addExhaustion", at = @At("HEAD"))
+	private float modifyExhaustion(float exhaustion) {
+		if (!world.isClient && hasNegativeEffects() && hasContract(BWContracts.GLUTTONY)) {
+			return exhaustion * 1.5f;
+		}
+		return exhaustion;
+	}
+	
+	@Inject(method = "canFoodHeal", at = @At("HEAD"), cancellable = true)
+	private void canFoodHeal(CallbackInfoReturnable<Boolean> callbackInfo) {
+		if (BewitchmentAPI.isVampire(this, true)) {
+			callbackInfo.setReturnValue(false);
 		}
 	}
 	
@@ -173,15 +257,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 					getHungerManager().add(foodComponent.getHunger(), foodComponent.getSaturationModifier());
 				}
 			}
+			if (BewitchmentAPI.isVampire(this, true)) {
+				addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 100, 1));
+				addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100, 1));
+				addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 100, 1));
+				addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 100, 1));
+			}
 		}
-	}
-	
-	@ModifyVariable(method = "addExhaustion", at = @At("HEAD"))
-	private float addExhaustion(float exhaustion) {
-		if (!world.isClient && hasNegativeEffects() && hasContract(BWContracts.GLUTTONY)) {
-			return exhaustion * 1.5f;
-		}
-		return exhaustion;
 	}
 	
 	@Inject(method = "dropItem(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/ItemEntity;", at = @At("HEAD"))
@@ -210,6 +292,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		if (tag.contains("Fortune")) {
 			setFortune(new Fortune.Instance(BWRegistries.FORTUNES.get(new Identifier(tag.getString("Fortune"))), tag.getInt("FortuneDuration")));
 		}
+		if (tag.contains("Transformation")) {
+			setTransformation(new Identifier(tag.getString("Transformation")));
+		}
+		setAlternateForm(tag.getBoolean("AlternateForm"));
 		setPolymorphUUID(tag.getString("PolymorphUUID").isEmpty() ? Optional.empty() : Optional.of(UUID.fromString(tag.getString("PolymorphUUID"))));
 		setPolymorphName(tag.getString("PolymorphName"));
 		setRespawnTimer(tag.getInt("RespawnTimer"));
@@ -222,6 +308,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 			tag.putString("Fortune", BWRegistries.FORTUNES.getId(getFortune().fortune).toString());
 			tag.putInt("FortuneDuration", getFortune().duration);
 		}
+		tag.putString("Transformation", getTransformation().toString());
+		tag.putBoolean("AlternativeForm", getAlternateForm());
 		tag.putString("PolymorphUUID", getPolymorphUUID().isPresent() ? getPolymorphUUID().get().toString() : "");
 		tag.putString("PolymorphName", getPolymorphName());
 		tag.putInt("RespawnTimer", getRespawnTimer());
@@ -231,6 +319,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	private void initDataTracker(CallbackInfo callbackInfo) {
 		dataTracker.startTracking(MAGIC, 0);
 		dataTracker.startTracking(MAGIC_TIMER, 60);
+		dataTracker.startTracking(TRANSFORMATION, BWTransformations.HUMAN.toString());
+		dataTracker.startTracking(ALTERNATE_FORM, false);
 		dataTracker.startTracking(POLYMORPH_UUID, Optional.empty());
 		dataTracker.startTracking(POLYMORPH_NAME, "");
 	}

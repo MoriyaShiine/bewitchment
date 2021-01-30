@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.common.block.juniper;
 
-import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
 import moriyashiine.bewitchment.common.block.BWChestBlock;
 import moriyashiine.bewitchment.common.block.entity.JuniperChestBlockEntity;
+import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
