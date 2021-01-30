@@ -1,16 +1,20 @@
 package moriyashiine.bewitchment.common.statuseffect;
 
+import com.mojang.authlib.GameProfile;
+import io.github.ladysnake.impersonate.Impersonator;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Identifier;
 
 import java.util.Optional;
 
 public class PolymorphStatusEffect extends StatusEffect {
-	//	private static final Identifier IMPERSONATE_IDENTIFIER = new Identifier(Bewitchment.MODID, "polymorph");
+	private static final Identifier IMPERSONATE_IDENTIFIER = new Identifier(Bewitchment.MODID, "polymorph");
 	
 	public PolymorphStatusEffect(StatusEffectType type, int color) {
 		super(type, color);
@@ -19,7 +23,7 @@ public class PolymorphStatusEffect extends StatusEffect {
 	@Override
 	public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
 		if (entity instanceof PlayerEntity) {
-			//			PolymorphAccessor.of(entity).ifPresent(polymorphAccessor -> polymorphAccessor.getPolymorphUUID().ifPresent(uuid -> Impersonator.get((PlayerEntity) entity).impersonate(IMPERSONATE_IDENTIFIER, new GameProfile(uuid, polymorphAccessor.getPolymorphName()))));
+			((PolymorphAccessor) entity).getPolymorphUUID().ifPresent(uuid -> Impersonator.get((PlayerEntity) entity).impersonate(IMPERSONATE_IDENTIFIER, new GameProfile(uuid, ((PolymorphAccessor) entity).getPolymorphName())));
 		}
 	}
 	
@@ -30,7 +34,7 @@ public class PolymorphStatusEffect extends StatusEffect {
 			polymorphAccessor.setPolymorphUUID(Optional.empty());
 			polymorphAccessor.setPolymorphName("");
 			if (entity instanceof PlayerEntity) {
-				//			Impersonator.get((PlayerEntity) entity).stopImpersonation(IMPERSONATE_IDENTIFIER);
+				Impersonator.get((PlayerEntity) entity).stopImpersonation(IMPERSONATE_IDENTIFIER);
 			}
 		}
 	}
