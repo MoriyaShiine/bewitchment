@@ -97,13 +97,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	}
 	
 	@Override
-	public Identifier getTransformation() {
-		return new Identifier(dataTracker.get(TRANSFORMATION));
+	public String getTransformation() {
+		return dataTracker.get(TRANSFORMATION);
 	}
 	
 	@Override
-	public void setTransformation(Identifier transformation) {
-		dataTracker.set(TRANSFORMATION, transformation.toString());
+	public void setTransformation(String transformation) {
+		dataTracker.set(TRANSFORMATION, transformation);
 	}
 	
 	@Override
@@ -293,7 +293,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 			setFortune(new Fortune.Instance(BWRegistries.FORTUNES.get(new Identifier(tag.getString("Fortune"))), tag.getInt("FortuneDuration")));
 		}
 		if (tag.contains("Transformation")) {
-			setTransformation(new Identifier(tag.getString("Transformation")));
+			setTransformation(tag.getString("Transformation"));
 		}
 		setAlternateForm(tag.getBoolean("AlternateForm"));
 		setPolymorphUUID(tag.getString("PolymorphUUID").isEmpty() ? Optional.empty() : Optional.of(UUID.fromString(tag.getString("PolymorphUUID"))));
@@ -308,7 +308,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 			tag.putString("Fortune", BWRegistries.FORTUNES.getId(getFortune().fortune).toString());
 			tag.putInt("FortuneDuration", getFortune().duration);
 		}
-		tag.putString("Transformation", getTransformation().toString());
+		tag.putString("Transformation", getTransformation());
 		tag.putBoolean("AlternativeForm", getAlternateForm());
 		tag.putString("PolymorphUUID", getPolymorphUUID().isPresent() ? getPolymorphUUID().get().toString() : "");
 		tag.putString("PolymorphName", getPolymorphName());
@@ -319,7 +319,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	private void initDataTracker(CallbackInfo callbackInfo) {
 		dataTracker.startTracking(MAGIC, 0);
 		dataTracker.startTracking(MAGIC_TIMER, 60);
-		dataTracker.startTracking(TRANSFORMATION, BWTransformations.HUMAN.toString());
+		dataTracker.startTracking(TRANSFORMATION, BWTransformations.HUMAN);
 		dataTracker.startTracking(ALTERNATE_FORM, false);
 		dataTracker.startTracking(POLYMORPH_UUID, Optional.empty());
 		dataTracker.startTracking(POLYMORPH_NAME, "");

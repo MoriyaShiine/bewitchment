@@ -1,11 +1,9 @@
 package moriyashiine.bewitchment.api.interfaces.entity;
 
-import net.minecraft.util.Identifier;
-
 public interface TransformationAccessor {
-	Identifier getTransformation();
+	String getTransformation();
 	
-	void setTransformation(Identifier transformation);
+	void setTransformation(String transformation);
 	
 	boolean getAlternateForm();
 	

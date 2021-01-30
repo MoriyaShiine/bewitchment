@@ -72,7 +72,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings({"ConstantConditions"})
+@SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements BloodAccessor, FamiliarAccessor, CurseAccessor, ContractAccessor {
 	private static final TrackedData<Integer> BLOOD = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
@@ -98,6 +98,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	public abstract boolean removeStatusEffect(StatusEffect type);
 	
 	@Shadow
+	public abstract boolean clearStatusEffects();
+	
+	@Shadow
 	protected abstract boolean shouldDropLoot();
 	
 	@Shadow
@@ -108,6 +111,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Shadow
 	public abstract void heal(float amount);
+	
+	@Shadow
+	public abstract void setHealth(float health);
 	
 	@Shadow
 	public abstract boolean isSleeping();
@@ -245,16 +251,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					if (poppet.damage((int) (amount * ((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0.5f : 1)), random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
 						poppet.decrement(1);
 					}
-					return 0;
-				}
-			}
-			if (getHealth() - amount <= 0) {
-				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.DEATH_PROTECTION_POPPET, this, null);
-				if (!poppet.isEmpty()) {
-					if (poppet.damage((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
-						poppet.decrement(1);
-					}
-					heal(Float.MAX_VALUE);
 					return 0;
 				}
 			}
@@ -479,6 +475,36 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	private void getGroup(CallbackInfoReturnable<EntityGroup> callbackInfo) {
 		if (((Object) this instanceof PlayerEntity) && BewitchmentAPI.isVampire(this, true)) {
 			callbackInfo.setReturnValue(EntityGroup.UNDEAD);
+		}
+	}
+	
+	@Inject(method = "tryUseTotem", at = @At("RETURN"), cancellable = true)
+	private void tryUseTotem(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
+		if (!world.isClient) {
+			if (!callbackInfo.getReturnValue()) {
+				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.DEATH_PROTECTION_POPPET, this, null);
+				if (!poppet.isEmpty()) {
+					if (poppet.damage((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+						poppet.decrement(1);
+					}
+					setHealth(1);
+					clearStatusEffects();
+					addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1));
+					addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1));
+					addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 800, 0));
+					callbackInfo.setReturnValue(true);
+				}
+			}
+			if (callbackInfo.getReturnValue() && this instanceof TransformationAccessor && hasCurse(BWCurses.SUSCEPTIBILITY)) {
+				if (((TransformationAccessor) this).getTransformation().equals(BWTransformations.HUMAN)) {
+					if (BewitchmentAPI.isVampire(source.getSource(), true)) {
+						((TransformationAccessor) this).setTransformation(BWTransformations.VAMPIRE);
+					}
+					else if (BewitchmentAPI.isWerewolf(source.getSource(), false)) {
+						((TransformationAccessor) this).setTransformation(BWTransformations.WEREWOLF);
+					}
+				}
+			}
 		}
 	}
 	
