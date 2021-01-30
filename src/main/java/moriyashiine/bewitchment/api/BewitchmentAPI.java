@@ -146,7 +146,7 @@ public class BewitchmentAPI {
 	}
 	
 	public static boolean isVampire(Entity entity, boolean includeHumanForm) {
-		return entity instanceof VampireEntity;
+		return entity instanceof VampireEntity || entity instanceof PlayerEntity;
 	}
 	
 	public static boolean isWerewolf(Entity entity, boolean includeHumanForm) {

@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.common.entity.living;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.common.entity.interfaces.DespawnAccessor;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
+import moriyashiine.bewitchment.common.entity.interfaces.DespawnAccessor;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
@@ -78,14 +78,6 @@ public class WerewolfEntity extends BWHostileEntity {
 	@Override
 	protected SoundEvent getDeathSound() {
 		return BWSoundEvents.ENTITY_WEREWOLF_DEATH;
-	}
-	
-	@Override
-	public boolean damage(DamageSource source, float amount) {
-		if (!world.isClient && !VampireEntity.isEffective(source, false)) {
-			amount /= 6;
-		}
-		return super.damage(source, amount);
 	}
 	
 	@Override

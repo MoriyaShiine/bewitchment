@@ -3,12 +3,11 @@ package moriyashiine.bewitchment.common.entity.living;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
-import moriyashiine.bewitchment.common.registry.BWDamageSources;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
-import moriyashiine.bewitchment.common.registry.BWTags;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityGroup;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -29,7 +28,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
-@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class VampireEntity extends BWHostileEntity {
 	public static final TrackedData<Boolean> HAS_TARGET = DataTracker.registerData(VampireEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
@@ -48,7 +46,7 @@ public class VampireEntity extends BWHostileEntity {
 			BloodAccessor bloodAccessor = (BloodAccessor) this;
 			if (getHealth() < getMaxHealth() && (age + getEntityId()) % 40 == 0 && bloodAccessor.getBlood() > 0) {
 				heal(1);
-				if (random.nextFloat() < 1/4f) {
+				if (random.nextFloat() < 1 / 4f) {
 					bloodAccessor.drainBlood(1, false);
 				}
 			}
@@ -90,18 +88,6 @@ public class VampireEntity extends BWHostileEntity {
 	}
 	
 	@Override
-	public boolean damage(DamageSource source, float amount) {
-		if (!world.isClient) {
-			if (source.isFire()) {
-				source = BWDamageSources.SUN;
-				amount *= 2;
-			}
-			amount = handleAmount(this, source, amount);
-		}
-		return super.damage(source, amount);
-	}
-	
-	@Override
 	public void setTarget(@Nullable LivingEntity target) {
 		super.setTarget(target);
 		dataTracker.set(HAS_TARGET, target != null);
@@ -122,35 +108,6 @@ public class VampireEntity extends BWHostileEntity {
 		goalSelector.add(3, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this));
 		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> entity instanceof PlayerEntity || entity instanceof MerchantEntity || entity.getGroup() == EntityGroup.ILLAGER));
-	}
-	
-	public static boolean isEffective(DamageSource source, boolean vampire) {
-		if (source.isOutOfWorld() || (vampire && source == BWDamageSources.SUN)) {
-			return true;
-		}
-		Entity attacker = source.getSource();
-		if (attacker != null) {
-			if (BWTags.BOSSES.contains(attacker.getType()) || BewitchmentAPI.isVampire(attacker, true) || BewitchmentAPI.isWerewolf(attacker, true)) {
-				return true;
-			}
-			else if (vampire && attacker instanceof LivingEntity && EnchantmentHelper.getEquipmentLevel(Enchantments.SMITE, (LivingEntity) attacker) > 0) {
-				return true;
-			}
-		}
-		return BewitchmentAPI.isSourceFromSilver(source);
-	}
-	
-	public static float handleAmount(LivingEntity entity, DamageSource source, float amount) {
-		if (!isEffective(source, true)) {
-			if (entity.getHealth() - amount < 1) {
-				BloodAccessor bloodAccessor = (BloodAccessor) entity;
-				while (entity.getHealth() - amount < 1 && bloodAccessor.getBlood() > 0) {
-					amount--;
-					bloodAccessor.drainBlood(1, false);
-				}
-			}
-		}
-		return amount;
 	}
 	
 	public static boolean canSpawn(EntityType<VampireEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {

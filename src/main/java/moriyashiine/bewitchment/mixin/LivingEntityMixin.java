@@ -2,13 +2,13 @@ package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.*;
-import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.client.network.packet.SpawnExplosionParticlesPacket;
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
+import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.entity.interfaces.CaduceusFireballAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.InsanityTargetAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.MasterAccessor;
@@ -72,7 +72,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("ConstantConditions")
+@SuppressWarnings({"ConstantConditions", "BooleanMethodIsAlwaysInverted"})
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements BloodAccessor, FamiliarAccessor, CurseAccessor, ContractAccessor {
 	private static final TrackedData<Integer> BLOOD = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
@@ -148,6 +148,51 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	@Override
 	public boolean hasNegativeEffects() {
 		return !world.isClient && !BewitchmentAPI.isPledged(world, BWPledges.BAPHOMET_UUID, getUuid());
+	}
+	
+	@Inject(method = "tick", at = @At("HEAD"))
+	private void tick(CallbackInfo callbackInfo) {
+		if (!world.isClient && (Object) this instanceof LivingEntity) {
+			LivingEntity livingEntity = (LivingEntity) (Object) this;
+			if (BewitchmentAPI.isWeakToSilver(livingEntity)) {
+				int damage = BewitchmentAPI.getArmorPieces(livingEntity, stack -> BWTags.SILVER_ARMOR.contains(stack.getItem()));
+				if (BewitchmentAPI.isHoldingSilver(livingEntity, Hand.MAIN_HAND)) {
+					damage++;
+				}
+				if (BewitchmentAPI.isHoldingSilver(livingEntity, Hand.OFF_HAND)) {
+					damage++;
+				}
+				if (damage > 0) {
+					damage(DamageSource.MAGIC, damage);
+				}
+			}
+			for (int i = curses.size() - 1; i >= 0; i--) {
+				Curse.Instance instance = curses.get(i);
+				instance.curse.tick(livingEntity);
+				instance.duration--;
+				if (instance.duration <= 0) {
+					curses.remove(i);
+				}
+			}
+			for (int i = contracts.size() - 1; i >= 0; i--) {
+				Contract.Instance instance = contracts.get(i);
+				instance.contract.tick(livingEntity, hasNegativeEffects());
+				instance.duration--;
+				if (instance.duration <= 0) {
+					contracts.remove(i);
+				}
+			}
+		}
+		if (getFamiliar()) {
+			if (!world.isClient) {
+				if (age % 100 == 0) {
+					heal(1);
+				}
+			}
+			else {
+				world.addParticle(ParticleTypes.ENCHANT, getParticleX(getWidth()), getY() + MathHelper.nextFloat(random, 0, getHeight()), getParticleZ(getWidth()), 0, 0, 0);
+			}
+		}
 	}
 	
 	@ModifyVariable(method = "addStatusEffect", at = @At("HEAD"))
@@ -303,6 +348,12 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			if (getFamiliar()) {
 				amount /= 8;
 			}
+			if (BewitchmentAPI.isVampire(this, true)) {
+				amount = handleVampireDamage((LivingEntity) (Object) this, source, amount);
+			}
+			if (BewitchmentAPI.isWerewolf(this, false) && !isEffective(source, false)) {
+				amount /= 6;
+			}
 		}
 		return amount;
 	}
@@ -318,54 +369,13 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		return source;
 	}
 	
-	@Inject(method = "tick", at = @At("HEAD"))
-	private void tick(CallbackInfo callbackInfo) {
-		if (!world.isClient && (Object) this instanceof LivingEntity) {
-			LivingEntity livingEntity = (LivingEntity) (Object) this;
-			if (BewitchmentAPI.isWeakToSilver(livingEntity)) {
-				int damage = BewitchmentAPI.getArmorPieces(livingEntity, stack -> BWTags.SILVER_ARMOR.contains(stack.getItem()));
-				if (BewitchmentAPI.isHoldingSilver(livingEntity, Hand.MAIN_HAND)) {
-					damage++;
-				}
-				if (BewitchmentAPI.isHoldingSilver(livingEntity, Hand.OFF_HAND)) {
-					damage++;
-				}
-				if (damage > 0) {
-					damage(DamageSource.MAGIC, damage);
-				}
-			}
-			for (int i = curses.size() - 1; i >= 0; i--) {
-				Curse.Instance instance = curses.get(i);
-				instance.curse.tick(livingEntity);
-				instance.duration--;
-				if (instance.duration <= 0) {
-					curses.remove(i);
-				}
-			}
-			for (int i = contracts.size() - 1; i >= 0; i--) {
-				Contract.Instance instance = contracts.get(i);
-				instance.contract.tick(livingEntity, hasNegativeEffects());
-				instance.duration--;
-				if (instance.duration <= 0) {
-					contracts.remove(i);
-				}
-			}
-		}
-		if (getFamiliar()) {
-			if (!world.isClient) {
-				if (age % 100 == 0) {
-					heal(1);
-				}
-			}
-			else {
-				world.addParticle(ParticleTypes.ENCHANT, getParticleX(getWidth()), getY() + MathHelper.nextFloat(random, 0, getHeight()), getParticleZ(getWidth()), 0, 0, 0);
-			}
-		}
-	}
-	
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
+			if (BewitchmentAPI.isVampire(this, true) && source.isFire()) {
+				callbackInfo.setReturnValue(damage(BWDamageSources.SUN, amount * 2));
+				return;
+			}
 			Entity trueSource = source.getAttacker();
 			if (trueSource instanceof LeonardEntity) {
 				removeStatusEffect(BWStatusEffects.MAGIC_SPONGE);
@@ -674,5 +684,34 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			dataTracker.startTracking(BLOOD, MAX_BLOOD);
 		}
 		dataTracker.startTracking(IS_FAMILIAR, false);
+	}
+	
+	private static boolean isEffective(DamageSource source, boolean vampire) {
+		if (source.isOutOfWorld() || (vampire && source == BWDamageSources.SUN)) {
+			return true;
+		}
+		Entity attacker = source.getSource();
+		if (attacker != null) {
+			if (BWTags.BOSSES.contains(attacker.getType()) || BewitchmentAPI.isVampire(attacker, true) || BewitchmentAPI.isWerewolf(attacker, true)) {
+				return true;
+			}
+			else if (vampire && attacker instanceof LivingEntity && EnchantmentHelper.getEquipmentLevel(Enchantments.SMITE, (LivingEntity) attacker) > 0) {
+				return true;
+			}
+		}
+		return BewitchmentAPI.isSourceFromSilver(source);
+	}
+	
+	private static float handleVampireDamage(LivingEntity entity, DamageSource source, float amount) {
+		if (!isEffective(source, true)) {
+			if (entity.getHealth() - amount < 1) {
+				BloodAccessor bloodAccessor = (BloodAccessor) entity;
+				while (entity.getHealth() - amount <= 0 && bloodAccessor.getBlood() > 0) {
+					amount--;
+					bloodAccessor.drainBlood(1, false);
+				}
+			}
+		}
+		return amount;
 	}
 }
