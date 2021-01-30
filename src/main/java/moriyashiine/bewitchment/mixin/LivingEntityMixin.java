@@ -200,7 +200,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		if (!world.isClient && !effect.isAmbient()) {
 			StatusEffectType type = ((StatusEffectAccessor) effect.getEffectType()).bw_getType();
 			if ((type == StatusEffectType.HARMFUL && hasCurse(BWCurses.COMPROMISED)) || (type == StatusEffectType.BENEFICIAL && (Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == BWEntityTypes.TOAD)) {
-				return new StatusEffectInstance(effect.getEffectType(), effect.getDuration(), effect.getAmplifier() + 1, false, effect.shouldShowParticles());
+				return new StatusEffectInstance(effect.getEffectType(), effect.getDuration(), effect.getAmplifier() + 1, false, effect.shouldShowParticles(), effect.shouldShowIcon());
 			}
 		}
 		return effect;
