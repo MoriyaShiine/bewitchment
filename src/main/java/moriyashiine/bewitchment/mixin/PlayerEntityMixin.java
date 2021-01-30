@@ -170,6 +170,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 			}
 			boolean vampire = BewitchmentAPI.isVampire(this, true);
 			if (age % 20 == 0) {
+				if (vampire) {
+					addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
+				}
 				boolean shouldHave = BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF;
 				EntityAttributeInstance attackDamageAttribute = getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
 				EntityAttributeInstance armorAttribute = getAttributeInstance(EntityAttributes.GENERIC_ARMOR);

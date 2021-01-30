@@ -118,6 +118,12 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	@Shadow
 	public abstract boolean isSleeping();
 	
+	@Shadow
+	protected abstract float getSoundVolume();
+	
+	@Shadow
+	protected abstract float getSoundPitch();
+	
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
@@ -233,11 +239,11 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		if (!world.isClient) {
 			Entity trueSource = source.getAttacker();
 			Entity directSource = source.getSource();
-			if (amount > 0 && (Object) this instanceof PlayerEntity) {
+			if (amount > 0 && (Object) this instanceof PlayerEntity && !BewitchmentAPI.isVampire(this, true)) {
 				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VAMPIRIC_POPPET, null, (PlayerEntity) (Object) this);
 				if (!poppet.isEmpty()) {
 					LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
-					if (!getUuid().equals(owner.getUuid()) && owner.damage(BWDamageSources.VAMPIRE, amount)) {
+					if (!BewitchmentAPI.isVampire(owner, true) && !getUuid().equals(owner.getUuid()) && owner.damage(BWDamageSources.VAMPIRE, amount)) {
 						if (poppet.damage((int) (amount * (BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0.5f : 1)), random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
 							poppet.decrement(1);
 						}
@@ -478,9 +484,16 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		}
 	}
 	
+	@Inject(method = "tryUseTotem", at = @At("HEAD"), cancellable = true)
+	private void tryUseTotem0(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
+		if (!world.isClient && BewitchmentAPI.isVampire(this, true)) {
+			callbackInfo.setReturnValue(false);
+		}
+	}
+	
 	@Inject(method = "tryUseTotem", at = @At("RETURN"), cancellable = true)
-	private void tryUseTotem(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!world.isClient) {
+	private void tryUseTotem1(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
+		if (!world.isClient && !BewitchmentAPI.isVampire(this, true)) {
 			if (!callbackInfo.getReturnValue()) {
 				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.DEATH_PROTECTION_POPPET, this, null);
 				if (!poppet.isEmpty()) {
@@ -499,9 +512,11 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				if (((TransformationAccessor) this).getTransformation().equals(BWTransformations.HUMAN)) {
 					if (BewitchmentAPI.isVampire(source.getSource(), true)) {
 						((TransformationAccessor) this).setTransformation(BWTransformations.VAMPIRE);
+						world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, getSoundCategory(), getSoundVolume(), getSoundPitch());
 					}
 					else if (BewitchmentAPI.isWerewolf(source.getSource(), false)) {
 						((TransformationAccessor) this).setTransformation(BWTransformations.WEREWOLF);
+						world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, getSoundCategory(), getSoundVolume(), getSoundPitch());
 					}
 				}
 			}
@@ -614,6 +629,14 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				}
 				if (getGroup() == EntityGroup.ARTHROPOD && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.TOAD) {
 					player.heal(player.getMaxHealth() * 1 / 4f);
+				}
+			}
+			if (attacker instanceof LivingEntity) {
+				if (((ContractAccessor) attacker).hasContract(BWContracts.VIOLENCE)) {
+					((LivingEntity) attacker).heal(((LivingEntity) attacker).getMaxHealth() * 1 / 4f);
+					if (((ContractAccessor) attacker).hasNegativeEffects()) {
+						((LivingEntity) attacker).addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 600, 2));
+					}
 				}
 			}
 			BWUniversalWorldState worldState = BWUniversalWorldState.get(world);

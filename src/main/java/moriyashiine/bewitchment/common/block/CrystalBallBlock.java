@@ -1,11 +1,13 @@
 package moriyashiine.bewitchment.common.block;
 
 import moriyashiine.bewitchment.api.block.WitchAltarBlock;
+import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.FortuneAccessor;
 import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
+import moriyashiine.bewitchment.common.registry.BWContracts;
 import moriyashiine.bewitchment.common.registry.BWCurses;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
@@ -64,6 +66,11 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 					Fortune fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
 					if (((CurseAccessor) player).hasCurse(BWCurses.UNLUCKY)) {
 						while (fortune.positive) {
+							fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
+						}
+					}
+					if (((ContractAccessor) player).hasContract(BWContracts.FRAUD)) {
+						while (!fortune.positive) {
 							fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
 						}
 					}

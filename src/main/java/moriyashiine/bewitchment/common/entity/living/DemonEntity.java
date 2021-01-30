@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.common.entity.living;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
 import moriyashiine.bewitchment.common.Bewitchment;
@@ -286,7 +287,7 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	}
 	
 	public static boolean rejectTrades(LivingEntity merchant) {
-		return !merchant.world.getEntitiesByClass(LivingEntity.class, new Box(merchant.getBlockPos()).expand(8), entity -> merchant.canSee(entity) && entity.isAlive() && ((CurseAccessor) entity).hasCurse(BWCurses.APATHY)).isEmpty();
+		return !merchant.world.getEntitiesByClass(LivingEntity.class, new Box(merchant.getBlockPos()).expand(8), entity -> merchant.canSee(entity) && entity.isAlive() && (((CurseAccessor) entity).hasCurse(BWCurses.APATHY) || (((ContractAccessor) entity).hasContract(BWContracts.FRAUD) && ((ContractAccessor) entity).hasNegativeEffects()))).isEmpty();
 	}
 	
 	@SuppressWarnings("ConstantConditions")

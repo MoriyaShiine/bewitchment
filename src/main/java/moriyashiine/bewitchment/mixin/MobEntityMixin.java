@@ -165,11 +165,11 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 	
 	@Inject(method = "interact", at = @At("HEAD"), cancellable = true)
 	private void interact(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> callbackInfo) {
-		if (isAlive() && BewitchmentAPI.isVampire(player, true) && BWTags.HAS_BLOOD.contains(getType())) {
+		if (hand == Hand.MAIN_HAND && player.isSneaking() && isAlive() && BewitchmentAPI.isVampire(player, true) && BWTags.HAS_BLOOD.contains(getType()) && player.getStackInHand(hand).isEmpty()) {
 			BloodAccessor playerBlood = (BloodAccessor) player;
 			BloodAccessor thisBlood = (BloodAccessor) this;
 			if (playerBlood.fillBlood(5, true) && thisBlood.drainBlood(10, true)) {
-				if (hurtTime == 0) {
+				if (!world.isClient && hurtTime == 0) {
 					world.playSound(null, getBlockPos(), SoundEvents.ITEM_HONEY_BOTTLE_DRINK, getSoundCategory(), getSoundVolume(), 0.5f);
 					if (!isSleeping() || thisBlood.getBlood() < thisBlood.MAX_BLOOD / 2) {
 						damage(BWDamageSources.VAMPIRE, 2);

@@ -2,6 +2,7 @@ package moriyashiine.bewitchment.common.block.entity;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.block.entity.UsesAltarPower;
+import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.client.network.packet.SyncBrazierBlockEntity;
@@ -17,6 +18,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
@@ -129,6 +132,12 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 							if (closestPlayer != null) {
 								Entity target = getTarget();
 								if (target instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) target) == BWEntityTypes.RAVEN && world.random.nextBoolean()) {
+									target = closestPlayer;
+								}
+								else if (target instanceof ContractAccessor && ((ContractAccessor) target).hasContract(BWContracts.HERESY)) {
+									if (((ContractAccessor) target).hasNegativeEffects()) {
+										((LivingEntity) target).addStatusEffect(new StatusEffectInstance(BWStatusEffects.MORTAL_COIL, 12000));
+									}
 									target = closestPlayer;
 								}
 								if (target instanceof CurseAccessor) {

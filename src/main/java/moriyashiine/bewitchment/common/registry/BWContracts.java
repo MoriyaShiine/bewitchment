@@ -27,10 +27,10 @@ public class BWContracts {
 	public static final Contract WAR = create("war", new Contract(true));
 	public static final Contract DEATH = create("death", new DeathContract(false));
 	
-	//	public static final Contract HERESY = create("heresy", new Contract());
-	//	public static final Contract VIOLENCE = create("violence", new Contract());
-	//	public static final Contract FRAUD = create("fraud", new Contract());
-	//	public static final Contract TREACHERY = create("treachery", new Contract());
+	public static final Contract HERESY = create("heresy", new Contract(true));
+	public static final Contract VIOLENCE = create("violence", new Contract(true));
+	public static final Contract FRAUD = create("fraud", new Contract(true));
+	public static final Contract TREACHERY = create("treachery", new Contract(true));
 	
 	private static <T extends Contract> T create(String name, T contract) {
 		CONTRACTS.put(contract, new Identifier(Bewitchment.MODID, name));
