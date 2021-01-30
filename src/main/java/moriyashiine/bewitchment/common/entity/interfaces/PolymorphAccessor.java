@@ -1,13 +1,9 @@
 package moriyashiine.bewitchment.common.entity.interfaces;
 
-import java.util.Optional;
-import java.util.UUID;
-
-@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public interface PolymorphAccessor {
-	Optional<UUID> getPolymorphUUID();
+	String getPolymorphUUID();
 	
-	void setPolymorphUUID(Optional<UUID> uuid);
+	void setPolymorphUUID(String uuid);
 	
 	String getPolymorphName();
 	

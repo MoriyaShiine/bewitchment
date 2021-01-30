@@ -341,11 +341,13 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 		ItemStack stack = new ItemStack(Items.POTION);
 		if (world != null) {
 			List<StatusEffectInstance> effects = new ArrayList<>();
-			int redstone = 0, amplifierBoost = creator != null && BewitchmentAPI.isPledged(world, BWPledges.LEONARD_UUID, creator.getUuid()) ? 1 : 0;
+			int durationBoost = creator != null && BewitchmentAPI.getArmorPieces(creator, armorStack -> armorStack.getItem() instanceof ArmorItem && ((ArmorItem) armorStack.getItem()).getMaterial() == BWMaterials.ALCHEMIST_ARMOR) >= 3 ? 1 : 0;
+			boolean glowstone = false;
+			boolean leonard = creator != null && BewitchmentAPI.isPledged(world, BWPledges.LEONARD_UUID, creator.getUuid());
 			for (int i = 0; i < size(); i++) {
 				ItemStack stackInSlot = getStack(i);
 				if (stackInSlot.getItem() instanceof TaglockItem && TaglockItem.isTaglockFromPlayer(stackInSlot)) {
-					stack.getOrCreateTag().putUuid("PolymorphUUID", TaglockItem.getTaglockUUID(stackInSlot));
+					stack.getOrCreateTag().putString("PolymorphUUID", TaglockItem.getTaglockUUID(stackInSlot).toString());
 					stack.getOrCreateTag().putString("PolymorphName", TaglockItem.getTaglockName(stackInSlot));
 				}
 				CauldronBrewingRecipe cauldronBrewingRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CAULDRON_BREWING_RECIPE_TYPE).stream().filter(recipe -> recipe.input.test(stackInSlot)).findFirst().orElse(null);
@@ -353,18 +355,23 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 					effects.add(new StatusEffectInstance(cauldronBrewingRecipe.output, cauldronBrewingRecipe.time));
 				}
 				else if (stackInSlot.getItem() == Items.REDSTONE) {
-					redstone++;
+					durationBoost++;
 				}
 				else if (stackInSlot.getItem() == Items.GLOWSTONE_DUST) {
-					amplifierBoost++;
+					glowstone = true;
 				}
 			}
 			for (int i = 0; i < effects.size(); i++) {
-				for (int j = 0; j < redstone; j++) {
-					effects.set(i, new StatusEffectInstance(effects.get(i).getEffectType(), effects.get(i).getDuration() * 2));
+				for (int j = 0; j < durationBoost; j++) {
+					StatusEffect type = effects.get(i).getEffectType();
+					int duration = effects.get(i).getDuration();
+					effects.set(i, new StatusEffectInstance(type, type.isInstant() ? duration : duration * 2));
 				}
-				if (amplifierBoost > 0) {
-					effects.set(i, new StatusEffectInstance(effects.get(i).getEffectType(), effects.get(i).getDuration() / 2, effects.get(i).getAmplifier() + amplifierBoost));
+				if (glowstone) {
+					effects.set(i, new StatusEffectInstance(effects.get(i).getEffectType(), effects.get(i).getDuration() / 2, effects.get(i).getAmplifier() + 1));
+				}
+				if (leonard) {
+					effects.set(i, new StatusEffectInstance(effects.get(i).getEffectType(), effects.get(i).getDuration(), effects.get(i).getAmplifier() + 1));
 				}
 			}
 			List<StatusEffectInstance> finalEffects = new ArrayList<>();
@@ -374,15 +381,6 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 				}
 			}
 			finalEffects.addAll(effects);
-			if (creator != null) {
-				if (BewitchmentAPI.getArmorPieces(creator, armorStack -> armorStack.getItem() instanceof ArmorItem && ((ArmorItem) armorStack.getItem()).getMaterial() == BWMaterials.ALCHEMIST_ARMOR) >= 3) {
-					for (int i = 0; i < finalEffects.size(); i++) {
-						StatusEffect type = finalEffects.get(i).getEffectType();
-						int duration = finalEffects.get(i).getDuration();
-						finalEffects.set(i, new StatusEffectInstance(type, type.isInstant() ? duration : duration * 2, finalEffects.get(i).getAmplifier()));
-					}
-				}
-			}
 			PotionUtil.setCustomPotionEffects(stack, finalEffects);
 			stack.getOrCreateTag().putInt("CustomPotionColor", PotionUtil.getColor(finalEffects));
 			stack.getOrCreateTag().putBoolean("BewitchmentBrew", true);

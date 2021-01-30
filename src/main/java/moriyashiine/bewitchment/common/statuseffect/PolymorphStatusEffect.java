@@ -11,7 +11,7 @@ import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.Optional;
+import java.util.UUID;
 
 public class PolymorphStatusEffect extends StatusEffect {
 	private static final Identifier IMPERSONATE_IDENTIFIER = new Identifier(Bewitchment.MODID, "polymorph");
@@ -23,7 +23,7 @@ public class PolymorphStatusEffect extends StatusEffect {
 	@Override
 	public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
 		if (entity instanceof PlayerEntity) {
-			((PolymorphAccessor) entity).getPolymorphUUID().ifPresent(uuid -> Impersonator.get((PlayerEntity) entity).impersonate(IMPERSONATE_IDENTIFIER, new GameProfile(uuid, ((PolymorphAccessor) entity).getPolymorphName())));
+			Impersonator.get((PlayerEntity) entity).impersonate(IMPERSONATE_IDENTIFIER, new GameProfile(UUID.fromString(((PolymorphAccessor) entity).getPolymorphUUID()), ((PolymorphAccessor) entity).getPolymorphName()));
 		}
 	}
 	
@@ -31,7 +31,7 @@ public class PolymorphStatusEffect extends StatusEffect {
 	public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
 		if (entity instanceof PolymorphAccessor) {
 			PolymorphAccessor polymorphAccessor = (PolymorphAccessor) entity;
-			polymorphAccessor.setPolymorphUUID(Optional.empty());
+			polymorphAccessor.setPolymorphUUID("");
 			polymorphAccessor.setPolymorphName("");
 			if (entity instanceof PlayerEntity) {
 				Impersonator.get((PlayerEntity) entity).stopImpersonation(IMPERSONATE_IDENTIFIER);

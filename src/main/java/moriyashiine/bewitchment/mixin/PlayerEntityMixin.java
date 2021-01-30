@@ -34,7 +34,6 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @SuppressWarnings("ConstantConditions")
@@ -46,7 +45,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	private static final TrackedData<String> TRANSFORMATION = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.STRING);
 	private static final TrackedData<Boolean> ALTERNATE_FORM = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
-	private static final TrackedData<Optional<UUID>> POLYMORPH_UUID = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
+	private static final TrackedData<String> POLYMORPH_UUID = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.STRING);
 	private static final TrackedData<String> POLYMORPH_NAME = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.STRING);
 	
 	private static final EntityAttributeModifier WOLF_FAMILIAR_ARMOR_BONUS = new EntityAttributeModifier(UUID.fromString("1b2866e6-ca04-43e4-b643-1142c0791e6d"), "Familiar bonus", 6, EntityAttributeModifier.Operation.ADDITION);
@@ -117,12 +116,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	}
 	
 	@Override
-	public Optional<UUID> getPolymorphUUID() {
+	public String getPolymorphUUID() {
 		return dataTracker.get(POLYMORPH_UUID);
 	}
 	
 	@Override
-	public void setPolymorphUUID(Optional<UUID> uuid) {
+	public void setPolymorphUUID(String uuid) {
 		dataTracker.set(POLYMORPH_UUID, uuid);
 	}
 	
@@ -299,7 +298,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 			setTransformation(tag.getString("Transformation"));
 		}
 		setAlternateForm(tag.getBoolean("AlternateForm"));
-		setPolymorphUUID(tag.getString("PolymorphUUID").isEmpty() ? Optional.empty() : Optional.of(UUID.fromString(tag.getString("PolymorphUUID"))));
+		setPolymorphUUID(tag.getString("PolymorphUUID"));
 		setPolymorphName(tag.getString("PolymorphName"));
 		setRespawnTimer(tag.getInt("RespawnTimer"));
 	}
@@ -313,7 +312,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		}
 		tag.putString("Transformation", getTransformation());
 		tag.putBoolean("AlternativeForm", getAlternateForm());
-		tag.putString("PolymorphUUID", getPolymorphUUID().isPresent() ? getPolymorphUUID().get().toString() : "");
+		tag.putString("PolymorphUUID", getPolymorphUUID());
 		tag.putString("PolymorphName", getPolymorphName());
 		tag.putInt("RespawnTimer", getRespawnTimer());
 	}
@@ -324,7 +323,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		dataTracker.startTracking(MAGIC_TIMER, 60);
 		dataTracker.startTracking(TRANSFORMATION, BWTransformations.HUMAN);
 		dataTracker.startTracking(ALTERNATE_FORM, false);
-		dataTracker.startTracking(POLYMORPH_UUID, Optional.empty());
+		dataTracker.startTracking(POLYMORPH_UUID, "");
 		dataTracker.startTracking(POLYMORPH_NAME, "");
 	}
 }
