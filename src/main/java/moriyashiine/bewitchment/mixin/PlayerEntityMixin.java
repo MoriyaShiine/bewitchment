@@ -199,7 +199,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 				setRespawnTimer(getRespawnTimer() - 1);
 			}
 			if (vampire) {
-				if (world.isDay() && world.isSkyVisible(getBlockPos())) {
+				if (world.isDay() && !world.isRaining() && world.isSkyVisible(getBlockPos())) {
 					setOnFireFor(8);
 				}
 				if (age % 40 == 0) {

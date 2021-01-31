@@ -50,7 +50,7 @@ public class VampireEntity extends BWHostileEntity {
 					bloodAccessor.drainBlood(1, false);
 				}
 			}
-			if (!hasCustomName() && world.isDay() && !world.isRaining() && world.isSkyVisibleAllowingSea(getBlockPos())) {
+			if (!hasCustomName() && world.isDay() && !world.isRaining() && world.isSkyVisible(getBlockPos())) {
 				setOnFireFor(8);
 			}
 		}
