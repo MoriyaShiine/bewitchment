@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.common.block.elder;
 import com.terraformersmc.terraform.wood.block.TerraformDoorBlock;
 import moriyashiine.bewitchment.common.block.entity.LockableBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.Lockable;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -49,5 +50,14 @@ public class ElderDoorBlock extends TerraformDoorBlock implements BlockEntityPro
 			lockable.syncLockable(world, blockEntity);
 			blockEntity.markDirty();
 		}
+	}
+	
+	@Override
+	public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if (blockEntity instanceof Lockable && ((Lockable) blockEntity).getLocked()) {
+			return;
+		}
+		super.neighborUpdate(state, world, pos, block, fromPos, notify);
 	}
 }
