@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.block.util;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -7,6 +8,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
@@ -62,6 +65,17 @@ public class BWCropBlock extends CropBlock {
 	@Override
 	protected int getGrowthAmount(World world) {
 		return MathHelper.nextInt(world.random, 1, 2);
+	}
+	
+	@Override
+	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+		super.onEntityCollision(state, world, pos, entity);
+		if (this == BWObjects.GARLIC_CROP && BewitchmentAPI.isVampire(entity, true)) {
+			entity.damage(DamageSource.MAGIC, 1);
+		}
+		else if (this == BWObjects.ACONITE_CROP && BewitchmentAPI.isWerewolf(entity, true)) {
+			entity.damage(DamageSource.MAGIC, 1);
+		}
 	}
 	
 	@Override
