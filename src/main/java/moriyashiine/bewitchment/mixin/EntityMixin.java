@@ -137,8 +137,8 @@ public abstract class EntityMixin implements WetAccessor {
 			BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
 			for (int i = worldState.specificPledges.size() - 1; i >= 0; i--) {
 				Pair<UUID, UUID> pair = worldState.specificPledges.get(i);
-				if (pair.getLeft().equals(getUuid())) {
-					BewitchmentAPI.unpledge(world, ((Pledgeable) this).getPledgeUUID(), pair.getLeft());
+				if (pair.getRight().equals(getUuid())) {
+					BewitchmentAPI.unpledge(world, ((Pledgeable) this).getPledgeID(), pair.getLeft());
 					worldState.specificPledges.remove(i);
 					worldState.markDirty();
 				}

@@ -42,7 +42,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
-import java.util.UUID;
 
 @SuppressWarnings("ConstantConditions")
 public class BaphometEntity extends BWHostileEntity implements Pledgeable {
@@ -105,8 +104,8 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 	}
 	
 	@Override
-	public UUID getPledgeUUID() {
-		return BWPledges.BAPHOMET_UUID;
+	public String getPledgeID() {
+		return BWPledges.BAPHOMET;
 	}
 	
 	@Override
@@ -160,7 +159,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 		if (isAlive() && getTarget() == null) {
 			boolean client = world.isClient;
 			if (!client) {
-				if (BewitchmentAPI.isPledged(world, getPledgeUUID(), player.getUuid())) {
+				if (BewitchmentAPI.isPledged(world, getPledgeID(), player.getUuid())) {
 					if (player.experienceLevel >= 20 || player.isCreative()) {
 						Contract contract = null;
 						while (contract == null || !contract.canBeGiven) {
@@ -262,6 +261,6 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 		goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8));
 		goalSelector.add(3, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this));
-		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> entity.getGroup() != BewitchmentAPI.DEMON && BewitchmentAPI.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3 && !(entity instanceof PlayerEntity && BewitchmentAPI.isPledged(world, getPledgeUUID(), entity.getUuid()))));
+		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> entity.getGroup() != BewitchmentAPI.DEMON && BewitchmentAPI.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3 && !(entity instanceof PlayerEntity && BewitchmentAPI.isPledged(world, getPledgeID(), entity.getUuid()))));
 	}
 }

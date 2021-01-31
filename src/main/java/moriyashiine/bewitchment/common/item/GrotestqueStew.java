@@ -28,7 +28,7 @@ public class GrotestqueStew extends Item {
 					}
 				}
 				if (closest instanceof Pledgeable && closest.canSee(user)) {
-					BewitchmentAPI.pledge(world, ((Pledgeable) closest).getPledgeUUID(), user.getUuid());
+					BewitchmentAPI.pledge(world, ((Pledgeable) closest).getPledgeID(), user.getUuid());
 					BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
 					worldState.specificPledges.add(new Pair<>(user.getUuid(), closest.getUuid()));
 					worldState.markDirty();

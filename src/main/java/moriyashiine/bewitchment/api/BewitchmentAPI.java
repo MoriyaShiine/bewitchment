@@ -182,7 +182,7 @@ public class BewitchmentAPI {
 	
 	public static boolean hasPledge(World world, UUID entity) {
 		BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-		for (Pair<UUID, List<UUID>> pair : worldState.pledges) {
+		for (Pair<String, List<UUID>> pair : worldState.pledges) {
 			for (UUID player : pair.getRight()) {
 				if (player.equals(entity)) {
 					return true;
@@ -192,10 +192,10 @@ public class BewitchmentAPI {
 		return false;
 	}
 	
-	public static boolean isPledged(World world, UUID pledgeableUUID, UUID entity) {
+	public static boolean isPledged(World world, String pledgeable, UUID entity) {
 		BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-		for (Pair<UUID, List<UUID>> pair : worldState.pledges) {
-			if (pair.getLeft().equals(pledgeableUUID)) {
+		for (Pair<String, List<UUID>> pair : worldState.pledges) {
+			if (pair.getLeft().equals(pledgeable)) {
 				for (UUID livingUUID : pair.getRight()) {
 					if (livingUUID.equals(entity)) {
 						return true;
@@ -206,10 +206,10 @@ public class BewitchmentAPI {
 		return false;
 	}
 	
-	public static void pledge(World world, UUID pledgeable, UUID entity) {
+	public static void pledge(World world, String pledgeable, UUID entity) {
 		BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
 		List<UUID> currentPlayers = new ArrayList<>();
-		for (Pair<UUID, List<UUID>> pair : worldState.pledges) {
+		for (Pair<String, List<UUID>> pair : worldState.pledges) {
 			if (pair.getLeft().equals(pledgeable)) {
 				currentPlayers = pair.getRight();
 				break;
@@ -230,7 +230,7 @@ public class BewitchmentAPI {
 		worldState.markDirty();
 	}
 	
-	public static void unpledge(World world, UUID pledgeable, UUID entity) {
+	public static void unpledge(World world, String pledgeable, UUID entity) {
 		BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
 		for (int i = worldState.pledges.size() - 1; i >= 0; i--) {
 			if (worldState.pledges.get(i).getLeft().equals(pledgeable)) {

@@ -46,7 +46,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
-import java.util.UUID;
 
 public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 	private final ServerBossBar bossBar;
@@ -99,8 +98,8 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 	}
 	
 	@Override
-	public UUID getPledgeUUID() {
-		return BWPledges.LEONARD_UUID;
+	public String getPledgeID() {
+		return BWPledges.LEONARD;
 	}
 	
 	@Override
@@ -230,7 +229,7 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 		goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8));
 		goalSelector.add(3, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this));
-		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> entity.getGroup() != BewitchmentAPI.DEMON && BewitchmentAPI.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3 && !(entity instanceof PlayerEntity && BewitchmentAPI.isPledged(world, getPledgeUUID(), entity.getUuid()))));
+		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> entity.getGroup() != BewitchmentAPI.DEMON && BewitchmentAPI.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3 && !(entity instanceof PlayerEntity && BewitchmentAPI.isPledged(world, getPledgeID(), entity.getUuid()))));
 	}
 	
 	private void spawnPotion(BlockPos target, Potion potionType) {

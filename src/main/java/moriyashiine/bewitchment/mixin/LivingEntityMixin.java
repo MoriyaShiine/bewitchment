@@ -162,7 +162,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Override
 	public boolean hasNegativeEffects() {
-		return !world.isClient && !BewitchmentAPI.isPledged(world, BWPledges.BAPHOMET_UUID, getUuid());
+		return !world.isClient && !BewitchmentAPI.isPledged(world, BWPledges.BAPHOMET, getUuid());
 	}
 	
 	@Inject(method = "tick", at = @At("HEAD"))

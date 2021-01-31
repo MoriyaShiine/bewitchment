@@ -343,7 +343,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 			List<StatusEffectInstance> effects = new ArrayList<>();
 			int durationBoost = creator != null && BewitchmentAPI.getArmorPieces(creator, armorStack -> armorStack.getItem() instanceof ArmorItem && ((ArmorItem) armorStack.getItem()).getMaterial() == BWMaterials.ALCHEMIST_ARMOR) >= 3 ? 1 : 0;
 			boolean glowstone = false;
-			boolean leonard = creator != null && BewitchmentAPI.isPledged(world, BWPledges.LEONARD_UUID, creator.getUuid());
+			boolean leonard = creator != null && BewitchmentAPI.isPledged(world, BWPledges.LEONARD, creator.getUuid());
 			for (int i = 0; i < size(); i++) {
 				ItemStack stackInSlot = getStack(i);
 				if (stackInSlot.getItem() instanceof TaglockItem && TaglockItem.isTaglockFromPlayer(stackInSlot)) {

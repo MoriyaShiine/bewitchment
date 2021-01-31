@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class BWUniversalWorldState extends PersistentState {
-	public final List<Pair<UUID, List<UUID>>> pledges = new ArrayList<>();
+	public final List<Pair<String, List<UUID>>> pledges = new ArrayList<>();
 	public final List<Pair<UUID, UUID>> specificPledges = new ArrayList<>();
 	public final List<Pair<UUID, CompoundTag>> familiars = new ArrayList<>();
 	
@@ -25,13 +25,13 @@ public class BWUniversalWorldState extends PersistentState {
 	@Override
 	public CompoundTag toTag(CompoundTag tag) {
 		ListTag pledges = new ListTag();
-		for (Pair<UUID, List<UUID>> pair : this.pledges) {
+		for (Pair<String, List<UUID>> pair : this.pledges) {
 			CompoundTag pledgeTag = new CompoundTag();
-			pledgeTag.putUuid("PledgeUUID", pair.getLeft());
+			pledgeTag.putString("Pledge", pair.getLeft());
 			ListTag players = new ListTag();
 			for (int i = 0; i < pair.getRight().size(); i++) {
 				CompoundTag playerTag = new CompoundTag();
-				playerTag.putUuid("PlayerUUID" + i, pair.getRight().get(i));
+				playerTag.putUuid("Player" + i, pair.getRight().get(i));
 				players.add(playerTag);
 			}
 			pledgeTag.put("Players", players);
@@ -41,15 +41,15 @@ public class BWUniversalWorldState extends PersistentState {
 		ListTag specificPledges = new ListTag();
 		for (Pair<UUID, UUID> pair : this.specificPledges) {
 			CompoundTag pledgeTag = new CompoundTag();
-			pledgeTag.putUuid("PlayerUUID", pair.getLeft());
-			pledgeTag.putUuid("PledgeUUID", pair.getRight());
+			pledgeTag.putUuid("Player", pair.getLeft());
+			pledgeTag.putUuid("Pledge", pair.getRight());
 			specificPledges.add(pledgeTag);
 		}
 		tag.put("SpecificPledges", specificPledges);
 		ListTag familiars = new ListTag();
 		for (Pair<UUID, CompoundTag> pair : this.familiars) {
 			CompoundTag familiarTag = new CompoundTag();
-			familiarTag.putUuid("PlayerUUID", pair.getLeft());
+			familiarTag.putUuid("Player", pair.getLeft());
 			familiarTag.put("Familiar", pair.getRight());
 			familiars.add(familiarTag);
 		}
@@ -66,19 +66,19 @@ public class BWUniversalWorldState extends PersistentState {
 			ListTag playersTag = pledgeTag.getList("Players", NbtType.COMPOUND);
 			for (int j = 0; j < playersTag.size(); j++) {
 				CompoundTag player = playersTag.getCompound(j);
-				players.add(player.getUuid("PlayerUUID" + j));
+				players.add(player.getUuid("Player" + j));
 			}
-			this.pledges.add(new Pair<>(pledgeTag.getUuid("PledgeUUID"), players));
+			this.pledges.add(new Pair<>(pledgeTag.getString("Pledge"), players));
 		}
 		ListTag specificPledges = tag.getList("SpecificPledges", NbtType.COMPOUND);
 		for (int i = 0; i < specificPledges.size(); i++) {
 			CompoundTag pledgeTag = specificPledges.getCompound(i);
-			this.specificPledges.add(new Pair<>(pledgeTag.getUuid("PlayerUUID"), pledgeTag.getUuid("PledgeUUID")));
+			this.specificPledges.add(new Pair<>(pledgeTag.getUuid("Player"), pledgeTag.getUuid("Pledge")));
 		}
 		ListTag familiars = tag.getList("Familiars", NbtType.COMPOUND);
 		for (int i = 0; i < familiars.size(); i++) {
 			CompoundTag familiarTag = familiars.getCompound(i);
-			this.familiars.add(new Pair<>(familiarTag.getUuid("PlayerUUID"), familiarTag.getCompound("Familiar")));
+			this.familiars.add(new Pair<>(familiarTag.getUuid("Player"), familiarTag.getCompound("Familiar")));
 		}
 	}
 	

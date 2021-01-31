@@ -133,8 +133,8 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 					return null;
 				}
 				Pledgeable pledgeable = (Pledgeable) this;
-				if (BewitchmentAPI.isPledged(world, pledgeable.getPledgeUUID(), target.getUuid())) {
-					BewitchmentAPI.unpledge(world, pledgeable.getPledgeUUID(), target.getUuid());
+				if (BewitchmentAPI.isPledged(world, pledgeable.getPledgeID(), target.getUuid())) {
+					BewitchmentAPI.unpledge(world, pledgeable.getPledgeID(), target.getUuid());
 				}
 				pledgeable.summonMinions((MobEntity) (Object) this);
 			}

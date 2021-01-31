@@ -12,10 +12,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.ServerWorldAccess;
 
 import java.util.Collection;
-import java.util.UUID;
 
 public interface Pledgeable {
-	UUID getPledgeUUID();
+	String getPledgeID();
 	
 	EntityType<?> getMinionType();
 	
