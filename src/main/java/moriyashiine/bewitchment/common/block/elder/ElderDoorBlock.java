@@ -54,7 +54,7 @@ public class ElderDoorBlock extends TerraformDoorBlock implements BlockEntityPro
 	
 	@Override
 	public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
-		BlockEntity blockEntity = world.getBlockEntity(pos);
+		BlockEntity blockEntity = world.getBlockEntity(state.get(HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos);
 		if (blockEntity instanceof Lockable && ((Lockable) blockEntity).getLocked()) {
 			return;
 		}
