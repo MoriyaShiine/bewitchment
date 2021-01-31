@@ -56,6 +56,7 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -90,6 +91,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Shadow
 	public abstract boolean hasStatusEffect(StatusEffect effect);
+	
+	@Shadow
+	public abstract boolean canHaveStatusEffect(StatusEffectInstance effect);
 	
 	@Shadow
 	public abstract boolean addStatusEffect(StatusEffectInstance effect);
@@ -512,6 +516,12 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				if (((TransformationAccessor) this).getTransformation().equals(BWTransformations.HUMAN)) {
 					if (BewitchmentAPI.isVampire(source.getSource(), true)) {
 						((TransformationAccessor) this).setTransformation(BWTransformations.VAMPIRE);
+						Registry.STATUS_EFFECT.stream().forEach(effect -> {
+							StatusEffectInstance effectInstance = getStatusEffect(effect);
+							if (effectInstance != null && !canHaveStatusEffect(effectInstance)) {
+								removeStatusEffect(effect);
+							}
+						});
 						world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, getSoundCategory(), getSoundVolume(), getSoundPitch());
 					}
 					else if (BewitchmentAPI.isWerewolf(source.getSource(), false)) {
