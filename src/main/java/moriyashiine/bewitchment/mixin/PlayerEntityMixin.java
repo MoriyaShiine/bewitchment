@@ -25,6 +25,9 @@ import net.minecraft.item.FoodComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -247,6 +250,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 			return exhaustion * 1.5f;
 		}
 		return exhaustion;
+	}
+	
+	@Inject(method = "getHurtSound", at = @At("HEAD"))
+	private void getHurtSound(DamageSource source, CallbackInfoReturnable<SoundEvent> callbackInfo) {
+		if (source == BWDamageSources.SUN) {
+			world.playSound(null, getBlockPos(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.PLAYERS, 1, 1);
+		}
 	}
 	
 	@Inject(method = "canFoodHeal", at = @At("HEAD"), cancellable = true)
