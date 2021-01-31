@@ -718,22 +718,8 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			tag.putInt("Blood", getBlood());
 		}
 		tag.putBoolean("IsFamiliar", getFamiliar());
-		ListTag curses = new ListTag();
-		for (Curse.Instance instance : getCurses()) {
-			CompoundTag curseTag = new CompoundTag();
-			curseTag.putString("Curse", BWRegistries.CURSES.getId(instance.curse).toString());
-			curseTag.putInt("Duration", instance.duration);
-			curses.add(curseTag);
-		}
-		tag.put("Curses", curses);
-		ListTag contracts = new ListTag();
-		for (Contract.Instance instance : getContracts()) {
-			CompoundTag contractTag = new CompoundTag();
-			contractTag.putString("Contract", BWRegistries.CONTRACTS.getId(instance.contract).toString());
-			contractTag.putInt("Duration", instance.duration);
-			contracts.add(contractTag);
-		}
-		tag.put("Contracts", contracts);
+		tag.put("Curses", toTagCurse());
+		tag.put("Contracts", toTagContract());
 	}
 	
 	@Inject(method = "initDataTracker", at = @At("TAIL"))

@@ -22,7 +22,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
@@ -110,6 +109,6 @@ public class SigilItem extends Item {
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		tooltip.add(new TranslatableText("sigil." + BWRegistries.SIGILS.getId(sigil).toString().replace(":", ".")).setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
+		tooltip.add(new TranslatableText("sigil." + BWRegistries.SIGILS.getId(sigil).toString().replace(":", ".")).formatted(Formatting.GRAY));
 	}
 }

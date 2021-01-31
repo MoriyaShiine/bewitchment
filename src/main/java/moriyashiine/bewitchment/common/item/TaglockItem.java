@@ -21,11 +21,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.LiteralText;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
@@ -143,7 +143,17 @@ public class TaglockItem extends Item {
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		if (hasTaglock(stack)) {
-			tooltip.add(new LiteralText(getTaglockName(stack)).setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
+			tooltip.add(new LiteralText(getTaglockName(stack)).formatted(Formatting.GRAY));
+			CompoundTag tag = stack.getTag();
+			if (tag.contains("UsedForScrying")) {
+				tooltip.add(new LiteralText("Location: " + BlockPos.fromLong(stack.getOrCreateTag().getLong("LocationPos")) + " in " + stack.getOrCreateTag().getString("LocationWorld")).formatted(Formatting.DARK_GRAY));
+				tooltip.add(new LiteralText("Level: " + tag.getInt("Level")).formatted(Formatting.DARK_GRAY));
+				tooltip.add(new LiteralText("Curses: " + tag.get("Curses")).formatted(Formatting.DARK_GRAY));
+				tooltip.add(new LiteralText("Contracts: " + tag.get("Contracts")).formatted(Formatting.DARK_GRAY));
+				tooltip.add(new LiteralText("Transformation: " + tag.getString("Transformation")).formatted(Formatting.DARK_GRAY));
+				tooltip.add(new LiteralText("Familiar: " + tag.getString("Familiar")).formatted(Formatting.DARK_GRAY));
+				tooltip.add(new LiteralText("Pledge: " + tag.getString("Pledge")).formatted(Formatting.DARK_GRAY));
+			}
 		}
 	}
 	

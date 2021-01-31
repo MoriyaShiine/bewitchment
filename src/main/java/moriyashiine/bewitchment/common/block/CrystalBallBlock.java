@@ -1,24 +1,31 @@
 package moriyashiine.bewitchment.common.block;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.block.WitchAltarBlock;
 import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.FortuneAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
+import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.registry.BWContracts;
 import moriyashiine.bewitchment.common.registry.BWCurses;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
+import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.Waterloggable;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
@@ -60,27 +67,67 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 		else {
 			BlockPos nearestAltarPos = WitchAltarBlock.getClosestAltarPos(world, pos);
 			if (nearestAltarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(nearestAltarPos)).drain(500, false)) {
-				FortuneAccessor fortuneAccessor = (FortuneAccessor) player;
-				if (fortuneAccessor.getFortune() == null) {
-					world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE, SoundCategory.BLOCKS, 1, 1);
-					Fortune fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
-					if (((CurseAccessor) player).hasCurse(BWCurses.UNLUCKY)) {
-						while (fortune.positive) {
-							fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
+				ItemStack stack = player.getStackInHand(hand);
+				if (stack.getItem() instanceof TaglockItem && TaglockItem.isTaglockFromPlayer(stack)) {
+					LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, stack);
+					if (owner instanceof PlayerEntity) {
+						CompoundTag tag = stack.getTag();
+						if (!tag.contains("UsedForScrying")) {
+							tag.putBoolean("UsedForScrying", true);
+							tag.putLong("LocationPos", owner.getBlockPos().asLong());
+							tag.putString("LocationWorld", world.getRegistryKey().getValue().toString());
+							tag.putInt("Level", ((PlayerEntity) owner).experienceLevel);
+							tag.put("Curses", ((CurseAccessor) owner).toTagCurse());
+							tag.put("Contracts", ((ContractAccessor) owner).toTagContract());
+							tag.putString("Transformation", ((TransformationAccessor) owner).getTransformation());
+							BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
+							String familiar = "none";
+							for (int i = 0; i < worldState.familiars.size(); i++) {
+								if (worldState.familiars.get(i).getLeft().equals(owner.getUuid())) {
+									familiar = worldState.familiars.get(i).getRight().getString("id");
+									break;
+								}
+							}
+							tag.putString("Familiar", familiar);
+							String pledge = "none";
+							for (int i = 0; i < worldState.pledges.size(); i++) {
+								if (BewitchmentAPI.isPledged(world, worldState.pledges.get(i).getLeft(), owner.getUuid())) {
+									pledge = worldState.pledges.get(i).getLeft();
+									break;
+								}
+							}
+							tag.putString("Pledge", pledge);
+							world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE, SoundCategory.BLOCKS, 1, 1);
 						}
 					}
-					if (((ContractAccessor) player).hasContract(BWContracts.FRAUD)) {
-						while (!fortune.positive) {
-							fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
-						}
+					else {
+						world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FAIL, SoundCategory.BLOCKS, 1, 1);
+						player.sendMessage(new TranslatableText("ritual.precondition.found_entity"), true);
 					}
-					fortuneAccessor.setFortune(new Fortune.Instance(fortune, world.random.nextInt(120000)));
-					player.sendMessage(new TranslatableText("fortune." + BWRegistries.FORTUNES.getId(fortune).toString().replace(":", ".")), true);
-					
 				}
 				else {
-					world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FAIL, SoundCategory.BLOCKS, 1, 1);
-					player.sendMessage(new TranslatableText(Bewitchment.MODID + ".has_fortune"), true);
+					FortuneAccessor fortuneAccessor = (FortuneAccessor) player;
+					if (fortuneAccessor.getFortune() == null) {
+						world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE, SoundCategory.BLOCKS, 1, 1);
+						Fortune fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
+						if (((CurseAccessor) player).hasCurse(BWCurses.UNLUCKY)) {
+							while (fortune.positive) {
+								fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
+							}
+						}
+						if (((ContractAccessor) player).hasContract(BWContracts.FRAUD)) {
+							while (!fortune.positive) {
+								fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
+							}
+						}
+						fortuneAccessor.setFortune(new Fortune.Instance(fortune, world.random.nextInt(120000)));
+						player.sendMessage(new TranslatableText("fortune." + BWRegistries.FORTUNES.getId(fortune).toString().replace(":", ".")), true);
+						
+					}
+					else {
+						world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FAIL, SoundCategory.BLOCKS, 1, 1);
+						player.sendMessage(new TranslatableText(Bewitchment.MODID + ".has_fortune"), true);
+					}
 				}
 			}
 			else {

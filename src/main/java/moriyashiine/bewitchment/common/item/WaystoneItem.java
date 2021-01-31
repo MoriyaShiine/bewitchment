@@ -7,7 +7,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.text.LiteralText;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
@@ -45,7 +44,7 @@ public class WaystoneItem extends Item {
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		if (stack.hasTag() && stack.getOrCreateTag().contains("LocationPos")) {
-			tooltip.add(new LiteralText(BlockPos.fromLong(stack.getOrCreateTag().getLong("LocationPos")) + " in " + stack.getOrCreateTag().getString("LocationWorld")).setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
+			tooltip.add(new LiteralText(BlockPos.fromLong(stack.getOrCreateTag().getLong("LocationPos")) + " in " + stack.getOrCreateTag().getString("LocationWorld")).formatted(Formatting.GRAY));
 		}
 	}
 }
