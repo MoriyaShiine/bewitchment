@@ -8,7 +8,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
@@ -28,8 +27,8 @@ public class DragonsBloodPressurePlateBlock extends TerraformPressurePlateBlock 
 	
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (entity instanceof LivingEntity && SigilHolder.onUse(world, pos, (LivingEntity) entity, Hand.MAIN_HAND) == ActionResult.FAIL) {
-			return;
+		if (entity instanceof LivingEntity) {
+			SigilHolder.onUse(world, pos, (LivingEntity) entity, Hand.MAIN_HAND);
 		}
 		super.onEntityCollision(state, world, pos, entity);
 	}

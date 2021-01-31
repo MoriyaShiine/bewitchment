@@ -32,10 +32,7 @@ public class DragonsBloodChestBlock extends BWChestBlock {
 	
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		ActionResult result = SigilHolder.onUse(world, pos, player, hand);
-		if (result == ActionResult.FAIL) {
-			return ActionResult.FAIL;
-		}
+		SigilHolder.onUse(world, pos, player, hand);
 		return super.onUse(state, world, pos, player, hand, hit);
 	}
 }

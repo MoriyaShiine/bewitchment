@@ -53,7 +53,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	private static final EntityAttributeModifier WOLF_FAMILIAR_ARMOR_TOUGHNESS_BONUS = new EntityAttributeModifier(UUID.fromString("ec7f7a2e-d5c5-40c4-9338-c2808946f7c4"), "Familiar bonus", 6, EntityAttributeModifier.Operation.ADDITION);
 	
 	private static final EntityAttributeModifier VAMPIRE_ATTACK_DAMAGE_BONUS_0 = new EntityAttributeModifier(UUID.fromString("066862f6-989c-4f35-ac6d-2696b91a1a5b"), "Transformation bonus", 2, EntityAttributeModifier.Operation.ADDITION);
+	private static final EntityAttributeModifier VAMPIRE_ATTACK_DAMAGE_BONUS_1 = new EntityAttributeModifier(UUID.fromString("d2be3564-97e7-42c9-88c5-6b753472e37f"), "Transformation bonus", 4, EntityAttributeModifier.Operation.ADDITION);
 	private static final EntityAttributeModifier VAMPIRE_MOVEMENT_SPEED_BONUS_0 = new EntityAttributeModifier(UUID.fromString("a782c03d-af7b-4eb7-b997-dd396bfdc7a0"), "Transformation bonus", 0.04, EntityAttributeModifier.Operation.ADDITION);
+	private static final EntityAttributeModifier VAMPIRE_MOVEMENT_SPEED_BONUS_1 = new EntityAttributeModifier(UUID.fromString("7c7a61eb-83e8-4e85-94d6-a410a4153d6d"), "Transformation bonus", 0.08, EntityAttributeModifier.Operation.ADDITION);
 	
 	private Fortune.Instance fortune = null;
 	
@@ -186,7 +188,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 					armorAttribute.removeModifier(WOLF_FAMILIAR_ARMOR_BONUS);
 					armorToughnessAttribute.removeModifier(WOLF_FAMILIAR_ARMOR_TOUGHNESS_BONUS);
 				}
-				shouldHave = vampire;
+				shouldHave = vampire && !BewitchmentAPI.isPledged(world, BWPledges.LILITH, getUuid());
 				if (shouldHave && !attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_BONUS_0)) {
 					attackDamageAttribute.addPersistentModifier(VAMPIRE_ATTACK_DAMAGE_BONUS_0);
 					movementSpeedAttribute.addPersistentModifier(VAMPIRE_MOVEMENT_SPEED_BONUS_0);
@@ -194,6 +196,15 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 				else if (!shouldHave && attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_BONUS_0)) {
 					attackDamageAttribute.removeModifier(VAMPIRE_ATTACK_DAMAGE_BONUS_0);
 					movementSpeedAttribute.removeModifier(VAMPIRE_MOVEMENT_SPEED_BONUS_0);
+				}
+				shouldHave = vampire && BewitchmentAPI.isPledged(world, BWPledges.LILITH, getUuid());
+				if (shouldHave && !attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_BONUS_1)) {
+					attackDamageAttribute.addPersistentModifier(VAMPIRE_ATTACK_DAMAGE_BONUS_1);
+					movementSpeedAttribute.addPersistentModifier(VAMPIRE_MOVEMENT_SPEED_BONUS_1);
+				}
+				else if (!shouldHave && attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_BONUS_1)) {
+					attackDamageAttribute.removeModifier(VAMPIRE_ATTACK_DAMAGE_BONUS_1);
+					movementSpeedAttribute.removeModifier(VAMPIRE_MOVEMENT_SPEED_BONUS_1);
 				}
 			}
 			if (getRespawnTimer() > 0) {
@@ -203,9 +214,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 				if (world.isDay() && !world.isRaining() && world.isSkyVisible(getBlockPos())) {
 					setOnFireFor(8);
 				}
-				if (age % 40 == 0) {
-					HungerManager hungerManager = getHungerManager();
-					if (((BloodAccessor) this).getBlood() > 0) {
+				HungerManager hungerManager = getHungerManager();
+				if (((BloodAccessor) this).getBlood() > 0) {
+					if (age % (BewitchmentAPI.isPledged(world, BWPledges.LILITH, getUuid()) ? 30 : 40) == 0) {
 						if (getHealth() < getMaxHealth()) {
 							heal(1);
 							hungerManager.addExhaustion(3);
@@ -214,9 +225,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 							hungerManager.add(1, 20);
 						}
 					}
-					else {
-						hungerManager.addExhaustion(Float.MAX_VALUE);
-					}
+				}
+				else {
+					hungerManager.addExhaustion(Float.MAX_VALUE);
 				}
 			}
 		}

@@ -73,18 +73,16 @@ public interface SigilHolder {
 		tag.putBoolean("ModeOnWhitelist", getModeOnWhitelist());
 	}
 	
-	default ActionResult use(World world, BlockPos pos, LivingEntity user, Hand hand) {
+	default void use(World world, BlockPos pos, LivingEntity user, Hand hand) {
 		if (getSigil() != null && getSigil().active && test(user)) {
 			ActionResult result = getSigil().use(world, pos, user, hand);
-			if (result.isAccepted() || result == ActionResult.FAIL) {
+			if (result == ActionResult.SUCCESS) {
 				BlockEntity blockEntity = world.getBlockEntity(pos);
 				setUses(getUses() - 1);
 				syncSigilHolder(world, blockEntity);
 				blockEntity.markDirty();
 			}
-			return result;
 		}
-		return ActionResult.PASS;
 	}
 	
 	default void tick(World world, BlockPos pos, BlockEntity blockEntity) {
@@ -134,11 +132,12 @@ public interface SigilHolder {
 		}
 	}
 	
-	static ActionResult onUse(World world, BlockPos pos, LivingEntity user, Hand hand) {
+	static void onUse(World world, BlockPos pos, LivingEntity user, Hand hand) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity instanceof SigilHolder && ((SigilHolder) blockEntity).test(user)) {
-			return ((SigilHolder) blockEntity).use(world, pos, user, hand);
+		if (blockEntity instanceof SigilHolder) {
+			if (((SigilHolder) blockEntity).test(user)) {
+				((SigilHolder) blockEntity).use(world, pos, user, hand);
+			}
 		}
-		return ActionResult.PASS;
 	}
 }
