@@ -148,14 +148,14 @@ public class BewitchmentAPI {
 	}
 	
 	public static boolean isVampire(Entity entity, boolean includeHumanForm) {
-		if (entity instanceof TransformationAccessor && ((TransformationAccessor) entity).getTransformation().equals(BWTransformations.VAMPIRE)) {
+		if (entity instanceof TransformationAccessor && ((TransformationAccessor) entity).getTransformation() == BWTransformations.VAMPIRE) {
 			return includeHumanForm || ((TransformationAccessor) entity).getAlternateForm();
 		}
 		return entity instanceof VampireEntity;
 	}
 	
 	public static boolean isWerewolf(Entity entity, boolean includeHumanForm) {
-		if (entity instanceof TransformationAccessor && ((TransformationAccessor) entity).getTransformation().equals(BWTransformations.WEREWOLF)) {
+		if (entity instanceof TransformationAccessor && ((TransformationAccessor) entity).getTransformation() == BWTransformations.WEREWOLF) {
 			return includeHumanForm || ((TransformationAccessor) entity).getAlternateForm();
 		}
 		return entity instanceof WerewolfEntity;

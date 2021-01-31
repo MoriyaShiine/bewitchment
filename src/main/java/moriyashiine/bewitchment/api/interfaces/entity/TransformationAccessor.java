@@ -1,9 +1,11 @@
 package moriyashiine.bewitchment.api.interfaces.entity;
 
+import moriyashiine.bewitchment.api.registry.Transformation;
+
 public interface TransformationAccessor {
-	String getTransformation();
+	Transformation getTransformation();
 	
-	void setTransformation(String transformation);
+	void setTransformation(Transformation transformation);
 	
 	boolean getAlternateForm();
 	

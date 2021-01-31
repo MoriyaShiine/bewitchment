@@ -5,6 +5,7 @@ import moriyashiine.bewitchment.api.interfaces.entity.*;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.client.network.packet.SpawnExplosionParticlesPacket;
+import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
@@ -56,7 +57,6 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -91,9 +91,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Shadow
 	public abstract boolean hasStatusEffect(StatusEffect effect);
-	
-	@Shadow
-	public abstract boolean canHaveStatusEffect(StatusEffectInstance effect);
 	
 	@Shadow
 	public abstract boolean addStatusEffect(StatusEffectInstance effect);
@@ -513,19 +510,25 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				}
 			}
 			if (callbackInfo.getReturnValue() && this instanceof TransformationAccessor && hasCurse(BWCurses.SUSCEPTIBILITY)) {
-				if (((TransformationAccessor) this).getTransformation().equals(BWTransformations.HUMAN)) {
+				if (((TransformationAccessor) this).getTransformation() == BWTransformations.HUMAN) {
 					if (BewitchmentAPI.isVampire(source.getSource(), true)) {
+						((TransformationAccessor) this).getTransformation().onRemoved((LivingEntity) (Object) this);
 						((TransformationAccessor) this).setTransformation(BWTransformations.VAMPIRE);
-						Registry.STATUS_EFFECT.stream().forEach(effect -> {
-							StatusEffectInstance effectInstance = getStatusEffect(effect);
-							if (effectInstance != null && !canHaveStatusEffect(effectInstance)) {
-								removeStatusEffect(effect);
-							}
-						});
+						((TransformationAccessor) this).getTransformation().onAdded((LivingEntity) (Object) this);
+						PlayerLookup.tracking(this).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, this));
+						if ((Object) this instanceof PlayerEntity) {
+							SpawnSmokeParticlesPacket.send((PlayerEntity) (Object) this, this);
+						}
 						world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, getSoundCategory(), getSoundVolume(), getSoundPitch());
 					}
 					else if (BewitchmentAPI.isWerewolf(source.getSource(), false)) {
+						((TransformationAccessor) this).getTransformation().onRemoved((LivingEntity) (Object) this);
 						((TransformationAccessor) this).setTransformation(BWTransformations.WEREWOLF);
+						((TransformationAccessor) this).getTransformation().onAdded((LivingEntity) (Object) this);
+						PlayerLookup.tracking(this).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, this));
+						if ((Object) this instanceof PlayerEntity) {
+							SpawnSmokeParticlesPacket.send((PlayerEntity) (Object) this, this);
+						}
 						world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, getSoundCategory(), getSoundVolume(), getSoundPitch());
 					}
 				}

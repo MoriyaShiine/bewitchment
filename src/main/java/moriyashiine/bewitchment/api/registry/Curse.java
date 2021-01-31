@@ -17,7 +17,6 @@ public class Curse {
 		public int duration;
 		
 		public Instance(Curse curse, int duration) {
-			
 			this.curse = curse;
 			this.duration = duration;
 		}

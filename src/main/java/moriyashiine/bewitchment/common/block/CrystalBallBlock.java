@@ -96,7 +96,7 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 								tag.putInt("Level", ((PlayerEntity) owner).experienceLevel);
 								tag.put("Curses", ((CurseAccessor) owner).toTagCurse());
 								tag.put("Contracts", ((ContractAccessor) owner).toTagContract());
-								tag.putString("Transformation", ((TransformationAccessor) owner).getTransformation());
+								tag.putString("Transformation", BWRegistries.TRANSFORMATIONS.getId(((TransformationAccessor) owner).getTransformation()).toString());
 								BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
 								String familiar = "none";
 								for (int i = 0; i < worldState.familiars.size(); i++) {

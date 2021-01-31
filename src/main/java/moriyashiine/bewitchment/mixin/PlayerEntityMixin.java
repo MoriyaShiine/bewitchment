@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.mixin;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.*;
 import moriyashiine.bewitchment.api.registry.Fortune;
+import moriyashiine.bewitchment.api.registry.Transformation;
 import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
 import moriyashiine.bewitchment.common.registry.*;
@@ -96,13 +97,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	}
 	
 	@Override
-	public String getTransformation() {
-		return dataTracker.get(TRANSFORMATION);
+	public Transformation getTransformation() {
+		return BWRegistries.TRANSFORMATIONS.get(new Identifier(dataTracker.get(TRANSFORMATION)));
 	}
 	
 	@Override
-	public void setTransformation(String transformation) {
-		dataTracker.set(TRANSFORMATION, transformation);
+	public void setTransformation(Transformation transformation) {
+		dataTracker.set(TRANSFORMATION, BWRegistries.TRANSFORMATIONS.getId(transformation).toString());
 	}
 	
 	@Override
@@ -295,7 +296,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 			setFortune(new Fortune.Instance(BWRegistries.FORTUNES.get(new Identifier(tag.getString("Fortune"))), tag.getInt("FortuneDuration")));
 		}
 		if (tag.contains("Transformation")) {
-			setTransformation(tag.getString("Transformation"));
+			setTransformation(BWRegistries.TRANSFORMATIONS.get(new Identifier(tag.getString("Transformation"))));
 		}
 		setAlternateForm(tag.getBoolean("AlternateForm"));
 		setPolymorphUUID(tag.getString("PolymorphUUID"));
@@ -310,7 +311,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 			tag.putString("Fortune", BWRegistries.FORTUNES.getId(getFortune().fortune).toString());
 			tag.putInt("FortuneDuration", getFortune().duration);
 		}
-		tag.putString("Transformation", getTransformation());
+		tag.putString("Transformation", BWRegistries.TRANSFORMATIONS.getId(getTransformation()).toString());
 		tag.putBoolean("AlternativeForm", getAlternateForm());
 		tag.putString("PolymorphUUID", getPolymorphUUID());
 		tag.putString("PolymorphName", getPolymorphName());
@@ -321,7 +322,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	private void initDataTracker(CallbackInfo callbackInfo) {
 		dataTracker.startTracking(MAGIC, 0);
 		dataTracker.startTracking(MAGIC_TIMER, 60);
-		dataTracker.startTracking(TRANSFORMATION, BWTransformations.HUMAN);
+		dataTracker.startTracking(TRANSFORMATION, BWRegistries.TRANSFORMATIONS.getId(BWTransformations.HUMAN).toString());
 		dataTracker.startTracking(ALTERNATE_FORM, false);
 		dataTracker.startTracking(POLYMORPH_UUID, "");
 		dataTracker.startTracking(POLYMORPH_NAME, "");

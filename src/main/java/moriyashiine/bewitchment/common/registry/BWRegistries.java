@@ -12,4 +12,5 @@ public class BWRegistries {
 	public static final Registry<Sigil> SIGILS = FabricRegistryBuilder.createSimple(Sigil.class, new Identifier(Bewitchment.MODID, "sigils")).buildAndRegister();
 	public static final Registry<Curse> CURSES = FabricRegistryBuilder.createSimple(Curse.class, new Identifier(Bewitchment.MODID, "curses")).buildAndRegister();
 	public static final Registry<Contract> CONTRACTS = FabricRegistryBuilder.createSimple(Contract.class, new Identifier(Bewitchment.MODID, "contracts")).buildAndRegister();
+	public static final Registry<Transformation> TRANSFORMATIONS = FabricRegistryBuilder.createSimple(Transformation.class, new Identifier(Bewitchment.MODID, "transformations")).buildAndRegister();
 }

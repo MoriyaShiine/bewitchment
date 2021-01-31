@@ -20,7 +20,6 @@ public class Contract {
 		public int duration;
 		
 		public Instance(Contract contract, int duration) {
-			
 			this.contract = contract;
 			this.duration = duration;
 		}

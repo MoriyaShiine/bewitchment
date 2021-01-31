@@ -12,9 +12,11 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.FortuneAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.api.registry.Fortune;
+import moriyashiine.bewitchment.api.registry.Transformation;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
@@ -215,6 +217,25 @@ public class BWCommands {
 			}
 			return 0;
 		}))));
+		dispatcher.register(CommandManager.literal("transformation").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.argument("target", EntityArgumentType.player()).then(CommandManager.literal("get").executes(context -> {
+			PlayerEntity target = EntityArgumentType.getPlayer(context, "target");
+			if (target instanceof TransformationAccessor) {
+				context.getSource().sendFeedback(new LiteralText(target.getEntityName() + " has the following transformation: " + BWRegistries.TRANSFORMATIONS.getId(((TransformationAccessor) target).getTransformation()).toString()), true);
+				return 1;
+			}
+			return 0;
+		})).then(CommandManager.literal("set").then(CommandManager.argument("transformation", TransformationArgumentType.transformation()).executes(context -> {
+			PlayerEntity target = EntityArgumentType.getPlayer(context, "target");
+			if (target instanceof TransformationAccessor) {
+				Transformation transformation = TransformationArgumentType.getTransformation(context, "transformation");
+				((TransformationAccessor) target).getTransformation().onRemoved(target);
+				((TransformationAccessor) target).setTransformation(transformation);
+				transformation.onAdded(target);
+				context.getSource().sendFeedback(new LiteralText("Set " + target.getEntityName() + "'s transformation to " + BWRegistries.TRANSFORMATIONS.getId(transformation).toString()), true);
+				return 1;
+			}
+			return 0;
+		})))));
 	}
 	
 	private static class FortuneArgumentType implements ArgumentType<Fortune> {
@@ -283,6 +304,29 @@ public class BWCommands {
 		@Override
 		public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
 			return CommandSource.suggestIdentifiers(BWRegistries.CONTRACTS.getIds(), builder);
+		}
+	}
+	
+	private static class TransformationArgumentType implements ArgumentType<Transformation> {
+		public static final DynamicCommandExceptionType INVALID_TRANSFORMATION_EXCEPTION = new DynamicCommandExceptionType((object) -> new TranslatableText("transformation.transformationNotFound", object));
+		
+		public static TransformationArgumentType transformation() {
+			return new TransformationArgumentType();
+		}
+		
+		public static Transformation getTransformation(CommandContext<ServerCommandSource> commandContext, String string) {
+			return commandContext.getArgument(string, Transformation.class);
+		}
+		
+		@Override
+		public Transformation parse(StringReader reader) throws CommandSyntaxException {
+			Identifier identifier = Identifier.fromCommandInput(reader);
+			return BWRegistries.TRANSFORMATIONS.getOrEmpty(identifier).orElseThrow(() -> INVALID_TRANSFORMATION_EXCEPTION.create(identifier));
+		}
+		
+		@Override
+		public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
+			return CommandSource.suggestIdentifiers(BWRegistries.TRANSFORMATIONS.getIds(), builder);
 		}
 	}
 }

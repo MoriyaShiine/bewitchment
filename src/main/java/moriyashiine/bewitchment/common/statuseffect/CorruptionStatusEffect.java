@@ -44,7 +44,7 @@ public class CorruptionStatusEffect extends StatusEffect {
 	@Override
 	public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
 		Registry.STATUS_EFFECT.stream().forEach(effect -> {
-			if (((StatusEffectAccessor) effect).bw_getType() == StatusEffectType.BENEFICIAL && entity.hasStatusEffect(effect)) {
+			if (((StatusEffectAccessor) effect).bw_getType() == StatusEffectType.BENEFICIAL && entity.hasStatusEffect(effect) && !entity.getStatusEffect(effect).isAmbient()) {
 				StatusEffect inverse = INVERSE_EFFECTS.get(effect);
 				StatusEffectInstance inverseEffect = null;
 				if (inverse != null) {
