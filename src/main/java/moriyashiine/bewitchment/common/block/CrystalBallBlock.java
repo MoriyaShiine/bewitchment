@@ -9,16 +9,15 @@ import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
+import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.item.TaglockItem;
-import moriyashiine.bewitchment.common.registry.BWContracts;
-import moriyashiine.bewitchment.common.registry.BWCurses;
-import moriyashiine.bewitchment.common.registry.BWRegistries;
-import moriyashiine.bewitchment.common.registry.BWSoundEvents;
+import moriyashiine.bewitchment.common.registry.*;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.Waterloggable;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -28,6 +27,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.TranslatableText;
@@ -65,50 +65,72 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 			}
 		}
 		else {
+			SoundEvent sound = BWSoundEvents.BLOCK_CRYSTAL_BALL_FAIL;
 			BlockPos nearestAltarPos = WitchAltarBlock.getClosestAltarPos(world, pos);
 			if (nearestAltarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(nearestAltarPos)).drain(500, false)) {
 				ItemStack stack = player.getStackInHand(hand);
 				if (stack.getItem() instanceof TaglockItem && TaglockItem.isTaglockFromPlayer(stack)) {
-					LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, stack);
-					if (owner instanceof PlayerEntity) {
-						CompoundTag tag = stack.getTag();
-						if (!tag.contains("UsedForScrying")) {
+					if (!stack.getTag().contains("UsedForScrying")) {
+						LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, stack);
+						if (owner instanceof PlayerEntity) {
+							boolean failed = false;
+							BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(owner.getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.SHADOWS);
+							if (sigilPos == null) {
+								sigilPos = BewitchmentAPI.getClosestBlockPos(pos, 16, currentPos -> world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.SHADOWS);
+							}
+							if (sigilPos != null) {
+								BlockEntity blockEntity = world.getBlockEntity(sigilPos);
+								SigilHolder sigil = (SigilHolder) blockEntity;
+								if (sigil.test(player)) {
+									sigil.setUses(sigil.getUses() - 1);
+									blockEntity.markDirty();
+									failed = true;
+								}
+							}
+							ItemStack newTaglock = new ItemStack(BWObjects.TAGLOCK);
+							CompoundTag tag = newTaglock.getOrCreateTag().copyFrom(stack.getTag());
 							tag.putBoolean("UsedForScrying", true);
-							tag.putLong("LocationPos", owner.getBlockPos().asLong());
-							tag.putString("LocationWorld", world.getRegistryKey().getValue().toString());
-							tag.putInt("Level", ((PlayerEntity) owner).experienceLevel);
-							tag.put("Curses", ((CurseAccessor) owner).toTagCurse());
-							tag.put("Contracts", ((ContractAccessor) owner).toTagContract());
-							tag.putString("Transformation", ((TransformationAccessor) owner).getTransformation());
-							BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-							String familiar = "none";
-							for (int i = 0; i < worldState.familiars.size(); i++) {
-								if (worldState.familiars.get(i).getLeft().equals(owner.getUuid())) {
-									familiar = worldState.familiars.get(i).getRight().getString("id");
-									break;
+							if (!failed) {
+								tag.putLong("LocationPos", owner.getBlockPos().asLong());
+								tag.putString("LocationWorld", world.getRegistryKey().getValue().toString());
+								tag.putInt("Level", ((PlayerEntity) owner).experienceLevel);
+								tag.put("Curses", ((CurseAccessor) owner).toTagCurse());
+								tag.put("Contracts", ((ContractAccessor) owner).toTagContract());
+								tag.putString("Transformation", ((TransformationAccessor) owner).getTransformation());
+								BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
+								String familiar = "none";
+								for (int i = 0; i < worldState.familiars.size(); i++) {
+									if (worldState.familiars.get(i).getLeft().equals(owner.getUuid())) {
+										familiar = worldState.familiars.get(i).getRight().getString("id");
+										break;
+									}
 								}
-							}
-							tag.putString("Familiar", familiar);
-							String pledge = "none";
-							for (int i = 0; i < worldState.pledges.size(); i++) {
-								if (BewitchmentAPI.isPledged(world, worldState.pledges.get(i).getLeft(), owner.getUuid())) {
-									pledge = worldState.pledges.get(i).getLeft();
-									break;
+								tag.putString("Familiar", familiar);
+								String pledge = "none";
+								for (int i = 0; i < worldState.pledges.size(); i++) {
+									if (BewitchmentAPI.isPledged(world, worldState.pledges.get(i).getLeft(), owner.getUuid())) {
+										pledge = worldState.pledges.get(i).getLeft();
+										break;
+									}
 								}
+								tag.putString("Pledge", pledge);
+								sound = BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE;
 							}
-							tag.putString("Pledge", pledge);
-							world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE, SoundCategory.BLOCKS, 1, 1);
+							else {
+								tag.putBoolean("Failed", true);
+								player.sendMessage(new TranslatableText(Bewitchment.MODID + ".blocked_by_shadows"), true);
+							}
+							BewitchmentAPI.addItemToInventoryAndConsume(player, hand, newTaglock);
 						}
-					}
-					else {
-						world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FAIL, SoundCategory.BLOCKS, 1, 1);
-						player.sendMessage(new TranslatableText("ritual.precondition.found_entity"), true);
+						else {
+							player.sendMessage(new TranslatableText(Bewitchment.MODID + ".invalid_entity"), true);
+						}
 					}
 				}
 				else {
 					FortuneAccessor fortuneAccessor = (FortuneAccessor) player;
 					if (fortuneAccessor.getFortune() == null) {
-						world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE, SoundCategory.BLOCKS, 1, 1);
+						sound = BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE;
 						Fortune fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
 						if (((CurseAccessor) player).hasCurse(BWCurses.UNLUCKY)) {
 							while (fortune.positive) {
@@ -125,15 +147,14 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 						
 					}
 					else {
-						world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FAIL, SoundCategory.BLOCKS, 1, 1);
 						player.sendMessage(new TranslatableText(Bewitchment.MODID + ".has_fortune"), true);
 					}
 				}
 			}
 			else {
-				world.playSound(null, pos, BWSoundEvents.BLOCK_CRYSTAL_BALL_FAIL, SoundCategory.BLOCKS, 1, 1);
 				player.sendMessage(new TranslatableText(Bewitchment.MODID + ".insufficent_altar_power"), true);
 			}
+			world.playSound(null, pos, sound, SoundCategory.BLOCKS, 1, 1);
 		}
 		return ActionResult.success(client);
 	}

@@ -146,13 +146,18 @@ public class TaglockItem extends Item {
 			tooltip.add(new LiteralText(getTaglockName(stack)).formatted(Formatting.GRAY));
 			CompoundTag tag = stack.getTag();
 			if (tag.contains("UsedForScrying")) {
-				tooltip.add(new LiteralText("Location: " + BlockPos.fromLong(stack.getOrCreateTag().getLong("LocationPos")) + " in " + stack.getOrCreateTag().getString("LocationWorld")).formatted(Formatting.DARK_GRAY));
-				tooltip.add(new LiteralText("Level: " + tag.getInt("Level")).formatted(Formatting.DARK_GRAY));
-				tooltip.add(new LiteralText("Curses: " + tag.get("Curses")).formatted(Formatting.DARK_GRAY));
-				tooltip.add(new LiteralText("Contracts: " + tag.get("Contracts")).formatted(Formatting.DARK_GRAY));
-				tooltip.add(new LiteralText("Transformation: " + tag.getString("Transformation")).formatted(Formatting.DARK_GRAY));
-				tooltip.add(new LiteralText("Familiar: " + tag.getString("Familiar")).formatted(Formatting.DARK_GRAY));
-				tooltip.add(new LiteralText("Pledge: " + tag.getString("Pledge")).formatted(Formatting.DARK_GRAY));
+				if (tag.contains("Failed")) {
+					tooltip.add(new LiteralText("Failed").formatted(Formatting.DARK_GRAY));
+				}
+				else {
+					tooltip.add(new LiteralText("Location: " + BlockPos.fromLong(stack.getOrCreateTag().getLong("LocationPos")) + " in " + stack.getOrCreateTag().getString("LocationWorld")).formatted(Formatting.DARK_GRAY));
+					tooltip.add(new LiteralText("Level: " + tag.getInt("Level")).formatted(Formatting.DARK_GRAY));
+					tooltip.add(new LiteralText("Curses: " + tag.get("Curses")).formatted(Formatting.DARK_GRAY));
+					tooltip.add(new LiteralText("Contracts: " + tag.get("Contracts")).formatted(Formatting.DARK_GRAY));
+					tooltip.add(new LiteralText("Transformation: " + tag.getString("Transformation")).formatted(Formatting.DARK_GRAY));
+					tooltip.add(new LiteralText("Familiar: " + tag.getString("Familiar")).formatted(Formatting.DARK_GRAY));
+					tooltip.add(new LiteralText("Pledge: " + tag.getString("Pledge")).formatted(Formatting.DARK_GRAY));
+				}
 			}
 		}
 	}

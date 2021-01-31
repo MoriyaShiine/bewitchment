@@ -430,6 +430,7 @@
   "bewitchment.invalid_cauldron": "Cannot find a cauldron named '%s'",
   "bewitchment.has_fortune": "You already have a fortune",
   "bewitchment.taglock_fail": "%s tried to take your taglock!",
+  "bewitchment.blocked_by_shadows": "Something obstructs your vision",
   "bewitchment.scepter_uses": "Uses Left: %s",
   "bewitchment.baphomet_contract": "Baphomet has given you the following contract: %s",
   "rei.bewitchment.athame_stripping": "Athame Stripping",
