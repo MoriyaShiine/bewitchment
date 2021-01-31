@@ -41,6 +41,7 @@
 	"client.HeldItemFeatureRendererMixin",
 	"client.InGameHudMixin",
 	"client.MobEntityRendererMixin",
+	"client.PlayerEntityRendererMixin",
 	"client.TexturedRenderLayersMixin"
   ],
   "injectors": {

@@ -6,6 +6,7 @@ import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.api.registry.Transformation;
 import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
+import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
 import moriyashiine.bewitchment.common.registry.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
@@ -20,6 +21,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.HungerManager;
+import net.minecraft.entity.player.PlayerAbilities;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.ItemStack;
@@ -30,6 +32,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -52,13 +55,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	private static final TrackedData<String> POLYMORPH_UUID = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.STRING);
 	private static final TrackedData<String> POLYMORPH_NAME = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.STRING);
 	
-	private static final EntityAttributeModifier WOLF_FAMILIAR_ARMOR_BONUS = new EntityAttributeModifier(UUID.fromString("1b2866e6-ca04-43e4-b643-1142c0791e6d"), "Familiar bonus", 6, EntityAttributeModifier.Operation.ADDITION);
-	private static final EntityAttributeModifier WOLF_FAMILIAR_ARMOR_TOUGHNESS_BONUS = new EntityAttributeModifier(UUID.fromString("ec7f7a2e-d5c5-40c4-9338-c2808946f7c4"), "Familiar bonus", 6, EntityAttributeModifier.Operation.ADDITION);
+	private static final EntityAttributeModifier WOLF_FAMILIAR_ARMOR_MODIFIER = new EntityAttributeModifier(UUID.fromString("1b2866e6-ca04-43e4-b643-1142c0791e6d"), "Familiar modifier", 6, EntityAttributeModifier.Operation.ADDITION);
+	private static final EntityAttributeModifier WOLF_FAMILIAR_ARMOR_TOUGHNESS_MODIFIER = new EntityAttributeModifier(UUID.fromString("ec7f7a2e-d5c5-40c4-9338-c2808946f7c4"), "Familiar modifier", 6, EntityAttributeModifier.Operation.ADDITION);
 	
-	private static final EntityAttributeModifier VAMPIRE_ATTACK_DAMAGE_BONUS_0 = new EntityAttributeModifier(UUID.fromString("066862f6-989c-4f35-ac6d-2696b91a1a5b"), "Transformation bonus", 2, EntityAttributeModifier.Operation.ADDITION);
-	private static final EntityAttributeModifier VAMPIRE_ATTACK_DAMAGE_BONUS_1 = new EntityAttributeModifier(UUID.fromString("d2be3564-97e7-42c9-88c5-6b753472e37f"), "Transformation bonus", 4, EntityAttributeModifier.Operation.ADDITION);
-	private static final EntityAttributeModifier VAMPIRE_MOVEMENT_SPEED_BONUS_0 = new EntityAttributeModifier(UUID.fromString("a782c03d-af7b-4eb7-b997-dd396bfdc7a0"), "Transformation bonus", 0.04, EntityAttributeModifier.Operation.ADDITION);
-	private static final EntityAttributeModifier VAMPIRE_MOVEMENT_SPEED_BONUS_1 = new EntityAttributeModifier(UUID.fromString("7c7a61eb-83e8-4e85-94d6-a410a4153d6d"), "Transformation bonus", 0.08, EntityAttributeModifier.Operation.ADDITION);
+	private static final EntityAttributeModifier VAMPIRE_ATTACK_DAMAGE_MODIFIER_0 = new EntityAttributeModifier(UUID.fromString("066862f6-989c-4f35-ac6d-2696b91a1a5b"), "Transformation modifier", 2, EntityAttributeModifier.Operation.ADDITION);
+	private static final EntityAttributeModifier VAMPIRE_ATTACK_DAMAGE_MODIFIER_1 = new EntityAttributeModifier(UUID.fromString("d2be3564-97e7-42c9-88c5-6b753472e37f"), "Transformation modifier", 4, EntityAttributeModifier.Operation.ADDITION);
+	private static final EntityAttributeModifier VAMPIRE_MOVEMENT_SPEED_MODIFIER_0 = new EntityAttributeModifier(UUID.fromString("a782c03d-af7b-4eb7-b997-dd396bfdc7a0"), "Transformation modifier", 0.04, EntityAttributeModifier.Operation.ADDITION);
+	private static final EntityAttributeModifier VAMPIRE_MOVEMENT_SPEED_MODIFIER_1 = new EntityAttributeModifier(UUID.fromString("7c7a61eb-83e8-4e85-94d6-a410a4153d6d"), "Transformation modifier", 0.08, EntityAttributeModifier.Operation.ADDITION);
 	
 	private Fortune.Instance fortune = null;
 	
@@ -66,6 +69,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	
 	@Shadow
 	public abstract HungerManager getHungerManager();
+	
+	@Shadow
+	public abstract void sendAbilitiesUpdate();
+	
+	@Shadow
+	@Final
+	public PlayerAbilities abilities;
 	
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
@@ -183,31 +193,31 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 				EntityAttributeInstance armorAttribute = getAttributeInstance(EntityAttributes.GENERIC_ARMOR);
 				EntityAttributeInstance armorToughnessAttribute = getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS);
 				EntityAttributeInstance movementSpeedAttribute = getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
-				if (shouldHave && !armorAttribute.hasModifier(WOLF_FAMILIAR_ARMOR_BONUS)) {
-					armorAttribute.addPersistentModifier(WOLF_FAMILIAR_ARMOR_BONUS);
-					armorToughnessAttribute.addPersistentModifier(WOLF_FAMILIAR_ARMOR_TOUGHNESS_BONUS);
+				if (shouldHave && !armorAttribute.hasModifier(WOLF_FAMILIAR_ARMOR_MODIFIER)) {
+					armorAttribute.addPersistentModifier(WOLF_FAMILIAR_ARMOR_MODIFIER);
+					armorToughnessAttribute.addPersistentModifier(WOLF_FAMILIAR_ARMOR_TOUGHNESS_MODIFIER);
 				}
-				else if (!shouldHave && armorAttribute.hasModifier(WOLF_FAMILIAR_ARMOR_BONUS)) {
-					armorAttribute.removeModifier(WOLF_FAMILIAR_ARMOR_BONUS);
-					armorToughnessAttribute.removeModifier(WOLF_FAMILIAR_ARMOR_TOUGHNESS_BONUS);
+				else if (!shouldHave && armorAttribute.hasModifier(WOLF_FAMILIAR_ARMOR_MODIFIER)) {
+					armorAttribute.removeModifier(WOLF_FAMILIAR_ARMOR_MODIFIER);
+					armorToughnessAttribute.removeModifier(WOLF_FAMILIAR_ARMOR_TOUGHNESS_MODIFIER);
 				}
 				shouldHave = vampire && !BewitchmentAPI.isPledged(world, BWPledges.LILITH, getUuid());
-				if (shouldHave && !attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_BONUS_0)) {
-					attackDamageAttribute.addPersistentModifier(VAMPIRE_ATTACK_DAMAGE_BONUS_0);
-					movementSpeedAttribute.addPersistentModifier(VAMPIRE_MOVEMENT_SPEED_BONUS_0);
+				if (shouldHave && !attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0)) {
+					attackDamageAttribute.addPersistentModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0);
+					movementSpeedAttribute.addPersistentModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_0);
 				}
-				else if (!shouldHave && attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_BONUS_0)) {
-					attackDamageAttribute.removeModifier(VAMPIRE_ATTACK_DAMAGE_BONUS_0);
-					movementSpeedAttribute.removeModifier(VAMPIRE_MOVEMENT_SPEED_BONUS_0);
+				else if (!shouldHave && attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0)) {
+					attackDamageAttribute.removeModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0);
+					movementSpeedAttribute.removeModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_0);
 				}
 				shouldHave = vampire && BewitchmentAPI.isPledged(world, BWPledges.LILITH, getUuid());
-				if (shouldHave && !attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_BONUS_1)) {
-					attackDamageAttribute.addPersistentModifier(VAMPIRE_ATTACK_DAMAGE_BONUS_1);
-					movementSpeedAttribute.addPersistentModifier(VAMPIRE_MOVEMENT_SPEED_BONUS_1);
+				if (shouldHave && !attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_1)) {
+					attackDamageAttribute.addPersistentModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_1);
+					movementSpeedAttribute.addPersistentModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_1);
 				}
-				else if (!shouldHave && attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_BONUS_1)) {
-					attackDamageAttribute.removeModifier(VAMPIRE_ATTACK_DAMAGE_BONUS_1);
-					movementSpeedAttribute.removeModifier(VAMPIRE_MOVEMENT_SPEED_BONUS_1);
+				else if (!shouldHave && attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_1)) {
+					attackDamageAttribute.removeModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_1);
+					movementSpeedAttribute.removeModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_1);
 				}
 			}
 			if (getRespawnTimer() > 0) {
@@ -230,7 +240,17 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 					}
 				}
 				else {
+					if (getAlternateForm()) {
+						TransformationAbilityPacket.useAbility((PlayerEntity) (Object) this);
+					}
 					hungerManager.addExhaustion(Float.MAX_VALUE);
+				}
+				if (getAlternateForm()) {
+					if (!abilities.flying) {
+						abilities.flying = true;
+						sendAbilitiesUpdate();
+					}
+					hungerManager.addExhaustion(0.5f);
 				}
 			}
 		}
@@ -333,7 +353,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 			tag.putInt("FortuneDuration", getFortune().duration);
 		}
 		tag.putString("Transformation", BWRegistries.TRANSFORMATIONS.getId(getTransformation()).toString());
-		tag.putBoolean("AlternativeForm", getAlternateForm());
+		tag.putBoolean("AlternateForm", getAlternateForm());
 		tag.putString("PolymorphUUID", getPolymorphUUID());
 		tag.putString("PolymorphName", getPolymorphName());
 		tag.putInt("RespawnTimer", getRespawnTimer());

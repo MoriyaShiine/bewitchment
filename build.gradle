@@ -12,6 +12,10 @@ group = project.maven_group
 
 repositories {
     maven {
+        name = "jitpack"
+        url = "https://jitpack.io"
+    }
+    maven {
         name = "reach"
         url = "https://maven.jamieswhiteshirt.com/libs-release"
     }
@@ -42,6 +46,8 @@ dependencies {
     include "io.github.ladysnake:Impersonate:${impersonate_version}"
     include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${cca_version}"
     include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${cca_version}"
+
+    modImplementation "com.github.Virtuoel:Pehkui:${project.pehkui_commit}"
 
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
     modRuntime "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"

@@ -27,6 +27,7 @@ public class BWSoundEvents {
 	public static final SoundEvent ENTITY_GENERIC_SHOOT = create("entity.generic.shoot");
 	public static final SoundEvent ENTITY_GENERIC_PLEDGE = create("entity.generic.pledge");
 	public static final SoundEvent ENTITY_GENERIC_CURSE = create("entity.generic.curse");
+	public static final SoundEvent ENTITY_GENERIC_TRANSFORM = create("entity.generic.transform");
 	public static final SoundEvent ENTITY_OWL_AMBIENT = create("entity.owl.ambient");
 	public static final SoundEvent ENTITY_OWL_HURT = create("entity.owl.hurt");
 	public static final SoundEvent ENTITY_OWL_DEATH = create("entity.owl.death");

@@ -139,6 +139,12 @@
 	],
 	"subtitle": "bewitchment.subtitles.entity.generic.curse"
   },
+  "entity.generic.transform": {
+	"sounds": [
+	  "random/fizz"
+	],
+	"subtitle": "bewitchment.subtitles.entity.generic.transform"
+  },
   "entity.owl.ambient": {
 	"sounds": [
 	  "bewitchment:mob/owl/say1",
