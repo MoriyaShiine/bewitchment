@@ -3,9 +3,12 @@ package moriyashiine.bewitchment.common.entity.living;
 import com.google.common.collect.Sets;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
+import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
+import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.registry.*;
 import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
@@ -26,11 +29,13 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.WitherSkullEntity;
 import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -143,6 +148,30 @@ public class LilithEntity extends BWHostileEntity implements Pledgeable {
 	@Override
 	protected SoundEvent getDeathSound() {
 		return BWSoundEvents.ENTITY_LILITH_DEATH;
+	}
+	
+	@Override
+	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
+		if (isAlive() && getTarget() == null && BewitchmentAPI.isVampire(player, true)) {
+			ItemStack stack = player.getStackInHand(hand);
+			if (stack.getItem() == BWObjects.GARLIC) {
+				boolean client = world.isClient;
+				if (!client) {
+					if (!player.isCreative()) {
+						stack.decrement(1);
+					}
+					PlayerLookup.tracking(player).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, player));
+					SpawnSmokeParticlesPacket.send(player, player);
+					world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_PLING, player.getSoundCategory(), 1, 1);
+					((TransformationAccessor) player).getTransformation().onRemoved(player);
+					((TransformationAccessor) player).setTransformation(BWTransformations.HUMAN);
+					((TransformationAccessor) player).getTransformation().onAdded(player);
+					((TransformationAccessor) player).setAlternateForm(false);
+				}
+				return ActionResult.success(client);
+			}
+		}
+		return super.interactMob(player, hand);
 	}
 	
 	@Override
