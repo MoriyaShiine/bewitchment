@@ -373,5 +373,20 @@
 	"sounds": [
 	],
 	"subtitle": "bewitchment.subtitles.entity.lilith.death"
+  },
+  "entity.herne.ambient": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.herne.ambient"
+  },
+  "entity.herne.hurt": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.herne.hurt"
+  },
+  "entity.herne.death": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.herne.death"
   }
 }
