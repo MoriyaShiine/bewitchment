@@ -359,7 +359,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			if (getFamiliar()) {
 				amount /= 8;
 			}
-			if (BewitchmentAPI.isVampire(directSource, true)) {
+			if (BewitchmentAPI.isVampire(directSource, false)) {
 				amount /= 8;
 			}
 		}
