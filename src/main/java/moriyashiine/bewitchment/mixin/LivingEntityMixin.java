@@ -25,8 +25,6 @@ import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.EntityDamageSource;
@@ -99,9 +97,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Shadow
 	public abstract boolean clearStatusEffects();
-	
-	@Shadow
-	protected abstract boolean shouldDropLoot();
 	
 	@Shadow
 	public abstract float getMaxHealth();
@@ -570,9 +565,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		}
 	}
 	
-	@Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "canHaveStatusEffect", at = @At("RETURN"), cancellable = true)
 	private void canHaveStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!world.isClient && !effect.isAmbient()) {
+		if (callbackInfo.getReturnValue() && !world.isClient && !effect.isAmbient()) {
 			StatusEffectType type = ((StatusEffectAccessor) effect.getEffectType()).bw_getType();
 			if (type == StatusEffectType.BENEFICIAL) {
 				if (hasCurse(BWCurses.UNLUCKY) && random.nextBoolean()) {
@@ -594,16 +589,16 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		}
 	}
 	
-	@Inject(method = "canBreatheInWater", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "canBreatheInWater", at = @At("RETURN"), cancellable = true)
 	private void canBreatheInWater(CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!world.isClient && hasStatusEffect(BWStatusEffects.GILLS)) {
+		if (callbackInfo.getReturnValue() && !world.isClient && hasStatusEffect(BWStatusEffects.GILLS)) {
 			callbackInfo.setReturnValue(true);
 		}
 	}
 	
-	@Inject(method = "isClimbing", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "isClimbing", at = @At("RETURN"), cancellable = true)
 	private void isClimbing(CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (hasStatusEffect(BWStatusEffects.CLIMBING) && horizontalCollision) {
+		if (!callbackInfo.getReturnValue() && hasStatusEffect(BWStatusEffects.CLIMBING) && horizontalCollision) {
 			callbackInfo.setReturnValue(true);
 		}
 	}
@@ -615,16 +610,15 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		}
 	}
 	
-	@Inject(method = "drop", at = @At("HEAD"))
-	private void drop(DamageSource source, CallbackInfo callbackInfo) {
-		if (!world.isClient && shouldDropLoot()) {
+	@Inject(method = "dropEquipment", at = @At("TAIL"))
+	private void dropEquipment(DamageSource source, int lootingMultiplier, boolean allowDrops, CallbackInfo callbackInfo) {
+		if (!world.isClient && allowDrops) {
 			Entity attacker = source.getSource();
 			if (attacker instanceof LivingEntity) {
 				LivingEntity livingAttacker = (LivingEntity) attacker;
-				ItemStack stack = livingAttacker.getMainHandStack();
-				if (stack.getItem() instanceof AthameItem && livingAttacker.preferredHand == Hand.MAIN_HAND) {
+				if (livingAttacker.getMainHandStack().getItem() instanceof AthameItem && livingAttacker.preferredHand == Hand.MAIN_HAND) {
 					for (AthameDropRecipe recipe : world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_DROP_RECIPE_TYPE)) {
-						if (recipe.entity_type.equals(getType()) && world.random.nextFloat() < recipe.chance * (EnchantmentHelper.getLevel(Enchantments.LOOTING, stack) + 1)) {
+						if (recipe.entity_type.equals(getType()) && world.random.nextFloat() < recipe.chance * (lootingMultiplier + 1)) {
 							ItemStack drop = recipe.getOutput().copy();
 							if (recipe.entity_type == EntityType.PLAYER) {
 								drop.getOrCreateTag().putString("SkullOwner", getName().getString());
@@ -641,7 +635,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		}
 	}
 	
-	@Inject(method = "onDeath", at = @At("HEAD"))
+	@Inject(method = "onDeath", at = @At("TAIL"))
 	private void onDeath(DamageSource source, CallbackInfo callbackInfo) {
 		if (!world.isClient) {
 			Entity attacker = source.getSource();

@@ -200,7 +200,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		dataTracker.set(WEREWOLF_VARIANT, variant);
 	}
 	
-	@Inject(method = "tick", at = @At("TAIL"))
+	@Inject(method = "tick", at = @At("HEAD"))
 	private void tick(CallbackInfo callbackInfo) {
 		if (!world.isClient) {
 			if (getMagicTimer() > 0) {
@@ -375,7 +375,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		return exhaustion;
 	}
 	
-	@Inject(method = "getHurtSound", at = @At("HEAD"))
+	@Inject(method = "getHurtSound", at = @At("TAIL"))
 	private void getHurtSound(DamageSource source, CallbackInfoReturnable<SoundEvent> callbackInfo) {
 		if (source == BWDamageSources.SUN) {
 			world.playSound(null, getBlockPos(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.PLAYERS, 1, 1);

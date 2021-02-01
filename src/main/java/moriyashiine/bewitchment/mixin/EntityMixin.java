@@ -63,23 +63,23 @@ public abstract class EntityMixin implements WetAccessor {
 		dataTracker.set(WET_TIMER, wetTimer);
 	}
 	
-	@Inject(method = "isWet", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "isWet", at = @At("RETURN"), cancellable = true)
 	private void isWet(CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (getWetTimer() > 0) {
+		if (!callbackInfo.getReturnValue() && getWetTimer() > 0) {
 			callbackInfo.setReturnValue(true);
 		}
 	}
 	
-	@Inject(method = "isTouchingWaterOrRain", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "isTouchingWaterOrRain", at = @At("RETURN"), cancellable = true)
 	private void isTouchingWaterOrRain(CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (getWetTimer() > 0) {
+		if (!callbackInfo.getReturnValue() && getWetTimer() > 0) {
 			callbackInfo.setReturnValue(true);
 		}
 	}
 	
-	@Inject(method = "isInvulnerableTo", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "isInvulnerableTo", at = @At("RETURN"), cancellable = true)
 	private void isInvulnerableTo(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!world.isClient && this instanceof MasterAccessor) {
+		if (!callbackInfo.getReturnValue() && !world.isClient && this instanceof MasterAccessor) {
 			Entity attacker = source.getAttacker();
 			if (attacker instanceof LivingEntity) {
 				if (this instanceof MasterAccessor) {
@@ -131,7 +131,7 @@ public abstract class EntityMixin implements WetAccessor {
 		}
 	}
 	
-	@Inject(method = "remove", at = @At("HEAD"))
+	@Inject(method = "remove", at = @At("TAIL"))
 	private void remove(CallbackInfo callbackInfo) {
 		if (!world.isClient && this instanceof Pledgeable) {
 			BWUniversalWorldState worldState = BWUniversalWorldState.get(world);

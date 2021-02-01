@@ -25,11 +25,13 @@ public abstract class MobEntityRendererMixin<T extends MobEntity, M extends Enti
 		super(dispatcher, model, shadowRadius);
 	}
 	
-	@Inject(method = "shouldRender", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "shouldRender", at = @At("RETURN"), cancellable = true)
 	private void shouldRender(T mobEntity, Frustum frustum, double d, double e, double f, CallbackInfoReturnable<Boolean> callbackInfo) {
-		UUID targetUUID = ((InsanityTargetAccessor) mobEntity).getInsanityTargetUUID().orElse(null);
-		if (targetUUID != null && !MinecraftClient.getInstance().player.getUuid().equals(targetUUID)) {
-			callbackInfo.setReturnValue(false);
+		if (callbackInfo.getReturnValue()) {
+			UUID targetUUID = ((InsanityTargetAccessor) mobEntity).getInsanityTargetUUID().orElse(null);
+			if (targetUUID != null && !MinecraftClient.getInstance().player.getUuid().equals(targetUUID)) {
+				callbackInfo.setReturnValue(false);
+			}
 		}
 	}
 }

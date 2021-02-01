@@ -23,7 +23,7 @@ public abstract class DamageEnchantmentMixin extends Enchantment {
 		super(weight, type, slotTypes);
 	}
 	
-	@Inject(method = "getAttackDamage", at = @At("TAIL"), cancellable = true)
+	@Inject(method = "getAttackDamage", at = @At("HEAD"), cancellable = true)
 	private void getAttackDamage(int level, EntityGroup group, CallbackInfoReturnable<Float> callbackInfo) {
 		if (typeIndex == 1 && group == BewitchmentAPI.DEMON) {
 			callbackInfo.setReturnValue(level * 3f);
