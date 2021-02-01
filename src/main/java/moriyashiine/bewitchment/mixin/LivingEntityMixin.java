@@ -216,7 +216,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				world.addParticle(ParticleTypes.ENCHANT, getParticleX(getWidth()), getY() + MathHelper.nextFloat(random, 0, getHeight()), getParticleZ(getWidth()), 0, 0, 0);
 			}
 		}
-		if (BewitchmentAPI.isWerewolf(this, false)) {
+		if ((Object) this instanceof PlayerEntity && BewitchmentAPI.isWerewolf(this, false)) {
 			flyingSpeed *= 1.5f;
 		}
 	}
@@ -382,13 +382,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		return source;
 	}
 	
-	@Inject(method = "getJumpVelocity", at = @At("RETURN"), cancellable = true)
-	private void getJumpVelocity(CallbackInfoReturnable<Float> callbackInfo) {
-		if (BewitchmentAPI.isWerewolf(this, false)) {
-			callbackInfo.setReturnValue(callbackInfo.getReturnValue() * 1.5f);
-		}
-	}
-	
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
@@ -490,6 +483,13 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					}
 				}
 			}
+		}
+	}
+	
+	@Inject(method = "getJumpVelocity", at = @At("RETURN"), cancellable = true)
+	private void getJumpVelocity(CallbackInfoReturnable<Float> callbackInfo) {
+		if ((Object) this instanceof PlayerEntity && BewitchmentAPI.isWerewolf(this, false)) {
+			callbackInfo.setReturnValue(callbackInfo.getReturnValue() * 1.5f);
 		}
 	}
 	
@@ -605,6 +605,13 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	private void isClimbing(CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (hasStatusEffect(BWStatusEffects.CLIMBING) && horizontalCollision) {
 			callbackInfo.setReturnValue(true);
+		}
+	}
+	
+	@Inject(method = "blockedByShield", at = @At("HEAD"), cancellable = true)
+	private void blockedByShield(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
+		if (BewitchmentAPI.isWerewolf(source.getSource(), false)) {
+			callbackInfo.setReturnValue(false);
 		}
 	}
 	

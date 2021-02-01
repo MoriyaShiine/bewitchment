@@ -29,12 +29,12 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 			((PolymorphAccessor) this).setPolymorphName(((PolymorphAccessor) oldPlayer).getPolymorphName());
 			((RespawnTimerAccessor) this).setRespawnTimer(((RespawnTimerAccessor) oldPlayer).getRespawnTimer());
 			((TransformationAccessor) this).setAlternateForm(((TransformationAccessor) oldPlayer).getAlternateForm());
+			((WerewolfAccessor) this).setForcedTransformation(((WerewolfAccessor) oldPlayer).getForcedTransformation());
 		}
 		((FortuneAccessor) this).setFortune(((FortuneAccessor) oldPlayer).getFortune());
 		((CurseAccessor) this).getCurses().addAll(((CurseAccessor) oldPlayer).getCurses());
 		((ContractAccessor) this).getContracts().addAll(((ContractAccessor) oldPlayer).getContracts());
 		((TransformationAccessor) this).setTransformation(((TransformationAccessor) oldPlayer).getTransformation());
-		((WerewolfAccessor) this).setForcedTransformation(((WerewolfAccessor) oldPlayer).getForcedTransformation());
 		((WerewolfAccessor) this).setWerewolfVariant(((WerewolfAccessor) oldPlayer).getWerewolfVariant());
 	}
 }
