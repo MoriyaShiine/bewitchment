@@ -61,7 +61,7 @@ public class WerewolfEntity extends BWHostileEntity {
 	
 	@Override
 	public int getVariants() {
-		return 7;
+		return getVariantsStatic();
 	}
 	
 	@Nullable
@@ -124,6 +124,10 @@ public class WerewolfEntity extends BWHostileEntity {
 		goalSelector.add(3, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this));
 		targetSelector.add(1, new FollowTargetGoal<>(this, PlayerEntity.class, true));
+	}
+	
+	public static int getVariantsStatic() {
+		return 7;
 	}
 	
 	public static boolean canSpawn(EntityType<WerewolfEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {

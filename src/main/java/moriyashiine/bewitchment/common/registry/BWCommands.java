@@ -17,6 +17,7 @@ import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.api.registry.Transformation;
+import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
@@ -228,6 +229,9 @@ public class BWCommands {
 			PlayerEntity target = EntityArgumentType.getPlayer(context, "target");
 			if (target instanceof TransformationAccessor) {
 				Transformation transformation = TransformationArgumentType.getTransformation(context, "transformation");
+				if (((TransformationAccessor) target).getAlternateForm()) {
+					TransformationAbilityPacket.useAbility(target, true);
+				}
 				((TransformationAccessor) target).getTransformation().onRemoved(target);
 				((TransformationAccessor) target).setTransformation(transformation);
 				transformation.onAdded(target);

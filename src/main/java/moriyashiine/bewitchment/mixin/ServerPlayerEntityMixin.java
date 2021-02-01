@@ -4,6 +4,7 @@ import com.mojang.authlib.GameProfile;
 import moriyashiine.bewitchment.api.interfaces.entity.*;
 import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
+import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -24,10 +25,8 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 		if (alive) {
 			((MagicAccessor) this).setMagic(((MagicAccessor) oldPlayer).getMagic());
 			((BloodAccessor) this).setBlood(((BloodAccessor) oldPlayer).getBlood());
-			PolymorphAccessor thisPoly = ((PolymorphAccessor) this);
-			PolymorphAccessor oldPoly = ((PolymorphAccessor) oldPlayer);
-			thisPoly.setPolymorphUUID(oldPoly.getPolymorphUUID());
-			thisPoly.setPolymorphName(oldPoly.getPolymorphName());
+			((PolymorphAccessor) this).setPolymorphUUID(((PolymorphAccessor) oldPlayer).getPolymorphUUID());
+			((PolymorphAccessor) this).setPolymorphName(((PolymorphAccessor) oldPlayer).getPolymorphName());
 			((RespawnTimerAccessor) this).setRespawnTimer(((RespawnTimerAccessor) oldPlayer).getRespawnTimer());
 			((TransformationAccessor) this).setAlternateForm(((TransformationAccessor) oldPlayer).getAlternateForm());
 		}
@@ -35,5 +34,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 		((CurseAccessor) this).getCurses().addAll(((CurseAccessor) oldPlayer).getCurses());
 		((ContractAccessor) this).getContracts().addAll(((ContractAccessor) oldPlayer).getContracts());
 		((TransformationAccessor) this).setTransformation(((TransformationAccessor) oldPlayer).getTransformation());
+		((WerewolfAccessor) this).setForcedTransformation(((WerewolfAccessor) oldPlayer).getForcedTransformation());
+		((WerewolfAccessor) this).setWerewolfVariant(((WerewolfAccessor) oldPlayer).getWerewolfVariant());
 	}
 }

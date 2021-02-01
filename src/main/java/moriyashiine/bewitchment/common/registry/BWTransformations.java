@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.common.registry;
 import moriyashiine.bewitchment.api.registry.Transformation;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.transformation.VampireTransformation;
+import moriyashiine.bewitchment.common.transformation.WerewolfTransformation;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -14,7 +15,7 @@ public class BWTransformations {
 	
 	public static final Transformation HUMAN = create("human", new Transformation());
 	public static final Transformation VAMPIRE = create("vampire", new VampireTransformation());
-	public static final Transformation WEREWOLF = create("werewolf", new Transformation());
+	public static final Transformation WEREWOLF = create("werewolf", new WerewolfTransformation());
 	
 	private static <T extends Transformation> T create(String name, T transformation) {
 		TRANSFORMATIONS.put(transformation, new Identifier(Bewitchment.MODID, name));

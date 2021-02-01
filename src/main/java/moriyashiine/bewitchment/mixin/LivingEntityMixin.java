@@ -13,10 +13,9 @@ import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.entity.interfaces.CaduceusFireballAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.InsanityTargetAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.MasterAccessor;
-import moriyashiine.bewitchment.common.entity.living.BaphometEntity;
-import moriyashiine.bewitchment.common.entity.living.HerneEntity;
-import moriyashiine.bewitchment.common.entity.living.LeonardEntity;
-import moriyashiine.bewitchment.common.entity.living.LilithEntity;
+import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
+import moriyashiine.bewitchment.common.entity.living.*;
+import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.recipe.AthameDropRecipe;
@@ -125,6 +124,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	@Shadow
 	protected abstract float getSoundPitch();
 	
+	@Shadow
+	public float flyingSpeed;
+	
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
@@ -213,6 +215,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			else {
 				world.addParticle(ParticleTypes.ENCHANT, getParticleX(getWidth()), getY() + MathHelper.nextFloat(random, 0, getHeight()), getParticleZ(getWidth()), 0, 0, 0);
 			}
+		}
+		if (BewitchmentAPI.isWerewolf(this, false)) {
+			flyingSpeed *= 1.5f;
 		}
 	}
 	
@@ -377,6 +382,13 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		return source;
 	}
 	
+	@Inject(method = "getJumpVelocity", at = @At("RETURN"), cancellable = true)
+	private void getJumpVelocity(CallbackInfoReturnable<Float> callbackInfo) {
+		if (BewitchmentAPI.isWerewolf(this, false)) {
+			callbackInfo.setReturnValue(callbackInfo.getReturnValue() * 1.5f);
+		}
+	}
+	
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
@@ -528,6 +540,16 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 						((TransformationAccessor) this).getTransformation().onRemoved((LivingEntity) (Object) this);
 						((TransformationAccessor) this).setTransformation(BWTransformations.WEREWOLF);
 						((TransformationAccessor) this).getTransformation().onAdded((LivingEntity) (Object) this);
+						int variant = -1;
+						if (source.getSource() instanceof WerewolfEntity) {
+							variant = source.getSource().getDataTracker().get(BWHostileEntity.VARIANT);
+						}
+						else if (source.getSource() instanceof WerewolfAccessor) {
+							variant = ((WerewolfAccessor) source.getSource()).getWerewolfVariant();
+						}
+						if (variant > -1) {
+							((WerewolfAccessor) this).setWerewolfVariant(variant);
+						}
 						PlayerLookup.tracking(this).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, this));
 						if ((Object) this instanceof PlayerEntity) {
 							SpawnSmokeParticlesPacket.send((PlayerEntity) (Object) this, this);
