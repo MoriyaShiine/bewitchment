@@ -1,0 +1,19 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	"CCC",
+	"CBC",
+	"CCC"
+  ],
+  "key": {
+	"C": {
+	  "item": "bewitchment:cypress_planks"
+	},
+	"B": {
+	  "item": "light_gray_bed"
+	}
+  },
+  "result": {
+	"item": "bewitchment:light_gray_coffin"
+  }
+}

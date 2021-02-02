@@ -1,0 +1,14 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "bewitchment:white_coffin"
+	},
+	{
+	  "item": "lime_dye"
+	}
+  ],
+  "result": {
+	"item": "bewitchment:lime_coffin"
+  }
+}

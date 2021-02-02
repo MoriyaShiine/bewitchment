@@ -1,0 +1,28 @@
+{
+  "type": "block",
+  "pools": [
+	{
+	  "rolls": 1,
+	  "entries": [
+		{
+		  "type": "item",
+		  "conditions": [
+			{
+			  "condition": "block_state_property",
+			  "block": "bewitchment:yellow_coffin",
+			  "properties": {
+				"part": "head"
+			  }
+			}
+		  ],
+		  "name": "bewitchment:yellow_coffin"
+		}
+	  ],
+	  "conditions": [
+		{
+		  "condition": "survives_explosion"
+		}
+	  ]
+	}
+  ]
+}

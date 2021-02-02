@@ -215,6 +215,22 @@ public class BWObjects {
 	public static final Block CYPRESS_POPPET_SHELF = create("cypress_poppet_shelf", new PoppetShelfBlock(copyOf(CYPRESS_PLANKS).nonOpaque()), true);
 	public static final Block ELDER_POPPET_SHELF = create("elder_poppet_shelf", new PoppetShelfBlock(copyOf(ELDER_PLANKS).nonOpaque()), true);
 	public static final Block DRAGONS_BLOOD_POPPET_SHELF = create("dragons_blood_poppet_shelf", new PoppetShelfBlock(copyOf(DRAGONS_BLOOD_PLANKS).nonOpaque()), true);
+	public static final Block WHITE_COFFIN = create("white_coffin", new CoffinBlock(DyeColor.WHITE, copyOf(CYPRESS_PLANKS).nonOpaque()), true);
+	public static final Block ORANGE_COFFIN = create("orange_coffin", new CoffinBlock(DyeColor.ORANGE, copyOf(CYPRESS_PLANKS).nonOpaque()), true);
+	public static final Block MAGENTA_COFFIN = create("magenta_coffin", new CoffinBlock(DyeColor.MAGENTA, copyOf(CYPRESS_PLANKS).nonOpaque()), true);
+	public static final Block LIGHT_BLUE_COFFIN = create("light_blue_coffin", new CoffinBlock(DyeColor.LIGHT_BLUE, copyOf(CYPRESS_PLANKS).nonOpaque()), true);
+	public static final Block YELLOW_COFFIN = create("yellow_coffin", new CoffinBlock(DyeColor.YELLOW, copyOf(CYPRESS_PLANKS).nonOpaque()), true);
+	public static final Block LIME_COFFIN = create("lime_coffin", new CoffinBlock(DyeColor.LIME, copyOf(CYPRESS_PLANKS).nonOpaque()), true);
+	public static final Block PINK_COFFIN = create("pink_coffin", new CoffinBlock(DyeColor.PINK, copyOf(CYPRESS_PLANKS).nonOpaque()), true);
+	public static final Block GRAY_COFFIN = create("gray_coffin", new CoffinBlock(DyeColor.GRAY, copyOf(CYPRESS_PLANKS).nonOpaque()), true);
+	public static final Block LIGHT_GRAY_COFFIN = create("light_gray_coffin", new CoffinBlock(DyeColor.LIGHT_GRAY, copyOf(CYPRESS_PLANKS).nonOpaque()), true);
+	public static final Block CYAN_COFFIN = create("cyan_coffin", new CoffinBlock(DyeColor.CYAN, copyOf(CYPRESS_PLANKS).nonOpaque()), true);
+	public static final Block PURPLE_COFFIN = create("purple_coffin", new CoffinBlock(DyeColor.PURPLE, copyOf(CYPRESS_PLANKS).nonOpaque()), true);
+	public static final Block BLUE_COFFIN = create("blue_coffin", new CoffinBlock(DyeColor.BLUE, copyOf(CYPRESS_PLANKS).nonOpaque()), true);
+	public static final Block BROWN_COFFIN = create("brown_coffin", new CoffinBlock(DyeColor.BROWN, copyOf(CYPRESS_PLANKS).nonOpaque()), true);
+	public static final Block GREEN_COFFIN = create("green_coffin", new CoffinBlock(DyeColor.GREEN, copyOf(CYPRESS_PLANKS).nonOpaque()), true);
+	public static final Block RED_COFFIN = create("red_coffin", new CoffinBlock(DyeColor.RED, copyOf(CYPRESS_PLANKS).nonOpaque()), true);
+	public static final Block BLACK_COFFIN = create("black_coffin", new CoffinBlock(DyeColor.BLACK, copyOf(CYPRESS_PLANKS).nonOpaque()), true);
 	//armor
 	public static final Item SILVER_HELMET = create("silver_helmet", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.HEAD, gen()));
 	public static final Item SILVER_CHESTPLATE = create("silver_chestplate", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.CHEST, gen()));

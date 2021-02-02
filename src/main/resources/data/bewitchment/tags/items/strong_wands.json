@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
 	"end_rod",
-	"bewitchment:netherite_candelabra"
+	"bewitchment:netherite_candelabra",
+	"bewitchment:scepter"
   ]
 }

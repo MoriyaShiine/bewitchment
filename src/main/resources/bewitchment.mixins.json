@@ -6,6 +6,8 @@
   "mixins": [
 	"AbstractBlockStateMixin",
 	"AnimalMateGoalMixin",
+	"BedBlockMixin",
+	"BlockEntityMixin",
 	"BlockMixin",
 	"BrewingRecipeRegistryMixin",
 	"CreeperEntityMixin",

@@ -1,0 +1,58 @@
+{
+  "variants": {
+	"part=foot,occupied=false,facing=north": {
+	  "model": "bewitchment:block/coffin_open",
+	  "y": 180
+	},
+	"part=foot,occupied=false,facing=south": {
+	  "model": "bewitchment:block/coffin_open"
+	},
+	"part=foot,occupied=false,facing=east": {
+	  "model": "bewitchment:block/coffin_open",
+	  "y": 270
+	},
+	"part=foot,occupied=false,facing=west": {
+	  "model": "bewitchment:block/coffin_open",
+	  "y": 90
+	},
+	"part=foot,occupied=true,facing=north": {
+	  "model": "bewitchment:block/coffin_closed",
+	  "y": 180
+	},
+	"part=foot,occupied=true,facing=south": {
+	  "model": "bewitchment:block/coffin_closed"
+	},
+	"part=foot,occupied=true,facing=east": {
+	  "model": "bewitchment:block/coffin_closed",
+	  "y": 270
+	},
+	"part=foot,occupied=true,facing=west": {
+	  "model": "bewitchment:block/coffin_closed",
+	  "y": 90
+	},
+	"part=head,occupied=false,facing=north": {
+	  "model": "bewitchment:block/cypress_chest"
+	},
+	"part=head,occupied=false,facing=south": {
+	  "model": "bewitchment:block/cypress_chest"
+	},
+	"part=head,occupied=false,facing=east": {
+	  "model": "bewitchment:block/cypress_chest"
+	},
+	"part=head,occupied=false,facing=west": {
+	  "model": "bewitchment:block/cypress_chest"
+	},
+	"part=head,occupied=true,facing=north": {
+	  "model": "bewitchment:block/cypress_chest"
+	},
+	"part=head,occupied=true,facing=south": {
+	  "model": "bewitchment:block/cypress_chest"
+	},
+	"part=head,occupied=true,facing=east": {
+	  "model": "bewitchment:block/cypress_chest"
+	},
+	"part=head,occupied=true,facing=west": {
+	  "model": "bewitchment:block/cypress_chest"
+	}
+  }
+}

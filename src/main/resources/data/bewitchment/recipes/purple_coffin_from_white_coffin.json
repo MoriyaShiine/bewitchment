@@ -1,0 +1,14 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "bewitchment:white_coffin"
+	},
+	{
+	  "item": "purple_dye"
+	}
+  ],
+  "result": {
+	"item": "bewitchment:purple_coffin"
+  }
+}
