@@ -150,6 +150,7 @@
   "block.bewitchment.red_coffin": "Red Coffin",
   "block.bewitchment.black_coffin": "Black Coffin",
   "block.minecraft.bed.transformation": "Your body refuses to rest",
+  "block.minecraft.bed.coffin": "You can only sleep at day",
   "item.bewitchment.juniper_boat": "Juniper Boat",
   "item.bewitchment.cypress_boat": "Cypress Boat",
   "item.bewitchment.elder_boat": "Elder Boat",

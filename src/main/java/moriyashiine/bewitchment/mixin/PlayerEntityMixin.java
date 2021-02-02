@@ -5,6 +5,7 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.*;
 import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.api.registry.Transformation;
+import moriyashiine.bewitchment.common.block.CoffinBlock;
 import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
@@ -34,6 +35,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -41,9 +43,11 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @SuppressWarnings("ConstantConditions")
@@ -373,6 +377,15 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 			}
 		}
 		return exhaustion;
+	}
+	
+	@Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;isDay()Z"))
+	private boolean coffinHack(World obj) {
+		Optional<BlockPos> pos = getSleepingPosition();
+		if (pos.isPresent() && world.getBlockState(pos.get()).getBlock() instanceof CoffinBlock) {
+			return obj.isNight();
+		}
+		return obj.isDay();
 	}
 	
 	@Inject(method = "getHurtSound", at = @At("TAIL"))
