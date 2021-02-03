@@ -9,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.state.StateManager;
@@ -70,11 +71,17 @@ public class BWCropBlock extends CropBlock {
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		super.onEntityCollision(state, world, pos, entity);
-		if (this == BWObjects.GARLIC_CROP && BewitchmentAPI.isVampire(entity, true)) {
-			entity.damage(DamageSource.MAGIC, 1);
-		}
-		else if (this == BWObjects.ACONITE_CROP && BewitchmentAPI.isWerewolf(entity, true)) {
-			entity.damage(DamageSource.MAGIC, 1);
+		if (entity instanceof LivingEntity) {
+			boolean damage = false;
+			if (this == BWObjects.GARLIC_CROP && BewitchmentAPI.isVampire(entity, true)) {
+				damage = true;
+			}
+			else if (this == BWObjects.ACONITE_CROP && BewitchmentAPI.isWerewolf(entity, true)) {
+				damage = true;
+			}
+			if (damage) {
+				entity.damage(DamageSource.MAGIC, ((LivingEntity) entity).getMaxHealth() * 1 / 4f);
+			}
 		}
 	}
 	
