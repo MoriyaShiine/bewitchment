@@ -39,7 +39,7 @@ public class WerewolfEntity extends BWHostileEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		if (!world.isClient && despawns && age % 20 == 0 && BewitchmentAPI.getMoonPhase(world) != 0) {
+		if (!world.isClient && despawns && age % 20 == 0 && (world.isDay() || BewitchmentAPI.getMoonPhase(world) != 0)) {
 			VillagerEntity entity = EntityType.VILLAGER.create(world);
 			if (entity instanceof DespawnAccessor) {
 				PlayerLookup.tracking(this).forEach(player -> SpawnSmokeParticlesPacket.send(player, this));
