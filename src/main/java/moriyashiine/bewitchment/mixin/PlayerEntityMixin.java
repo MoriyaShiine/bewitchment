@@ -337,7 +337,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 					TransformationAbilityPacket.useAbility((PlayerEntity) (Object) this, true);
 					setForcedTransformation(true);
 				}
-				else if (werewolfBeast && BewitchmentAPI.getMoonPhase(world) != 0 && getForcedTransformation()) {
+				else if (werewolfBeast && getForcedTransformation() && (world.isDay() || BewitchmentAPI.getMoonPhase(world) != 0)) {
 					TransformationAbilityPacket.useAbility((PlayerEntity) (Object) this, true);
 					setForcedTransformation(false);
 				}
