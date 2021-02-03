@@ -669,6 +669,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				if (getGroup() == EntityGroup.ARTHROPOD && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.TOAD) {
 					player.heal(player.getMaxHealth() * 1 / 4f);
 				}
+				if (BewitchmentAPI.isWerewolf(player, false)) {
+					player.getHungerManager().add(4, 1);
+				}
 			}
 			if (attacker instanceof LivingEntity) {
 				if (((ContractAccessor) attacker).hasContract(BWContracts.VIOLENCE)) {
