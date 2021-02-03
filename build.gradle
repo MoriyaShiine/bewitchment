@@ -23,6 +23,10 @@ repositories {
         name = "Ladysnake Libs"
         url = "https://dl.bintray.com/ladysnake/libs"
     }
+    maven {
+        name = "NerdHubMC"
+        url = "https://maven.abusedmaster.xyz/"
+    }
 }
 
 dependencies {
@@ -48,6 +52,7 @@ dependencies {
     include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${cca_version}"
 
     modImplementation "com.github.Virtuoel:Pehkui:${project.pehkui_commit}"
+    modImplementation "com.github.emilyalexandra:trinkets:${trinkets_version}"
 
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
     modRuntime "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
