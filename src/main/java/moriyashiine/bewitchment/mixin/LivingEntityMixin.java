@@ -521,7 +521,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			}
 			if (callbackInfo.getReturnValue() && this instanceof TransformationAccessor && hasCurse(BWCurses.SUSCEPTIBILITY)) {
 				if (((TransformationAccessor) this).getTransformation() == BWTransformations.HUMAN) {
-					if (BewitchmentAPI.isVampire(source.getSource(), true)) {
+					if (source.getSource() instanceof VampireEntity || (BewitchmentAPI.isVampire(source.getSource(), true) && BewitchmentAPI.isPledged(world, BWPledges.LILITH, source.getSource().getUuid()))) {
 						((TransformationAccessor) this).getTransformation().onRemoved((LivingEntity) (Object) this);
 						((TransformationAccessor) this).setTransformation(BWTransformations.VAMPIRE);
 						((TransformationAccessor) this).getTransformation().onAdded((LivingEntity) (Object) this);
@@ -539,7 +539,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 						if (source.getSource() instanceof WerewolfEntity) {
 							variant = source.getSource().getDataTracker().get(BWHostileEntity.VARIANT);
 						}
-						else if (source.getSource() instanceof WerewolfAccessor) {
+						else if (source.getSource() instanceof WerewolfAccessor && BewitchmentAPI.isPledged(world, BWPledges.HERNE, source.getSource().getUuid())) {
 							variant = ((WerewolfAccessor) source.getSource()).getWerewolfVariant();
 						}
 						if (variant > -1) {
