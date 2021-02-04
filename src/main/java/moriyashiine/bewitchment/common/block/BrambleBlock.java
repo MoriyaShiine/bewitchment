@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.block;
 
-import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.misc.interfaces.EntityShapeContextAdditionAccessor;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWProperties;
@@ -86,7 +86,7 @@ public class BrambleBlock extends SugarCaneBlock {
 		if (!world.isClient && entity instanceof LivingEntity) {
 			LivingEntity livingEntity = (LivingEntity) entity;
 			if (this == BWObjects.ENDER_BRAMBLE) {
-				BewitchmentAPI.attemptTeleport(livingEntity, entity.getBlockPos(), 64, true);
+				BWUtil.attemptTeleport(livingEntity, entity.getBlockPos(), 64, true);
 			}
 			if (this == BWObjects.SCORCHED_BRAMBLE) {
 				livingEntity.setOnFireFor(10);

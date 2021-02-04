@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.ritualfunction;
 
-import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
+import moriyashiine.bewitchment.common.misc.BWUtil;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.PlantBlock;
 import net.minecraft.entity.LivingEntity;
@@ -19,7 +19,7 @@ public class DestroyPlantsRitualFunction extends RitualFunction {
 	
 	@Override
 	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
-		for (BlockPos plant : BewitchmentAPI.getBlockPoses(effectivePos, catFamiliar ? 24 : 8, currentPos -> world.getBlockState(currentPos).getBlock() instanceof PlantBlock || world.getBlockState(currentPos).getBlock() instanceof LeavesBlock)) {
+		for (BlockPos plant : BWUtil.getBlockPoses(effectivePos, catFamiliar ? 24 : 8, currentPos -> world.getBlockState(currentPos).getBlock() instanceof PlantBlock || world.getBlockState(currentPos).getBlock() instanceof LeavesBlock)) {
 			world.breakBlock(plant, true);
 		}
 		super.start(world, glyphPos, effectivePos, inventory, catFamiliar);

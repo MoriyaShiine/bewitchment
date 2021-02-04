@@ -10,11 +10,15 @@ import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
-import moriyashiine.bewitchment.common.entity.interfaces.*;
+import moriyashiine.bewitchment.common.entity.interfaces.CaduceusFireballAccessor;
+import moriyashiine.bewitchment.common.entity.interfaces.InsanityTargetAccessor;
+import moriyashiine.bewitchment.common.entity.interfaces.MasterAccessor;
+import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
 import moriyashiine.bewitchment.common.entity.living.*;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.item.TaglockItem;
+import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.recipe.AthameDropRecipe;
 import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
 import moriyashiine.bewitchment.common.registry.*;
@@ -165,7 +169,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		if (!world.isClient && (Object) this instanceof LivingEntity) {
 			LivingEntity livingEntity = (LivingEntity) (Object) this;
 			if (BewitchmentAPI.isWeakToSilver(livingEntity)) {
-				int damage = BewitchmentAPI.getArmorPieces(livingEntity, stack -> BWTags.SILVER_ARMOR.contains(stack.getItem()));
+				int damage = BWUtil.getArmorPieces(livingEntity, stack -> BWTags.SILVER_ARMOR.contains(stack.getItem()));
 				if (BewitchmentAPI.isHoldingSilver(livingEntity, Hand.MAIN_HAND)) {
 					damage++;
 				}
@@ -303,7 +307,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				if (directSource instanceof LivingEntity) {
 					LivingEntity livingAttacker = (LivingEntity) directSource;
 					if (BewitchmentAPI.isWeakToSilver(livingAttacker)) {
-						int armorPieces = BewitchmentAPI.getArmorPieces(livingAttacker, stack -> BWTags.SILVER_ARMOR.contains(stack.getItem()));
+						int armorPieces = BWUtil.getArmorPieces(livingAttacker, stack -> BWTags.SILVER_ARMOR.contains(stack.getItem()));
 						if (armorPieces > 0) {
 							directSource.damage(DamageSource.thorns(this), armorPieces);
 						}
@@ -312,7 +316,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				}
 			}
 			if (source == DamageSource.FALL) {
-				BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.HEAVY);
+				BlockPos sigilPos = BWUtil.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.HEAVY);
 				if (sigilPos != null) {
 					BlockEntity blockEntity = world.getBlockEntity(sigilPos);
 					SigilHolder sigil = (SigilHolder) blockEntity;
@@ -342,7 +346,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				amount *= (1 + (0.025f * (getMaxHealth() - getHealth())));
 			}
 			if (source.getMagic() && (Object) this instanceof LivingEntity) {
-				int armorPieces = BewitchmentAPI.getArmorPieces((LivingEntity) (Object) this, stack -> {
+				int armorPieces = BWUtil.getArmorPieces((LivingEntity) (Object) this, stack -> {
 					if (stack.getItem() instanceof ArmorItem) {
 						ArmorMaterial material = ((ArmorItem) stack.getItem()).getMaterial();
 						return material == BWMaterials.HEDGEWITCH_ARMOR || material == BWMaterials.ALCHEMIST_ARMOR || material == BWMaterials.BESMIRCHED_ARMOR || material == BWMaterials.HARBINGER_ARMOR;
@@ -413,7 +417,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				}
 			}
 			if (!source.isOutOfWorld()) {
-				if (!BewitchmentAPI.getBlockPoses(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity && ((GlyphBlockEntity) world.getBlockEntity(currentPos)).ritualFunction == BWRitualFunctions.PREVENT_DAMAGE).isEmpty()) {
+				if (!BWUtil.getBlockPoses(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity && ((GlyphBlockEntity) world.getBlockEntity(currentPos)).ritualFunction == BWRitualFunctions.PREVENT_DAMAGE).isEmpty()) {
 					callbackInfo.setReturnValue(false);
 					return;
 				}
@@ -572,7 +576,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				}
 			}
 			if (type != StatusEffectType.HARMFUL) {
-				BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.RUIN);
+				BlockPos sigilPos = BWUtil.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.RUIN);
 				if (sigilPos != null) {
 					BlockEntity blockEntity = world.getBlockEntity(sigilPos);
 					SigilHolder sigil = (SigilHolder) blockEntity;
@@ -625,7 +629,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					}
 					if (livingAttacker instanceof PlayerEntity && livingAttacker.getOffHandStack().getItem() == Items.GLASS_BOTTLE && getBlood() > 30) {
 						world.playSound(null, attacker.getBlockPos(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1, 0.5f);
-						BewitchmentAPI.addItemToInventoryAndConsume((PlayerEntity) livingAttacker, Hand.OFF_HAND, new ItemStack(BWObjects.BOTTLE_OF_BLOOD));
+						BWUtil.addItemToInventoryAndConsume((PlayerEntity) livingAttacker, Hand.OFF_HAND, new ItemStack(BWObjects.BOTTLE_OF_BLOOD));
 					}
 				}
 			}
@@ -640,14 +644,14 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				PlayerEntity player = (PlayerEntity) attacker;
 				ItemStack stack = player.getMainHandStack();
 				if (stack.getItem() instanceof AthameItem && player.preferredHand == Hand.MAIN_HAND) {
-					BlockPos glyph = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 6, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity);
+					BlockPos glyph = BWUtil.getClosestBlockPos(getBlockPos(), 6, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity);
 					if (glyph != null) {
 						((GlyphBlockEntity) world.getBlockEntity(glyph)).onUse(world, glyph, player, Hand.MAIN_HAND, (LivingEntity) (Object) this);
 					}
 					if (world.isNight()) {
 						boolean chicken = (Object) this instanceof ChickenEntity;
 						if ((chicken && world.getBiome(getBlockPos()).getCategory() == Biome.Category.EXTREME_HILLS) || ((Object) this instanceof WolfEntity && world.getBiome(getBlockPos()).getCategory() == Biome.Category.FOREST)) {
-							BlockPos brazierPos = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 8, currentPos -> {
+							BlockPos brazierPos = BWUtil.getClosestBlockPos(getBlockPos(), 8, currentPos -> {
 								BlockEntity blockEntity = world.getBlockEntity(currentPos);
 								return blockEntity instanceof BrazierBlockEntity && ((BrazierBlockEntity) blockEntity).incenseRecipe.effect == BWStatusEffects.MORTAL_COIL;
 							});
@@ -692,10 +696,10 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	@Inject(method = "wakeUp", at = @At("TAIL"))
 	private void wakeUp(CallbackInfo callbackInfo) {
 		if (!world.isClient) {
-			BewitchmentAPI.getBlockPoses(getBlockPos(), 12, foundPos -> world.getBlockEntity(foundPos) instanceof BrazierBlockEntity && ((BrazierBlockEntity) world.getBlockEntity(foundPos)).incenseRecipe != null).forEach(foundPos -> {
+			BWUtil.getBlockPoses(getBlockPos(), 12, foundPos -> world.getBlockEntity(foundPos) instanceof BrazierBlockEntity && ((BrazierBlockEntity) world.getBlockEntity(foundPos)).incenseRecipe != null).forEach(foundPos -> {
 				IncenseRecipe recipe = ((BrazierBlockEntity) world.getBlockEntity(foundPos)).incenseRecipe;
 				int durationMultiplier = 1;
-				BlockPos nearestSigil = BewitchmentAPI.getClosestBlockPos(getBlockPos(), 16, foundSigil -> world.getBlockEntity(foundSigil) instanceof SigilBlockEntity && ((SigilBlockEntity) world.getBlockEntity(foundSigil)).getSigil() == BWSigils.EXTENDING);
+				BlockPos nearestSigil = BWUtil.getClosestBlockPos(getBlockPos(), 16, foundSigil -> world.getBlockEntity(foundSigil) instanceof SigilBlockEntity && ((SigilBlockEntity) world.getBlockEntity(foundSigil)).getSigil() == BWSigils.EXTENDING);
 				if (nearestSigil != null) {
 					BlockEntity blockEntity = world.getBlockEntity(nearestSigil);
 					SigilHolder sigil = ((SigilHolder) blockEntity);

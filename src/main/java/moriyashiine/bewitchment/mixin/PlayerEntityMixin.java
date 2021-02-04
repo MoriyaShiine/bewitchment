@@ -1,24 +1,21 @@
 package moriyashiine.bewitchment.mixin;
 
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.entity.*;
+import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.FortuneAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.api.registry.Transformation;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
 import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
-import moriyashiine.bewitchment.common.item.CaduceusItem;
-import moriyashiine.bewitchment.common.item.ScepterItem;
-import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
+import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttributeInstance;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -26,9 +23,9 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.HungerManager;
-import net.minecraft.entity.player.PlayerAbilities;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.FoodComponent;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -37,7 +34,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -48,7 +44,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @SuppressWarnings("ConstantConditions")
 @Mixin(PlayerEntity.class)
@@ -64,25 +59,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	
 	private static final TrackedData<Integer> WEREWOLF_VARIANT = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	
-	private static final EntityAttributeModifier WOLF_FAMILIAR_ARMOR_MODIFIER = new EntityAttributeModifier(UUID.fromString("1b2866e6-ca04-43e4-b643-1142c0791e6d"), "Familiar modifier", 6, EntityAttributeModifier.Operation.ADDITION);
-	private static final EntityAttributeModifier WOLF_FAMILIAR_ARMOR_TOUGHNESS_MODIFIER = new EntityAttributeModifier(UUID.fromString("ec7f7a2e-d5c5-40c4-9338-c2808946f7c4"), "Familiar modifier", 6, EntityAttributeModifier.Operation.ADDITION);
-	
-	private static final EntityAttributeModifier VAMPIRE_ATTACK_DAMAGE_MODIFIER_0 = new EntityAttributeModifier(UUID.fromString("066862f6-989c-4f35-ac6d-2696b91a1a5b"), "Transformation modifier", 2, EntityAttributeModifier.Operation.ADDITION);
-	private static final EntityAttributeModifier VAMPIRE_ATTACK_DAMAGE_MODIFIER_1 = new EntityAttributeModifier(UUID.fromString("d2be3564-97e7-42c9-88c5-6b753472e37f"), "Transformation modifier", 4, EntityAttributeModifier.Operation.ADDITION);
-	private static final EntityAttributeModifier VAMPIRE_MOVEMENT_SPEED_MODIFIER_0 = new EntityAttributeModifier(UUID.fromString("a782c03d-af7b-4eb7-b997-dd396bfdc7a0"), "Transformation modifier", 0.04, EntityAttributeModifier.Operation.ADDITION);
-	private static final EntityAttributeModifier VAMPIRE_MOVEMENT_SPEED_MODIFIER_1 = new EntityAttributeModifier(UUID.fromString("7c7a61eb-83e8-4e85-94d6-a410a4153d6d"), "Transformation modifier", 0.08, EntityAttributeModifier.Operation.ADDITION);
-	
-	private static final EntityAttributeModifier WEREWOLF_ARMOR_MODIFIER = new EntityAttributeModifier(UUID.fromString("f00b0b0f-8ad6-4a2f-bdf5-6c337ffee56c"), "Transformation modifier", 20, EntityAttributeModifier.Operation.ADDITION);
-	private static final EntityAttributeModifier WEREWOLF_ATTACK_RANGE_MODIFIER = new EntityAttributeModifier(UUID.fromString("ae0e4c0a-971f-4629-99ad-60c115112c1d"), "Transformation modifier", 1, EntityAttributeModifier.Operation.ADDITION);
-	private static final EntityAttributeModifier WEREWOLF_REACH_MODIFIER = new EntityAttributeModifier(UUID.fromString("4c6d90ab-41ad-4d8a-b77a-7329361d3a7b"), "Transformation modifier", 1, EntityAttributeModifier.Operation.ADDITION);
-	private static final EntityAttributeModifier WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_0 = new EntityAttributeModifier(UUID.fromString("44f17821-1e30-426f-81d7-cd1da88fa584"), "Transformation modifier", 10, EntityAttributeModifier.Operation.ADDITION);
-	private static final EntityAttributeModifier WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_1 = new EntityAttributeModifier(UUID.fromString("edfd078d-e25c-4e27-ad91-c2b32037c8be"), "Transformation modifier", 20, EntityAttributeModifier.Operation.ADDITION);
-	
-	private static final EntityAttributeModifier WEREWOLF_ATTACK_DAMAGE_MODIFIER_0 = new EntityAttributeModifier(UUID.fromString("06861902-ebc4-4e6e-956c-59c1ae3085c7"), "Transformation modifier", 6, EntityAttributeModifier.Operation.ADDITION);
-	private static final EntityAttributeModifier WEREWOLF_ATTACK_DAMAGE_MODIFIER_1 = new EntityAttributeModifier(UUID.fromString("10c0bedf-bde5-4cae-8acc-90b1204731dd"), "Transformation modifier", 10, EntityAttributeModifier.Operation.ADDITION);
-	private static final EntityAttributeModifier WEREWOLF_MOVEMENT_SPEED_MODIFIER_0 = new EntityAttributeModifier(UUID.fromString("e26a276a-86cd-44db-9091-acd42fc00d95"), "Transformation modifier", 0.08, EntityAttributeModifier.Operation.ADDITION);
-	private static final EntityAttributeModifier WEREWOLF_MOVEMENT_SPEED_MODIFIER_1 = new EntityAttributeModifier(UUID.fromString("718104a6-aa19-4b53-bad9-1f9edd46d38a"), "Transformation modifier", 0.16, EntityAttributeModifier.Operation.ADDITION);
-	
 	private Fortune.Instance fortune = null;
 	
 	private int respawnTimer = 400;
@@ -91,13 +67,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	
 	@Shadow
 	public abstract HungerManager getHungerManager();
-	
-	@Shadow
-	public abstract void sendAbilitiesUpdate();
-	
-	@Shadow
-	@Final
-	public PlayerAbilities abilities;
 	
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
@@ -225,131 +194,17 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 					}
 				}
 			}
-			boolean vampire = BewitchmentAPI.isVampire(this, true);
-			boolean werewolfBoth = BewitchmentAPI.isWerewolf(this, true);
-			boolean werewolfBeast = BewitchmentAPI.isWerewolf(this, false);
 			if (age % 20 == 0) {
-				if (vampire || werewolfBeast) {
-					addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
-				}
-				boolean shouldHave = BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF;
-				EntityAttributeInstance attackDamageAttribute = getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
-				EntityAttributeInstance armorAttribute = getAttributeInstance(EntityAttributes.GENERIC_ARMOR);
-				EntityAttributeInstance armorToughnessAttribute = getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS);
-				EntityAttributeInstance movementSpeedAttribute = getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
-				EntityAttributeInstance attackRange = getAttributeInstance(ReachEntityAttributes.ATTACK_RANGE);
-				EntityAttributeInstance reach = getAttributeInstance(ReachEntityAttributes.REACH);
-				if (shouldHave && !armorAttribute.hasModifier(WOLF_FAMILIAR_ARMOR_MODIFIER)) {
-					armorAttribute.addPersistentModifier(WOLF_FAMILIAR_ARMOR_MODIFIER);
-					armorToughnessAttribute.addPersistentModifier(WOLF_FAMILIAR_ARMOR_TOUGHNESS_MODIFIER);
-				}
-				else if (!shouldHave && armorAttribute.hasModifier(WOLF_FAMILIAR_ARMOR_MODIFIER)) {
-					armorAttribute.removeModifier(WOLF_FAMILIAR_ARMOR_MODIFIER);
-					armorToughnessAttribute.removeModifier(WOLF_FAMILIAR_ARMOR_TOUGHNESS_MODIFIER);
-				}
-				shouldHave = vampire && !BewitchmentAPI.isPledged(world, BWPledges.LILITH, getUuid());
-				if (shouldHave && !attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0)) {
-					attackDamageAttribute.addPersistentModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0);
-					movementSpeedAttribute.addPersistentModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_0);
-				}
-				else if (!shouldHave && attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0)) {
-					attackDamageAttribute.removeModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0);
-					movementSpeedAttribute.removeModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_0);
-				}
-				shouldHave = vampire && BewitchmentAPI.isPledged(world, BWPledges.LILITH, getUuid());
-				if (shouldHave && !attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_1)) {
-					attackDamageAttribute.addPersistentModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_1);
-					movementSpeedAttribute.addPersistentModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_1);
-				}
-				else if (!shouldHave && attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_1)) {
-					attackDamageAttribute.removeModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_1);
-					movementSpeedAttribute.removeModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_1);
-				}
-				shouldHave = werewolfBeast;
-				if (shouldHave && !armorAttribute.hasModifier(WEREWOLF_ARMOR_MODIFIER)) {
-					armorAttribute.addPersistentModifier(WEREWOLF_ARMOR_MODIFIER);
-					attackRange.addPersistentModifier(WEREWOLF_ATTACK_RANGE_MODIFIER);
-					reach.addPersistentModifier(WEREWOLF_REACH_MODIFIER);
-				}
-				else if (!shouldHave && armorAttribute.hasModifier(WEREWOLF_ARMOR_MODIFIER)) {
-					armorAttribute.removeModifier(WEREWOLF_ARMOR_MODIFIER);
-					attackRange.removeModifier(WEREWOLF_ATTACK_RANGE_MODIFIER);
-					reach.removeModifier(WEREWOLF_REACH_MODIFIER);
-				}
-				shouldHave = werewolfBeast && !BewitchmentAPI.isPledged(world, BWPledges.HERNE, getUuid());
-				if (shouldHave && !attackDamageAttribute.hasModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_0)) {
-					attackDamageAttribute.addPersistentModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_0);
-					armorToughnessAttribute.addPersistentModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_0);
-					movementSpeedAttribute.addPersistentModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_0);
-				}
-				else if (!shouldHave && attackDamageAttribute.hasModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_0)) {
-					attackDamageAttribute.removeModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_0);
-					armorToughnessAttribute.removeModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_0);
-					movementSpeedAttribute.removeModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_0);
-				}
-				shouldHave = werewolfBeast && BewitchmentAPI.isPledged(world, BWPledges.HERNE, getUuid());
-				if (shouldHave && !attackDamageAttribute.hasModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_1)) {
-					attackDamageAttribute.addPersistentModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_1);
-					armorToughnessAttribute.addPersistentModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_1);
-					movementSpeedAttribute.addPersistentModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_1);
-				}
-				else if (!shouldHave && attackDamageAttribute.hasModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_1)) {
-					attackDamageAttribute.removeModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_1);
-					armorToughnessAttribute.removeModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_1);
-					movementSpeedAttribute.removeModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_1);
-				}
+				BWUtil.updateAttributeModifiers((PlayerEntity) (Object) this);
 			}
 			if (getRespawnTimer() > 0) {
 				setRespawnTimer(getRespawnTimer() - 1);
 			}
-			if (vampire) {
-				if (getRespawnTimer() <= 0 && world.isDay() && !world.isRaining() && world.isSkyVisible(getBlockPos())) {
-					setOnFireFor(8);
-				}
-				HungerManager hungerManager = getHungerManager();
-				if (((BloodAccessor) this).getBlood() > 0) {
-					if (age % (BewitchmentAPI.isPledged(world, BWPledges.LILITH, getUuid()) ? 30 : 40) == 0) {
-						if (getHealth() < getMaxHealth()) {
-							heal(1);
-							hungerManager.addExhaustion(3);
-						}
-						if ((hungerManager.isNotFull() || hungerManager.getSaturationLevel() < 10) && ((BloodAccessor) this).drainBlood(1, false)) {
-							hungerManager.add(1, 20);
-						}
-					}
-				}
-				else {
-					if (getAlternateForm()) {
-						TransformationAbilityPacket.useAbility((PlayerEntity) (Object) this, true);
-					}
-					hungerManager.addExhaustion(Float.MAX_VALUE);
-				}
-				if (getAlternateForm()) {
-					if (!abilities.flying) {
-						abilities.flying = true;
-						sendAbilitiesUpdate();
-					}
-					hungerManager.addExhaustion(0.5f);
-				}
+			if (BewitchmentAPI.isVampire(this, true)) {
+				BWUtil.doVampireLogic(((PlayerEntity) (Object) this), getAlternateForm());
 			}
-			else if (werewolfBoth) {
-				if (!werewolfBeast && BewitchmentAPI.getMoonPhase(world) == 0 && world.isNight() && world.isSkyVisible(getBlockPos())) {
-					TransformationAbilityPacket.useAbility((PlayerEntity) (Object) this, true);
-					setForcedTransformation(true);
-				}
-				else if (werewolfBeast && getForcedTransformation() && (world.isDay() || BewitchmentAPI.getMoonPhase(world) != 0)) {
-					TransformationAbilityPacket.useAbility((PlayerEntity) (Object) this, true);
-					setForcedTransformation(false);
-				}
-				if (werewolfBeast) {
-					getArmorItems().forEach(stack -> dropStack(stack.split(1)));
-					if (isTool(getMainHandStack())) {
-						dropStack(getMainHandStack().split(1));
-					}
-					if (isTool(getOffHandStack())) {
-						dropStack(getOffHandStack().split(1));
-					}
-				}
+			if (BewitchmentAPI.isWerewolf(this, true)) {
+				BWUtil.doWerewolfLogic(((PlayerEntity) (Object) this), getAlternateForm());
 			}
 		}
 	}
@@ -487,10 +342,5 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		dataTracker.startTracking(POLYMORPH_UUID, "");
 		dataTracker.startTracking(POLYMORPH_NAME, "");
 		dataTracker.startTracking(WEREWOLF_VARIANT, 0);
-	}
-	
-	private static boolean isTool(ItemStack stack) {
-		Item item = stack.getItem();
-		return item instanceof ToolItem || item instanceof RangedWeaponItem || item instanceof ScepterItem || item instanceof CaduceusItem || item instanceof ShieldItem || item instanceof TridentItem;
 	}
 }

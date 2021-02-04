@@ -6,6 +6,7 @@ import moriyashiine.bewitchment.api.interfaces.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
+import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWPledges;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -57,7 +58,7 @@ public class CauldronTeleportPacket {
 					}
 				}
 				if (pledgedToLeonard || hasPower) {
-					BewitchmentAPI.teleport(player, closest.getX() + 0.5, closest.getY() - 0.5, closest.getZ() + 0.5, true);
+					BWUtil.teleport(player, closest.getX() + 0.5, closest.getY() - 0.5, closest.getZ() + 0.5, true);
 				}
 				else {
 					player.sendMessage(new TranslatableText(Bewitchment.MODID + ".insufficent_altar_power", message), true);

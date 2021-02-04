@@ -11,6 +11,7 @@ import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.item.TaglockItem;
+import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.*;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.minecraft.block.Block;
@@ -74,9 +75,9 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 						LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, stack);
 						if (owner instanceof PlayerEntity) {
 							boolean failed = false;
-							BlockPos sigilPos = BewitchmentAPI.getClosestBlockPos(owner.getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.SHADOWS);
+							BlockPos sigilPos = BWUtil.getClosestBlockPos(owner.getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.SHADOWS);
 							if (sigilPos == null) {
-								sigilPos = BewitchmentAPI.getClosestBlockPos(pos, 16, currentPos -> world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.SHADOWS);
+								sigilPos = BWUtil.getClosestBlockPos(pos, 16, currentPos -> world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.SHADOWS);
 							}
 							if (sigilPos != null) {
 								BlockEntity blockEntity = world.getBlockEntity(sigilPos);
@@ -120,7 +121,7 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 								tag.putBoolean("Failed", true);
 								player.sendMessage(new TranslatableText(Bewitchment.MODID + ".blocked_by_shadows"), true);
 							}
-							BewitchmentAPI.addItemToInventoryAndConsume(player, hand, newTaglock);
+							BWUtil.addItemToInventoryAndConsume(player, hand, newTaglock);
 						}
 						else {
 							player.sendMessage(new TranslatableText(Bewitchment.MODID + ".invalid_entity"), true);

@@ -3,19 +3,16 @@ package moriyashiine.bewitchment.api;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
-import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
 import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
 import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.registry.BWObjects;
-import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import moriyashiine.bewitchment.common.registry.BWTransformations;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import moriyashiine.bewitchment.common.world.BWWorldState;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
@@ -34,14 +31,11 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
 import java.util.*;
-import java.util.function.Predicate;
 
 @SuppressWarnings("ConstantConditions")
 public class BewitchmentAPI {
@@ -49,31 +43,6 @@ public class BewitchmentAPI {
 	
 	@SuppressWarnings("InstantiationOfUtilityClass")
 	public static final EntityGroup DEMON = new EntityGroup();
-	
-	public static Set<BlockPos> getBlockPoses(BlockPos origin, int radius, Predicate<BlockPos> provider) {
-		Set<BlockPos> blockPoses = new HashSet<>();
-		BlockPos.Mutable mutable = new BlockPos.Mutable();
-		for (int x = -radius; x <= radius; x++) {
-			for (int y = -radius; y <= radius; y++) {
-				for (int z = -radius; z <= radius; z++) {
-					if (provider.test(mutable.set(origin.getX() + x, origin.getY() + y, origin.getZ() + z))) {
-						blockPoses.add(mutable.toImmutable());
-					}
-				}
-			}
-		}
-		return blockPoses;
-	}
-	
-	public static BlockPos getClosestBlockPos(BlockPos origin, int radius, Predicate<BlockPos> provider) {
-		BlockPos pos = null;
-		for (BlockPos foundPos : getBlockPoses(origin, radius, provider)) {
-			if (pos == null || foundPos.getSquaredDistance(origin) < pos.getSquaredDistance(origin)) {
-				pos = foundPos;
-			}
-		}
-		return pos;
-	}
 	
 	public static LivingEntity getTaglockOwner(World world, ItemStack taglock) {
 		if (world instanceof ServerWorld && (taglock.getItem() instanceof TaglockItem || taglock.getItem() instanceof PoppetItem) && TaglockItem.hasTaglock(taglock)) {
@@ -247,63 +216,8 @@ public class BewitchmentAPI {
 		worldState.markDirty();
 	}
 	
-	public static int getArmorPieces(LivingEntity livingEntity, Predicate<ItemStack> predicate) {
-		int amount = 0;
-		for (ItemStack stack : livingEntity.getArmorItems()) {
-			if (predicate.test(stack)) {
-				amount++;
-			}
-		}
-		return amount;
-	}
-	
 	public static int getMoonPhase(WorldAccess world) {
 		return world.getDimension().getMoonPhase(world.getLunarTime());
-	}
-	
-	public static void addItemToInventoryAndConsume(PlayerEntity player, Hand hand, ItemStack toAdd) {
-		ItemStack stack = player.getStackInHand(hand);
-		stack.decrement(player.isCreative() ? 0 : 1);
-		if (!player.inventory.insertStack(toAdd)) {
-			player.dropItem(stack, false, true);
-		}
-	}
-	
-	public static void attemptTeleport(Entity entity, BlockPos origin, int distance, boolean hasEffects) {
-		for (int i = 0; i < 32; i++) {
-			BlockPos.Mutable mutable = new BlockPos.Mutable(origin.getX() + MathHelper.nextDouble(entity.world.random, -distance, distance), origin.getY() + MathHelper.nextDouble(entity.world.random, -distance / 2f, distance / 2f), origin.getZ() + MathHelper.nextDouble(entity.world.random, -distance, distance));
-			if (!entity.world.getBlockState(mutable).getMaterial().isSolid()) {
-				while (mutable.getY() > 0 && !entity.world.getBlockState(mutable).getMaterial().isSolid()) {
-					mutable.move(Direction.DOWN);
-				}
-				if (entity.world.getBlockState(mutable).getMaterial().blocksMovement()) {
-					teleport(entity, mutable.getX() + 0.5, mutable.getY() + 0.5, mutable.getZ() + 0.5, hasEffects);
-					break;
-				}
-			}
-		}
-	}
-	
-	public static void teleport(Entity entity, double x, double y, double z, boolean hasEffects) {
-		if (hasEffects) {
-			if (!entity.isSilent()) {
-				entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, entity.getSoundCategory(), 1, 1);
-			}
-			PlayerLookup.tracking(entity).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, entity));
-			if (entity instanceof PlayerEntity) {
-				SpawnPortalParticlesPacket.send((PlayerEntity) entity, entity);
-			}
-		}
-		entity.teleport(x, y + 0.5, z);
-		if (hasEffects) {
-			if (!entity.isSilent()) {
-				entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, entity.getSoundCategory(), 1, 1);
-			}
-			PlayerLookup.tracking(entity).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, entity));
-			if (entity instanceof PlayerEntity) {
-				SpawnPortalParticlesPacket.send((PlayerEntity) entity, entity);
-			}
-		}
 	}
 	
 	public static void registerAltarMapEntries(Block[]... altarArray) {

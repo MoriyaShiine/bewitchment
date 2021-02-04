@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.mixin;
 
-import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.MasterAccessor;
+import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWCurses;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.entity.LivingEntity;
@@ -40,7 +40,7 @@ public abstract class FollowTargetGoalMixin<T extends LivingEntity> extends Trac
 	
 	@Inject(method = "findClosestTarget", at = @At("TAIL"))
 	private void findClosestTarget(CallbackInfo callbackInfo) {
-		if (mob instanceof MasterAccessor && ((MasterAccessor) mob).getMasterUUID() == null && mob.isUndead() && targetEntity != null && BewitchmentAPI.getArmorPieces(targetEntity, stack -> stack.getItem() == BWObjects.HARBINGER) > 0) {
+		if (mob instanceof MasterAccessor && ((MasterAccessor) mob).getMasterUUID() == null && mob.isUndead() && targetEntity != null && BWUtil.getArmorPieces(targetEntity, stack -> stack.getItem() == BWObjects.HARBINGER) > 0) {
 			targetEntity = null;
 		}
 	}

@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.ritualfunction;
 
-import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
+import moriyashiine.bewitchment.common.misc.BWUtil;
 import net.minecraft.block.Fertilizable;
 import net.minecraft.block.GrassBlock;
 import net.minecraft.entity.LivingEntity;
@@ -31,7 +31,7 @@ public class GrowRitualFunction extends RitualFunction {
 						passiveEntity.growUp(world.random.nextInt(), true);
 					}
 				}
-				for (BlockPos growable : BewitchmentAPI.getBlockPoses(effectivePos, radius, currentPos -> !(world.getBlockState(currentPos).getBlock() instanceof GrassBlock) && world.getBlockState(currentPos).getBlock() instanceof Fertilizable && ((Fertilizable) world.getBlockState(currentPos).getBlock()).canGrow(world, world.random, currentPos, world.getBlockState(currentPos)))) {
+				for (BlockPos growable : BWUtil.getBlockPoses(effectivePos, radius, currentPos -> !(world.getBlockState(currentPos).getBlock() instanceof GrassBlock) && world.getBlockState(currentPos).getBlock() instanceof Fertilizable && ((Fertilizable) world.getBlockState(currentPos).getBlock()).canGrow(world, world.random, currentPos, world.getBlockState(currentPos)))) {
 					((Fertilizable) world.getBlockState(growable).getBlock()).grow((ServerWorld) world, world.random, growable, world.getBlockState(growable));
 				}
 			}
