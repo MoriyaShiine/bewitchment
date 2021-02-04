@@ -177,7 +177,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					damage++;
 				}
 				if (damage > 0) {
-					damage(DamageSource.MAGIC, damage);
+					damage(BWDamageSources.MAGIC_COPY, damage);
 				}
 			}
 			if (!BewitchmentAPI.isVampire(this, true) && BWTags.HAS_BLOOD.contains(getType())) {

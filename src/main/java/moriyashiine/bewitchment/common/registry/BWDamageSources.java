@@ -12,10 +12,11 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class BWDamageSources {
-	public static final DamageSource WEDNESDAY = new WednesdayDamageSource("wednesday");
-	public static final DamageSource DEATH = new DeathDamageSource("death");
+	public static final DamageSource MAGIC_COPY = new ArmorPiercingDamageSource("magic");
+	public static final DamageSource WEDNESDAY = new UnblockableDamageSource("wednesday");
+	public static final DamageSource DEATH = new UnblockableDamageSource("death");
 	public static final DamageSource VAMPIRE = new EmptyDamageSource("vampire");
-	public static final DamageSource SUN = new SunDamageSource("onFire");
+	public static final DamageSource SUN = new ArmorPiercingDamageSource("onFire");
 	
 	public static float handleDamage(LivingEntity entity, DamageSource source, float amount) {
 		if (BewitchmentAPI.isWeakToSilver(entity) && BewitchmentAPI.isSourceFromSilver(source)) {
@@ -31,7 +32,7 @@ public class BWDamageSources {
 	}
 	
 	private static boolean isEffective(DamageSource source, boolean vampire) {
-		if (source.isOutOfWorld() || (vampire && source == BWDamageSources.SUN)) {
+		if (source.isOutOfWorld() || (vampire && (source == MAGIC_COPY || source == BWDamageSources.SUN))) {
 			return true;
 		}
 		Entity attacker = source.getSource();
@@ -59,35 +60,26 @@ public class BWDamageSources {
 		return amount;
 	}
 	
-	private static class WednesdayDamageSource extends DamageSource {
-		protected WednesdayDamageSource(String name) {
-			super(name);
-			setBypassesArmor();
-			setUnblockable();
-			setOutOfWorld();
-		}
-	}
-	
-	private static class DeathDamageSource extends DamageSource {
-		protected DeathDamageSource(String name) {
-			super(name);
-			setBypassesArmor();
-			setUnblockable();
-			setOutOfWorld();
-		}
-	}
-	
-	private static class SunDamageSource extends DamageSource {
-		protected SunDamageSource(String name) {
-			super(name);
-			setBypassesArmor();
-			setUnblockable();
-		}
-	}
-	
 	private static class EmptyDamageSource extends DamageSource {
 		public EmptyDamageSource(String name) {
 			super(name);
+		}
+	}
+	
+	private static class UnblockableDamageSource extends DamageSource {
+		protected UnblockableDamageSource(String name) {
+			super(name);
+			setBypassesArmor();
+			setUnblockable();
+			setOutOfWorld();
+		}
+	}
+	
+	private static class ArmorPiercingDamageSource extends DamageSource {
+		protected ArmorPiercingDamageSource(String name) {
+			super(name);
+			setBypassesArmor();
+			setUnblockable();
 		}
 	}
 	
