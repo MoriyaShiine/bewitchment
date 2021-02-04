@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.common.block.util;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.common.registry.BWDamageSources;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -10,7 +11,6 @@ import net.minecraft.block.CropBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
@@ -80,7 +80,7 @@ public class BWCropBlock extends CropBlock {
 				damage = true;
 			}
 			if (damage) {
-				entity.damage(DamageSource.MAGIC, ((LivingEntity) entity).getMaxHealth() * 1 / 4f);
+				entity.damage(BWDamageSources.MAGIC_COPY, ((LivingEntity) entity).getMaxHealth() * 1 / 4f);
 			}
 		}
 	}
