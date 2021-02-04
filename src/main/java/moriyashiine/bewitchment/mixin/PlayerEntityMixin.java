@@ -194,9 +194,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 					}
 				}
 			}
-			if (age % 20 == 0) {
-				BWUtil.updateAttributeModifiers((PlayerEntity) (Object) this);
-			}
+			BWUtil.updateAttributeModifiers((PlayerEntity) (Object) this);
 			if (getRespawnTimer() > 0) {
 				setRespawnTimer(getRespawnTimer() - 1);
 			}
