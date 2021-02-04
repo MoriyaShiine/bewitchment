@@ -126,13 +126,14 @@ public class BWUtil {
 	}
 	
 	public static void doVampireLogic(PlayerEntity player, boolean alternateForm) {
+		boolean pledgedToLilith = BewitchmentAPI.isPledged(player.world, BWPledges.LILITH, player.getUuid());
 		player.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
 		if (((RespawnTimerAccessor) player).getRespawnTimer() <= 0 && player.world.isDay() && !player.world.isRaining() && player.world.isSkyVisible(player.getBlockPos())) {
 			player.setOnFireFor(8);
 		}
 		HungerManager hungerManager = player.getHungerManager();
 		if (((BloodAccessor) player).getBlood() > 0) {
-			if (player.age % (BewitchmentAPI.isPledged(player.world, BWPledges.LILITH, player.getUuid()) ? 30 : 40) == 0) {
+			if (player.age % (pledgedToLilith ? 30 : 40) == 0) {
 				if (player.getHealth() < player.getMaxHealth()) {
 					player.heal(1);
 					hungerManager.addExhaustion(3);
@@ -154,15 +155,19 @@ public class BWUtil {
 				player.sendAbilitiesUpdate();
 			}
 			hungerManager.addExhaustion(0.5f);
+			if (!pledgedToLilith) {
+				TransformationAbilityPacket.useAbility(player, true);
+			}
 		}
 	}
 	
 	public static void doWerewolfLogic(PlayerEntity player, boolean alternateForm) {
+		boolean forced = ((WerewolfAccessor) player).getForcedTransformation();
 		if (!alternateForm && BewitchmentAPI.getMoonPhase(player.world) == 0 && player.world.isNight() && player.world.isSkyVisible(player.getBlockPos())) {
 			TransformationAbilityPacket.useAbility(player, true);
 			((WerewolfAccessor) player).setForcedTransformation(true);
 		}
-		else if (alternateForm && ((WerewolfAccessor) player).getForcedTransformation() && (player.world.isDay() || BewitchmentAPI.getMoonPhase(player.world) != 0)) {
+		else if (alternateForm && forced && (player.world.isDay() || BewitchmentAPI.getMoonPhase(player.world) != 0)) {
 			TransformationAbilityPacket.useAbility(player, true);
 			((WerewolfAccessor) player).setForcedTransformation(false);
 		}
@@ -174,6 +179,9 @@ public class BWUtil {
 			}
 			if (BWUtil.isTool(player.getOffHandStack())) {
 				player.dropStack(player.getOffHandStack().split(1));
+			}
+			if (!forced && !BewitchmentAPI.isPledged(player.world, BWPledges.HERNE, player.getUuid())) {
+				TransformationAbilityPacket.useAbility(player, true);
 			}
 		}
 	}
