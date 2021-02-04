@@ -71,11 +71,6 @@ public class ToadEntity extends BWTameableEntity {
 		return child;
 	}
 	
-	@Override
-	protected boolean shouldDropLoot() {
-		return super.shouldDropLoot() && !isFromWednesdayRitual;
-	}
-	
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -90,6 +85,11 @@ public class ToadEntity extends BWTameableEntity {
 	@Override
 	protected SoundEvent getDeathSound() {
 		return BWSoundEvents.ENTITY_TOAD_DEATH;
+	}
+	
+	@Override
+	protected boolean shouldDropLoot() {
+		return super.shouldDropLoot() && !isFromWednesdayRitual;
 	}
 	
 	@Override

@@ -68,6 +68,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	@Shadow
 	public abstract HungerManager getHungerManager();
 	
+	@Shadow public abstract SoundCategory getSoundCategory();
+	
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
 	}
@@ -240,10 +242,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		return obj.isDay();
 	}
 	
-	@Inject(method = "getHurtSound", at = @At("TAIL"))
+	@Inject(method = "getHurtSound", at = @At("HEAD"))
 	private void getHurtSound(DamageSource source, CallbackInfoReturnable<SoundEvent> callbackInfo) {
 		if (source == BWDamageSources.SUN) {
-			world.playSound(null, getBlockPos(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.PLAYERS, 1, 1);
+			world.playSound(null, getBlockPos(), SoundEvents.BLOCK_FIRE_EXTINGUISH, getSoundCategory(), getSoundVolume(), getSoundPitch());
 		}
 	}
 	

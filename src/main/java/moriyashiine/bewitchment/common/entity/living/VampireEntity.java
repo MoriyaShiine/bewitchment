@@ -19,6 +19,7 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
@@ -30,6 +31,8 @@ import java.util.Random;
 
 public class VampireEntity extends BWHostileEntity {
 	public static final TrackedData<Boolean> HAS_TARGET = DataTracker.registerData(VampireEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+	
+	private boolean onFireFromSun = false;
 	
 	public VampireEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
@@ -52,6 +55,7 @@ public class VampireEntity extends BWHostileEntity {
 			}
 			if (!hasCustomName() && world.isDay() && !world.isRaining() && world.isSkyVisible(getBlockPos())) {
 				setOnFireFor(8);
+				onFireFromSun = true;
 			}
 		}
 	}
@@ -88,9 +92,26 @@ public class VampireEntity extends BWHostileEntity {
 	}
 	
 	@Override
+	protected boolean shouldDropLoot() {
+		return super.shouldDropLoot() && !onFireFromSun;
+	}
+	
+	@Override
 	public void setTarget(@Nullable LivingEntity target) {
 		super.setTarget(target);
 		dataTracker.set(HAS_TARGET, target != null);
+	}
+	
+	@Override
+	public void readCustomDataFromTag(CompoundTag tag) {
+		super.readCustomDataFromTag(tag);
+		onFireFromSun = tag.getBoolean("OnFireFromSun");
+	}
+	
+	@Override
+	public void writeCustomDataToTag(CompoundTag tag) {
+		super.writeCustomDataToTag(tag);
+		tag.putBoolean("OnFireFromSun", onFireFromSun);
 	}
 	
 	@Override
