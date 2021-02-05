@@ -23,7 +23,7 @@ public class PolymorphStatusEffect extends StatusEffect {
 	
 	@Override
 	public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-		if (entity instanceof ServerPlayerEntity) {
+		if (entity instanceof ServerPlayerEntity && !((PolymorphAccessor) entity).getPolymorphUUID().isEmpty()) {
 			Impersonator.get((PlayerEntity) entity).impersonate(IMPERSONATE_IDENTIFIER, new GameProfile(UUID.fromString(((PolymorphAccessor) entity).getPolymorphUUID()), ((PolymorphAccessor) entity).getPolymorphName()));
 		}
 	}
