@@ -1,0 +1,25 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	" D ",
+	" L ",
+	"SOS"
+  ],
+  "key": {
+	"D": {
+	  "item": "diamond"
+	},
+	"L": {
+	  "item": "bewitchment:juniper_log"
+	},
+	"S": {
+	  "item": "bewitchment:juniper_sapling"
+	},
+	"O": {
+	  "item": "bewitchment:heaven_extract"
+	}
+  },
+  "result": {
+	"item": "bewitchment:juniper_broom"
+  }
+}

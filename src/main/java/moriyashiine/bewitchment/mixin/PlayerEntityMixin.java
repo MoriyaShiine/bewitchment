@@ -68,7 +68,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	@Shadow
 	public abstract HungerManager getHungerManager();
 	
-	@Shadow public abstract SoundCategory getSoundCategory();
+	@Shadow
+	public abstract SoundCategory getSoundCategory();
 	
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);

@@ -8,6 +8,7 @@ import com.terraformersmc.terraform.wood.block.*;
 import moriyashiine.bewitchment.api.block.CandelabraBlock;
 import moriyashiine.bewitchment.api.block.PoppetShelfBlock;
 import moriyashiine.bewitchment.api.block.WitchAltarBlock;
+import moriyashiine.bewitchment.api.item.BroomItem;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.item.SigilItem;
 import moriyashiine.bewitchment.common.Bewitchment;
@@ -266,6 +267,10 @@ public class BWObjects {
 	public static final Item ELDRITCH_CHALK = create("eldritch_chalk", new ChalkItem(gen().maxDamage(128), ELDRITCH_GLYPH));
 	public static final Item TAGLOCK = create("taglock", new TaglockItem(gen().recipeRemainder(Items.GLASS_BOTTLE)));
 	public static final Item WAYSTONE = create("waystone", new WaystoneItem(gen().maxDamage(3)));
+	public static final Item JUNIPER_BROOM = create("juniper_broom", new BroomItem(gen().maxCount(1), BWEntityTypes.JUNIPER_BROOM));
+	public static final Item CYPRESS_BROOM = create("cypress_broom", new BroomItem(gen().maxCount(1), BWEntityTypes.CYPRESS_BROOM));
+	public static final Item ELDER_BROOM = create("elder_broom", new BroomItem(gen().maxCount(1), BWEntityTypes.ELDER_BROOM));
+	public static final Item DRAGONS_BLOOD_BROOM = create("dragons_blood_broom", new BroomItem(gen().maxCount(1), BWEntityTypes.DRAGONS_BLOOD_BROOM));
 	public static final Item MENDING_SIGIL = create("mending_sigil", new SigilItem(gen(), BWSigils.MENDING));
 	public static final Item CLEANSING_SIGIL = create("cleansing_sigil", new SigilItem(gen(), BWSigils.CLEANSING));
 	public static final Item JUDGMENT_SIGIL = create("judgment_sigil", new SigilItem(gen(), BWSigils.JUDGMENT));

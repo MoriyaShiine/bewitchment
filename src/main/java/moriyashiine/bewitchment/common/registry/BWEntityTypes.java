@@ -2,6 +2,7 @@ package moriyashiine.bewitchment.common.registry;
 
 import com.terraformersmc.terraform.boat.TerraformBoat;
 import com.terraformersmc.terraform.boat.TerraformBoatEntity;
+import moriyashiine.bewitchment.api.entity.BroomEntity;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.*;
 import moriyashiine.bewitchment.common.entity.projectile.HornedSpearEntity;
@@ -23,6 +24,11 @@ public class BWEntityTypes {
 	public static final EntityType<TerraformBoatEntity> CYPRESS_BOAT = create("cypress_boat", FabricEntityTypeBuilder.<TerraformBoatEntity>create(SpawnGroup.MISC, (type, world) -> new TerraformBoatEntity(type, world, new TerraformBoat(BWObjects.CYPRESS_BOAT, BWObjects.CYPRESS_PLANKS.asItem(), new Identifier(Bewitchment.MODID, "textures/entity/boat/cypress.png")))).dimensions(EntityType.BOAT.getDimensions()).build());
 	public static final EntityType<TerraformBoatEntity> ELDER_BOAT = create("elder_boat", FabricEntityTypeBuilder.<TerraformBoatEntity>create(SpawnGroup.MISC, (type, world) -> new TerraformBoatEntity(type, world, new TerraformBoat(BWObjects.ELDER_BOAT, BWObjects.ELDER_PLANKS.asItem(), new Identifier(Bewitchment.MODID, "textures/entity/boat/elder.png")))).dimensions(EntityType.BOAT.getDimensions()).build());
 	public static final EntityType<TerraformBoatEntity> DRAGONS_BLOOD_BOAT = create("dragons_blood_boat", FabricEntityTypeBuilder.<TerraformBoatEntity>create(SpawnGroup.MISC, (type, world) -> new TerraformBoatEntity(type, world, new TerraformBoat(BWObjects.DRAGONS_BLOOD_BOAT, BWObjects.DRAGONS_BLOOD_PLANKS.asItem(), new Identifier(Bewitchment.MODID, "textures/entity/boat/dragons_blood.png")))).dimensions(EntityType.BOAT.getDimensions()).build());
+	
+	public static final EntityType<BroomEntity> JUNIPER_BROOM = create("juniper_broom", FabricEntityTypeBuilder.create(SpawnGroup.MISC, BroomEntity::new).dimensions(EntityType.ARROW.getDimensions()).build());
+	public static final EntityType<BroomEntity> CYPRESS_BROOM = create("cypress_broom", FabricEntityTypeBuilder.create(SpawnGroup.MISC, BroomEntity::new).dimensions(JUNIPER_BROOM.getDimensions()).build());
+	public static final EntityType<BroomEntity> ELDER_BROOM = create("elder_broom", FabricEntityTypeBuilder.create(SpawnGroup.MISC, BroomEntity::new).dimensions(JUNIPER_BROOM.getDimensions()).build());
+	public static final EntityType<BroomEntity> DRAGONS_BLOOD_BROOM = create("dragons_blood_broom", FabricEntityTypeBuilder.create(SpawnGroup.MISC, BroomEntity::new).dimensions(JUNIPER_BROOM.getDimensions()).build());
 	
 	public static final EntityType<SilverArrowEntity> SILVER_ARROW = create("silver_arrow", FabricEntityTypeBuilder.<SilverArrowEntity>create(SpawnGroup.MISC, SilverArrowEntity::new).dimensions(EntityType.ARROW.getDimensions()).build());
 	public static final EntityType<HornedSpearEntity> HORNED_SPEAR = create("horned_spear", FabricEntityTypeBuilder.<HornedSpearEntity>create(SpawnGroup.MISC, HornedSpearEntity::new).dimensions(EntityType.TRIDENT.getDimensions()).build());

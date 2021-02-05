@@ -10,8 +10,7 @@ import moriyashiine.bewitchment.client.renderer.blockentity.BrazierBlockEntityRe
 import moriyashiine.bewitchment.client.renderer.blockentity.PoppetShelfBlockEntityRenderer;
 import moriyashiine.bewitchment.client.renderer.blockentity.WitchAltarBlockEntityRenderer;
 import moriyashiine.bewitchment.client.renderer.blockentity.WitchCauldronBlockEntityRenderer;
-import moriyashiine.bewitchment.client.renderer.entity.HornedSpearEntityRenderer;
-import moriyashiine.bewitchment.client.renderer.entity.SilverArrowEntityRenderer;
+import moriyashiine.bewitchment.client.renderer.entity.*;
 import moriyashiine.bewitchment.client.renderer.entity.living.*;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.BWChestBlockEntity;
@@ -97,6 +96,10 @@ public class BewitchmentClient implements ClientModInitializer {
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.CYPRESS_BOAT, (dispatcher, context) -> new BoatEntityRenderer(dispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.ELDER_BOAT, (dispatcher, context) -> new BoatEntityRenderer(dispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.DRAGONS_BLOOD_BOAT, (dispatcher, context) -> new BoatEntityRenderer(dispatcher));
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.JUNIPER_BROOM, (dispatcher, context) -> new JuniperBroomEntityRenderer(dispatcher));
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.CYPRESS_BROOM, (dispatcher, context) -> new CypressBroomEntityRenderer(dispatcher));
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.ELDER_BROOM, (dispatcher, context) -> new ElderBroomEntityRenderer(dispatcher));
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.DRAGONS_BLOOD_BROOM, (dispatcher, context) -> new DragonsBloodBroomEntityRenderer(dispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.SILVER_ARROW, (dispatcher, context) -> new SilverArrowEntityRenderer(dispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.HORNED_SPEAR, (dispatcher, context) -> new HornedSpearEntityRenderer(dispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.OWL, (dispatcher, context) -> new OwlEntityRenderer(dispatcher));
