@@ -28,7 +28,7 @@ public class MoveBroomPacket {
 		server.execute(() -> {
 			Entity broom = player.world.getEntityById(broomId);
 			if (broom != null) {
-				if (BewitchmentAPI.getFamiliar(player) == BWEntityTypes.OWL || ((MagicAccessor) player).drainMagic(1, false)) {
+				if (player.isCreative() || BewitchmentAPI.getFamiliar(player) == BWEntityTypes.OWL || ((MagicAccessor) player).drainMagic(1, false)) {
 					broom.setVelocity(broom.getVelocity().add(player.getRotationVector()));
 					broom.velocityDirty = true;
 				}
