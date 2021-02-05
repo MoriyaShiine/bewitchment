@@ -27,6 +27,7 @@ public abstract class ItemStackMixin {
 	private static final TranslatableText POTION = new TranslatableText("item." + Bewitchment.MODID + ".potion");
 	private static final TranslatableText SPLASH_POTION = new TranslatableText("item." + Bewitchment.MODID + ".splash_potion");
 	private static final TranslatableText LINGERING_POTION = new TranslatableText("item." + Bewitchment.MODID + ".lingering_potion");
+	private static final TranslatableText TIPPED_ARROW = new TranslatableText("item." + Bewitchment.MODID + ".tipped_arrow");
 	
 	@Shadow
 	@Nullable
@@ -56,6 +57,9 @@ public abstract class ItemStackMixin {
 			}
 			else if (getItem() == Items.LINGERING_POTION) {
 				callbackInfo.setReturnValue(LINGERING_POTION);
+			}
+			else if (getItem() == Items.TIPPED_ARROW) {
+				callbackInfo.setReturnValue(TIPPED_ARROW);
 			}
 		}
 	}

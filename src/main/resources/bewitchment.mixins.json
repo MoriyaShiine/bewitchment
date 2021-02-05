@@ -33,6 +33,7 @@
 	"SpawnHelperMixin",
 	"StatusEffectAccessor",
 	"StatusEffectMixin",
+	"TippedArrowRecipeMixin",
 	"TreeDecoratorTypeAccessor",
 	"VillagerEntityMixin",
 	"ZombieVillagerEntityAccessor"
