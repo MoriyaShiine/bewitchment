@@ -39,6 +39,7 @@
   ],
   "client": [
 	"client.ClientPlayerEntityMixin",
+	"client.ClientPlayNetworkHandlerMixin",
 	"client.ClientWorldMixin",
 	"client.HeldItemFeatureRendererMixin",
 	"client.InGameHudMixin",

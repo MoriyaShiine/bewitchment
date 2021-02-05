@@ -1,6 +1,5 @@
 package moriyashiine.bewitchment.api.entity;
 
-import moriyashiine.bewitchment.client.network.packet.CreateNonLivingEntityPacket;
 import moriyashiine.bewitchment.common.network.packet.MoveBroomPacket;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
@@ -12,6 +11,7 @@ import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Packet;
+import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
@@ -43,7 +43,7 @@ public class BroomEntity extends Entity {
 	
 	@Override
 	public Packet<?> createSpawnPacket() {
-		return CreateNonLivingEntityPacket.send(this);
+		return new EntitySpawnS2CPacket(this, 0);
 	}
 	
 	@Override
