@@ -101,6 +101,7 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 						world.updateComparators(pos, this);
 						blockEntity.markedForScan = true;
 						blockEntity.sync();
+						PlayerLookup.tracking(blockEntity).forEach(playerEntity -> SyncWitchAltarBlockEntity.send(player, blockEntity));
 					}
 				}
 				else {
