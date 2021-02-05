@@ -41,7 +41,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 		if (MinecraftClient.getInstance().options.keyForward.isPressed() && getVehicle() instanceof BroomEntity) {
 			TogglePressingForwardAccessor.send(true);
 		}
-		else if (((PressingForwardAccessor) this).getPressingForward() && !MinecraftClient.getInstance().options.keyForward.isPressed()) {
+		else if (((PressingForwardAccessor) this).getPressingForward()) {
 			TogglePressingForwardAccessor.send(false);
 		}
 	}
