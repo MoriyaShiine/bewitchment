@@ -244,16 +244,22 @@
   },
   "entity.ghost.ambient": {
 	"sounds": [
+	  "bewitchment:mob/ghost/say1",
+	  "bewitchment:mob/ghost/say2",
+	  "bewitchment:mob/ghost/say3"
 	],
 	"subtitle": "bewitchment.subtitles.entity.ghost.ambient"
   },
   "entity.ghost.hurt": {
 	"sounds": [
+	  "bewitchment:mob/ghost/hurt1",
+	  "bewitchment:mob/ghost/hurt2"
 	],
 	"subtitle": "bewitchment.subtitles.entity.ghost.hurt"
   },
   "entity.ghost.death": {
 	"sounds": [
+	  "bewitchment:mob/ghost/death"
 	],
 	"subtitle": "bewitchment.subtitles.entity.ghost.death"
   },
@@ -316,76 +322,106 @@
   },
   "entity.demon.ambient": {
 	"sounds": [
+	  "bewitchment:mob/demon/say1",
+	  "bewitchment:mob/demon/say2",
+	  "bewitchment:mob/demon/say3"
 	],
 	"subtitle": "bewitchment.subtitles.entity.demon.ambient"
   },
   "entity.demon.hurt": {
 	"sounds": [
+	  "bewitchment:mob/demon/hurt1",
+	  "bewitchment:mob/demon/hurt2"
 	],
 	"subtitle": "bewitchment.subtitles.entity.demon.hurt"
   },
   "entity.demon.death": {
 	"sounds": [
+	  "bewitchment:mob/demon/death"
 	],
 	"subtitle": "bewitchment.subtitles.entity.demon.death"
   },
   "entity.leonard.ambient": {
 	"sounds": [
+	  "bewitchment:mob/demon/say1",
+	  "bewitchment:mob/demon/say2",
+	  "bewitchment:mob/demon/say3"
 	],
 	"subtitle": "bewitchment.subtitles.entity.leonard.ambient"
   },
   "entity.leonard.hurt": {
 	"sounds": [
+	  "bewitchment:mob/demon/hurt1",
+	  "bewitchment:mob/demon/hurt2"
 	],
 	"subtitle": "bewitchment.subtitles.entity.leonard.hurt"
   },
   "entity.leonard.death": {
 	"sounds": [
+	  "bewitchment:mob/demon/death"
 	],
 	"subtitle": "bewitchment.subtitles.entity.leonard.death"
   },
   "entity.baphomet.ambient": {
 	"sounds": [
+	  "bewitchment:mob/demon/say1",
+	  "bewitchment:mob/demon/say2",
+	  "bewitchment:mob/demon/say3"
 	],
 	"subtitle": "bewitchment.subtitles.entity.baphomet.ambient"
   },
   "entity.baphomet.hurt": {
 	"sounds": [
+	  "bewitchment:mob/demon/hurt1",
+	  "bewitchment:mob/demon/hurt2"
 	],
 	"subtitle": "bewitchment.subtitles.entity.baphomet.hurt"
   },
   "entity.baphomet.death": {
 	"sounds": [
+	  "bewitchment:mob/demon/death"
 	],
 	"subtitle": "bewitchment.subtitles.entity.baphomet.death"
   },
   "entity.lilith.ambient": {
 	"sounds": [
+	  "bewitchment:mob/demon/say1",
+	  "bewitchment:mob/demon/say2",
+	  "bewitchment:mob/demon/say3"
 	],
 	"subtitle": "bewitchment.subtitles.entity.lilith.ambient"
   },
   "entity.lilith.hurt": {
 	"sounds": [
+	  "bewitchment:mob/demon/hurt1",
+	  "bewitchment:mob/demon/hurt2"
 	],
 	"subtitle": "bewitchment.subtitles.entity.lilith.hurt"
   },
   "entity.lilith.death": {
 	"sounds": [
+	  "bewitchment:mob/demon/death"
 	],
 	"subtitle": "bewitchment.subtitles.entity.lilith.death"
   },
   "entity.herne.ambient": {
 	"sounds": [
+	  "bewitchment:mob/demon/say1",
+	  "bewitchment:mob/demon/say2",
+	  "bewitchment:mob/demon/say3"
 	],
 	"subtitle": "bewitchment.subtitles.entity.herne.ambient"
   },
   "entity.herne.hurt": {
 	"sounds": [
+	  "bewitchment:mob/demon/hurt1",
+	  "bewitchment:mob/demon/hurt2"
 	],
 	"subtitle": "bewitchment.subtitles.entity.herne.hurt"
   },
   "entity.herne.death": {
 	"sounds": [
+	  "bewitchment:mob/demon/death"
 	],
 	"subtitle": "bewitchment.subtitles.entity.herne.death"
   }
