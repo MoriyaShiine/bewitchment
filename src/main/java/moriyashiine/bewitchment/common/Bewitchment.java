@@ -4,7 +4,7 @@ import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
 import me.sargunvohra.mcmods.autoconfig1u.serializer.GsonConfigSerializer;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.network.packet.CauldronTeleportPacket;
-import moriyashiine.bewitchment.common.network.packet.MoveBroomPacket;
+import moriyashiine.bewitchment.common.network.packet.TogglePressingForwardAccessor;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.api.ModInitializer;
@@ -28,7 +28,7 @@ public class Bewitchment implements ModInitializer {
 		config = AutoConfig.getConfigHolder(BWConfig.class).getConfig();
 		ServerPlayNetworking.registerGlobalReceiver(CauldronTeleportPacket.ID, CauldronTeleportPacket::handle);
 		ServerPlayNetworking.registerGlobalReceiver(TransformationAbilityPacket.ID, TransformationAbilityPacket::handle);
-		ServerPlayNetworking.registerGlobalReceiver(MoveBroomPacket.ID, MoveBroomPacket::handle);
+		ServerPlayNetworking.registerGlobalReceiver(TogglePressingForwardAccessor.ID, TogglePressingForwardAccessor::handle);
 		BWObjects.init();
 		BWBlockEntityTypes.init();
 		BWEntityTypes.init();

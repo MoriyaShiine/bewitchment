@@ -3,11 +3,14 @@ package moriyashiine.bewitchment.mixin.client;
 import com.mojang.authlib.GameProfile;
 import moriyashiine.bewitchment.client.BewitchmentClient;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
+import moriyashiine.bewitchment.common.entity.interfaces.PressingForwardAccessor;
 import moriyashiine.bewitchment.common.network.packet.CauldronTeleportPacket;
+import moriyashiine.bewitchment.common.network.packet.TogglePressingForwardAccessor;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
@@ -33,7 +36,12 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 		else if (BewitchmentClient.TRANSFORMATION_ABILITY.isPressed()) {
 			transformationAbilityCooldown = 20;
 			TransformationAbilityPacket.send();
-			
+		}
+		if (MinecraftClient.getInstance().options.keyForward.wasPressed() && !((PressingForwardAccessor) this).getPressingForward()) {
+			TogglePressingForwardAccessor.send(true);
+		}
+		else if (((PressingForwardAccessor) this).getPressingForward() && !MinecraftClient.getInstance().options.keyForward.isPressed()) {
+			TogglePressingForwardAccessor.send(false);
 		}
 	}
 	

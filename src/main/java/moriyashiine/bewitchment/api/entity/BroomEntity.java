@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.api.entity;
 
-import moriyashiine.bewitchment.common.network.packet.MoveBroomPacket;
-import net.minecraft.client.MinecraftClient;
+import moriyashiine.bewitchment.common.entity.interfaces.PressingForwardAccessor;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MovementType;
@@ -14,6 +14,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -52,13 +53,15 @@ public class BroomEntity extends Entity {
 		if (isLogicalSideForUpdatingMovement()) {
 			updateTrackedPosition(getX(), getY(), getZ());
 			Entity passenger = getPrimaryPassenger();
-			if (passenger != null) {
+			if (passenger instanceof PressingForwardAccessor) {
 				setRotation(passenger.yaw, passenger.pitch);
-				if (world.isClient && passenger.getUuid().equals(MinecraftClient.getInstance().player.getUuid()) && MinecraftClient.getInstance().options.keyForward.isPressed()) {
-					MoveBroomPacket.send(this);
+				if (((PressingForwardAccessor) passenger).getPressingForward()) {
+					addVelocity(passenger.getRotationVector().x / 8, passenger.getRotationVector().y / 8, passenger.getRotationVector().z / 8);
+					setVelocity(MathHelper.clamp(getVelocity().x, -1, 1), MathHelper.clamp(getVelocity().y, -1, 1), MathHelper.clamp(getVelocity().z, -1, 1));
 				}
 			}
 			move(MovementType.SELF, getVelocity());
+			setVelocity(getVelocity().multiply(0.9));
 		}
 		else {
 			setVelocity(Vec3d.ZERO);
@@ -123,5 +126,14 @@ public class BroomEntity extends Entity {
 	@Override
 	protected boolean canClimb() {
 		return false;
+	}
+	
+	@Override
+	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
+		return false;
+	}
+	
+	@Override
+	protected void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition) {
 	}
 }
