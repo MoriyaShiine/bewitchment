@@ -101,7 +101,7 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 						world.updateComparators(pos, this);
 						blockEntity.markedForScan = true;
 						blockEntity.sync();
-						PlayerLookup.tracking(blockEntity).forEach(playerEntity -> SyncWitchAltarBlockEntity.send(player, blockEntity));
+						PlayerLookup.tracking(blockEntity).forEach(playerEntity -> SyncWitchAltarBlockEntity.send(playerEntity, blockEntity));
 					}
 				}
 				else {
@@ -111,7 +111,7 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 						world.updateComparators(pos, this);
 						blockEntity.markedForScan = true;
 						blockEntity.sync();
-						PlayerLookup.tracking(blockEntity).forEach(playerEntity -> SyncWitchAltarBlockEntity.send(player, blockEntity));
+						PlayerLookup.tracking(blockEntity).forEach(playerEntity -> SyncWitchAltarBlockEntity.send(playerEntity, blockEntity));
 					}
 					else {
 						player.sendMessage(new LiteralText(blockEntity.power + " / " + blockEntity.maxPower + " (" + blockEntity.gain + "x)"), true);
