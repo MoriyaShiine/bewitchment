@@ -380,6 +380,10 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 				if (effects.get(i).getEffectType() == BWStatusEffects.CORRUPTION) {
 					finalEffects.add(effects.remove(i));
 				}
+				else if (effects.get(i).getEffectType() == BWStatusEffects.POLYMORPH) {
+					StatusEffectInstance removed = effects.remove(i);
+					finalEffects.add(new StatusEffectInstance(removed.getEffectType(), removed.getDuration(), removed.getAmplifier(), removed.isAmbient(), false, removed.shouldShowIcon()));
+				}
 			}
 			finalEffects.addAll(effects);
 			PotionUtil.setCustomPotionEffects(stack, finalEffects);
