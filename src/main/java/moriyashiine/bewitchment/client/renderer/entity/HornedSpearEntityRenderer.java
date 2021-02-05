@@ -31,7 +31,7 @@ public class HornedSpearEntityRenderer extends EntityRenderer<HornedSpearEntity>
 	@Override
 	public void render(HornedSpearEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
 		ItemStack spear = entity.spear;
-		if (spear == null) {
+		if (spear.isEmpty()) {
 			spear = HerneEntityModel.HORNED_SPEAR;
 		}
 		matrices.push();

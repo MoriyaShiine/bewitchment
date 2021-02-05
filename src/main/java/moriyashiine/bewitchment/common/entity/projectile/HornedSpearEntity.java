@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("ConstantConditions")
 public class HornedSpearEntity extends PersistentProjectileEntity {
-	public ItemStack spear;
+	public ItemStack spear = ItemStack.EMPTY;
 	private boolean dealtDamage = false;
 	
 	public HornedSpearEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
