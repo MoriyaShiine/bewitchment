@@ -9,10 +9,7 @@ import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.interfaces.InsanityTargetAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.MasterAccessor;
 import moriyashiine.bewitchment.common.misc.BWUtil;
-import moriyashiine.bewitchment.common.registry.BWContracts;
-import moriyashiine.bewitchment.common.registry.BWCurses;
-import moriyashiine.bewitchment.common.registry.BWDamageSources;
-import moriyashiine.bewitchment.common.registry.BWTags;
+import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -139,7 +136,7 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 				}
 				pledgeable.summonMinions((MobEntity) (Object) this);
 			}
-			if (isUndead() && !BWUtil.getBlockPoses(target.getBlockPos(), 2, foundPos -> BWTags.UNDEAD_MASK.contains(world.getBlockState(foundPos).getBlock())).isEmpty()) {
+			if (isUndead() && (world.getEntitiesByType(BWEntityTypes.CYPRESS_BROOM, new Box(target.getBlockPos()).expand(2), entity -> !entity.removed).size() > 0 || !BWUtil.getBlockPoses(target.getBlockPos(), 2, foundPos -> BWTags.UNDEAD_MASK.contains(world.getBlockState(foundPos).getBlock())).isEmpty())) {
 				return null;
 			}
 			ContractAccessor contractAccessor = (ContractAccessor) target;
