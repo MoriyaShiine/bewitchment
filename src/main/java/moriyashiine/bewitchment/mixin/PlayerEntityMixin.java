@@ -298,7 +298,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	private void dropItem(ItemStack stack, boolean throwRandomly, boolean retainOwnership, CallbackInfoReturnable<ItemEntity> callbackInfo) {
 		if (!world.isClient && stack.getItem() == BWObjects.VOODOO_POPPET) {
 			LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, stack);
-			if (owner != null && !owner.getUuid().equals(getUuid())) {
+			if (owner != null) {
 				if (stack.damage(BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && stack.getDamage() >= stack.getMaxDamage()) {
 					stack.decrement(1);
 				}
@@ -309,7 +309,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 					}
 					return;
 				}
-				owner.addVelocity(getRotationVector().x / 2, getRotationVector().y / 2, getRotationVector().z / 2);
+				owner.addVelocity(getRotationVector().x, getRotationVector().y, getRotationVector().z);
+				owner.velocityModified = true;
 			}
 		}
 	}
