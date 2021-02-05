@@ -20,7 +20,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("ConstantConditions")
 public class BroomEntity extends Entity {
 	public ItemStack stack = ItemStack.EMPTY;
 	
@@ -66,7 +65,6 @@ public class BroomEntity extends Entity {
 		else {
 			setVelocity(Vec3d.ZERO);
 		}
-		checkBlockCollision();
 	}
 	
 	@Override
