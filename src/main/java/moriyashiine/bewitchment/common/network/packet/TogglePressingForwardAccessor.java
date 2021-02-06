@@ -28,11 +28,12 @@ public class TogglePressingForwardAccessor {
 		boolean pressingForward = buf.readBoolean();
 		server.execute(() -> {
 			if (pressingForward) {
-				if (!(player.isCreative() || BewitchmentAPI.getFamiliar(player) == BWEntityTypes.OWL || (!player.hasStatusEffect(BWStatusEffects.INHIBITED) && ((MagicAccessor) player).drainMagic(1, true)))) {
-					return;
+				if (!player.isCreative() && BewitchmentAPI.getFamiliar(player) != BWEntityTypes.OWL) {
+					if (player.hasStatusEffect(BWStatusEffects.INHIBITED) || !((MagicAccessor) player).drainMagic(1, true)) {
+						return;
+					}
 				}
-
-				if(player.age % 60 == 0) {
+				if (player.age % 60 == 0) {
 					((MagicAccessor) player).drainMagic(1, false);
 				}
 			}
