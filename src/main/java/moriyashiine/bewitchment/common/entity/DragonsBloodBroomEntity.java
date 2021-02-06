@@ -1,10 +1,12 @@
 package moriyashiine.bewitchment.common.entity;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.entity.BroomEntity;
 import moriyashiine.bewitchment.api.item.SigilItem;
 import moriyashiine.bewitchment.api.registry.Sigil;
 import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.item.TaglockItem;
+import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.fabric.api.util.NbtType;
@@ -57,7 +59,7 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 				ItemStack stack = player.getStackInHand(hand);
 				if (stack.getItem() instanceof SigilItem && ((SigilItem) stack.getItem()).sigil.active) {
 					sigil = ((SigilItem) stack.getItem()).sigil;
-					uses = sigil.uses;
+					uses = sigil.uses * (BewitchmentAPI.getFamiliar(player) == BWEntityTypes.SNAKE ? 2 : 1);
 					modeOnWhitelist = true;
 					stack.decrement(1);
 				}
