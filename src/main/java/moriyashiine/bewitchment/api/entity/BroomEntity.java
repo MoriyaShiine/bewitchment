@@ -58,7 +58,7 @@ public class BroomEntity extends Entity {
 			if (passenger instanceof BroomUserAccessor) {
 				setRotation(passenger.yaw, passenger.pitch);
 				if (((BroomUserAccessor) passenger).getPressingForward()) {
-					addVelocity(passenger.getRotationVector().x / 8 * ((BroomUserAccessor) passenger).getBroomSpeed(), passenger.getRotationVector().y / 8 * ((BroomUserAccessor) passenger).getBroomSpeed(), passenger.getRotationVector().z / 8 * ((BroomUserAccessor) passenger).getBroomSpeed());
+					addVelocity(passenger.getRotationVector().x / 8, passenger.getRotationVector().y / 8, passenger.getRotationVector().z / 8);
 					setVelocity(MathHelper.clamp(getVelocity().x, -1, 1), MathHelper.clamp(getVelocity().y, -1, 1), MathHelper.clamp(getVelocity().z, -1, 1));
 				}
 			}

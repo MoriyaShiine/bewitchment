@@ -4,12 +4,10 @@ import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
 import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
-import moriyashiine.bewitchment.common.entity.interfaces.BroomUserAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
 import moriyashiine.bewitchment.common.item.ScepterItem;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
-import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWPledges;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
@@ -126,8 +124,6 @@ public class BWUtil {
 			armorToughnessAttribute.removeModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_1);
 			movementSpeedAttribute.removeModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_1);
 		}
-		((BroomUserAccessor) player).setBroomSpeed(familiar == BWEntityTypes.OWL ? 1.25f : 1);
-		
 	}
 	
 	public static void doVampireLogic(PlayerEntity player, boolean alternateForm) {
