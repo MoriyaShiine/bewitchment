@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.api.entity;
 
 import moriyashiine.bewitchment.common.entity.interfaces.PressingForwardAccessor;
+import moriyashiine.bewitchment.common.item.TaglockItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -19,6 +20,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.UUID;
 
 public class BroomEntity extends Entity {
 	public ItemStack stack = ItemStack.EMPTY;
@@ -83,8 +86,8 @@ public class BroomEntity extends Entity {
 		if (isInvulnerableTo(source)) {
 			return false;
 		}
-		if (!world.isClient && !removed && !hasPassengers()) {
-			dropStack(stack);
+		if (!world.isClient && !removed && !hasPassengers() && (stack.isEmpty() || (source.getAttacker() instanceof PlayerEntity && source.getAttacker().getUuid().equals(getOwner())))) {
+			dropStack(getDroppedStack());
 			remove();
 		}
 		return true;
@@ -133,5 +136,16 @@ public class BroomEntity extends Entity {
 	
 	@Override
 	protected void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition) {
+	}
+	
+	public void init(ItemStack stack) {
+	}
+	
+	protected ItemStack getDroppedStack() {
+		return stack;
+	}
+	
+	protected UUID getOwner() {
+		return TaglockItem.getTaglockUUID(stack);
 	}
 }
