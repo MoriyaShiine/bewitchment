@@ -19,7 +19,7 @@ public class InvigoratingStatusEffect extends StatusEffect {
 	@Override
 	public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
 		if (entity instanceof MagicAccessor) {
-			((MagicAccessor) entity).fillMagic(1000 * (amplifier + 1), false);
+			((MagicAccessor) entity).fillMagic(750 * (amplifier + 1), false);
 		}
 	}
 }

@@ -290,7 +290,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 			FoodComponent foodComponent = stack.getItem().getFoodComponent();
 			if (foodComponent != null) {
 				if (BWTags.WITCHBERRY_FOODS.contains(stack.getItem())) {
-					fillMagic(foodComponent.getHunger() * 100, false);
+					fillMagic(foodComponent.getHunger() * 50, false);
 				}
 				if (hasContract(BWContracts.GLUTTONY)) {
 					getHungerManager().add(foodComponent.getHunger(), foodComponent.getSaturationModifier());

@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.api.interfaces.entity;
 
 public interface MagicAccessor {
-	int MAX_MAGIC = 10000;
+	int MAX_MAGIC = 5000;
 	
 	int getMagic();
 	

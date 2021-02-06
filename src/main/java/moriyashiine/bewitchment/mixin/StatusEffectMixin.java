@@ -28,7 +28,7 @@ public class StatusEffectMixin {
 	@Inject(method = "applyUpdateEffect", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 0, target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"), cancellable = true)
 	private void damage(LivingEntity entity, int amplifier, CallbackInfo callbackInfo) {
 		if (entity instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) entity) == BWEntityTypes.SNAKE) {
-			((MagicAccessor) entity).fillMagic(50, false);
+			((MagicAccessor) entity).fillMagic(25, false);
 			callbackInfo.cancel();
 		}
 	}
