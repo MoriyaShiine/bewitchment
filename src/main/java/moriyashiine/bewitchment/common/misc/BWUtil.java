@@ -126,7 +126,7 @@ public class BWUtil {
 			armorToughnessAttribute.removeModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_1);
 			movementSpeedAttribute.removeModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_1);
 		}
-		((BroomUserAccessor) player).setBroomSpeed(familiar == BWEntityTypes.OWL ? 1.5f : 1);
+		((BroomUserAccessor) player).setBroomSpeed(familiar == BWEntityTypes.OWL ? 1.25f : 1);
 		
 	}
 	
