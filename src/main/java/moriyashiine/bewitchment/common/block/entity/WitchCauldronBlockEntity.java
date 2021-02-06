@@ -27,9 +27,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.particle.DustParticleEffect;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.server.world.ServerWorld;
@@ -151,37 +148,8 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 				loaded = true;
 			}
 			heatTimer = MathHelper.clamp(heatTimer + (getCachedState().get(Properties.LIT) && getCachedState().get(Properties.LEVEL_3) > 0 ? 1 : -1), 0, 160);
-			if (world.isClient) {
-				if (heatTimer >= 60) {
-					float fluidHeight = 0;
-					float width = 0.35f;
-					switch (getCachedState().get(Properties.LEVEL_3)) {
-						case 1:
-							fluidHeight = 0.225f;
-							break;
-						case 2:
-							fluidHeight = 0.425f;
-							width = 0.3f;
-							break;
-						case 3:
-							fluidHeight = 0.625f;
-					}
-					if (fluidHeight > 0) {
-						if (mode == Mode.TELEPORTATION) {
-							world.addParticle(new DustParticleEffect(((color >> 16) & 0xff) / 255f, ((color >> 8) & 0xff) / 255f, (color & 0xff) / 255f, 1), pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + fluidHeight, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), 0, 0, 0);
-						}
-						if (mode == Mode.OIL_CRAFTING && color != 0xfc00fc) {
-							world.addParticle(ParticleTypes.ENCHANTED_HIT, pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + fluidHeight, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), 0, 0, 0);
-						}
-						if (mode == Mode.BREWING) {
-							world.addParticle(ParticleTypes.ENTITY_EFFECT, pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + fluidHeight, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), ((color >> 16) & 0xff) / 255f, ((color >> 8) & 0xff) / 255f, (color & 0xff) / 255f);
-						}
-						world.addParticle((ParticleEffect) BWParticleTypes.CAULDRON_BUBBLE, pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + fluidHeight, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), ((color >> 16) & 0xff) / 255f, ((color >> 8) & 0xff) / 255f, (color & 0xff) / 255f);
-					}
-				}
-			}
-			else {
-				if (getCachedState().get(Properties.LEVEL_3) > 0 && heatTimer >= 60) {
+			if (!world.isClient) {
+				if (heatTimer >= 60 && getCachedState().get(Properties.LEVEL_3) > 0) {
 					if (world.random.nextFloat() <= 0.075f) {
 						world.playSound(null, pos, SoundEvents.BLOCK_BUBBLE_COLUMN_UPWARDS_AMBIENT, SoundCategory.BLOCKS, 1 / 3f, mode == Mode.FAILED ? 0.5f : 1);
 					}

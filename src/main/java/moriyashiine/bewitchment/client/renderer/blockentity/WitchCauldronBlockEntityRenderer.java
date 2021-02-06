@@ -2,6 +2,7 @@ package moriyashiine.bewitchment.client.renderer.blockentity;
 
 import moriyashiine.bewitchment.common.block.WitchCauldronBlock;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
+import moriyashiine.bewitchment.common.registry.BWParticleTypes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Blocks;
@@ -13,8 +14,13 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.particle.DustParticleEffect;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.world.World;
 
@@ -48,6 +54,33 @@ public class WitchCauldronBlockEntityRenderer extends BlockEntityRenderer<WitchC
 				}
 				renderWater(entity, matrices, vertexConsumers.getBuffer(RenderLayer.getTranslucent()), light, overlay);
 				matrices.pop();
+				if (entity.heatTimer >= 60 && !MinecraftClient.getInstance().isPaused()) {
+					float fluidHeight = 0;
+					float width = 0.35f;
+					switch (entity.getCachedState().get(Properties.LEVEL_3)) {
+						case 1:
+							fluidHeight = 0.225f;
+							break;
+						case 2:
+							fluidHeight = 0.425f;
+							width = 0.3f;
+							break;
+						case 3:
+							fluidHeight = 0.625f;
+					}
+					if (fluidHeight > 0) {
+						if (entity.mode == WitchCauldronBlockEntity.Mode.TELEPORTATION) {
+							world.addParticle(new DustParticleEffect(((entity.color >> 16) & 0xff) / 255f, ((entity.color >> 8) & 0xff) / 255f, (entity.color & 0xff) / 255f, 1), pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + fluidHeight, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), 0, 0, 0);
+						}
+						if (entity.mode == WitchCauldronBlockEntity.Mode.OIL_CRAFTING && entity.color != 0xfc00fc) {
+							world.addParticle(ParticleTypes.ENCHANTED_HIT, pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + fluidHeight, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), 0, 0, 0);
+						}
+						if (entity.mode == WitchCauldronBlockEntity.Mode.BREWING) {
+							world.addParticle(ParticleTypes.ENTITY_EFFECT, pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + fluidHeight, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), ((entity.color >> 16) & 0xff) / 255f, ((entity.color >> 8) & 0xff) / 255f, (entity.color & 0xff) / 255f);
+						}
+						world.addParticle((ParticleEffect) BWParticleTypes.CAULDRON_BUBBLE, pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + fluidHeight, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), ((entity.color >> 16) & 0xff) / 255f, ((entity.color >> 8) & 0xff) / 255f, (entity.color & 0xff) / 255f);
+					}
+				}
 			}
 		}
 	}
