@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.interfaces.Lockable;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
@@ -147,16 +148,17 @@ public class TaglockItem extends Item {
 			CompoundTag tag = stack.getTag();
 			if (tag.contains("UsedForScrying")) {
 				if (tag.contains("Failed")) {
-					tooltip.add(new LiteralText("Failed").formatted(Formatting.DARK_GRAY));
+					tooltip.add(new TranslatableText("Failed").formatted(Formatting.DARK_GRAY));
 				}
 				else {
-					tooltip.add(new LiteralText("Location: " + BlockPos.fromLong(stack.getOrCreateTag().getLong("LocationPos")) + " in " + stack.getOrCreateTag().getString("LocationWorld")).formatted(Formatting.DARK_GRAY));
-					tooltip.add(new LiteralText("Level: " + tag.getInt("Level")).formatted(Formatting.DARK_GRAY));
+					BlockPos pos = BlockPos.fromLong(stack.getTag().getLong("LocationPos"));
+					tooltip.add(new TranslatableText(Bewitchment.MODID + ".location_tooltip", pos.getX(), pos.getY(), pos.getZ(), stack.getTag().getString("LocationWorld")).formatted(Formatting.DARK_GRAY));
+					tooltip.add(new TranslatableText(Bewitchment.MODID + ".level_tooltip", stack.getTag().getInt("Level")).formatted(Formatting.DARK_GRAY));
 					tooltip.add(new LiteralText("Curses: " + tag.get("Curses")).formatted(Formatting.DARK_GRAY));
 					tooltip.add(new LiteralText("Contracts: " + tag.get("Contracts")).formatted(Formatting.DARK_GRAY));
-					tooltip.add(new LiteralText("Transformation: " + tag.getString("Transformation")).formatted(Formatting.DARK_GRAY));
-					tooltip.add(new LiteralText("Familiar: " + tag.getString("Familiar")).formatted(Formatting.DARK_GRAY));
-					tooltip.add(new LiteralText("Pledge: " + tag.getString("Pledge")).formatted(Formatting.DARK_GRAY));
+					tooltip.add(new TranslatableText(Bewitchment.MODID + ".transformation_tooltip", new TranslatableText(stack.getTag().getString("Transformation"))).formatted(Formatting.DARK_GRAY));
+					tooltip.add(new TranslatableText(Bewitchment.MODID + ".familiar_tooltip", new TranslatableText("entity." + tag.getString("Familiar").replace(":", "."))).formatted(Formatting.DARK_GRAY));
+					tooltip.add(new TranslatableText(Bewitchment.MODID + ".pledge_tooltip", new TranslatableText(stack.getTag().getString("Pledge"))).formatted(Formatting.DARK_GRAY));
 				}
 			}
 		}

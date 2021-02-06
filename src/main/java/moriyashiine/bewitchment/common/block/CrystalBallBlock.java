@@ -97,9 +97,9 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 								tag.putInt("Level", ((PlayerEntity) owner).experienceLevel);
 								tag.put("Curses", ((CurseAccessor) owner).toTagCurse());
 								tag.put("Contracts", ((ContractAccessor) owner).toTagContract());
-								tag.putString("Transformation", BWRegistries.TRANSFORMATIONS.getId(((TransformationAccessor) owner).getTransformation()).toString());
+								tag.putString("Transformation", "transformation." + BWRegistries.TRANSFORMATIONS.getId(((TransformationAccessor) owner).getTransformation()).toString().replace(":", "."));
 								BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-								String familiar = "none";
+								String familiar = "None";
 								for (int i = 0; i < worldState.familiars.size(); i++) {
 									if (worldState.familiars.get(i).getLeft().equals(owner.getUuid())) {
 										familiar = worldState.familiars.get(i).getRight().getString("id");
@@ -107,7 +107,7 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 									}
 								}
 								tag.putString("Familiar", familiar);
-								String pledge = "none";
+								String pledge = "pledge.none";
 								for (int i = 0; i < worldState.pledges.size(); i++) {
 									if (BewitchmentAPI.isPledged(world, worldState.pledges.get(i).getLeft(), owner.getUuid())) {
 										pledge = worldState.pledges.get(i).getLeft();

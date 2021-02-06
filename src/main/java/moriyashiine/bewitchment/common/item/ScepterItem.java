@@ -79,7 +79,7 @@ public class ScepterItem extends Item {
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		tooltip.add(new TranslatableText(Bewitchment.MODID + ".scepter_uses", stack.getOrCreateTag().getInt("PotionUses")).formatted(Formatting.GRAY));
+		tooltip.add(new TranslatableText(Bewitchment.MODID + ".uses_left", stack.getOrCreateTag().getInt("PotionUses")).formatted(Formatting.GRAY));
 		Items.POTION.appendTooltip(stack, world, tooltip, context);
 	}
 }
