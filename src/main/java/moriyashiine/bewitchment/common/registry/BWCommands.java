@@ -35,10 +35,12 @@ import java.util.concurrent.CompletableFuture;
 @SuppressWarnings("ConstantConditions")
 public class BWCommands {
 	public static void init(CommandDispatcher<ServerCommandSource> dispatcher, boolean dedicated) {
-		ArgumentTypes.register("fortune", FortuneArgumentType.class, new ConstantArgumentSerializer<>(FortuneArgumentType::fortune));
-		ArgumentTypes.register("curse", CurseArgumentType.class, new ConstantArgumentSerializer<>(CurseArgumentType::curse));
-		ArgumentTypes.register("contract", ContractArgumentType.class, new ConstantArgumentSerializer<>(ContractArgumentType::contract));
-		ArgumentTypes.register("transformation", TransformationArgumentType.class, new ConstantArgumentSerializer<>(TransformationArgumentType::transformation));
+		if (dedicated) {
+			ArgumentTypes.register("fortune", FortuneArgumentType.class, new ConstantArgumentSerializer<>(FortuneArgumentType::fortune));
+			ArgumentTypes.register("curse", CurseArgumentType.class, new ConstantArgumentSerializer<>(CurseArgumentType::curse));
+			ArgumentTypes.register("contract", ContractArgumentType.class, new ConstantArgumentSerializer<>(ContractArgumentType::contract));
+			ArgumentTypes.register("transformation", TransformationArgumentType.class, new ConstantArgumentSerializer<>(TransformationArgumentType::transformation));
+		}
 		dispatcher.register(CommandManager.literal("fortune").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.argument("target", EntityArgumentType.player()).then(CommandManager.literal("get").executes(context -> {
 			PlayerEntity target = EntityArgumentType.getPlayer(context, "target");
 			if (target instanceof FortuneAccessor) {
