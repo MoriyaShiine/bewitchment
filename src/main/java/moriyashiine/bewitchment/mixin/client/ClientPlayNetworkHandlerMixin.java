@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.mixin.client;
 
 import moriyashiine.bewitchment.api.entity.BroomEntity;
+import moriyashiine.bewitchment.common.entity.ElderBroomEntity;
 import moriyashiine.bewitchment.common.entity.JuniperBroomEntity;
 import moriyashiine.bewitchment.common.entity.projectile.HornedSpearEntity;
 import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
@@ -39,7 +40,7 @@ public class ClientPlayNetworkHandlerMixin {
 			entity = new BroomEntity(BWEntityTypes.CYPRESS_BROOM, world);
 		}
 		else if (type == BWEntityTypes.ELDER_BROOM) {
-			entity = new BroomEntity(BWEntityTypes.ELDER_BROOM, world);
+			entity = new ElderBroomEntity(BWEntityTypes.ELDER_BROOM, world);
 		}
 		else if (type == BWEntityTypes.DRAGONS_BLOOD_BROOM) {
 			entity = new BroomEntity(BWEntityTypes.DRAGONS_BLOOD_BROOM, world);

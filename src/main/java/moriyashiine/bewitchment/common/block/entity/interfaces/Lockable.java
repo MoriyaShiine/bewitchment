@@ -73,6 +73,7 @@ public interface Lockable {
 							if (!(user instanceof PlayerEntity && ((PlayerEntity) user).isCreative())) {
 								stack.decrement(1);
 							}
+							((Lockable) blockEntity).setModeOnWhitelist(true);
 							((Lockable) blockEntity).setLocked(true);
 							syncLockable(world, blockEntity);
 							blockEntity.markDirty();
