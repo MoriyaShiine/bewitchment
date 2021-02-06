@@ -31,7 +31,7 @@ public class CaduceusItem extends SwordItem {
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (user instanceof MagicAccessor) {
-			if (!world.isClient && !user.hasStatusEffect(BWStatusEffects.INHIBITED) && ((user instanceof PlayerEntity && ((PlayerEntity) user).isCreative()) || ((MagicAccessor) user).drainMagic(125, false))) {
+			if (!world.isClient && !user.hasStatusEffect(BWStatusEffects.INHIBITED) && ((user instanceof PlayerEntity && ((PlayerEntity) user).isCreative()) || ((MagicAccessor) user).drainMagic(2, false))) {
 				FireballEntity fireball = new FireballEntity(world, user, user.getRotationVector().x, user.getRotationVector().y, user.getRotationVector().z);
 				fireball.setOwner(user);
 				fireball.setPos(fireball.getX(), fireball.getY() + 1, fireball.getZ());

@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.api.interfaces.entity;
 
 public interface MagicAccessor {
-	int MAX_MAGIC = 5000;
+	int MAX_MAGIC = 100;
 	
 	int getMagic();
 	
@@ -15,8 +15,8 @@ public interface MagicAccessor {
 		if (getMagic() < MAX_MAGIC) {
 			if (!simulate) {
 				setMagic(Math.min(MAX_MAGIC, getMagic() + amount));
-				setMagicTimer(60);
 			}
+			setMagicTimer(60);
 			return true;
 		}
 		return false;
@@ -26,8 +26,8 @@ public interface MagicAccessor {
 		if (getMagic() - amount >= 0) {
 			if (!simulate) {
 				setMagic(getMagic() - amount);
-				setMagicTimer(60);
 			}
+			setMagicTimer(60);
 			return true;
 		}
 		return false;

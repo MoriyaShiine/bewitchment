@@ -300,7 +300,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				float magicAmount = (0.3f + (0.1f * getStatusEffect(BWStatusEffects.MAGIC_SPONGE).getAmplifier()));
 				amount *= (1 - magicAmount);
 				if (this instanceof MagicAccessor) {
-					((MagicAccessor) this).fillMagic((int) (amount * magicAmount * 50), false);
+					((MagicAccessor) this).fillMagic((int) (amount * magicAmount), false);
 				}
 			}
 			if (!(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns())) {

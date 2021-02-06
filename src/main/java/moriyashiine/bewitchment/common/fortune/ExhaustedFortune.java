@@ -12,6 +12,6 @@ public class ExhaustedFortune extends Fortune {
 	
 	@Override
 	public boolean finish(ServerWorld world, PlayerEntity target) {
-		return ((MagicAccessor) target).drainMagic(2500, false);
+		return ((MagicAccessor) target).drainMagic(50, false);
 	}
 }
