@@ -58,7 +58,7 @@ public class BroomEntity extends Entity {
 			if (passenger instanceof BroomUserAccessor) {
 				setRotation(passenger.yaw, passenger.pitch);
 				if (((BroomUserAccessor) passenger).getPressingForward()) {
-					addVelocity(passenger.getRotationVector().x / 8, passenger.getRotationVector().y / 8, passenger.getRotationVector().z / 8);
+					addVelocity(passenger.getRotationVector().x / 8 * getSpeed(), passenger.getRotationVector().y / 8 * getSpeed(), passenger.getRotationVector().z / 8 * getSpeed());
 					setVelocity(MathHelper.clamp(getVelocity().x, -1, 1), MathHelper.clamp(getVelocity().y, -1, 1), MathHelper.clamp(getVelocity().z, -1, 1));
 				}
 			}
@@ -147,5 +147,9 @@ public class BroomEntity extends Entity {
 	
 	protected UUID getOwner() {
 		return TaglockItem.getTaglockUUID(stack);
+	}
+	
+	protected float getSpeed() {
+		return 0.5f;
 	}
 }
