@@ -6,6 +6,7 @@ import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.interfaces.BroomUserAccessor;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
+import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.network.PacketByteBuf;
@@ -27,8 +28,12 @@ public class TogglePressingForwardAccessor {
 		boolean pressingForward = buf.readBoolean();
 		server.execute(() -> {
 			if (pressingForward) {
-				if (!(player.isCreative() || BewitchmentAPI.getFamiliar(player) == BWEntityTypes.OWL || ((MagicAccessor) player).drainMagic(1, false))) {
+				if (!(player.isCreative() || BewitchmentAPI.getFamiliar(player) == BWEntityTypes.OWL || (!player.hasStatusEffect(BWStatusEffects.INHIBITED) && ((MagicAccessor) player).drainMagic(1, true)))) {
 					return;
+				}
+
+				if(player.age % 60 == 0) {
+					((MagicAccessor) player).drainMagic(1, false);
 				}
 			}
 			((BroomUserAccessor) player).setPressingForward(pressingForward);
