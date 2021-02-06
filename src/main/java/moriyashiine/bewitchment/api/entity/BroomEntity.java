@@ -86,7 +86,7 @@ public class BroomEntity extends Entity {
 		if (isInvulnerableTo(source)) {
 			return false;
 		}
-		if (!world.isClient && !removed && !hasPassengers() && (stack.isEmpty() || (source.getAttacker() instanceof PlayerEntity && source.getAttacker().getUuid().equals(getOwner())))) {
+		if (!world.isClient && !removed && !hasPassengers() && (stack.isEmpty() || (source.getAttacker() instanceof PlayerEntity && (((PlayerEntity) source.getAttacker()).isCreative() || source.getAttacker().getUuid().equals(getOwner()))))) {
 			dropStack(getDroppedStack());
 			remove();
 		}
