@@ -1,69 +1,21 @@
 package moriyashiine.bewitchment.common.entity;
 
 import moriyashiine.bewitchment.api.entity.BroomEntity;
-import moriyashiine.bewitchment.common.item.AthameItem;
-import moriyashiine.bewitchment.common.item.TaglockItem;
-import moriyashiine.bewitchment.common.registry.BWSoundEvents;
-import moriyashiine.bewitchment.common.registry.BWTags;
-import net.fabricmc.fabric.api.util.NbtType;
+import moriyashiine.bewitchment.common.misc.BWUtil;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-@SuppressWarnings("ConstantConditions")
 public class ElderBroomEntity extends BroomEntity {
-	private final List<UUID> entities = new ArrayList<>();
-	
-	private boolean modeOnWhitelist = false;
-	private boolean locked = false;
+	private BlockPos originalPos = null;
+	private String originalWorld = "";
 	
 	public ElderBroomEntity(EntityType<?> type, World world) {
 		super(type, world);
-	}
-	
-	@Override
-	public ActionResult interact(PlayerEntity player, Hand hand) {
-		boolean client = world.isClient;
-		if (player.isSneaking()) {
-			if (!client && player.getUuid().equals(getOwner())) {
-				ItemStack stack = player.getStackInHand(hand);
-				if (BWTags.SILVER_INGOTS.contains(stack.getItem()) && !locked) {
-					modeOnWhitelist = true;
-					locked = true;
-					stack.decrement(1);
-				}
-				else if (locked) {
-					if (stack.getItem() instanceof TaglockItem && TaglockItem.hasTaglock(stack)) {
-						entities.add(TaglockItem.getTaglockUUID(stack));
-						stack.decrement(1);
-					}
-					else if (stack.getItem() instanceof AthameItem && !entities.isEmpty()) {
-						world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_PLING, SoundCategory.NEUTRAL, 1, modeOnWhitelist ? 0.5f : 1);
-						modeOnWhitelist = !modeOnWhitelist;
-					}
-				}
-			}
-			return ActionResult.success(client);
-		}
-		boolean allowed = true;
-		if (locked && !player.getUuid().equals(getOwner())) {
-			allowed = !entities.isEmpty() && modeOnWhitelist && entities.contains(player.getUuid());
-		}
-		if (allowed) {
-			return super.interact(player, hand);
-		}
-		return ActionResult.FAIL;
 	}
 	
 	@Override
@@ -79,41 +31,38 @@ public class ElderBroomEntity extends BroomEntity {
 	}
 	
 	@Override
-	public void init(ItemStack stack) {
-		if (stack.hasTag()) {
-			readFromTag(stack.getTag());
-		}
+	protected void addPassenger(Entity passenger) {
+		super.addPassenger(passenger);
+		originalPos = getBlockPos();
+		originalWorld = world.getRegistryKey().toString();
 	}
 	
 	@Override
-	protected ItemStack getDroppedStack() {
-		ItemStack stack = super.getDroppedStack();
-		if (locked) {
-			writeToTag(stack.getOrCreateTag());
+	public Vec3d updatePassengerForDismount(LivingEntity passenger) {
+		Vec3d value = super.updatePassengerForDismount(passenger);
+		if (originalPos != null && world.getRegistryKey().toString().equals(originalWorld)) {
+			double x = originalPos.getX() + 0.5;
+			double y = originalPos.getY() + 0.5;
+			double z = originalPos.getZ() + 0.5;
+			value = new Vec3d(x, y, z);
+			BWUtil.teleport(this, x, y, z, false);
+			originalPos = null;
+			originalWorld = "";
 		}
-		return stack;
+		return value;
 	}
 	
 	private void readFromTag(CompoundTag tag) {
-		if (tag.contains("Entities")) {
-			ListTag entities = tag.getList("Entities", NbtType.STRING);
-			for (int i = 0; i < entities.size(); i++) {
-				this.entities.add(UUID.fromString(entities.getString(i)));
-			}
-			modeOnWhitelist = tag.getBoolean("ModeOnWhitelist");
-			locked = tag.getBoolean("Locked");
+		if (tag.contains("OriginalPos")) {
+			originalPos = BlockPos.fromLong(tag.getLong("OriginalPos"));
+			originalWorld = tag.getString("OriginalWorld");
 		}
 	}
 	
 	private void writeToTag(CompoundTag tag) {
-		if (locked) {
-			ListTag entities = new ListTag();
-			for (UUID entity : this.entities) {
-				entities.add(StringTag.of(entity.toString()));
-			}
-			tag.put("Entities", entities);
-			tag.putBoolean("ModeOnWhitelist", modeOnWhitelist);
-			tag.putBoolean("Locked", locked);
+		if (originalPos != null) {
+			tag.putLong("OriginalPos", originalPos.asLong());
+			tag.putString("OriginalWorld", originalWorld);
 		}
 	}
 }
