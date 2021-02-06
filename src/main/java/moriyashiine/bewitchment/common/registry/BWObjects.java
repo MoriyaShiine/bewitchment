@@ -270,7 +270,7 @@ public class BWObjects {
 	public static final Item JUNIPER_BROOM = create("juniper_broom", new BroomItem(gen().maxCount(1), BWEntityTypes.JUNIPER_BROOM));
 	public static final Item CYPRESS_BROOM = create("cypress_broom", new BroomItem(gen().maxCount(1), BWEntityTypes.CYPRESS_BROOM));
 	public static final Item ELDER_BROOM = create("elder_broom", new BroomItem(gen().maxCount(1), BWEntityTypes.ELDER_BROOM));
-	public static final Item DRAGONS_BLOOD_BROOM = create("dragons_blood_broom", new BroomItem(gen().maxCount(1), BWEntityTypes.DRAGONS_BLOOD_BROOM));
+	public static final Item DRAGONS_BLOOD_BROOM = create("dragons_blood_broom", new DragonsBloodBroomItem(gen().maxCount(1), BWEntityTypes.DRAGONS_BLOOD_BROOM));
 	public static final Item MENDING_SIGIL = create("mending_sigil", new SigilItem(gen(), BWSigils.MENDING));
 	public static final Item CLEANSING_SIGIL = create("cleansing_sigil", new SigilItem(gen(), BWSigils.CLEANSING));
 	public static final Item JUDGMENT_SIGIL = create("judgment_sigil", new SigilItem(gen(), BWSigils.JUDGMENT));

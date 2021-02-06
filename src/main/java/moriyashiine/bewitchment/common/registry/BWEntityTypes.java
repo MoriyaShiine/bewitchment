@@ -4,6 +4,7 @@ import com.terraformersmc.terraform.boat.TerraformBoat;
 import com.terraformersmc.terraform.boat.TerraformBoatEntity;
 import moriyashiine.bewitchment.api.entity.BroomEntity;
 import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.entity.DragonsBloodBroomEntity;
 import moriyashiine.bewitchment.common.entity.ElderBroomEntity;
 import moriyashiine.bewitchment.common.entity.JuniperBroomEntity;
 import moriyashiine.bewitchment.common.entity.living.*;
@@ -30,7 +31,7 @@ public class BWEntityTypes {
 	public static final EntityType<JuniperBroomEntity> JUNIPER_BROOM = create("juniper_broom", FabricEntityTypeBuilder.create(SpawnGroup.MISC, JuniperBroomEntity::new).dimensions(EntityType.ARROW.getDimensions()).build());
 	public static final EntityType<BroomEntity> CYPRESS_BROOM = create("cypress_broom", FabricEntityTypeBuilder.create(SpawnGroup.MISC, BroomEntity::new).dimensions(JUNIPER_BROOM.getDimensions()).build());
 	public static final EntityType<ElderBroomEntity> ELDER_BROOM = create("elder_broom", FabricEntityTypeBuilder.create(SpawnGroup.MISC, ElderBroomEntity::new).dimensions(JUNIPER_BROOM.getDimensions()).build());
-	public static final EntityType<BroomEntity> DRAGONS_BLOOD_BROOM = create("dragons_blood_broom", FabricEntityTypeBuilder.create(SpawnGroup.MISC, BroomEntity::new).dimensions(JUNIPER_BROOM.getDimensions()).build());
+	public static final EntityType<DragonsBloodBroomEntity> DRAGONS_BLOOD_BROOM = create("dragons_blood_broom", FabricEntityTypeBuilder.create(SpawnGroup.MISC, DragonsBloodBroomEntity::new).dimensions(JUNIPER_BROOM.getDimensions()).build());
 	
 	public static final EntityType<SilverArrowEntity> SILVER_ARROW = create("silver_arrow", FabricEntityTypeBuilder.<SilverArrowEntity>create(SpawnGroup.MISC, SilverArrowEntity::new).dimensions(EntityType.ARROW.getDimensions()).build());
 	public static final EntityType<HornedSpearEntity> HORNED_SPEAR = create("horned_spear", FabricEntityTypeBuilder.<HornedSpearEntity>create(SpawnGroup.MISC, HornedSpearEntity::new).dimensions(EntityType.TRIDENT.getDimensions()).build());

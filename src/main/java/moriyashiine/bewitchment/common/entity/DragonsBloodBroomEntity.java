@@ -1,11 +1,14 @@
 package moriyashiine.bewitchment.common.entity;
 
 import moriyashiine.bewitchment.api.entity.BroomEntity;
+import moriyashiine.bewitchment.api.item.SigilItem;
+import moriyashiine.bewitchment.api.registry.Sigil;
 import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.item.TaglockItem;
+import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
-import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.fabric.api.util.NbtType;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -15,6 +18,7 @@ import net.minecraft.nbt.StringTag;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -22,14 +26,27 @@ import java.util.List;
 import java.util.UUID;
 
 @SuppressWarnings("ConstantConditions")
-public class ElderBroomEntity extends BroomEntity {
+public class DragonsBloodBroomEntity extends BroomEntity {
 	private final List<UUID> entities = new ArrayList<>();
 	
-	private boolean modeOnWhitelist = false;
-	private boolean locked = false;
+	private Sigil sigil = null;
+	private int uses = 0;
 	
-	public ElderBroomEntity(EntityType<?> type, World world) {
+	private boolean modeOnWhitelist = false;
+	
+	public DragonsBloodBroomEntity(EntityType<?> type, World world) {
 		super(type, world);
+	}
+	
+	@Override
+	public void tick() {
+		super.tick();
+		if (!world.isClient && sigil != null && uses <= 0) {
+			entities.clear();
+			sigil = null;
+			uses = 0;
+			modeOnWhitelist = false;
+		}
 	}
 	
 	@Override
@@ -38,12 +55,13 @@ public class ElderBroomEntity extends BroomEntity {
 		if (player.isSneaking()) {
 			if (!client && player.getUuid().equals(getOwner())) {
 				ItemStack stack = player.getStackInHand(hand);
-				if (BWTags.SILVER_INGOTS.contains(stack.getItem()) && !locked) {
+				if (stack.getItem() instanceof SigilItem && ((SigilItem) stack.getItem()).sigil.active) {
+					sigil = ((SigilItem) stack.getItem()).sigil;
+					uses = sigil.uses;
 					modeOnWhitelist = true;
-					locked = true;
 					stack.decrement(1);
 				}
-				else if (locked) {
+				else if (sigil != null) {
 					if (stack.getItem() instanceof TaglockItem && TaglockItem.hasTaglock(stack)) {
 						entities.add(TaglockItem.getTaglockUUID(stack));
 						stack.decrement(1);
@@ -56,14 +74,15 @@ public class ElderBroomEntity extends BroomEntity {
 			}
 			return ActionResult.success(client);
 		}
-		boolean allowed = true;
-		if (locked && !player.getUuid().equals(getOwner())) {
-			allowed = !entities.isEmpty() && modeOnWhitelist && entities.contains(player.getUuid());
+		if (!world.isClient && hand == Hand.MAIN_HAND && sigil != null) {
+			if (sigil != null && sigil.active && test(player)) {
+				ActionResult result = sigil.use(world, getBlockPos(), player, hand);
+				if (result == ActionResult.SUCCESS) {
+					uses--;
+				}
+			}
 		}
-		if (allowed) {
-			return super.interact(player, hand);
-		}
-		return ActionResult.FAIL;
+		return super.interact(player, hand);
 	}
 	
 	@Override
@@ -75,7 +94,9 @@ public class ElderBroomEntity extends BroomEntity {
 	@Override
 	protected void writeCustomDataToTag(CompoundTag tag) {
 		super.writeCustomDataToTag(tag);
-		writeToTag(stack.getOrCreateTag());
+		if (sigil != null) {
+			writeToTag(tag);
+		}
 	}
 	
 	@Override
@@ -88,32 +109,50 @@ public class ElderBroomEntity extends BroomEntity {
 	@Override
 	protected ItemStack getDroppedStack() {
 		ItemStack stack = super.getDroppedStack();
-		if (locked) {
+		if (sigil != null) {
 			writeToTag(stack.getOrCreateTag());
+		}
+		else if (stack.hasTag()) {
+			stack.getTag().remove("Entities");
+			stack.getTag().remove("Sigil");
+			stack.getTag().remove("Uses");
+			stack.getTag().remove("ModeOnWhitelist");
 		}
 		return stack;
 	}
 	
 	private void readFromTag(CompoundTag tag) {
-		if (tag.contains("Entities")) {
+		if (tag.contains("Sigil")) {
 			ListTag entities = tag.getList("Entities", NbtType.STRING);
 			for (int i = 0; i < entities.size(); i++) {
 				this.entities.add(UUID.fromString(entities.getString(i)));
 			}
+			sigil = BWRegistries.SIGILS.get(new Identifier(tag.getString("Sigil")));
+			uses = tag.getInt("Uses");
 			modeOnWhitelist = tag.getBoolean("ModeOnWhitelist");
-			locked = tag.getBoolean("Locked");
 		}
 	}
 	
 	private void writeToTag(CompoundTag tag) {
-		if (locked) {
+		if (sigil != null) {
 			ListTag entities = new ListTag();
 			for (UUID entity : this.entities) {
 				entities.add(StringTag.of(entity.toString()));
 			}
 			tag.put("Entities", entities);
+			tag.putString("Sigil", BWRegistries.SIGILS.getId(sigil).toString());
+			tag.putInt("Uses", uses);
 			tag.putBoolean("ModeOnWhitelist", modeOnWhitelist);
-			tag.putBoolean("Locked", locked);
 		}
+	}
+	
+	private boolean test(Entity entity) {
+		if (!entities.isEmpty()) {
+			if (modeOnWhitelist) {
+				return entities.contains(entity.getUuid());
+			}
+			return !entities.contains(entity.getUuid());
+		}
+		return true;
 	}
 }
