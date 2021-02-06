@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.api.entity;
 
-import moriyashiine.bewitchment.common.entity.interfaces.PressingForwardAccessor;
+import moriyashiine.bewitchment.common.entity.interfaces.BroomUserAccessor;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -55,10 +55,10 @@ public class BroomEntity extends Entity {
 		if (isLogicalSideForUpdatingMovement()) {
 			updateTrackedPosition(getX(), getY(), getZ());
 			Entity passenger = getPrimaryPassenger();
-			if (passenger instanceof PressingForwardAccessor) {
+			if (passenger instanceof BroomUserAccessor) {
 				setRotation(passenger.yaw, passenger.pitch);
-				if (((PressingForwardAccessor) passenger).getPressingForward()) {
-					addVelocity(passenger.getRotationVector().x / 8, passenger.getRotationVector().y / 8, passenger.getRotationVector().z / 8);
+				if (((BroomUserAccessor) passenger).getPressingForward()) {
+					addVelocity(passenger.getRotationVector().x / 8 * ((BroomUserAccessor) passenger).getBroomSpeed(), passenger.getRotationVector().y / 8 * ((BroomUserAccessor) passenger).getBroomSpeed(), passenger.getRotationVector().z / 8 * ((BroomUserAccessor) passenger).getBroomSpeed());
 					setVelocity(MathHelper.clamp(getVelocity().x, -1, 1), MathHelper.clamp(getVelocity().y, -1, 1), MathHelper.clamp(getVelocity().z, -1, 1));
 				}
 			}

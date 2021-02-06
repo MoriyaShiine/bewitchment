@@ -8,8 +8,8 @@ import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.api.registry.Transformation;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
+import moriyashiine.bewitchment.common.entity.interfaces.BroomUserAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
-import moriyashiine.bewitchment.common.entity.interfaces.PressingForwardAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
 import moriyashiine.bewitchment.common.misc.BWUtil;
@@ -48,7 +48,7 @@ import java.util.Optional;
 
 @SuppressWarnings("ConstantConditions")
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity implements MagicAccessor, PolymorphAccessor, FortuneAccessor, ContractAccessor, TransformationAccessor, RespawnTimerAccessor, WerewolfAccessor, PressingForwardAccessor {
+public abstract class PlayerEntityMixin extends LivingEntity implements MagicAccessor, PolymorphAccessor, FortuneAccessor, ContractAccessor, TransformationAccessor, RespawnTimerAccessor, WerewolfAccessor, BroomUserAccessor {
 	private static final TrackedData<Integer> MAGIC = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	private static final TrackedData<Integer> MAGIC_TIMER = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	
@@ -61,6 +61,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	private static final TrackedData<Integer> WEREWOLF_VARIANT = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	
 	private static final TrackedData<Boolean> PRESSING_FORWARD = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+	private static final TrackedData<Float> BROOM_SPEED = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.FLOAT);
 	
 	private Fortune.Instance fortune = null;
 	
@@ -186,6 +187,16 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	@Override
 	public void setPressingForward(boolean pressingForward) {
 		dataTracker.set(PRESSING_FORWARD, pressingForward);
+	}
+	
+	@Override
+	public float getBroomSpeed() {
+		return dataTracker.get(BROOM_SPEED);
+	}
+	
+	@Override
+	public void setBroomSpeed(float broomSpeed) {
+		dataTracker.set(BROOM_SPEED, broomSpeed);
 	}
 	
 	@Inject(method = "tick", at = @At("HEAD"))
@@ -331,6 +342,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		setForcedTransformation(tag.getBoolean("ForcedTransformation"));
 		setWerewolfVariant(tag.getInt("WerewolfVariant"));
 		setPressingForward(tag.getBoolean("PressingForward"));
+		setBroomSpeed(tag.getFloat("BroomSpeed"));
 	}
 	
 	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
@@ -348,6 +360,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		tag.putBoolean("ForcedTransformation", getForcedTransformation());
 		tag.putInt("WerewolfVariant", getWerewolfVariant());
 		tag.putBoolean("PressingForward", getPressingForward());
+		tag.putFloat("BroomSpeed", getBroomSpeed());
 	}
 	
 	@Inject(method = "initDataTracker", at = @At("TAIL"))
@@ -360,5 +373,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		dataTracker.startTracking(POLYMORPH_NAME, "");
 		dataTracker.startTracking(WEREWOLF_VARIANT, 0);
 		dataTracker.startTracking(PRESSING_FORWARD, false);
+		dataTracker.startTracking(BROOM_SPEED, 1f);
 	}
 }

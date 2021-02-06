@@ -4,7 +4,7 @@ import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.common.Bewitchment;
-import moriyashiine.bewitchment.common.entity.interfaces.PressingForwardAccessor;
+import moriyashiine.bewitchment.common.entity.interfaces.BroomUserAccessor;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
@@ -31,7 +31,7 @@ public class TogglePressingForwardAccessor {
 					return;
 				}
 			}
-			((PressingForwardAccessor) player).setPressingForward(pressingForward);
+			((BroomUserAccessor) player).setPressingForward(pressingForward);
 		});
 	}
 }

@@ -1,7 +1,11 @@
 package moriyashiine.bewitchment.common.entity.interfaces;
 
-public interface PressingForwardAccessor {
+public interface BroomUserAccessor {
 	boolean getPressingForward();
 	
 	void setPressingForward(boolean pressingForward);
+	
+	float getBroomSpeed();
+	
+	void setBroomSpeed(float broomSpeed);
 }

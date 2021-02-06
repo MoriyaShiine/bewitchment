@@ -4,7 +4,7 @@ import com.mojang.authlib.GameProfile;
 import moriyashiine.bewitchment.api.entity.BroomEntity;
 import moriyashiine.bewitchment.client.BewitchmentClient;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
-import moriyashiine.bewitchment.common.entity.interfaces.PressingForwardAccessor;
+import moriyashiine.bewitchment.common.entity.interfaces.BroomUserAccessor;
 import moriyashiine.bewitchment.common.network.packet.CauldronTeleportPacket;
 import moriyashiine.bewitchment.common.network.packet.TogglePressingForwardAccessor;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
@@ -41,7 +41,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 		if (MinecraftClient.getInstance().options.keyForward.isPressed() && getVehicle() instanceof BroomEntity) {
 			TogglePressingForwardAccessor.send(true);
 		}
-		else if (((PressingForwardAccessor) this).getPressingForward()) {
+		else if (((BroomUserAccessor) this).getPressingForward()) {
 			TogglePressingForwardAccessor.send(false);
 		}
 	}
