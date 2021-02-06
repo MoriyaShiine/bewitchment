@@ -150,6 +150,6 @@ public class BroomEntity extends Entity {
 	}
 	
 	protected float getSpeed() {
-		return 0.5f;
+		return 0.75f;
 	}
 }

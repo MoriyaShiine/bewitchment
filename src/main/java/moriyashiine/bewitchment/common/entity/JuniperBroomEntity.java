@@ -11,6 +11,6 @@ public class JuniperBroomEntity extends BroomEntity {
 	
 	@Override
 	protected float getSpeed() {
-		return 1.25f;
+		return 1.5f;
 	}
 }
