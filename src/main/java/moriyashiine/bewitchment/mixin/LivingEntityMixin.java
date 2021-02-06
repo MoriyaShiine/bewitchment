@@ -241,6 +241,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		if (!world.isClient) {
 			Entity trueSource = source.getAttacker();
 			Entity directSource = source.getSource();
+			if ((getVehicle() != null && getVehicle().getType() == BWEntityTypes.CYPRESS_BROOM) || (trueSource != null && trueSource.getVehicle() != null && trueSource.getVehicle().getType() == BWEntityTypes.CYPRESS_BROOM)) {
+				return 0;
+			}
 			if (amount > 0 && (Object) this instanceof PlayerEntity && !BewitchmentAPI.isVampire(this, true)) {
 				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VAMPIRIC_POPPET, null, (PlayerEntity) (Object) this);
 				if (!poppet.isEmpty()) {

@@ -136,7 +136,7 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 				}
 				pledgeable.summonMinions((MobEntity) (Object) this);
 			}
-			if (isUndead() && (world.getEntitiesByType(BWEntityTypes.CYPRESS_BROOM, new Box(target.getBlockPos()).expand(2), entity -> !entity.removed).size() > 0 || !BWUtil.getBlockPoses(target.getBlockPos(), 2, foundPos -> BWTags.UNDEAD_MASK.contains(world.getBlockState(foundPos).getBlock())).isEmpty())) {
+			if (isUndead() && !BWUtil.getBlockPoses(target.getBlockPos(), 2, foundPos -> BWTags.UNDEAD_MASK.contains(world.getBlockState(foundPos).getBlock())).isEmpty()) {
 				return null;
 			}
 			ContractAccessor contractAccessor = (ContractAccessor) target;
