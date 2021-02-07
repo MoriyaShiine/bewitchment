@@ -166,19 +166,32 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "tick", at = @At("HEAD"))
 	private void tick(CallbackInfo callbackInfo) {
-		if (!world.isClient && (Object) this instanceof LivingEntity) {
+		if (!world.isClient) {
 			LivingEntity livingEntity = (LivingEntity) (Object) this;
+			int damage = 0;
 			if (BewitchmentAPI.isWeakToSilver(livingEntity)) {
-				int damage = BWUtil.getArmorPieces(livingEntity, stack -> BWTags.SILVER_ARMOR.contains(stack.getItem()));
+				damage += BWUtil.getArmorPieces(livingEntity, stack -> BWTags.SILVER_ARMOR.contains(stack.getItem()));
 				if (BewitchmentAPI.isHoldingSilver(livingEntity, Hand.MAIN_HAND)) {
 					damage++;
 				}
 				if (BewitchmentAPI.isHoldingSilver(livingEntity, Hand.OFF_HAND)) {
 					damage++;
 				}
-				if (damage > 0) {
-					damage(BWDamageSources.MAGIC_COPY, damage);
-				}
+			}
+			if (livingEntity.getMainHandStack().getItem() == BWObjects.GARLIC && BewitchmentAPI.isVampire(this, true)) {
+				damage++;
+			}
+			if (livingEntity.getOffHandStack().getItem() == BWObjects.GARLIC && BewitchmentAPI.isVampire(this, true)) {
+				damage++;
+			}
+			if (livingEntity.getMainHandStack().getItem() == BWObjects.ACONITE && BewitchmentAPI.isWerewolf(this, true)) {
+				damage++;
+			}
+			if (livingEntity.getOffHandStack().getItem() == BWObjects.ACONITE && BewitchmentAPI.isWerewolf(this, true)) {
+				damage++;
+			}
+			if (damage > 0) {
+				damage(BWDamageSources.MAGIC_COPY, damage);
 			}
 			if (!BewitchmentAPI.isVampire(this, true) && BWTags.HAS_BLOOD.contains(getType())) {
 				if (random.nextFloat() < (isSleeping() ? 1 / 50f : 1 / 500f)) {
