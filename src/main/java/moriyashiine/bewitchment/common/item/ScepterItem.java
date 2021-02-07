@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.common.item;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.common.Bewitchment;
-import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
@@ -45,7 +45,7 @@ public class ScepterItem extends Item {
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (user instanceof MagicAccessor) {
-			if (!world.isClient && !user.hasStatusEffect(BWStatusEffects.INHIBITED) && ((user instanceof PlayerEntity && ((PlayerEntity) user).isCreative()) || ((MagicAccessor) user).drainMagic(2, false))) {
+			if (!world.isClient && user instanceof PlayerEntity && BewitchmentAPI.usePlayerMagic((PlayerEntity) user, 2, false)) {
 				PotionEntity potion = new PotionEntity(world, user);
 				List<StatusEffectInstance> effects = PotionUtil.getCustomPotionEffects(stack);
 				ItemStack potionStack = PotionUtil.setCustomPotionEffects(new ItemStack(Items.SPLASH_POTION), effects);
@@ -54,7 +54,7 @@ public class ScepterItem extends Item {
 				potion.setProperties(user, user.pitch, user.yaw, -20.0F, 0.5F, 1.0F);
 				world.spawnEntity(potion);
 				world.playSound(null, user.getBlockPos(), SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 1, 1);
-				if (!(user instanceof PlayerEntity && ((PlayerEntity) user).isCreative())) {
+				if (!((PlayerEntity) user).isCreative()) {
 					stack.getOrCreateTag().putInt("PotionUses", stack.getOrCreateTag().getInt("PotionUses") - 1);
 					if (stack.getOrCreateTag().getInt("PotionUses") <= 0) {
 						stack.getOrCreateTag().put("CustomPotionEffects", new ListTag());

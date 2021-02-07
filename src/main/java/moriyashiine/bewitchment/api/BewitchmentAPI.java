@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.api;
 
+import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
@@ -9,6 +10,7 @@ import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
 import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.registry.BWObjects;
+import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import moriyashiine.bewitchment.common.registry.BWTransformations;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
@@ -114,6 +116,16 @@ public class BewitchmentAPI {
 			}
 		}
 		return null;
+	}
+	
+	public static boolean usePlayerMagic(PlayerEntity player, int amount, boolean simulate) {
+		if (player.isCreative()) {
+			return true;
+		}
+		if (player.hasStatusEffect(BWStatusEffects.INHIBITED)) {
+			return false;
+		}
+		return ((MagicAccessor) player).drainMagic(amount, simulate);
 	}
 	
 	public static boolean isVampire(Entity entity, boolean includeHumanForm) {

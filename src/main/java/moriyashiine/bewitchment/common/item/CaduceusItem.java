@@ -1,9 +1,9 @@
 package moriyashiine.bewitchment.common.item;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.CaduceusFireballAccessor;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
-import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
@@ -31,7 +31,7 @@ public class CaduceusItem extends SwordItem {
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (user instanceof MagicAccessor) {
-			if (!world.isClient && !user.hasStatusEffect(BWStatusEffects.INHIBITED) && ((user instanceof PlayerEntity && ((PlayerEntity) user).isCreative()) || ((MagicAccessor) user).drainMagic(2, false))) {
+			if (!world.isClient && user instanceof PlayerEntity && BewitchmentAPI.usePlayerMagic((PlayerEntity) user, 2, false)) {
 				FireballEntity fireball = new FireballEntity(world, user, user.getRotationVector().x, user.getRotationVector().y, user.getRotationVector().z);
 				fireball.setOwner(user);
 				fireball.setPos(fireball.getX(), fireball.getY() + 1, fireball.getZ());

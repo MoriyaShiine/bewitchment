@@ -1,6 +1,5 @@
 package moriyashiine.bewitchment.mixin;
 
-import com.sun.jna.platform.win32.WinDef;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.FortuneAccessor;
@@ -75,7 +74,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	@Shadow
 	public abstract SoundCategory getSoundCategory();
 	
-	@Shadow public abstract boolean damage(DamageSource source, float amount);
+	@Shadow
+	public abstract boolean damage(DamageSource source, float amount);
 	
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
