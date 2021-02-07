@@ -100,11 +100,6 @@ public class BroomEntity extends Entity {
 	}
 	
 	@Override
-	public double getMountedHeightOffset() {
-		return 0.25f + MathHelper.sin((age + getEntityId()) / 4f) / 16f;
-	}
-	
-	@Override
 	protected boolean canAddPassenger(Entity passenger) {
 		return getPrimaryPassenger() == null;
 	}
