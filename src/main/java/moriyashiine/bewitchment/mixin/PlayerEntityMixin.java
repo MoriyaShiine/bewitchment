@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.mixin;
 
+import com.sun.jna.platform.win32.WinDef;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.FortuneAccessor;
@@ -73,6 +74,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	
 	@Shadow
 	public abstract SoundCategory getSoundCategory();
+	
+	@Shadow public abstract boolean damage(DamageSource source, float amount);
 	
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
@@ -285,11 +288,15 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 					getHungerManager().add(foodComponent.getHunger(), foodComponent.getSaturationModifier());
 				}
 			}
-			if (BewitchmentAPI.isVampire(this, true) || (BewitchmentAPI.isWerewolf(this, true) && !foodComponent.isMeat())) {
+			boolean vampire = BewitchmentAPI.isVampire(this, true);
+			if (vampire || (BewitchmentAPI.isWerewolf(this, true) && !foodComponent.isMeat())) {
 				addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 100, 1));
 				addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100, 1));
 				addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 100, 1));
 				addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 100, 1));
+			}
+			if (vampire && (stack.getItem() == BWObjects.GARLIC || stack.getItem() == BWObjects.GRILLED_GARLIC || stack.getItem() == BWObjects.GARLIC_BREAD)) {
+				damage(BWDamageSources.MAGIC_COPY, Float.MAX_VALUE);
 			}
 		}
 	}
