@@ -38,8 +38,7 @@ public abstract class PlayerEntityRendererMixin {
 			callbackInfo.cancel();
 			return;
 		}
-		if(player.getVehicle() instanceof BroomEntity)
-		{
+		if (player.getVehicle() instanceof BroomEntity) {
 			matrixStack.translate(0, MathHelper.sin((player.getVehicle().age + player.getVehicle().getEntityId()) / 4f) / 16f, 0);
 		}
 		LivingEntity entity = null;
