@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.mixin.client;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.entity.BroomEntity;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
@@ -18,6 +19,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -35,6 +37,10 @@ public abstract class PlayerEntityRendererMixin {
 		if (pos.isPresent() && player.world.getBlockState(pos.get()).getBlock() instanceof CoffinBlock) {
 			callbackInfo.cancel();
 			return;
+		}
+		if(player.getVehicle() instanceof BroomEntity)
+		{
+			matrixStack.translate(0, MathHelper.sin((player.getVehicle().age + player.getVehicle().getEntityId()) / 4f) / 16f, 0);
 		}
 		LivingEntity entity = null;
 		if (BewitchmentAPI.isVampire(player, false)) {
