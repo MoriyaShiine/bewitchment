@@ -129,12 +129,12 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Override
 	public int getBlood() {
-		return BWTags.HAS_BLOOD.contains(getType()) ? dataTracker.get(BLOOD) : 0;
+		return dataTracker != null && BWTags.HAS_BLOOD.contains(getType()) ? dataTracker.get(BLOOD) : 0;
 	}
 	
 	@Override
 	public void setBlood(int blood) {
-		if (BWTags.HAS_BLOOD.contains(getType())) {
+		if (dataTracker != null && BWTags.HAS_BLOOD.contains(getType())) {
 			dataTracker.set(BLOOD, blood);
 		}
 	}
