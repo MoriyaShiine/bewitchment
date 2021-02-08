@@ -142,6 +142,7 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 								}
 								if (bottle != null) {
 									BWUtil.addItemToInventoryAndConsume(player, hand, bottle);
+									cauldron.syncCauldron();
 								}
 							}
 							else if (waterBottle) {
@@ -149,10 +150,10 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 							}
 							if (targetLevel == 0) {
 								cauldron.mode = cauldron.reset();
-								cauldron.syncCauldron();
 							}
 							world.setBlockState(pos, state.with(Properties.LEVEL_3, targetLevel));
 							world.playSound(null, pos, bucket ? SoundEvents.ITEM_BUCKET_FILL : waterBucket ? SoundEvents.ITEM_BUCKET_EMPTY : glassBottle ? SoundEvents.ITEM_BOTTLE_FILL : SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1, 1);
+							cauldron.syncCauldron();
 						}
 					}
 				}
