@@ -9,6 +9,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.UUID;
+
 @SuppressWarnings("ConstantConditions")
 @Mixin(TippedArrowRecipe.class)
 public class TippedArrowRecipeMixin {
@@ -17,17 +19,17 @@ public class TippedArrowRecipeMixin {
 		ItemStack stack = inventory.getStack(1 + inventory.getWidth());
 		if (stack.hasTag() && stack.getTag().contains("BewitchmentBrew")) {
 			int color = PotionUtil.getColor(stack);
-			String uuid = null;
+			UUID uuid = null;
 			String name = null;
-			if (stack.getTag().contains("PolymorphUUID")){
-				uuid = stack.getTag().getString("PolymorphUUID");
+			if (stack.getTag().contains("PolymorphUUID")) {
+				uuid = stack.getTag().getUuid("PolymorphUUID");
 				name = stack.getTag().getString("PolymorphName");
 			}
 			stack = callbackInfo.getReturnValue();
 			stack.getOrCreateTag().putBoolean("BewitchmentBrew", true);
 			stack.getOrCreateTag().putInt("CustomPotionColor", color);
 			if (uuid != null) {
-				stack.getOrCreateTag().putString("PolymorphUUID", uuid);
+				stack.getOrCreateTag().putUuid("PolymorphUUID", uuid);
 				stack.getOrCreateTag().putString("PolymorphName", name);
 			}
 			callbackInfo.setReturnValue(stack);

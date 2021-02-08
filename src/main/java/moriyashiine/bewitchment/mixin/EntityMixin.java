@@ -40,14 +40,14 @@ public abstract class EntityMixin implements WetAccessor {
 	public abstract UUID getUuid();
 	
 	@Shadow
+	public abstract boolean isOnFire();
+	
+	@Shadow
 	public World world;
 	
 	@Shadow
 	@Final
 	protected Random random;
-	
-	@Shadow
-	public abstract boolean isOnFire();
 	
 	@Shadow
 	@Final

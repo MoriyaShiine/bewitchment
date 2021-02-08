@@ -134,6 +134,7 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 										}
 										if (failed) {
 											cauldron.mode = cauldron.fail();
+											cauldron.syncCauldron();
 											return ActionResult.FAIL;
 										}
 									}

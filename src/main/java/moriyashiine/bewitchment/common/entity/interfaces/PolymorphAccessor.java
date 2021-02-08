@@ -1,9 +1,11 @@
 package moriyashiine.bewitchment.common.entity.interfaces;
 
+import java.util.UUID;
+
 public interface PolymorphAccessor {
-	String getPolymorphUUID();
+	UUID getPolymorphUUID();
 	
-	void setPolymorphUUID(String uuid);
+	void setPolymorphUUID(UUID uuid);
 	
 	String getPolymorphName();
 	

@@ -47,6 +47,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @SuppressWarnings("ConstantConditions")
 @Mixin(PlayerEntity.class)
@@ -57,14 +58,14 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	private static final TrackedData<String> TRANSFORMATION = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.STRING);
 	private static final TrackedData<Boolean> ALTERNATE_FORM = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
-	private static final TrackedData<String> POLYMORPH_UUID = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.STRING);
-	private static final TrackedData<String> POLYMORPH_NAME = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.STRING);
-	
 	private static final TrackedData<Integer> WEREWOLF_VARIANT = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	
 	private static final TrackedData<Boolean> PRESSING_FORWARD = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
 	private Fortune.Instance fortune = null;
+	
+	private UUID polymorphUUID = null;
+	private String polymorphName = null;
 	
 	private int respawnTimer = 400;
 	
@@ -134,23 +135,23 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	}
 	
 	@Override
-	public String getPolymorphUUID() {
-		return dataTracker.get(POLYMORPH_UUID);
+	public UUID getPolymorphUUID() {
+		return polymorphUUID;
 	}
 	
 	@Override
-	public void setPolymorphUUID(String uuid) {
-		dataTracker.set(POLYMORPH_UUID, uuid);
+	public void setPolymorphUUID(UUID uuid) {
+		polymorphUUID = uuid;
 	}
 	
 	@Override
 	public String getPolymorphName() {
-		return dataTracker.get(POLYMORPH_NAME);
+		return polymorphName;
 	}
 	
 	@Override
 	public void setPolymorphName(String name) {
-		dataTracker.set(POLYMORPH_NAME, name);
+		polymorphName = name;
 	}
 	
 	@Override
@@ -199,9 +200,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 			if (getMagicTimer() > 0) {
 				setMagicTimer(getMagicTimer() - 1);
 			}
-			if (!getPolymorphUUID().isEmpty() && !hasStatusEffect(BWStatusEffects.POLYMORPH)){
-				setPolymorphUUID("");
-				setPolymorphName("");
+			if (getPolymorphUUID() != null && !hasStatusEffect(BWStatusEffects.POLYMORPH)) {
+				setPolymorphUUID(null);
+				setPolymorphName(null);
 				Impersonator.get((PlayerEntity) (Object) this).stopImpersonation(PolymorphStatusEffect.IMPERSONATE_IDENTIFIER);
 			}
 			if (getFortune() != null) {
@@ -339,8 +340,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 			setTransformation(BWRegistries.TRANSFORMATIONS.get(new Identifier(tag.getString("Transformation"))));
 		}
 		setAlternateForm(tag.getBoolean("AlternateForm"));
-		setPolymorphUUID(tag.getString("PolymorphUUID"));
-		setPolymorphName(tag.getString("PolymorphName"));
+		if (tag.contains("PolymorphUUID")) {
+			setPolymorphUUID(tag.getUuid("PolymorphUUID"));
+			setPolymorphName(tag.getString("PolymorphName"));
+		}
 		setRespawnTimer(tag.getInt("RespawnTimer"));
 		setForcedTransformation(tag.getBoolean("ForcedTransformation"));
 		setWerewolfVariant(tag.getInt("WerewolfVariant"));
@@ -356,8 +359,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		}
 		tag.putString("Transformation", BWRegistries.TRANSFORMATIONS.getId(getTransformation()).toString());
 		tag.putBoolean("AlternateForm", getAlternateForm());
-		tag.putString("PolymorphUUID", getPolymorphUUID());
-		tag.putString("PolymorphName", getPolymorphName());
+		if (getPolymorphUUID() != null) {
+			tag.putUuid("PolymorphUUID", getPolymorphUUID());
+			tag.putString("PolymorphName", getPolymorphName());
+		}
 		tag.putInt("RespawnTimer", getRespawnTimer());
 		tag.putBoolean("ForcedTransformation", getForcedTransformation());
 		tag.putInt("WerewolfVariant", getWerewolfVariant());
@@ -370,8 +375,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		dataTracker.startTracking(MAGIC_TIMER, 60);
 		dataTracker.startTracking(TRANSFORMATION, BWRegistries.TRANSFORMATIONS.getId(BWTransformations.HUMAN).toString());
 		dataTracker.startTracking(ALTERNATE_FORM, false);
-		dataTracker.startTracking(POLYMORPH_UUID, "");
-		dataTracker.startTracking(POLYMORPH_NAME, "");
 		dataTracker.startTracking(WEREWOLF_VARIANT, 0);
 		dataTracker.startTracking(PRESSING_FORWARD, false);
 	}

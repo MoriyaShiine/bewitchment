@@ -21,7 +21,7 @@ public abstract class PotionItemMixin {
 				String name = tag.getString("PolymorphName");
 				if (!name.isEmpty()) {
 					PolymorphAccessor polymorphAccessor = (PolymorphAccessor) user;
-					polymorphAccessor.setPolymorphUUID(tag.getString("PolymorphUUID"));
+					polymorphAccessor.setPolymorphUUID(tag.getUuid("PolymorphUUID"));
 					polymorphAccessor.setPolymorphName(name);
 				}
 			}
