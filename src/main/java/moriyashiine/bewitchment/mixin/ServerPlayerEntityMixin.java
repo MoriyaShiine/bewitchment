@@ -1,7 +1,6 @@
 package moriyashiine.bewitchment.mixin;
 
 import com.mojang.authlib.GameProfile;
-import io.github.ladysnake.impersonate.Impersonator;
 import moriyashiine.bewitchment.api.interfaces.entity.*;
 import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
@@ -14,8 +13,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import static moriyashiine.bewitchment.common.statuseffect.PolymorphStatusEffect.IMPERSONATE_IDENTIFIER;
 
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin extends PlayerEntity {
@@ -33,9 +30,8 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 			((RespawnTimerAccessor) this).setRespawnTimer(((RespawnTimerAccessor) oldPlayer).getRespawnTimer());
 			((TransformationAccessor) this).setAlternateForm(((TransformationAccessor) oldPlayer).getAlternateForm());
 			((WerewolfAccessor) this).setForcedTransformation(((WerewolfAccessor) oldPlayer).getForcedTransformation());
-		}else{
-			Impersonator.get(this).stopImpersonation(IMPERSONATE_IDENTIFIER);
 		}
+
 		((FortuneAccessor) this).setFortune(((FortuneAccessor) oldPlayer).getFortune());
 		((CurseAccessor) this).getCurses().addAll(((CurseAccessor) oldPlayer).getCurses());
 		((ContractAccessor) this).getContracts().addAll(((ContractAccessor) oldPlayer).getContracts());

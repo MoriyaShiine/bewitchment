@@ -6,6 +6,7 @@
   "mixins": [
     "AbstractBlockStateMixin",
     "AnimalMateGoalMixin",
+    "AreaEffectCloudEntityMixin",
     "BedBlockMixin",
     "BlockEntityMixin",
     "BlockMixin",
