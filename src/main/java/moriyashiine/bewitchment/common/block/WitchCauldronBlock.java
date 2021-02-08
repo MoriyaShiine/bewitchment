@@ -100,7 +100,6 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 				if (!client) {
 					if (nameTag && stack.hasCustomName()) {
 						cauldron.customName = stack.getName();
-						cauldron.syncCauldron();
 						if (!player.isCreative()) {
 							stack.decrement(1);
 						}
@@ -135,14 +134,12 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 										}
 										if (failed) {
 											cauldron.mode = cauldron.fail();
-											cauldron.syncCauldron();
 											return ActionResult.FAIL;
 										}
 									}
 								}
 								if (bottle != null) {
 									BWUtil.addItemToInventoryAndConsume(player, hand, bottle);
-									cauldron.syncCauldron();
 								}
 							}
 							else if (waterBottle) {
@@ -153,9 +150,9 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 							}
 							world.setBlockState(pos, state.with(Properties.LEVEL_3, targetLevel));
 							world.playSound(null, pos, bucket ? SoundEvents.ITEM_BUCKET_FILL : waterBucket ? SoundEvents.ITEM_BUCKET_EMPTY : glassBottle ? SoundEvents.ITEM_BOTTLE_FILL : SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1, 1);
-							cauldron.syncCauldron();
 						}
 					}
+					cauldron.syncCauldron();
 				}
 			}
 			return ActionResult.success(client);
