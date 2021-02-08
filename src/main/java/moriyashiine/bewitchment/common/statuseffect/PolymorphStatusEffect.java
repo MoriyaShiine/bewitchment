@@ -27,16 +27,4 @@ public class PolymorphStatusEffect extends StatusEffect {
 			Impersonator.get((PlayerEntity) entity).impersonate(IMPERSONATE_IDENTIFIER, new GameProfile(UUID.fromString(((PolymorphAccessor) entity).getPolymorphUUID()), ((PolymorphAccessor) entity).getPolymorphName()));
 		}
 	}
-	
-	@Override
-	public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-		if (entity instanceof PolymorphAccessor) {
-			PolymorphAccessor polymorphAccessor = (PolymorphAccessor) entity;
-			polymorphAccessor.setPolymorphUUID("");
-			polymorphAccessor.setPolymorphName("");
-			if (entity instanceof ServerPlayerEntity) {
-				Impersonator.get((PlayerEntity) entity).stopImpersonation(IMPERSONATE_IDENTIFIER);
-			}
-		}
-	}
 }

@@ -199,7 +199,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 			if (getMagicTimer() > 0) {
 				setMagicTimer(getMagicTimer() - 1);
 			}
-			if (getPolymorphUUID().isEmpty() && hasStatusEffect(BWStatusEffects.POLYMORPH)){
+			if (!getPolymorphUUID().isEmpty() && !hasStatusEffect(BWStatusEffects.POLYMORPH)){
+				setPolymorphUUID("");
+				setPolymorphName("");
 				Impersonator.get((PlayerEntity) (Object) this).stopImpersonation(PolymorphStatusEffect.IMPERSONATE_IDENTIFIER);
 			}
 			if (getFortune() != null) {
