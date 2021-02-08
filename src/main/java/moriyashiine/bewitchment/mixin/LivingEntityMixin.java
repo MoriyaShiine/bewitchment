@@ -25,6 +25,7 @@ import moriyashiine.bewitchment.common.registry.*;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.util.NbtType;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
@@ -193,7 +194,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			if (damage > 0) {
 				damage(BWDamageSources.MAGIC_COPY, damage);
 			}
-			if (!BewitchmentAPI.isVampire(this, true) && BWTags.HAS_BLOOD.contains(getType())) {
+			if (BWTags.HAS_BLOOD.contains(getType()) && !BewitchmentAPI.isVampire(this, true)) {
 				if (random.nextFloat() < (isSleeping() ? 1 / 50f : 1 / 500f)) {
 					fillBlood(1, false);
 				}
@@ -246,6 +247,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		if (!world.isClient) {
 			amount = BWDamageSources.handleDamage((LivingEntity) (Object) this, source, amount);
 		}
+		if ((getVehicle() != null && getVehicle().getType() == BWEntityTypes.CYPRESS_BROOM) || (source.getAttacker() != null && source.getAttacker().getVehicle() != null && source.getAttacker().getVehicle().getType() == BWEntityTypes.CYPRESS_BROOM)) {
+			amount *= 0.2f;
+		}
 		return amount;
 	}
 	
@@ -254,8 +258,13 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		if (!world.isClient) {
 			Entity trueSource = source.getAttacker();
 			Entity directSource = source.getSource();
-			if ((getVehicle() != null && getVehicle().getType() == BWEntityTypes.CYPRESS_BROOM) || (trueSource != null && trueSource.getVehicle() != null && trueSource.getVehicle().getType() == BWEntityTypes.CYPRESS_BROOM)) {
+			if (!source.isOutOfWorld() && (hasStatusEffect(BWStatusEffects.ETHEREAL) || (directSource instanceof LivingEntity && ((LivingEntity) directSource).hasStatusEffect(BWStatusEffects.ETHEREAL)))) {
 				return 0;
+			}
+			if (!source.isOutOfWorld()) {
+				if (!BWUtil.getBlockPoses(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity && ((GlyphBlockEntity) world.getBlockEntity(currentPos)).ritualFunction == BWRitualFunctions.PREVENT_DAMAGE).isEmpty()) {
+					return 0;
+				}
 			}
 			if (amount > 0 && (Object) this instanceof PlayerEntity && !BewitchmentAPI.isVampire(this, true)) {
 				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VAMPIRIC_POPPET, null, (PlayerEntity) (Object) this);
@@ -401,6 +410,12 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				callbackInfo.setReturnValue(damage(BWDamageSources.SUN, amount * 2));
 				return;
 			}
+			if (this instanceof InsanityTargetAccessor) {
+				if (((InsanityTargetAccessor) this).getInsanityTargetUUID().isPresent()) {
+					callbackInfo.setReturnValue(false);
+					return;
+				}
+			}
 			Entity trueSource = source.getAttacker();
 			if (trueSource instanceof LeonardEntity) {
 				removeStatusEffect(BWStatusEffects.MAGIC_SPONGE);
@@ -425,26 +440,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					callbackInfo.setReturnValue(false);
 					return;
 				}
-			}
-			if (this instanceof InsanityTargetAccessor) {
-				if (((InsanityTargetAccessor) this).getInsanityTargetUUID().isPresent()) {
-					callbackInfo.setReturnValue(false);
-					return;
-				}
-			}
-			if (!source.isOutOfWorld()) {
-				if (!BWUtil.getBlockPoses(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity && ((GlyphBlockEntity) world.getBlockEntity(currentPos)).ritualFunction == BWRitualFunctions.PREVENT_DAMAGE).isEmpty()) {
-					callbackInfo.setReturnValue(false);
-					return;
-				}
-			}
-			if (!source.isOutOfWorld() && (hasStatusEffect(BWStatusEffects.ETHEREAL) || (directSource instanceof LivingEntity && ((LivingEntity) directSource).hasStatusEffect(BWStatusEffects.ETHEREAL)))) {
-				callbackInfo.setReturnValue(false);
-				return;
-			}
-			if (source == DamageSource.FALL && (Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == BWEntityTypes.OWL) {
-				callbackInfo.setReturnValue(false);
-				return;
 			}
 			if (hasStatusEffect(BWStatusEffects.DEFLECTION) && directSource != null && EntityTypeTags.ARROWS.contains(directSource.getType())) {
 				int amplifier = getStatusEffect(BWStatusEffects.DEFLECTION).getAmplifier() + 1;
@@ -624,6 +619,20 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	private void blockedByShield(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (BewitchmentAPI.isWerewolf(source.getSource(), false)) {
 			callbackInfo.setReturnValue(false);
+		}
+	}
+	
+	@Inject(method = "handleFallDamage", at = @At("HEAD"), cancellable = true)
+	private void handleFallDamage(float fallDistance, float damageMultiplier, CallbackInfoReturnable<Boolean> callbackInfo) {
+		if ((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == BWEntityTypes.OWL) {
+			callbackInfo.setReturnValue(false);
+		}
+	}
+	
+	@Inject(method = "fall", at = @At("HEAD"), cancellable = true)
+	private void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition, CallbackInfo callbackInfo) {
+		if ((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == BWEntityTypes.OWL) {
+			callbackInfo.cancel();
 		}
 	}
 	
