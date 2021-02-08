@@ -7,6 +7,7 @@
     "AbstractBlockStateMixin",
     "AnimalMateGoalMixin",
     "AreaEffectCloudEntityMixin",
+    "ArrowEntityMixin",
     "BedBlockMixin",
     "BlockEntityMixin",
     "BlockMixin",

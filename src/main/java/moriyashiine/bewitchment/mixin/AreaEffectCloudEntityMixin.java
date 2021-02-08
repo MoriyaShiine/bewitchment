@@ -35,6 +35,7 @@ public class AreaEffectCloudEntityMixin implements PolymorphAccessor {
 
     @Redirect(method = "tick", at = @At(value = "INVOKE", target = "net/minecraft/entity/LivingEntity.addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;)Z"))
     private boolean tick(LivingEntity entity, StatusEffectInstance effect){
+        //todo replace redirect with local inject
         if (entity instanceof PolymorphAccessor && effect.getEffectType() == BWStatusEffects.POLYMORPH && polymorphUUID != null){
             PolymorphAccessor polymorphAccessor = (PolymorphAccessor) entity;
             polymorphAccessor.setPolymorphUUID(polymorphUUID);
