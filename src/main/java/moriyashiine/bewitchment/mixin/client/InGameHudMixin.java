@@ -84,21 +84,19 @@ public abstract class InGameHudMixin extends DrawableHelper {
 	}
 	
 	private void drawBlood(MatrixStack matrices, LivingEntity entity, int x, int y, int droplets) {
-		if (BWTags.HAS_BLOOD.contains(entity.getType())) {
-			BloodAccessor bloodAccessor = (BloodAccessor) entity;
-			int v = entity.hasStatusEffect(StatusEffects.HUNGER) ? 9 : 0;
-			float blood = ((float) bloodAccessor.getBlood() / bloodAccessor.MAX_BLOOD * droplets);
-			int full = (int) blood;
-			for (int i = 0; i < full; i++) {
-				drawTexture(matrices, x - i * 8, y, 39, v, 9, 9);
-			}
-			if (full < droplets) {
-				float remaining = blood - full;
-				drawTexture(matrices, x - full * 8, y, remaining > 5 / 6f ? 48 : remaining > 4 / 6f ? 57 : remaining > 3 / 6f ? 66 : remaining > 2 / 6f ? 75 : remaining > 1 / 6f ? 84 : remaining > 0 ? 93 : 102, v, 9, 9);
-			}
-			for (int i = (full + 1); i < droplets; i++) {
-				drawTexture(matrices, x - i * 8, y, 102, v, 9, 9);
-			}
+		BloodAccessor bloodAccessor = (BloodAccessor) entity;
+		int v = entity.hasStatusEffect(StatusEffects.HUNGER) ? 9 : 0;
+		float blood = ((float) bloodAccessor.getBlood() / bloodAccessor.MAX_BLOOD * droplets);
+		int full = (int) blood;
+		for (int i = 0; i < full; i++) {
+			drawTexture(matrices, x - i * 8, y, 39, v, 9, 9);
+		}
+		if (full < droplets) {
+			float remaining = blood - full;
+			drawTexture(matrices, x - full * 8, y, remaining > 5 / 6f ? 48 : remaining > 4 / 6f ? 57 : remaining > 3 / 6f ? 66 : remaining > 2 / 6f ? 75 : remaining > 1 / 6f ? 84 : remaining > 0 ? 93 : 102, v, 9, 9);
+		}
+		for (int i = (full + 1); i < droplets; i++) {
+			drawTexture(matrices, x - i * 8, y, 102, v, 9, 9);
 		}
 	}
 }

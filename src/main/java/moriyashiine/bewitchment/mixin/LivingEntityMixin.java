@@ -130,14 +130,12 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Override
 	public int getBlood() {
-		return BWTags.HAS_BLOOD.contains(getType()) ? dataTracker.get(BLOOD) : 0;
+		return dataTracker.get(BLOOD);
 	}
 	
 	@Override
 	public void setBlood(int blood) {
-		if (BWTags.HAS_BLOOD.contains(getType())) {
-			dataTracker.set(BLOOD, blood);
-		}
+		dataTracker.set(BLOOD, blood);
 	}
 	
 	@Override
@@ -246,9 +244,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	private float modifyDamage0(float amount, DamageSource source) {
 		if (!world.isClient) {
 			amount = BWDamageSources.handleDamage((LivingEntity) (Object) this, source, amount);
-		}
-		if ((getVehicle() != null && getVehicle().getType() == BWEntityTypes.CYPRESS_BROOM) || (source.getAttacker() != null && source.getAttacker().getVehicle() != null && source.getAttacker().getVehicle().getType() == BWEntityTypes.CYPRESS_BROOM)) {
-			amount *= 0.2f;
 		}
 		return amount;
 	}
@@ -387,6 +382,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 			}
 			if (BewitchmentAPI.isVampire(directSource, false)) {
 				amount /= 8;
+			}
+			if ((getVehicle() != null && getVehicle().getType() == BWEntityTypes.CYPRESS_BROOM) || (source.getAttacker() != null && source.getAttacker().getVehicle() != null && source.getAttacker().getVehicle().getType() == BWEntityTypes.CYPRESS_BROOM)) {
+				amount *= 0.2f;
 			}
 		}
 		return amount;
@@ -764,7 +762,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
 	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		if (BWTags.HAS_BLOOD.contains(getType()) && tag.contains("Blood")) {
+		if (tag.contains("Blood")) {
 			setBlood(tag.getInt("Blood"));
 		}
 		setFamiliar(tag.getBoolean("IsFamiliar"));
@@ -782,9 +780,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
 	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		if (BWTags.HAS_BLOOD.contains(getType())) {
-			tag.putInt("Blood", getBlood());
-		}
+		tag.putInt("Blood", getBlood());
 		tag.putBoolean("IsFamiliar", getFamiliar());
 		tag.put("Curses", toTagCurse());
 		tag.put("Contracts", toTagContract());
@@ -792,9 +788,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "initDataTracker", at = @At("TAIL"))
 	private void initDataTracker(CallbackInfo callbackInfo) {
-		if (BWTags.HAS_BLOOD.contains(getType())) {
-			dataTracker.startTracking(BLOOD, MAX_BLOOD);
-		}
+		dataTracker.startTracking(BLOOD, MAX_BLOOD);
 		dataTracker.startTracking(IS_FAMILIAR, false);
 	}
 }
