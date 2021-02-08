@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.mixin;
 
+import io.github.ladysnake.impersonate.Impersonator;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.FortuneAccessor;
@@ -14,6 +15,7 @@ import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.*;
+import moriyashiine.bewitchment.common.statuseffect.PolymorphStatusEffect;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
@@ -196,6 +198,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		if (!world.isClient) {
 			if (getMagicTimer() > 0) {
 				setMagicTimer(getMagicTimer() - 1);
+			}
+			if (!getPolymorphUUID().isEmpty() && !hasStatusEffect(BWStatusEffects.POLYMORPH)){
+				setPolymorphUUID("");
+				setPolymorphName("");
+				Impersonator.get((PlayerEntity) (Object) this).stopImpersonation(PolymorphStatusEffect.IMPERSONATE_IDENTIFIER);
 			}
 			if (getFortune() != null) {
 				if (getFortune().fortune.tick((ServerWorld) world, (PlayerEntity) (Object) this)) {

@@ -31,6 +31,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 			((TransformationAccessor) this).setAlternateForm(((TransformationAccessor) oldPlayer).getAlternateForm());
 			((WerewolfAccessor) this).setForcedTransformation(((WerewolfAccessor) oldPlayer).getForcedTransformation());
 		}
+
 		((FortuneAccessor) this).setFortune(((FortuneAccessor) oldPlayer).getFortune());
 		((CurseAccessor) this).getCurses().addAll(((CurseAccessor) oldPlayer).getCurses());
 		((ContractAccessor) this).getContracts().addAll(((ContractAccessor) oldPlayer).getContracts());
