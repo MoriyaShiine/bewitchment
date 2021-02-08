@@ -14,31 +14,31 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AreaEffectCloudEntity.class)
 public class AreaEffectCloudEntityMixin implements PolymorphAccessor {
-    private String polymorphName;
     private String polymorphUUID;
+    private String polymorphName;
 
     @Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
-    private void writePolymorphData(CompoundTag tag, CallbackInfo ci){
-        if (polymorphName != null) {
-            tag.putString("PolymorphName", polymorphName);
+    private void writeCustomDataToTag(CompoundTag tag, CallbackInfo ci){
+        if (polymorphUUID != null) {
             tag.putString("PolymorphUUID", polymorphUUID);
+            tag.putString("PolymorphName", polymorphName);
         }
     }
 
     @Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
-    private void readPolymorphData(CompoundTag tag, CallbackInfo ci){
-        if (tag.contains("PolymorphName")) {
-            polymorphName = tag.getString("PolymorphName");
+    private void readCustomDataFromTag(CompoundTag tag, CallbackInfo ci){
+        if (tag.contains("PolymorphUUID")) {
             polymorphUUID = tag.getString("PolymorphUUID");
+            polymorphName = tag.getString("PolymorphName");
         }
     }
 
     @Redirect(method = "tick", at = @At(value = "INVOKE", target = "net/minecraft/entity/LivingEntity.addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;)Z"))
-    private boolean applyPolymorphData(LivingEntity entity, StatusEffectInstance effect){
+    private boolean tick(LivingEntity entity, StatusEffectInstance effect){
         if (entity instanceof PolymorphAccessor && effect.getEffectType() == BWStatusEffects.POLYMORPH && polymorphUUID != null){
             PolymorphAccessor polymorphAccessor = (PolymorphAccessor) entity;
-            polymorphAccessor.setPolymorphName(polymorphName);
             polymorphAccessor.setPolymorphUUID(polymorphUUID);
+            polymorphAccessor.setPolymorphName(polymorphName);
         }
         return entity.addStatusEffect(effect);
     }
