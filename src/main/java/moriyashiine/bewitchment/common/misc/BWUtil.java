@@ -228,10 +228,24 @@ public class BWUtil {
 	}
 	
 	public static void addItemToInventoryAndConsume(PlayerEntity player, Hand hand, ItemStack toAdd) {
+		boolean shouldAdd = false;
 		ItemStack stack = player.getStackInHand(hand);
-		stack.decrement(player.isCreative() ? 0 : 1);
-		if (!player.inventory.insertStack(toAdd)) {
-			player.dropItem(stack, false, true);
+		if (stack.getCount() == 1) {
+			if (player.isCreative()) {
+				shouldAdd = true;
+			}
+			else {
+				player.setStackInHand(hand, toAdd);
+			}
+		}
+		else {
+			stack.decrement(1);
+			shouldAdd = true;
+		}
+		if (shouldAdd) {
+			if (!player.inventory.insertStack(toAdd)) {
+				player.dropItem(toAdd, false, true);
+			}
 		}
 	}
 	

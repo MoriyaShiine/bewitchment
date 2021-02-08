@@ -217,6 +217,13 @@ public class TaglockItem extends Item {
 		return ActionResult.FAIL;
 	}
 	
+	public static ItemStack putTaglock(ItemStack stack, Entity entity) {
+		stack.getOrCreateTag().putUuid("OwnerUUID", entity.getUuid());
+		stack.getOrCreateTag().putString("OwnerName", entity.getDisplayName().getString());
+		stack.getOrCreateTag().putBoolean("FromPlayer", entity instanceof PlayerEntity);
+		return stack;
+	}
+	
 	public static ItemStack copyTo(ItemStack from, ItemStack to) {
 		if (hasTaglock(from)) {
 			to.getOrCreateTag().putUuid("OwnerUUID", from.getOrCreateTag().getUuid("OwnerUUID"));
@@ -228,13 +235,6 @@ public class TaglockItem extends Item {
 	
 	public static boolean hasTaglock(ItemStack stack) {
 		return stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID");
-	}
-	
-	public static ItemStack putTaglock(ItemStack stack, Entity entity) {
-		stack.getOrCreateTag().putUuid("OwnerUUID", entity.getUuid());
-		stack.getOrCreateTag().putString("OwnerName", entity.getDisplayName().getString());
-		stack.getOrCreateTag().putBoolean("FromPlayer", entity instanceof PlayerEntity);
-		return stack;
 	}
 	
 	public static void removeTaglock(ItemStack stack) {
