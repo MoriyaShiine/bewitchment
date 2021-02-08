@@ -248,20 +248,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		}
 		return amount;
 	}
-
-	@Inject(method = "applyDamage", at = @At("HEAD"), cancellable = true)
-	private void applyDamage(DamageSource source, float amount, CallbackInfo info)
-	{
-		if (!world.isClient)
-		{
-			Entity trueSource = source.getAttacker();
-
-			if((getVehicle() != null && getVehicle().getType() == BWEntityTypes.CYPRESS_BROOM) || (trueSource != null && trueSource.getVehicle() != null && trueSource.getVehicle().getType() == BWEntityTypes.CYPRESS_BROOM))
-			{
-				info.cancel();
-			}
-		}
-	}
 	
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
 	private float modifyDamage1(float amount, DamageSource source) {
@@ -408,11 +394,14 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
+			Entity trueSource = source.getAttacker();
+			if ((getVehicle() != null && getVehicle().getType() == BWEntityTypes.CYPRESS_BROOM) || (trueSource != null && trueSource.getVehicle() != null && trueSource.getVehicle().getType() == BWEntityTypes.CYPRESS_BROOM)) {
+				callbackInfo.cancel();
+			}
 			if (BewitchmentAPI.isVampire(this, true) && source.isFire()) {
 				callbackInfo.setReturnValue(damage(BWDamageSources.SUN, amount * 2));
 				return;
 			}
-			Entity trueSource = source.getAttacker();
 			if (trueSource instanceof LeonardEntity) {
 				removeStatusEffect(BWStatusEffects.MAGIC_SPONGE);
 			}
