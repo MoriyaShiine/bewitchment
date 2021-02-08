@@ -248,15 +248,26 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 		}
 		return amount;
 	}
+
+	@Inject(method = "applyDamage", at = @At("HEAD"), cancellable = true)
+	private void applyDamage(DamageSource source, float amount, CallbackInfo info)
+	{
+		if (!world.isClient)
+		{
+			Entity trueSource = source.getAttacker();
+
+			if((getVehicle() != null && getVehicle().getType() == BWEntityTypes.CYPRESS_BROOM) || (trueSource != null && trueSource.getVehicle() != null && trueSource.getVehicle().getType() == BWEntityTypes.CYPRESS_BROOM))
+			{
+				info.cancel();
+			}
+		}
+	}
 	
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
 	private float modifyDamage1(float amount, DamageSource source) {
 		if (!world.isClient) {
 			Entity trueSource = source.getAttacker();
 			Entity directSource = source.getSource();
-			if ((getVehicle() != null && getVehicle().getType() == BWEntityTypes.CYPRESS_BROOM) || (trueSource != null && trueSource.getVehicle() != null && trueSource.getVehicle().getType() == BWEntityTypes.CYPRESS_BROOM)) {
-				return 0;
-			}
 			if (amount > 0 && (Object) this instanceof PlayerEntity && !BewitchmentAPI.isVampire(this, true)) {
 				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VAMPIRIC_POPPET, null, (PlayerEntity) (Object) this);
 				if (!poppet.isEmpty()) {
