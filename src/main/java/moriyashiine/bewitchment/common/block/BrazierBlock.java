@@ -17,8 +17,10 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
@@ -107,15 +109,19 @@ public class BrazierBlock extends LanternBlock implements BlockEntityProvider {
 		}
 	}
 	
-	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-		super.appendProperties(builder.add(Properties.LIT));
-	}
-	
+	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
 		if (!PotionUtil.getCustomPotionEffects(stack).isEmpty()) {
 			PotionUtil.buildTooltip(stack, tooltip, 1);
 		}
+		if (stack.hasTag() && stack.getTag().contains("Cost")) {
+			tooltip.add(new LiteralText("Cost: " + stack.getOrCreateTag().getInt("Cost")).formatted(Formatting.GRAY));
+		}
+	}
+	
+	@Override
+	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+		super.appendProperties(builder.add(Properties.LIT));
 	}
 }
