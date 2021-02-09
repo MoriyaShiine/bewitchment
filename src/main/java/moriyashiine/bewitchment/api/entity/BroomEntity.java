@@ -2,6 +2,8 @@ package moriyashiine.bewitchment.api.entity;
 
 import moriyashiine.bewitchment.common.entity.interfaces.BroomUserAccessor;
 import moriyashiine.bewitchment.common.item.TaglockItem;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -25,6 +27,13 @@ import java.util.UUID;
 
 public class BroomEntity extends Entity {
 	public ItemStack stack = ItemStack.EMPTY;
+	
+	private int lerpSteps;
+	private double lerpX;
+	private double lerpY;
+	private double lerpZ;
+	private double lerpYaw;
+	private double lerpPitch;
 	
 	public BroomEntity(EntityType<?> type, World world) {
 		super(type, world);
@@ -52,6 +61,15 @@ public class BroomEntity extends Entity {
 	@Override
 	public void tick() {
 		super.tick();
+		if (isLogicalSideForUpdatingMovement()) {
+			lerpSteps = 0;
+			updateTrackedPosition(getX(), getY(), getZ());
+		}
+		if (lerpSteps > 0) {
+			updatePosition(getX() + (lerpX - getX()) / lerpSteps, getY() + (lerpY - getY()) / lerpSteps, getZ() + (lerpZ - getZ()) / lerpSteps);
+			setRotation((float) (yaw + MathHelper.wrapDegrees(lerpYaw - yaw) / lerpSteps), (float) (pitch + (lerpPitch - pitch) / lerpSteps));
+			--lerpSteps;
+		}
 		if (isLogicalSideForUpdatingMovement()) {
 			updateTrackedPosition(getX(), getY(), getZ());
 			Entity passenger = getPrimaryPassenger();
@@ -131,6 +149,17 @@ public class BroomEntity extends Entity {
 	
 	@Override
 	protected void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition) {
+	}
+	
+	@Environment(EnvType.CLIENT)
+	@Override
+	public void updateTrackedPositionAndAngles(double x, double y, double z, float yaw, float pitch, int interpolationSteps, boolean interpolate) {
+		lerpX = x;
+		lerpY = y;
+		lerpZ = z;
+		lerpYaw = yaw;
+		lerpPitch = pitch;
+		lerpSteps = 10;
 	}
 	
 	public void init(ItemStack stack) {
