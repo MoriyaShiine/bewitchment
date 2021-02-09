@@ -42,41 +42,31 @@ public abstract class InGameHudMixin extends DrawableHelper {
 	@Final
 	private MinecraftClient client;
 	
-	@Inject(method = "render", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 0, target = "Lnet/minecraft/client/gui/hud/InGameHud;renderCrosshair(Lnet/minecraft/client/util/math/MatrixStack;)V"))
-	private void render(MatrixStack matrices, float tickDelta, CallbackInfo callbackInfo) {
-		PlayerEntity player = getCameraPlayer();
-		if (player != null) {
-			MagicAccessor magicAccessor = (MagicAccessor) player;
-			if (magicAccessor.getMagicTimer() > 0) {
-				client.getTextureManager().bindTexture(BEWITCHMENT_GUI_ICONS_TEXTURE);
-				RenderSystem.color4f(1, 1, 1, magicAccessor.getMagicTimer() / 10f);
-				drawTexture(matrices, 13, (scaledHeight - 74) / 2, 25, 0, 7, 74);
-				drawTexture(matrices, 13, (scaledHeight - 74) / 2, 32, 0, 7, (int) (74 - (magicAccessor.getMagic() * 74f / MagicAccessor.MAX_MAGIC)));
-				drawTexture(matrices, 4, (scaledHeight - 102) / 2, 0, 0, 25, 102);
-				RenderSystem.color4f(1, 1, 1, 1);
-				client.getTextureManager().bindTexture(GUI_ICONS_TEXTURE);
-			}
-			if (!player.isCreative() && BewitchmentAPI.isVampire(player, true)) {
-				client.getTextureManager().bindTexture(BEWITCHMENT_GUI_ICONS_TEXTURE);
-				drawBlood(matrices, player, scaledWidth / 2 + 82, scaledHeight - 39, 10);
-				if (player.isInSneakingPose() && client.targetedEntity instanceof BloodAccessor && BWTags.HAS_BLOOD.contains(client.targetedEntity.getType())) {
-					drawBlood(matrices, (LivingEntity) client.targetedEntity, scaledWidth / 2 + 13, scaledHeight / 2 + 9, 5);
-				}
-				client.getTextureManager().bindTexture(GUI_ICONS_TEXTURE);
-			}
-		}
-	}
-	
 	@Inject(method = "renderStatusBars", at = @At(value = "INVOKE", shift = At.Shift.AFTER, ordinal = 2, target = "Lnet/minecraft/client/MinecraftClient;getProfiler()Lnet/minecraft/util/profiler/Profiler;"))
-	private void disableTexture(MatrixStack matrices, CallbackInfo callbackInfo) {
+	private void renderPre(MatrixStack matrices, CallbackInfo callbackInfo) {
 		PlayerEntity player = getCameraPlayer();
+		MagicAccessor magicAccessor = (MagicAccessor) player;
+		if (magicAccessor.getMagicTimer() > 0) {
+			client.getTextureManager().bindTexture(BEWITCHMENT_GUI_ICONS_TEXTURE);
+			RenderSystem.color4f(1, 1, 1, magicAccessor.getMagicTimer() / 10f);
+			drawTexture(matrices, 13, (scaledHeight - 74) / 2, 25, 0, 7, 74);
+			drawTexture(matrices, 13, (scaledHeight - 74) / 2, 32, 0, 7, (int) (74 - (magicAccessor.getMagic() * 74f / MagicAccessor.MAX_MAGIC)));
+			drawTexture(matrices, 4, (scaledHeight - 102) / 2, 0, 0, 25, 102);
+			RenderSystem.color4f(1, 1, 1, 1);
+			client.getTextureManager().bindTexture(GUI_ICONS_TEXTURE);
+		}
 		if (BewitchmentAPI.isVampire(player, true)) {
+			client.getTextureManager().bindTexture(BEWITCHMENT_GUI_ICONS_TEXTURE);
+			drawBlood(matrices, player, scaledWidth / 2 + 82, scaledHeight - 39, 10);
+			if (player.isInSneakingPose() && client.targetedEntity instanceof BloodAccessor && BWTags.HAS_BLOOD.contains(client.targetedEntity.getType())) {
+				drawBlood(matrices, (LivingEntity) client.targetedEntity, scaledWidth / 2 + 13, scaledHeight / 2 + 9, 5);
+			}
 			client.getTextureManager().bindTexture(EMPTY_TEXTURE);
 		}
 	}
 	
 	@Inject(method = "renderStatusBars", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 3, target = "Lnet/minecraft/client/MinecraftClient;getProfiler()Lnet/minecraft/util/profiler/Profiler;"))
-	private void enableTexture(MatrixStack matrices, CallbackInfo callbackInfo) {
+	private void renderPost(MatrixStack matrices, CallbackInfo callbackInfo) {
 		PlayerEntity player = getCameraPlayer();
 		if (BewitchmentAPI.isVampire(player, true)) {
 			client.getTextureManager().bindTexture(GUI_ICONS_TEXTURE);
