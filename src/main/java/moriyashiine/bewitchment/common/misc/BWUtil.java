@@ -274,6 +274,14 @@ public class BWUtil {
 				SpawnPortalParticlesPacket.send((PlayerEntity) entity, entity);
 			}
 		}
+		if (entity instanceof LivingEntity) {
+			if (entity instanceof PlayerEntity) {
+				((PlayerEntity) entity).wakeUp(true, false);
+			}
+			else {
+				((LivingEntity) entity).wakeUp();
+			}
+		}
 		entity.teleport(x, y + 0.5, z);
 		if (hasEffects) {
 			if (!entity.isSilent()) {
