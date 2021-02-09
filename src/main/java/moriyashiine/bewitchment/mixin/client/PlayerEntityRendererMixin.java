@@ -57,6 +57,8 @@ public abstract class PlayerEntityRendererMixin {
 		}
 		if (entity != null) {
 			entity.age = player.age;
+			entity.hurtTime = player.hurtTime;
+			entity.maxHurtTime = player.maxHurtTime;
 			entity.limbDistance = player.limbDistance;
 			entity.lastLimbDistance = player.lastLimbDistance;
 			entity.limbAngle = player.limbAngle;
