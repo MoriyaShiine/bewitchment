@@ -7,6 +7,7 @@ import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.misc.BWUtil;
+import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
 import moriyashiine.bewitchment.common.registry.*;
 import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
@@ -164,10 +165,12 @@ public class LilithEntity extends BWHostileEntity implements Pledgeable {
 					PlayerLookup.tracking(player).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, player));
 					SpawnSmokeParticlesPacket.send(player, player);
 					world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_PLING, player.getSoundCategory(), 1, 1);
+					if (((TransformationAccessor) player).getAlternateForm()) {
+						TransformationAbilityPacket.useAbility(player, true);
+					}
 					((TransformationAccessor) player).getTransformation().onRemoved(player);
 					((TransformationAccessor) player).setTransformation(BWTransformations.HUMAN);
 					((TransformationAccessor) player).getTransformation().onAdded(player);
-					((TransformationAccessor) player).setAlternateForm(false);
 				}
 				return ActionResult.success(client);
 			}
