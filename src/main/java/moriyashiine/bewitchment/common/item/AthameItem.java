@@ -79,7 +79,7 @@ public class AthameItem extends SwordItem {
                 }
                 if (world.isNight()) {
                     boolean chicken = target instanceof ChickenEntity;
-                    if ((chicken && world.getBiome(pos).getCategory() == Biome.Category.EXTREME_HILLS) || (target instanceof WolfEntity && world.getBiome(pos).getCategory() == Biome.Category.FOREST)) {
+                    if ((chicken && world.getBiome(pos).getCategory() == Biome.Category.EXTREME_HILLS) || (target instanceof WolfEntity && (world.getBiome(pos).getCategory() == Biome.Category.FOREST || world.getBiome(pos).getCategory() == Biome.Category.TAIGA))) {
                         BlockPos brazierPos = BWUtil.getClosestBlockPos(pos, 8, currentPos -> {
                             BlockEntity blockEntity = world.getBlockEntity(currentPos);
                             return blockEntity instanceof BrazierBlockEntity && ((BrazierBlockEntity) blockEntity).incenseRecipe.effect == BWStatusEffects.MORTAL_COIL;
