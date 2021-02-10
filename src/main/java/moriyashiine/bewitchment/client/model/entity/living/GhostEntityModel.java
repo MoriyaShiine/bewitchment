@@ -94,7 +94,6 @@ public class GhostEntityModel<T extends GhostEntity> extends BipedEntityModel<T>
 			rightArm.roll = MathHelper.sin(animationProgress) / 2;
 			leftArm.pitch += 4.5;
 			leftArm.roll = -rightArm.roll;
-			
 		}
 		else {
 			leftArm.roll = -0.1f;

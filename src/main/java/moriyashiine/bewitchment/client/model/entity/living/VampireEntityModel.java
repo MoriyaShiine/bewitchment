@@ -40,12 +40,10 @@ public class VampireEntityModel<T extends VampireEntity> extends BipedEntityMode
 		nose.setTextureOffset(24, 0).addCuboid(-1.0F, -1.3F, -1.0F, 2.0F, 3.0F, 2.0F, 0.0F, false);
 		
 		lLeg = new ModelPart(this);
-		lLeg.setPivot(2.0F, 12.0F, 0.0F);
 		body.addChild(lLeg);
 		lLeg.setTextureOffset(0, 22).addCuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.0F, false);
 		
 		rLeg = new ModelPart(this);
-		rLeg.setPivot(-2.0F, 12.0F, 0.0F);
 		body.addChild(rLeg);
 		rLeg.setTextureOffset(0, 22).addCuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.0F, true);
 		
@@ -64,7 +62,6 @@ public class VampireEntityModel<T extends VampireEntity> extends BipedEntityMode
 		downArms.setPivot(0.0F, 24.0F, 0.0F);
 		
 		lArm = new ModelPart(this);
-		lArm.setPivot(5.0F, -22.0F, 0.0F);
 		downArms.addChild(lArm);
 		lArm.setTextureOffset(40, 46).addCuboid(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.0F, false);
 		
@@ -87,7 +84,6 @@ public class VampireEntityModel<T extends VampireEntity> extends BipedEntityMode
 		lClaw03.setTextureOffset(0, 0).addCuboid(-1.1F, 0.0F, -0.5F, 2.0F, 4.0F, 1.0F, 0.0F, false);
 		
 		rArm = new ModelPart(this);
-		rArm.setPivot(-10.0F, 0.0F, 0.0F);
 		downArms.addChild(rArm);
 		rArm.setTextureOffset(40, 46).addCuboid(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.0F, true);
 		
@@ -114,12 +110,15 @@ public class VampireEntityModel<T extends VampireEntity> extends BipedEntityMode
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 		super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
 		head.copyPositionAndRotation(super.head);
+		body.copyPositionAndRotation(super.torso);
 		lArm.copyPositionAndRotation(super.leftArm);
-		lArm.pivotY -= 24;
+		lArm.setPivot(5, -22, 0);
 		rArm.copyPositionAndRotation(super.rightArm);
-		rArm.pivotY -= 24;
+		rArm.setPivot(-5, -22, 0);
 		lLeg.copyPositionAndRotation(super.leftLeg);
+		lLeg.setPivot(2, 12, 0);
 		rLeg.copyPositionAndRotation(super.rightLeg);
+		rLeg.setPivot(-2, 12, 0);
 		boolean hasTarget = entity.getDataTracker().get(VampireEntity.HAS_TARGET);
 		crossedArms.visible = !hasTarget;
 		downArms.visible = hasTarget;

@@ -367,22 +367,15 @@ public class WerewolfEntityModel<T extends WerewolfEntity> extends BipedEntityMo
 		neck.pitch -= 0.9076f;
 		body.copyPositionAndRotation(super.torso);
 		body.setPivot(0, -12.7f, 0);
-		if (riding && entity.maxHurtTime != Integer.MAX_VALUE) {
-			body.pivotY += 8;
-		}
 		body.pitch += 0.5672f;
 		BipedLeftArm.copyPositionAndRotation(super.leftArm);
-		BipedLeftArm.pitch -= 1 / 8f;
+		BipedLeftArm.setPivot(5.5f, -2.3f, 2);
 		BipedLeftArm.pitch /= 2;
-		BipedLeftArm.roll -= 1 / 4f;
-		BipedLeftArm.pivotY -= 5;
-		BipedLeftArm.pivotZ += 2;
+		BipedLeftArm.roll -= 1 / 6f;
 		BipedRightArm.copyPositionAndRotation(super.rightArm);
-		BipedRightArm.pitch -= 1 / 8f;
+		BipedRightArm.setPivot(-5.5f, -2.3f, 2);
 		BipedRightArm.pitch /= 2;
-		BipedRightArm.roll += 1 / 4f;
-		BipedRightArm.pivotY -= 5;
-		BipedRightArm.pivotZ += 2;
+		BipedRightArm.roll += 1 / 6f;
 		BipedLeftLeg.copyPositionAndRotation(super.leftLeg);
 		BipedLeftLeg.setPivot(2.7f, 10.2f, -0.4f);
 		BipedLeftLeg.pitch /= 2;

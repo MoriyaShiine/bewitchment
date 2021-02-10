@@ -32,7 +32,6 @@ public class BaphometEntityModel<T extends BaphometEntity> extends BipedEntityMo
 		textureWidth = 128;
 		textureHeight = 64;
 		body = new ModelPart(this);
-		body.setPivot(0.0F, -12.7F, 0.0F);
 		body.setTextureOffset(20, 19).addCuboid(-4.0F, 0.0F, -2.5F, 8.0F, 6.0F, 5.0F, 0.0F, false);
 		
 		ModelPart boobLeft = new ModelPart(this);
@@ -60,9 +59,7 @@ public class BaphometEntityModel<T extends BaphometEntity> extends BipedEntityMo
 		hips.setTextureOffset(16, 43).addCuboid(-4.0F, 0.0F, -2.5F, 8.0F, 3.0F, 5.0F, 0.0F, false);
 		
 		leftLeg = new ModelPart(this);
-		leftLeg.setPivot(2.6F, 2.8F, 0.3F);
 		hips.addChild(leftLeg);
-		setRotationAngle(leftLeg, -0.2793F, 0.0F, -0.096F);
 		leftLeg.setTextureOffset(0, 16).addCuboid(-2.5F, -1.6F, -2.9F, 5.0F, 11.0F, 5.0F, 0.0F, false);
 		
 		ModelPart lLeg02 = new ModelPart(this);
@@ -102,9 +99,7 @@ public class BaphometEntityModel<T extends BaphometEntity> extends BipedEntityMo
 		lHoofClaw02b.setTextureOffset(0, 57).addCuboid(-0.49F, -1.1F, -1.2F, 1.0F, 1.0F, 3.0F, 0.0F, false);
 		
 		rightLeg = new ModelPart(this);
-		rightLeg.setPivot(-2.4F, 2.8F, 0.3F);
 		hips.addChild(rightLeg);
-		setRotationAngle(rightLeg, -0.2793F, 0.0F, 0.096F);
 		rightLeg.setTextureOffset(0, 16).addCuboid(-2.5F, -1.6F, -2.9F, 5.0F, 11.0F, 5.0F, 0.0F, true);
 		
 		ModelPart rLeg02 = new ModelPart(this);
@@ -146,7 +141,6 @@ public class BaphometEntityModel<T extends BaphometEntity> extends BipedEntityMo
 		frontLoincloth = new ModelPart(this);
 		frontLoincloth.setPivot(0.0F, 0.0F, -2.0F);
 		hips.addChild(frontLoincloth);
-		setRotationAngle(frontLoincloth, -0.3491F, 0.0F, 0.0F);
 		frontLoincloth.setTextureOffset(65, 0).addCuboid(-5.0F, 0.4698F, -0.329F, 10.0F, 10.0F, 2.0F, 0.0F, false);
 		
 		backLoincloth = new ModelPart(this);
@@ -155,7 +149,6 @@ public class BaphometEntityModel<T extends BaphometEntity> extends BipedEntityMo
 		backLoincloth.setTextureOffset(91, 0).addCuboid(-4.5F, 0.0F, -1.0F, 9.0F, 10.0F, 2.0F, 0.0F, false);
 		
 		head = new ModelPart(this);
-		head.setPivot(0.0F, 0.0F, 1.0F);
 		body.addChild(head);
 		head.setTextureOffset(1, 2).addCuboid(-3.5F, -7.0F, -3.5F, 7.0F, 7.0F, 7.0F, 0.0F, false);
 		
@@ -334,21 +327,16 @@ public class BaphometEntityModel<T extends BaphometEntity> extends BipedEntityMo
 		rCheekFur.setTextureOffset(31, 54).addCuboid(-5.0F, -2.5F, 0.0F, 5.0F, 5.0F, 0.0F, 0.0F, true);
 		
 		leftArm = new ModelPart(this);
-		leftArm.setPivot(5.0F, 1.9F, 0.0F);
 		body.addChild(leftArm);
-		setRotationAngle(leftArm, 0.0F, 0.0F, -0.1F);
 		leftArm.setTextureOffset(46, 19).addCuboid(-1.0F, -2.0F, -2.0F, 3.0F, 16.0F, 4.0F, 0.0F, false);
 		
 		rightArm = new ModelPart(this);
-		rightArm.setPivot(-5.0F, 1.9F, 0.0F);
 		body.addChild(rightArm);
-		setRotationAngle(rightArm, 0.0F, 0.0F, 0.1F);
 		rightArm.setTextureOffset(46, 19).addCuboid(-2.0F, -2.0F, -2.0F, 3.0F, 16.0F, 4.0F, 0.0F, true);
 		
 		rWing01 = new ModelPart(this);
 		rWing01.setPivot(-1.8F, 2.8F, 1.4F);
 		body.addChild(rWing01);
-		setRotationAngle(rWing01, 0.3491F, -0.6458F, 0.0F);
 		rWing01.setTextureOffset(57, 40).addCuboid(-1.0F, -1.5F, 0.0F, 2.0F, 3.0F, 6.0F, 0.0F, true);
 		
 		ModelPart rWing02 = new ModelPart(this);
@@ -389,7 +377,6 @@ public class BaphometEntityModel<T extends BaphometEntity> extends BipedEntityMo
 		lWing01 = new ModelPart(this);
 		lWing01.setPivot(1.8F, 2.8F, 1.4F);
 		body.addChild(lWing01);
-		setRotationAngle(lWing01, 0.3491F, 0.6458F, 0.0F);
 		lWing01.setTextureOffset(57, 40).addCuboid(-1.0F, -1.5F, 0.0F, 2.0F, 3.0F, 6.0F, 0.0F, true);
 		
 		ModelPart lWing02 = new ModelPart(this);
@@ -433,12 +420,25 @@ public class BaphometEntityModel<T extends BaphometEntity> extends BipedEntityMo
 		super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
 		entity.setStackInHand(Hand.MAIN_HAND, CADUCEUS);
 		head.copyPositionAndRotation(super.head);
+		head.setPivot(0, 0, 1);
+		body.copyPositionAndRotation(super.torso);
+		body.setPivot(0, -12.7f, 0);
 		leftArm.copyPositionAndRotation(super.leftArm);
-		leftArm.roll -= 1 / 8f;
+		leftArm.setPivot(5, 1.9f, 0);
+		leftArm.roll -= 0.1f;
 		rightArm.copyPositionAndRotation(super.rightArm);
-		rightArm.roll += 1 / 8f;
-		rightLeg.pitch = MathHelper.cos(limbAngle * 2 / 3f) * limbDistance - 1 / 3f;
-		leftLeg.pitch = -rightLeg.pitch - 2 / 3f;
+		rightArm.setPivot(-5, 1.9f, 0);
+		rightArm.roll += 0.1f;
+		leftLeg.copyPositionAndRotation(super.leftLeg);
+		leftLeg.setPivot(2.6f, 2.8f, 0.3f);
+		leftLeg.pitch /= 2;
+		leftLeg.pitch -= 0.2793f;
+		leftLeg.roll -= 0.096f;
+		rightLeg.copyPositionAndRotation(super.rightLeg);
+		rightLeg.setPivot(-2.4f, 2.8f, 0.3f);
+		rightLeg.pitch /= 2;
+		rightLeg.pitch -= 0.2793f;
+		rightLeg.roll += 0.096f;
 		lWing01.yaw = MathHelper.cos(animationProgress / 16) / 3 + 1 / 3f;
 		rWing01.yaw = -lWing01.yaw;
 		frontLoincloth.pitch = Math.min(leftLeg.pitch, rightLeg.pitch) + 1 / 3f - 0.3491f;

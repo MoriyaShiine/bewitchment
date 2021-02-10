@@ -10,7 +10,6 @@ import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
 public class LeonardEntityModel<T extends LeonardEntity> extends BipedEntityModel<T> {
@@ -272,12 +271,24 @@ public class LeonardEntityModel<T extends LeonardEntity> extends BipedEntityMode
 		super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
 		entity.setStackInHand(Hand.MAIN_HAND, SCEPTER);
 		head.copyPositionAndRotation(super.head);
+		body.copyPositionAndRotation(super.torso);
+		body.setPivot(0, -9.4f, 0);
 		leftArm.copyPositionAndRotation(super.leftArm);
-		leftArm.roll -= 1 / 8f;
+		leftArm.setPivot(5.5f, 1.8f, 0);
+		leftArm.roll -= 0.1f;
 		rightArm.copyPositionAndRotation(super.rightArm);
-		rightArm.roll += 1 / 8f;
-		rightLeg.pitch = MathHelper.cos(limbAngle * 2 / 3f) * limbDistance - 0.0698f;
-		leftLeg.pitch = -rightLeg.pitch - 0.1396f;
+		rightArm.setPivot(-5.5f, 1.8f, 0);
+		rightArm.roll += 0.1f;
+		leftLeg.copyPositionAndRotation(super.leftLeg);
+		leftLeg.setPivot(2.1f, 7.2f, 0.1f);
+		leftLeg.pitch /= 2;
+		leftLeg.pitch -= 0.0698f;
+		leftLeg.roll -= 0.0349f;
+		rightLeg.copyPositionAndRotation(super.rightLeg);
+		rightLeg.setPivot(-2.1f, 7.2f, 0.1f);
+		rightLeg.pitch /= 2;
+		rightLeg.pitch -= 0.0698f;
+		rightLeg.roll += 0.0349f;
 		frontLoincloth00.pitch = Math.min(leftLeg.pitch, rightLeg.pitch);
 		backLoincloth00.pitch = Math.max(leftLeg.pitch, rightLeg.pitch);
 	}

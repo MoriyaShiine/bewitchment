@@ -10,7 +10,6 @@ import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
 public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T> {
@@ -32,7 +31,6 @@ public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T>
 		textureWidth = 128;
 		textureHeight = 64;
 		chest = new ModelPart(this);
-		chest.setPivot(0.0F, -9.4F, 0.0F);
 		chest.setTextureOffset(23, 15).addCuboid(-4.9F, -8.0F, -3.5F, 10.0F, 8.0F, 7.0F, 0.0F, false);
 		
 		ModelPart lPec = new ModelPart(this);
@@ -53,9 +51,7 @@ public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T>
 		stomach.setTextureOffset(19, 31).addCuboid(-4.5F, -6.5F, -3.0F, 9.0F, 10.0F, 6.0F, 0.0F, false);
 		
 		bipedLeftLeg = new ModelPart(this);
-		bipedLeftLeg.setPivot(2.5F, 3.0F, 0.1F);
 		stomach.addChild(bipedLeftLeg);
-		setRotationAngle(bipedLeftLeg, -0.2793F, 0.0F, -0.1047F);
 		bipedLeftLeg.setTextureOffset(0, 16).addCuboid(-2.5F, -0.7F, -3.0F, 5.0F, 12.0F, 6.0F, -0.2F, false);
 		
 		ModelPart lLeg02 = new ModelPart(this);
@@ -95,9 +91,7 @@ public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T>
 		lHoofClaw02b.setTextureOffset(0, 59).addCuboid(-0.49F, -1.1F, -1.2F, 1.0F, 1.0F, 3.0F, 0.0F, false);
 		
 		bipedRightLeg = new ModelPart(this);
-		bipedRightLeg.setPivot(-2.5F, 3.0F, 0.1F);
 		stomach.addChild(bipedRightLeg);
-		setRotationAngle(bipedRightLeg, -0.2793F, 0.0F, 0.1047F);
 		bipedRightLeg.setTextureOffset(0, 16).addCuboid(-2.5F, -0.7F, -3.0F, 5.0F, 12.0F, 6.0F, -0.2F, true);
 		
 		ModelPart rLeg02 = new ModelPart(this);
@@ -160,7 +154,6 @@ public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T>
 		mossR.setTextureOffset(111, 48).addCuboid(-0.5F, -0.7F, -3.5F, 1.0F, 9.0F, 7.0F, 0.0F, false);
 		
 		neck00 = new ModelPart(this);
-		neck00.setPivot(0.0F, -8.1F, -0.1F);
 		chest.addChild(neck00);
 		neck00.setTextureOffset(51, 0).addCuboid(-3.5F, -1.7F, -3.0F, 7.0F, 3.0F, 6.0F, 0.0F, false);
 		
@@ -458,9 +451,7 @@ public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T>
 		mMantle.setTextureOffset(75, 26).addCuboid(-6.0F, 0.0F, -4.5F, 12.0F, 10.0F, 9.0F, 0.0F, false);
 		
 		bipedLeftArm = new ModelPart(this);
-		bipedLeftArm.setPivot(5.5F, -6.3F, 1.0F);
 		chest.addChild(bipedLeftArm);
-		setRotationAngle(bipedLeftArm, 0.0F, 0.0F, -0.1309F);
 		bipedLeftArm.setTextureOffset(58, 18).addCuboid(-2.0F, -1.0F, -2.5F, 4.0F, 20.0F, 4.0F, 0.0F, false);
 		
 		ModelPart lMantle = new ModelPart(this);
@@ -470,9 +461,7 @@ public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T>
 		lMantle.setTextureOffset(69, 45).addCuboid(-2.5F, -2.0F, -3.0F, 5.0F, 8.0F, 6.0F, 0.0F, false);
 		
 		bipedRightArm = new ModelPart(this);
-		bipedRightArm.setPivot(-5.5F, -6.3F, 1.0F);
 		chest.addChild(bipedRightArm);
-		setRotationAngle(bipedRightArm, 0.0F, 0.0F, 0.1309F);
 		bipedRightArm.setTextureOffset(58, 18).addCuboid(-2.0F, -1.0F, -2.5F, 4.0F, 20.0F, 4.0F, 0.0F, true);
 		
 		ModelPart rMantle = new ModelPart(this);
@@ -487,17 +476,25 @@ public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T>
 		super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
 		entity.setStackInHand(Hand.MAIN_HAND, HORNED_SPEAR);
 		neck00.copyPositionAndRotation(super.head);
-		neck00.pivotY = -8.1f;
+		neck00.setPivot(0, -8.1f, -0.1f);
+		chest.copyPositionAndRotation(super.torso);
+		chest.setPivot(0, -9.4f, 0);
 		bipedLeftArm.copyPositionAndRotation(super.leftArm);
-		bipedLeftArm.roll -= 1 / 8f;
-		bipedLeftArm.pivotX = 5.5f;
-		bipedLeftArm.pivotY = -6.3f;
+		bipedLeftArm.setPivot(5.5f, -6.3f, 1);
+		bipedLeftArm.roll -= 0.1309f;
 		bipedRightArm.copyPositionAndRotation(super.rightArm);
-		bipedRightArm.roll += 1 / 8f;
-		bipedRightArm.pivotX = -5.5f;
-		bipedRightArm.pivotY = -6.3f;
-		bipedRightLeg.pitch = MathHelper.cos(limbAngle * 2 / 3f) * limbDistance - 0.2793f;
-		bipedLeftLeg.pitch = -bipedRightLeg.pitch - 0.5586f;
+		bipedRightArm.setPivot(-5.5f, -6.3f, 1);
+		bipedRightArm.roll += 0.1309f;
+		bipedLeftLeg.copyPositionAndRotation(super.leftLeg);
+		bipedLeftLeg.setPivot(2.5f, 3, 0.1f);
+		bipedLeftLeg.pitch /= 2;
+		bipedLeftLeg.pitch -= 0.2793f;
+		bipedLeftLeg.roll -= 0.1047f;
+		bipedRightLeg.copyPositionAndRotation(super.rightLeg);
+		bipedRightLeg.setPivot(-2.5f, 3, 0.1f);
+		bipedRightLeg.pitch /= 2;
+		bipedRightLeg.pitch -= 0.2793f;
+		bipedRightLeg.roll += 0.1047f;
 		moss01.pitch = Math.min(bipedLeftLeg.pitch, bipedRightLeg.pitch);
 		mossL.pitch = moss01.pitch;
 		mossR.pitch = moss01.pitch;

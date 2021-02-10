@@ -27,7 +27,6 @@ public class LilithEntityModel<T extends LilithEntity> extends BipedEntityModel<
 		textureWidth = 128;
 		textureHeight = 64;
 		body = new ModelPart(this);
-		body.setPivot(0.0F, -12.0F, 1.2F);
 		body.setTextureOffset(20, 16).addCuboid(-4.0F, 0.0F, -2.5F, 8.0F, 6.0F, 5.0F, 0.0F, false);
 		
 		ModelPart stomach = new ModelPart(this);
@@ -41,9 +40,7 @@ public class LilithEntityModel<T extends LilithEntity> extends BipedEntityModel<
 		hips.setTextureOffset(19, 39).addCuboid(-4.0F, 0.0F, -2.5F, 8.0F, 3.0F, 5.0F, 0.0F, false);
 		
 		bipedLeftLeg = new ModelPart(this);
-		bipedLeftLeg.setPivot(2.3F, 2.0F, 0.0F);
 		hips.addChild(bipedLeftLeg);
-		setRotationAngle(bipedLeftLeg, -0.0698F, 0.0F, -0.0349F);
 		bipedLeftLeg.setTextureOffset(0, 16).addCuboid(-2.5F, -1.0F, -2.5F, 5.0F, 12.0F, 5.0F, 0.0F, false);
 		
 		ModelPart lLeg02 = new ModelPart(this);
@@ -77,9 +74,7 @@ public class LilithEntityModel<T extends LilithEntity> extends BipedEntityModel<
 		lTalon04.setTextureOffset(0, 58).addCuboid(-0.5F, -0.5F, 0.0F, 1.0F, 2.0F, 4.0F, 0.0F, false);
 		
 		bipedRightLeg = new ModelPart(this);
-		bipedRightLeg.setPivot(-2.3F, 2.0F, 0.0F);
 		hips.addChild(bipedRightLeg);
-		setRotationAngle(bipedRightLeg, -0.0698F, 0.0F, 0.0349F);
 		bipedRightLeg.setTextureOffset(0, 16).addCuboid(-2.5F, -1.0F, -2.5F, 5.0F, 12.0F, 5.0F, 0.0F, true);
 		
 		ModelPart rLeg02 = new ModelPart(this);
@@ -331,9 +326,7 @@ public class LilithEntityModel<T extends LilithEntity> extends BipedEntityModel<
 		base_r1.setTextureOffset(85, 0).addCuboid(-5.0F, -2.0F, -1.0F, 6.0F, 10.0F, 6.0F, 0.1F, false);
 		
 		bipedLeftArm = new ModelPart(this);
-		bipedLeftArm.setPivot(4.5F, 1.9F, 0.0F);
 		body.addChild(bipedLeftArm);
-		setRotationAngle(bipedLeftArm, 0.0F, 0.0F, -0.1F);
 		bipedLeftArm.setTextureOffset(46, 16).addCuboid(-1.0F, -2.0F, -2.0F, 3.0F, 16.0F, 4.0F, 0.0F, false);
 		
 		ModelPart lClaw01 = new ModelPart(this);
@@ -361,9 +354,7 @@ public class LilithEntityModel<T extends LilithEntity> extends BipedEntityModel<
 		lClaw04.setTextureOffset(11, 53).addCuboid(0.0F, 0.0F, -0.5F, 2.0F, 5.0F, 1.0F, 0.0F, false);
 		
 		bipedRightArm = new ModelPart(this);
-		bipedRightArm.setPivot(-4.5F, 1.9F, 0.0F);
 		body.addChild(bipedRightArm);
-		setRotationAngle(bipedRightArm, 0.0F, 0.0F, 0.1F);
 		bipedRightArm.setTextureOffset(46, 16).addCuboid(-2.0F, -2.0F, -2.0F, 3.0F, 16.0F, 4.0F, 0.0F, true);
 		
 		ModelPart rClaw01 = new ModelPart(this);
@@ -477,12 +468,24 @@ public class LilithEntityModel<T extends LilithEntity> extends BipedEntityModel<
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 		super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
 		head.copyPositionAndRotation(super.head);
+		body.copyPositionAndRotation(super.torso);
+		body.setPivot(0, -12, 1.2f);
 		bipedLeftArm.copyPositionAndRotation(super.leftArm);
-		bipedLeftArm.roll -= 1 / 8f;
+		bipedLeftArm.setPivot(4.5f, 1.9f, 0);
+		bipedLeftArm.roll -= 0.1f;
 		bipedRightArm.copyPositionAndRotation(super.rightArm);
-		bipedRightArm.roll += 1 / 8f;
-		bipedRightLeg.pitch = MathHelper.cos(limbAngle * 2 / 3f) * limbDistance - 0.0698f;
-		bipedLeftLeg.pitch = -bipedRightLeg.pitch - 0.1396f;
+		bipedRightArm.setPivot(-4.5f, 1.9f, 0);
+		bipedRightArm.roll += 0.1f;
+		bipedLeftLeg.copyPositionAndRotation(super.leftLeg);
+		bipedLeftLeg.setPivot(2.3f, 2, 0);
+		bipedLeftLeg.pitch /= 2;
+		bipedLeftLeg.pitch -= 0.0698f;
+		bipedLeftLeg.roll -= 0.0349f;
+		bipedRightLeg.copyPositionAndRotation(super.rightLeg);
+		bipedRightLeg.setPivot(-2.3f, 2, 0);
+		bipedRightLeg.pitch /= 2;
+		bipedRightLeg.pitch -= 0.0698f;
+		bipedRightLeg.roll += 0.0349f;
 		lWing01.yaw = MathHelper.cos(animationProgress / 16) / 3 + 1 / 3f;
 		rWing01.yaw = -lWing01.yaw;
 		frontLoincloth.pitch = Math.min(bipedLeftLeg.pitch, bipedRightLeg.pitch);
