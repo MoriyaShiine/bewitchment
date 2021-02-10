@@ -71,7 +71,7 @@ public class AthameItem extends SwordItem {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker instanceof PlayerEntity) {
             World world = attacker.world;
-            if (!world.isClient && !target.isDead()) {
+            if (!world.isClient && target.isDead()) {
                 BlockPos pos = target.getBlockPos();
                 BlockPos glyph = BWUtil.getClosestBlockPos(pos, 6, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity);
                 if (glyph != null) {
