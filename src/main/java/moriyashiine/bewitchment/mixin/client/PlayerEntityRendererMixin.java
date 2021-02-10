@@ -11,7 +11,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EntityType;
@@ -45,20 +44,15 @@ public abstract class PlayerEntityRendererMixin {
 		if (BewitchmentAPI.isVampire(player, false)) {
 			entity = EntityType.BAT.create(player.world);
 			((BatEntity) entity).setRoosting(false);
-			matrixStack.scale(1.2f, EntityType.BAT.getHeight() * EntityType.PLAYER.getHeight() * 1.2f, 1.2f);
 		}
 		else if (BewitchmentAPI.isWerewolf(player, false)) {
 			entity = BWEntityTypes.WEREWOLF.create(player.world);
 			entity.getDataTracker().set(BWHostileEntity.VARIANT, ((WerewolfAccessor) player).getWerewolfVariant());
-			matrixStack.scale(0.8f, 0.65f, 0.8f);
-			if (player.isInSneakingPose()) {
-				matrixStack.translate(0, 0.25f, 0);
-			}
 		}
 		if (entity != null) {
 			entity.age = player.age;
 			entity.hurtTime = player.hurtTime;
-			entity.maxHurtTime = player.maxHurtTime;
+			entity.maxHurtTime = Integer.MAX_VALUE;
 			entity.limbDistance = player.limbDistance;
 			entity.lastLimbDistance = player.lastLimbDistance;
 			entity.limbAngle = player.limbAngle;
@@ -76,8 +70,14 @@ public abstract class PlayerEntityRendererMixin {
 			entity.setStackInHand(Hand.MAIN_HAND, player.getMainHandStack());
 			entity.setStackInHand(Hand.OFF_HAND, player.getOffHandStack());
 			entity.setCurrentHand(player.getActiveHand() == null ? Hand.MAIN_HAND : player.getActiveHand());
-			EntityRenderer<? super LivingEntity> renderer = MinecraftClient.getInstance().getEntityRenderDispatcher().getRenderer(entity);
-			renderer.render(entity, yaw, tickDelta, matrixStack, vertexConsumerProvider, light);
+			entity.setSneaking(player.isSneaking());
+			entity.setPose(player.getPose());
+			if (player.hasVehicle()) {
+				entity.startRiding(player.getVehicle(), true);
+			}
+			float width = 1 / (entity.getType().getWidth() / EntityType.PLAYER.getWidth());
+			matrixStack.scale(width, 1 / (entity.getType().getHeight() / EntityType.PLAYER.getHeight()), width);
+			MinecraftClient.getInstance().getEntityRenderDispatcher().getRenderer(entity).render(entity, yaw, tickDelta, matrixStack, vertexConsumerProvider, light);
 			callbackInfo.cancel();
 		}
 	}

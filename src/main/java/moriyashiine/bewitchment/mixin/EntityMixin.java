@@ -8,6 +8,7 @@ import moriyashiine.bewitchment.common.entity.interfaces.WetAccessor;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -25,6 +26,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -61,6 +63,18 @@ public abstract class EntityMixin implements WetAccessor {
 	@Override
 	public void setWetTimer(int wetTimer) {
 		dataTracker.set(WET_TIMER, wetTimer);
+	}
+	
+	@ModifyVariable(method = "setPose", at = @At("HEAD"))
+	private EntityPose setPose(EntityPose pose) {
+		if (((Object) this) instanceof PlayerEntity) {
+			if (BewitchmentAPI.isVampire((Entity) (Object) this, false) || BewitchmentAPI.isWerewolf((Entity) (Object) this, false)) {
+				if (pose == EntityPose.FALL_FLYING || pose == EntityPose.SWIMMING) {
+					return EntityPose.STANDING;
+				}
+			}
+		}
+		return pose;
 	}
 	
 	@Inject(method = "isWet", at = @At("RETURN"), cancellable = true)

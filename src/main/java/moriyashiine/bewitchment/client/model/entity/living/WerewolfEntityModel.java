@@ -24,8 +24,6 @@ public class WerewolfEntityModel<T extends WerewolfEntity> extends BipedEntityMo
 		textureWidth = 128;
 		textureHeight = 64;
 		body = new ModelPart(this);
-		body.setPivot(0.0F, -12.7F, 0.0F);
-		setRotationAngle(body, 0.5672F, 0.0F, 0.0F);
 		body.setTextureOffset(49, 15).addCuboid(-5.5F, -3.3F, -2.0F, 11.0F, 11.0F, 8.0F, 0.0F, false);
 		
 		ModelPart head = new ModelPart(this);
@@ -34,9 +32,7 @@ public class WerewolfEntityModel<T extends WerewolfEntity> extends BipedEntityMo
 		head.setTextureOffset(1, 2).addCuboid(-0.5F, 0.7F, -0.4F, 1.0F, 1.0F, 1.0F, 0.0F, false);
 		
 		neck = new ModelPart(this);
-		neck.setPivot(0.0F, -2.5F, 0.0F);
 		head.addChild(neck);
-		setRotationAngle(neck, -0.9076F, 0.0F, 0.0F);
 		neck.setTextureOffset(0, 0).addCuboid(-3.5F, -1.5F, -1.0F, 7.0F, 5.0F, 5.0F, 0.0F, false);
 		
 		ModelPart head2 = new ModelPart(this);
@@ -137,9 +133,7 @@ public class WerewolfEntityModel<T extends WerewolfEntity> extends BipedEntityMo
 		fur01.setTextureOffset(90, 0).addCuboid(-3.5F, 2.0F, 0.0F, 7.0F, 7.0F, 2.0F, 0.1F, false);
 		
 		BipedLeftArm = new ModelPart(this);
-		BipedLeftArm.setPivot(5.5F, -2.3F, 2.0F);
 		body.addChild(BipedLeftArm);
-		setRotationAngle(BipedLeftArm, -0.2618F, -0.0873F, -0.2356F);
 		BipedLeftArm.setTextureOffset(32, 47).addCuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.0F, false);
 		
 		ModelPart lArm02 = new ModelPart(this);
@@ -182,9 +176,7 @@ public class WerewolfEntityModel<T extends WerewolfEntity> extends BipedEntityMo
 		lArm02.addChild(leftHandItem);
 		
 		BipedRightArm = new ModelPart(this);
-		BipedRightArm.setPivot(-5.5F, -2.3F, 2.0F);
 		body.addChild(BipedRightArm);
-		setRotationAngle(BipedRightArm, -0.2618F, 0.0873F, 0.2356F);
 		BipedRightArm.setTextureOffset(32, 47).addCuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.0F, true);
 		
 		ModelPart rArm02 = new ModelPart(this);
@@ -233,9 +225,7 @@ public class WerewolfEntityModel<T extends WerewolfEntity> extends BipedEntityMo
 		stomach.setTextureOffset(16, 16).addCuboid(-5.0F, 0.0F, -3.0F, 10.0F, 12.0F, 6.0F, 0.0F, false);
 		
 		BipedLeftLeg = new ModelPart(this);
-		BipedLeftLeg.setPivot(2.7F, 10.2F, -0.4F);
 		stomach.addChild(BipedLeftLeg);
-		setRotationAngle(BipedLeftLeg, -0.829F, -0.2269F, -0.0873F);
 		BipedLeftLeg.setTextureOffset(11, 46).addCuboid(-2.3F, -1.1F, -1.9F, 5.0F, 13.0F, 5.0F, 0.0F, false);
 		
 		ModelPart lLeg02 = new ModelPart(this);
@@ -275,9 +265,7 @@ public class WerewolfEntityModel<T extends WerewolfEntity> extends BipedEntityMo
 		lFootClaw03.setTextureOffset(1, 48).addCuboid(-0.5F, -0.5F, -1.7F, 1.0F, 2.0F, 3.0F, 0.0F, false);
 		
 		BipedRightLeg = new ModelPart(this);
-		BipedRightLeg.setPivot(-2.7F, 10.2F, -0.4F);
 		stomach.addChild(BipedRightLeg);
-		setRotationAngle(BipedRightLeg, -0.829F, 0.2269F, 0.0873F);
 		BipedRightLeg.setTextureOffset(11, 46).addCuboid(-2.7F, -1.1F, -1.9F, 5.0F, 13.0F, 5.0F, 0.0F, true);
 		
 		ModelPart rLeg02 = new ModelPart(this);
@@ -375,8 +363,14 @@ public class WerewolfEntityModel<T extends WerewolfEntity> extends BipedEntityMo
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 		super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
 		neck.copyPositionAndRotation(super.head);
-		neck.pivotY -= 4;
-		neck.pitch -= 3 / 4f;
+		neck.setPivot(0, -2.5f, 0);
+		neck.pitch -= 0.9076f;
+		body.copyPositionAndRotation(super.torso);
+		body.setPivot(0, -12.7f, 0);
+		if (riding && entity.maxHurtTime != Integer.MAX_VALUE) {
+			body.pivotY += 8;
+		}
+		body.pitch += 0.5672f;
 		BipedLeftArm.copyPositionAndRotation(super.leftArm);
 		BipedLeftArm.pitch -= 1 / 8f;
 		BipedLeftArm.pitch /= 2;
@@ -389,9 +383,26 @@ public class WerewolfEntityModel<T extends WerewolfEntity> extends BipedEntityMo
 		BipedRightArm.roll += 1 / 4f;
 		BipedRightArm.pivotY -= 5;
 		BipedRightArm.pivotZ += 2;
-		BipedRightLeg.pitch = MathHelper.cos(limbAngle * 2 / 3f) * limbDistance * 0.5f - 7 / 8f;
-		BipedLeftLeg.pitch = -BipedRightLeg.pitch - 7 / 4f;
+		BipedLeftLeg.copyPositionAndRotation(super.leftLeg);
+		BipedLeftLeg.setPivot(2.7f, 10.2f, -0.4f);
+		BipedLeftLeg.pitch /= 2;
+		BipedLeftLeg.pitch -= 0.829f;
+		BipedLeftLeg.yaw -= 0.2269f;
+		BipedLeftLeg.roll -= 0.0873f;
+		BipedRightLeg.copyPositionAndRotation(super.rightLeg);
+		BipedRightLeg.setPivot(-2.7f, 10.2f, -0.4f);
+		BipedRightLeg.pitch /= 2;
+		BipedRightLeg.pitch -= 0.829f;
+		BipedRightLeg.yaw += 0.2269f;
+		BipedRightLeg.roll += 0.0873f;
 		tail01.roll = MathHelper.sin(animationProgress / 8) / 8;
+		if (entity.isSneaking()) {
+			body.pivotY += 2;
+			body.pivotZ -= 4;
+			body.pitch += 0.5f;
+			BipedLeftLeg.pitch -= 0.5f;
+			BipedRightLeg.pitch -= 0.5f;
+		}
 	}
 	
 	@Override
