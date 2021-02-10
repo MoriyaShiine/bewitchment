@@ -201,8 +201,10 @@ public class TaglockItem extends Item {
 			if (failed) {
 				if (entity instanceof PlayerEntity) {
 					((PlayerEntity) entity).sendMessage(new TranslatableText("bewitchment.taglock_fail", user.getDisplayName().getString()), false);
+					if (entity.world.isClient) {
+						entity.world.playSoundFromEntity((PlayerEntity) entity, user, BWSoundEvents.ENTITY_GENERIC_PLING, SoundCategory.PLAYERS, 1, 1);
+					}
 				}
-				user.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_PLING, SoundCategory.PLAYERS, 1, 1);
 				return ActionResult.FAIL;
 			}
 			boolean client = user.world.isClient;
@@ -211,6 +213,8 @@ public class TaglockItem extends Item {
 					((MobEntity) entity).setPersistent();
 				}
 				BWUtil.addItemToInventoryAndConsume(user, hand, putTaglock(new ItemStack(BWObjects.TAGLOCK), entity));
+			}else{
+				user.world.playSoundFromEntity(user, entity, BWSoundEvents.ENTITY_GENERIC_PLING, SoundCategory.PLAYERS, 1, 1);
 			}
 			return ActionResult.success(client);
 		}
