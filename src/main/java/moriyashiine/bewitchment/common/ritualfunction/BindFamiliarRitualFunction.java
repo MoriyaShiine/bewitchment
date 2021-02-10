@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.ritualfunction;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.entity.FamiliarAccessor;
+import moriyashiine.bewitchment.common.entity.interfaces.FamiliarAccessor;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
