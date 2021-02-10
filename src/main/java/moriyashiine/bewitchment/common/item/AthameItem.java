@@ -68,39 +68,6 @@ public class AthameItem extends SwordItem {
     }
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (attacker instanceof PlayerEntity) {
-            World world = attacker.world;
-            if (!world.isClient && target.isDead()) {
-                BlockPos pos = target.getBlockPos();
-                BlockPos glyph = BWUtil.getClosestBlockPos(pos, 6, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity);
-                if (glyph != null) {
-                    ((GlyphBlockEntity) world.getBlockEntity(glyph)).onUse(world, glyph, (PlayerEntity) attacker, Hand.MAIN_HAND, target);
-                }
-                if (world.isNight()) {
-                    boolean chicken = target instanceof ChickenEntity;
-                    if ((chicken && world.getBiome(pos).getCategory() == Biome.Category.EXTREME_HILLS) || (target instanceof WolfEntity && (world.getBiome(pos).getCategory() == Biome.Category.FOREST || world.getBiome(pos).getCategory() == Biome.Category.TAIGA))) {
-                        BlockPos brazierPos = BWUtil.getClosestBlockPos(pos, 8, currentPos -> {
-                            BlockEntity blockEntity = world.getBlockEntity(currentPos);
-                            return blockEntity instanceof BrazierBlockEntity && ((BrazierBlockEntity) blockEntity).incenseRecipe.effect == BWStatusEffects.MORTAL_COIL;
-                        });
-                        if (brazierPos != null) {
-                            world.createExplosion(target, brazierPos.getX() + 0.5, brazierPos.getY() + 0.5, brazierPos.getZ() + 0.5, 3, Explosion.DestructionType.DESTROY);
-                            Entity entity = chicken ? BWEntityTypes.LILITH.create(world) : BWEntityTypes.HERNE.create(world);
-                            if (entity instanceof MobEntity) {
-                                ((MobEntity) entity).initialize((ServerWorldAccess) world, world.getLocalDifficulty(brazierPos), SpawnReason.EVENT, null, null);
-                                entity.updatePositionAndAngles(brazierPos.getX() + 0.5, brazierPos.getY(), brazierPos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
-                                world.spawnEntity(entity);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return super.postHit(stack, target, attacker);
-    }
-
-    @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         World world = context.getWorld();
         BlockPos pos = context.getBlockPos();
@@ -159,6 +126,39 @@ public class AthameItem extends SwordItem {
             }
         }
         return super.useOnBlock(context);
+    }
+    
+    @Override
+    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if (attacker instanceof PlayerEntity) {
+            World world = attacker.world;
+            if (!world.isClient && target.isDead()) {
+                BlockPos pos = target.getBlockPos();
+                BlockPos glyph = BWUtil.getClosestBlockPos(pos, 6, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity);
+                if (glyph != null) {
+                    ((GlyphBlockEntity) world.getBlockEntity(glyph)).onUse(world, glyph, (PlayerEntity) attacker, Hand.MAIN_HAND, target);
+                }
+                if (world.isNight()) {
+                    boolean chicken = target instanceof ChickenEntity;
+                    if ((chicken && world.getBiome(pos).getCategory() == Biome.Category.EXTREME_HILLS) || (target instanceof WolfEntity && (world.getBiome(pos).getCategory() == Biome.Category.FOREST || world.getBiome(pos).getCategory() == Biome.Category.TAIGA))) {
+                        BlockPos brazierPos = BWUtil.getClosestBlockPos(pos, 8, currentPos -> {
+                            BlockEntity blockEntity = world.getBlockEntity(currentPos);
+                            return blockEntity instanceof BrazierBlockEntity && ((BrazierBlockEntity) blockEntity).incenseRecipe.effect == BWStatusEffects.MORTAL_COIL;
+                        });
+                        if (brazierPos != null) {
+                            world.createExplosion(target, brazierPos.getX() + 0.5, brazierPos.getY() + 0.5, brazierPos.getZ() + 0.5, 3, Explosion.DestructionType.DESTROY);
+                            Entity entity = chicken ? BWEntityTypes.LILITH.create(world) : BWEntityTypes.HERNE.create(world);
+                            if (entity instanceof MobEntity) {
+                                ((MobEntity) entity).initialize((ServerWorldAccess) world, world.getLocalDifficulty(brazierPos), SpawnReason.EVENT, null, null);
+                                entity.updatePositionAndAngles(brazierPos.getX() + 0.5, brazierPos.getY(), brazierPos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
+                                world.spawnEntity(entity);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return super.postHit(stack, target, attacker);
     }
 
     @Override

@@ -27,7 +27,7 @@ public class BottleOfBloodItem extends Item {
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (BewitchmentAPI.isVampire(user, true)) {
-			((BloodAccessor) user).fillBlood(5, false);
+			((BloodAccessor) user).fillBlood(20, false);
 		}
 		else {
 			user.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 200));
