@@ -1,16 +1,16 @@
 package moriyashiine.bewitchment.client.renderer;
 
-import moriyashiine.bewitchment.common.registry.BWObjects;
-import net.minecraft.client.MinecraftClient;
+import moriyashiine.bewitchment.client.model.ContributorHornsModel;
+import moriyashiine.bewitchment.common.Bewitchment;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
-import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,6 +21,8 @@ import java.util.*;
 public final class ContributorRenderer extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
     private static boolean init = false;
     private static Set<UUID> contributors;
+    private static final ContributorHornsModel model = new ContributorHornsModel();
+    private static final Identifier texture = new Identifier(Bewitchment.MODID, "textures/entity/armor/horns.png");
 
     public ContributorRenderer(FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> context) {
         super(context);
@@ -39,16 +41,15 @@ public final class ContributorRenderer extends FeatureRenderer<AbstractClientPla
         }
 
         // TODO: if wearing cape?
-        ItemStack itemStack = new ItemStack(BWObjects.ATHAME);
-        renderItem(matrices, vertexConsumers, itemStack);
+        if (contributors.contains(player.getGameProfile().getId())) {
+            renderHorns(matrices, vertexConsumers, light);
+        }
     }
 
-    private void renderItem(MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, ItemStack itemStack) {
+    private void renderHorns(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         matrices.push();
         getContextModel().head.rotate(matrices);
-        matrices.translate(0, -0.75, 0);
-        matrices.scale(0.5f, -0.5f, -0.5f);
-        MinecraftClient.getInstance().getItemRenderer().renderItem(itemStack, ModelTransformation.Mode.NONE, 0xF00F0, OverlayTexture.DEFAULT_UV, matrices, vertexConsumerProvider);
+        model.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntitySolid(texture)), light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
         matrices.pop();
     }
 
