@@ -25,7 +25,7 @@ import java.util.UUID;
 public final class ContributorHornsFeatureRenderer extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
 	private static final Identifier texture = new Identifier(Bewitchment.MODID, "textures/entity/armor/contributor_horns.png");
 	private static final ContributorHornsModel model = new ContributorHornsModel();
-	private static Set<UUID> contributors;
+	private static final Set<UUID> contributors = new HashSet<>();
 	
 	private static boolean init = false;
 	
@@ -40,7 +40,7 @@ public final class ContributorHornsFeatureRenderer extends FeatureRenderer<Abstr
 			loader.start();
 			init = true;
 		}
-		if (!player.isInvisible() && player.isPartVisible(PlayerModelPart.CAPE) && contributors.contains(player.getUuid())) {
+		else if (!player.isInvisible() && player.isPartVisible(PlayerModelPart.HAT) && contributors.contains(player.getUuid())) {
 			matrices.push();
 			getContextModel().head.rotate(matrices);
 			model.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntitySolid(texture)), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
@@ -62,7 +62,6 @@ public final class ContributorHornsFeatureRenderer extends FeatureRenderer<Abstr
 				Properties properties = new Properties();
 				properties.load(reader);
 				reader.close();
-				contributors = new HashSet<>();
 				for (String key : properties.stringPropertyNames()) {
 					try {
 						contributors.add(UUID.fromString(properties.getProperty(key)));
