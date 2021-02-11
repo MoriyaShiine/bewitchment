@@ -2,7 +2,7 @@ package moriyashiine.bewitchment.mixin.client;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.entity.BroomEntity;
-import moriyashiine.bewitchment.client.renderer.ContributorRenderer;
+import moriyashiine.bewitchment.client.renderer.ContributorHornsFeatureRenderer;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
@@ -34,16 +34,15 @@ import java.util.Optional;
 @Environment(EnvType.CLIENT)
 @Mixin(PlayerEntityRenderer.class)
 public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
-
 	public PlayerEntityRendererMixin(EntityRenderDispatcher dispatcher, PlayerEntityModel<AbstractClientPlayerEntity> model, float shadowRadius) {
 		super(dispatcher, model, shadowRadius);
 	}
-
+	
 	@Inject(method = "<init>(Lnet/minecraft/client/render/entity/EntityRenderDispatcher;Z)V", at = @At("TAIL"))
-	private void PlayerEntityRenderer(EntityRenderDispatcher dispatcher, boolean bl, CallbackInfo ci) {
-		this.addFeature(new ContributorRenderer(this));
+	private void PlayerEntityRenderer(EntityRenderDispatcher dispatcher, boolean bl, CallbackInfo callbackInfo) {
+		addFeature(new ContributorHornsFeatureRenderer(this));
 	}
-
+	
 	@Inject(method = "render", at = @At("HEAD"), cancellable = true)
 	private void render(AbstractClientPlayerEntity player, float yaw, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, CallbackInfo callbackInfo) {
 		Optional<BlockPos> pos = player.getSleepingPosition();

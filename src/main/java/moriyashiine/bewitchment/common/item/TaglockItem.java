@@ -213,7 +213,8 @@ public class TaglockItem extends Item {
 					((MobEntity) entity).setPersistent();
 				}
 				BWUtil.addItemToInventoryAndConsume(user, hand, putTaglock(new ItemStack(BWObjects.TAGLOCK), entity));
-			}else{
+			}
+			else {
 				user.world.playSoundFromEntity(user, entity, BWSoundEvents.ENTITY_GENERIC_PLING, SoundCategory.PLAYERS, 1, 1);
 			}
 			return ActionResult.success(client);

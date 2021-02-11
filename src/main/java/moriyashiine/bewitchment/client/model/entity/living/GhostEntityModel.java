@@ -106,6 +106,4 @@ public class GhostEntityModel<T extends GhostEntity> extends BipedEntityModel<T>
 		bone.yaw = y;
 		bone.roll = z;
 	}
-	
-	
 }
