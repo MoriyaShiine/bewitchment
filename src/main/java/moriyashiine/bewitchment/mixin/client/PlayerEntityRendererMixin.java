@@ -2,6 +2,7 @@ package moriyashiine.bewitchment.mixin.client;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.entity.BroomEntity;
+import moriyashiine.bewitchment.client.renderer.ContributorRenderer;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
@@ -11,7 +12,10 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
+import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -29,7 +33,17 @@ import java.util.Optional;
 @SuppressWarnings("ConstantConditions")
 @Environment(EnvType.CLIENT)
 @Mixin(PlayerEntityRenderer.class)
-public abstract class PlayerEntityRendererMixin {
+public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
+
+	public PlayerEntityRendererMixin(EntityRenderDispatcher dispatcher, PlayerEntityModel<AbstractClientPlayerEntity> model, float shadowRadius) {
+		super(dispatcher, model, shadowRadius);
+	}
+
+	@Inject(method = "<init>(Lnet/minecraft/client/render/entity/EntityRenderDispatcher;Z)V", at = @At("TAIL"))
+	private void PlayerEntityRenderer(EntityRenderDispatcher dispatcher, boolean bl, CallbackInfo ci) {
+		this.addFeature(new ContributorRenderer(this));
+	}
+
 	@Inject(method = "render", at = @At("HEAD"), cancellable = true)
 	private void render(AbstractClientPlayerEntity player, float yaw, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, CallbackInfo callbackInfo) {
 		Optional<BlockPos> pos = player.getSleepingPosition();
