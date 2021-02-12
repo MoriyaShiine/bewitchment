@@ -57,7 +57,7 @@ public class TaglockItem extends Item {
 			if (!client && player != null && player.isSneaking()) {
 				MinecraftServer server = world.getServer();
 				if (server != null) {
-					if (state.get(BedBlock.PART) != BedPart.HEAD){
+					if (state.get(BedBlock.PART) != BedPart.HEAD) {
 						pos = pos.offset(state.get(BedBlock.FACING));
 					}
 					PlayerEntity earliestSleeper = null;
