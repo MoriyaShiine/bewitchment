@@ -1,7 +1,6 @@
 {
-  "name": "book.bewitchment.book_of_shadows.name",
-  "subtitle": "book.bewitchment.book_of_shadows.subtitle",
-  "landing_text": "book.bewitchment.book_of_shadows.landing_text",
-  "model": "bewitchment:book_of_shadows",
-  "creative_tab": "bewitchment.bewitchment"
+  "name": "item.bewitchment.book_of_shadows",
+  "landing_text": "item.bewitchment.book_of_shadows.landing_text",
+  "custom_book_item": "bewitchment:book_of_shadows",
+  "dont_generate_book": true
 }

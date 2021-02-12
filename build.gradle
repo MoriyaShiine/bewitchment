@@ -28,10 +28,6 @@ repositories {
         url = "https://maven.abusedmaster.xyz/"
     }
     maven {
-        name = "nbt crafting"
-        url = "https://maven.siphalor.de"
-    }
-    maven {
         name = "patchouli"
         url = "https://maven.blamejared.com"
     }
@@ -54,14 +50,12 @@ dependencies {
     include "com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraform_wood_api_version}"
     modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${project.reach_version}"
     include "com.jamieswhiteshirt:reach-entity-attributes:${project.reach_version}"
-    modImplementation "io.github.ladysnake:Impersonate:${impersonate_version}"
-    include "io.github.ladysnake:Impersonate:${impersonate_version}"
     include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${cca_version}"
     include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${cca_version}"
 
-    modImplementation "de.siphalor:nbtcrafting-${project.nbt_crafting_version}"
     modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}"
     modImplementation "com.github.emilyalexandra:trinkets:${trinkets_version}"
+    modImplementation "io.github.ladysnake:Impersonate:${impersonate_version}"
     modImplementation "com.github.Virtuoel:Pehkui:${project.pehkui_commit}"
 
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"

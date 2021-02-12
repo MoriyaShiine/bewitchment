@@ -8,6 +8,7 @@ import com.terraformersmc.terraform.wood.block.*;
 import moriyashiine.bewitchment.api.block.CandelabraBlock;
 import moriyashiine.bewitchment.api.block.PoppetShelfBlock;
 import moriyashiine.bewitchment.api.block.WitchAltarBlock;
+import moriyashiine.bewitchment.api.item.BWBookItem;
 import moriyashiine.bewitchment.api.item.BroomItem;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.item.SigilItem;
@@ -343,6 +344,8 @@ public class BWObjects {
 	public static final Item BAPHOMET_SPAWN_EGG = create("baphomet_spawn_egg", new SpawnEggItem(BWEntityTypes.BAPHOMET, 0xa00303, 0x5e3214, gen()));
 	public static final Item LILITH_SPAWN_EGG = create("lilith_spawn_egg", new SpawnEggItem(BWEntityTypes.LILITH, 0x222621, 0xc9cbcd, gen()));
 	public static final Item HERNE_SPAWN_EGG = create("herne_spawn_egg", new SpawnEggItem(BWEntityTypes.HERNE, 0x5d482d, 0x294e00, gen()));
+	//books
+	public static final Item BOOK_OF_SHADOWS = create("book_of_shadows", new BWBookItem(gen().maxCount(1)));
 	
 	private static <T extends Block> T create(String name, T block, boolean createItem) {
 		BLOCKS.put(block, new Identifier(Bewitchment.MODID, name));
