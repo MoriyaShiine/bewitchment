@@ -13,6 +13,7 @@ import net.minecraft.block.BedBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.enums.BedPart;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
@@ -56,6 +57,9 @@ public class TaglockItem extends Item {
 			if (!client && player != null && player.isSneaking()) {
 				MinecraftServer server = world.getServer();
 				if (server != null) {
+					if (state.get(BedBlock.PART) != BedPart.HEAD){
+						pos = pos.offset(state.get(BedBlock.FACING));
+					}
 					PlayerEntity earliestSleeper = null;
 					for (ServerPlayerEntity playerEntity : server.getPlayerManager().getPlayerList()) {
 						BlockPos bedPos = playerEntity.getSpawnPointPosition();
