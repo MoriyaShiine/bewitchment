@@ -1,0 +1,17 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "book"
+	},
+	{
+	  "item": "bewitchment:mandrake_root"
+	}
+  ],
+  "result": {
+	"item": "patchouli:guide_book",
+	"data": {
+	  "patchouli:book": "bewitchment:book_of_shadows"
+	}
+  }
+}

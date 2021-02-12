@@ -1,0 +1,7 @@
+{
+  "name": "book.bewitchment.book_of_shadows.name",
+  "subtitle": "book.bewitchment.book_of_shadows.subtitle",
+  "landing_text": "book.bewitchment.book_of_shadows.landing_text",
+  "model": "bewitchment:book_of_shadows",
+  "creative_tab": "bewitchment.bewitchment"
+}

@@ -24,8 +24,16 @@ repositories {
         url = "https://dl.bintray.com/ladysnake/libs"
     }
     maven {
-        name = "NerdHubMC"
+        name = "cardinal"
         url = "https://maven.abusedmaster.xyz/"
+    }
+    maven {
+        name = "nbt crafting"
+        url = "https://maven.siphalor.de"
+    }
+    maven {
+        name = "patchouli"
+        url = "https://maven.blamejared.com"
     }
 }
 
@@ -51,8 +59,10 @@ dependencies {
     include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${cca_version}"
     include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${cca_version}"
 
-    modImplementation "com.github.Virtuoel:Pehkui:${project.pehkui_commit}"
+    modImplementation "de.siphalor:nbtcrafting-${project.nbt_crafting_version}"
+    modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}"
     modImplementation "com.github.emilyalexandra:trinkets:${trinkets_version}"
+    modImplementation "com.github.Virtuoel:Pehkui:${project.pehkui_commit}"
 
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
     modRuntime "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
