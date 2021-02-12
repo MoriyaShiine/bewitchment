@@ -54,6 +54,4 @@ public class BWConfig implements ConfigData {
 	public final int werewolfMaxGroupCount = 1;
 	
 	public final boolean doDemonTradesRefresh = true;
-	
-	public final boolean enableTaglockCommand = false;
 }

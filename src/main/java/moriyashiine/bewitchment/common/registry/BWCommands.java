@@ -17,23 +17,19 @@ import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.api.registry.Transformation;
-import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.ArgumentTypes;
 import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.command.argument.UuidArgumentType;
 import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.NbtHelper;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.*;
-import net.minecraft.util.Formatting;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 
-import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @SuppressWarnings("ConstantConditions")
@@ -252,15 +248,6 @@ public class BWCommands {
 			}
 			return 0;
 		})))));
-		if (Bewitchment.config.enableTaglockCommand) {
-			dispatcher.register(CommandManager.literal("taglock").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.literal("get").then(CommandManager.argument("uuid", UuidArgumentType.uuid()).executes(context -> {
-				UUID uuid = UuidArgumentType.getUuid(context, "uuid");
-				String stringUuid = NbtHelper.fromUuid(uuid).toString();
-				Text text = Texts.bracketed((new LiteralText(stringUuid)).styled((style) -> style.withColor(Formatting.GREEN).withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, stringUuid)).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText("chat.copy.click"))).withInsertion(stringUuid)));
-				context.getSource().sendFeedback(text, false);
-				return 1;
-			}))));
-		}
 	}
 	
 	private static class FortuneArgumentType implements ArgumentType<Fortune> {
