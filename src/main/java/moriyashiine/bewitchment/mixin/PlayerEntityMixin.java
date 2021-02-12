@@ -197,13 +197,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	@Inject(method = "tick", at = @At("HEAD"))
 	private void tick(CallbackInfo callbackInfo) {
 		if (!world.isClient) {
-			if (getMagicTimer() > 0) {
-				setMagicTimer(getMagicTimer() - 1);
-			}
 			if (getPolymorphUUID() != null && !hasStatusEffect(BWStatusEffects.POLYMORPH)) {
 				setPolymorphUUID(null);
 				setPolymorphName(null);
 				Impersonator.get((PlayerEntity) (Object) this).stopImpersonation(PolymorphStatusEffect.IMPERSONATE_IDENTIFIER);
+			}
+			if (getMagicTimer() > 0) {
+				setMagicTimer(getMagicTimer() - 1);
 			}
 			if (getFortune() != null) {
 				if (getFortune().fortune.tick((ServerWorld) world, (PlayerEntity) (Object) this)) {
