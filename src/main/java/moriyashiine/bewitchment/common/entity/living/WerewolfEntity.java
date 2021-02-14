@@ -64,6 +64,11 @@ public class WerewolfEntity extends BWHostileEntity {
 		return getVariantsStatic();
 	}
 	
+	@Override
+	public EntityGroup getGroup() {
+		return BewitchmentAPI.DEMON;
+	}
+	
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

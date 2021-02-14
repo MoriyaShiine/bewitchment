@@ -40,7 +40,7 @@ public class BWDamageSources {
 			if (BWTags.BOSSES.contains(attacker.getType()) || BewitchmentAPI.isVampire(attacker, true) || BewitchmentAPI.isWerewolf(attacker, true)) {
 				return true;
 			}
-			else if (vampire && attacker instanceof LivingEntity && EnchantmentHelper.getEquipmentLevel(Enchantments.SMITE, (LivingEntity) attacker) > 0) {
+			else if (attacker instanceof LivingEntity && EnchantmentHelper.getEquipmentLevel(Enchantments.SMITE, (LivingEntity) attacker) > 0) {
 				return true;
 			}
 		}
