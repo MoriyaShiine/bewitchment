@@ -184,11 +184,15 @@
   },
   "entity.raven.hurt": {
 	"sounds": [
+	  "bewitchment:mob/raven/hurt1",
+	  "bewitchment:mob/raven/hurt2",
+	  "bewitchment:mob/raven/hurt3"
 	],
 	"subtitle": "bewitchment.subtitles.entity.raven.hurt"
   },
   "entity.raven.death": {
 	"sounds": [
+	  "bewitchment:mob/raven/death"
 	],
 	"subtitle": "bewitchment.subtitles.entity.raven.death"
   },
