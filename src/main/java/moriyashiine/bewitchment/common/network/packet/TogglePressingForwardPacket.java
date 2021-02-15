@@ -13,7 +13,7 @@ import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
-public class TogglePressingForwardAccessor {
+public class TogglePressingForwardPacket {
 	public static final Identifier ID = new Identifier(Bewitchment.MODID, "toggle_pressing_forward");
 	
 	public static void send(boolean pressingForward) {
