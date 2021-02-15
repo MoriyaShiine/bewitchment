@@ -36,7 +36,8 @@
 	"fabric": "*",
 	"minecraft": "1.16.5",
 	"cloth-config2": "*",
-	"patchouli": "*",
-	"pehkui": "*"
+	"pehkui": "*",
+	"impersonate": "*",
+	"patchouli": "*"
   }
 }
