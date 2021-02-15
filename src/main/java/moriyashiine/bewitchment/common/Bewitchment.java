@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common;
 
-import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
-import me.sargunvohra.mcmods.autoconfig1u.serializer.GsonConfigSerializer;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.network.packet.CauldronTeleportPacket;
 import moriyashiine.bewitchment.common.network.packet.TogglePressingForwardAccessor;
