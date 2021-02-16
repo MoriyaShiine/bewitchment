@@ -1,0 +1,22 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	"SS ",
+	"S L",
+	" LI"
+  ],
+  "key": {
+	"S": {
+	  "item": "string"
+	},
+	"L": {
+	  "item": "lapis_lazuli"
+	},
+	"I": {
+	  "tag": "c:silver_ingots"
+	}
+  },
+  "result": {
+	"item": "bewitchment:nazar"
+  }
+}

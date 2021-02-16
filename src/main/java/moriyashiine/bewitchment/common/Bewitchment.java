@@ -1,5 +1,8 @@
 package moriyashiine.bewitchment.common;
 
+import dev.emi.trinkets.api.SlotGroups;
+import dev.emi.trinkets.api.Slots;
+import dev.emi.trinkets.api.TrinketSlots;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
@@ -26,6 +29,9 @@ public class Bewitchment implements ModInitializer {
 	public void onInitialize() {
 		AutoConfig.register(BWConfig.class, GsonConfigSerializer::new);
 		config = AutoConfig.getConfigHolder(BWConfig.class).getConfig();
+		TrinketSlots.addSlot(SlotGroups.CHEST, Slots.NECKLACE, new Identifier("trinkets", "textures/item/empty_trinket_slot_necklace.png"));
+		TrinketSlots.addSlot(SlotGroups.LEGS, Slots.BELT, new Identifier("trinkets", "textures/item/empty_trinket_slot_belt.png"));
+		TrinketSlots.addSlot(SlotGroups.FEET, Slots.AGLET, new Identifier("trinkets", "textures/item/empty_trinket_slot_aglet.png"));
 		ServerPlayNetworking.registerGlobalReceiver(CauldronTeleportPacket.ID, CauldronTeleportPacket::handle);
 		ServerPlayNetworking.registerGlobalReceiver(TransformationAbilityPacket.ID, TransformationAbilityPacket::handle);
 		ServerPlayNetworking.registerGlobalReceiver(TogglePressingForwardPacket.ID, TogglePressingForwardPacket::handle);

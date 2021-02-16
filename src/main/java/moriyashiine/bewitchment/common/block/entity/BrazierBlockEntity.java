@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.block.entity;
 
+import dev.emi.trinkets.api.TrinketsApi;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
@@ -41,6 +42,8 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Collections;
 
 @SuppressWarnings("ConstantConditions")
 public class BrazierBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Tickable, Inventory, UsesAltarPower {
@@ -142,15 +145,18 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 								}
 								if (target instanceof CurseAccessor) {
 									ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, target, null);
-									if (!poppet.isEmpty() && !poppet.getOrCreateTag().getBoolean("Cursed")) {
-										poppet.getOrCreateTag().putString("Curse", BWRegistries.CURSES.getId(curseRecipe.curse).toString());
-										poppet.getOrCreateTag().putBoolean("Cursed", true);
+									if (!poppet.isEmpty() && poppet.hasTag() && !poppet.getTag().getBoolean("Cursed")) {
+										poppet.getTag().putString("Curse", BWRegistries.CURSES.getId(curseRecipe.curse).toString());
+										poppet.getTag().putBoolean("Cursed", true);
 										TaglockItem.removeTaglock(poppet);
 									}
 									else {
 										int duration = 168000;
-										if (closestPlayer != null && BewitchmentAPI.getFamiliar(closestPlayer) == BWEntityTypes.RAVEN) {
+										if (BewitchmentAPI.getFamiliar(closestPlayer) == BWEntityTypes.RAVEN) {
 											duration *= 2;
+										}
+										if (target instanceof PlayerEntity && TrinketsApi.getTrinketsInventory((PlayerEntity) target).containsAny(Collections.singleton(BWObjects.NAZAR)) && BewitchmentAPI.usePlayerMagic((PlayerEntity) target, 50, false)) {
+											duration /= 2;
 										}
 										((CurseAccessor) target).addCurse(new Curse.Instance(curseRecipe.curse, duration));
 									}

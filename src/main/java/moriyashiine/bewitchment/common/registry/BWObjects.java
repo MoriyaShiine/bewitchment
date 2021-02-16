@@ -8,7 +8,6 @@ import com.terraformersmc.terraform.wood.block.*;
 import moriyashiine.bewitchment.api.block.CandelabraBlock;
 import moriyashiine.bewitchment.api.block.PoppetShelfBlock;
 import moriyashiine.bewitchment.api.block.WitchAltarBlock;
-import moriyashiine.bewitchment.common.item.util.BWBookItem;
 import moriyashiine.bewitchment.api.item.BroomItem;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.item.SigilItem;
@@ -23,6 +22,7 @@ import moriyashiine.bewitchment.common.block.util.BWOreBlock;
 import moriyashiine.bewitchment.common.block.util.BWSaplingBlock;
 import moriyashiine.bewitchment.common.item.*;
 import moriyashiine.bewitchment.common.item.util.BWAxeItem;
+import moriyashiine.bewitchment.common.item.util.BWBookItem;
 import moriyashiine.bewitchment.common.item.util.BWHoeItem;
 import moriyashiine.bewitchment.common.item.util.BWPickaxeItem;
 import moriyashiine.bewitchment.common.world.generator.tree.generator.CypressSaplingGenerator;
@@ -251,6 +251,8 @@ public class BWObjects {
 	public static final Item BESMIRCHED_ROBES = create("besmirched_robes", new ArmorItem(BWMaterials.BESMIRCHED_ARMOR, EquipmentSlot.CHEST, gen()));
 	public static final Item BESMIRCHED_PANTS = create("besmirched_pants", new ArmorItem(BWMaterials.BESMIRCHED_ARMOR, EquipmentSlot.LEGS, gen()));
 	public static final Item HARBINGER = create("harbinger", new ArmorItem(BWMaterials.HARBINGER_ARMOR, EquipmentSlot.FEET, gen().rarity(Rarity.RARE).maxDamage(444).fireproof()));
+	//trinket
+	public static final Item NAZAR = create("nazar", new NazarItem(gen().maxCount(1)));
 	//tool
 	public static final Item SILVER_SWORD = create("silver_sword", new SwordItem(BWMaterials.SILVER_TOOL, 3, -2.4f, gen()));
 	public static final Item SILVER_PICKAXE = create("silver_pickaxe", new BWPickaxeItem(BWMaterials.SILVER_TOOL, 1, -2.8f, gen()));
