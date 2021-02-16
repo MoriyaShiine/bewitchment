@@ -3,13 +3,13 @@
   "name": "Coffins",
   "icon": "bewitchment:white_coffin",
   "pages": [
-    {
-      "type": "text",
-      "text": "can be used to sleep through the day\ncolor based on bed in recipe\nwhite coffin can be dyed"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:white_coffin"
-    }
+	{
+	  "type": "text",
+	  "text": "can be used to sleep through the day\ncolor based on bed in recipe\nwhite coffin can be dyed"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:white_coffin"
+	}
   ]
 }

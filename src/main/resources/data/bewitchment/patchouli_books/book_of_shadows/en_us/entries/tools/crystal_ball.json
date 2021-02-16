@@ -3,13 +3,13 @@
   "name": "Crystal Ball",
   "icon": "bewitchment:crystal_ball",
   "pages": [
-    {
-      "type": "text",
-      "text": "can be used to give a fortune at the cost of magic\ncan be right clicked with taglock to see information about the player"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:crystal_ball"
-    }
+	{
+	  "type": "text",
+	  "text": "can be used to give a fortune at the cost of magic\ncan be right clicked with taglock to see information about the player"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:crystal_ball"
+	}
   ]
 }

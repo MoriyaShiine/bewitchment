@@ -3,13 +3,13 @@
   "name": "Taglock",
   "icon": "bewitchment:taglock",
   "pages": [
-    {
-      "type": "text",
-      "text": "can gather the dna of an entity for various uses"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:taglock"
-    }
+	{
+	  "type": "text",
+	  "text": "can gather the dna of an entity for various uses"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:taglock"
+	}
   ]
 }

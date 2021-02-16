@@ -3,12 +3,16 @@
   "name": "Salt",
   "icon": "bewitchment:salt",
   "pages": [
-    {
-      "type": "text",
-      "text": "spawns near coal levels\nrelates to protection\ncan be placed to block unholy creatures"
-    },
-    {
-      "type": "empty"
-    }
+	{
+	  "type": "text",
+	  "text": "spawns near coal levels\nrelates to protection\ncan be placed to block unholy creatures"
+	},
+	{
+	  "type": "image",
+	  "images": [
+		"bewitchment:textures/gui/patchouli/salt_ore.png"
+	  ],
+	  "border": true
+	}
   ]
 }

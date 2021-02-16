@@ -3,13 +3,13 @@
   "name": "Thick Bramble",
   "icon": "bewitchment:thick_bramble",
   "pages": [
-    {
-      "type": "text",
-      "text": "can only be passed when sneaking"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:thick_bramble"
-    }
+	{
+	  "type": "text",
+	  "text": "can only be passed when sneaking"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:thick_bramble"
+	}
   ]
 }

@@ -3,47 +3,51 @@
   "name": "Elder Trees",
   "icon": "bewitchment:elder_sapling",
   "pages": [
-    {
-      "type": "text",
-      "text": "spawns in forest biomes\nrelates to knowledge\nblocks made with it can be locked with a silver ingot and given taglocks\nshift right clicking athame toggles white/blacklist"
-    },
-    {
-      "type": "empty"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:elder_wood",
-      "recipe2": "bewitchment:elder_planks"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:elder_stairs",
-      "recipe2": "bewitchment:elder_slab"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:elder_fence",
-      "recipe2": "bewitchment:elder_fence_gate"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:elder_pressure_plate",
-      "recipe2": "bewitchment:elder_button"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:elder_trapdoor",
-      "recipe2": "bewitchment:elder_door"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:elder_chest",
-      "recipe2": "bewitchment:trapped_elder_chest"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:elder_sign",
-      "recipe2": "bewitchment:elder_boat"
-    }
+	{
+	  "type": "text",
+	  "text": "spawns in forest biomes\nrelates to knowledge\nblocks made with it can be locked with a silver ingot and given taglocks\nshift right clicking athame toggles white/blacklist"
+	},
+	{
+	  "type": "image",
+	  "images": [
+		"bewitchment:textures/gui/patchouli/elder_tree.png"
+	  ],
+	  "border": true
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:elder_wood",
+	  "recipe2": "bewitchment:elder_planks"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:elder_stairs",
+	  "recipe2": "bewitchment:elder_slab"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:elder_fence",
+	  "recipe2": "bewitchment:elder_fence_gate"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:elder_pressure_plate",
+	  "recipe2": "bewitchment:elder_button"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:elder_trapdoor",
+	  "recipe2": "bewitchment:elder_door"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:elder_chest",
+	  "recipe2": "bewitchment:trapped_elder_chest"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:elder_sign",
+	  "recipe2": "bewitchment:elder_boat"
+	}
   ]
 }

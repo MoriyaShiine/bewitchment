@@ -3,9 +3,9 @@
   "name": "Scepter",
   "icon": "bewitchment:scepter",
   "pages": [
-    {
-      "type": "text",
-      "text": "dropped from leonard\ncan craft potions for 8 uses"
-    }
+	{
+	  "type": "text",
+	  "text": "dropped from leonard\ncan craft potions for 8 uses"
+	}
   ]
 }

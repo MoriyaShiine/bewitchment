@@ -3,13 +3,13 @@
   "name": "Ender Bramble",
   "icon": "bewitchment:ender_bramble",
   "pages": [
-    {
-      "type": "text",
-      "text": "teleports entities to a 64 block radius"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:ender_bramble"
-    }
+	{
+	  "type": "text",
+	  "text": "teleports entities to a 64 block radius"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:ender_bramble"
+	}
   ]
 }

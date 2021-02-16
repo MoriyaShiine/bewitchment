@@ -3,13 +3,13 @@
   "name": "Fleeting Bramble",
   "icon": "bewitchment:fleeting_bramble",
   "pages": [
-    {
-      "type": "text",
-      "text": "launches entities into air\nsneaking slowly lowers you"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:fleeting_bramble"
-    }
+	{
+	  "type": "text",
+	  "text": "launches entities into air\nsneaking slowly lowers you"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:fleeting_bramble"
+	}
   ]
 }

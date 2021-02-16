@@ -3,24 +3,24 @@
   "name": "Hedgewitch Armor",
   "icon": "bewitchment:hedgewitch_robes",
   "pages": [
-    {
-      "type": "text",
-      "text": "increased crop yield"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:hedgewitch_hat",
-      "recipe2": "bewitchment:hedgewitch_hood"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:hedgewitch_robes",
-      "recipe2": "bewitchment:hedgewitch_pants"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:hedgewitch_wool",
-      "recipe2": "bewitchment:hedgewitch_carpet"
-    }
+	{
+	  "type": "text",
+	  "text": "increased crop yield"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:hedgewitch_hat",
+	  "recipe2": "bewitchment:hedgewitch_hood"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:hedgewitch_robes",
+	  "recipe2": "bewitchment:hedgewitch_pants"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:hedgewitch_wool",
+	  "recipe2": "bewitchment:hedgewitch_carpet"
+	}
   ]
 }

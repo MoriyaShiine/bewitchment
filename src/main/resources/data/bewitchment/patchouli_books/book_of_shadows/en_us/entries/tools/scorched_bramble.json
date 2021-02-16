@@ -3,13 +3,13 @@
   "name": "Scorched Bramble",
   "icon": "bewitchment:scorched_bramble",
   "pages": [
-    {
-      "type": "text",
-      "text": "sets entities on fire\ncan be used as fuel for 4 items"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:scorched_bramble"
-    }
+	{
+	  "type": "text",
+	  "text": "sets entities on fire\ncan be used as fuel for 4 items"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:scorched_bramble"
+	}
   ]
 }

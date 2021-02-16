@@ -3,12 +3,16 @@
   "name": "Silver",
   "icon": "bewitchment:silver_ingot",
   "pages": [
-    {
-      "type": "text",
-      "text": "spawns near gold levels\nrelates to purity"
-    },
-    {
-      "type": "empty"
-    }
+	{
+	  "type": "text",
+	  "text": "spawns near gold levels\nrelates to purity"
+	},
+	{
+	  "type": "image",
+	  "images": [
+		"bewitchment:textures/gui/patchouli/silver_ore.png"
+	  ],
+	  "border": true
+	}
   ]
 }

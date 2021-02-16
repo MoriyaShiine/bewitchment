@@ -3,13 +3,13 @@
   "name": "Glowing Bramble",
   "icon": "bewitchment:glowing_bramble",
   "pages": [
-    {
-      "type": "text",
-      "text": "emites light\nprevents mob spawns in a 24 block radius"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:glowing_bramble"
-    }
+	{
+	  "type": "text",
+	  "text": "emites light\nprevents mob spawns in a 24 block radius"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:glowing_bramble"
+	}
   ]
 }

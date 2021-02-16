@@ -3,42 +3,42 @@
   "name": "Altars",
   "icon": "bewitchment:stone_witch_altar",
   "pages": [
-    {
-      "type": "text",
-      "text": "used to power things\nmaterial is only visual\nput carpet on top to create\npower is gained from plants, variety is more important than more of the same type\ncan have 3 types of modifiers (sword, pentacle, wand)"
-    },
-    {
-      "type": "crafting",
-      "title": "Overworld",
-      "recipe": "bewitchment:stone_witch_altar",
-      "recipe2": "bewitchment:mossy_cobblestone_witch_altar"
-    },
-    {
-      "type": "crafting",
-      "title": " ",
-      "recipe": "bewitchment:prismarine_witch_altar"
-    },
-    {
-      "type": "crafting",
-      "title": "The Nether",
-      "recipe": "bewitchment:nether_brick_witch_altar",
-      "recipe2": "bewitchment:blackstone_witch_altar"
-    },
-    {
-      "type": "crafting",
-      "title": " ",
-      "recipe": "bewitchment:golden_witch_altar"
-    },
-    {
-      "type": "crafting",
-      "title": "The End",
-      "recipe": "bewitchment:end_stone_witch_altar",
-      "recipe2": "bewitchment:obsidian_witch_altar"
-    },
-    {
-      "type": "crafting",
-      "title": " ",
-      "recipe": "bewitchment:purpur_witch_altar"
-    }
+	{
+	  "type": "text",
+	  "text": "used to power things\nmaterial is only visual\nput carpet on top to create\npower is gained from plants, variety is more important than more of the same type\ncan have 3 types of modifiers (sword, pentacle, wand)"
+	},
+	{
+	  "type": "crafting",
+	  "title": "Overworld",
+	  "recipe": "bewitchment:stone_witch_altar",
+	  "recipe2": "bewitchment:mossy_cobblestone_witch_altar"
+	},
+	{
+	  "type": "crafting",
+	  "title": " ",
+	  "recipe": "bewitchment:prismarine_witch_altar"
+	},
+	{
+	  "type": "crafting",
+	  "title": "The Nether",
+	  "recipe": "bewitchment:nether_brick_witch_altar",
+	  "recipe2": "bewitchment:blackstone_witch_altar"
+	},
+	{
+	  "type": "crafting",
+	  "title": " ",
+	  "recipe": "bewitchment:golden_witch_altar"
+	},
+	{
+	  "type": "crafting",
+	  "title": "The End",
+	  "recipe": "bewitchment:end_stone_witch_altar",
+	  "recipe2": "bewitchment:obsidian_witch_altar"
+	},
+	{
+	  "type": "crafting",
+	  "title": " ",
+	  "recipe": "bewitchment:purpur_witch_altar"
+	}
   ]
 }

@@ -3,47 +3,51 @@
   "name": "Juniper Trees",
   "icon": "bewitchment:juniper_sapling",
   "pages": [
-    {
-      "type": "text",
-      "text": "spawns in savanna biomes\nrelates to life\nblocks made with it can take up to 3 taglocks\nshift right clicking athame gathers taglocks"
-    },
-    {
-      "type": "empty"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:juniper_wood",
-      "recipe2": "bewitchment:juniper_planks"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:juniper_stairs",
-      "recipe2": "bewitchment:juniper_slab"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:juniper_fence",
-      "recipe2": "bewitchment:juniper_fence_gate"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:juniper_pressure_plate",
-      "recipe2": "bewitchment:juniper_button"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:juniper_trapdoor",
-      "recipe2": "bewitchment:juniper_door"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:juniper_chest",
-      "recipe2": "bewitchment:trapped_juniper_chest"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:juniper_sign",
-      "recipe2": "bewitchment:juniper_boat"
-    }
+	{
+	  "type": "text",
+	  "text": "spawns in savanna biomes\nrelates to life\nblocks made with it can take up to 3 taglocks\nshift right clicking athame gathers taglocks"
+	},
+	{
+	  "type": "image",
+	  "images": [
+		"bewitchment:textures/gui/patchouli/juniper_tree.png"
+	  ],
+	  "border": true
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:juniper_wood",
+	  "recipe2": "bewitchment:juniper_planks"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:juniper_stairs",
+	  "recipe2": "bewitchment:juniper_slab"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:juniper_fence",
+	  "recipe2": "bewitchment:juniper_fence_gate"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:juniper_pressure_plate",
+	  "recipe2": "bewitchment:juniper_button"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:juniper_trapdoor",
+	  "recipe2": "bewitchment:juniper_door"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:juniper_chest",
+	  "recipe2": "bewitchment:trapped_juniper_chest"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:juniper_sign",
+	  "recipe2": "bewitchment:juniper_boat"
+	}
   ]
 }

@@ -3,13 +3,13 @@
   "name": "Brazier",
   "icon": "bewitchment:brazier",
   "pages": [
-    {
-      "type": "text",
-      "text": "can be used for incenses\ncan be used for curses"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:brazier"
-    }
+	{
+	  "type": "text",
+	  "text": "can be used for incenses\ncan be used for curses"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:brazier"
+	}
   ]
 }
