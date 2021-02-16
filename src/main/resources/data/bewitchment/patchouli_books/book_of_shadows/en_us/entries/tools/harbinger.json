@@ -1,0 +1,11 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Harbinger",
+  "icon": "bewitchment:harbinger",
+  "pages": [
+    {
+      "type": "text",
+      "text": "dropped from lilith\nstats equal to netherite\nundead are neutral"
+    }
+  ]
+}

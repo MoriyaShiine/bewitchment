@@ -1,0 +1,26 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Alchemist Armor",
+  "icon": "bewitchment:alchemist_robes",
+  "pages": [
+    {
+      "type": "text",
+      "text": "double duration brews"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:alchemist_hat",
+      "recipe2": "bewitchment:alchemist_hood"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:alchemist_robes",
+      "recipe2": "bewitchment:alchemist_pants"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:alchemist_wool",
+      "recipe2": "bewitchment:alchemist_carpet"
+    }
+  ]
+}

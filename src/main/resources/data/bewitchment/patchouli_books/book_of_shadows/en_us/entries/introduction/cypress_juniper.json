@@ -1,0 +1,49 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "Cypress Trees",
+  "icon": "bewitchment:cypress_sapling",
+  "pages": [
+    {
+      "type": "text",
+      "text": "spawns in taiga biomes and swamp biomes\nrelates to death\nblocks made with it mask you from undead"
+    },
+    {
+      "type": "empty"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:cypress_wood",
+      "recipe2": "bewitchment:cypress_planks"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:cypress_stairs",
+      "recipe2": "bewitchment:cypress_slab"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:cypress_fence",
+      "recipe2": "bewitchment:cypress_fence_gate"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:cypress_pressure_plate",
+      "recipe2": "bewitchment:cypress_button"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:cypress_trapdoor",
+      "recipe2": "bewitchment:cypress_door"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:cypress_chest",
+      "recipe2": "bewitchment:trapped_cypress_chest"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:cypress_sign",
+      "recipe2": "bewitchment:cypress_boat"
+    }
+  ]
+}

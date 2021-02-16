@@ -1,0 +1,14 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "Salt",
+  "icon": "bewitchment:salt",
+  "pages": [
+    {
+      "type": "text",
+      "text": "spawns near coal levels\nrelates to protection\ncan be placed to block unholy creatures"
+    },
+    {
+      "type": "empty"
+    }
+  ]
+}

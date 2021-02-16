@@ -1,0 +1,15 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Witch Cauldron",
+  "icon": "bewitchment:witch_cauldron",
+  "pages": [
+    {
+      "type": "text",
+      "text": "used for crafting oils, brewing, and teleporting"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:witch_cauldron"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "Dragon's Blood Trees",
+  "icon": "bewitchment:dragons_blood_sapling",
+  "pages": [
+    {
+      "type": "text",
+      "text": "right clicking athame on log cuts to drop resin\nrelates to power\nblocks made with it can be given a sigil and given taglocks\nshift right clicking athame toggles white/blacklist"
+    },
+    {
+      "type": "empty"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:dragons_blood_wood",
+      "recipe2": "bewitchment:dragons_blood_planks"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:dragons_blood_stairs",
+      "recipe2": "bewitchment:dragons_blood_slab"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:dragons_blood_fence",
+      "recipe2": "bewitchment:dragons_blood_fence_gate"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:dragons_blood_pressure_plate",
+      "recipe2": "bewitchment:dragons_blood_button"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:dragons_blood_trapdoor",
+      "recipe2": "bewitchment:dragons_blood_door"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:dragons_blood_chest",
+      "recipe2": "bewitchment:trapped_dragons_blood_chest"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:dragons_blood_sign",
+      "recipe2": "bewitchment:dragons_blood_boat"
+    }
+  ]
+}

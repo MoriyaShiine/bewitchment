@@ -1,0 +1,11 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Horned Spear",
+  "icon": "bewitchment:horned_spear",
+  "pages": [
+    {
+      "type": "text",
+      "text": "dropped from herne\nmore powerful trident with built in loyalty"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "Bark",
+  "icon": "bewitchment:oak_bark",
+  "pages": [
+    {
+      "type": "text",
+      "text": "right click logs with athame to obtain"
+    }
+  ]
+}

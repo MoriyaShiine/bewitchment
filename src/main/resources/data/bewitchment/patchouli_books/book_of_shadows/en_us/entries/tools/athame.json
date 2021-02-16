@@ -1,0 +1,15 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Athame",
+  "icon": "bewitchment:athame",
+  "pages": [
+    {
+      "type": "text",
+      "text": "used for basically everything"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:athame"
+    }
+  ]
+}

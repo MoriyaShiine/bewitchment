@@ -1,0 +1,15 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Cypress Broom",
+  "icon": "bewitchment:cypress_broom",
+  "pages": [
+    {
+      "type": "text",
+      "text": "rider takes and deals 0.2x damage"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:cypress_broom"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "Silver",
+  "icon": "bewitchment:silver_ingot",
+  "pages": [
+    {
+      "type": "text",
+      "text": "spawns near gold levels\nrelates to purity"
+    },
+    {
+      "type": "empty"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Elder Broom",
+  "icon": "bewitchment:elder_broom",
+  "pages": [
+    {
+      "type": "text",
+      "text": "dismounting brings you and the broom back to the starting point"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:elder_broom"
+    }
+  ]
+}

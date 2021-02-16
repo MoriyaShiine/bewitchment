@@ -1,0 +1,39 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Silver Tools",
+  "icon": "bewitchment:silver_sword",
+  "pages": [
+    {
+      "type": "text",
+      "text": "smithing upgrade to iron\nstats equal to iron with some gold qualities\nsilver tools deal +4 unblockable damage to unholy beings\nsilver armor protects against an additional 12.5% per piece against unholy beings"
+    },
+    {
+      "type": "smithing",
+      "recipe": "bewitchment:silver_sword_smithing",
+      "recipe2": "bewitchment:silver_pickaxe_smithing"
+    },
+    {
+      "type": "smithing",
+      "recipe": "bewitchment:silver_axe_smithing",
+      "recipe2": "bewitchment:silver_shovel_smithing"
+    },
+    {
+      "type": "smithing",
+      "recipe": "bewitchment:silver_hoe_smithing"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:silver_arrow"
+    },
+    {
+      "type": "smithing",
+      "recipe": "bewitchment:silver_helmet_smithing",
+      "recipe2": "bewitchment:silver_chestplate_smithing"
+    },
+    {
+      "type": "smithing",
+      "recipe": "bewitchment:silver_leggings_smithing",
+      "recipe2": "bewitchment:silver_boots_smithing"
+    }
+  ]
+}

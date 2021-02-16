@@ -1,0 +1,15 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Waystone",
+  "icon": "bewitchment:waystone",
+  "pages": [
+    {
+      "type": "text",
+      "text": "can be used to store locations and redirect rituals"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:waystone"
+    }
+  ]
+}

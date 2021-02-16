@@ -1,0 +1,11 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Caduceus",
+  "icon": "bewitchment:caduceus",
+  "pages": [
+    {
+      "type": "text",
+      "text": "dropped from baphomet\npending change to multitool?"
+    }
+  ]
+}
