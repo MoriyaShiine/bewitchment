@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.api.item;
+package moriyashiine.bewitchment.common.item.util;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
