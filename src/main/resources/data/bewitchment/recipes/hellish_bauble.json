@@ -1,0 +1,22 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	"S S",
+	" I ",
+	" M "
+  ],
+  "key": {
+	"S": {
+	  "item": "string"
+	},
+	"I": {
+	  "item": "netherite_ingot"
+	},
+	"M": {
+	  "item": "bewitchment:mandrake_root"
+	}
+  },
+  "result": {
+	"item": "bewitchment:hellish_bauble"
+  }
+}

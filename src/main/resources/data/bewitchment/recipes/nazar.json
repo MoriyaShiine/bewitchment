@@ -1,11 +1,14 @@
 {
   "type": "crafting_shaped",
   "pattern": [
-	"SS ",
+	"DS ",
 	"S L",
 	" LI"
   ],
   "key": {
+	"D": {
+	  "tag": "c:salt_dusts"
+	},
 	"S": {
 	  "item": "string"
 	},
