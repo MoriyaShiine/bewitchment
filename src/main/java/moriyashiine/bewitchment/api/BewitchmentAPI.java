@@ -70,7 +70,7 @@ public class BewitchmentAPI {
 			else {
 				for (long longPos : BWWorldState.get(world).poppetShelves) {
 					BlockPos pos = BlockPos.fromLong(longPos);
-					if (world.getBlockEntity(pos) instanceof PoppetShelfBlockEntity){
+					if (world.getBlockEntity(pos) instanceof PoppetShelfBlockEntity) {
 						PoppetShelfBlockEntity poppetShelf = ((PoppetShelfBlockEntity) world.getBlockEntity(BlockPos.fromLong(longPos)));
 						for (int i = 0; i < poppetShelf.size(); i++) {
 							toSearch.put(poppetShelf.getStack(i), poppetShelf);

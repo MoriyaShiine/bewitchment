@@ -165,9 +165,10 @@ public class TaglockItem extends Item {
 					tooltip.add(new TranslatableText(Bewitchment.MODID + ".level_tooltip", stack.getTag().getInt("Level")).formatted(Formatting.DARK_GRAY));
 					MutableText curseTooltip = new TranslatableText(Bewitchment.MODID + ".curse_tooltip");
 					ListTag curses = tag.getList("Curses", 10);
-					if (curses.isEmpty()){
+					if (curses.isEmpty()) {
 						curseTooltip.append(new TranslatableText(Bewitchment.MODID + ".none"));
-					}else if (!shifting){
+					}
+					else if (!shifting) {
 						curseTooltip.append(new TranslatableText(Bewitchment.MODID + ".shift_expand"));
 					}
 					tooltip.add(curseTooltip.formatted(Formatting.DARK_GRAY));
@@ -181,9 +182,10 @@ public class TaglockItem extends Item {
 					}
 					MutableText contractTooltip = new TranslatableText(Bewitchment.MODID + ".contract_tooltip");
 					ListTag contracts = tag.getList("Contracts", 10);
-					if (contracts.isEmpty()){
+					if (contracts.isEmpty()) {
 						contractTooltip.append(new TranslatableText(Bewitchment.MODID + ".none"));
-					}else if (!shifting){
+					}
+					else if (!shifting) {
 						contractTooltip.append(new TranslatableText(Bewitchment.MODID + ".shift_expand"));
 					}
 					tooltip.add(contractTooltip.formatted(Formatting.DARK_GRAY));
