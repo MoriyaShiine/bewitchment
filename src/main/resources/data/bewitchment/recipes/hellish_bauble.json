@@ -3,7 +3,7 @@
   "pattern": [
 	"S S",
 	" I ",
-	" M "
+	" O "
   ],
   "key": {
 	"S": {
@@ -12,8 +12,8 @@
 	"I": {
 	  "item": "netherite_ingot"
 	},
-	"M": {
-	  "item": "bewitchment:mandrake_root"
+	"O": {
+	  "item": "bewitchment:grim_elixir"
 	}
   },
   "result": {

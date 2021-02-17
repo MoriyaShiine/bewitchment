@@ -1,13 +1,13 @@
 {
   "type": "crafting_shaped",
   "pattern": [
-	"DS ",
+	"OS ",
 	"S L",
 	" LI"
   ],
   "key": {
-	"D": {
-	  "tag": "c:salt_dusts"
+	"O": {
+	  "item": "bewitchment:cleansing_balm"
 	},
 	"S": {
 	  "item": "string"
