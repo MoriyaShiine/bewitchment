@@ -69,9 +69,12 @@ public class BewitchmentAPI {
 			}
 			else {
 				for (long longPos : BWWorldState.get(world).poppetShelves) {
-					PoppetShelfBlockEntity poppetShelf = ((PoppetShelfBlockEntity) world.getBlockEntity(BlockPos.fromLong(longPos)));
-					for (int i = 0; i < poppetShelf.size(); i++) {
-						toSearch.put(poppetShelf.getStack(i), poppetShelf);
+					BlockPos pos = BlockPos.fromLong(longPos);
+					if (world.getBlockEntity(pos) instanceof PoppetShelfBlockEntity){
+						PoppetShelfBlockEntity poppetShelf = ((PoppetShelfBlockEntity) world.getBlockEntity(BlockPos.fromLong(longPos)));
+						for (int i = 0; i < poppetShelf.size(); i++) {
+							toSearch.put(poppetShelf.getStack(i), poppetShelf);
+						}
 					}
 				}
 				for (PlayerEntity player : ((ServerWorld) world).getPlayers()) {
