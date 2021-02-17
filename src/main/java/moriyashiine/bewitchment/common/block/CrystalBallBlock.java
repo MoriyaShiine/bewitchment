@@ -119,12 +119,12 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 							}
 							else {
 								tag.putBoolean("Failed", true);
-								player.sendMessage(new TranslatableText(Bewitchment.MODID + ".blocked_by_shadows"), true);
+								player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.blocked_by_shadows"), true);
 							}
 							BWUtil.addItemToInventoryAndConsume(player, hand, newTaglock);
 						}
 						else {
-							player.sendMessage(new TranslatableText(Bewitchment.MODID + ".invalid_entity"), true);
+							player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.invalid_entity"), true);
 						}
 					}
 				}
@@ -148,12 +148,12 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 						
 					}
 					else {
-						player.sendMessage(new TranslatableText(Bewitchment.MODID + ".has_fortune"), true);
+						player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.has_fortune"), true);
 					}
 				}
 			}
 			else {
-				player.sendMessage(new TranslatableText(Bewitchment.MODID + ".insufficent_altar_power"), true);
+				player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.insufficent_altar_power"), true);
 			}
 			world.playSound(null, pos, sound, SoundCategory.BLOCKS, 1, 1);
 		}

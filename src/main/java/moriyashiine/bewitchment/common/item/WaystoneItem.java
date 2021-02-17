@@ -47,7 +47,7 @@ public class WaystoneItem extends Item {
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		if (stack.hasTag() && stack.getTag().contains("LocationPos")) {
 			BlockPos pos = BlockPos.fromLong(stack.getTag().getLong("LocationPos"));
-			tooltip.add(new TranslatableText(Bewitchment.MODID + ".location_tooltip", pos.getX(), pos.getY(), pos.getZ(), stack.getTag().getString("LocationWorld")).formatted(Formatting.GRAY));
+			tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.location", pos.getX(), pos.getY(), pos.getZ(), stack.getTag().getString("LocationWorld")).formatted(Formatting.GRAY));
 		}
 	}
 }

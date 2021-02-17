@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.common.ritualfunction;
 
 import moriyashiine.bewitchment.api.registry.RitualFunction;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.LivingEntity;
@@ -24,7 +25,7 @@ public class SearchBlocksRitualFunction extends RitualFunction {
 		if (closestPlayer != null) {
 			Block block = world.getBlockState(glyphPos.down(2)).getBlock();
 			int blocks = BWUtil.getBlockPoses(effectivePos, catFamiliar ? 48 : 16, currentPos -> world.getBlockState(currentPos).getBlock() == block).size();
-			closestPlayer.sendMessage(new TranslatableText("bewitchment.found_block" + (blocks == 1 ? "" : "s"), blocks, block.getName()), true);
+			closestPlayer.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.found_block" + (blocks == 1 ? "" : "s"), blocks, block.getName()), true);
 		}
 		super.start(world, glyphPos, effectivePos, inventory, catFamiliar);
 	}

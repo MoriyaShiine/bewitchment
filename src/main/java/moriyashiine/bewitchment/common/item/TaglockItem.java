@@ -156,20 +156,20 @@ public class TaglockItem extends Item {
 			CompoundTag tag = stack.getTag();
 			if (tag.contains("UsedForScrying")) {
 				if (tag.contains("Failed")) {
-					tooltip.add(new TranslatableText("Failed").formatted(Formatting.DARK_GRAY));
+					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.failed").formatted(Formatting.DARK_GRAY));
 				}
 				else {
 					boolean shifting = Screen.hasShiftDown();
 					BlockPos pos = BlockPos.fromLong(stack.getTag().getLong("LocationPos"));
-					tooltip.add(new TranslatableText(Bewitchment.MODID + ".location_tooltip", pos.getX(), pos.getY(), pos.getZ(), stack.getTag().getString("LocationWorld")).formatted(Formatting.DARK_GRAY));
-					tooltip.add(new TranslatableText(Bewitchment.MODID + ".level_tooltip", stack.getTag().getInt("Level")).formatted(Formatting.DARK_GRAY));
-					MutableText curseTooltip = new TranslatableText(Bewitchment.MODID + ".curse_tooltip");
+					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.location", pos.getX(), pos.getY(), pos.getZ(), stack.getTag().getString("LocationWorld")).formatted(Formatting.DARK_GRAY));
+					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.level", stack.getTag().getInt("Level")).formatted(Formatting.DARK_GRAY));
+					MutableText curseTooltip = new TranslatableText(Bewitchment.MODID + ".tooltip.curse");
 					ListTag curses = tag.getList("Curses", 10);
 					if (curses.isEmpty()) {
-						curseTooltip.append(new TranslatableText(Bewitchment.MODID + ".none"));
+						curseTooltip.append(new TranslatableText(Bewitchment.MODID + ".tooltip.none"));
 					}
 					else if (!shifting) {
-						curseTooltip.append(new TranslatableText(Bewitchment.MODID + ".shift_expand"));
+						curseTooltip.append(new TranslatableText(Bewitchment.MODID + ".tooltip.press_shift"));
 					}
 					tooltip.add(curseTooltip.formatted(Formatting.DARK_GRAY));
 					if (shifting) {
@@ -177,16 +177,16 @@ public class TaglockItem extends Item {
 							CompoundTag curseTag = (CompoundTag) t;
 							MutableText curseText = new TranslatableText("curse." + curseTag.getString("Curse").replace(":", "."));
 							int duration = curseTag.getInt("Duration") / 24000;
-							tooltip.add(new TranslatableText(Bewitchment.MODID + ".curse_tooltip_expanded", curseText, duration).formatted(Formatting.DARK_GRAY));
+							tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.curse_expanded", curseText, duration).formatted(Formatting.DARK_GRAY));
 						}
 					}
-					MutableText contractTooltip = new TranslatableText(Bewitchment.MODID + ".contract_tooltip");
+					MutableText contractTooltip = new TranslatableText(Bewitchment.MODID + ".tooltip.contract");
 					ListTag contracts = tag.getList("Contracts", 10);
 					if (contracts.isEmpty()) {
-						contractTooltip.append(new TranslatableText(Bewitchment.MODID + ".none"));
+						contractTooltip.append(new TranslatableText(Bewitchment.MODID + ".tooltip.none"));
 					}
 					else if (!shifting) {
-						contractTooltip.append(new TranslatableText(Bewitchment.MODID + ".shift_expand"));
+						contractTooltip.append(new TranslatableText(Bewitchment.MODID + ".tooltip.press_shift"));
 					}
 					tooltip.add(contractTooltip.formatted(Formatting.DARK_GRAY));
 					if (shifting) {
@@ -194,12 +194,12 @@ public class TaglockItem extends Item {
 							CompoundTag contractTag = (CompoundTag) t;
 							MutableText curseText = new TranslatableText("contract." + contractTag.getString("Contract").replace(":", "."));
 							int duration = contractTag.getInt("Duration") / 24000;
-							tooltip.add(new TranslatableText(Bewitchment.MODID + ".curse_tooltip_expanded", curseText, duration).formatted(Formatting.DARK_GRAY));
+							tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.curse_expanded", curseText, duration).formatted(Formatting.DARK_GRAY));
 						}
 					}
-					tooltip.add(new TranslatableText(Bewitchment.MODID + ".transformation_tooltip", new TranslatableText(stack.getTag().getString("Transformation"))).formatted(Formatting.DARK_GRAY));
-					tooltip.add(new TranslatableText(Bewitchment.MODID + ".familiar_tooltip", new TranslatableText("entity." + tag.getString("Familiar").replace(":", "."))).formatted(Formatting.DARK_GRAY));
-					tooltip.add(new TranslatableText(Bewitchment.MODID + ".pledge_tooltip", new TranslatableText(stack.getTag().getString("Pledge"))).formatted(Formatting.DARK_GRAY));
+					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.transformation", new TranslatableText(stack.getTag().getString("Transformation"))).formatted(Formatting.DARK_GRAY));
+					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.familiar", new TranslatableText("entity." + tag.getString("Familiar").replace(":", "."))).formatted(Formatting.DARK_GRAY));
+					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.pledge", new TranslatableText(stack.getTag().getString("Pledge"))).formatted(Formatting.DARK_GRAY));
 				}
 			}
 		}
@@ -241,7 +241,7 @@ public class TaglockItem extends Item {
 			}
 			if (failed) {
 				if (entity instanceof PlayerEntity) {
-					((PlayerEntity) entity).sendMessage(new TranslatableText("bewitchment.taglock_fail", user.getDisplayName().getString()), false);
+					((PlayerEntity) entity).sendMessage(new TranslatableText(Bewitchment.MODID + ".message.taglock_fail", user.getDisplayName().getString()), false);
 					if (entity.world.isClient) {
 						entity.world.playSoundFromEntity((PlayerEntity) entity, user, BWSoundEvents.ENTITY_GENERIC_PLING, SoundCategory.PLAYERS, 1, 1);
 					}

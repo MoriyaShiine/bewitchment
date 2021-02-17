@@ -65,7 +65,7 @@ public class ContractItem extends Item {
 						}
 					}
 					if (user instanceof PlayerEntity) {
-						((PlayerEntity) user).sendMessage(new TranslatableText(Bewitchment.MODID + ".invalid_entity", TaglockItem.getTaglockName(stack)), true);
+						((PlayerEntity) user).sendMessage(new TranslatableText(Bewitchment.MODID + ".message.invalid_entity", TaglockItem.getTaglockName(stack)), true);
 					}
 				}
 			}
