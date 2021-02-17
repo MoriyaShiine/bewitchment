@@ -15,6 +15,7 @@ import net.minecraft.block.DoorBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.BedPart;
 import net.minecraft.block.enums.DoubleBlockHalf;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -24,10 +25,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
@@ -155,11 +159,42 @@ public class TaglockItem extends Item {
 					tooltip.add(new TranslatableText("Failed").formatted(Formatting.DARK_GRAY));
 				}
 				else {
+					boolean shifting = Screen.hasShiftDown();
 					BlockPos pos = BlockPos.fromLong(stack.getTag().getLong("LocationPos"));
 					tooltip.add(new TranslatableText(Bewitchment.MODID + ".location_tooltip", pos.getX(), pos.getY(), pos.getZ(), stack.getTag().getString("LocationWorld")).formatted(Formatting.DARK_GRAY));
 					tooltip.add(new TranslatableText(Bewitchment.MODID + ".level_tooltip", stack.getTag().getInt("Level")).formatted(Formatting.DARK_GRAY));
-					tooltip.add(new LiteralText("Curses: " + tag.get("Curses")).formatted(Formatting.DARK_GRAY));
-					tooltip.add(new LiteralText("Contracts: " + tag.get("Contracts")).formatted(Formatting.DARK_GRAY));
+					MutableText curseTooltip = new TranslatableText(Bewitchment.MODID + ".curse_tooltip");
+					ListTag curses = tag.getList("Curses", 10);
+					if (curses.isEmpty()){
+						curseTooltip.append(new TranslatableText(Bewitchment.MODID + ".none"));
+					}else if (!shifting){
+						curseTooltip.append(new TranslatableText(Bewitchment.MODID + ".shift_expand"));
+					}
+					tooltip.add(curseTooltip.formatted(Formatting.DARK_GRAY));
+					if (shifting) {
+						for (Tag t : curses) {
+							CompoundTag curseTag = (CompoundTag) t;
+							MutableText curseText = new TranslatableText("curse." + curseTag.getString("Curse").replace(":", "."));
+							int duration = curseTag.getInt("Duration") / 24000;
+							tooltip.add(new TranslatableText(Bewitchment.MODID + ".curse_tooltip_expanded", curseText, duration).formatted(Formatting.DARK_GRAY));
+						}
+					}
+					MutableText contractTooltip = new TranslatableText(Bewitchment.MODID + ".contract_tooltip");
+					ListTag contracts = tag.getList("Contracts", 10);
+					if (contracts.isEmpty()){
+						contractTooltip.append(new TranslatableText(Bewitchment.MODID + ".none"));
+					}else if (!shifting){
+						contractTooltip.append(new TranslatableText(Bewitchment.MODID + ".shift_expand"));
+					}
+					tooltip.add(contractTooltip.formatted(Formatting.DARK_GRAY));
+					if (shifting) {
+						for (Tag t : contracts) {
+							CompoundTag contractTag = (CompoundTag) t;
+							MutableText curseText = new TranslatableText("contract." + contractTag.getString("Contract").replace(":", "."));
+							int duration = contractTag.getInt("Duration") / 24000;
+							tooltip.add(new TranslatableText(Bewitchment.MODID + ".curse_tooltip_expanded", curseText, duration).formatted(Formatting.DARK_GRAY));
+						}
+					}
 					tooltip.add(new TranslatableText(Bewitchment.MODID + ".transformation_tooltip", new TranslatableText(stack.getTag().getString("Transformation"))).formatted(Formatting.DARK_GRAY));
 					tooltip.add(new TranslatableText(Bewitchment.MODID + ".familiar_tooltip", new TranslatableText("entity." + tag.getString("Familiar").replace(":", "."))).formatted(Formatting.DARK_GRAY));
 					tooltip.add(new TranslatableText(Bewitchment.MODID + ".pledge_tooltip", new TranslatableText(stack.getTag().getString("Pledge"))).formatted(Formatting.DARK_GRAY));

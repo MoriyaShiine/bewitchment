@@ -214,7 +214,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					heal(1);
 				}
 			}
-			else {
+			else if (random.nextFloat() < 0.25F){
 				world.addParticle(ParticleTypes.ENCHANT, getParticleX(getWidth()), getY() + MathHelper.nextFloat(random, 0, getHeight()), getParticleZ(getWidth()), 0, 0, 0);
 			}
 		}
