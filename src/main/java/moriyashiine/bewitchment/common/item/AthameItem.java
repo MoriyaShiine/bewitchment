@@ -148,7 +148,8 @@ public class AthameItem extends SwordItem {
 							return blockEntity instanceof BrazierBlockEntity && ((BrazierBlockEntity) blockEntity).incenseRecipe.effect == BWStatusEffects.MORTAL_COIL;
 						});
 						if (brazierPos != null) {
-							world.createExplosion(target, brazierPos.getX() + 0.5, brazierPos.getY() + 0.5, brazierPos.getZ() + 0.5, 3, Explosion.DestructionType.DESTROY);
+							world.breakBlock(brazierPos, false);
+							world.createExplosion(target, brazierPos.getX() + 0.5, brazierPos.getY() + 0.5, brazierPos.getZ() + 0.5, 3, Explosion.DestructionType.BREAK);
 							Entity entity = chicken ? BWEntityTypes.LILITH.create(world) : BWEntityTypes.HERNE.create(world);
 							if (entity instanceof MobEntity) {
 								((MobEntity) entity).initialize((ServerWorldAccess) world, world.getLocalDifficulty(brazierPos), SpawnReason.EVENT, null, null);
