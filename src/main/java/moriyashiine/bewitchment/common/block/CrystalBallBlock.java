@@ -99,7 +99,7 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 								tag.put("Contracts", ((ContractAccessor) owner).toTagContract());
 								tag.putString("Transformation", "transformation." + BWRegistries.TRANSFORMATIONS.getId(((TransformationAccessor) owner).getTransformation()).toString().replace(":", "."));
 								BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-								String familiar = "None";
+								String familiar = "none";
 								for (int i = 0; i < worldState.familiars.size(); i++) {
 									if (worldState.familiars.get(i).getLeft().equals(owner.getUuid())) {
 										familiar = worldState.familiars.get(i).getRight().getString("id");
