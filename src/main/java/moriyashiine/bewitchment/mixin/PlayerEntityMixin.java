@@ -9,10 +9,7 @@ import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.api.registry.Transformation;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
-import moriyashiine.bewitchment.common.entity.interfaces.BroomUserAccessor;
-import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
-import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
-import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
+import moriyashiine.bewitchment.common.entity.interfaces.*;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.*;
 import moriyashiine.bewitchment.common.statuseffect.PolymorphStatusEffect;
@@ -51,7 +48,7 @@ import java.util.UUID;
 
 @SuppressWarnings("ConstantConditions")
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity implements MagicAccessor, PolymorphAccessor, FortuneAccessor, ContractAccessor, TransformationAccessor, RespawnTimerAccessor, WerewolfAccessor, BroomUserAccessor {
+public abstract class PlayerEntityMixin extends LivingEntity implements MagicAccessor, PolymorphAccessor, FortuneAccessor, ContractAccessor, TransformationAccessor, RespawnTimerAccessor, WerewolfAccessor, BroomUserAccessor, TrueInvisibleAccessor {
 	private static final TrackedData<Integer> MAGIC = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	private static final TrackedData<Integer> MAGIC_TIMER = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	
@@ -61,6 +58,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	private static final TrackedData<Integer> WEREWOLF_VARIANT = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	
 	private static final TrackedData<Boolean> PRESSING_FORWARD = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+	
+	private static final TrackedData<Boolean> TRUE_INVISIBLE = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
 	private Fortune.Instance fortune = null;
 	
@@ -194,6 +193,16 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		dataTracker.set(PRESSING_FORWARD, pressingForward);
 	}
 	
+	@Override
+	public boolean getTrueInvisible() {
+		return dataTracker.get(TRUE_INVISIBLE);
+	}
+	
+	@Override
+	public void setTrueInvisible(boolean pressingForward) {
+		dataTracker.set(TRUE_INVISIBLE, pressingForward);
+	}
+	
 	@Inject(method = "tick", at = @At("HEAD"))
 	private void tick(CallbackInfo callbackInfo) {
 		if (!world.isClient) {
@@ -220,6 +229,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 						getFortune().duration = world.random.nextInt(120000);
 					}
 				}
+			}
+			if (getTrueInvisible()) {
+				setTrueInvisible(false);
 			}
 			BWUtil.updateAttributeModifiers((PlayerEntity) (Object) this);
 			if (getRespawnTimer() > 0) {
@@ -348,6 +360,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		setForcedTransformation(tag.getBoolean("ForcedTransformation"));
 		setWerewolfVariant(tag.getInt("WerewolfVariant"));
 		setPressingForward(tag.getBoolean("PressingForward"));
+		setTrueInvisible(tag.getBoolean("TrueInvisible"));
 	}
 	
 	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
@@ -367,6 +380,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		tag.putBoolean("ForcedTransformation", getForcedTransformation());
 		tag.putInt("WerewolfVariant", getWerewolfVariant());
 		tag.putBoolean("PressingForward", getPressingForward());
+		tag.putBoolean("TrueInvisible", getTrueInvisible());
 	}
 	
 	@Inject(method = "initDataTracker", at = @At("TAIL"))
@@ -377,5 +391,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		dataTracker.startTracking(ALTERNATE_FORM, false);
 		dataTracker.startTracking(WEREWOLF_VARIANT, 0);
 		dataTracker.startTracking(PRESSING_FORWARD, false);
+		dataTracker.startTracking(TRUE_INVISIBLE, false);
 	}
 }

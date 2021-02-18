@@ -4,6 +4,7 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.entity.BroomEntity;
 import moriyashiine.bewitchment.client.renderer.ContributorHornsFeatureRenderer;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
+import moriyashiine.bewitchment.common.entity.interfaces.TrueInvisibleAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
@@ -47,6 +48,10 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 	private void render(AbstractClientPlayerEntity player, float yaw, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, CallbackInfo callbackInfo) {
 		Optional<BlockPos> pos = player.getSleepingPosition();
 		if (pos.isPresent() && player.world.getBlockState(pos.get()).getBlock() instanceof CoffinBlock) {
+			callbackInfo.cancel();
+			return;
+		}
+		if (((TrueInvisibleAccessor) player).getTrueInvisible()) {
 			callbackInfo.cancel();
 			return;
 		}

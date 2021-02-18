@@ -4,6 +4,7 @@ import com.mojang.authlib.GameProfile;
 import moriyashiine.bewitchment.api.interfaces.entity.*;
 import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
+import moriyashiine.bewitchment.common.entity.interfaces.TrueInvisibleAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -28,6 +29,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 			((RespawnTimerAccessor) this).setRespawnTimer(((RespawnTimerAccessor) oldPlayer).getRespawnTimer());
 			((TransformationAccessor) this).setAlternateForm(((TransformationAccessor) oldPlayer).getAlternateForm());
 			((WerewolfAccessor) this).setForcedTransformation(((WerewolfAccessor) oldPlayer).getForcedTransformation());
+			((TrueInvisibleAccessor) this).setTrueInvisible(((TrueInvisibleAccessor) oldPlayer).getTrueInvisible());
 		}
 		((PolymorphAccessor) this).setPolymorphUUID(((PolymorphAccessor) oldPlayer).getPolymorphUUID());
 		((PolymorphAccessor) this).setPolymorphName(((PolymorphAccessor) oldPlayer).getPolymorphName());
