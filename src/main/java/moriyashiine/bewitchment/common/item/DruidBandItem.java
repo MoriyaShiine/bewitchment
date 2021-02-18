@@ -22,7 +22,7 @@ public class DruidBandItem extends TrinketItem {
 	
 	@Override
 	public void tick(PlayerEntity player, ItemStack stack) {
-		if (!player.world.isClient && player.age % 20 == 0 && player.world.getBlockState(player.getBlockPos().down()).getBlock() instanceof Fertilizable) {
+		if (!player.world.isClient && player.age % 10 == 0 && player.world.getBlockState(player.getBlockPos().down()).getBlock() instanceof Fertilizable) {
 			StatusEffectInstance speed = new StatusEffectInstance(StatusEffects.SPEED, 200, 0, true, false);
 			StatusEffectInstance regeneration = new StatusEffectInstance(StatusEffects.REGENERATION, 200, 0, true, false);
 			boolean canApply = player.canHaveStatusEffect(speed) && !player.hasStatusEffect(StatusEffects.SPEED);
