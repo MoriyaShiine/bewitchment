@@ -1,0 +1,11 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "Cauldron",
+  "icon": "bewitchment:witch_cauldron",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Funni metal pot wonder what it does"
+    }
+  ]
+}

@@ -4,5 +4,8 @@
   "custom_book_item": "bewitchment:book_of_shadows",
   "book_texture": "bewitchment:textures/gui/patchouli/book.png",
   "filler_texture": "bewitchment:textures/gui/patchouli/filler.png",
-  "dont_generate_book": true
+  "dont_generate_book": true,
+  "macros": {
+    "$(item)": "$(0xFF00FF)"
+  }
 }

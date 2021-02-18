@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "Elemental Oils",
+  "icon": "bewitchment:cleansing_balm",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Elemental Oil$() is an essential crafting component in witchcraft. It is generally made out of a type of $(l:bewitchment:introduction/bark)$(item)Bark$() and other components.$(br)To craft oil, throw the piece of bark into a boiling $(l:bewitchment:introduction/cauldron)$(item)Cauldron$() first, then add the other ingredients.$(br)Once it reaches a pleasant, matching color, you can bottle the oil."
+    },
+    {
+      "type": "bewitchment:oil",
+      "recipe": "bewitchment:oil_crafting/aqua_cerate",
+      "text": "$(o)The Forbidden Oil$()"
+    }
+  ]
+}
