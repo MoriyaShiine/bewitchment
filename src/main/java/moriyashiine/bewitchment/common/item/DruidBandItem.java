@@ -23,8 +23,8 @@ public class DruidBandItem extends TrinketItem {
 	@Override
 	public void tick(PlayerEntity player, ItemStack stack) {
 		if (!player.world.isClient && player.age % 10 == 0 && player.world.getBlockState(player.getBlockPos().down()).getBlock() instanceof Fertilizable) {
-			StatusEffectInstance speed = new StatusEffectInstance(StatusEffects.SPEED, 200, 0, true, false);
-			StatusEffectInstance regeneration = new StatusEffectInstance(StatusEffects.REGENERATION, 200, 0, true, false);
+			StatusEffectInstance speed = new StatusEffectInstance(StatusEffects.SPEED, 300, 0, true, false);
+			StatusEffectInstance regeneration = new StatusEffectInstance(StatusEffects.REGENERATION, 300, 0, true, false);
 			boolean canApply = player.canHaveStatusEffect(speed) && !player.hasStatusEffect(StatusEffects.SPEED);
 			canApply |= player.canHaveStatusEffect(regeneration) && !player.hasStatusEffect(StatusEffects.REGENERATION);
 			if (canApply && BewitchmentAPI.usePlayerMagic(player, 1, false)) {
