@@ -1,0 +1,25 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	" I ",
+	"IEI",
+	"SOS"
+  ],
+  "key": {
+	"I": {
+	  "tag": "c:silver_ingots"
+	},
+	"E": {
+	  "item": "ender_pearl"
+	},
+	"S": {
+	  "item": "string"
+	},
+	"O": {
+	  "item": "bewitchment:fiery_serum"
+	}
+  },
+  "result": {
+	"item": "bewitchment:zephyr_harness"
+  }
+}

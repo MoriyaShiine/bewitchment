@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.mixin;
 
+import dev.emi.trinkets.api.TrinketsApi;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.*;
 import moriyashiine.bewitchment.api.registry.Contract;
@@ -64,6 +65,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
@@ -117,6 +119,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Shadow
 	public float flyingSpeed;
+	
+	@Shadow
+	public int hurtTime;
 	
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
@@ -396,7 +401,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	}
 	
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
-	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
+	private void damageHead(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
 			if (BewitchmentAPI.isVampire(this, true) && source.isFire()) {
 				callbackInfo.setReturnValue(damage(BWDamageSources.SUN, amount * 2));
@@ -440,7 +445,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				callbackInfo.setReturnValue(false);
 				return;
 			}
-			if (amount > 0) {
+			if (amount > 0 && hurtTime == 0) {
 				if (hasStatusEffect(BWStatusEffects.LEECHING)) {
 					heal(amount * (getStatusEffect(BWStatusEffects.LEECHING).getAmplifier() + 1) / 4);
 				}
@@ -482,6 +487,13 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					}
 				}
 			}
+		}
+	}
+	
+	@Inject(method = "damage", at = @At("RETURN"))
+	private void damageReturn(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
+		if (!world.isClient && callbackInfo.getReturnValue() && source.getSource() instanceof PlayerEntity && ((PlayerEntity) source.getSource()).getMainHandStack().isEmpty() && TrinketsApi.getTrinketsInventory((PlayerEntity) source.getSource()).containsAny(Collections.singleton(BWObjects.ZEPHYR_HARNESS)) && BewitchmentAPI.usePlayerMagic((PlayerEntity) source.getSource(), 1, false)) {
+			addVelocity(0, 2 / 3f, 0);
 		}
 	}
 	
