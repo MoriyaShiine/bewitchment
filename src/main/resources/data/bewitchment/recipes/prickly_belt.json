@@ -1,0 +1,25 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	" L ",
+	"LCL",
+	"BO "
+  ],
+  "key": {
+	"L": {
+	  "item": "leather"
+	},
+	"C": {
+	  "item": "cactus"
+	},
+	"B": {
+	  "item": "glass_bottle"
+	},
+	"O": {
+	  "item": "bewitchment:aqua_cerate"
+	}
+  },
+  "result": {
+	"item": "bewitchment:prickly_belt"
+  }
+}

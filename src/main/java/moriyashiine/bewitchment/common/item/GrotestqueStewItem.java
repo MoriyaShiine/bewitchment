@@ -13,8 +13,8 @@ import net.minecraft.util.Pair;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 
-public class GrotestqueStew extends Item {
-	public GrotestqueStew(Settings settings) {
+public class GrotestqueStewItem extends Item {
+	public GrotestqueStewItem(Settings settings) {
 		super(settings);
 	}
 	

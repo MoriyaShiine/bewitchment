@@ -12,14 +12,14 @@ import net.minecraft.item.ItemStack;
 
 import java.util.UUID;
 
-public class ZephyrHarness extends TrinketItem {
+public class ZephyrHarnessItem extends TrinketItem {
 	private static final Multimap<EntityAttribute, EntityAttributeModifier> MODIFIER_MAP = LinkedHashMultimap.create();
 	
 	static {
 		MODIFIER_MAP.put(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, new EntityAttributeModifier(UUID.fromString("eec5a75f-44e6-4a02-ac8b-096144b57f10"), "Trinket modifier", 1, EntityAttributeModifier.Operation.ADDITION));
 	}
 	
-	public ZephyrHarness(Settings settings) {
+	public ZephyrHarnessItem(Settings settings) {
 		super(settings);
 	}
 	

@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+	"layer0": "bewitchment:item/prickly_belt"
+  },
+  "overrides": [
+	{
+	  "predicate": {
+		"bewitchment:variant": 1
+	  },
+	  "model": "bewitchment:item/prickly_belt_variant"
+	}
+  ]
+}

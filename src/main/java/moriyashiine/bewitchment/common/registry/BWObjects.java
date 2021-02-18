@@ -254,9 +254,10 @@ public class BWObjects {
 	//trinket
 	public static final Item NAZAR = create("nazar", new NazarItem(gen().maxCount(1)));
 	public static final Item SPECTER_BANGLE = create("specter_bangle", new SpecterBangleItem(gen().maxCount(1)));
+	public static final Item PRICKLY_BELT = create("prickly_belt", new PricklyBeltItem(gen().maxCount(1)));
 	public static final Item HELLISH_BAUBLE = create("hellish_bauble", new HellishBaubleItem(gen().maxCount(1)));
 	public static final Item DRUID_BAND = create("druid_band", new DruidBandItem(gen().maxCount(1)));
-	public static final Item ZEPHYR_HARNESS = create("zephyr_harness", new ZephyrHarness(gen().maxCount(1)));
+	public static final Item ZEPHYR_HARNESS = create("zephyr_harness", new ZephyrHarnessItem(gen().maxCount(1)));
 	//tool
 	public static final Item SILVER_SWORD = create("silver_sword", new SwordItem(BWMaterials.SILVER_TOOL, 3, -2.4f, gen()));
 	public static final Item SILVER_PICKAXE = create("silver_pickaxe", new BWPickaxeItem(BWMaterials.SILVER_TOOL, 1, -2.8f, gen()));
@@ -335,7 +336,7 @@ public class BWObjects {
 	public static final Item WITCHBERRY = create("witchberry", new Item(gen().food(BWFoodComponents.WITCHBERRY)));
 	public static final Item WITCHBERRY_PIE = create("witchberry_pie", new Item(gen().food(BWFoodComponents.WITCHBERRY_PIE)));
 	public static final Item WITCHBERRY_COOKIE = create("witchberry_cookie", new Item(gen().food(BWFoodComponents.WITCHBERRY_COOKIE)));
-	public static final Item GROTESQUE_STEW = create("grotesque_stew", new GrotestqueStew(gen().food(BWFoodComponents.DEMON_HEART).maxCount(1).recipeRemainder(Items.BOWL)));
+	public static final Item GROTESQUE_STEW = create("grotesque_stew", new GrotestqueStewItem(gen().food(BWFoodComponents.DEMON_HEART).maxCount(1).recipeRemainder(Items.BOWL)));
 	//spawn_egg
 	public static final Item OWL_SPAWN_EGG = create("owl_spawn_egg", new SpawnEggItem(BWEntityTypes.OWL, 0x7f3f00, 0xc0c0c0, gen()));
 	public static final Item RAVEN_SPAWN_EGG = create("raven_spawn_egg", new SpawnEggItem(BWEntityTypes.RAVEN, 0x3f3f3f, 0x000000, gen()));
