@@ -255,6 +255,7 @@ public class BWObjects {
 	public static final Item NAZAR = create("nazar", new NazarItem(gen().maxCount(1)));
 	public static final Item SPECTER_BANGLE = create("specter_bangle", new SpecterBangleItem(gen().maxCount(1)));
 	public static final Item HELLISH_BAUBLE = create("hellish_bauble", new HellishBaubleItem(gen().maxCount(1)));
+	public static final Item DRUID_BAND = create("druid_band", new DruidBandItem(gen().maxCount(1)));
 	//tool
 	public static final Item SILVER_SWORD = create("silver_sword", new SwordItem(BWMaterials.SILVER_TOOL, 3, -2.4f, gen()));
 	public static final Item SILVER_PICKAXE = create("silver_pickaxe", new BWPickaxeItem(BWMaterials.SILVER_TOOL, 1, -2.8f, gen()));
