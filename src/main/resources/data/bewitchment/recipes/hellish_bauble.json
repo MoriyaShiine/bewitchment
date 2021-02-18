@@ -2,12 +2,15 @@
   "type": "crafting_shaped",
   "pattern": [
 	"S S",
-	" I ",
+	"HIH",
 	" O "
   ],
   "key": {
 	"S": {
 	  "item": "string"
+	},
+	"H": {
+	  "item": "bewitchment:demon_horn"
 	},
 	"I": {
 	  "item": "netherite_ingot"
