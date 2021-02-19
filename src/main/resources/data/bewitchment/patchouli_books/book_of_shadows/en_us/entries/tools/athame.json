@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "The $(item)Athame$() is an essential tool to any witch. It can be used to gather special drops (such as heads) from mobs, and also has a lot of niche uses.$(br2)Being made out of silver, it is perfectly usable against vampires and werewolves too. "
+      "text": "The $(item)Athame$() is an essential tool to any witch. It can be used to gather special drops (such as heads) from mobs, and also has a lot of niche uses.$(br2)Being made out of silver, it is perfectly usable against vampires and werewolves too."
     },
     {
       "type": "crafting",

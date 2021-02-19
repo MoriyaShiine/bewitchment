@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "Ruin",
+  "icon": "bewitchment:ruin_sigil",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "text",
+      "text": "The Sigil of $(marked)Ruin$() prevents any positive potion effect from taking hold around it."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:ruin_sigil"
+    }
+  ]
+}

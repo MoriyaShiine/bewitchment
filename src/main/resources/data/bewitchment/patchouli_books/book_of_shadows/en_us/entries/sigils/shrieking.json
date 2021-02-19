@@ -1,0 +1,15 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "Shrieking",
+  "icon": "bewitchment:shrieking_sigil",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The $(marked)Shrieking$() Sigil will cast a horrible sound when activated."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:shrieking_sigil"
+    }
+  ]
+}

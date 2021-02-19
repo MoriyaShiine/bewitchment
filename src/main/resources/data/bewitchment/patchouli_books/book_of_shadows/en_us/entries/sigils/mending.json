@@ -1,0 +1,15 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "Mending",
+  "icon": "bewitchment:mending_sigil",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(marked)Mending$() is an $(marked)active Sigil$().$(br)When activated, it will give $(marked)Regeneration$() and $(marked)Resistance$() to whoever activated it."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:mending_sigil"
+    }
+  ]
+}

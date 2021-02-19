@@ -1,0 +1,11 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Incense",
+  "icon": "bewitchment:brazier",
+  "pages": [
+    {
+      "type": "text",
+      "text": "FNORD"
+    }
+  ]
+}

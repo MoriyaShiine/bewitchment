@@ -1,0 +1,11 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "Ghost",
+  "icon": "bewitchment:ghost_spawn_egg",
+  "pages": [
+    {
+      "type": "text",
+      "text": "gost"
+    }
+  ]
+}

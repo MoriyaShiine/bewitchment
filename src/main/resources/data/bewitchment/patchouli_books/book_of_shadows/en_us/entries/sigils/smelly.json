@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "Smelly",
+  "icon": "bewitchment:smelly_sigil",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(marked)Smelly$() Sigils are stinky, causing nearby hostile entities to thread towards it."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:smelly_sigil"
+    }
+  ]
+}

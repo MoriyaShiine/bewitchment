@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "Slippery",
+  "icon": "bewitchment:slippery_sigil",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "text",
+      "text": "The $(marked)Slippery$() Sigil will make it impossible for anyone affected to properly handle fine items such as $(item)Taglocks$(), making it a viable protective method."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:slippery_sigil"
+    }
+  ]
+}

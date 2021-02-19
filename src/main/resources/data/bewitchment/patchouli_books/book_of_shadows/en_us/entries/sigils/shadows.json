@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "Shadows",
+  "icon": "bewitchment:shadows_sigil",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "text",
+      "text": "The $(marked)Shadows$() Sigil casts a magical aura of darkness around it, preventing $(marked)scrying$() from $(l:bewitchment:tools/crystal_ball)$(item)Crystal Balls$() that aim around it."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:shadows_sigil"
+    }
+  ]
+}

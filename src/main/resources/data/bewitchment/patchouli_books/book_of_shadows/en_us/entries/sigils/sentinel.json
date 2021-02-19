@@ -1,0 +1,15 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "Sentinel",
+  "icon": "bewitchment:sentinel_sigil",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The $(marked)Sentinel$() Sigil traps the spirit of a $(l:bewitchment:creatures/ghost)$(marked)Ghost$(). When activated, it will apply a random debuff."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:sentinel_sigil"
+    }
+  ]
+}
