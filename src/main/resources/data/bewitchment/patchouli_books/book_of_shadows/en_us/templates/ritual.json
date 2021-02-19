@@ -1,0 +1,66 @@
+{
+  "processor": "moriyashiine.bewitchment.client.integration.patchouli.RitualProcessor",
+  "components": [
+    {
+      "type": "image",
+      "image": "bewitchment:textures/gui/patchouli/crafting.png",
+      "x": 16,
+      "y": 16,
+      "u": 0,
+      "v": 75,
+      "texture_width": 256,
+      "texture_height": 256,
+      "width": 77,
+      "height": 39,
+      "scale": 1
+    },
+    {
+      "type": "item",
+      "item": "#ingredient0",
+      "x": 18,
+      "y": 18
+    },
+    {
+      "type": "item",
+      "item": "#ingredient1",
+      "x": 37,
+      "y": 18
+    },
+    {
+      "type": "item",
+      "item": "#ingredient2",
+      "x": 55,
+      "y": 18
+    },
+    {
+      "type": "item",
+      "item": "#ingredient3",
+      "x": 74,
+      "y": 18
+    },
+    {
+      "type": "item",
+      "item": "#ingredient4",
+      "x": 37,
+      "y": 37
+    },
+    {
+      "type": "item",
+      "item": "#ingredient5",
+      "x": 55,
+      "y": 37
+    },
+    {
+      "type": "text",
+      "text": "#text",
+      "x": 0,
+      "y": 58
+    },
+    {
+      "type": "header",
+      "text": "#header",
+      "x": -1,
+      "y": 0
+    }
+  ]
+}

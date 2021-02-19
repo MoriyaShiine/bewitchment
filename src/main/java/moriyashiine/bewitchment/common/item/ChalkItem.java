@@ -75,6 +75,7 @@ public class ChalkItem extends Item {
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+		//todo localize this properly or just add it to REI
 		if (stack.hasTag() && stack.getOrCreateTag().contains("InnerCircle")) {
 			tooltip.add(new LiteralText("Inner Circle: " + stack.getOrCreateTag().getString("InnerCircle")).formatted(Formatting.GRAY));
 			if (stack.getOrCreateTag().contains("OuterCircle")) {

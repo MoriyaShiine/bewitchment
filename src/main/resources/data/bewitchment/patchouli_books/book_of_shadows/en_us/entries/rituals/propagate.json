@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "Ritual: Propagate",
+  "icon": "bewitchment:athame",
+  "pages": [
+    {
+      "type": "text",
+      "text": "used for basically everything"
+    },
+    {
+      "type": "bewitchment:ritual",
+      "recipe": "bewitchment:rituals/summon_baphomet",
+      "text": "the uh"
+    }
+  ]
+}
