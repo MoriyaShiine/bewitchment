@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.common.item;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.dragonsblood.DragonsBloodLogBlock;
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
@@ -36,6 +37,7 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.property.Properties;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
@@ -98,6 +100,7 @@ public class AthameItem extends SwordItem {
 				if (!client && !sigil.getEntities().isEmpty()) {
 					boolean whitelist = sigil.getModeOnWhitelist();
 					world.playSound(null, pos, BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.BLOCKS, 1, whitelist ? 0.5f : 1);
+					player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.toggle_" +  (!whitelist ? "whitelist" : "blacklist")), true);
 					sigil.setModeOnWhitelist(!whitelist);
 					blockEntity.markDirty();
 				}
@@ -121,6 +124,7 @@ public class AthameItem extends SwordItem {
 				if (!client) {
 					boolean whitelist = lockable.getModeOnWhitelist();
 					world.playSound(null, pos, BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.BLOCKS, 1, whitelist ? 0.5f : 1);
+					player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.toggle_" +  (!whitelist ? "whitelist" : "blacklist")), true);
 					lockable.setModeOnWhitelist(!whitelist);
 					blockEntity.markDirty();
 				}

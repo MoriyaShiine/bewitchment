@@ -479,6 +479,8 @@
   "bewitchment.message.taglock_fail": "%s tried to take your taglock!",
   "bewitchment.message.blocked_by_shadows": "Something obstructs your vision",
   "bewitchment.message.baphomet_contract": "Baphomet has given you the following contract: %s",
+  "bewitchment.message.toggle_whitelist": "Toggled to whitelist",
+  "bewitchment.message.toggle_blacklist": "Toggled to blacklist",
   "bewitchment.tooltip.none": "None",
   "bewitchment.tooltip.press_shift": "[Press Shift]",
   "bewitchment.tooltip.uses_left": "Uses Left: %s",
