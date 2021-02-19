@@ -1,0 +1,11 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "Vampire",
+  "icon": "bewitchment:vampire_spawn_egg",
+  "pages": [
+    {
+      "type": "text",
+      "text": "succ"
+    }
+  ]
+}

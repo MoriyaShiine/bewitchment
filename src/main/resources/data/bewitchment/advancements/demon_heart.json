@@ -1,0 +1,35 @@
+{
+  "parent": "bewitchment:root",
+  "display": {
+    "icon": {
+      "item": "bewitchment:demon_heart"
+    },
+    "title": {
+      "translate": "advancements.demon_heart.root.title"
+    },
+    "description": {
+      "translate": "advancements.demon_heart.root.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "heart": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "bewitchment:demon_heart"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "heart"
+    ]
+  ]
+}

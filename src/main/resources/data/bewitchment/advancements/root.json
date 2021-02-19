@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "item": "bewitchment:book_of_shadows"
+    },
+    "title": {
+      "translate": "advancements.bewitchment.root.title"
+    },
+    "description": {
+      "translate": "advancements.bewitchment.root.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "bewitchment:textures/block/cypress_planks.png"
+  },
+  "criteria": {
+    "get_book": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "bewitchment:book_of_shadows"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "get_book"
+    ]
+  ]
+}

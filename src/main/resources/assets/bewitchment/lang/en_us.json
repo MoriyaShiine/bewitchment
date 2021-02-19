@@ -506,5 +506,9 @@
   "rei.bewitchment.curses": "Curses",
   "chalk.bewitchment.normal": "Normal",
   "chalk.bewitchment.fiery": "Fiery",
-  "chalk.bewitchment.eldritch": "Eldritch"
+  "chalk.bewitchment.eldritch": "Eldritch",
+  "advancements.bewitchment.root.title": "Bewitchment",
+  "advancements.bewitchment.root.description": "Craft a Book of Shadows and enter the world of witchcraft",
+  "advancements.demon_heart.root.title": "get demon ehart",
+  "advancements.demon_heart.root.description": "Touhou reference idk"
 }

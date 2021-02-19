@@ -8,5 +8,6 @@
   "macros": {
     "$(marked)": "$(#AE32FF)",
     "$(item)": "$(#2F32FF)"
-  }
+  },
+  "advancements_tab": "miskatonicmysteries:root"
 }

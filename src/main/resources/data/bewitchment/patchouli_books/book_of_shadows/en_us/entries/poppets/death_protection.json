@@ -1,0 +1,12 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "Death Protection",
+  "icon": "bewitchment:death_protection_poppet",
+  "advancement": "bewitchment:demon_heart",
+  "pages": [
+    {
+      "type": "text",
+      "text": "a"
+    }
+  ]
+}
