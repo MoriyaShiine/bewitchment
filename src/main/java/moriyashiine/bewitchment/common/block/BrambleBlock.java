@@ -85,7 +85,7 @@ public class BrambleBlock extends SugarCaneBlock {
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (!world.isClient && entity instanceof LivingEntity) {
 			LivingEntity livingEntity = (LivingEntity) entity;
-			if (this == BWObjects.ENDER_BRAMBLE) {
+			if (this == BWObjects.ENDER_BRAMBLE && !livingEntity.hasVehicle()) {
 				BWUtil.attemptTeleport(livingEntity, entity.getBlockPos(), 64, true);
 			}
 			if (this == BWObjects.SCORCHED_BRAMBLE) {
