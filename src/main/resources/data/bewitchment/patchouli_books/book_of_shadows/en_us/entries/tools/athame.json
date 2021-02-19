@@ -3,13 +3,13 @@
   "name": "Athame",
   "icon": "bewitchment:athame",
   "pages": [
-	{
-	  "type": "text",
-	  "text": "used for basically everything"
-	},
-	{
-	  "type": "crafting",
-	  "recipe": "bewitchment:athame"
-	}
+    {
+      "type": "text",
+      "text": "The $(item)Athame$() is an essential tool to any witch. It can be used to gather special drops (such as heads) from mobs, and also has a lot of niche uses.$(br2)Being made out of silver, it is perfectly usable against vampires and werewolves too. "
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:athame"
+    }
   ]
 }
