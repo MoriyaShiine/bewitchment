@@ -9,12 +9,12 @@
     },
     {
       "type": "bewitchment:multi_showcase",
-      "item1": "bewitchment:belladonna",
-      "item2": "bewitchment:mandrake_root",
-      "item3": "bewitchment:aconite",
-      "item4": "bewitchment:garlic",
+      "item1": "bewitchment:aconite",
+      "item2": "bewitchment:belladonna",
+      "item3": "bewitchment:garlic",
+      "item4": "bewitchment:mandrake_root",
       "header": "Regular Crops",
-      "text": "The four regular crops are $(item)Belladonna$(), $(item)Mandrake$(), $(item)Aconite$() and $(item)Garlic$().$(br)Belladonna is mostly associated with the unholy, and Mandrake is commonly used for $(l:bewitchment:brewing/brewing_basics)$(marked)Brews$().$(br)Aconite will hurt lycanthropes, and Garlic can kill Vampires."
+      "text": "The four regular crops are $(item)Aconite$(), $(item)Belladonna$(), $(item)Garlic$() and $(item)Mandrake$().$(br)Aconite is mostly used as a neurotoxin, whereas Belladonna is known for causing physical harm. Mandrake enhances magic, and Garlic embodies healing."
     },
     {
       "type": "smelting",
