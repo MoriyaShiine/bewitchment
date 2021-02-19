@@ -5,7 +5,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "spawns in forest biomes\nrelates to knowledge\nblocks made with it can be locked with a silver ingot and given taglocks\nshift right clicking athame toggles white/blacklist"
+	  "text": "This noble tree spawns in $(marked)forest$() biomes. It is often associated with knowledge and intelligence.$(br)Blocks made with this wood can be locked using a $(item)Silver Ingot$().$(br2)$(o)Locked Blocks can be given $(l:bewitchment:tools/taglock)$(item)Taglocks$()$(o) to white- or blacklist certain players. White-/ Blacklist can be toggled using an $(l:bewitchment:tools/athame)$(item)Athame$()$(o) while sneaking."
 	},
 	{
 	  "type": "image",

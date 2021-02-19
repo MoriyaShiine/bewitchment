@@ -6,6 +6,7 @@
   "filler_texture": "bewitchment:textures/gui/patchouli/filler.png",
   "dont_generate_book": true,
   "macros": {
-    "$(item)": "$(0xFF00FF)"
+    "$(marked)": "$(#AE32FF)",
+    "$(item)": "$(#2F32FF)"
   }
 }

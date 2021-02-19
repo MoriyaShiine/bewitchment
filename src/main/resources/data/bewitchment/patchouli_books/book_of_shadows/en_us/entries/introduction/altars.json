@@ -3,42 +3,46 @@
   "name": "Altars",
   "icon": "bewitchment:stone_witch_altar",
   "pages": [
-	{
-	  "type": "text",
-	  "text": "used to power things\nmaterial is only visual\nput carpet on top to create\npower is gained from plants, variety is more important than more of the same type\ncan have 3 types of modifiers (sword, pentacle, wand)"
-	},
-	{
-	  "type": "crafting",
-	  "title": "Overworld",
-	  "recipe": "bewitchment:stone_witch_altar",
-	  "recipe2": "bewitchment:mossy_cobblestone_witch_altar"
-	},
-	{
-	  "type": "crafting",
-	  "title": " ",
-	  "recipe": "bewitchment:prismarine_witch_altar"
-	},
-	{
-	  "type": "crafting",
-	  "title": "The Nether",
-	  "recipe": "bewitchment:nether_brick_witch_altar",
-	  "recipe2": "bewitchment:blackstone_witch_altar"
-	},
-	{
-	  "type": "crafting",
-	  "title": " ",
-	  "recipe": "bewitchment:golden_witch_altar"
-	},
-	{
-	  "type": "crafting",
-	  "title": "The End",
-	  "recipe": "bewitchment:end_stone_witch_altar",
-	  "recipe2": "bewitchment:obsidian_witch_altar"
-	},
-	{
-	  "type": "crafting",
-	  "title": " ",
-	  "recipe": "bewitchment:purpur_witch_altar"
-	}
+    {
+      "type": "text",
+      "text": "$(item)Altars$() are the cornerstone of any witches lair. They can be used to collect energy -henceforth referred to as $(marked)ME$() (Magical Energy). This energy is essential to most witchcraft, and is collected from nearby plants. You'll want many different plants to collect maximal power.$(br)You may also place $(marked)swords$(), $(marked)pentacles$(), and $(marked)wands$() atop the altar to modify it."
+    },
+    {
+      "type": "text",
+      "text": "$(marked)Pentacles$(), such as $(item)Skulls and $(item)Gems$() will increase gain.$(br)$(marked)Swords$() will increase the storage multiplier.$(br)$(marked)Wands$() such as $(item)Candelabras$() will give a flat bonus on capacity.$(br2)Altars are created by putting carpets on their base block. $(br)The base block is of cosmetic nature only and tied to one of the three dimensions."
+    },
+    {
+      "type": "crafting",
+      "title": "Overworld",
+      "recipe": "bewitchment:stone_witch_altar",
+      "recipe2": "bewitchment:mossy_cobblestone_witch_altar"
+    },
+    {
+      "type": "crafting",
+      "title": " ",
+      "recipe": "bewitchment:prismarine_witch_altar"
+    },
+    {
+      "type": "crafting",
+      "title": "The Nether",
+      "recipe": "bewitchment:nether_brick_witch_altar",
+      "recipe2": "bewitchment:blackstone_witch_altar"
+    },
+    {
+      "type": "crafting",
+      "title": " ",
+      "recipe": "bewitchment:golden_witch_altar"
+    },
+    {
+      "type": "crafting",
+      "title": "The End",
+      "recipe": "bewitchment:end_stone_witch_altar",
+      "recipe2": "bewitchment:obsidian_witch_altar"
+    },
+    {
+      "type": "crafting",
+      "title": " ",
+      "recipe": "bewitchment:purpur_witch_altar"
+    }
   ]
 }

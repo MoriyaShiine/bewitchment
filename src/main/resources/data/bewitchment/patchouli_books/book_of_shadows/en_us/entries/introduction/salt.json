@@ -5,7 +5,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "spawns near coal levels\nrelates to protection\ncan be placed to block unholy creatures"
+	  "text": "Used since ancient times, $(item)Salt$() can block against unholy creatures, giving it a reputation as a protector.$(br)It can be found close to the surface, making it easy to mine.$(br2)Other than being protective, Salt also serves as a common witching material."
 	},
 	{
 	  "type": "image",

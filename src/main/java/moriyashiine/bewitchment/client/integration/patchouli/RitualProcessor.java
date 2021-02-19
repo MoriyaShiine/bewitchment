@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.client.integration.patchouli;
 import moriyashiine.bewitchment.common.recipe.RitualRecipe;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.text.TranslatableText;
@@ -27,11 +28,11 @@ public class RitualProcessor implements IComponentProcessor {
             case "header":
                 return IVariable.from(new TranslatableText("ritual." + recipe.getId().toString().replaceAll(":", ".").replaceAll("/", ".")));
             case "inner":
-                return IVariable.from(recipe.inner);
+                return IVariable.wrap(recipe.inner);
             case "outer":
-                return IVariable.from(recipe.outer);
+                return IVariable.wrap(recipe.outer);
             case "cost":
-                return IVariable.from(recipe.cost);
+                return IVariable.wrap("$(o)" + I18n.translate("bewitchment.tooltip.cost", recipe.cost));
         }
         for (int i = 0; i < recipe.input.size(); i++) {
             if (key.equals("ingredient" + i)) {

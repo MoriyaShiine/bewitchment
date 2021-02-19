@@ -1,0 +1,30 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "Crops",
+  "icon": "bewitchment:mandrake_root",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Witchcraft utilizes several natural crops for the art. These crops are used for Rituals, Brewing and Incense, and seeds for these crops can be found in wild grass, much like other seeds."
+    },
+    {
+      "type": "bewitchment:multi_showcase",
+      "item1": "bewitchment:belladonna",
+      "item2": "bewitchment:mandrake_root",
+      "item3": "bewitchment:aconite",
+      "item4": "bewitchment:garlic",
+      "header": "Regular Crops",
+      "text": "The four regular crops are $(item)Belladonna$(), $(item)Mandrake$(), $(item)Aconite$() and $(item)Garlic$().$(br)Belladonna is mostly associated with the unholy, and Mandrake is commonly used for $(l:bewitchment:brewing/brewing_basics)$(marked)Brews$().$(br)Aconite will hurt lycanthropes, and Garlic can kill Vampires."
+    },
+    {
+      "type": "smelting",
+      "recipe": "bewitchment:grilled_garlic",
+      "text": "Garlic can also be roasted into delicious $(item)Grilled Garlic$()."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:garlic_bread",
+      "text": "Grilled Garlic can in turn be crafted into even more delicious $(item)Garlic Bread$()."
+    }
+  ]
+}

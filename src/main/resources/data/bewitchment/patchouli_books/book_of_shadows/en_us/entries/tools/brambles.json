@@ -1,0 +1,46 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Brambles",
+  "icon": "bewitchment:thick_bramble",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Brambles$() are witchy weeds, artificially created with the help of $(item)Elemental Oil$(). Each Bramble has a unique effect connected to its element."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:glowing_bramble",
+      "text": "$(item)Glowing Bramble$() emits light and prevents mob spawning in a 24 Block radius."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:ender_bramble",
+      "text": "$(item)Ender Bramble$() will teleport anything that collides with it within a 64 Block radius."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:fruiting_bramble",
+      "text": "$(item)Fruiting Bramble$() will grow $(item)Witchberries$(), which can be used to craft ME-restoring goodies."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:scorched_bramble",
+      "text": "$(item)Scorched Bramble$() will set entities on fire. It can also be used as a relatively decent fuel."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:thick_bramble",
+      "text": "Due to its incredible thickness, $(item)Thick Bramble$() can only be passed while sneaking."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:fleeting_bramble",
+      "text": "$(item)Fleeting Bramble$() will launch anything that enters it into the air, unless it's sneaking."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:witchberry_pie",
+      "recipe2": "bewitchment:witchberry_cookie"
+    }
+  ]
+}

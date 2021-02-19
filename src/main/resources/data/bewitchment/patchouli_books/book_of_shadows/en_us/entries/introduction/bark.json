@@ -5,7 +5,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "right click logs with athame to obtain"
+	  "text": "Some say that bark is the most magically potent part of the tree, so early witches learned to strip bark from wood using an $(l:bewitchment:tools/athame)$(item)Athame$().$(br2)$(o)Do note that some woods are simply too hard to strip bark from.$()"
 	}
   ]
 }
