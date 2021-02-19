@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "Arachnophobia",
+  "icon": "minecraft:spider_eye",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Through the power of magic and random asexual reproduction, this curse will cause a massive fear of spiders that may even extend over the duration of the actual curse."
+    },
+    {
+      "type": "bewitchment:curse",
+      "recipe": "bewitchment:curses/arachnophobia",
+      "text": "You do $(o)not$() want to be around spiders while under this curse."
+    }
+  ]
+}

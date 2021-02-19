@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "Concept: Curses",
+  "priority": true,
+  "icon": "bewitchment:brazier",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(marked)Curses$() are malicious magic cast with a $(l:bewitchment:tools/brazier)$(item)Brazier$().$(br)To cast an effective curse, you will need the $(l:bewitchment:tools/taglock)$(item)Taglock$() of your target and put it in the Brazier, in addition to the other ingredients.$(br2)After putting in all of the ingredients, light the Brazier to cast the curse."
+    },
+    {
+      "type": "text",
+      "text": "Do note that all curses need at least 400 ME available.$(br2)Curses will wear off after seven days, but they can also be $(l:bewitchment:rituals/cleansing)cleansed$() using the respective ritual."
+    }
+  ]
+}
