@@ -92,9 +92,9 @@ public class RitualCategory implements RecipeCategory<RitualCategory.Display> {
 			}
 			this.input = input;
 			ItemStack chalk = new ItemStack(BWObjects.GOLDEN_CHALK).setCustomName(new TranslatableText("ritual." + recipe.getId().toString().replaceAll(":", ".").replaceAll("/", ".")));
-			chalk.getOrCreateTag().putString("InnerCircle", recipe.inner);
+			chalk.getOrCreateTag().putString("InnerCircle", "chalk." + Bewitchment.MODID + "." + recipe.inner);
 			if (!recipe.outer.isEmpty()) {
-				chalk.getOrCreateTag().putString("OuterCircle", recipe.outer);
+				chalk.getOrCreateTag().putString("OuterCircle", "chalk." + Bewitchment.MODID + "." + recipe.outer);
 			}
 			chalk.getOrCreateTag().putInt("Cost", recipe.cost);
 			if (recipe.runningTime > 0) {

@@ -491,11 +491,18 @@
   "bewitchment.tooltip.transformation": "Transformation: %s",
   "bewitchment.tooltip.familiar": "Familiar: %s",
   "bewitchment.tooltip.pledge": "Pledge: %s",
+  "bewitchment.tooltip.inner_circle": "Inner Circle: %s",
+  "bewitchment.tooltip.outer_circle": "Outer Circle: %s",
+  "bewitchment.tooltip.cost": "Cost: %d",
+  "bewitchment.tooltip.running_time": "Running Time: %d seconds",
   "rei.bewitchment.athame_stripping": "Athame Stripping",
   "rei.bewitchment.athame_drops": "Athame Drops",
   "rei.bewitchment.rituals": "Rituals",
   "rei.bewitchment.oil_crafting": "Oil Crafting",
   "rei.bewitchment.cauldron_brewing": "Cauldron Brewing",
   "rei.bewitchment.incenses": "Incenses",
-  "rei.bewitchment.curses": "Curses"
+  "rei.bewitchment.curses": "Curses",
+  "chalk.bewitchment.normal": "Normal",
+  "chalk.bewitchment.fiery": "Fiery",
+  "chalk.bewitchment.eldritch": "Eldritch"
 }
