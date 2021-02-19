@@ -1,7 +1,8 @@
 {
-  "category": "bewitchment:introduction",
+  "category": "bewitchment:brewing",
   "name": "Elemental Oils",
   "icon": "bewitchment:cleansing_balm",
+  "priority": true,
   "pages": [
     {
       "type": "text",

@@ -5,13 +5,14 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "spawns in savanna biomes\nrelates to life\nblocks made with it can take up to 3 taglocks\nshift right clicking athame gathers taglocks"
+	  "text": "The Juniper Tree, in stark contrast to the Cypress Tree, represents life. Blocks made with its wood can take up to 3 $(item)Taglocks$(), which are manually inserted.$(br2)$(o)Taglocks are inserted by sneaking while using them on the block. $(br)You can gather the Taglocks by using an $(item)Athame$()$(o) while sneaking$()."
 	},
 	{
 	  "type": "image",
 	  "images": [
 		"bewitchment:textures/gui/patchouli/juniper_tree.png"
 	  ],
+		"text": "The Juniper tree spawns exclusively in $(marked)savannas$().",
 	  "border": true
 	},
 	{

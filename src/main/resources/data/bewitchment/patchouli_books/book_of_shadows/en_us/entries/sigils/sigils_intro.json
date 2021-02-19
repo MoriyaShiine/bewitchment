@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "Using Sigils",
+  "icon": "bewitchment:mending_sigil",
+  "priority": true,
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(marked)Sigils$() are magic symbols of power. They can be divided into two groups: active and passive sigils.$(br2)$(marked)Passive Sigils$() can be placed anywhere and will apply their effect to everything around.$(br2)$(marked)Active Sigils$() need to be placed on usable blocks or other things made from $(l:bewitchment:introduction/dragons_blood_trees)$(marked)Dragon's Blood$()."
+    },
+    {
+      "type": "text",
+      "text": "$(l:bewitchment:tools/taglock)$(item)Taglocks$() can be added to Sigils to control who it affects.$(br)If a Sigil is set to regard the Taglocks as a $(marked)whitelist$(), the Sigil will only affect those in it. If it is set as a blacklist, the Sigil won't affect anyone the Taglock is from.$(br2)$(o)Use an $(l:bewitchment:tools/athame)$(item)Athame$()$(o) while sneaking to toggle between blacklist and whitelist.$()"
+    }
+  ]
+}
