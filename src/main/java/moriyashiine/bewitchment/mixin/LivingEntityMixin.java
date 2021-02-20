@@ -15,6 +15,7 @@ import moriyashiine.bewitchment.common.entity.interfaces.*;
 import moriyashiine.bewitchment.common.entity.living.*;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.item.AthameItem;
+import moriyashiine.bewitchment.common.item.PricklyBeltItem;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.recipe.AthameDropRecipe;
@@ -41,10 +42,12 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.entity.projectile.WitherSkullEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.potion.PotionUtil;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.EntityTypeTags;
@@ -467,22 +470,58 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100));
 					addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100));
 				}
-				if (source == DamageSource.DROWN && (Object) this instanceof PlayerEntity) {
-					ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_POPPET, null, (PlayerEntity) (Object) this);
-					if (!poppet.isEmpty()) {
-						LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
-						if (!owner.getUuid().equals(getUuid())) {
-							if (poppet.damage(BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
-								poppet.decrement(1);
-							}
-							ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
-							if (!potentialPoppet.isEmpty()) {
-								if (potentialPoppet.damage(owner instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) owner) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
-									potentialPoppet.decrement(1);
+				if ((Object) this instanceof PlayerEntity) {
+					if (source == DamageSource.DROWN) {
+						ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_POPPET, null, (PlayerEntity) (Object) this);
+						if (!poppet.isEmpty()) {
+							LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
+							if (!owner.getUuid().equals(getUuid())) {
+								if (poppet.damage(BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+									poppet.decrement(1);
 								}
-								return;
+								ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
+								if (!potentialPoppet.isEmpty()) {
+									if (potentialPoppet.damage(owner instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) owner) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
+										potentialPoppet.decrement(1);
+									}
+									return;
+								}
+								owner.damage(source, amount);
 							}
-							owner.damage(source, amount);
+						}
+					}
+					if (directSource instanceof LivingEntity) {
+						Inventory trinketsInventory = TrinketsApi.getTrinketsInventory((PlayerEntity) (Object) this);
+						if (trinketsInventory.containsAny(Collections.singleton(BWObjects.PRICKLY_BELT))) {
+							ItemStack belt = null;
+							for (int i = 0; i < trinketsInventory.size(); i++) {
+								if (trinketsInventory.getStack(i).getItem() instanceof PricklyBeltItem) {
+									belt = trinketsInventory.getStack(i);
+									break;
+								}
+							}
+							if (belt != null) {
+								if (belt.hasTag() && belt.getTag().getInt("PotionUses") > 0) {
+									boolean used = false;
+									List<StatusEffectInstance> effects = PotionUtil.getPotionEffects(belt);
+									for (StatusEffectInstance effect : effects) {
+										if (((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.HARMFUL) {
+											if (!(((LivingEntity) directSource).hasStatusEffect(effect.getEffectType())) && BewitchmentAPI.usePlayerMagic((PlayerEntity) (Object) this, 2, true) && ((LivingEntity) directSource).addStatusEffect(effect)) {
+												used = true;
+											}
+										}
+										else if (!hasStatusEffect(effect.getEffectType()) && BewitchmentAPI.usePlayerMagic((PlayerEntity) (Object) this, 2, true) && addStatusEffect(effect)) {
+											used = true;
+										}
+									}
+									if (used) {
+										belt.getTag().putInt("PotionUses", belt.getTag().getInt("PotionUses") - 1);
+										if (belt.getTag().getInt("PotionUses") <= 0) {
+											belt.getOrCreateTag().put("CustomPotionEffects", new ListTag());
+										}
+									}
+								}
+							}
 						}
 					}
 				}

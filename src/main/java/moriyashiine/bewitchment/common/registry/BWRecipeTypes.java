@@ -39,6 +39,7 @@ public class BWRecipeTypes {
 	
 	public static final RecipeSerializer<TaglockCraftingRecipe> TAGLOCK_CRAFTING_SERIALIZER = create("taglock_crafting", new SpecialRecipeSerializer<>(TaglockCraftingRecipe::new));
 	public static final RecipeSerializer<ScepterCraftingRecipe> SCEPTER_CRAFTING_SERIALIZER = create("scepter_crafting", new SpecialRecipeSerializer<>(ScepterCraftingRecipe::new));
+	public static final RecipeSerializer<PricklyBeltCraftingRecipe> PRICKLY_BELT_CRAFTING_SERIALIZER = create("prickly_belt_crafting", new SpecialRecipeSerializer<>(PricklyBeltCraftingRecipe::new));
 	
 	private static <T extends Recipe<?>> RecipeSerializer<T> create(String name, RecipeSerializer<T> serializer) {
 		RECIPE_SERIALIZERS.put(serializer, new Identifier(Bewitchment.MODID, name));
