@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "Imbue",
+  "icon": "minecraft:enchanted_book",
+  "advancement": "bewitchment:chalk",
+  "pages": [
+    {
+      "type": "text",
+      "text": "An extremely powerful Ritual; by calling on the deeper, obscure forces of Water, it is able to apply powerful enchantments onto items.$(br)The items to be enchanted must be throw into the circle after it has been started.$(br2)Each enchanted item will require five experience levels."
+    },
+    {
+      "type": "bewitchment:ritual",
+      "recipe": "bewitchment:rituals/imbue",
+      "text": ""
+    }
+  ]
+}

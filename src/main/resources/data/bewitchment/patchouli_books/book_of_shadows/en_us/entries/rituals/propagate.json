@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "Propagate",
+  "icon": "minecraft:bone_meal",
+  "advancement": "bewitchment:chalk",
+  "pages": [
+    {
+      "type": "text",
+      "text": "This Ritual causes nearby crops and animals $(o)and humans$() to grow.$(br2)Sometimes it's better to not question magic."
+    },
+    {
+      "type": "bewitchment:ritual",
+      "recipe": "bewitchment:rituals/propagate",
+      "text": ""
+    }
+  ]
+}

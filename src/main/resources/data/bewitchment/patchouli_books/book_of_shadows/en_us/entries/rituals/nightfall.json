@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "Nightfall",
+  "icon": "bewitchment:silver_ingot",
+  "advancement": "bewitchment:chalk",
+  "pages": [
+    {
+      "type": "text",
+      "text": "By calling on the Moon, witches may change the day for the night."
+    },
+    {
+      "type": "bewitchment:ritual",
+      "recipe": "bewitchment:rituals/nightfall",
+      "text": ""
+    }
+  ]
+}

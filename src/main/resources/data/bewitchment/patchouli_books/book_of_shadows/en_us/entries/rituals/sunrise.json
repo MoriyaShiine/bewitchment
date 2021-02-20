@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "Sunrise",
+  "icon": "minecraft:gold_ingot",
+  "advancement": "bewitchment:chalk",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The Ritual of $(marked)Sunrise$(), simply put, makes it day."
+    },
+    {
+      "type": "bewitchment:ritual",
+      "recipe": "bewitchment:rituals/sunrise",
+      "text": ""
+    }
+  ]
+}
