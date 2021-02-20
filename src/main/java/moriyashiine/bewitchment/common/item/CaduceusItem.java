@@ -4,12 +4,14 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.CaduceusFireballAccessor;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
-import net.minecraft.item.SwordItem;
+import net.minecraft.item.MiningToolItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Hand;
@@ -17,10 +19,12 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
+import java.util.Set;
+
 @SuppressWarnings("ConstantConditions")
-public class CaduceusItem extends SwordItem {
-	public CaduceusItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
-		super(toolMaterial, attackDamage, attackSpeed, settings);
+public class CaduceusItem extends MiningToolItem {
+	public CaduceusItem(float attackDamage, float attackSpeed, ToolMaterial material, Set<Block> effectiveBlocks, Settings settings) {
+		super(attackDamage, attackSpeed, material, effectiveBlocks, settings);
 	}
 	
 	@Override
@@ -52,5 +56,15 @@ public class CaduceusItem extends SwordItem {
 	@Override
 	public int getMaxUseTime(ItemStack stack) {
 		return 24;
+	}
+	
+	@Override
+	public boolean isEffectiveOn(BlockState state) {
+		return true;
+	}
+	
+	@Override
+	public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
+		return miningSpeed;
 	}
 }

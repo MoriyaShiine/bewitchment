@@ -44,6 +44,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -267,7 +268,7 @@ public class BWObjects {
 	public static final Item ATHAME = create("athame", new AthameItem(BWMaterials.SILVER_TOOL, 1, -2, gen()));
 	public static final Item SILVER_ARROW = create("silver_arrow", new SilverArrowItem(gen()));
 	public static final Item SCEPTER = create("scepter", new ScepterItem(gen().rarity(Rarity.RARE).maxDamage(64).fireproof()));
-	public static final Item CADUCEUS = create("caduceus", new CaduceusItem(ToolMaterials.NETHERITE, 6, -3.2f, gen().rarity(Rarity.RARE).maxDamage(666).fireproof()));
+	public static final Item CADUCEUS = create("caduceus", new CaduceusItem(2, -3, ToolMaterials.NETHERITE, new HashSet<>(), gen().rarity(Rarity.RARE).maxDamage(1998).fireproof()));
 	public static final Item HORNED_SPEAR = create("horned_spear", new HornedSpearItem(ToolMaterials.NETHERITE, 4, -2.4f, gen().rarity(Rarity.RARE).maxDamage(1008).fireproof()));
 	public static final Item CHALK = create("chalk", new ChalkItem(gen().maxDamage(128), GLYPH));
 	public static final Item GOLDEN_CHALK = create("golden_chalk", new ChalkItem(gen().maxDamage(128), GOLDEN_GLYPH));
