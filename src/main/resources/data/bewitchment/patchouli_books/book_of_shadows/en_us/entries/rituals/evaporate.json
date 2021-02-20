@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "This Ritual channels energies of Fire, removing any nearby water."
+      "text": "This ritual channels energies of Fire, removing any nearby water."
     },
     {
       "type": "bewitchment:ritual",

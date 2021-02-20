@@ -13,6 +13,8 @@
       "entity": "minecraft:wolf",
       "name": "Wolf",
       "text": "$(o)Woof$()",
+      "rotate": false,
+      "default_rotation": 45,
       "scale": 0.6
     }
   ]

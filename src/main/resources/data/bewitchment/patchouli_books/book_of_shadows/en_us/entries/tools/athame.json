@@ -3,6 +3,9 @@
   "name": "Athame",
   "priority": true,
   "icon": "bewitchment:athame",
+  "extra_recipe_mappings": {
+    "bewitchment:bottle_of_blood": 1
+  },
   "pages": [
     {
       "type": "text",
@@ -10,7 +13,8 @@
     },
     {
       "type": "crafting",
-      "recipe": "bewitchment:athame"
+      "recipe": "bewitchment:athame",
+      "text": "By slaying a humanoid with an Athame while holding a $(item)Glass Bottle$() in the offhand, one can collect $(item)Bottles of Blood$().$(br2)Athames are also used to start most sacrificial Rites."
     }
   ]
 }

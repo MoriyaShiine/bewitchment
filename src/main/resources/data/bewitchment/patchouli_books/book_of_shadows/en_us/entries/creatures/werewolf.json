@@ -5,7 +5,15 @@
   "pages": [
     {
       "type": "text",
-      "text": "uwu"
+      "text": "$(marked)Werewolves$() -victims of $(marked)lycanthropy$()- roam $(marked)forests$(), $(marked)taiga$() or $(marked)icy$() biomes on $(marked)full moons$().$(br)When the sun rises, they turn back into their human form."
+    },
+    {
+      "type": "entity",
+      "entity": "bewitchment:werewolf{Variant:1}",
+      "offset": 0.1,
+      "rotate": false,
+      "default_rotation": 45,
+      "text": "They are extremely resilient, so run when you see one."
     }
   ]
 }

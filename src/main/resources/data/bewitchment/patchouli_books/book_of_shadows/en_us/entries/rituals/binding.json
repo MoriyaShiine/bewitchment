@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "The Ritual of $(marked)Binding$() uses greater demonic power to cross the soul of the caster and an animal they hold dear, making it a $(marked)familiar$(). The animal the Ritual is applied to is defined via $(item)Taglock$().$(br)Do note that not everything can be bound as a familiar; possible familiars are usually mentioned in this book."
+      "text": "The ritual of $(marked)Binding$() uses greater demonic power to cross the soul of the caster and an animal they hold dear, making it a $(marked)familiar$(). The animal the Ritual is applied to is defined via $(item)Taglock$().$(br)Do note that not everything can be bound as a familiar; possible familiars are usually mentioned in this book."
     },
     {
       "type": "bewitchment:ritual",

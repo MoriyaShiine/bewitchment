@@ -5,7 +5,14 @@
   "pages": [
     {
       "type": "text",
-      "text": "succ"
+      "text": "$(marked)Vampires$() are individuals turned by Vampirism. They appear in $(marked)plains$() and $(marked)taiga$() biomes, on new moons where there's the least light.$(br2)They are known to attack humans, so you should equip yourself against them with $(marked)fire$() or $(l:bewitchment:introduction/silver)$(item)Silver$(). "
+    },
+    {
+      "type": "entity",
+      "entity": "bewitchment:vampire{Variant:1}",
+      "offset": 0.1,
+      "rotate": false,
+      "default_rotation": 45
     }
   ]
 }

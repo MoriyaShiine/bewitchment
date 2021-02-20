@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "This Ritual of Light is of highest degree, granting temporary immortality.$(br)Any damage -safe for void- is completely nullified.$(br2)The effect applies to any living being nearby, and it lasts for around half a day."
+      "text": "This ritual of Light is of highest degree, granting temporary immortality.$(br)Any damage -safe for void- is completely nullified.$(br2)The effect applies to any living being nearby, and it lasts for around half a day."
     },
     {
       "type": "bewitchment:ritual",

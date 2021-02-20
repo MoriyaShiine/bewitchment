@@ -12,6 +12,8 @@
       "type": "entity",
       "entity": "minecraft:cat",
       "text": "$(o)May bring dead birds by accident.$()",
+      "rotate": false,
+      "default_rotation": 45,
       "scale": 0.6
     }
   ]
