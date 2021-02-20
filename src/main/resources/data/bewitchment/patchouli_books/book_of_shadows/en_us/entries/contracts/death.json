@@ -1,0 +1,12 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "Death",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The $(marked)Death$() Contract instantly kills its target.$(br2)It $(o)may$() also curse whoever uses it."
+    }
+  ]
+}

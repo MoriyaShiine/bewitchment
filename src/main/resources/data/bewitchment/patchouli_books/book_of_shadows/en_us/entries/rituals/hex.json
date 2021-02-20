@@ -2,7 +2,7 @@
   "category": "bewitchment:rituals",
   "name": "Hex",
   "icon": "minecraft:iron_sword",
-  "advancement": "bewitchment:chalk",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
     {
       "type": "text",

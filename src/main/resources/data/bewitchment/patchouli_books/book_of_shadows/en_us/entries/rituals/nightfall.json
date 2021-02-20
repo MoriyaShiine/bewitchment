@@ -2,7 +2,7 @@
   "category": "bewitchment:rituals",
   "name": "Nightfall",
   "icon": "bewitchment:silver_ingot",
-  "advancement": "bewitchment:chalk",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
     {
       "type": "text",

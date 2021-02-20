@@ -2,7 +2,7 @@
   "category": "bewitchment:rituals",
   "name": "Drench",
   "icon": "minecraft:ghast_tear",
-  "advancement": "bewitchment:chalk",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
     {
       "type": "text",

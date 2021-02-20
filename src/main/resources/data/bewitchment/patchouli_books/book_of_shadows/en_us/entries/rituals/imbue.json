@@ -2,7 +2,7 @@
   "category": "bewitchment:rituals",
   "name": "Imbue",
   "icon": "minecraft:enchanted_book",
-  "advancement": "bewitchment:chalk",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
     {
       "type": "text",

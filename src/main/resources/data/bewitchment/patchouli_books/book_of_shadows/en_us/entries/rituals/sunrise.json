@@ -2,7 +2,7 @@
   "category": "bewitchment:rituals",
   "name": "Sunrise",
   "icon": "minecraft:gold_ingot",
-  "advancement": "bewitchment:chalk",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
     {
       "type": "text",

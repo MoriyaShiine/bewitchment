@@ -2,7 +2,7 @@
   "category": "bewitchment:rituals",
   "name": "Refine",
   "icon": "minecraft:blaze_powder",
-  "advancement": "bewitchment:chalk",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
     {
       "type": "text",

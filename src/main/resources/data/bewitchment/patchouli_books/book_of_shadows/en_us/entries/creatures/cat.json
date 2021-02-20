@@ -2,7 +2,7 @@
   "category": "bewitchment:creatures",
   "name": "Cat",
   "icon": "minecraft:cat_spawn_egg",
-  "advancement": "bewitchment:demon_heart",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
     {
       "type": "text",

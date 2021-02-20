@@ -2,7 +2,7 @@
   "category": "bewitchment:creatures",
   "name": "Dog",
   "icon": "minecraft:wolf_spawn_egg",
-  "advancement": "bewitchment:demon_heart",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
     {
       "type": "text",

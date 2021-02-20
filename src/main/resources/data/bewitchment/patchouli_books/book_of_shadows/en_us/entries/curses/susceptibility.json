@@ -2,7 +2,7 @@
   "category": "bewitchment:curses",
   "name": "Susceptibility",
   "icon": "minecraft:rotten_flesh",
-  "advancement": "bewitchment:demon_heart",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
     {
       "type": "text",

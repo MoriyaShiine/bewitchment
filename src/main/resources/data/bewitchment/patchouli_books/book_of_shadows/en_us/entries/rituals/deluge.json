@@ -2,7 +2,7 @@
   "category": "bewitchment:rituals",
   "name": "Deluge",
   "icon": "minecraft:water_bucket",
-  "advancement": "bewitchment:chalk",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
     {
       "type": "text",

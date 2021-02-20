@@ -2,7 +2,7 @@
   "category": "bewitchment:rituals",
   "name": "Darken",
   "icon": "minecraft:obsidian",
-  "advancement": "bewitchment:chalk",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
     {
       "type": "text",

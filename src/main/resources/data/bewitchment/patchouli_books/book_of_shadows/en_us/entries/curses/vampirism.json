@@ -2,7 +2,7 @@
   "category": "bewitchment:curses",
   "name": "Vampirism",
   "icon": "bewitchment:bottle_of_blood",
-  "advancement": "bewitchment:demon_heart",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
     {
       "type": "text",

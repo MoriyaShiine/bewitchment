@@ -2,7 +2,7 @@
   "category": "bewitchment:rituals",
   "name": "Immortality",
   "icon": "minecraft:diamond",
-  "advancement": "bewitchment:chalk",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
     {
       "type": "text",

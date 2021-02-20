@@ -2,7 +2,7 @@
   "category": "bewitchment:rituals",
   "name": "Evaporate",
   "icon": "minecraft:netherrack",
-  "advancement": "bewitchment:chalk",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
     {
       "type": "text",

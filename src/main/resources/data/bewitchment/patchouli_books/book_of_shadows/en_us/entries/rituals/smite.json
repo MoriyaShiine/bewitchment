@@ -2,7 +2,7 @@
   "category": "bewitchment:rituals",
   "name": "Smite",
   "icon": "minecraft:redstone",
-  "advancement": "bewitchment:chalk",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
     {
       "type": "text",

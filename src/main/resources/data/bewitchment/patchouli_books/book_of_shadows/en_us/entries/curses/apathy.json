@@ -2,7 +2,7 @@
   "category": "bewitchment:curses",
   "name": "Insanity",
   "icon": "minecraft:red_mushroom",
-  "advancement": "bewitchment:demon_heart",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
     {
       "type": "text",
