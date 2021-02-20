@@ -55,6 +55,10 @@ public class ScepterItem extends Item {
 				List<StatusEffectInstance> effects = PotionUtil.getCustomPotionEffects(stack);
 				ItemStack potionStack = PotionUtil.setCustomPotionEffects(new ItemStack(Items.SPLASH_POTION), effects);
 				potionStack.getOrCreateTag().putInt("CustomPotionColor", PotionUtil.getColor(effects));
+				if(stack.getOrCreateTag().contains("PolymorphUUID")) {
+					potionStack.getOrCreateTag().putUuid("PolymorphUUID", stack.getOrCreateTag().getUuid("PolymorphUUID"));
+					potionStack.getOrCreateTag().putString("PolymorphName", stack.getOrCreateTag().getString("PolymorphName"));
+				}
 				potion.setItem(potionStack);
 				potion.setProperties(user, user.pitch, user.yaw, -20.0F, 0.5F, 1.0F);
 				world.spawnEntity(potion);
@@ -62,8 +66,13 @@ public class ScepterItem extends Item {
 				if (!((PlayerEntity) user).isCreative()) {
 					stack.getOrCreateTag().putInt("PotionUses", stack.getOrCreateTag().getInt("PotionUses") - 1);
 					if (stack.getOrCreateTag().getInt("PotionUses") <= 0) {
+						if(stack.getOrCreateTag().contains("PolymorphUUID")) {
+							potionStack.getOrCreateTag().remove("PolymorphUUID");
+							potionStack.getOrCreateTag().remove("PolymorphName");
+						}
 						stack.getOrCreateTag().put("CustomPotionEffects", new ListTag());
 					}
+
 					stack.damage(1, user, stackUser -> stackUser.sendToolBreakStatus(user.getActiveHand()));
 				}
 			}

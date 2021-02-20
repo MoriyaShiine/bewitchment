@@ -53,6 +53,10 @@ public class ScepterCraftingRecipe extends SpecialCraftingRecipe {
 		}
 		scepter.getOrCreateTag().putInt("PotionUses", 8);
 		PotionUtil.setCustomPotionEffects(scepter, !PotionUtil.getCustomPotionEffects(potion).isEmpty() ? PotionUtil.getCustomPotionEffects(potion) : PotionUtil.getPotionEffects(potion));
+		if (potion.getOrCreateTag().contains("PolymorphUUID")){
+			scepter.getOrCreateTag().putUuid("PolymorphUUID", potion.getOrCreateTag().getUuid("PolymorphUUID"));
+			scepter.getOrCreateTag().putString("PolymorphName", potion.getOrCreateTag().getString("PolymorphName"));
+		}
 		return scepter;
 	}
 	
