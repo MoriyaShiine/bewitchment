@@ -483,7 +483,7 @@
   "bewitchment.message.toggle_blacklist": "Toggled to blacklist",
   "bewitchment.tooltip.none": "None",
   "bewitchment.tooltip.press_shift": "[Press Shift]",
-  "bewitchment.tooltip.uses_left": "Uses Left: %s",
+  "bewitchment.tooltip.uses_left": "Uses Left: %d",
   "bewitchment.tooltip.failed": "Failed",
   "bewitchment.tooltip.location": "Location: %s %s %s (%s)",
   "bewitchment.tooltip.level": "Level: %s",

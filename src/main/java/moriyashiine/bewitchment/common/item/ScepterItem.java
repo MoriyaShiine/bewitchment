@@ -41,7 +41,12 @@ public class ScepterItem extends Item {
 		}
 		return TypedActionResult.fail(user.getStackInHand(hand));
 	}
-	
+
+	@Override
+	public boolean canRepair(ItemStack stack, ItemStack ingredient) {
+		return ingredient.getItem().equals(Items.NETHERITE_INGOT);
+	}
+
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (user instanceof MagicAccessor) {
@@ -70,7 +75,7 @@ public class ScepterItem extends Item {
 	public UseAction getUseAction(ItemStack stack) {
 		return !PotionUtil.getCustomPotionEffects(stack).isEmpty() ? UseAction.BOW : UseAction.NONE;
 	}
-	
+
 	@Override
 	public int getMaxUseTime(ItemStack stack) {
 		return 16;
@@ -79,7 +84,7 @@ public class ScepterItem extends Item {
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.uses_left", stack.getOrCreateTag().getInt("Uses")).formatted(Formatting.GRAY));
+		tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.uses_left", stack.getOrCreateTag().getInt("PotionUses")).formatted(Formatting.GRAY));
 		Items.POTION.appendTooltip(stack, world, tooltip, context);
 	}
 }

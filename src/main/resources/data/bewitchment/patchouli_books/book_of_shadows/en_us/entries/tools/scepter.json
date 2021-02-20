@@ -2,6 +2,8 @@
   "category": "bewitchment:tools",
   "name": "Scepter",
   "icon": "bewitchment:scepter",
+  "advancement": "bewitchment:hidden_unlocks/scepter",
+  "secret": true,
   "pages": [
 	{
 	  "type": "text",
