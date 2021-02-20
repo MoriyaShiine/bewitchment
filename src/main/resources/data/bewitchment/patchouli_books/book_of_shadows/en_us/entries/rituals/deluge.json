@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "Deluge",
+  "icon": "minecraft:water_bucket",
+  "advancement": "bewitchment:chalk",
+  "pages": [
+    {
+      "type": "text",
+      "text": "A lesser Ritual that calls on water spirits to make it rain.$(br)The rain itself supernatural, with a rough time span of up to half a day - that is assuming the Ritual is not reinforced somehow."
+    },
+    {
+      "type": "bewitchment:ritual",
+      "recipe": "bewitchment:rituals/deluge"
+    }
+  ]
+}

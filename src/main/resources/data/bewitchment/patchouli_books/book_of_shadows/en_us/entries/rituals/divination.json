@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "Divination",
+  "icon": "minecraft:emerald_ore",
+  "advancement": "bewitchment:chalk",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The Ritual of $(marked)Divination$() searches the earth for the specific block under the center Glyph (that is under the block it is attached on).$(br)It will not give away the exact position, just the count.$(br)When searching for those blocks, keep in mind that the radius of this Ritual is limited to a chunk (under normal conditions)."
+    },
+    {
+      "type": "bewitchment:ritual",
+      "recipe": "bewitchment:rituals/divination"
+    }
+  ]
+}

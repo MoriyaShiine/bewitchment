@@ -507,8 +507,13 @@
   "chalk.bewitchment.normal": "Normal",
   "chalk.bewitchment.fiery": "Fiery",
   "chalk.bewitchment.eldritch": "Eldritch",
+  "chalk.bewitchment.any": "Any",
   "advancements.bewitchment.root.title": "Bewitchment",
   "advancements.bewitchment.root.description": "Craft a Book of Shadows and enter the world of witchcraft",
+  "advancements.witch_cauldron.root.title": "h",
+  "advancements.witch_cauldron.root.description": "Obtain a Witch Cauldron",
+  "advancements.chalk.root.title": "???",
+  "advancements.chalk.root.description": "Craft Chalk to conduct Rituals",
   "advancements.demon_heart.root.title": "get demon ehart",
   "advancements.demon_heart.root.description": "Touhou reference idk"
 }

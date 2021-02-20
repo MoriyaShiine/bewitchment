@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "Drench",
+  "icon": "minecraft:ghast_tear",
+  "advancement": "bewitchment:chalk",
+  "pages": [
+    {
+      "type": "text",
+      "text": "A Ritual that fills the air with water energies, making everything around it wet and extinguishing flames.$(br)It's range is rather limited, so you usually want to apply it in very special cases where you need something to be wet.$()"
+    },
+    {
+      "type": "bewitchment:ritual",
+      "recipe": "bewitchment:rituals/drench"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "Barrier",
+  "icon": "bewitchment:salt",
+  "advancement": "bewitchment:chalk",
+  "pages": [
+    {
+      "type": "text",
+      "text": "This lesser Ritual utilizes the power of wind and salt to push back $(marked)hostile$() entities.$(br)It will run for around half a day."
+    },
+    {
+      "type": "bewitchment:ritual",
+      "recipe": "bewitchment:rituals/barrier",
+      "text": ""
+    }
+  ]
+}

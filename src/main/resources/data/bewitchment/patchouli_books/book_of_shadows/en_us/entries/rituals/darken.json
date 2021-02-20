@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "Darken",
+  "icon": "minecraft:obsidian",
+  "advancement": "bewitchment:chalk",
+  "pages": [
+    {
+      "type": "text",
+      "text": "This Ritual releases a wave of darkness. It will destroy any easily destroyable light sources nearby."
+    },
+    {
+      "type": "bewitchment:ritual",
+      "recipe": "bewitchment:rituals/darken",
+      "text": "That's dark."
+    }
+  ]
+}

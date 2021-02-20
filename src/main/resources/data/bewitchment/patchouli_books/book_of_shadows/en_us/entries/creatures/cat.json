@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "Cat",
+  "icon": "minecraft:cat_spawn_egg",
+  "advancement": "bewitchment:demon_heart",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(marked)Cats$() are finicky things. Even so, there mere presence is soothing to many.$(br)When bound as a familiar, Cats will greatly help with $(l:bewitchent:rituals/ritual_intro)$(marked)rituals$().$(br)In addition, $(marked)Creepers$() will stay away from witches with a Cat familiar."
+    },
+    {
+      "type": "entity",
+      "entity": "minecraft:cat",
+      "text": "$(o)May bring dead birds by accident.$()",
+      "scale": 0.6
+    }
+  ]
+}

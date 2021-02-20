@@ -2,6 +2,7 @@
   "category": "bewitchment:rituals",
   "name": "Cleansing",
   "icon": "minecraft:golden_apple",
+  "advancement": "bewitchment:chalk",
   "pages": [
     {
       "type": "text",

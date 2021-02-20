@@ -1,14 +1,14 @@
 {
-  "parent": "bewitchment:chalk",
+  "parent": "bewitchment:witch_cauldron",
   "display": {
     "icon": {
-      "item": "bewitchment:demon_heart"
+      "item": "bewitchment:chalk"
     },
     "title": {
-      "translate": "advancements.demon_heart.root.title"
+      "translate": "advancements.chalk.root.title"
     },
     "description": {
-      "translate": "advancements.demon_heart.root.description"
+      "translate": "advancements.chalk.root.description"
     },
     "frame": "task",
     "show_toast": false,
@@ -16,12 +16,12 @@
     "hidden": false
   },
   "criteria": {
-    "heart": {
+    "cauldron": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "bewitchment:demon_heart"
+            "item": "bewitchment:witch_cauldron"
           }
         ]
       }
@@ -29,7 +29,7 @@
   },
   "requirements": [
     [
-      "heart"
+      "cauldron"
     ]
   ]
 }

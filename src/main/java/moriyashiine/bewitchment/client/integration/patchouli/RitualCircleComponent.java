@@ -30,8 +30,10 @@ public class RitualCircleComponent implements ICustomComponent {
         ms.push();
         ms.translate(x, y, -1);
         ms.scale(4, 4, 1);
-        textureManager.bindTexture(circles[1]);
-        DrawableHelper.drawTexture(ms, 0, 0, 0, 0, 16, 16, 16, 16);
+        if (circles[1] != null){
+            textureManager.bindTexture(circles[1]);
+            DrawableHelper.drawTexture(ms, 0, 0, 0, 0, 16, 16, 16, 16);
+        }
         ms.translate(4, 4, 1);
         textureManager.bindTexture(circles[0]);
         DrawableHelper.drawTexture(ms, 0, 0, 4, 4, 7, 7, 16, 16);
@@ -41,6 +43,8 @@ public class RitualCircleComponent implements ICustomComponent {
     @Override
     public void onVariablesAvailable(UnaryOperator<IVariable> lookup) {
         circles[0] = new Identifier(Bewitchment.MODID, "textures/gui/chalk/" + lookup.apply(inner).asString() + ".png");
-        circles[1] = new Identifier(Bewitchment.MODID, "textures/gui/chalk/" + lookup.apply(outer).asString() + ".png");
+        if(!lookup.apply(outer).asString().isEmpty()) {
+            circles[1] = new Identifier(Bewitchment.MODID, "textures/gui/chalk/" + lookup.apply(outer).asString() + ".png");
+        }
     }
 }
