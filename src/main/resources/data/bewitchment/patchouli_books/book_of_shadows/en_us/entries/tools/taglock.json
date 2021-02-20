@@ -3,13 +3,14 @@
   "name": "Taglock",
   "icon": "bewitchment:taglock",
   "pages": [
-	{
-	  "type": "text",
-	  "text": "can gather the dna of an entity for various uses"
-	},
-	{
-	  "type": "crafting",
-	  "recipe": "bewitchment:taglock"
-	}
+    {
+      "type": "text",
+      "text": "The $(item)Taglock$() is yet another essential tool.$(br)It can gather an entity's hair, blood and all things needed to establish a connection.$(br)To gather Taglock from an entity, either sneak up from behind or search or search for their $(marked)Bed$().$(br2)$(o)To gather a Taglock from a Bed, use the Taglock while sneaking so you don't accidentally sleep$()."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:taglock",
+      "text": "Recipes that require a Taglock will usually assume that this Taglock has already been used."
+    }
   ]
 }

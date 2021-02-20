@@ -1,6 +1,7 @@
 {
   "category": "bewitchment:tools",
   "name": "Athame",
+  "priority": true,
   "icon": "bewitchment:athame",
   "pages": [
     {

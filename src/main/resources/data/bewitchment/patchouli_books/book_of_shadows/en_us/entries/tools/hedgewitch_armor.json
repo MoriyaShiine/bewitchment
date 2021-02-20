@@ -3,24 +3,24 @@
   "name": "Hedgewitch Armor",
   "icon": "bewitchment:hedgewitch_robes",
   "pages": [
-	{
-	  "type": "text",
-	  "text": "increased crop yield"
-	},
-	{
-	  "type": "crafting",
-	  "recipe": "bewitchment:hedgewitch_hat",
-	  "recipe2": "bewitchment:hedgewitch_hood"
-	},
-	{
-	  "type": "crafting",
-	  "recipe": "bewitchment:hedgewitch_robes",
-	  "recipe2": "bewitchment:hedgewitch_pants"
-	},
-	{
-	  "type": "crafting",
-	  "recipe": "bewitchment:hedgewitch_wool",
-	  "recipe2": "bewitchment:hedgewitch_carpet"
-	}
+    {
+      "type": "text",
+      "text": "This old classic has proven itself over centuries of witchcraft.$(br)When worn, it increases crop yield.$(br2)Carpets of the same fabric can also be placed on $(l:bewitchment:introduction/altars)$(marked)Altars$()."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:hedgewitch_hat",
+      "recipe2": "bewitchment:hedgewitch_hood"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:hedgewitch_robes",
+      "recipe2": "bewitchment:hedgewitch_pants"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:hedgewitch_wool",
+      "recipe2": "bewitchment:hedgewitch_carpet"
+    }
   ]
 }

@@ -25,7 +25,7 @@
     {
       "type": "crafting",
       "recipe": "bewitchment:dragons_blood_broom",
-      "text": "$(item)Dragon's Blood Brooms$() can have active Sigils applied to it, much like any other Dragon's Blood block."
+      "text": "$(item)Dragon's Blood Brooms$() can have active Sigils applied to them, much like any other Dragon's Blood block."
     }
   ]
 }

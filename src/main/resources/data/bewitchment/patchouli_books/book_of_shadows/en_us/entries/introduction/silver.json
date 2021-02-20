@@ -14,6 +14,16 @@
       ],
       "text": "Silver can be found near gold levels.",
       "border": true
+    },
+    {
+      "type": "smelting",
+      "recipe": "bewitchment:silver_ingot",
+      "text": "Silver Ore can be processed in normal $(item)Furnaces$() and $(item)Blast Furnaces$()."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:silver_block",
+      "recipe2": "bewitchment:silver_nugget"
     }
   ]
 }

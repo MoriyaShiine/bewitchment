@@ -2,14 +2,32 @@
   "category": "bewitchment:tools",
   "name": "Coffins",
   "icon": "bewitchment:white_coffin",
+  "extra_recipe_mappings": {
+    "bewitchment:orange_coffin": 1,
+    "bewitchment:magenta_coffin": 1,
+    "bewitchment:light_blue_coffin": 1,
+    "bewitchment:yellow_coffin": 1,
+    "bewitchment:lime_coffin": 1,
+    "bewitchment:pink_coffin": 1,
+    "bewitchment:gray_coffin": 1,
+    "bewitchment:light_gray_coffin": 1,
+    "bewitchment:cyan_coffin": 1,
+    "bewitchment:purple_coffin": 1,
+    "bewitchment:blue_coffin": 1,
+    "bewitchment:brown_coffin": 1,
+    "bewitchment:green_coffin": 1,
+    "bewitchment:red_coffin": 1,
+    "bewitchment:black_coffin": 1
+  },
   "pages": [
-	{
-	  "type": "text",
-	  "text": "can be used to sleep through the day\ncolor based on bed in recipe\nwhite coffin can be dyed"
-	},
-	{
-	  "type": "crafting",
-	  "recipe": "bewitchment:white_coffin"
-	}
+    {
+      "type": "text",
+      "text": "$(item)Coffins$(), originally emerging from vampires, have recently found traction especially among night-active witches.$(br)When you sleep in one, you can skip the day.$(br)Coffins, much like $(item)beds$(), can be dyed if they're white."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:white_coffin",
+      "text": "Coffins can be made from any type of bed."
+    }
   ]
 }

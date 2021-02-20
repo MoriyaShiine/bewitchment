@@ -1,0 +1,12 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "Poppet Practice",
+  "icon": "bewitchment:voodoo_poppet",
+  "priority": true,
+  "pages": [
+    {
+      "type": "text",
+      "text": "a"
+    }
+  ]
+}
