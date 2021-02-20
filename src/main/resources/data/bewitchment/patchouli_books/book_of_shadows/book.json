@@ -6,8 +6,11 @@
   "filler_texture": "bewitchment:textures/gui/patchouli/filler.png",
   "dont_generate_book": true,
   "macros": {
-    "$(marked)": "$(#AE32FF)",
-    "$(item)": "$(#2F32FF)"
+    "$(marked)": "$(#980000)",
+    "$(item)": "$(#980061)"
   },
+  "link_color": "980000",
+  "link_hover_color": "5C0000",
+  "progress_bar_color": "8500B9",
   "advancements_tab": "miskatonicmysteries:root"
 }
