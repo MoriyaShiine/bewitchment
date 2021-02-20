@@ -5,7 +5,12 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "dropped from leonard\ncan craft potions for 8 uses"
-	}
+	  "text": "This powerful relic is acquired by defeating $(l:bewitchment:creatures/leonard)$(marked)Leonard$().$(br)Once acquired, it can be combined with a $(item)Splash Potion$(), which can then be thrown eight times using the Scepter."
+	},
+    {
+      "type": "spotlight",
+      "item": "bewitchment:scepter",
+      "text": "The Scepter will use ME to launch its potions. It can be repaired using $(item)Netherite Ingots$()."
+    }
   ]
 }

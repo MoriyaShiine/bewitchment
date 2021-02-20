@@ -2,10 +2,11 @@
   "category": "bewitchment:tools",
   "name": "Caduceus",
   "icon": "bewitchment:caduceus",
+  "advancement": "bewitchment:hidden_unlocks/caduceus",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "dropped from baphomet\npending change to multitool?"
+	  "text": "TO DO in another PR"
 	}
   ]
 }

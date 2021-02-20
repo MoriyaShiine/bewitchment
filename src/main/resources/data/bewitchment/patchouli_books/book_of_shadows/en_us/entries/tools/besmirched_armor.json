@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "This profane clothing fits perfect into the collection gothique.$(br)Demons are unable to discern the wearer from their card, enabling them to $(marked)trade.$(br2)Carpets of this cloth are perfect for $(l:bewitchment:introduction/altars)$(marked)Altars$()."
+      "text": "This profane clothing fits perfect into the collection gothique.$(br)Demons are unable to discern the wearer from their card, enabling them to $(marked)trade$().$(br2)Carpets of this cloth are perfect for $(l:bewitchment:introduction/altars)$(marked)Altars$()."
     },
     {
       "type": "crafting",
