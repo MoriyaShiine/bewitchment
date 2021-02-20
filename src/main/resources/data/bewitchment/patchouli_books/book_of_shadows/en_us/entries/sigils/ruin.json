@@ -2,6 +2,7 @@
   "category": "bewitchment:sigils",
   "name": "Ruin",
   "icon": "bewitchment:ruin_sigil",
+  "advancement": "minecraft:nether/find_fortress",
   "sortnum": 1,
   "pages": [
     {

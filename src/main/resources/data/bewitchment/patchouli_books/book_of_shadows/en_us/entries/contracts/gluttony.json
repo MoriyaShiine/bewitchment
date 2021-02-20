@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:contracts",
-  "name": "Death",
+  "name": "Gluttony",
   "icon": "bewitchment:demonic_contract",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
-  "sortnum": 1,
+  "sortnum": 2,
   "pages": [
     {
       "type": "text",
-      "text": "The $(marked)Death$() Contract instantly kills its target.$(br2)It $(o)may$() also curse whoever uses it."
+      "text": "$(marked)Gluttony$() doubles the nourishing effect of food...or does it make you consume just as much?"
     }
   ]
 }

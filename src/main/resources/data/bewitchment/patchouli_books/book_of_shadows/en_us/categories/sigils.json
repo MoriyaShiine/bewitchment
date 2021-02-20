@@ -2,5 +2,6 @@
   "name": "Sigils",
   "description": "sigils description",
   "icon": "bewitchment:mending_sigil",
-  "sortnum": 7
+  "sortnum": 7,
+  "secret": true
 }

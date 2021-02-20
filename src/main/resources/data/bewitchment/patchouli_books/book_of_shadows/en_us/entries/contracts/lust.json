@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "Lust",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(marked)Lust$() brings love in the air~$(br)This causes animals bred under whoever has this contract to breed thrice the usual amount.$(br2)A side effect may be the spawning of horrible abominations from Hell."
+    }
+  ]
+}

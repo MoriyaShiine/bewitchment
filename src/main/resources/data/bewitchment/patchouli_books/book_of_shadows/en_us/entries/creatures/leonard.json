@@ -1,0 +1,11 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "Leonard",
+  "icon": "bewitchment:leonard_spawn_egg",
+  "pages": [
+    {
+      "type": "text",
+      "text": "lenny"
+    }
+  ]
+}

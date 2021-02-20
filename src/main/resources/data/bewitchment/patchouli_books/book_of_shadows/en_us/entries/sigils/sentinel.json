@@ -2,6 +2,7 @@
   "category": "bewitchment:sigils",
   "name": "Sentinel",
   "icon": "bewitchment:sentinel_sigil",
+  "advancement": "minecraft:nether/find_fortress",
   "pages": [
     {
       "type": "text",

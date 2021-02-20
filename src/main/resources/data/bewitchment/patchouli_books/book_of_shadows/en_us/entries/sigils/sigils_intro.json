@@ -2,6 +2,7 @@
   "category": "bewitchment:sigils",
   "name": "Using Sigils",
   "icon": "bewitchment:mending_sigil",
+  "advancement": "minecraft:nether/find_fortress",
   "priority": true,
   "pages": [
     {

@@ -1,0 +1,11 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "Lilith",
+  "icon": "bewitchment:lilith_spawn_egg",
+  "pages": [
+    {
+      "type": "text",
+      "text": "she"
+    }
+  ]
+}

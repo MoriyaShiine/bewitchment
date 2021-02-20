@@ -2,6 +2,7 @@
   "category": "bewitchment:sigils",
   "name": "Smelly",
   "icon": "bewitchment:smelly_sigil",
+  "advancement": "minecraft:nether/find_fortress",
   "sortnum": 1,
   "pages": [
     {

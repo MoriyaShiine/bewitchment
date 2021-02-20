@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:contracts",
-  "name": "Death",
+  "name": "Heresy",
   "icon": "bewitchment:demonic_contract",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
-  "sortnum": 1,
+  "sortnum": 3,
   "pages": [
     {
       "type": "text",
-      "text": "The $(marked)Death$() Contract instantly kills its target.$(br2)It $(o)may$() also curse whoever uses it."
+      "text": "$(marked)Heresy$()!$(br)This will reflect any curse cast upon you, but may give you $(marked)Mortal Coil$() instead."
     }
   ]
 }

@@ -2,6 +2,7 @@
   "category": "bewitchment:sigils",
   "name": "Decay",
   "icon": "bewitchment:decay_sigil",
+  "advancement": "minecraft:nether/find_fortress",
   "pages": [
     {
       "type": "text",

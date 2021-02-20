@@ -2,6 +2,7 @@
   "category": "bewitchment:sigils",
   "name": "Heavy",
   "icon": "bewitchment:heavy_sigil",
+  "advancement": "minecraft:nether/find_fortress",
   "sortnum": 1,
   "pages": [
     {

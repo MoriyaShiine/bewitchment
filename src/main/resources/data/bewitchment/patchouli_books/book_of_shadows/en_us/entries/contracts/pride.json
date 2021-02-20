@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "Pride",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "text",
+      "text": "With a $(marked)Pride$() contract you can instantly smelt any ore, though that may come with spontaneous explosions instead.$(br)But that's definitely worth it."
+    }
+  ]
+}
