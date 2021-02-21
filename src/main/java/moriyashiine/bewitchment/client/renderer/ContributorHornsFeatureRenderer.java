@@ -42,6 +42,10 @@ public final class ContributorHornsFeatureRenderer extends FeatureRenderer<Abstr
 		}
 		else if (!player.isInvisible() && player.isPartVisible(PlayerModelPart.HAT) && contributors.contains(player.getUuid())) {
 			matrices.push();
+			if (player.isBaby()) {
+				matrices.translate(0, 0.75, 0);
+				matrices.scale(0.75f, 0.75f, 0.75f);
+			}
 			getContextModel().head.rotate(matrices);
 			model.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntitySolid(texture)), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
 			matrices.pop();

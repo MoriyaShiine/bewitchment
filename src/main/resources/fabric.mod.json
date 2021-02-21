@@ -38,6 +38,7 @@
 	"cloth-config2": "*",
 	"pehkui": ">=1.7.1+21w03a",
 	"impersonate": "*",
-	"patchouli": "*"
+	"patchouli": "*",
+	"trinkets": "*"
   }
 }
