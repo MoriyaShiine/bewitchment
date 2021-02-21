@@ -23,9 +23,9 @@ public class TheftStatusEffect extends StatusEffect {
 	
 	@Override
 	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-		if (entity.age % 20 == 0) {
+		if (!entity.world.isClient && entity.age % 20 == 0) {
 			entity.world.getEntitiesByClass(LivingEntity.class, entity.getBoundingBox().expand(3 * (amplifier + 1)), livingEntity -> livingEntity != entity).forEach(livingEntity -> {
-				List<StatusEffectInstance> statusEffects = livingEntity.getStatusEffects().stream().filter(instance -> instance.getEffectType().isBeneficial() && instance.isAmbient()).collect(Collectors.toList());
+				List<StatusEffectInstance> statusEffects = livingEntity.getStatusEffects().stream().filter(instance -> instance.getEffectType().isBeneficial() && !instance.isAmbient()).collect(Collectors.toList());
 				for (StatusEffectInstance statusEffect : statusEffects) {
 					entity.addStatusEffect(new StatusEffectInstance(statusEffect.getEffectType(), statusEffect.getDuration() / 2, statusEffect.getAmplifier()));
 					livingEntity.removeStatusEffect(statusEffect.getEffectType());
