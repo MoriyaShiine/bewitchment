@@ -5,7 +5,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(item)Silver tools$() are simple upgrade to $(item)Iron tools$(). $(br)They are crafted using a $(item)Smithing Table$(). While still having most of Iron's qualities, Silver tools inherit abilities from $(item)gold tools$().$(br2)They are all great defense against $(marked)unholy entities$()."
+	  "text": "$(item)Silver tools$() are a simple upgrade to $(item)Iron tools$(). $(br)They are crafted using a $(item)Smithing Table$(). While still having most of Iron's qualities, Silver tools inherit abilities from $(item)Golden tools$().$(br2)They are a great defense against $(marked)unholy entities$(), dealing more damage or taking less damage respectively."
 	},
 	{
 	  "type": "smithing",

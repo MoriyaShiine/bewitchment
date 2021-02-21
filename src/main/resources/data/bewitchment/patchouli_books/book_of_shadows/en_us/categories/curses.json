@@ -2,5 +2,6 @@
   "name": "Curses",
   "description": "A collection of malicious magic.",
   "icon": "bewitchment:brazier",
-  "sortnum": 9
+  "sortnum": 9,
+  "secret": true
 }

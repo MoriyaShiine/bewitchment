@@ -10,7 +10,7 @@
 	{
 	  "type": "text",
 	  "advancement:": "bewitchment:hidden_unlocks/demon_heart",
-	  "text": "Ravens can be bound as familiars, enabling the witch to occasionally reflect curses.$(br)Raven familiars also double the duration of curses cast by the witch, making them much more effective."
+	  "text": "Ravens can be bound as familiars, enabling the witch to occasionally reflect curses.$(br)Raven familiars also double the duration of $(l:bewitchment:curses/conducting_curses)curses$() cast by the witch, making them much more effective."
 	},
 	{
 	  "type": "entity",

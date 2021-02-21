@@ -5,7 +5,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Using the powers of the Light, $(item)Nazars$() are commonly used to protect against $(marked)curses$().$(br)When worn, they will cut the duration of any curse in $(marked)half$(). $(br)This requires about half of the wearer's $(marked)ME$()."
+	  "text": "Using the powers of the Light, $(item)Nazars$() are commonly used to protect against $(l:bewitchment:curses/conducting_curses)curses$(). When worn, they will cut the duration of any curse in $(marked)half$(). $(br)This requires about half of the wearer's $(marked)ME$()."
 	},
 	{
 	  "type": "crafting",

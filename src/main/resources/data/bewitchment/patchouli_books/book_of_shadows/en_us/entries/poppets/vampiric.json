@@ -10,7 +10,7 @@
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:vampiric_poppet",
-	  "text": "$(item)Vampiric Poppets$() do not work in $(item)Poppet Shelves$()."
+	  "text": "$(item)Vampiric Poppets$() do not work in $(l:bewitchment:tools/poppet_shelves)Poppet Shelves$()."
 	}
   ]
 }

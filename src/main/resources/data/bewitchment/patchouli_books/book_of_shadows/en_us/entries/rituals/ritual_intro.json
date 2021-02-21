@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Rituals$() are powerful magic practice used to have a direct effect on the world. They are cast by drawing $(marked)circles$() and throwing in the proper ingredients.$(br)Eituals need an ME-providing $(l:bewitchment:introduction/altars)$(item)Altar$() nearby; the amount of ME needed is always noted in the ritual's entry.$(br)Every ritual has an $(marked)inner$() and an optional $(marked)outer$() circle drawn with different $(l:bewitchment:rituals/ritual_intro#chalk)$(item)Chalk$(), depending on the ritual."
+	  "text": "$(marked)Rituals$() are a powerful magic practice used to have a direct effect on the world. They are cast by drawing $(marked)circles$() and throwing in the proper ingredients.$(br)Rituals need an ME-providing $(l:bewitchment:introduction/altars)$(item)Altar$() nearby; the amount of ME needed is always noted in the ritual's entry.$(br)Every ritual has an $(marked)inner$() and an optional $(marked)outer$() circle drawn with different $(l:bewitchment:rituals/ritual_intro#chalk)$(item)Chalk$(), depending on the ritual."
 	},
 	{
 	  "type": "multiblock",

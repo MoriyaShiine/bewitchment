@@ -11,7 +11,7 @@
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:death_protection_poppet",
-	  "text": "$(item)Death Protection Poppets$() do not work in $(item)Poppet Shelves$()."
+	  "text": "$(item)Death Protection Poppets$() do not work in $(l:bewitchment:tools/poppet_shelves)Poppet Shelves$()."
 	}
   ]
 }

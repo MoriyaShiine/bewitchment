@@ -5,7 +5,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Werewolves$() - victims of $(marked)lycanthropy$() - roam $(marked)forests$(), $(marked)taiga$() or $(marked)icy$() biomes on $(marked)full moons$(). They are heavily weak to silver. $(br)When the sun rises, they turn back into their human form."
+	  "text": "$(marked)Werewolves$() - victims of $(marked)lycanthropy$() - roam $(marked)forests$(), $(marked)taiga$() or $(marked)icy$() biomes on $(marked)full moons$(). They are heavily weak to $(l:bewitchment:introduction/silver)$(item)Silver$(). $(br)When the sun rises, they turn back into their human form."
 	},
 	{
 	  "type": "entity",

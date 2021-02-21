@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This ritual releases a wave of darkness. It will destroy any easily destroyable light sources nearby."
+	  "text": "This ritual releases a wave of darkness. It will destroy any easily breakable light sources nearby."
 	},
 	{
 	  "type": "bewitchment:ritual",

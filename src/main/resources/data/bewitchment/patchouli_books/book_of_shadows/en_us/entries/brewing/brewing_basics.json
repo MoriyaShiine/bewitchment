@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The fine art of $(marked)Brewing$() is a core discipline of witchcraft. As its name implies, it's all about brewing potions.$(br2)To get started with brewing, you'll need a boiling $(l:bewitchment:introduction/cauldron)$(item)Cauldron$(), some $(l:bewitchment:introduction/altars)$(marked)Altar Power$(), as well as other miscellaneous ingredients.$(br)To start a brew, first add a $(l:bewitchment:introduction/crops)$(item)Mandrake Root$() to the cauldron."
+	  "text": "The fine art of $(marked)Brewing$() is a core discipline of witchcraft. As its name implies, it's all about brewing potions.$(br2)To get started with brewing, you'll need a boiling $(l:bewitchment:tools/witch_cauldron)$(item)Cauldron$(), some $(l:bewitchment:introduction/altars)$(marked)Altar Power$(), as well as other miscellaneous ingredients.$(br)To start a brew, first add a $(l:bewitchment:introduction/crops)$(item)Mandrake Root$() to the cauldron."
 	},
 	{
 	  "type": "text",

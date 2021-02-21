@@ -2,6 +2,7 @@
   "category": "bewitchment:tools",
   "name": "Incense",
   "icon": "bewitchment:brazier",
+  "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "text",

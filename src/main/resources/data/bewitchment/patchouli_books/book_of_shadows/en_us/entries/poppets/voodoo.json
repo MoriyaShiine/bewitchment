@@ -11,7 +11,7 @@
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:voodoo_poppet",
-	  "text": "$(item)Voodoo Poppets$() do not work in $(item)Poppet Shelves$()."
+	  "text": "$(item)Voodoo Poppets$() do not work in $(l:bewitchment:tools/poppet_shelves)Poppet Shelves$()."
 	}
   ]
 }
