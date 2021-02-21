@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Heresy$()!$(br)This will reflect any curse cast upon you, but may give you $(marked)Mortal Coil$() instead."
+	  "text": "$(marked)Heresy$()!$(br)This will reflect any curse cast upon you, but may give you $(marked)Mortal Coil$()."
 	}
   ]
 }
