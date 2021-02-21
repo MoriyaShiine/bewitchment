@@ -1,0 +1,32 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Brooms",
+  "icon": "bewitchment:juniper_broom",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Brooms$() are magical devices commonly by witches. Through the use of $(marked)ME$(), they enable the user to fly through the skies.$(br2)Brooms come in four variants, each with unique properties."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:juniper_broom",
+      "text": "$(item)Juniper Brooms$() are the fastest of all brooms, without any other special properties."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:cypress_broom",
+      "text": "$(item)Cypress Brooms$() ward the user, reducing both damage input and output."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:elder_broom",
+      "text": "$(item)Elder Brooms$() will return the user to where they mounted it after dismounting."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:dragons_blood_broom",
+      "text": "$(item)Dragon's Blood Brooms$() can have active Sigils applied to them, much like any other Dragon's Blood block."
+    }
+  ]
+}

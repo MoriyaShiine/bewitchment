@@ -1,13 +1,14 @@
 package moriyashiine.bewitchment.common.statuseffect;
 
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
-import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectType;
-import net.minecraft.util.registry.Registry;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("ConstantConditions")
 public class TheftStatusEffect extends StatusEffect {
@@ -22,13 +23,14 @@ public class TheftStatusEffect extends StatusEffect {
 	
 	@Override
 	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-		if (entity.age % 20 == 0) {
-			entity.world.getEntitiesByClass(LivingEntity.class, entity.getBoundingBox().expand(3 * (amplifier + 1)), livingEntity -> livingEntity != entity).forEach(livingEntity -> Registry.STATUS_EFFECT.stream().forEach(effect -> {
-				if (effect != this && !livingEntity.getStatusEffect(effect).isAmbient() && ((StatusEffectAccessor) effect).bw_getType() == StatusEffectType.BENEFICIAL && livingEntity.hasStatusEffect(effect)) {
-					entity.addStatusEffect(new StatusEffectInstance(livingEntity.getStatusEffect(effect).getEffectType(), livingEntity.getStatusEffect(effect).getDuration() / 2, livingEntity.getStatusEffect(effect).getAmplifier()));
-					livingEntity.removeStatusEffect(effect);
+		if (!entity.world.isClient && entity.age % 20 == 0) {
+			entity.world.getEntitiesByClass(LivingEntity.class, entity.getBoundingBox().expand(3 * (amplifier + 1)), livingEntity -> livingEntity != entity).forEach(livingEntity -> {
+				List<StatusEffectInstance> statusEffects = livingEntity.getStatusEffects().stream().filter(instance -> instance.getEffectType().isBeneficial() && !instance.isAmbient()).collect(Collectors.toList());
+				for (StatusEffectInstance statusEffect : statusEffects) {
+					entity.addStatusEffect(new StatusEffectInstance(statusEffect.getEffectType(), statusEffect.getDuration() / 2, statusEffect.getAmplifier()));
+					livingEntity.removeStatusEffect(statusEffect.getEffectType());
 				}
-			}));
+			});
 		}
 	}
 	

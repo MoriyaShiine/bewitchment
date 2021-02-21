@@ -1,0 +1,22 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "Ghost",
+  "icon": "bewitchment:ghost_spawn_egg",
+  "extra_recipe_mappings": {
+    "bewitchment:ectoplasm": 1
+  },
+  "pages": [
+    {
+      "type": "text",
+      "text": "Ghosts are lost souls, wandering the Wake at night wherever they can.$(br)Upon noticing nearby humans, they will apply their short-lived curses in the form of negative potion effects.$(br)Ghost are immune to mundane weapons, safe for those of $(l:bewitchment:introduction/silver)$(item)Silver$()."
+    },
+    {
+      "type": "entity",
+      "entity": "bewitchment:ghost{Variant:1}",
+      "offset": 0.1,
+      "rotate": false,
+      "default_rotation": 45,
+      "text": "When killed with an $(l:bewitchment:tools/athame)$(item)Athame$(), they will drop $(item)Ectoplasm$()."
+    }
+  ]
+}

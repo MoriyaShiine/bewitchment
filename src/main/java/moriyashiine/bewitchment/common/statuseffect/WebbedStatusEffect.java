@@ -2,11 +2,12 @@ package moriyashiine.bewitchment.common.statuseffect;
 
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWObjects;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.util.math.BlockPos;
+import org.jetbrains.annotations.Nullable;
 
 public class WebbedStatusEffect extends StatusEffect {
 	public WebbedStatusEffect(StatusEffectType type, int color) {
@@ -17,12 +18,12 @@ public class WebbedStatusEffect extends StatusEffect {
 	public boolean isInstant() {
 		return true;
 	}
-	
+
 	@Override
-	public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-		if (!entity.world.isClient) {
-			for (BlockPos air : BWUtil.getBlockPoses(entity.getBlockPos(), Math.min(3, amplifier + 1), currentPos -> entity.world.getBlockState(currentPos).isAir())) {
-				entity.world.setBlockState(air, BWObjects.TEMPORARY_COBWEB.getDefaultState());
+	public void applyInstantEffect(@Nullable Entity source, @Nullable Entity attacker, LivingEntity target, int amplifier, double proximity) {
+		if (!target.world.isClient) {
+			for (BlockPos air : BWUtil.getBlockPoses(target.getBlockPos(), Math.min(3, amplifier + 1), currentPos -> target.world.getBlockState(currentPos).isAir())) {
+				target.world.setBlockState(air, BWObjects.TEMPORARY_COBWEB.getDefaultState());
 			}
 		}
 	}

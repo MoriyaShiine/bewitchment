@@ -3,16 +3,27 @@
   "name": "Silver",
   "icon": "bewitchment:silver_ingot",
   "pages": [
-	{
-	  "type": "text",
-	  "text": "spawns near gold levels\nrelates to purity"
-	},
-	{
-	  "type": "image",
-	  "images": [
-		"bewitchment:textures/gui/patchouli/silver_ore.png"
-	  ],
-	  "border": true
-	}
+    {
+      "type": "text",
+      "text": "$(item)Silver$() prominent material in witchcraft, and a symbol of purity.$(br)It is used as a base for many tools and ingredients that are all very effective against the undead and demons."
+    },
+    {
+      "type": "image",
+      "images": [
+        "bewitchment:textures/gui/patchouli/silver_ore.png"
+      ],
+      "text": "Silver can be found near gold levels.",
+      "border": true
+    },
+    {
+      "type": "smelting",
+      "recipe": "bewitchment:silver_ingot",
+      "text": "Silver Ore can be processed in normal $(item)Furnaces$() and $(item)Blast Furnaces$()."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:silver_block",
+      "recipe2": "bewitchment:silver_nugget"
+    }
   ]
 }

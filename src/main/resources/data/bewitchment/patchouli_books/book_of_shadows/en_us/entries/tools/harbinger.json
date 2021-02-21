@@ -2,10 +2,17 @@
   "category": "bewitchment:tools",
   "name": "Harbinger",
   "icon": "bewitchment:harbinger",
+  "advancement": "bewitchment:hidden_unlocks/harbinger",
+  "secret": true,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "dropped from lilith\nstats equal to netherite\nundead are neutral"
-	}
+	  "text": "Acquired by defeating the $(l:bewitchment:creatures/lilith)Vampire Queen$() in battle, these shoes have a protection comparable to $(item)Netherite Boots$().$(br)Because of their dark energies, the undead are neutral to the wearer."
+	},
+    {
+      "type": "spotlight",
+      "item": "bewitchment:harbinger",
+      "text": "The Harbinger's shoe pairs can be repaired using $(item)Netherite$().$(br2)Finally, drip shoes."
+    }
   ]
 }

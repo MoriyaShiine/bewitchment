@@ -1,0 +1,15 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "Voodoo Protection",
+  "icon": "bewitchment:voodoo_protection_poppet",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The $(item)Voodoo Protection Poppet$() is the response-counterpart to the $(l:bewitchment:poppets/voodoo)$(item)Voodoo Poppet$().$(br)By redirecting malicious energy, anyone bound to it is completely immune to the effects of a Voodoo Doll."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:voodoo_protection_poppet"
+    }
+  ]
+}

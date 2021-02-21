@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "Greed",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "text",
+      "text": "When under the contract of $(marked)Greed$(), $(marked)ores$() drop twice than what they would normally drop.$(br)Chances are that the ores also drop nothing at all."
+    }
+  ]
+}

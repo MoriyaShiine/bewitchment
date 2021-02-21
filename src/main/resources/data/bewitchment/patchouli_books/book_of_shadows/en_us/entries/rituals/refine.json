@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "Refine",
+  "icon": "minecraft:blaze_powder",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+    {
+      "type": "text",
+      "text": "This ritual call son Fire spirits, basically making the circle a very big smelting pot.$(br)Any item thrown into it is smelted as if it were thrown into a furnace.$(br)This ritual lasts a few minutes."
+    },
+    {
+      "type": "bewitchment:ritual",
+      "recipe": "bewitchment:rituals/refine",
+      "text": ""
+    }
+  ]
+}

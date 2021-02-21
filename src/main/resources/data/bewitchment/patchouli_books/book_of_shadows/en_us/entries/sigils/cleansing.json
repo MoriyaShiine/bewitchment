@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "Cleansing",
+  "icon": "bewitchment:cleansing_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The active sigil of $(marked)Cleansing$() removes all active potion effects on whoever activates it."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:cleansing_sigil"
+    }
+  ]
+}

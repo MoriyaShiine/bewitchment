@@ -1,0 +1,15 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "Mending",
+  "icon": "bewitchment:mending_poppet",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Like the rare and coveted enchantment, the $(item)Mending Poppet$() will repair the armor and held items of whoever is bound to it.$(br)This effect is not passively applied; instead, it is applied whenever an item would normally $(marked)break$(), resetting its durability and destroying the poppet instead."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:mending_poppet"
+    }
+  ]
+}

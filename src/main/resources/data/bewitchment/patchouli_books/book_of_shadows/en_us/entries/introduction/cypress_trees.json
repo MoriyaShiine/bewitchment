@@ -5,7 +5,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "spawns in taiga biomes and swamp biomes\nrelates to death\nblocks made with it mask you from undead"
+	  "text": "$(marked)Cypress$() spawns in Taiga and Swamp biomes.$(br)Relating to death, blocks made from it will mask you from the undead."
 	},
 	{
 	  "type": "image",

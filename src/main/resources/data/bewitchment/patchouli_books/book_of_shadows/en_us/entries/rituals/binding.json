@@ -1,0 +1,25 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "Binding",
+  "icon": "minecraft:lead",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The ritual of $(marked)Binding$() uses greater demonic power to cross the soul of the caster and an animal they hold dear, making it a $(marked)familiar$(). The animal the Ritual is applied to is defined via $(item)Taglock$().$(br)Do note that not everything can be bound as a familiar; possible familiars are usually mentioned in this book."
+    },
+    {
+      "type": "bewitchment:ritual",
+      "recipe": "bewitchment:rituals/binding",
+      "text": "Binding a familiar is a greater step and comes with several benefits depending on the animal chosen.$(br)$(o)Entries for all possible familiars in this book have been expanded$()."
+    },
+    {
+      "type": "text",
+      "text": "Familiars are far tougher than the average animal, but you should try to keep them safe anyways.$(br)Familiars can be noticed from the slight magic particles emitting from them."
+    },{
+      "type": "bewitchment:ritual",
+      "recipe": "bewitchment:rituals/severing",
+      "text": "A Ritual of $(marked)Severing$() can be cast, should you wish to part ways with your familiar."
+    }
+  ]
+}

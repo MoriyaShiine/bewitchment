@@ -2,52 +2,54 @@
   "category": "bewitchment:introduction",
   "name": "Dragon's Blood Trees",
   "icon": "bewitchment:dragons_blood_sapling",
+  "advancement": "minecraft:nether/find_fortress",
   "pages": [
-	{
-	  "type": "text",
-	  "text": "right clicking athame on log cuts to drop resin\nrelates to power\nblocks made with it can be given a sigil and given taglocks\nshift right clicking athame toggles white/blacklist"
-	},
-	{
-	  "type": "image",
-	  "images": [
-		"bewitchment:textures/gui/patchouli/dragons_blood_tree.png"
-	  ],
-	  "border": true
-	},
-	{
-	  "type": "crafting",
-	  "recipe": "bewitchment:dragons_blood_wood",
-	  "recipe2": "bewitchment:dragons_blood_planks"
-	},
-	{
-	  "type": "crafting",
-	  "recipe": "bewitchment:dragons_blood_stairs",
-	  "recipe2": "bewitchment:dragons_blood_slab"
-	},
-	{
-	  "type": "crafting",
-	  "recipe": "bewitchment:dragons_blood_fence",
-	  "recipe2": "bewitchment:dragons_blood_fence_gate"
-	},
-	{
-	  "type": "crafting",
-	  "recipe": "bewitchment:dragons_blood_pressure_plate",
-	  "recipe2": "bewitchment:dragons_blood_button"
-	},
-	{
-	  "type": "crafting",
-	  "recipe": "bewitchment:dragons_blood_trapdoor",
-	  "recipe2": "bewitchment:dragons_blood_door"
-	},
-	{
-	  "type": "crafting",
-	  "recipe": "bewitchment:dragons_blood_chest",
-	  "recipe2": "bewitchment:trapped_dragons_blood_chest"
-	},
-	{
-	  "type": "crafting",
-	  "recipe": "bewitchment:dragons_blood_sign",
-	  "recipe2": "bewitchment:dragons_blood_boat"
-	}
+    {
+      "type": "text",
+      "text": "With crimson colored wood, one can easily see how the $(marked)Dragon's Blood$() tree gets its name.$(br)Cutting through the bark with an $(l:bewitchment:tools/athame)$(item)Athame$() will cause it to bleed, yielding $(item)Dragon's Blood Resin$().$(br)Blocks made with this wood almost give off an aura of power, and can be given $(l:bewitchment:sigils/sigils_intro)$(marked)active Sigils$()."
+    },
+    {
+      "type": "image",
+      "images": [
+        "bewitchment:textures/gui/patchouli/dragons_blood_tree.png"
+      ],
+      "border": true,
+      "text": "$(item)Dragon's Blood Saplings$() are found in $(marked)Nether Fortresses$()."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:dragons_blood_wood",
+      "recipe2": "bewitchment:dragons_blood_planks"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:dragons_blood_stairs",
+      "recipe2": "bewitchment:dragons_blood_slab"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:dragons_blood_fence",
+      "recipe2": "bewitchment:dragons_blood_fence_gate"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:dragons_blood_pressure_plate",
+      "recipe2": "bewitchment:dragons_blood_button"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:dragons_blood_trapdoor",
+      "recipe2": "bewitchment:dragons_blood_door"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:dragons_blood_chest",
+      "recipe2": "bewitchment:trapped_dragons_blood_chest"
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:dragons_blood_sign",
+      "recipe2": "bewitchment:dragons_blood_boat"
+    }
   ]
 }

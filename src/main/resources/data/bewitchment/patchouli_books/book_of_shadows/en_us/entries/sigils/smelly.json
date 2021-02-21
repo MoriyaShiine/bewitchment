@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "Smelly",
+  "icon": "bewitchment:smelly_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(marked)Smelly$() sigils are stinky, causing nearby hostile entities to thread towards it."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:smelly_sigil"
+    }
+  ]
+}

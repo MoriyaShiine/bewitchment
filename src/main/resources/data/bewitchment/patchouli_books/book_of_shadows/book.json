@@ -4,5 +4,12 @@
   "custom_book_item": "bewitchment:book_of_shadows",
   "book_texture": "bewitchment:textures/gui/patchouli/book.png",
   "filler_texture": "bewitchment:textures/gui/patchouli/filler.png",
-  "dont_generate_book": true
+  "dont_generate_book": true,
+  "macros": {
+    "$(marked)": "$(#980000)",
+    "$(item)": "$(#980061)"
+  },
+  "link_color": "980000",
+  "link_hover_color": "5C0000",
+  "progress_bar_color": "8500B9"
 }

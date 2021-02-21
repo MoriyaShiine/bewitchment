@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "Death Protection",
+  "icon": "bewitchment:death_protection_poppet",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The reaper has nothing on you when you're using the $(item)Death Protection Poppet$().$(br)Much like a $(item)Totem of Undying$(), this poppet will pull you from the edge of death once."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:death_protection_poppet"
+    }
+  ]
+}

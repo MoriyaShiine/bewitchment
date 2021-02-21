@@ -1,6 +1,7 @@
 {
   "name": "Sigils",
-  "description": "sigils description",
+  "description": "Supernatural symbols, capable of affecting their surroundings.",
   "icon": "bewitchment:mending_sigil",
-  "sortnum": 7
+  "sortnum": 7,
+  "secret": true
 }

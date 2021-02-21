@@ -1,0 +1,24 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Brewing Basics",
+  "icon": "bewitchment:witch_cauldron",
+  "priority": true,
+  "pages": [
+    {
+      "type": "text",
+      "text": "The fine art of $(marked)Brewing$() is a core discipline of witchcraft. As its name implies, it's all about brewing potions.$(br2)To get started with brewing, you'll need a boiling $(l:bewitchment:introduction/cauldron)$(item)Cauldron$(), some $(l:bewitchment:introduction/altars)$(marked)Altar Power$(), as well as other miscellaneous ingredients.$(br)To start a brew, first add a $(l:bewitchment:introduction/crops)$(item)Mandrake Root$() to the cauldron."
+    },
+    {
+      "type": "text",
+      "text": "After adding the Mandrake Root, you can add other ingredients. $(br)Each ingredient will increase the Altar Power needed to bottle the brew by $(l)150$(), and having insufficient Altar Power while brewing will cause the brew to fail immediately, so keep that in mind.$(br2)Ingredients can be divided into $(marked)Potion Ingredients$() and $(marked)Modifiers$(). No matter your Altar Power, you can only add up to $(marked)four$() ingredients."
+    },
+    {
+      "type": "text",
+      "text": "Potion Ingredients add effects to your brew. You'll always want to have at least one of those. The exact effects provided by certain Potion Ingredients are outlined in other entries.$(br)More ingredients can be added, though that comes at the cost of space for modifiers.$(br2)Modifiers will enhance your brew: $(item)Redstone$() increases the duration, $(item)Glowstone Dust$() makes it more potent."
+    },
+    {
+      "type": "text",
+      "text": "You may add only one potency-enhancing modifier; however, other modifiers are technically only limited by the amount of space left, and your Altar Power.$(br)Lastly, you can post-process your potions using a regular $(item)Brewing Stand$().$(br)Also know that when the water is brown, it usually means you failed your brew. $(br2)$(o)Maybe you should experiment yourself to find out what works and what doesn't?$()"
+    }
+  ]
+}

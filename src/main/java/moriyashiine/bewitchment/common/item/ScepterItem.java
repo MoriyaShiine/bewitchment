@@ -41,7 +41,12 @@ public class ScepterItem extends Item {
 		}
 		return TypedActionResult.fail(user.getStackInHand(hand));
 	}
-	
+
+	@Override
+	public boolean canRepair(ItemStack stack, ItemStack ingredient) {
+		return ingredient.getItem().equals(Items.NETHERITE_INGOT);
+	}
+
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (user instanceof MagicAccessor) {
@@ -50,6 +55,10 @@ public class ScepterItem extends Item {
 				List<StatusEffectInstance> effects = PotionUtil.getCustomPotionEffects(stack);
 				ItemStack potionStack = PotionUtil.setCustomPotionEffects(new ItemStack(Items.SPLASH_POTION), effects);
 				potionStack.getOrCreateTag().putInt("CustomPotionColor", PotionUtil.getColor(effects));
+				if(stack.getOrCreateTag().contains("PolymorphUUID")) {
+					potionStack.getOrCreateTag().putUuid("PolymorphUUID", stack.getOrCreateTag().getUuid("PolymorphUUID"));
+					potionStack.getOrCreateTag().putString("PolymorphName", stack.getOrCreateTag().getString("PolymorphName"));
+				}
 				potion.setItem(potionStack);
 				potion.setProperties(user, user.pitch, user.yaw, -20.0F, 0.5F, 1.0F);
 				world.spawnEntity(potion);
@@ -57,8 +66,13 @@ public class ScepterItem extends Item {
 				if (!((PlayerEntity) user).isCreative()) {
 					stack.getOrCreateTag().putInt("PotionUses", stack.getOrCreateTag().getInt("PotionUses") - 1);
 					if (stack.getOrCreateTag().getInt("PotionUses") <= 0) {
+						if(stack.getOrCreateTag().contains("PolymorphUUID")) {
+							potionStack.getOrCreateTag().remove("PolymorphUUID");
+							potionStack.getOrCreateTag().remove("PolymorphName");
+						}
 						stack.getOrCreateTag().put("CustomPotionEffects", new ListTag());
 					}
+
 					stack.damage(1, user, stackUser -> stackUser.sendToolBreakStatus(user.getActiveHand()));
 				}
 			}
@@ -70,7 +84,7 @@ public class ScepterItem extends Item {
 	public UseAction getUseAction(ItemStack stack) {
 		return !PotionUtil.getCustomPotionEffects(stack).isEmpty() ? UseAction.BOW : UseAction.NONE;
 	}
-	
+
 	@Override
 	public int getMaxUseTime(ItemStack stack) {
 		return 16;
@@ -79,7 +93,7 @@ public class ScepterItem extends Item {
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.uses_left", stack.getOrCreateTag().getInt("Uses")).formatted(Formatting.GRAY));
+		tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.uses_left", stack.getOrCreateTag().getInt("PotionUses")).formatted(Formatting.GRAY));
 		Items.POTION.appendTooltip(stack, world, tooltip, context);
 	}
 }

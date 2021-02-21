@@ -1,0 +1,42 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Elemental Oils",
+  "icon": "bewitchment:cleansing_balm",
+  "priority": true,
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Elemental Oils$() are essential $(marked)crafting components$() in witchcraft. They are made out of a type of $(l:bewitchment:introduction/bark)$(item)Bark$() and other components.$(br)To craft a phew bottles of oil, throw a piece of bark into a boiling $(l:bewitchment:introduction/cauldron)$(item)Cauldron$() first, then add the other ingredients.$(br)Once it reaches a pleasant, matching color, you can bottle it."
+    },
+    {
+      "type": "bewitchment:oil",
+      "recipe": "bewitchment:oil_crafting/cleansing_balm",
+      "text": "$(item)Cleansing Balm$() is associated with light, and is just as bright."
+    },
+    {
+      "type": "bewitchment:oil",
+      "recipe": "bewitchment:oil_crafting/grim_elixir",
+      "text": "Associated with the principle of darkness, $(item)Grim Elixir$() is dark, like blood."
+    },
+    {
+      "type": "bewitchment:oil",
+      "recipe": "bewitchment:oil_crafting/aqua_cerate",
+      "text": "$(item)Aqua Cerate$() is blue, like water.$(br)Any type of fish may be used for this."
+    },
+    {
+      "type": "bewitchment:oil",
+      "recipe": "bewitchment:oil_crafting/fiery_serum",
+      "text": "$(item)Fiery Serum$() is of bright orange. It incorporates the principle of the flame."
+    },
+    {
+      "type": "bewitchment:oil",
+      "recipe": "bewitchment:oil_crafting/earth_ichor",
+      "text": "This grass-green oil incorporates earth."
+    },
+    {
+      "type": "bewitchment:oil",
+      "recipe": "bewitchment:oil_crafting/heaven_extract",
+      "text": "$(item)Heaven Extract$() is completely white and represents air.$(br2)$(o)Be careful not to throw the Mandrake Root in first, or you might accidentally create a brew.$()"
+    }
+  ]
+}

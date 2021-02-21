@@ -4,6 +4,7 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.entity.BroomEntity;
 import moriyashiine.bewitchment.api.item.SigilItem;
 import moriyashiine.bewitchment.api.registry.Sigil;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
@@ -18,6 +19,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -70,6 +72,7 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 					}
 					else if (stack.getItem() instanceof AthameItem && !entities.isEmpty()) {
 						world.playSound(null, getBlockPos(), BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.NEUTRAL, 1, modeOnWhitelist ? 0.5f : 1);
+						player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.toggle_" +  (!modeOnWhitelist ? "whitelist" : "blacklist")), true);
 						modeOnWhitelist = !modeOnWhitelist;
 					}
 				}

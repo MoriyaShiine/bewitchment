@@ -5,7 +5,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "can store up to 9 poppets"
+	  "text": "$(item)Poppet Shelves$() make for nice furniture. They can store up to nine $(l:bewitchment:poppets/poppet_practice)$(item)poppets$(), which are all active.$(br)This makes Poppet Shelves good for freeing up inventory space, while still having all poppets ready."
 	},
 	{
 	  "type": "crafting",

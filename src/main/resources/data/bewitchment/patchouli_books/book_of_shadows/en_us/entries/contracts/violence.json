@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "Violence",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "text",
+      "text": "This contract makes you crave $(marked)Violence$().$(br)Anything slain by your hand will heal you, but you may hunger for more."
+    }
+  ]
+}

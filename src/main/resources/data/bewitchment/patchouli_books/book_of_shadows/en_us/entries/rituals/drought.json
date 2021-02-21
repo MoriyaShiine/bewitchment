@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "Drought",
+  "icon": "minecraft:dead_bush",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The ritual of $(marked)Drought$() makes the air dry, stopping all rain.$(br)It has a duration similar to its counterpart, $(l:bewitchment:rituals/deluge)$(marked)Deluge$()."
+    },
+    {
+      "type": "bewitchment:ritual",
+      "recipe": "bewitchment:rituals/drought"
+    }
+  ]
+}

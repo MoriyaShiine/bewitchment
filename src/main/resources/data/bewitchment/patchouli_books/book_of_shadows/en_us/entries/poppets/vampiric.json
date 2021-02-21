@@ -1,0 +1,15 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "Vampiric",
+  "icon": "bewitchment:vampiric_poppet",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The $(item)Vampiric Poppet$() transfers damage taken by the user to the bound entity at the cost of durability.$(br2)$(o)Ironically, this does not seem to work for vampires."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:vampiric_poppet"
+    }
+  ]
+}

@@ -19,7 +19,7 @@ public class SynchronizedStatusEffect extends StatusEffect {
 	
 	@Override
 	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-		if (entity.age % 20 == 0) {
+		if (!entity.world.isClient && entity.age % 20 == 0) {
 			entity.world.getEntitiesByClass(LivingEntity.class, entity.getBoundingBox().expand(3 * (amplifier + 1)), livingEntity -> livingEntity != entity).forEach(livingEntity -> entity.getStatusEffects().forEach(effect -> {
 				if (effect.getEffectType() != this) {
 					livingEntity.addStatusEffect(new StatusEffectInstance(effect.getEffectType(), effect.getDuration() / 2, effect.getAmplifier()));
