@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Zephyr Harness",
+  "icon": "bewitchment:zephyr_harness",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The $(item)Zephy Harness$() makes its wearer unstoppable like the strongest wind, completely negating most forms of $(marked)knockback$().$(br2)Other than that, the Harness allows its wearer to hurl entities into the air when punching them only with their fist.$(br)This, however, consumes $(marked)ME$()."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:zephyr_harness",
+      "text": "$(o)The Zephyr Harness can be equipped in the $(marked)Belt$()$(o) trinket slot$()."
+    }
+  ]
+}
