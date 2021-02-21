@@ -12,7 +12,7 @@
       "type": "spotlight",
       "title": "Corruption",
       "item": "bewitchment:demon_heart",
-      "text": "When added as a potion ingredient, it will always float on top, meaning it will invert all previous effects when quaffed, but not those of the potion."
+      "text": "When added as a potion ingredient, Corruption will always come out on top, meaning it will invert all previous effects when quaffed, but not those of the potion."
     }
   ]
 }

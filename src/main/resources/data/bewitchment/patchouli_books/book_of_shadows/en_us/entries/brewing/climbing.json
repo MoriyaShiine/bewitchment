@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Climbing",
+  "icon": "minecraft:spider_Eye",
+  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Allows whoever is affected to climb walls like spiders would."
+    },
+    {
+      "type": "spotlight",
+      "title": "Climbing",
+      "item": "bewitchment:spider_Eye",
+      "text": "This effect is not affected by intensity."
+    }
+  ]
+}
