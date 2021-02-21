@@ -29,6 +29,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+@SuppressWarnings("ConstantConditions")
 public class ScepterItem extends Item {
 	public ScepterItem(Settings settings) {
 		super(settings);
@@ -93,7 +94,11 @@ public class ScepterItem extends Item {
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.uses_left", stack.getOrCreateTag().getInt("PotionUses")).formatted(Formatting.GRAY));
+		int uses = 0;
+		if (stack.hasTag()) {
+			uses = stack.getTag().getInt("PotionUses");
+		}
+		tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.uses_left", uses).formatted(Formatting.GRAY));
 		Items.POTION.appendTooltip(stack, world, tooltip, context);
 	}
 }
