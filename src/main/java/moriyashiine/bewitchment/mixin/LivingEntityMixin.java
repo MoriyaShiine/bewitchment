@@ -511,6 +511,11 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 											}
 										}
 										else if (!hasStatusEffect(effect.getEffectType()) && BewitchmentAPI.usePlayerMagic((PlayerEntity) (Object) this, 2, true) && addStatusEffect(effect)) {
+											if (belt.getTag().contains("PolymorphUUID") && this instanceof PolymorphAccessor){
+												PolymorphAccessor polymorphAccessor = (PolymorphAccessor) this;
+												polymorphAccessor.setPolymorphUUID(belt.getTag().getUuid("PolymorphUUID"));
+												polymorphAccessor.setPolymorphName(belt.getTag().getString("PolymorphName"));
+											}
 											used = true;
 										}
 									}
@@ -518,6 +523,10 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 										belt.getTag().putInt("PotionUses", belt.getTag().getInt("PotionUses") - 1);
 										if (belt.getTag().getInt("PotionUses") <= 0) {
 											belt.getOrCreateTag().put("CustomPotionEffects", new ListTag());
+											if (belt.getTag().contains("PolymorphUUID")){
+												belt.getTag().remove("PolymorphUUID");
+												belt.getTag().remove("PolymorphName");
+											}
 										}
 									}
 								}

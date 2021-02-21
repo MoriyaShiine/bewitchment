@@ -256,7 +256,7 @@ public class BWObjects {
 	public static final Item NAZAR = create("nazar", new NazarItem(gen().maxCount(1)));
 	public static final Item SPECTER_BANGLE = create("specter_bangle", new SpecterBangleItem(gen().maxCount(1)));
 	public static final Item PRICKLY_BELT = create("prickly_belt", new PricklyBeltItem(gen().maxCount(1)));
-	public static final Item HELLISH_BAUBLE = create("hellish_bauble", new HellishBaubleItem(gen().maxCount(1)));
+	public static final Item HELLISH_BAUBLE = create("hellish_bauble", new HellishBaubleItem(gen().maxCount(1).fireproof()));
 	public static final Item DRUID_BAND = create("druid_band", new DruidBandItem(gen().maxCount(1)));
 	public static final Item ZEPHYR_HARNESS = create("zephyr_harness", new ZephyrHarnessItem(gen().maxCount(1)));
 	//tool
