@@ -2,13 +2,14 @@ package moriyashiine.bewitchment.common.statuseffect;
 
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.registry.Registry;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,20 +41,20 @@ public class CorruptionStatusEffect extends StatusEffect {
 	public boolean isInstant() {
 		return true;
 	}
-	
+
 	@Override
-	public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
+	public void applyInstantEffect(@Nullable Entity source, @Nullable Entity attacker, LivingEntity target, int amplifier, double proximity) {
 		Registry.STATUS_EFFECT.stream().forEach(effect -> {
-			if (((StatusEffectAccessor) effect).bw_getType() == StatusEffectType.BENEFICIAL && entity.hasStatusEffect(effect) && !entity.getStatusEffect(effect).isAmbient()) {
+			if (((StatusEffectAccessor) effect).bw_getType() == StatusEffectType.BENEFICIAL && target.hasStatusEffect(effect) && !target.getStatusEffect(effect).isAmbient()) {
 				StatusEffect inverse = INVERSE_EFFECTS.get(effect);
 				StatusEffectInstance inverseEffect = null;
 				if (inverse != null) {
-					StatusEffectInstance goodEffect = entity.getStatusEffect(effect);
+					StatusEffectInstance goodEffect = target.getStatusEffect(effect);
 					inverseEffect = new StatusEffectInstance(inverse, goodEffect.getDuration(), goodEffect.getAmplifier(), goodEffect.isAmbient(), goodEffect.shouldShowParticles(), goodEffect.shouldShowIcon());
 				}
-				entity.removeStatusEffect(effect);
+				target.removeStatusEffect(effect);
 				if (inverseEffect != null) {
-					entity.addStatusEffect(inverseEffect);
+					target.addStatusEffect(inverseEffect);
 				}
 			}
 		});
