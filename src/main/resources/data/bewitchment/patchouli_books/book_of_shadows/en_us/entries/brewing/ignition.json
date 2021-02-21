@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Ignition",
+  "icon": "minecraft:blaze_powder",
+  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "pages": [
+    {
+      "type": "text",
+      "text": "This will simply put the target on fire."
+    },
+    {
+      "type": "spotlight",
+      "title": "Ignition",
+      "item": "minecraft:blaze_powder",
+      "text": "$(marked)Ignition$() is not affected by intensity."
+    }
+  ]
+}

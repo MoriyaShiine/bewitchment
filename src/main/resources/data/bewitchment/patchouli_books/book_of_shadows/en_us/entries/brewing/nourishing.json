@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Nourishing",
+  "icon": "minecraft:bamboo",
+  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The $(marked)Nourishing$() potion increases the effectivity of food, giving a flat increase in gain when consuming food."
+    },
+    {
+      "type": "spotlight",
+      "title": "Nourishing",
+      "item": "minecraft:bamboo",
+      "text": "The gain increase scales with intensity."
+    }
+  ]
+}

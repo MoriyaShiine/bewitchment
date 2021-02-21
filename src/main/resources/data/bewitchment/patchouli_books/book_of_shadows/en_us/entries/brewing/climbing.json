@@ -1,7 +1,7 @@
 {
   "category": "bewitchment:brewing",
   "name": "Climbing",
-  "icon": "minecraft:spider_Eye",
+  "icon": "minecraft:spider_eye",
   "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "pages": [
     {
@@ -11,7 +11,7 @@
     {
       "type": "spotlight",
       "title": "Climbing",
-      "item": "bewitchment:spider_Eye",
+      "item": "minecraft:spider_eye",
       "text": "This effect is not affected by intensity."
     }
   ]
