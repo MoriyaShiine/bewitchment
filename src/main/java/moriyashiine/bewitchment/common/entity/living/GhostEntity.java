@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.entity.living;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.block.CandelabraBlock;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
@@ -107,6 +108,11 @@ public class GhostEntity extends BWHostileEntity {
 	@Override
 	public boolean canHaveStatusEffect(StatusEffectInstance effect) {
 		return false;
+	}
+	
+	@Override
+	public boolean isInvulnerableTo(DamageSource damageSource) {
+		return !BewitchmentAPI.isSourceFromSilver(damageSource) && super.isInvulnerableTo(damageSource);
 	}
 	
 	@Override
