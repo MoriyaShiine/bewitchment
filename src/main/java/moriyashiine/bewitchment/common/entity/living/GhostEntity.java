@@ -1,10 +1,10 @@
 package moriyashiine.bewitchment.common.entity.living;
 
-import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.block.CandelabraBlock;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
+import moriyashiine.bewitchment.common.registry.BWDamageSources;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
@@ -112,7 +112,7 @@ public class GhostEntity extends BWHostileEntity {
 	
 	@Override
 	public boolean isInvulnerableTo(DamageSource damageSource) {
-		return !BewitchmentAPI.isSourceFromSilver(damageSource) && super.isInvulnerableTo(damageSource);
+		return !BWDamageSources.isEffective(damageSource, false) && super.isInvulnerableTo(damageSource);
 	}
 	
 	@Override

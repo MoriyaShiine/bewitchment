@@ -31,7 +31,7 @@ public class BWDamageSources {
 		return amount;
 	}
 	
-	private static boolean isEffective(DamageSource source, boolean vampire) {
+	public static boolean isEffective(DamageSource source, boolean vampire) {
 		if (source.isOutOfWorld() || (vampire && (source == MAGIC_COPY || source == BWDamageSources.SUN))) {
 			return true;
 		}
