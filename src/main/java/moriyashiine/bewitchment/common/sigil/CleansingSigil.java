@@ -1,15 +1,15 @@
 package moriyashiine.bewitchment.common.sigil;
 
 import moriyashiine.bewitchment.api.registry.Sigil;
-import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
 import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public class CleansingSigil extends Sigil {
@@ -23,12 +23,17 @@ public class CleansingSigil extends Sigil {
 		if (world.getBlockState(pos).getBlock() instanceof PressurePlateBlock) {
 			flag = user.age % 20 == 0;
 		}
-		if (flag && user.getStatusEffects().stream().anyMatch(effect -> ((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.HARMFUL)) {
-			StatusEffectInstance effect = new StatusEffectInstance(BWStatusEffects.PURITY, 1, 1, true, false);
-			if (user.canHaveStatusEffect(effect)) {
-				if (!world.isClient) {
-					user.addStatusEffect(effect);
+		if (flag) {
+			flag = false;
+			for (StatusEffect effect : Registry.STATUS_EFFECT) {
+				if (user.hasStatusEffect(effect) && ((StatusEffectAccessor) effect).bw_getType() == StatusEffectType.HARMFUL) {
+					if (!world.isClient) {
+						user.removeStatusEffect(effect);
+					}
+					flag = true;
 				}
+			}
+			if (flag) {
 				return ActionResult.SUCCESS;
 			}
 		}

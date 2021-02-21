@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Smelly$() sigils are stinky, causing nearby hostile entities to thread towards it."
+	  "text": "$(marked)Smelly$() sigils are stinky, causing nearby hostile entities to move towards it."
 	},
 	{
 	  "type": "crafting",
