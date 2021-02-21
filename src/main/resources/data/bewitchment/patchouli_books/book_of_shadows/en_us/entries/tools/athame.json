@@ -14,7 +14,7 @@
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:athame",
-	  "text": "By slaying a $(marked)humanoid$() with an Athame while holding a $(item)Glass Bottle$() in the offhand, one can collect $(item)Bottles of Blood$().$(br2)Athames are also used to start most $(l:bewitchment:rituals/ritual_intro)sacrificial rituals$()."
+	  "text": "By slaying a $(marked)humanoid$() with an Athame while holding a $(item)Glass Bottle$() in the offhand, one can collect $(item)Bottles of Blood$().$(br2)Athames are also used to start most $(l:bewitchment:rituals/rituals)sacrificial rituals$()."
 	}
   ]
 }
