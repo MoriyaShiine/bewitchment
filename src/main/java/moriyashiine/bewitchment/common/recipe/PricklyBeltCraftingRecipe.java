@@ -70,6 +70,10 @@ public class PricklyBeltCraftingRecipe extends SpecialCraftingRecipe {
 			}
 			effects.set(i, new StatusEffectInstance(effect.getEffectType(), duration, amplifier, effect.isAmbient(), effect.shouldShowParticles(), effect.shouldShowIcon()));
 		}
+		if(potion.getOrCreateTag().contains("PolymorphUUID")){
+			pricklyBelt.getOrCreateTag().putUuid("PolymorphUUID", potion.getTag().getUuid("PolymorphUUID"));
+			pricklyBelt.getOrCreateTag().putString("PolymorphName", potion.getTag().getString("PolymorphName"));
+		}
 		PotionUtil.setCustomPotionEffects(pricklyBelt, effects);
 		pricklyBelt.getOrCreateTag().putInt("PotionUses", uses);
 		return pricklyBelt;
