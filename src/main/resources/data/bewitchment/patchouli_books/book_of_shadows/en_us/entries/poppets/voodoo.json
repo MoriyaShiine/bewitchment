@@ -1,0 +1,15 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "Voodoo",
+  "icon": "bewitchment:voodoo_poppet",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The $(item)Voodoo Poppet$() is a classic.$(br)It can be used to throw whoever is bound to it, drown them, set them on fire, and even apply potion effects to them from anywhere!$(br2)$(o)Of course, to do the latter ones you will have to suffer the effects yourself$()."
+    },
+    {
+      "type": "crafting",
+      "recipe": "bewitchment:voodoo_poppet"
+    }
+  ]
+}
