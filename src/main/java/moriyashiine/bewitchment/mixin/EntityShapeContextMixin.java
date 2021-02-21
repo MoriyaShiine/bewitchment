@@ -14,7 +14,7 @@ public abstract class EntityShapeContextMixin implements ShapeContext, EntitySha
 	private Entity entity;
 	
 	@Override
-	public Entity getEntity() {
+	public Entity bw_getEntity() {
 		return entity;
 	}
 	

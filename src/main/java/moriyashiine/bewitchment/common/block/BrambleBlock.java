@@ -44,7 +44,7 @@ public class BrambleBlock extends SugarCaneBlock {
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		if (this == BWObjects.THICK_BRAMBLE && context instanceof EntityShapeContextAdditionAccessor) {
-			Entity entity = ((EntityShapeContextAdditionAccessor) context).getEntity();
+			Entity entity = ((EntityShapeContextAdditionAccessor) context).bw_getEntity();
 			if (entity instanceof LivingEntity && !entity.isSneaking()) {
 				return VoxelShapes.fullCube();
 			}
