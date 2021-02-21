@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Cats$() are finicky things. Even so, there mere presence is soothing to many.$(br)When bound as a familiar, Cats will greatly help with $(l:bewitchent:rituals/ritual_intro)$(marked)rituals$().$(br)In addition, $(marked)Creepers$() will stay away from witches with a Cat familiar."
+	  "text": "$(marked)Cats$() are finicky things. Even so, their mere presence is soothing to many.$(br)When bound as a familiar, Cats will greatly help with $(l:bewitchent:rituals/ritual_intro)$(marked)rituals$().$(br)In addition, $(marked)Creepers$() will stay away from witches with a Cat familiar."
 	},
 	{
 	  "type": "entity",

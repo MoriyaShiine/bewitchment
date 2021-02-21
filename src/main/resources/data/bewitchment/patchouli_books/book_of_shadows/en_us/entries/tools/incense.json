@@ -30,8 +30,9 @@
 	},
 	{
 	  "type": "bewitchment:incense",
-	  "advancement": "bewitchment:demon_heart",
+	  "advancement": "bewitchment:hidden_unlocks/demon_heart",
 	  "recipe": "bewitchment:incenses/mortal_coil",
+	  "anchor": "mortal_coil",
 	  "text": "The $(marked)Mortal Coil$() Incense is used for rather profane rites.$(br)You may not want to prepare this before going to bed."
 	}
   ]

@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:curses",
-  "name": "Apathy",
-  "icon": "minecraft:soul_lantern",
+  "name": "Insanity",
+  "icon": "minecraft:red_mushroom",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Apathy$() withers the soul, making it unable to attain $(marked)Magical Energy$(). $(marked)Demons$() will reject trading and animals will flee from the victim of this powerful curse."
+	  "text": "This greater curse rots the mind... it will cause the affected target to see monsters which do not exist. $(br)It will not be able to attack them; however this does not count for the visions."
 	},
 	{
 	  "type": "bewitchment:curse",
