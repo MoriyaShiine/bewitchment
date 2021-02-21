@@ -12,7 +12,7 @@
       "type": "spotlight",
       "title": "Synchronized",
       "item": "minecraft:ghast_tear",
-      "text": "This effect is not compatible with $(l:bewitchment:brewing/theft)Theft$()."
+      "text": "Synchronized potion effects are cut in half.$(br2)This effect is not compatible with $(l:bewitchment:brewing/theft)Theft$().$(br2)The higher this potion's intensity, the further it'll reach."
     }
   ]
 }

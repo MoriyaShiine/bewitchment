@@ -12,7 +12,7 @@
       "type": "spotlight",
       "title": "Theft",
       "item": "minecraft:diamond",
-      "text": "Stealing a potion effect will half its duration.$(br2)This effect is not compatible with $(l:bewitchment:brewing/synchronized)Synchronized$()."
+      "text": "Stealing a potion effect will halve its duration.$(br2)This effect is not compatible with $(l:bewitchment:brewing/synchronized)Synchronized$().$(br2)The higher this potion's intensity, the further it'll reach."
     }
   ]
 }
