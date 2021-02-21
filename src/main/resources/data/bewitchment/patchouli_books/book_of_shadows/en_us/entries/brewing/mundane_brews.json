@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "While a $(item)Witch Cauldron$() can be used to make much more incredible brews, some witches may at times prefer to use more subtle brews.$(br)All brews in this entry can be crafted using a $(item)Brewing Station$(), though the Witches Cauldron may allow to make them stronger.$(br)Mundane brews fabricated in the Witches Cauldron use slightly different ingredients. "
+	  "text": "While a $(item)Witch Cauldron$() can be used to make much more incredible brews, some witches may at times prefer to use more subtle brews.$(br)All brews in this entry can be obtained via other means, though the Witches Cauldron may allow to make them stronger.$(br)Mundane brews fabricated in the Witches Cauldron use slightly different ingredients. "
 	},
 	{
 	  "type": "spotlight",
@@ -145,7 +145,7 @@
 	  "type": "spotlight",
 	  "title": "Weakness",
 	  "item": "minecraft:red_mushroom",
-	  "text": "Reduces the target's damage.$(br)You may also use a $(item)Mushroom$() for this."
+	  "text": "Reduces the target's damage.$(br)You may also use a $(item)Brown Mushroom$() for this."
 	},
 	{
 	  "type": "spotlight",

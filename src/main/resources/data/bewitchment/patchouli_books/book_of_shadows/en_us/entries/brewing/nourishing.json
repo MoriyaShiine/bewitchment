@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The $(marked)Nourishing$() potion increases the effectivity of food, giving a flat increase in gain when consuming food."
+	  "text": "The $(marked)Nourishing$() potion increases the effectiveness of food, giving a flat increase in gain when consuming food."
 	},
 	{
 	  "type": "spotlight",
