@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "The ritual of $(marked)Cleansing$() calls on the Light to cleanse its target of $(l:bewitchment:curses/curse_intro)$(marked)curses$(). The target is specified with a $(l:bewitchment:tools/taglock)$(item)taglock$().$(br)The ritual is also applicable to $(marked)Zombie Vilagers$(). Doing so will turn them into normal Villagers."
+      "text": "The ritual of $(marked)Cleansing$() calls on the Light to cleanse its target of $(l:bewitchment:curses/curse_intro)curses$(). The target is specified with a $(l:bewitchment:tools/taglock)$(item)Taglock$().$(br)The ritual is also applicable to $(marked)Zombie Vilagers$(). Doing so will turn them into normal Villagers."
     },
     {
       "type": "bewitchment:ritual",

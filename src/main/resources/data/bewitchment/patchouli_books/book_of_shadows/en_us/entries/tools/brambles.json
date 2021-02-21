@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "$(item)Brambles$() are witchy weeds, artificially created with the help of $(item)Elemental Oil$(). Each Bramble has a unique effect connected to its element."
+      "text": "$(item)Brambles$() are witchy weeds, artificially created with the help of $(l:bewitchment:brewing/elemental_oils)$(item)Elemental Oil$().$(br)Each Bramble has a unique effect connected to its $(marked)element$()."
     },
     {
       "type": "crafting",
@@ -20,7 +20,7 @@
     {
       "type": "crafting",
       "recipe": "bewitchment:fruiting_bramble",
-      "text": "$(item)Fruiting Bramble$() will grow $(item)Witchberries$(), which can be used to craft ME-restoring goodies."
+      "text": "$(item)Fruiting Bramble$() will grow $(item)Witchberries$(), which can be used to craft $(marked)ME$()-restoring $(l:bewitchment:tools/brambles#food)$(item)goodies$()."
     },
     {
       "type": "crafting",
@@ -30,15 +30,16 @@
     {
       "type": "crafting",
       "recipe": "bewitchment:thick_bramble",
-      "text": "Due to its incredible thickness, $(item)Thick Bramble$() can only be passed while sneaking."
+      "text": "Due to its incredible thickness, $(item)Thick Bramble$() can only be passed while $(marked)sneaking$()."
     },
     {
       "type": "crafting",
       "recipe": "bewitchment:fleeting_bramble",
-      "text": "$(item)Fleeting Bramble$() will launch anything that enters it into the air, unless it's sneaking."
+      "text": "$(item)Fleeting Bramble$() will launch anything that enters it into the air, unless it's $(marked)sneaking$()."
     },
     {
       "type": "crafting",
+      "anchor": "food",
       "recipe": "bewitchment:witchberry_pie",
       "recipe2": "bewitchment:witchberry_cookie"
     }

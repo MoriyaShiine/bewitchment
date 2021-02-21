@@ -1,12 +1,12 @@
 {
   "parent": "recipes/root",
   "criteria": {
-    "cauldron": {
+    "chalk": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "bewitchment:witch_cauldron"
+            "item": "bewitchment:chalk"
           }
         ]
       }
@@ -14,7 +14,7 @@
   },
   "requirements": [
     [
-      "cauldron"
+      "chalk"
     ]
   ]
 }

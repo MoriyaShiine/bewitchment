@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This spear is the hunting weapon of $(l:bewitchment:creatures/herne)$(marked)Herne$().$(br)Much like a $(item)Trident$(), it can be thrown towards a target."
+	  "text": "This spear is the hunting weapon of $(l:bewitchment:creatures/herne)Herne$().$(br)Much like a $(item)Trident$(), it can be thrown towards a target."
 	},
     {
       "type":"spotlight",

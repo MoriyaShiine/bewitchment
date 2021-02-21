@@ -5,7 +5,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The Juniper Tree, in stark contrast to the Cypress Tree, represents life. You can insert up to three $(item)Taglocks$() into blocks made with this wood. One use, these blocks will gather Taglocks of everyone but their owner.$(br2)$(o)Taglocks are inserted by sneaking while using them on the block; you can gather them by using an $(item)Athame$()$(o) while sneaking$()."
+	  "text": "The Juniper Tree, in stark contrast to the Cypress Tree, represents life. You can insert up to three $(item)Taglocks$() into blocks made with this wood. One use, these blocks will gather Taglocks of everyone but their owner.$(br2)$(o)Taglocks are inserted by sneaking while using them on the block; you can gather them by using an $(l:bewitchment:tools/atahme)$(item)Athame$()$(o) while sneaking$()."
 	},
 	{
 	  "type": "image",

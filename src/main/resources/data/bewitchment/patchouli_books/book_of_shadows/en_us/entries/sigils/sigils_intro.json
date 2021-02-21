@@ -7,11 +7,11 @@
   "pages": [
     {
       "type": "text",
-      "text": "$(marked)Sigils$() are magic symbols of power. They can be divided into two groups: active and passive sigils.$(br2)$(marked)Active Sigils$() need to be placed on usable blocks or brooms made from $(l:bewitchment:introduction/dragons_blood_trees)$(marked)Dragon's Blood$().$(br2)$(marked)Passive Sigils$() can be placed anywhere and will apply their effect to everything around."
+      "text": "$(marked)Sigils$() are magic symbols of power. They can be divided into two groups: active and passive sigils.$(br2)$(marked)Active$() sigils need to be placed on usable blocks or brooms made from $(l:bewitchment:introduction/dragons_blood_trees)$(item)Dragon's Blood$().$(br2)$(marked)Passive$() sigils can be placed anywhere and will apply their effect to everything around."
     },
     {
       "type": "text",
-      "text": "It should be noted that all Sigils are of limited duration.$(br2)$(l:bewitchment:tools/taglock)$(item)Taglocks$() can be added to Sigils to control who it affects.$(br)If a Sigil is set to regard the Taglocks as a $(marked)whitelist$(), the Sigil will only affect those in it. If it is set as a $(marked)blacklist$(), the Sigil won't affect anyone the Taglock is from.$(br2)$(o)Use an $(l:bewitchment:tools/athame)$(item)Athame$()$(o) while sneaking to toggle between blacklist and whitelist.$()"
+      "text": "It should be noted that all sigils are of limited duration.$(br2)$(l:bewitchment:tools/taglock)$(item)Taglocks$() can be added to sigils to control who it affects.$(br)If a sigil is set to regard the Taglocks as a $(marked)whitelist$(), the Sigil will only affect those in it. If it is set as a $(marked)blacklist$(), the sigil won't affect anyone the Taglock is from.$(br2)$(o)Use an $(l:bewitchment:tools/athame)$(item)Athame$()$(o) while sneaking to toggle between blacklist and whitelist.$()"
     }
   ]
 }

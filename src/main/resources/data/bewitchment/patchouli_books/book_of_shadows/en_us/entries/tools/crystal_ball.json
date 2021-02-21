@@ -5,7 +5,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(item)Crystal Balls$() are common divination tools. When used, they will give the caster a $(marked)fortune$(), at the cost of some ME drawn from a nearby $(l:bewitchment:introduction/altars)$(marked)Altar$().$(br2)Additionally, Crystal Balls may be used for $(marked)scrying$(). When used with a $(l:bewitchment:tools/taglock)$(item)Taglock$(), it will give precise information on the target."
+	  "text": "$(item)Crystal Balls$() are common $(marked)divination$() tools.$(br)When used, they will give the caster a $(marked)fortune$(), at the cost of some $(marked)ME$() drawn from a nearby $(l:bewitchment:introduction/altars)$(item)Altar$().$(br2)Additionally, Crystal Balls may be used for $(marked)scrying$(). When used with a $(l:bewitchment:tools/taglock)$(item)Taglock$(), it will give precise information on the target."
 	},
 	{
 	  "type": "crafting",

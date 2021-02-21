@@ -7,7 +7,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "The Sigil of $(marked)Ruin$() prevents any positive potion effect from taking hold around it."
+      "text": "The sigil of $(marked)Ruin$() prevents any positive $(marked)potion effect$() from taking hold around it."
     },
     {
       "type": "crafting",

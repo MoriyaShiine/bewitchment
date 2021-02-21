@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "$(item)Waystones$() are infused with ender-energy, making them able to store locations.$(br)This in turn allows them to redirect $(l:bewitchment:rituals/ritual_intro)$(marked)Rituals$(), casting them in a different place.$(br2)$(o)To redirect a Ritual, use the Waystone while sneaking, after the Ritual has been started$()."
+      "text": "$(item)Waystones$() are infused with ender-energy, making them able to store locations.$(br)This in turn allows them to redirect $(l:bewitchment:rituals/ritual_intro)rituals$(), casting them in a different place.$(br2)$(o)To redirect a ritual, use the Waystone while sneaking, after the ritual has been started$()."
     },
     {
       "type": "crafting",

@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "This high-end couture enables the wearer to master $(l:bewitchment:brewing/brewing_basics)$(marked)potion brewing$(), doubling the duration of brews.$(br2)$(item)Carpets$() made from the same fabric can be placed on $(l:bewitchment:introduction/altars)$(marked)Altars$()."
+      "text": "This high-end couture enables the wearer to master $(l:bewitchment:brewing/brewing_basics)potion brewing$(), doubling the duration of brews.$(br2)$(item)Carpets$() made from the same fabric can be placed on $(l:bewitchment:introduction/altars)$(item)Altars$()."
     },
     {
       "type": "crafting",

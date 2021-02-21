@@ -22,7 +22,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "$(item)Coffins$(), originally emerging from vampires, have recently found traction especially among night-active witches.$(br)When you sleep in one, you can skip the day.$(br)Coffins, much like $(item)beds$(), can be dyed if they're white."
+      "text": "$(item)Coffins$(), originally emerging from $(l:bewitchment:creatures/vampire)Vampires$(), have recently found traction especially among night-active witches.$(br)When you sleep in one, you can $(marked)skip the day$().$(br)Coffins, much like $(item)beds$(), can be $(marked)dyed$() if they're white."
     },
     {
       "type": "crafting",

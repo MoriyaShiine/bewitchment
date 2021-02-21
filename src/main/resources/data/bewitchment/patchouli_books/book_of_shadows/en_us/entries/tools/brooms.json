@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "$(item)Brooms$() are magical devices commonly by witches. Through the use of ME, they enable the user to fly through the skies.$(br2)Brooms come in four variants, each with unique properties."
+      "text": "$(item)Brooms$() are magical devices commonly by witches. Through the use of $(marked)ME$(), they enable the user to fly through the skies.$(br2)Brooms come in four variants, each with unique properties."
     },
     {
       "type": "crafting",

@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "The active sigil of $(marked)Judgment$() damages any unholy being that activates it, making it a good contraption against vampires and werewolves."
+      "text": "The active sigil of $(marked)Judgment$() damages any unholy being that activates it, making it a good contraption against $(l:bewitchment:creatures/vampire)Vampires$() and $(l:bewitchment:creatures/werewolf)Werewolves$()."
     },
     {
       "type": "crafting",

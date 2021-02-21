@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "$(marked)Incenses$() are simple usage method of the $(l:bewitchment:tools/brazier)$(item)Brazier$(). Incense can apply extended potion effects after waking up.$(br)Simply light a nearby Brazier with the needed ingredients and go to sleep."
+      "text": "$(marked)Incenses$() are a simple usage method of the $(l:bewitchment:tools/brazier)$(item)Brazier$(). Incense can apply extended $(marked)potion effects$() after waking up.$(br)Simply light a nearby Brazier with the needed ingredients and go to sleep."
     },
     {
       "type": "bewitchment:incense_compressed",
