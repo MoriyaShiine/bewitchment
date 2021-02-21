@@ -72,7 +72,7 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 					}
 					else if (stack.getItem() instanceof AthameItem && !entities.isEmpty()) {
 						world.playSound(null, getBlockPos(), BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.NEUTRAL, 1, modeOnWhitelist ? 0.5f : 1);
-						player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.toggle_" +  (!modeOnWhitelist ? "whitelist" : "blacklist")), true);
+						player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.toggle_" + (!modeOnWhitelist ? "whitelist" : "blacklist")), true);
 						modeOnWhitelist = !modeOnWhitelist;
 					}
 				}

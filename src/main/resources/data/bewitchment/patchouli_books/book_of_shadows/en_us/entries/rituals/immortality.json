@@ -4,14 +4,14 @@
   "icon": "minecraft:diamond",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
-    {
-      "type": "text",
-      "text": "This ritual of Light is of highest degree, granting temporary immortality.$(br)Any damage -safe for void- is completely nullified.$(br2)The effect applies to any living being nearby, and it lasts for around half a day."
-    },
-    {
-      "type": "bewitchment:ritual",
-      "recipe": "bewitchment:rituals/immortality",
-      "text": ""
-    }
+	{
+	  "type": "text",
+	  "text": "This ritual of Light is of highest degree, granting temporary immortality.$(br)Any damage -safe for void- is completely nullified.$(br2)The effect applies to any living being nearby, and it lasts for around half a day."
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/immortality",
+	  "text": ""
+	}
   ]
 }

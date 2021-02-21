@@ -1,20 +1,20 @@
 {
   "parent": "recipes/root",
   "criteria": {
-    "heart": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "bewitchment:demon_heart"
-          }
-        ]
-      }
-    }
+	"heart": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "bewitchment:demon_heart"
+		  }
+		]
+	  }
+	}
   },
   "requirements": [
-    [
-      "heart"
-    ]
+	[
+	  "heart"
+	]
   ]
 }

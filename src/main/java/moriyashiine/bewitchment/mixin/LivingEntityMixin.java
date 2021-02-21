@@ -299,7 +299,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				((FortuneAccessor) trueSource).getFortune().duration = 0;
 				amount *= 3;
 			}
-			if (trueSource instanceof PlayerEntity && BewitchmentAPI.isWeakToSilver((LivingEntity) trueSource)) {
+			if (trueSource instanceof LivingEntity && BewitchmentAPI.isWeakToSilver((LivingEntity) trueSource)) {
 				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.JUDGMENT_POPPET, this, null);
 				if (!poppet.isEmpty()) {
 					if (poppet.damage((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
@@ -511,7 +511,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 											}
 										}
 										else if (!hasStatusEffect(effect.getEffectType()) && BewitchmentAPI.usePlayerMagic((PlayerEntity) (Object) this, 2, true) && addStatusEffect(effect)) {
-											if (belt.getTag().contains("PolymorphUUID") && this instanceof PolymorphAccessor){
+											if (belt.getTag().contains("PolymorphUUID") && this instanceof PolymorphAccessor) {
 												PolymorphAccessor polymorphAccessor = (PolymorphAccessor) this;
 												polymorphAccessor.setPolymorphUUID(belt.getTag().getUuid("PolymorphUUID"));
 												polymorphAccessor.setPolymorphName(belt.getTag().getString("PolymorphName"));
@@ -523,7 +523,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 										belt.getTag().putInt("PotionUses", belt.getTag().getInt("PotionUses") - 1);
 										if (belt.getTag().getInt("PotionUses") <= 0) {
 											belt.getOrCreateTag().put("CustomPotionEffects", new ListTag());
-											if (belt.getTag().contains("PolymorphUUID")){
+											if (belt.getTag().contains("PolymorphUUID")) {
 												belt.getTag().remove("PolymorphUUID");
 												belt.getTag().remove("PolymorphName");
 											}

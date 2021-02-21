@@ -4,15 +4,15 @@
   "icon": "bewitchment:taglock{OwnerName:Aelpecyem}",
   "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "pages": [
-    {
-      "type": "text",
-      "text": "$(marked)Polymorph$() must be one of the most versatile potion effects. When a Polymorph potion is consumed, the target will change its form into the target of the $(l:bewitchment:tools/taglock)$(item)Taglock$() used.$(br)The brew can be made into a $(item)Splash Potion$() or similar variants, just like other brews."
-    },
-    {
-      "type": "spotlight",
-      "title": "Polymorph",
-      "item": "bewitchment:taglock{FromPlayer: 1b, OwnerUUID: [I; 1672005179, -1854323673, -2070260447, 778045631], OwnerName:\"Aelpecyem\"}",
-      "text": "Intensity does not have an effect on this potion."
-    }
+	{
+	  "type": "text",
+	  "text": "$(marked)Polymorph$() must be one of the most versatile potion effects. When a Polymorph potion is consumed, the target will change its form into the target of the $(l:bewitchment:tools/taglock)$(item)Taglock$() used.$(br)The brew can be made into a $(item)Splash Potion$() or similar variants, just like other brews."
+	},
+	{
+	  "type": "spotlight",
+	  "title": "Polymorph",
+	  "item": "bewitchment:taglock{FromPlayer: 1b, OwnerUUID: [I; 1672005179, -1854323673, -2070260447, 778045631], OwnerName:\"Aelpecyem\"}",
+	  "text": "Intensity does not have an effect on this potion."
+	}
   ]
 }

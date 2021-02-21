@@ -4,14 +4,14 @@
   "icon": "bewitchment:salt",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
-    {
-      "type": "text",
-      "text": "This lesser ritual utilizes the power of wind and salt to push back $(marked)hostile$() entities.$(br)It will run for around half a day."
-    },
-    {
-      "type": "bewitchment:ritual",
-      "recipe": "bewitchment:rituals/barrier",
-      "text": ""
-    }
+	{
+	  "type": "text",
+	  "text": "This lesser ritual utilizes the power of wind and salt to push back $(marked)hostile$() entities.$(br)It will run for around half a day."
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/barrier",
+	  "text": ""
+	}
   ]
 }

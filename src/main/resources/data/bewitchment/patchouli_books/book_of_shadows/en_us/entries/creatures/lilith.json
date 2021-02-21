@@ -4,23 +4,23 @@
   "icon": "bewitchment:lilith_spawn_egg",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
-    {
-      "type": "text",
-      "text": "$(marked)Lilith$(), the Mountain-Mother of $(l:bewitchment:creatures/vampire)Vampires$() is often addressed to grant victims of $(l:bewitchment:curses/vampirism)$(marked)Vampirism$() higher powers.$(br)Pledging to her allows them to freely change their form into that of a $(marked)Bat$(), allowing them to roam freely.$(br2)Alternatively, she can be given be offered $(l:bewitchment:introduction/crops)$(item)Garlic$(), freeing the victim of her curse."
-    },
-    {
-      "type": "entity",
-      "entity": "bewitchment:lilith",
-      "offset": 0.2
-    },
-    {
-      "type": "text",
-      "title": "Summoning Lilith",
-      "text": "Summoning Lilith works much like summoning $(l:bewitchment:creatures/herne)$(marked)Herne$(). It requires you to be in a $(marked)mountains$() biome.$(br)Prepare a $(l:bewitchment:tools/incense#mortal_coil)$(marked)Mortal Coil Incense$() and slay a $(marked)Chicken$() with an $(l:bewitchment:tools/athame)$(item)Athame$() at night."
-    },
-    {
-      "type": "text",
-      "text": "You want to keep Lilith around if you want to pledge to her, so decide where to summon her wisely.$(br)Alternatively, you can attempt moving her using the $(l:bewitchment:rituals/warp)$(marked)Warp$() ritual.$(br2)$(o)Once pledged, you can toggle your Bat-form by pressing [$(k:bewitchment.transformation_ability)].$()"
-    }
+	{
+	  "type": "text",
+	  "text": "$(marked)Lilith$(), the Mountain-Mother of $(l:bewitchment:creatures/vampire)Vampires$() is often addressed to grant victims of $(l:bewitchment:curses/vampirism)$(marked)Vampirism$() higher powers.$(br)Pledging to her allows them to freely change their form into that of a $(marked)Bat$(), allowing them to roam freely.$(br2)Alternatively, she can be given be offered $(l:bewitchment:introduction/crops)$(item)Garlic$(), freeing the victim of her curse."
+	},
+	{
+	  "type": "entity",
+	  "entity": "bewitchment:lilith",
+	  "offset": 0.2
+	},
+	{
+	  "type": "text",
+	  "title": "Summoning Lilith",
+	  "text": "Summoning Lilith works much like summoning $(l:bewitchment:creatures/herne)$(marked)Herne$(). It requires you to be in a $(marked)mountains$() biome.$(br)Prepare a $(l:bewitchment:tools/incense#mortal_coil)$(marked)Mortal Coil Incense$() and slay a $(marked)Chicken$() with an $(l:bewitchment:tools/athame)$(item)Athame$() at night."
+	},
+	{
+	  "type": "text",
+	  "text": "You want to keep Lilith around if you want to pledge to her, so decide where to summon her wisely.$(br)Alternatively, you can attempt moving her using the $(l:bewitchment:rituals/warp)$(marked)Warp$() ritual.$(br2)$(o)Once pledged, you can toggle your Bat-form by pressing [$(k:bewitchment.transformation_ability)].$()"
+	}
   ]
 }

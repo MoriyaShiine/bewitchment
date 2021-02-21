@@ -3,38 +3,38 @@
   "name": "Silver Tools",
   "icon": "bewitchment:silver_sword",
   "pages": [
-    {
-      "type": "text",
-      "text": "$(item)Silver tools$() are simple upgrade to $(item)Iron tools$(). $(br)They are crafted using a $(item)Smithing Table$(). While still having most of Iron's qualities, Silver tools inherit abilities from $(item)gold tools$().$(br2)They are all great defense against $(marked)unholy entities$()."
-    },
-    {
-      "type": "smithing",
-      "recipe": "bewitchment:silver_sword_smithing",
-      "recipe2": "bewitchment:silver_pickaxe_smithing"
-    },
-    {
-      "type": "smithing",
-      "recipe": "bewitchment:silver_axe_smithing",
-      "recipe2": "bewitchment:silver_shovel_smithing"
-    },
-    {
-      "type": "smithing",
-      "recipe": "bewitchment:silver_hoe_smithing"
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:silver_arrow",
-      "text": "$(item)Silver Arrows$() can be shot just like normal arrows, applying additional damage as Silver would."
-    },
-    {
-      "type": "smithing",
-      "recipe": "bewitchment:silver_helmet_smithing",
-      "recipe2": "bewitchment:silver_chestplate_smithing"
-    },
-    {
-      "type": "smithing",
-      "recipe": "bewitchment:silver_leggings_smithing",
-      "recipe2": "bewitchment:silver_boots_smithing"
-    }
+	{
+	  "type": "text",
+	  "text": "$(item)Silver tools$() are simple upgrade to $(item)Iron tools$(). $(br)They are crafted using a $(item)Smithing Table$(). While still having most of Iron's qualities, Silver tools inherit abilities from $(item)gold tools$().$(br2)They are all great defense against $(marked)unholy entities$()."
+	},
+	{
+	  "type": "smithing",
+	  "recipe": "bewitchment:silver_sword_smithing",
+	  "recipe2": "bewitchment:silver_pickaxe_smithing"
+	},
+	{
+	  "type": "smithing",
+	  "recipe": "bewitchment:silver_axe_smithing",
+	  "recipe2": "bewitchment:silver_shovel_smithing"
+	},
+	{
+	  "type": "smithing",
+	  "recipe": "bewitchment:silver_hoe_smithing"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:silver_arrow",
+	  "text": "$(item)Silver Arrows$() can be shot just like normal arrows, applying additional damage as Silver would."
+	},
+	{
+	  "type": "smithing",
+	  "recipe": "bewitchment:silver_helmet_smithing",
+	  "recipe2": "bewitchment:silver_chestplate_smithing"
+	},
+	{
+	  "type": "smithing",
+	  "recipe": "bewitchment:silver_leggings_smithing",
+	  "recipe2": "bewitchment:silver_boots_smithing"
+	}
   ]
 }

@@ -5,9 +5,9 @@
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "sortnum": 2,
   "pages": [
-    {
-      "type": "text",
-      "text": "Sometimes getting hurt makes you angry, and with the contract of $(marked)Wrath$() you can finally manifest that anger reasonably!$(br)Signing this contract will increase your damage output with lower health.$(br)It may also increase damage intake."
-    }
+	{
+	  "type": "text",
+	  "text": "Sometimes getting hurt makes you angry, and with the contract of $(marked)Wrath$() you can finally manifest that anger reasonably!$(br)Signing this contract will increase your damage output with lower health.$(br)It may also increase damage intake."
+	}
   ]
 }

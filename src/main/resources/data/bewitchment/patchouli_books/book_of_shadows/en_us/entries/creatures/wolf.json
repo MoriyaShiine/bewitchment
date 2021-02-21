@@ -4,18 +4,18 @@
   "icon": "minecraft:wolf_spawn_egg",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
-    {
-      "type": "text",
-      "text": "Tamed $(marked)Wolves$() are precious creatures; when their friend is in need, they are usually ready to help, even risking their own life.$(br)When bound as a familiar, Dogs will increase the effectivity and especially durability of $(l:bewitchent:poppets/poppet_practice)$(marked)poppets$().$(br)Their protective spirit will also naturally increase the armor of their witch."
-    },
-    {
-      "type": "entity",
-      "entity": "minecraft:wolf",
-      "name": "Wolf",
-      "text": "$(o)Woof$()",
-      "rotate": false,
-      "default_rotation": 45,
-      "scale": 0.6
-    }
+	{
+	  "type": "text",
+	  "text": "Tamed $(marked)Wolves$() are precious creatures; when their friend is in need, they are usually ready to help, even risking their own life.$(br)When bound as a familiar, Dogs will increase the effectivity and especially durability of $(l:bewitchent:poppets/poppet_practice)$(marked)poppets$().$(br)Their protective spirit will also naturally increase the armor of their witch."
+	},
+	{
+	  "type": "entity",
+	  "entity": "minecraft:wolf",
+	  "name": "Wolf",
+	  "text": "$(o)Woof$()",
+	  "rotate": false,
+	  "default_rotation": 45,
+	  "scale": 0.6
+	}
   ]
 }

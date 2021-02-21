@@ -5,9 +5,9 @@
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "sortnum": 2,
   "pages": [
-    {
-      "type": "text",
-      "text": "The $(marked)Envy$() contract lets you steal a Villager's shinies by heartlessly murdering them.$(br2)This could spark some pillager's attention."
-    }
+	{
+	  "type": "text",
+	  "text": "The $(marked)Envy$() contract lets you steal a Villager's shinies by heartlessly murdering them.$(br2)This could spark some pillager's attention."
+	}
   ]
 }

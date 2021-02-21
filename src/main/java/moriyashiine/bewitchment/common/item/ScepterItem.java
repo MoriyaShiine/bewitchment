@@ -41,12 +41,12 @@ public class ScepterItem extends Item {
 		}
 		return TypedActionResult.fail(user.getStackInHand(hand));
 	}
-
+	
 	@Override
 	public boolean canRepair(ItemStack stack, ItemStack ingredient) {
 		return ingredient.getItem().equals(Items.NETHERITE_INGOT);
 	}
-
+	
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (user instanceof MagicAccessor) {
@@ -55,7 +55,7 @@ public class ScepterItem extends Item {
 				List<StatusEffectInstance> effects = PotionUtil.getCustomPotionEffects(stack);
 				ItemStack potionStack = PotionUtil.setCustomPotionEffects(new ItemStack(Items.SPLASH_POTION), effects);
 				potionStack.getOrCreateTag().putInt("CustomPotionColor", PotionUtil.getColor(effects));
-				if(stack.getOrCreateTag().contains("PolymorphUUID")) {
+				if (stack.getOrCreateTag().contains("PolymorphUUID")) {
 					potionStack.getOrCreateTag().putUuid("PolymorphUUID", stack.getOrCreateTag().getUuid("PolymorphUUID"));
 					potionStack.getOrCreateTag().putString("PolymorphName", stack.getOrCreateTag().getString("PolymorphName"));
 				}
@@ -66,13 +66,13 @@ public class ScepterItem extends Item {
 				if (!((PlayerEntity) user).isCreative()) {
 					stack.getOrCreateTag().putInt("PotionUses", stack.getOrCreateTag().getInt("PotionUses") - 1);
 					if (stack.getOrCreateTag().getInt("PotionUses") <= 0) {
-						if(stack.getOrCreateTag().contains("PolymorphUUID")) {
+						if (stack.getOrCreateTag().contains("PolymorphUUID")) {
 							potionStack.getOrCreateTag().remove("PolymorphUUID");
 							potionStack.getOrCreateTag().remove("PolymorphName");
 						}
 						stack.getOrCreateTag().put("CustomPotionEffects", new ListTag());
 					}
-
+					
 					stack.damage(1, user, stackUser -> stackUser.sendToolBreakStatus(user.getActiveHand()));
 				}
 			}
@@ -84,7 +84,7 @@ public class ScepterItem extends Item {
 	public UseAction getUseAction(ItemStack stack) {
 		return !PotionUtil.getCustomPotionEffects(stack).isEmpty() ? UseAction.BOW : UseAction.NONE;
 	}
-
+	
 	@Override
 	public int getMaxUseTime(ItemStack stack) {
 		return 16;

@@ -5,9 +5,9 @@
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "sortnum": 1,
   "pages": [
-    {
-      "type": "text",
-      "text": "Those marked by $(marked)Pestilence$() are able to effectively inflict illness upon their foes... as well as their surroundings.$(br)This may have a downside when around $(marked)Villagers$()."
-    }
+	{
+	  "type": "text",
+	  "text": "Those marked by $(marked)Pestilence$() are able to effectively inflict illness upon their foes... as well as their surroundings.$(br)This may have a downside when around $(marked)Villagers$()."
+	}
   ]
 }

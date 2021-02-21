@@ -3,13 +3,13 @@
   "name": "Protection",
   "icon": "bewitchment:protection_poppet",
   "pages": [
-    {
-      "type": "text",
-      "text": "The $(item)Protection Poppet$() won't protect you from Zombies or Skeletons;$(br)however, it will ward of environmental damage sources such as $(marked)fire$(), $(marked)drowning$(), and $(marked)velocity$() from anyone bound to it."
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:protection_poppet"
-    }
+	{
+	  "type": "text",
+	  "text": "The $(item)Protection Poppet$() won't protect you from Zombies or Skeletons; however, it will ward of environmental damage sources such as $(marked)fire$(), $(marked)drowning$(), and $(marked)velocity$() from anyone bound to it."
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:protection_poppet"
+	}
   ]
 }

@@ -5,14 +5,14 @@
   "icon": "bewitchment:grotesque_stew",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
-    {
-      "type": "text",
-      "text": "Gross.$(br)This $(marked)questionable stew$() is part of the $(marked)pledging$() rite.$(br)By drinking while deeply looking into the eyes of a $(marked)Greater Demon$(), a witch can $(marked)pledge$() to them.$(br)Pledging to a $(marked)Greater Demon$() has unique benefits depending on the Demon.$(br)The exact benefits are outlined in the according entries."
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:grotesque_stew",
-      "text": "A Demon that is pledged to has to $(marked)remain$() in the world for the pledge to be active.$(br)Attacking the demon in any way will immediately $(marked)revoke$() the pledge."
-    }
+	{
+	  "type": "text",
+	  "text": "Gross.$(br)This $(marked)questionable stew$() is part of the $(marked)pledging$() rite.$(br)By drinking while deeply looking into the eyes of a $(marked)Greater Demon$(), a witch can $(marked)pledge$() to them.$(br)Pledging to a $(marked)Greater Demon$() has unique benefits depending on the Demon.$(br)The exact benefits are outlined in the according entries."
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:grotesque_stew",
+	  "text": "A Demon that is pledged to has to $(marked)remain$() in the world for the pledge to be active.$(br)Attacking the demon in any way will immediately $(marked)revoke$() the pledge."
+	}
   ]
 }

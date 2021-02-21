@@ -4,13 +4,13 @@
   "icon": "bewitchment:sentinel_sigil",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
-    {
-      "type": "text",
-      "text": "The $(marked)Sentinel$() sigil traps the spirit of a $(l:bewitchment:creatures/ghost)$(marked)Ghost$(). When activated, it will apply a random debuff."
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:sentinel_sigil"
-    }
+	{
+	  "type": "text",
+	  "text": "The $(marked)Sentinel$() sigil traps the spirit of a $(l:bewitchment:creatures/ghost)$(marked)Ghost$(). When activated, it will apply a random debuff."
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:sentinel_sigil"
+	}
   ]
 }

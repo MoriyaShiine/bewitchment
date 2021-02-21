@@ -12,7 +12,7 @@
 	  "images": [
 		"bewitchment:textures/gui/patchouli/juniper_tree.png"
 	  ],
-		"text": "The Juniper tree spawns exclusively in $(marked)savannas$().",
+	  "text": "The Juniper tree spawns exclusively in $(marked)savannas$().",
 	  "border": true
 	},
 	{

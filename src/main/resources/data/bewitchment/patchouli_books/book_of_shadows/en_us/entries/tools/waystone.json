@@ -3,14 +3,14 @@
   "name": "Waystone",
   "icon": "bewitchment:waystone",
   "pages": [
-    {
-      "type": "text",
-      "text": "$(item)Waystones$() are infused with ender-energy, making them able to store locations.$(br)This in turn allows them to redirect $(l:bewitchment:rituals/ritual_intro)rituals$(), casting them in a different place.$(br2)$(o)To redirect a ritual, use the Waystone while sneaking, after the ritual has been started$()."
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:waystone",
-      "text": "Recipes that require Waystones will usually assume that the Waystone has already been bound."
-    }
+	{
+	  "type": "text",
+	  "text": "$(item)Waystones$() are infused with ender-energy, making them able to store locations.$(br)This in turn allows them to redirect $(l:bewitchment:rituals/ritual_intro)rituals$(), casting them in a different place.$(br2)$(o)To redirect a ritual, use the Waystone while sneaking, after the ritual has been started$()."
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:waystone",
+	  "text": "Recipes that require Waystones will usually assume that the Waystone has already been bound."
+	}
   ]
 }

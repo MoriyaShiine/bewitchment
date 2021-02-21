@@ -5,9 +5,9 @@
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "sortnum": 3,
   "pages": [
-    {
-      "type": "text",
-      "text": "$(marked)Heresy$()!$(br)This will reflect any curse cast upon you, but may give you $(marked)Mortal Coil$() instead."
-    }
+	{
+	  "type": "text",
+	  "text": "$(marked)Heresy$()!$(br)This will reflect any curse cast upon you, but may give you $(marked)Mortal Coil$() instead."
+	}
   ]
 }

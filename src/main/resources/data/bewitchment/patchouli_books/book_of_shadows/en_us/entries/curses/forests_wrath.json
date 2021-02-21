@@ -2,14 +2,15 @@
   "category": "bewitchment:curses",
   "name": "Forest's Wrath",
   "icon": "minecraft:oak_sapling",
+  "advancement": "minecraft:nether/find_fortress",
   "pages": [
-    {
-      "type": "text",
-      "text": "This curse casts nature's anguish back to mankind, causing anyone to be cursed with it to suffer the same way it does.$(br)This doubles damage from fire, as well as from $(item)Axes$()."
-    },
-    {
-      "type": "bewitchment:curse",
-      "recipe": "bewitchment:curses/forests_wrath"
-    }
+	{
+	  "type": "text",
+	  "text": "This curse casts nature's anguish back to mankind, causing anyone to be cursed with it to suffer the same way it does.$(br)This doubles damage from fire, as well as from $(item)Axes$()."
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/forests_wrath"
+	}
   ]
 }

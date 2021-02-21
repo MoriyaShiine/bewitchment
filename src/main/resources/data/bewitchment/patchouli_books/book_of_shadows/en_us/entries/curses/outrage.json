@@ -2,14 +2,15 @@
   "category": "bewitchment:curses",
   "name": "Outrage",
   "icon": "minecraft:sweet_berries",
+  "advancement": "minecraft:nether/find_fortress",
   "pages": [
-    {
-      "type": "text",
-      "text": "This curse will make normally neutral mobs such as $(marked)Endermen$() or $(marked)Zombified Piglins$() aggressive towards the target."
-    },
-    {
-      "type": "bewitchment:curse",
-      "recipe": "bewitchment:curses/outrage"
-    }
+	{
+	  "type": "text",
+	  "text": "This curse will make normally neutral mobs such as $(marked)Endermen$() or $(marked)Zombified Piglins$() aggressive towards the target."
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/outrage"
+	}
   ]
 }

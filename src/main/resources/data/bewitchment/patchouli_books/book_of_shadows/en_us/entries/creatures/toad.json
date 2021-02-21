@@ -3,22 +3,22 @@
   "name": "Toad",
   "icon": "bewitchment:toad_spawn_egg",
   "pages": [
-    {
-      "type": "text",
-      "text": "$(marked)Toads$() can be found in $(marked)jungles$() and $(marked)swamps$(), jumping happily around."
-    },
-    {
-      "type": "text",
-      "advancement:": "bewitchment:hidden_unlocks/demon_heart",
-      "text": "A Frog familiar grants the witch that bound it enhanced positive status effects.$(br)Killing arthropods will also heal such witches by a quarter of their maximum health."
-    },
-    {
-      "type": "entity",
-      "entity": "bewitchment:toad{Variant:1}",
-      "rotate": false,
-      "scale": 0.6,
-      "default_rotation": 45,
-      "text": "Frogs can be tamed with $(item)Fermented Spider Eyes$(), and bred with normal $(item)Spider Eyes$()."
-    }
+	{
+	  "type": "text",
+	  "text": "$(marked)Toads$() can be found in $(marked)jungles$() and $(marked)swamps$(), jumping happily around."
+	},
+	{
+	  "type": "text",
+	  "advancement:": "bewitchment:hidden_unlocks/demon_heart",
+	  "text": "A Frog familiar grants the witch that bound it enhanced positive status effects.$(br)Killing arthropods will also heal such witches by a quarter of their maximum health."
+	},
+	{
+	  "type": "entity",
+	  "entity": "bewitchment:toad{Variant:1}",
+	  "rotate": false,
+	  "scale": 0.6,
+	  "default_rotation": 45,
+	  "text": "Frogs can be tamed with $(item)Fermented Spider Eyes$(), and bred with normal $(item)Spider Eyes$()."
+	}
   ]
 }

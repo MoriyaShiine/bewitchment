@@ -4,13 +4,13 @@
   "icon": "bewitchment:bottle_of_blood",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
-    {
-      "type": "text",
-      "text": "$(marked)Vampirism$() is a terrible curse that most consider terminal. $(br2)Vampires are technically immortal, though their immortality feeds on the blood of humans; without it, they die. Additionally, they are weak to $(l:bewitchment:introduction/silver)$(marked)Silver$() and $(l:bewitchment:introduction/crops)$(item)Garlic$()."
-    },
-    {
-      "type": "text",
-      "text": "Vampirism cannot be cast with a Brazier; instead, it has to be contracted from another $(l:bewitchment:creatures/vampire)$(marked)Vampire$().$(br2)To contract the curse, one must be under the curse of $(l:bewitchment:curses/susceptibility)$(marked)Susceptibility$() and be slain by a vampire... but still $(l:bewitchment:poppets/death_protection)survive$().$(br2)$(o)But why would you want this?$()"
-    }
+	{
+	  "type": "text",
+	  "text": "$(marked)Vampirism$() is a terrible curse that most consider terminal. $(br2)Vampires are technically immortal, though their immortality feeds on the blood of humans; without it, they die. Additionally, they are weak to $(l:bewitchment:introduction/silver)$(marked)Silver$() and $(l:bewitchment:introduction/crops)$(item)Garlic$()."
+	},
+	{
+	  "type": "text",
+	  "text": "Vampirism cannot be cast with a Brazier; instead, it has to be contracted from another $(l:bewitchment:creatures/vampire)$(marked)Vampire$().$(br2)To contract the curse, one must be under the curse of $(l:bewitchment:curses/susceptibility)$(marked)Susceptibility$() and be slain by a vampire... but still $(l:bewitchment:poppets/death_protection)survive$().$(br2)$(o)But why would you want this?$()"
+	}
   ]
 }

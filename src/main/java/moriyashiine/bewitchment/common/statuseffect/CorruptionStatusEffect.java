@@ -41,7 +41,7 @@ public class CorruptionStatusEffect extends StatusEffect {
 	public boolean isInstant() {
 		return true;
 	}
-
+	
 	@Override
 	public void applyInstantEffect(@Nullable Entity source, @Nullable Entity attacker, LivingEntity target, int amplifier, double proximity) {
 		Registry.STATUS_EFFECT.stream().forEach(effect -> {

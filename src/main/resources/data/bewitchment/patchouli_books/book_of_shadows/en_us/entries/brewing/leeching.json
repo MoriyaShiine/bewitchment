@@ -4,15 +4,15 @@
   "icon": "bewitchment:bottle_of_blood",
   "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "pages": [
-    {
-      "type": "text",
-      "text": "Heals the target based on damage dealt."
-    },
-    {
-      "type": "spotlight",
-      "title": "Leeching",
-      "item": "bewitchment:bottle_of_blood",
-      "text": "The higher the intensity, the more health is healed."
-    }
+	{
+	  "type": "text",
+	  "text": "Heals the target based on damage dealt."
+	},
+	{
+	  "type": "spotlight",
+	  "title": "Leeching",
+	  "item": "bewitchment:bottle_of_blood",
+	  "text": "The higher the intensity, the more health is healed."
+	}
   ]
 }

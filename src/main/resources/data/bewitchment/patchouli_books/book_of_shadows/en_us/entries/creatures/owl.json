@@ -3,22 +3,22 @@
   "name": "Owl",
   "icon": "bewitchment:owl_spawn_egg",
   "pages": [
-    {
-      "type": "text",
-      "text": "$(marked)Owls$() are usually active during the night, and usually spawn in $(marked)forests$() and $(marked)taigas$().$(br)They drop $(item)Feathers$(), like any bird."
-    },
-    {
-      "type": "text",
-      "advancement:": "bewitchment:hidden_unlocks/demon_heart",
-      "text": "As a possible $(l:bewitchment:rituals/binding)$(marked)familiar$(), Owls will increase their friend's capability of flight, namely with $(l:bewitchment:tools/brooms)$(item)Brooms$().$(br)They also won't take $(o)any$() fall damage, in case they somehow fall."
-    },
-    {
-      "type": "entity",
-      "entity": "bewitchment:owl{Variant:1}",
-      "rotate": false,
-      "scale": 0.6,
-      "default_rotation": 45,
-      "text": "Owls can be tamed with $(item)Raw Rabbit$(), and bred with $(item)Raw Chicken$()."
-    }
+	{
+	  "type": "text",
+	  "text": "$(marked)Owls$() are usually active during the night, and usually spawn in $(marked)forests$() and $(marked)taigas$().$(br)They drop $(item)Feathers$(), like any bird."
+	},
+	{
+	  "type": "text",
+	  "advancement:": "bewitchment:hidden_unlocks/demon_heart",
+	  "text": "As a possible $(l:bewitchment:rituals/binding)$(marked)familiar$(), Owls will increase their friend's capability of flight, namely making $(l:bewitchment:tools/brooms)$(item)Brooms$() cost no ME.$(br)They also won't take $(o)any$() fall damage, in case they somehow fall."
+	},
+	{
+	  "type": "entity",
+	  "entity": "bewitchment:owl{Variant:1}",
+	  "rotate": false,
+	  "scale": 0.6,
+	  "default_rotation": 45,
+	  "text": "Owls can be tamed with $(item)Raw Rabbit$(), and bred with $(item)Raw Chicken$()."
+	}
   ]
 }

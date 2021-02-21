@@ -5,9 +5,9 @@
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "sortnum": 2,
   "pages": [
-    {
-      "type": "text",
-      "text": "$(marked)Sloth$() lets you regenerate faster when standing still, while also making you slower."
-    }
+	{
+	  "type": "text",
+	  "text": "$(marked)Sloth$() lets you regenerate faster when standing still, while also making you slower."
+	}
   ]
 }

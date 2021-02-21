@@ -4,14 +4,14 @@
   "icon": "bewitchment:leonard_spawn_egg",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
-    {
-      "type": "text",
-      "text": "This ritual calls on the Lord of Brews, summoning $(l:bewitchment:creatures/leonard)Leonard$() himself.$(br)Make sure to keep him away from things you hold dear.$(br2)Prepare $(l:bewitchment:tools/grotesque_stew)$(item)Grotesque Stew$(), should you want to pledge to him."
-    },
-    {
-      "type": "bewitchment:ritual",
-      "recipe": "bewitchment:rituals/summon_leonard",
-      "text": "The ritual is started by sacrificing a $(marked)Sheep$() with an $(l:bewitchment:tools/athame)$(item)Athame$()."
-    }
+	{
+	  "type": "text",
+	  "text": "This ritual calls on the Lord of Brews, summoning $(l:bewitchment:creatures/leonard)Leonard$() himself.$(br)Make sure to keep him away from things you hold dear.$(br2)Prepare $(l:bewitchment:tools/grotesque_stew)$(item)Grotesque Stew$(), should you want to pledge to him."
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/summon_leonard",
+	  "text": "The ritual is started by sacrificing a $(marked)Sheep$() with an $(l:bewitchment:tools/athame)$(item)Athame$()."
+	}
   ]
 }

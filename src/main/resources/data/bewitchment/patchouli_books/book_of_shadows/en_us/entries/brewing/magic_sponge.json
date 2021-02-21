@@ -4,15 +4,15 @@
   "icon": "bewitchment:dragons_blood_resin",
   "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "pages": [
-    {
-      "type": "text",
-      "text": "$(marked)Magic Sponge$() will reduce damage from magic sources, and in turn refill the target's internal $(marked)ME$() buffer based on the damage."
-    },
-    {
-      "type": "spotlight",
-      "title": "Ignition",
-      "item": "bewitchment:dragons_blood_resin",
-      "text": "Higher intensity increases magic damage reduction."
-    }
+	{
+	  "type": "text",
+	  "text": "$(marked)Magic Sponge$() will reduce damage from magic sources, and in turn refill the target's internal $(marked)ME$() buffer based on the damage."
+	},
+	{
+	  "type": "spotlight",
+	  "title": "Ignition",
+	  "item": "bewitchment:dragons_blood_resin",
+	  "text": "Higher intensity increases magic damage reduction."
+	}
   ]
 }

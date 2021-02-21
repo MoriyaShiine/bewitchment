@@ -28,7 +28,7 @@ public class DisjunctionStatusEffect extends StatusEffect {
 			BWUtil.attemptTeleport(entity, entity.getBlockPos(), 8 * (amplifier + 1), true);
 		}
 	}
-
+	
 	@Override
 	public void applyInstantEffect(@Nullable Entity source, @Nullable Entity attacker, LivingEntity target, int amplifier, double proximity) {
 		applyUpdateEffect(target, amplifier);

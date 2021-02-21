@@ -5,13 +5,13 @@
   "advancement": "minecraft:nether/find_fortress",
   "sortnum": 1,
   "pages": [
-    {
-      "type": "text",
-      "text": "The $(marked)Slippery$() sigil will make it impossible for anyone affected to properly handle fine items such as $(item)Taglocks$(), making it a viable protective method."
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:slippery_sigil"
-    }
+	{
+	  "type": "text",
+	  "text": "The $(marked)Slippery$() sigil will make it impossible for anyone affected to properly handle fine items such as $(item)Taglocks$(), making it a viable protective method."
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:slippery_sigil"
+	}
   ]
 }

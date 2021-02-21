@@ -4,17 +4,17 @@
   "icon": "minecraft:cat_spawn_egg",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
-    {
-      "type": "text",
-      "text": "$(marked)Cats$() are finicky things. Even so, there mere presence is soothing to many.$(br)When bound as a familiar, Cats will greatly help with $(l:bewitchent:rituals/ritual_intro)$(marked)rituals$().$(br)In addition, $(marked)Creepers$() will stay away from witches with a Cat familiar."
-    },
-    {
-      "type": "entity",
-      "entity": "minecraft:cat",
-      "text": "$(o)May bring dead birds by accident.$()",
-      "rotate": false,
-      "default_rotation": 45,
-      "scale": 0.6
-    }
+	{
+	  "type": "text",
+	  "text": "$(marked)Cats$() are finicky things. Even so, there mere presence is soothing to many.$(br)When bound as a familiar, Cats will greatly help with $(l:bewitchent:rituals/ritual_intro)$(marked)rituals$().$(br)In addition, $(marked)Creepers$() will stay away from witches with a Cat familiar."
+	},
+	{
+	  "type": "entity",
+	  "entity": "minecraft:cat",
+	  "text": "$(o)May bring dead birds by accident.$()",
+	  "rotate": false,
+	  "default_rotation": 45,
+	  "scale": 0.6
+	}
   ]
 }

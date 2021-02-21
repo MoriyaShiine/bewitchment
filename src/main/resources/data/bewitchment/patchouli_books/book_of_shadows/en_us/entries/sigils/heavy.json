@@ -5,13 +5,13 @@
   "advancement": "minecraft:nether/find_fortress",
   "sortnum": 1,
   "pages": [
-    {
-      "type": "text",
-      "text": "The $(marked)Heavy$() sigil will magically increase fall damage on everything around it $(o)as long as it's not blacklisted$()."
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:heavy_sigil"
-    }
+	{
+	  "type": "text",
+	  "text": "The $(marked)Heavy$() sigil will magically increase fall damage on everything around it $(o)as long as it's not blacklisted$()."
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:heavy_sigil"
+	}
   ]
 }

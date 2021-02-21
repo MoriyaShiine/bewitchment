@@ -4,14 +4,14 @@
   "icon": "minecraft:golden_apple",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
-    {
-      "type": "text",
-      "text": "The ritual of $(marked)Cleansing$() calls on the Light to cleanse its target of $(l:bewitchment:curses/curse_intro)curses$(). The target is specified with a $(l:bewitchment:tools/taglock)$(item)Taglock$().$(br)The ritual is also applicable to $(marked)Zombie Vilagers$(). Doing so will turn them into normal Villagers."
-    },
-    {
-      "type": "bewitchment:ritual",
-      "recipe": "bewitchment:rituals/cleansing",
-      "text": "Note that this ritual is not guaranteed to succeed. Some curses may be harder to get rid off, but -just like with washing- rubbing hard enough will get anything off."
-    }
+	{
+	  "type": "text",
+	  "text": "The ritual of $(marked)Cleansing$() calls on the Light to cleanse its target of $(l:bewitchment:curses/curse_intro)curses$(). The target is specified with a $(l:bewitchment:tools/taglock)$(item)Taglock$().$(br)The ritual is also applicable to $(marked)Zombie Vilagers$(). Doing so will turn them into normal Villagers."
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/cleansing",
+	  "text": "Note that this ritual is not guaranteed to succeed. Some curses may be harder to get rid off, but -just like with washing- rubbing hard enough will get anything off."
+	}
   ]
 }

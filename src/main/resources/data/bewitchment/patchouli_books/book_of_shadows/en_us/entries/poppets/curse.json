@@ -3,13 +3,13 @@
   "name": "Curse",
   "icon": "bewitchment:curse_poppet",
   "pages": [
-    {
-      "type": "text",
-      "text": "The ludicrous $(item)Curse Poppet$() will protect its owner from $(marked)$(l:bewitchment:curses/curse_intro)curses$().$(br)The poppet does so by absorbing the curse like a sponge. $(br2)Once the poppet successfully absorbed a curse, it can be rebound and used to apply its absorbed curse to the target."
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:curse_poppet"
-    }
+	{
+	  "type": "text",
+	  "text": "The ludicrous $(item)Curse Poppet$() will protect its owner from $(marked)$(l:bewitchment:curses/curse_intro)curses$().$(br)The poppet does so by absorbing the curse like a sponge. $(br2)Once the poppet has successfully absorbed a curse, it can be rebound and used to apply its absorbed curse to the target."
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:curse_poppet"
+	}
   ]
 }

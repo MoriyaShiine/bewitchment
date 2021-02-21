@@ -4,15 +4,15 @@
   "icon": "minecraft:cod",
   "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "pages": [
-    {
-      "type": "text",
-      "text": "This malicious effect replaces the target's lungs with gills, making them able to only breathe underwater."
-    },
-    {
-      "type": "spotlight",
-      "title": "Thorns",
-      "item": "minecraft:cod",
-      "text": "Any fish may be used for this."
-    }
+	{
+	  "type": "text",
+	  "text": "This malicious effect replaces the target's lungs with gills, making them able to only breathe underwater."
+	},
+	{
+	  "type": "spotlight",
+	  "title": "Thorns",
+	  "item": "minecraft:cod",
+	  "text": "Any fish may be used for this."
+	}
   ]
 }

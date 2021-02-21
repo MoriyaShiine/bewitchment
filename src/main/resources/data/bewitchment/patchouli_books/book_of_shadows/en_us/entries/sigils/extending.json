@@ -5,13 +5,13 @@
   "advancement": "minecraft:nether/find_fortress",
   "sortnum": 1,
   "pages": [
-    {
-      "type": "text",
-      "text": "The $(marked)Extending$() sigil will increase the duration of any nearby $(l:bewitchment:tools/incense)incense$() around it."
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:extending_sigil"
-    }
+	{
+	  "type": "text",
+	  "text": "The $(marked)Extending$() sigil will increase the duration of any nearby $(l:bewitchment:tools/incense)incense$() around it."
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:extending_sigil"
+	}
   ]
 }

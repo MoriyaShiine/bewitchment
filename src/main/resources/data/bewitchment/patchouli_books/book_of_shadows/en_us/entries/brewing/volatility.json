@@ -4,15 +4,15 @@
   "icon": "minecraft:fire_charge",
   "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "pages": [
-    {
-      "type": "text",
-      "text": "Makes the target extremely volatile.$(br)When hit, they will cause a damaging explosion, instantly removing the potion effect and harming all entities around."
-    },
-    {
-      "type": "spotlight",
-      "title": "Volatility",
-      "item": "minecraft:fire_charge",
-      "text": "Explosion damage scales with the intensity of the potion."
-    }
+	{
+	  "type": "text",
+	  "text": "Makes the target extremely volatile.$(br)When hit, they will cause a damaging explosion, instantly removing the potion effect and harming all entities around."
+	},
+	{
+	  "type": "spotlight",
+	  "title": "Volatility",
+	  "item": "minecraft:fire_charge",
+	  "text": "Explosion damage scales with the intensity of the potion."
+	}
   ]
 }

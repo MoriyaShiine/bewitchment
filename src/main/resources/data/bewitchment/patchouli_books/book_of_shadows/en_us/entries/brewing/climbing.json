@@ -4,15 +4,15 @@
   "icon": "minecraft:spider_eye",
   "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "pages": [
-    {
-      "type": "text",
-      "text": "Allows whoever is affected to climb walls like spiders would."
-    },
-    {
-      "type": "spotlight",
-      "title": "Climbing",
-      "item": "minecraft:spider_eye",
-      "text": "This effect is not affected by intensity."
-    }
+	{
+	  "type": "text",
+	  "text": "Allows whoever is affected to climb walls like spiders would."
+	},
+	{
+	  "type": "spotlight",
+	  "title": "Climbing",
+	  "item": "minecraft:spider_eye",
+	  "text": "This effect is not affected by intensity."
+	}
   ]
 }

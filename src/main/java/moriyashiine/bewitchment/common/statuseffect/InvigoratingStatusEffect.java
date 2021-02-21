@@ -16,7 +16,7 @@ public class InvigoratingStatusEffect extends StatusEffect {
 	public boolean isInstant() {
 		return true;
 	}
-
+	
 	@Override
 	public void applyInstantEffect(@Nullable Entity source, @Nullable Entity attacker, LivingEntity target, int amplifier, double proximity) {
 		if (target instanceof MagicAccessor) {

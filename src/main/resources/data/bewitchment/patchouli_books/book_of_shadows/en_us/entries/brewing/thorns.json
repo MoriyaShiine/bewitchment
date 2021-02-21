@@ -4,15 +4,15 @@
   "icon": "minecraft:cactus",
   "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "pages": [
-    {
-      "type": "text",
-      "text": "The $(marked)Thorns$() effect does as its name implies.$(br)Every entity that tries to damage the user will receive some damage."
-    },
-    {
-      "type": "spotlight",
-      "title": "Thorns",
-      "item": "minecraft:cactus",
-      "text": "The damage received through Thorns is proportional to the potion's strength."
-    }
+	{
+	  "type": "text",
+	  "text": "The $(marked)Thorns$() effect does as its name implies.$(br)Every entity that tries to damage the user will receive some damage."
+	},
+	{
+	  "type": "spotlight",
+	  "title": "Thorns",
+	  "item": "minecraft:cactus",
+	  "text": "The damage received through Thorns is proportional to the potion's strength."
+	}
   ]
 }

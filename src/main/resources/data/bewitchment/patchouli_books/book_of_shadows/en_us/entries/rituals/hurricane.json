@@ -4,14 +4,14 @@
   "icon": "minecraft:feather",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
-    {
-      "type": "text",
-      "text": "By magically creating a magic wind, this ritual removes any nearby plants and leaves.$(br)Unlike what its name implies, it does $(o)not$() fling away entities."
-    },
-    {
-      "type": "bewitchment:ritual",
-      "recipe": "bewitchment:rituals/hurricane",
-      "text": ""
-    }
+	{
+	  "type": "text",
+	  "text": "By magically creating a magic wind, this ritual removes any nearby plants and leaves.$(br)Unlike what its name implies, it does $(o)not$() fling away entities."
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/hurricane",
+	  "text": ""
+	}
   ]
 }

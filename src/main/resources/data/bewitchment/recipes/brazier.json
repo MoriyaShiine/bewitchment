@@ -1,22 +1,22 @@
 {
   "type": "crafting_shaped",
   "pattern": [
-    "INI",
-    "BIB",
-    "BIB"
+	"IWI",
+	"BIB",
+	"BIB"
   ],
   "key": {
-    "I": {
-      "tag": "c:silver_ingots"
-    },
-    "N": {
-      "item": "netherrack"
-    },
-    "B": {
-      "item": "iron_bars"
-    }
+	"I": {
+	  "tag": "c:silver_ingots"
+	},
+	"W": {
+	  "item": "nether_wart"
+	},
+	"B": {
+	  "item": "iron_bars"
+	}
   },
   "result": {
-    "item": "bewitchment:brazier"
+	"item": "bewitchment:brazier"
   }
 }
