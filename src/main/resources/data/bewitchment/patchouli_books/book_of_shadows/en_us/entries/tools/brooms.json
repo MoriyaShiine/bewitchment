@@ -2,10 +2,11 @@
   "category": "bewitchment:tools",
   "name": "Brooms",
   "icon": "bewitchment:juniper_broom",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
     {
       "type": "text",
-      "text": "$(item)Brooms$() are magical devices commonly by witches. Through the use of ME, they enable the user to fly through the skies.$(br2)Brooms come in four variants, each with unique properties.used dismounting brings you and the broom back to the starting point"
+      "text": "$(item)Brooms$() are magical devices commonly by witches. Through the use of ME, they enable the user to fly through the skies.$(br2)Brooms come in four variants, each with unique properties."
     },
     {
       "type": "crafting",
