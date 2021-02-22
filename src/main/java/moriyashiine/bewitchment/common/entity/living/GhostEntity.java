@@ -112,7 +112,7 @@ public class GhostEntity extends BWHostileEntity {
 	
 	@Override
 	public boolean isInvulnerableTo(DamageSource damageSource) {
-		return !BWDamageSources.isEffective(damageSource, false) && super.isInvulnerableTo(damageSource);
+		return !BWDamageSources.isEffective(damageSource, false) || super.isInvulnerableTo(damageSource);
 	}
 	
 	@Override
