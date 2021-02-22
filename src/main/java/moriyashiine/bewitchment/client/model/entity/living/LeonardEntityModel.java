@@ -283,8 +283,8 @@ public class LeonardEntityModel<T extends LeonardEntity> extends BipedEntityMode
 	
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
-		body.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		head.render(matrices, vertices, light, overlay, red, green, blue, alpha);
+		body.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		BipedLeftArm.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		BipedRightArm.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		BipedLeftLeg.render(matrices, vertices, light, overlay, red, green, blue, alpha);

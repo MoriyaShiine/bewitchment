@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.mixin.client;
 
+import moriyashiine.bewitchment.common.entity.living.BaphometEntity;
 import moriyashiine.bewitchment.common.entity.living.LeonardEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -30,6 +31,9 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
 	private void renderItem(LivingEntity entity, ItemStack stack, ModelTransformation.Mode transformationMode, Arm arm, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo callbackInfo) {
 		if (entity instanceof LeonardEntity) {
 			matrices.translate(-1 / 24f, 0, -5.75 / 16f);
+		}
+		else if (entity instanceof BaphometEntity) {
+			matrices.translate(-1 / 24f, 0, -1 / 4f);
 		}
 	}
 }
