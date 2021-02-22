@@ -3,16 +3,15 @@
   "name": "Scepter",
   "icon": "bewitchment:scepter",
   "advancement": "bewitchment:hidden_unlocks/scepter",
-  "secret": true,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This powerful relic is acquired by defeating $(l:bewitchment:creatures/leonard)Leonard$().$(br)Once acquired, it can be combined with a $(item)Splash Potion$(), which can then be thrown eight times using the Scepter."
+	  "text": "This powerful relic is acquired by defeating $(l:bewitchment:creatures/leonard)Leonard$().$(br2)Once acquired, it can be combined with a $(item)Splash Potion$(), which can then be thrown eight times using the Scepter."
 	},
 	{
 	  "type": "spotlight",
 	  "item": "bewitchment:scepter",
-	  "text": "The Scepter will use $(marked)ME$() to launch its potions. It can be repaired using $(item)Netherite Ingots$()."
+	  "text": "The $(item)Scepter$() will use $(marked)ME$() to launch its potions.$(br2)It can be repaired using $(item)Netherite Ingots$()."
 	}
   ]
 }

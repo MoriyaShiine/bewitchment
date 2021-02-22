@@ -11,7 +11,7 @@
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:hellish_bauble",
-	  "text": "Being made out of $(item)Netherite$(), the Bauble is completely fireproof.$(br2)$(o)You can equip this in the $(marked)Necklace$()$(o) trinket slot$()."
+	  "text": "Being made out of $(item)Netherite$(), the Bauble is completely fireproof.$(br2)$(o)You can equip this in the $(marked)Necklace$()$(o) trinket slot."
 	}
   ]
 }

@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This old classic has proven itself over centuries of witchcraft.$(br)When worn, it increases $(marked)crop yield$().$(br2)$(item)Carpets$() of the same fabric can also be placed on $(l:bewitchment:introduction/altars)$(item)Altars$()."
+	  "text": "This old classic has proven itself over centuries of witchcraft. When worn, it increases $(marked)crop yield$().$(br2)$(item)Carpets$() of the same fabric can also be placed on $(l:bewitchment:introduction/altars)Altars$()."
 	},
 	{
 	  "type": "crafting",

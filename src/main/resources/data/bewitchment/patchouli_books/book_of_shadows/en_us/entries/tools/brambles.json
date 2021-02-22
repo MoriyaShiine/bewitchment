@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(item)Brambles$() are witchy weeds, artificially created with the help of $(l:bewitchment:brewing/elemental_oils)$(item)Elemental Oil$().$(br)Each Bramble has a unique effect connected to its $(marked)element$()."
+	  "text": "$(item)Brambles$() are witchy weeds, artificially created with the help of $(l:bewitchment:brewing/elemental_oils)Elemental Oil$().$(br2)Each Bramble has a unique effect connected to its $(marked)element$()."
 	},
 	{
 	  "type": "crafting",
@@ -21,7 +21,7 @@
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:fruiting_bramble",
-	  "text": "$(item)Fruiting Bramble$() will grow $(item)Witchberries$(), which can be used to craft $(marked)ME$()-restoring $(l:bewitchment:tools/brambles#food)$(item)goodies$()."
+	  "text": "$(item)Fruiting Bramble$() will grow $(item)Witchberries$(), which can be used to craft $(marked)ME$()-restoring $(l:bewitchment:tools/brambles#food)goodies$()."
 	},
 	{
 	  "type": "crafting",

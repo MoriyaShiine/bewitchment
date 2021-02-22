@@ -3,16 +3,15 @@
   "name": "Horned Spear",
   "icon": "bewitchment:horned_spear",
   "advancement": "bewitchment:hidden_unlocks/horned_spear",
-  "secret": true,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This spear is the hunting weapon of $(l:bewitchment:creatures/herne)Herne$().$(br)Much like a $(item)Trident$(), it can be thrown towards a target."
+	  "text": "This spear is the hunting weapon of $(l:bewitchment:creatures/herne)Herne$().$(br2)Much like a $(item)Trident$(), it can be thrown towards a target."
 	},
 	{
 	  "type": "spotlight",
 	  "item": "bewitchment:horned_spear",
-	  "text": "The Horned Spear will always return to whoever threw it.$(br)It can be repaired with $(item)Netherite Ingots$()."
+	  "text": "The $(item)Horned Spear$() will always return to whoever threw it.$(br2)It can be repaired with $(item)Netherite Ingots$()."
 	}
   ]
 }

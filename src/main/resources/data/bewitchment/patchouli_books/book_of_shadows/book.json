@@ -6,10 +6,10 @@
   "filler_texture": "bewitchment:textures/gui/patchouli/filler.png",
   "dont_generate_book": true,
   "macros": {
-	"$(marked)": "$(#980000)",
-	"$(item)": "$(#980061)"
+	"$(marked)": "$(#ff7f00)",
+	"$(item)": "$(#00c200)"
   },
-  "link_color": "980000",
-  "link_hover_color": "5C0000",
-  "progress_bar_color": "8500B9"
+  "link_color": "7f007f",
+  "link_hover_color": "7f007f",
+  "progress_bar_color": "8500b9"
 }

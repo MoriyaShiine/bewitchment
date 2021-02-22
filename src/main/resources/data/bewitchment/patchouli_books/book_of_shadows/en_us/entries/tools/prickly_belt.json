@@ -11,7 +11,7 @@
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:prickly_belt",
-	  "text": "To add a potion effect, simply combine the Belt with a $(item)Potion$(). The amount of uses is based off on both $(marked)duration$() and $(marked)amplifier$() of the used potion.$(br2)$(o)You can equip the Prickly Belt in the $(marked)Belt$()$(o) trinket slot$()."
+	  "text": "To add a potion effect, simply combine the Belt with a $(item)Potion$(). The amount of uses is based off on both $(marked)duration$() and $(marked)amplifier$() of the used potion.$(br2)$(o)You can equip this in the $(marked)Belt$()$(o) trinket slot."
 	}
   ]
 }
