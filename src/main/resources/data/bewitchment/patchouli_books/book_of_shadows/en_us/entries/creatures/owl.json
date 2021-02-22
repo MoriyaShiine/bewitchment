@@ -9,7 +9,7 @@
 	},
 	{
 	  "type": "text",
-	  "advancement:": "bewitchment:hidden_unlocks/demon_heart",
+	  "advancement": "bewitchment:hidden_unlocks/demon_heart",
 	  "text": "As a possible $(l:bewitchment:rituals/binding)$(marked)familiar$(), Owls will increase their friend's capability of flight, namely making $(l:bewitchment:tools/brooms)$(item)Brooms$() cost no ME.$(br)They also won't take $(o)any$() fall damage, in case they somehow fall."
 	},
 	{

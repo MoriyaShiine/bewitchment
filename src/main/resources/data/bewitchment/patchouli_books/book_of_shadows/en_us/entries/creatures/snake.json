@@ -12,7 +12,7 @@
 	},
 	{
 	  "type": "text",
-	  "advancement:": "bewitchment:hidden_unlocks/demon_heart",
+	  "advancement": "bewitchment:hidden_unlocks/demon_heart",
 	  "text": "Snakes can be $(l:bewitchment:rituals/binding)$(marked)familiars$().$(br)Witches with a Snake familiar are able to craft much more durable $(l:bewitchment:sigils/sigils_intro)$(marked)sigils$(). Additionally they benefit from $(marked)poison$(); it does not harm them and refills their internal $(marked)ME buffer$()."
 	},
 	{
