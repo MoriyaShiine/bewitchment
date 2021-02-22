@@ -2,6 +2,7 @@
   "category": "bewitchment:rituals",
   "name": "Rituals",
   "icon": "bewitchment:golden_chalk",
+  "advancement": "bewitchment:hidden_unlocks/altars",
   "priority": true,
   "pages": [
 	{

@@ -2,6 +2,7 @@
   "category": "bewitchment:poppets",
   "name": "Voodoo Protection",
   "icon": "bewitchment:voodoo_protection_poppet",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
   "pages": [
 	{
 	  "type": "text",

@@ -2,6 +2,7 @@
   "category": "bewitchment:tools",
   "name": "Druid Band",
   "icon": "bewitchment:druid_band",
+  "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",

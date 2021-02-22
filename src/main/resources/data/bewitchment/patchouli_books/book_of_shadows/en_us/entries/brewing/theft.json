@@ -2,7 +2,7 @@
   "category": "bewitchment:brewing",
   "name": "Theft",
   "icon": "minecraft:diamond",
-  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",

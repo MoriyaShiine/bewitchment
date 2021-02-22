@@ -2,6 +2,7 @@
   "category": "bewitchment:tools",
   "name": "Prickly Belt",
   "icon": "bewitchment:prickly_belt",
+  "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",

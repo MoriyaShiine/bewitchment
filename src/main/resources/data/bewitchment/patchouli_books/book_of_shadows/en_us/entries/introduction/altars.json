@@ -2,6 +2,8 @@
   "category": "bewitchment:introduction",
   "name": "Altars",
   "icon": "bewitchment:stone_witch_altar",
+  "advancement": "bewitchment:hidden_unlocks/barks",
+  "priority": true,
   "pages": [
 	{
 	  "type": "text",

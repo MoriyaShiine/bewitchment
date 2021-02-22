@@ -2,6 +2,7 @@
   "category": "bewitchment:tools",
   "name": "Alchemist Armor",
   "icon": "bewitchment:alchemist_robes",
+  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "pages": [
 	{
 	  "type": "text",

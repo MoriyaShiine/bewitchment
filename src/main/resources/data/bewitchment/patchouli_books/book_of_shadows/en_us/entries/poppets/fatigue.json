@@ -2,6 +2,7 @@
   "category": "bewitchment:poppets",
   "name": "Fatigue",
   "icon": "bewitchment:fatigue_poppet",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
   "pages": [
 	{
 	  "type": "text",

@@ -2,7 +2,7 @@
   "category": "bewitchment:brewing",
   "name": "Mundane Brews",
   "icon": "bewitchment:witch_cauldron",
-  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "advancement": "bewitchment:hidden_unlocks/altars",
   "priority": true,
   "pages": [
 	{

@@ -2,6 +2,7 @@
   "category": "bewitchment:tools",
   "name": "Nazar",
   "icon": "bewitchment:nazar",
+  "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",

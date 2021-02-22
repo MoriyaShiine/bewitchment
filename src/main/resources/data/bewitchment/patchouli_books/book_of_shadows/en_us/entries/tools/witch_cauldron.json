@@ -2,6 +2,7 @@
   "category": "bewitchment:tools",
   "name": "Witch Cauldron",
   "icon": "bewitchment:witch_cauldron",
+  "priority": true,
   "pages": [
 	{
 	  "type": "text",

@@ -2,6 +2,5 @@
   "name": "Contracts",
   "description": "Devilish Contracts sold by $(l:bewitchment:creatures/demon)$(marked)Demons$().",
   "icon": "bewitchment:demonic_contract",
-  "sortnum": 10,
-  "secret": true
+  "sortnum": 10
 }

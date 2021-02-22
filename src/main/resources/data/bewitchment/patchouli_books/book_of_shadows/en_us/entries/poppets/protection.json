@@ -2,6 +2,7 @@
   "category": "bewitchment:poppets",
   "name": "Protection",
   "icon": "bewitchment:protection_poppet",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
   "pages": [
 	{
 	  "type": "text",

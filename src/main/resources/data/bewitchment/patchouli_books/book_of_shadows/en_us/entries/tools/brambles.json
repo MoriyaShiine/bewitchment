@@ -2,6 +2,7 @@
   "category": "bewitchment:tools",
   "name": "Brambles",
   "icon": "bewitchment:thick_bramble",
+  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "pages": [
 	{
 	  "type": "text",

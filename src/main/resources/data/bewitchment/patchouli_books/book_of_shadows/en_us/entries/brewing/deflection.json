@@ -2,7 +2,7 @@
   "category": "bewitchment:brewing",
   "name": "Deflection",
   "icon": "minecraft:phantom_membrane",
-  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",

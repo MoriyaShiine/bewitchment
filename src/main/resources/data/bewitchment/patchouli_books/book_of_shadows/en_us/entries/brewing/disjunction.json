@@ -2,7 +2,7 @@
   "category": "bewitchment:brewing",
   "name": "Disjunction",
   "icon": "minecraft:ender_pearl",
-  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",

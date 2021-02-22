@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+	"bewitchment:stone_witch_altar",
+	"bewitchment:mossy_cobblestone_witch_altar",
+	"bewitchment:prismarine_witch_altar",
+	"bewitchment:nether_brick_witch_altar",
+	"bewitchment:blackstone_witch_altar",
+	"bewitchment:golden_witch_altar",
+	"bewitchment:end_stone_witch_altar",
+	"bewitchment:obsidian_witch_altar",
+	"bewitchment:purpur_witch_altar"
+  ]
+}

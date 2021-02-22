@@ -2,6 +2,7 @@
   "category": "bewitchment:brewing",
   "name": "Elemental Oils",
   "icon": "bewitchment:cleansing_balm",
+  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "priority": true,
   "pages": [
 	{

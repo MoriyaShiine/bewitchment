@@ -2,6 +2,7 @@
   "category": "bewitchment:poppets",
   "name": "Vampiric",
   "icon": "bewitchment:vampiric_poppet",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
   "pages": [
 	{
 	  "type": "text",

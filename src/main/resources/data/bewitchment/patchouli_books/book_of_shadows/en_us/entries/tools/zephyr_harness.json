@@ -2,6 +2,7 @@
   "category": "bewitchment:tools",
   "name": "Zephyr Harness",
   "icon": "bewitchment:zephyr_harness",
+  "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",

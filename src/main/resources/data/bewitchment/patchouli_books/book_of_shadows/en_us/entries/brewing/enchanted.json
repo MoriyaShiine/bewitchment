@@ -2,7 +2,7 @@
   "category": "bewitchment:brewing",
   "name": "Enchanted",
   "icon": "minecraft:lapis_block",
-  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",

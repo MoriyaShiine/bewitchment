@@ -2,6 +2,7 @@
   "category": "bewitchment:tools",
   "name": "Besmirched Armor",
   "icon": "bewitchment:besmirched_robes",
+  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "pages": [
 	{
 	  "type": "text",

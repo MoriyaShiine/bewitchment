@@ -2,6 +2,7 @@
   "category": "bewitchment:tools",
   "name": "Hedgewitch Armor",
   "icon": "bewitchment:hedgewitch_robes",
+  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "pages": [
 	{
 	  "type": "text",

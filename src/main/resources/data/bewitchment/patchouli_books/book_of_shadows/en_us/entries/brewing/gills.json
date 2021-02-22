@@ -2,7 +2,7 @@
   "category": "bewitchment:brewing",
   "name": "Gills",
   "icon": "minecraft:cod",
-  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
@@ -10,7 +10,7 @@
 	},
 	{
 	  "type": "spotlight",
-	  "title": "Thorns",
+	  "title": "Gills",
 	  "item": "minecraft:cod",
 	  "text": "Any fish may be used for this."
 	}

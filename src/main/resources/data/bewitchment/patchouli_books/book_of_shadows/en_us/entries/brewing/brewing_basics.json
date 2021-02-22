@@ -2,6 +2,7 @@
   "category": "bewitchment:brewing",
   "name": "Brewing Basics",
   "icon": "bewitchment:witch_cauldron",
+  "advancement": "bewitchment:hidden_unlocks/altars",
   "priority": true,
   "pages": [
 	{

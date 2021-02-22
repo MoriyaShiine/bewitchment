@@ -2,6 +2,7 @@
   "category": "bewitchment:poppets",
   "name": "Poppet Practice",
   "icon": "bewitchment:voodoo_poppet",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
   "priority": true,
   "pages": [
 	{

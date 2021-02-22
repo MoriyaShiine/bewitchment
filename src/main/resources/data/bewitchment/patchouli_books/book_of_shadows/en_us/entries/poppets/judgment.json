@@ -2,6 +2,7 @@
   "category": "bewitchment:poppets",
   "name": "Judgment",
   "icon": "bewitchment:judgment_poppet",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
   "pages": [
 	{
 	  "type": "text",

@@ -3,7 +3,7 @@
   "name": "Death",
   "icon": "bewitchment:demonic_contract",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
-  "sortnum": 1,
+  "sortnum": 2,
   "pages": [
 	{
 	  "type": "text",

@@ -2,6 +2,7 @@
   "category": "bewitchment:tools",
   "name": "Poppet Shelves",
   "icon": "bewitchment:oak_poppet_shelf",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
   "pages": [
 	{
 	  "type": "text",

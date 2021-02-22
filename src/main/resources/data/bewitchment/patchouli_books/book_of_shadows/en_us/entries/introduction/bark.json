@@ -2,6 +2,7 @@
   "category": "bewitchment:introduction",
   "name": "Bark",
   "icon": "bewitchment:oak_bark",
+  "advancement": "bewitchment:hidden_unlocks/athame",
   "pages": [
 	{
 	  "type": "text",

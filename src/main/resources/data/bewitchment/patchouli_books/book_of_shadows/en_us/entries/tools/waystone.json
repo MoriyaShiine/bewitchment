@@ -2,6 +2,7 @@
   "category": "bewitchment:tools",
   "name": "Waystone",
   "icon": "bewitchment:waystone",
+  "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",

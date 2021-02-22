@@ -2,6 +2,7 @@
   "category": "bewitchment:tools",
   "name": "Crystal Ball",
   "icon": "bewitchment:crystal_ball",
+  "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
