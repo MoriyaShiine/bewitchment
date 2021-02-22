@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.client.model.armor;
+package moriyashiine.bewitchment.client.model.equipment.armor;
 
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.RenderLayer;

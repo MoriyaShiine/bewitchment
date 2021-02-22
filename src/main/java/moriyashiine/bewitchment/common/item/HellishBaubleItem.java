@@ -42,7 +42,7 @@ public class HellishBaubleItem extends TrinketItem {
 	@Override
 	public void render(String slot, MatrixStack matrixStack, VertexConsumerProvider vertexConsumer, int light, PlayerEntityModel<AbstractClientPlayerEntity> model, AbstractClientPlayerEntity player, float headYaw, float headPitch) {
 		Trinket.translateToChest(matrixStack, model, player, headYaw, headPitch);
-		matrixStack.translate(0, -1 / 4f, 1 / 48f);
+		matrixStack.translate(0, -1 / 4.25f, 1 / 48f);
 		matrixStack.scale(1 / 3f, 1 / 3f, 1 / 3f);
 		matrixStack.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(180));
 		MinecraftClient.getInstance().getItemRenderer().renderItem(new ItemStack(BWObjects.HELLISH_BAUBLE), ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrixStack, vertexConsumer);
