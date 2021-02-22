@@ -13,6 +13,7 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
+import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -24,6 +25,7 @@ public class GhostEntityRenderer extends MobEntityRenderer<GhostEntity, GhostEnt
 	
 	public GhostEntityRenderer(EntityRenderDispatcher entityRenderDispatcher) {
 		super(entityRenderDispatcher, new GhostEntityModel<>(), 0);
+		addFeature(new HeldItemFeatureRenderer<>(this));
 		addFeature(new FeatureRenderer<GhostEntity, GhostEntityModel<GhostEntity>>(this) {
 			@Override
 			public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, GhostEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
