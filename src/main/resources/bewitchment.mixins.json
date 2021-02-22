@@ -48,6 +48,7 @@
 	"client.ClientWorldMixin",
 	"client.EntityRenderDispatcherMixin",
 	"client.GameRendererMixin",
+	"client.HeldItemFeatureRendererMixin",
 	"client.InGameHudMixin",
 	"client.MobEntityRendererMixin",
 	"client.PlayerEntityRendererMixin",
