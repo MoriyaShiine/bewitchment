@@ -259,10 +259,10 @@ public class LeonardEntityModel<T extends LeonardEntity> extends BipedEntityMode
 	
 	@Override
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+		entity.setStackInHand(Hand.MAIN_HAND, SCEPTER);
 		realArm = false;
 		super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
 		realArm = true;
-		entity.setStackInHand(Hand.MAIN_HAND, SCEPTER);
 		copyRotation(head, super.head);
 		copyRotation(body, super.torso);
 		copyRotation(BipedLeftArm, super.leftArm);

@@ -2,6 +2,7 @@ package moriyashiine.bewitchment.mixin.client;
 
 import moriyashiine.bewitchment.common.entity.living.BaphometEntity;
 import moriyashiine.bewitchment.common.entity.living.DemonEntity;
+import moriyashiine.bewitchment.common.entity.living.HerneEntity;
 import moriyashiine.bewitchment.common.entity.living.LeonardEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -38,6 +39,9 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
 		}
 		else if (entity instanceof BaphometEntity) {
 			matrices.translate((arm == Arm.LEFT ? 0.75f : -0.75f) / 24f, 0, -1 / 4f);
+		}
+		else if (entity instanceof HerneEntity) {
+			matrices.translate((arm == Arm.LEFT ? 0.75f : -0.75f) / 24f, 0, -4 / 7f);
 		}
 	}
 }
