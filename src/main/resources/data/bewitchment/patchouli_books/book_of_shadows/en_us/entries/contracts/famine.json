@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Under the $(marked)Famine$() contract, damage is reduced the hungrier you are.$(br)This goes both ways, which means that you give $(o)and$() take less damage."
+	  "text": "Under the $(marked)Famine$() contract, damage is reduced the hungrier you are.$(br2)This goes both ways, which means that you give $(o)and$() take less damage."
 	}
   ]
 }

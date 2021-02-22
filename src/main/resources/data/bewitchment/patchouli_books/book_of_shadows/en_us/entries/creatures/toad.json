@@ -10,7 +10,7 @@
 	{
 	  "type": "text",
 	  "advancement": "bewitchment:hidden_unlocks/demon_heart",
-	  "text": "A Frog familiar grants the witch that bound it enhanced positive status effects.$(br)Killing arthropods will also heal such witches by a quarter of their maximum health."
+	  "text": "A Toad familiar grants the witch that bound it enhanced positive status effects.$(br2)Killing arthropods will also heal such witches by a quarter of their maximum health."
 	},
 	{
 	  "type": "entity",
@@ -18,7 +18,7 @@
 	  "rotate": false,
 	  "scale": 0.6,
 	  "default_rotation": 45,
-	  "text": "Frogs can be tamed with $(item)Fermented Spider Eyes$(), and bred with normal $(item)Spider Eyes$()."
+	  "text": "Toads can be tamed with $(item)Fermented Spider Eyes$(), and bred with normal $(item)Spider Eyes$()."
 	}
   ]
 }

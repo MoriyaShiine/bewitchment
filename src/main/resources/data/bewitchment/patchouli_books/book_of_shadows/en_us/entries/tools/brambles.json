@@ -16,7 +16,7 @@
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:ender_bramble",
-	  "text": "$(item)Ender Bramble$() will teleport anything that collides with it within a 64 Block radius."
+	  "text": "$(item)Ender Bramble$() will teleport anything that collides with it to a random location within a 64 block radius."
 	},
 	{
 	  "type": "crafting",

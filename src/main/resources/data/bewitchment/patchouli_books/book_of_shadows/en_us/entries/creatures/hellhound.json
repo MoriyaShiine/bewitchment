@@ -9,7 +9,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Hellhounds$() spawn in the $(marked)Nether$(). $(br)Filled with aggression, they will attack anyone nearby, though they will respect wearers of $(l:bewitchment:tools/besmirched_armor)$(item)Besmirched Armor$()."
+	  "text": "$(marked)Hellhounds$() spawn in the $(marked)Nether$(). $(br2)Filled with aggression, they will attack anyone nearby, though they will respect wearers of $(l:bewitchment:tools/besmirched_armor)$(item)Besmirched Armor$()."
 	},
 	{
 	  "type": "entity",

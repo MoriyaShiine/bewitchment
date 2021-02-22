@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(item)Elemental Oils$() are essential $(marked)crafting components$() in witchcraft. They are made out of a type of $(l:bewitchment:introduction/bark)$(item)Bark$() and other components.$(br)To craft a few bottles of oil, throw a piece of bark into a boiling $(l:bewitchment:tools/witch_cauldron)$(item)Cauldron$() first, then add the other ingredients.$(br)Once it reaches a pleasant, matching color, you can bottle it."
+	  "text": "$(item)Elemental Oils$() are essential $(marked)crafting components$() in witchcraft. They are made out of a type of $(l:bewitchment:introduction/bark)$(item)Bark$() and other components.$(br2)To craft a few bottles of oil, first throw a piece of bark into a boiling $(l:bewitchment:tools/witch_cauldron)$(item)Cauldron$(), then add the other ingredients. Once it reaches a pleasant, matching color, you can bottle it."
 	},
 	{
 	  "type": "bewitchment:oil",
@@ -22,12 +22,12 @@
 	{
 	  "type": "bewitchment:oil",
 	  "recipe": "bewitchment:oil_crafting/aqua_cerate",
-	  "text": "$(item)Aqua Cerate$() is blue, like water.$(br)Any type of fish may be used for this."
+	  "text": "$(item)Aqua Cerate$() is blue, like water.$(br2)Any type of fish may be used for this."
 	},
 	{
 	  "type": "bewitchment:oil",
 	  "recipe": "bewitchment:oil_crafting/fiery_serum",
-	  "text": "$(item)Fiery Serum$() is of bright orange. It incorporates the principle of the flame."
+	  "text": "$(item)Fiery Serum$() is a bright orange. It incorporates the principle of the flame."
 	},
 	{
 	  "type": "bewitchment:oil",

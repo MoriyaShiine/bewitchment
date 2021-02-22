@@ -5,7 +5,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Cypress$() trees spawns in Taiga and Swamp biomes.$(br)Relating to death, blocks made from it will mask you from the undead."
+	  "text": "$(marked)Cypress$() trees spawn in Taiga and Swamp biomes.$(br2)Relating to death, blocks made from it will mask you from the undead."
 	},
 	{
 	  "type": "image",

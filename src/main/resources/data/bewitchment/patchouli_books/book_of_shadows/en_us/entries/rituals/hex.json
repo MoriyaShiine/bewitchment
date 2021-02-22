@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "By applying a simple $(marked)Hexing ritual$(), magical energy can be compensated. This will remove any enchantments from item, also repairing them in the process.$(br)Items affected by this ritual need to be thrown into the circle $(o)after$() it has been started."
+	  "text": "By applying a simple $(marked)Hexing ritual$(), magical energy can be compensated. This will remove any enchantments from an item, also repairing it in the process.$(br2)Items affected by this ritual need to be thrown into the circle $(o)after$() it has been started."
 	},
 	{
 	  "type": "bewitchment:ritual",

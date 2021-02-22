@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This powerful Rite teleports anything in its vicinity to a target location.$(br)This Rite works really well with $(l:bewitchment:tools/waystone)Waystones$(), as it allows teleporting entities in remote places."
+	  "text": "This powerful Rite teleports anything in its vicinity to a target location.$(br2)This Rite works really well with $(l:bewitchment:tools/waystone)Waystones$(), as it allows teleporting entities in remote places."
 	},
 	{
 	  "type": "bewitchment:ritual",

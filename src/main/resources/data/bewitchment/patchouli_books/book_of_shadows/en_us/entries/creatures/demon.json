@@ -9,7 +9,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Grim beings, crawling straight from the pits of Hell.$(br)Demons are usually summoned and, due to internal political conflicts, will attack any living being around them, including other demons, usually with $(marked)fire$().$(br)Demons can be safely approached with $(l:bewitchment:tools/besmirched_armor)$(marked)Besmirched Armor$(), offering their trades."
+	  "text": "Grim beings, crawling straight from the pits of Hell. Demons are usually summoned and, due to internal political conflicts, will attack any living being around them, including other demons, usually with $(marked)fire$().$(br2)Demons can be safely approached with $(l:bewitchment:tools/besmirched_armor)$(marked)Besmirched Armor$(), offering their trades."
 	},
 	{
 	  "type": "entity",

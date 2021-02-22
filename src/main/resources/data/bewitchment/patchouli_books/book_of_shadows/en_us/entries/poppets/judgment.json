@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "When bound to a $(item)Judgment Poppet$(), any unholy being that attacks you will find their attack damage quartered.$(br2)This includes $(marked)undead mobs$(), $(l:bewitchment:creatures/vampire)Vampires$(), and $(l:bewitchment:creatures/werewolf)Werewolves$()."
+	  "text": "When bound to a $(item)Judgment Poppet$(), any unholy being that attacks you will find their attack damage quartered.$(br2)This includes $(marked)undead mobs$(), $(marked)demons$(), $(l:bewitchment:creatures/vampire)Vampires$(), and $(l:bewitchment:creatures/werewolf)Werewolves$()."
 	},
 	{
 	  "type": "crafting",

@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This lesser ritual utilizes the power of wind and salt to push back $(marked)hostile$() entities.$(br)It will run for around half a day."
+	  "text": "This lesser ritual utilizes the power of wind and salt to push back $(marked)hostile$() entities.$(br2)It will run for around half a day."
 	},
 	{
 	  "type": "bewitchment:ritual",

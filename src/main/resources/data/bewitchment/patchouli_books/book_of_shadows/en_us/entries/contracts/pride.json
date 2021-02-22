@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "With a $(marked)Pride$() contract you can instantly smelt any ore, though that may come with spontaneous explosions instead.$(br)But that's definitely worth it."
+	  "text": "With a $(marked)Pride$() contract you can instantly smelt any ore, though that may come with spontaneous explosions instead.$(br2)But that's definitely worth it."
 	}
   ]
 }

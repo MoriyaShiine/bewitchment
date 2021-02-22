@@ -11,13 +11,13 @@
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:witch_cauldron",
-	  "text": "$(marked)Items$() can be tossed into the Witches Cauldron once it $(marked)boils$(). To make it boil, place hot blocks such as $(item)Lava$() or $(item)Magma Blocks$() below it.$(br)Note that the Witch Cauldron often requires $(l:bewitchment:introduction/altars)Altar Power$(), except for $(l:bewitchment:brewing/elemental_oils)Oil Crafting$()."
+	  "text": "$(marked)Items$() can be tossed into the Witch Cauldron once it $(marked)boils$(). To make it boil, place hot blocks such as $(item)Lava$() or $(item)Magma Blocks$() below it.$(br)Note that the Witch Cauldron often requires $(l:bewitchment:introduction/altars)Altar Power$(), except for $(l:bewitchment:brewing/elemental_oils)Oil Crafting$()."
 	},
 	{
 	  "type": "text",
 	  "title": "Teleportation",
 	  "anchor": "teleport",
-	  "text": "To teleport with a Witch Cauldron, simply throw in an $(item)Ender Pearl$(), step on it and say your destination.$(br)That destination must be another Witches Cauldron that has been named with a $(item)Name Tag$().$(br)Teleportation requires $(marked)Altar Power$()."
+	  "text": "To teleport with a Witch Cauldron, simply throw in an $(item)Ender Pearl$(), step on it and say your destination.$(br)That destination must be another Witch Cauldron that has been named with a $(item)Name Tag$().$(br)Teleportation requires $(marked)Altar Power$()."
 	}
   ]
 }

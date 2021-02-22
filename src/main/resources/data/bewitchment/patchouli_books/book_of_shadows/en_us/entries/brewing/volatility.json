@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Makes the target extremely volatile.$(br)When hit, they will cause a damaging explosion, instantly removing the potion effect and harming all entities around."
+	  "text": "Makes the target extremely volatile. When hit, they will cause a damaging explosion, instantly removing the potion effect and harming all entities around."
 	},
 	{
 	  "type": "spotlight",

@@ -7,11 +7,11 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(item)Altars$() are the cornerstone of any witches lair. They can be used to collect energy -henceforth referred to as $(marked)ME$() (Magical Energy). This energy is essential to most witchcraft, and is collected from nearby plants. You'll want many different plants to collect maximal power.$(br)You may also place $(marked)swords$(), $(marked)pentacles$(), and $(marked)wands$() atop the altar to modify it."
+	  "text": "$(item)Altars$() are the cornerstone of any witches lair. They can be used to collect energy -henceforth referred to as $(marked)ME$() (Magical Energy). This energy is essential to most witchcraft, and is collected from nearby plants. You'll want many different plants to collect maximal power.$(br2)You may also place $(marked)swords$(), $(marked)pentacles$(), and $(marked)wands$() atop the altar to modify it."
 	},
 	{
 	  "type": "text",
-	  "text": "$(marked)Swords$() will increase the storage multiplier. $(marked)Pentacles$(), such as $(item)Skulls and $(item)Gems$() will increase gain.$(br)$(marked)Wands$() such as $(item)Candelabras$() will give a flat bonus on capacity.$(br2)Altars are created by putting carpets on their base block. $(br)The base block is of cosmetic nature only and tied to one of the three dimensions.$(br2)Nearby Altars will fill a player's $(marked)internal ME buffer$(), which is used for magic such as flying brooms."
+	  "text": "$(marked)Swords$() will increase the storage multiplier. $(marked)Pentacles$(), such as $(item)Skulls and $(item)Gems$() will increase gain. $(marked)Wands$() such as $(item)Candelabras$() will give a flat bonus on capacity.$(br2)Altars are created by putting carpets on their base block. $(br)The base block is of cosmetic nature only and tied to one of the three dimensions.$(br2)Nearby Altars will fill a player's $(marked)internal ME buffer$(), which is used for magic such as flying brooms."
 	},
 	{
 	  "type": "crafting",

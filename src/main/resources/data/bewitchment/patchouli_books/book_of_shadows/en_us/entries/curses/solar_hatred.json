@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "By weakening the target's skin, this curse makes them extremely susceptible to sunlight. $(br)This does in fact extend to literally setting them on flames."
+	  "text": "By weakening the target's skin, this curse makes them extremely susceptible to sunlight. $(br2)This does in fact extend to literally setting them on fire."
 	},
 	{
 	  "type": "bewitchment:curse",

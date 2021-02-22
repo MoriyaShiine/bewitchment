@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Makes the target more susceptible to lightning.$(br)Any lightning bolt in the target's vicinity will instead redirect directly to it."
+	  "text": "Makes the target more susceptible to lightning. Any lightning bolt in the target's vicinity will instead redirect directly to it."
 	},
 	{
 	  "type": "bewitchment:curse",

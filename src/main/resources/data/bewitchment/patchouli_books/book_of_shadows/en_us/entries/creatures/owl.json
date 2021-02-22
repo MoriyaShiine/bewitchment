@@ -5,12 +5,12 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Owls$() are usually active during the night, and usually spawn in $(marked)forests$() and $(marked)taigas$().$(br)They drop $(item)Feathers$(), like any bird."
+	  "text": "$(marked)Owls$() are usually active during the night, and usually spawn in $(marked)forests$() and $(marked)taigas$(). They drop $(item)Feathers$(), like any bird."
 	},
 	{
 	  "type": "text",
 	  "advancement": "bewitchment:hidden_unlocks/demon_heart",
-	  "text": "As a possible $(l:bewitchment:rituals/binding)$(marked)familiar$(), Owls will increase their friend's capability of flight, namely making $(l:bewitchment:tools/brooms)$(item)Brooms$() cost no ME.$(br)They also won't take $(o)any$() fall damage, in case they somehow fall."
+	  "text": "As a possible $(l:bewitchment:rituals/binding)$(marked)familiar$(), Owls will increase their friend's capability of flight, namely making $(l:bewitchment:tools/brooms)$(item)Brooms$() cost no ME.$(br2)They also won't take $(o)any$() fall damage, in case they somehow fall."
 	},
 	{
 	  "type": "entity",

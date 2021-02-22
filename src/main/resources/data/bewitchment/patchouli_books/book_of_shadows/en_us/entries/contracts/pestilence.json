@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Those marked by $(marked)Pestilence$() are able to effectively inflict illness upon their foes... as well as their surroundings.$(br)This may have a downside when around $(marked)Villagers$()."
+	  "text": "Those marked by $(marked)Pestilence$() are able to effectively inflict illness upon their foes... as well as their surroundings.$(br2)This may have a downside when around $(marked)Villagers$()."
 	}
   ]
 }

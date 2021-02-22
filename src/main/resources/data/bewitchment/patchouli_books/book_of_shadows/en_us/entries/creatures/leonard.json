@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Leonard$() is the patron of witches, brewing $(o)and$()...$(br2)Leonard is a Greater Demon; he can be pledged to.$(br)Witches pledged to Leonard are known to brew potent potions.$(br)Pledging to Leonard also allows to $(l:bewitchment:tools/witch_cauldron#teleport)warp$() with Cauldrons without using any ME."
+	  "text": "$(marked)Leonard$() is the patron of witches, brewing $(o)and$()...$(br2)Leonard is a Greater Demon; he can be pledged to.$(br2)Witches pledged to Leonard are known to brew potent potions. Pledging to Leonard also allows players to $(l:bewitchment:tools/witch_cauldron#teleport)warp$() using Cauldrons without using any ME."
 	},
 	{
 	  "type": "entity",

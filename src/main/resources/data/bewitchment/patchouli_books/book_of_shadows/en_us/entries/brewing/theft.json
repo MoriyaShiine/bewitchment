@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This effect will $(marked)steal$() the positive potion effects of any nearby entity and apply them to $(o)you$() instead.$(br)Ambient potion effects are an exception to this."
+	  "text": "This effect will $(marked)steal$() the positive potion effects of any nearby entity and apply them to $(o)you$() instead. Ambient potion effects are an exception to this."
 	},
 	{
 	  "type": "spotlight",

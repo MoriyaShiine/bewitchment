@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Curses$() are malicious magic cast with a $(l:bewitchment:tools/brazier)$(item)Brazier$().$(br)To cast an effective curse, you will need the $(l:bewitchment:tools/taglock)$(item)Taglock$() of your target and put it in the Brazier, in addition to the other ingredients.$(br2)After putting in all of the ingredients, light the Brazier to cast the curse."
+	  "text": "$(marked)Curses$() are malicious magic cast with a $(l:bewitchment:tools/brazier)$(item)Brazier$().$(br2)To cast an effective curse, you will need the $(l:bewitchment:tools/taglock)$(item)Taglock$() of your target and put it in the Brazier, in addition to the other ingredients.$(br2)After putting in all of the ingredients, light the Brazier to cast the curse."
 	},
 	{
 	  "type": "text",

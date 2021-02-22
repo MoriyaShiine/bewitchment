@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Lycanthropy$() is a ferocious disease that scars the mind, the body, and the soul. Under a full moon, its victims transform into $(l:bewitchment:creatures/werewolf)$(marked)Werewolves$() craving fresh meat. While physically strong, $(l:bewitchment:introduction/silver)$(marked)Silver$() will harm them, as will $(l:bewitchment:introduction/crops)$(item)Aconite$(). Werewolves also exclusively feed on meat, no matter their form."
+	  "text": "$(marked)Lycanthropy$() is a ferocious disease that scars the mind, the body, and the soul. Under a full moon, its victims transform into $(l:bewitchment:creatures/werewolf)$(marked)Werewolves$() craving fresh meat.$(br2)While physically strong, $(l:bewitchment:introduction/silver)$(marked)Silver$() will harm them, as will $(l:bewitchment:introduction/crops)$(item)Aconite$(). Werewolves also exclusively feed on meat, no matter their form."
 	},
 	{
 	  "type": "text",

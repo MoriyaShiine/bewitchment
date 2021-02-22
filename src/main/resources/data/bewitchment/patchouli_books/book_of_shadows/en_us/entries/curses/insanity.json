@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This greater curse rots the mind... it will cause the affected target to see monsters which do not exist. $(br)It will not be able to attack them; however this does not count for the visions."
+	  "text": "This greater curse rots the mind... it will cause the affected target to see monsters which do not exist. $(br2)It will not be able to attack them; however this does not count for the visions."
 	},
 	{
 	  "type": "bewitchment:curse",

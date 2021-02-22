@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This ritual causes nearby crops, animals $(o)and humans$() to grow.$(br2)Sometimes it's better to not question magic."
+	  "text": "This ritual causes nearby crops, animals, $(o)and humans$() to grow.$(br2)Sometimes it's better to not question magic."
 	},
 	{
 	  "type": "bewitchment:ritual",
