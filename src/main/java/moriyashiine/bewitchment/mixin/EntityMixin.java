@@ -65,6 +65,13 @@ public abstract class EntityMixin implements WetAccessor {
 		dataTracker.set(WET_TIMER, wetTimer);
 	}
 	
+	@Inject(method = "tick", at = @At("HEAD"))
+	private void tick(CallbackInfo callbackInfo) {
+		if (!world.isClient && getWetTimer() > 0) {
+			setWetTimer(getWetTimer() - 1);
+		}
+	}
+	
 	@ModifyVariable(method = "setPose", at = @At("HEAD"))
 	private EntityPose setPose(EntityPose pose) {
 		if (((Object) this) instanceof PlayerEntity) {
@@ -107,13 +114,6 @@ public abstract class EntityMixin implements WetAccessor {
 					}
 				}
 			}
-		}
-	}
-	
-	@Inject(method = "tick", at = @At("HEAD"))
-	private void tick(CallbackInfo callbackInfo) {
-		if (!world.isClient && getWetTimer() > 0) {
-			setWetTimer(getWetTimer() - 1);
 		}
 	}
 	
