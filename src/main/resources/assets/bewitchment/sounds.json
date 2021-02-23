@@ -243,21 +243,6 @@
 	],
 	"subtitle": "bewitchment.subtitles.entity.ghost.death"
   },
-  "entity.hellhound.ambient": {
-	"sounds": [
-	],
-	"subtitle": "bewitchment.subtitles.entity.hellhound.ambient"
-  },
-  "entity.hellhound.hurt": {
-	"sounds": [
-	],
-	"subtitle": "bewitchment.subtitles.entity.hellhound.hurt"
-  },
-  "entity.hellhound.death": {
-	"sounds": [
-	],
-	"subtitle": "bewitchment.subtitles.entity.hellhound.death"
-  },
   "entity.vampire.ambient": {
 	"sounds": [
 	  "mob/pillager/idle1",
@@ -296,6 +281,21 @@
 	"sounds": [
 	],
 	"subtitle": "bewitchment.subtitles.entity.werewolf.death"
+  },
+  "entity.hellhound.ambient": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.hellhound.ambient"
+  },
+  "entity.hellhound.hurt": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.hellhound.hurt"
+  },
+  "entity.hellhound.death": {
+	"sounds": [
+	],
+	"subtitle": "bewitchment.subtitles.entity.hellhound.death"
   },
   "entity.demon.ambient": {
 	"sounds": [

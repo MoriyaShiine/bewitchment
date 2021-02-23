@@ -15,15 +15,8 @@ public class VampireEntityModel<T extends VampireEntity> extends BipedEntityMode
 	private final ModelPart robe;
 	private final ModelPart downArms;
 	private final ModelPart lArm;
-	private final ModelPart lClaw01;
-	private final ModelPart lClaw02;
-	private final ModelPart lClaw03;
 	private final ModelPart rArm;
-	private final ModelPart rClaw01;
-	private final ModelPart rClaw02;
-	private final ModelPart rClaw03;
 	private final ModelPart head;
-	private final ModelPart nose;
 	private final ModelPart lLeg;
 	private final ModelPart rLeg;
 	private final ModelPart crossedArms;
@@ -48,19 +41,19 @@ public class VampireEntityModel<T extends VampireEntity> extends BipedEntityMode
 		downArms.addChild(lArm);
 		lArm.setTextureOffset(40, 46).addCuboid(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.0F, false);
 		
-		lClaw01 = new ModelPart(this);
+		ModelPart lClaw01 = new ModelPart(this);
 		lClaw01.setPivot(2.3F, 8.6F, -1.4F);
 		lArm.addChild(lClaw01);
 		setRotation(lClaw01, 0.0F, 0.0F, 0.1745F);
 		lClaw01.setTextureOffset(0, 0).addCuboid(-1.1F, 0.0F, -0.5F, 2.0F, 4.0F, 1.0F, 0.0F, false);
 		
-		lClaw02 = new ModelPart(this);
+		ModelPart lClaw02 = new ModelPart(this);
 		lClaw02.setPivot(2.3F, 8.8F, -0.1F);
 		lArm.addChild(lClaw02);
 		setRotation(lClaw02, 0.0F, 0.0F, 0.1745F);
 		lClaw02.setTextureOffset(0, 0).addCuboid(-1.1F, 0.0F, -0.5F, 2.0F, 4.0F, 1.0F, 0.0F, false);
 		
-		lClaw03 = new ModelPart(this);
+		ModelPart lClaw03 = new ModelPart(this);
 		lClaw03.setPivot(2.3F, 8.6F, 1.2F);
 		lArm.addChild(lClaw03);
 		setRotation(lClaw03, 0.0F, 0.0F, 0.1745F);
@@ -71,19 +64,19 @@ public class VampireEntityModel<T extends VampireEntity> extends BipedEntityMode
 		lArm.addChild(rArm);
 		rArm.setTextureOffset(40, 46).addCuboid(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.0F, true);
 		
-		rClaw01 = new ModelPart(this);
+		ModelPart rClaw01 = new ModelPart(this);
 		rClaw01.setPivot(-2.3F, 8.6F, -1.4F);
 		rArm.addChild(rClaw01);
 		setRotation(rClaw01, 0.0F, 0.0F, -0.1745F);
 		rClaw01.setTextureOffset(0, 0).addCuboid(-1.1F, 0.0F, -0.5F, 2.0F, 4.0F, 1.0F, 0.0F, true);
 		
-		rClaw02 = new ModelPart(this);
+		ModelPart rClaw02 = new ModelPart(this);
 		rClaw02.setPivot(-2.3F, 8.8F, -0.1F);
 		rArm.addChild(rClaw02);
 		setRotation(rClaw02, 0.0F, 0.0F, -0.1745F);
 		rClaw02.setTextureOffset(0, 0).addCuboid(-1.1F, 0.0F, -0.5F, 2.0F, 4.0F, 1.0F, 0.0F, true);
 		
-		rClaw03 = new ModelPart(this);
+		ModelPart rClaw03 = new ModelPart(this);
 		rClaw03.setPivot(-2.3F, 8.6F, 1.2F);
 		rArm.addChild(rClaw03);
 		setRotation(rClaw03, 0.0F, 0.0F, -0.1745F);
@@ -93,7 +86,7 @@ public class VampireEntityModel<T extends VampireEntity> extends BipedEntityMode
 		head.setPivot(0.0F, 0.0F, 0.0F);
 		head.setTextureOffset(0, 0).addCuboid(-4.0F, -10.0F, -4.0F, 8.0F, 10.0F, 8.0F, 0.0F, false);
 		
-		nose = new ModelPart(this);
+		ModelPart nose = new ModelPart(this);
 		nose.setPivot(0.0F, -3.2F, -4.1F);
 		head.addChild(nose);
 		setRotation(nose, -0.7854F, 0.0F, 0.0F);
