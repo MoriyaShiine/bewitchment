@@ -1,17 +1,17 @@
 {
   "category": "bewitchment:tools",
-  "name": "Waystone",
+  "name": "waystone",
   "icon": "bewitchment:waystone",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Waystones are infused with ender-energy, making them able to store locations.$(br)This, in turn, allows them to redirect rituals, casting them in a different place.$(br2)To redirect a ritual, use the Waystone on the Golden Chalk after the ritual has been started."
+	  "text": "waystones are infused with ender-energy, making them able to store locations.$(br)this, in turn, allows them to redirect rituals, casting them in a different place.$(br2)to redirect a ritual, use the waystone on the golden chalk after the ritual has been started."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:waystone",
-	  "text": "Recipes that require Waystones will usually assume that the Waystone has already been bound."
+	  "text": "recipes that require waystones will usually assume that the waystone has already been bound."
 	}
   ]
 }

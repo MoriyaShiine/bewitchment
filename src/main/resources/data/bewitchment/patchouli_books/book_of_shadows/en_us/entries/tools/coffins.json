@@ -1,6 +1,6 @@
 {
   "category": "bewitchment:tools",
-  "name": "Coffins",
+  "name": "coffins",
   "icon": "bewitchment:white_coffin",
   "extra_recipe_mappings": {
 	"bewitchment:orange_coffin": 1,
@@ -22,12 +22,12 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Coffins, originally emerging from Vampires, have recently found traction especially among night-active witches.$(br)When you sleep in one, you can skip the day.$(br)Coffins, much like beds, can be dyed if they're white."
+	  "text": "coffins, originally emerging from vampires, have recently found traction especially among night-active witches.$(br)when you sleep in one, you can skip the day.$(br)coffins, much like beds, can be dyed if they're white."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:white_coffin",
-	  "text": "Coffins can be made from any type of bed."
+	  "text": "coffins can be made from any type of bed."
 	}
   ]
 }

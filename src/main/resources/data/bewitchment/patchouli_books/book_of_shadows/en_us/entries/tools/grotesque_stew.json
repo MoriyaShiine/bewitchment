@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:tools",
-  "name": "Grotesque Stew",
+  "name": "grotesque stew",
   "priority": true,
   "icon": "bewitchment:grotesque_stew",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Gross.$(br)This questionable stew is part of the pledging rite.$(br)By drinking while deeply looking into the eyes of a Greater Demon, a witch can pledge to them.$(br)Pledging to a Greater Demon has unique benefits depending on the Demon.$(br)The exact benefits are outlined in the according entries."
+	  "text": "gross.$(br)this questionable stew is part of the pledging rite.$(br)by drinking while deeply looking into the eyes of a greater demon, a witch can pledge to them.$(br)pledging to a greater demon has unique benefits depending on the demon.$(br)the exact benefits are outlined in the according entries."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:grotesque_stew",
-	  "text": "A Demon that is pledged to has to remain in the world for the pledge to be active.$(br)Attacking the demon in any way will immediately revoke the pledge."
+	  "text": "a demon that is pledged to has to remain in the world for the pledge to be active.$(br2)attacking the demon in any way will immediately revoke the pledge."
 	}
   ]
 }

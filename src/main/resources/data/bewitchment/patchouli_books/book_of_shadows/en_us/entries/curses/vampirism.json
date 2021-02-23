@@ -1,16 +1,16 @@
 {
   "category": "bewitchment:curses",
-  "name": "Vampirism",
+  "name": "vampirism",
   "icon": "bewitchment:bottle_of_blood",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Vampirism is a terrible curse that most consider terminal. $(br2)Vampires are technically immortal, though their immortality feeds on the blood of humans; without it, they die. Additionally, they are weak to Silver and Garlic."
+	  "text": "vampirism is a terrible curse that most consider terminal. $(br2)vampires are technically immortal, though their immortality feeds on the blood of humans; without it, they die. additionally, they are weak to silver and garlic."
 	},
 	{
 	  "type": "text",
-	  "text": "Vampirism cannot be cast with a Brazier; instead, it has to be contracted from another Vampire.$(br2)To contract the curse, one must be under the curse of Susceptibility and be slain by a vampire... but still survive.$(br2)But why would you want this?"
+	  "text": "vampirism cannot be cast with a brazier; instead, it has to be contracted from another vampire.$(br2)to contract the curse, one must be under the curse of susceptibility and be slain by a vampire... but still survive.$(br2)but why would you want this?"
 	}
   ]
 }

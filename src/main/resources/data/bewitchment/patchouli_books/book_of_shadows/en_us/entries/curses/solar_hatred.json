@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:curses",
-  "name": "Solar Hatred",
+  "name": "solar hatred",
   "icon": "minecraft:sunflower",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "By weakening the target's skin, this curse makes them extremely susceptible to sunlight. $(br2)This does in fact extend to literally setting them on fire."
+	  "text": "by weakening the target's skin, this curse makes them extremely susceptible to sunlight. $(br2)this does in fact extend to literally setting them on fire."
 	},
 	{
 	  "type": "bewitchment:curse",

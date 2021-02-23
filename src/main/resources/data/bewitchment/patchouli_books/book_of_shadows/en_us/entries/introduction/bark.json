@@ -1,17 +1,17 @@
 {
   "category": "bewitchment:introduction",
-  "name": "Bark",
+  "name": "bark",
   "icon": "bewitchment:oak_bark",
   "advancement": "bewitchment:hidden_unlocks/athame",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Some say that bark is the most magically potent part of the tree, so early witches learned to strip bark from wood using an athame.$(br2)Do note that some woods are simply too hard to strip bark from."
+	  "text": "some say that bark is the most magically potent part of the tree, so early witches learned to strip bark from wood using an athame.$(br2)do note that some woods are simply too hard to strip bark from."
 	},
 	{
 	  "type": "campfire",
 	  "recipe": "bewitchment:wood_ash_from_campfire_cooking",
-	  "text": "Bark can be used for many things, one of those being wood ash.$(br2)Wood ash is created by putting bark on a campfire. When thrown into a filled witch cauldron, it will immediately empty it."
+	  "text": "bark can be used for many things, one of those being wood ash.$(br2)wood ash is created by putting bark on a campfire. when thrown into a filled witch cauldron, it will immediately empty it."
 	}
   ]
 }

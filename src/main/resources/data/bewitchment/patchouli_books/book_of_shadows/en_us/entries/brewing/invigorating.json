@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "Invigorating",
+  "name": "invigorating",
   "icon": "bewitchment:elder_bark",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This will fill the internal ME buffer of whoever consumes it by a flat amount."
+	  "text": "this will fill the internal me buffer of whoever consumes it by a flat amount."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "Invigorating",
+	  "title": "invigorating",
 	  "item": "bewitchment:elder_bark",
-	  "text": "Intensity will increase the amount of ME gained."
+	  "text": "intensity will increase the amount of me gained."
 	}
   ]
 }

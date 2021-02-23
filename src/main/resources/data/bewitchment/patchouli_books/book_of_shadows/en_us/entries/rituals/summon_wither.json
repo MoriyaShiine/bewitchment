@@ -1,17 +1,17 @@
 {
   "category": "bewitchment:rituals",
-  "name": "Summon Wither",
+  "name": "summon wither",
   "icon": "minecraft:wither_skeleton_skull",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Summons the Wither.$(br2)Knowing the destructive tendencies of the Wither, you probably want to do this somewhere far away from your home."
+	  "text": "summons the wither.$(br2)knowing the destructive tendencies of the wither, you probably want to do this somewhere far away from your home."
 	},
 	{
 	  "type": "bewitchment:ritual",
 	  "recipe": "bewitchment:rituals/summon_wither",
-	  "text": "Unlike most summoning rituals, this does not require a sacrifice."
+	  "text": "unlike most summoning rituals, this does not require a sacrifice."
 	}
   ]
 }

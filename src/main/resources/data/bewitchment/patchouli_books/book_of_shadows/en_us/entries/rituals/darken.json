@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:rituals",
-  "name": "Darken",
+  "name": "darken",
   "icon": "minecraft:obsidian",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This ritual releases a wave of darkness. It will destroy any easily breakable light sources nearby."
+	  "text": "this ritual releases a wave of darkness. it will destroy any easily breakable light sources nearby."
 	},
 	{
 	  "type": "bewitchment:ritual",

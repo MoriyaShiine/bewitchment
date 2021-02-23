@@ -1,17 +1,17 @@
 {
   "category": "bewitchment:rituals",
-  "name": "Hex",
+  "name": "hex",
   "icon": "minecraft:iron_sword",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "By applying a simple Hexing ritual, magical energy can be compensated. This will remove any enchantments from an item, also repairing it in the process.$(br2)Items affected by this ritual need to be thrown into the circle after it has been started."
+	  "text": "by applying a simple hexing ritual, magical energy can be compensated. this will remove any enchantments from an item, also repairing it in the process.$(br2)items affected by this ritual need to be thrown into the circle after it has been started."
 	},
 	{
 	  "type": "bewitchment:ritual",
 	  "recipe": "bewitchment:rituals/hex",
-	  "text": "This ritual will also reduce the item's repair cost back to zero."
+	  "text": "this ritual will also reduce the item's repair cost back to zero."
 	}
   ]
 }

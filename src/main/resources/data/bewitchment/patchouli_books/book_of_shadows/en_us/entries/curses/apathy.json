@@ -1,17 +1,17 @@
 {
   "category": "bewitchment:curses",
-  "name": "Apathy",
+  "name": "apathy",
   "icon": "minecraft:soul_lantern",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Apathy withers the soul, making it unable to attain Magical Energy. Villagers and Demons will reject trading, and animals will flee from the victim of this powerful curse."
+	  "text": "apathy withers the soul, making it unable to attain magical energy. villagers and demons will reject trading, and animals will flee from the victim of this powerful curse."
 	},
 	{
 	  "type": "bewitchment:curse",
 	  "recipe": "bewitchment:curses/apathy",
-	  "text": "This is a greater curse; it is slightly harder to get rid of."
+	  "text": "this is a greater curse; it is slightly harder to get rid of."
 	}
   ]
 }

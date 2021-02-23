@@ -1,19 +1,17 @@
 {
   "category": "bewitchment:creatures",
-  "name": "Cat",
+  "name": "cat",
   "icon": "minecraft:cat_spawn_egg",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Cats are finicky things. Even so, their mere presence is soothing to many.$(br2)When bound as a familiar, Cats will greatly help with rituals.$(br)In addition, Creepers will stay away from witches with a Cat familiar."
+	  "text": "cats are finicky things. even so, their mere presence is soothing to many.$(br2)when bound as a familiar, cats will greatly help with rituals.$(br)in addition, creepers will stay away from witches with a cat familiar."
 	},
 	{
 	  "type": "entity",
 	  "entity": "minecraft:cat",
-	  "text": "May bring dead birds by accident.",
-	  "rotate": false,
-	  "default_rotation": 45,
+	  "text": "may bring dead birds by accident.",
 	  "scale": 0.6
 	}
   ]

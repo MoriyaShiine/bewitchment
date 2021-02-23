@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "Volatility",
+  "name": "volatility",
   "icon": "minecraft:fire_charge",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Makes the target extremely volatile. When hit, they will cause a damaging explosion, instantly removing the potion effect and harming all entities around."
+	  "text": "makes the target extremely volatile. when hit, they will cause a damaging explosion, instantly removing the potion effect and harming all entities around."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "Volatility",
+	  "title": "volatility",
 	  "item": "minecraft:fire_charge",
-	  "text": "Explosion damage scales with the intensity of the potion."
+	  "text": "explosion damage scales with the intensity of the potion."
 	}
   ]
 }

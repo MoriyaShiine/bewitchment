@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:sigils",
-  "name": "Ruin",
+  "name": "ruin",
   "icon": "bewitchment:ruin_sigil",
   "advancement": "minecraft:nether/find_fortress",
   "sortnum": 1,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The sigil of Ruin prevents any positive potion effect from taking hold around it."
+	  "text": "the sigil of ruin prevents any positive potion effect from taking hold around it."
 	},
 	{
 	  "type": "crafting",

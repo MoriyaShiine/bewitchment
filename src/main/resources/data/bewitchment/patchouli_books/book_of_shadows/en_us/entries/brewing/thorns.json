@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "Thorns",
+  "name": "thorns",
   "icon": "minecraft:cactus",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The Thorns effect does as its name implies. Every entity that tries to damage the user will receive some damage."
+	  "text": "the thorns effect does as its name implies. every entity that tries to damage the user will receive some damage."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "Thorns",
+	  "title": "thorns",
 	  "item": "minecraft:cactus",
-	  "text": "The damage received through Thorns is proportional to the potion's strength."
+	  "text": "the damage received through thorns is proportional to the potion's strength."
 	}
   ]
 }

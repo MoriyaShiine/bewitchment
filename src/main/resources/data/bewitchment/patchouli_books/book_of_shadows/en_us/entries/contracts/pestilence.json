@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:contracts",
-  "name": "Pestilence",
+  "name": "pestilence",
   "icon": "bewitchment:demonic_contract",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "sortnum": 2,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Those marked by Pestilence are able to effectively inflict illness upon their foes... as well as their surroundings.$(br2)This may have a downside when around Villagers."
+	  "text": "those marked by pestilence are able to effectively inflict illness upon their foes... as well as their surroundings.$(br2)this may have a downside when around villagers."
 	}
   ]
 }

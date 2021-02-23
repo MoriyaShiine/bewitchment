@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:curses",
-  "name": "Weak Lungs",
+  "name": "weak lungs",
   "icon": "minecraft:gunpowder",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Victims of this curse have a hard time breathing.$(br)When underwater, they will immediately start drowning."
+	  "text": "victims of this curse have a hard time breathing.$(br)when underwater, they will immediately start drowning."
 	},
 	{
 	  "type": "bewitchment:curse",

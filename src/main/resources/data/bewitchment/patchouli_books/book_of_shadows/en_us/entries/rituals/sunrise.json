@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:rituals",
-  "name": "Sunrise",
+  "name": "sunrise",
   "icon": "minecraft:gold_ingot",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The ritual of Sunrise, simply put, makes it day."
+	  "text": "the ritual of sunrise, simply put, makes it day."
 	},
 	{
 	  "type": "bewitchment:ritual",

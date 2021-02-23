@@ -1,25 +1,25 @@
 {
   "category": "bewitchment:brewing",
-  "name": "Brewing Basics",
+  "name": "brewing basics",
   "icon": "bewitchment:witch_cauldron",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "priority": true,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The fine art of Brewing is a core discipline of witchcraft. As its name implies, it's all about brewing potions.$(br2)To get started with brewing, you'll need a boiling Witch Cauldron, some Altar Power, as well as other miscellaneous ingredients.$(br2)To start a brew, first add a Mandrake Root to the cauldron."
+	  "text": "the fine art of brewing is a core discipline of witchcraft. as its name implies, it's all about brewing potions.$(br2)to get started with brewing, you'll need a boiling witch cauldron, some altar power, as well as other miscellaneous ingredients.$(br2)to start a brew, first add a mandrake root to the cauldron."
 	},
 	{
 	  "type": "text",
-	  "text": "After adding the Mandrake Root, you can add other ingredients. Each ingredient will increase the Altar Power needed to bottle the brew by 150, and having insufficient Altar Power while brewing will cause the brew to fail immediately, so keep that in mind.$(br2)Ingredients can be divided into Potion Ingredients and Modifiers. No matter your Altar Power, you can only add up to four ingredients."
+	  "text": "after adding the mandrake root, you can add other ingredients. each ingredient will increase the altar power needed to bottle the brew by 150, and having insufficient altar power while brewing will cause the brew to fail immediately, so keep that in mind.$(br2)ingredients can be divided into potion ingredients and modifiers. no matter your altar power, you can only add up to four ingredients."
 	},
 	{
 	  "type": "text",
-	  "text": "Potion Ingredients add effects to your brew. You'll always want to have at least one of those. The exact effects provided by certain Potion Ingredients are outlined in other entries. More ingredients can be added, though that comes at the cost of space for modifiers.$(br2)Modifiers will enhance your brew: Redstone increases the duration, Glowstone Dust makes it more potent."
+	  "text": "potion ingredients add effects to your brew. you'll always want to have at least one of those. the exact effects provided by certain potion ingredients are outlined in other entries. more ingredients can be added, though that comes at the cost of space for modifiers.$(br2)modifiers will enhance your brew: redstone increases the duration, glowstone dust makes it more potent."
 	},
 	{
 	  "type": "text",
-	  "text": "You may add only one potency-enhancing modifier; however, other modifiers are technically only limited by the amount of space left, and your Altar Power.$(br2)Lastly, you can post-process your potions using a regular Brewing Stand. Also note that when the water is brown, it usually means you failed your brew. $(br2)Maybe you should experiment yourself to find out what works and what doesn't?"
+	  "text": "you may add only one potency-enhancing modifier; however, other modifiers are technically only limited by the amount of space left, and your altar power.$(br2)lastly, you can post-process your potions using a regular brewing stand. also note that when the water is brown, it usually means you failed your brew. $(br2)maybe you should experiment yourself to find out what works and what doesn't?"
 	}
   ]
 }

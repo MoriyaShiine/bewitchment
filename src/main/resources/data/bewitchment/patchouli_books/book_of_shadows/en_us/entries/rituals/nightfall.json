@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:rituals",
-  "name": "Nightfall",
+  "name": "nightfall",
   "icon": "bewitchment:silver_ingot",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "By calling on the Moon, witches may exchange the day for night."
+	  "text": "by calling on the moon, witches may exchange the day for night."
 	},
 	{
 	  "type": "bewitchment:ritual",

@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:contracts",
-  "name": "Fraud",
+  "name": "fraud",
   "icon": "bewitchment:demonic_contract",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "sortnum": 3,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Fraud makes Miss Fortune act in your favor.$(br2)Villagers and $(l:bewitchment:creatures/demon)Demons usually recognize frauds, refusing to trade with them."
+	  "text": "fraud makes miss fortune act in your favor.$(br2)villagers and demons usually recognize frauds, refusing to trade with them."
 	}
   ]
 }

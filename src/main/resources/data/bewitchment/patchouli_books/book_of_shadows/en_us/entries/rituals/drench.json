@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:rituals",
-  "name": "Drench",
+  "name": "drench",
   "icon": "minecraft:ghast_tear",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "A ritual that fills the air with water energies, making everything around it wet and extinguishing flames.$(br2)Its range is rather limited, so you usually want to apply it in very special cases where you need something to be wet."
+	  "text": "a ritual that fills the air with water energies, making everything around it wet and extinguishing flames.$(br2)its range is rather limited, so you usually want to apply it in very special cases where you need something to be wet."
 	},
 	{
 	  "type": "bewitchment:ritual",

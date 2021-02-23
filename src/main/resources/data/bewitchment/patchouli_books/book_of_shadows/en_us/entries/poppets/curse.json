@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:poppets",
-  "name": "Curse",
+  "name": "curse",
   "icon": "bewitchment:curse_poppet",
   "advancement": "bewitchment:hidden_unlocks/taglock",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The ludicrous Curse Poppet will protect its owner from curses. The poppet does so by absorbing the curse like a sponge. $(br2)Once the poppet has successfully absorbed a curse, it can be rebound and used to apply its absorbed curse to the target."
+	  "text": "the ludicrous curse poppet will protect its owner from curses. the poppet does so by absorbing the curse like a sponge. $(br2)once the poppet has successfully absorbed a curse, it can be rebound and used to apply its absorbed curse to the target."
 	},
 	{
 	  "type": "crafting",

@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:rituals",
-  "name": "Propagate",
+  "name": "propagate",
   "icon": "minecraft:bone_meal",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This ritual causes nearby crops, animals, and humans to grow.$(br2)Sometimes it's better to not question magic."
+	  "text": "this ritual causes nearby crops, animals, and humans to grow.$(br2)sometimes it's better to not question magic."
 	},
 	{
 	  "type": "bewitchment:ritual",

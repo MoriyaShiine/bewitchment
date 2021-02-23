@@ -1,6 +1,6 @@
 {
-  "name": "Tools",
-  "description": "Convenient tools for any witch.",
+  "name": "tools",
+  "description": "convenient tools for any witch.",
   "icon": "bewitchment:athame",
   "sortnum": 1
 }

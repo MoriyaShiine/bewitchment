@@ -1,17 +1,17 @@
 {
   "category": "bewitchment:curses",
-  "name": "Conducting Curses",
+  "name": "conducting curses",
   "priority": true,
   "icon": "bewitchment:brazier",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Curses are malicious magic cast with a Brazier.$(br2)To cast an effective curse, you will need the Taglock of your target and put it in the Brazier, in addition to the other ingredients.$(br2)After putting in all of the ingredients, light the Brazier to cast the curse."
+	  "text": "curses are malicious magic cast with a brazier.$(br2)to cast an effective curse, you will need the taglock of your target and put it in the brazier, in addition to the other ingredients.$(br2)after putting in all of the ingredients, light the brazier to cast the curse."
 	},
 	{
 	  "type": "text",
-	  "text": "Do note that all curses need at least 400 ME available.$(br2)Curses will wear off after seven days, but they can also be cleansed using the respective ritual."
+	  "text": "do note that all curses need at least 400 me available.$(br2)curses will wear off after seven days, but they can also be cleansed using the respective ritual."
 	}
   ]
 }

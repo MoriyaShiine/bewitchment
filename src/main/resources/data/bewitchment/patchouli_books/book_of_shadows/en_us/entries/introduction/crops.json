@@ -1,11 +1,11 @@
 {
   "category": "bewitchment:introduction",
-  "name": "Crops",
+  "name": "crops",
   "icon": "bewitchment:mandrake_root",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Witchcraft utilizes several natural crops for the art. These crops are used for rituals, brewing and many other things.$(br2)Seeds for these crops can be found in wild grass, much like other seeds."
+	  "text": "witchcraft utilizes several natural crops for the art. these crops are used for rituals, brewing and many other things.$(br2)seeds for these crops can be found in wild grass, much like other seeds."
 	},
 	{
 	  "type": "bewitchment:multi_showcase",
@@ -13,18 +13,18 @@
 	  "item2": "bewitchment:belladonna",
 	  "item3": "bewitchment:garlic",
 	  "item4": "bewitchment:mandrake_root",
-	  "header": "Regular Crops",
-	  "text": "The four regular crops are aconite, belladonna, garlic and mandrake.$(br2)Aconite is mostly used as a neurotoxin, whereas belladonna is known for causing physical harm. Mandrake enhances magic, and garlic embodies healing."
+	  "header": "regular crops",
+	  "text": "the four regular crops are aconite, belladonna, garlic and mandrake.$(br2)aconite is mostly used as a neurotoxin, whereas belladonna is known for causing physical harm. mandrake enhances magic, and garlic embodies healing."
 	},
 	{
 	  "type": "smelting",
 	  "recipe": "bewitchment:grilled_garlic",
-	  "text": "Garlic can also be roasted into delicious grilled garlic."
+	  "text": "garlic can also be roasted into delicious grilled garlic."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:garlic_bread",
-	  "text": "Grilled garlic can in turn be crafted into even more delicious garlic bread."
+	  "text": "grilled garlic can in turn be crafted into even more delicious garlic bread."
 	}
   ]
 }

@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:creatures",
-  "name": "Herne",
+  "name": "herne",
   "icon": "bewitchment:herne_spawn_egg",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Herne, the Lord of the Wild Hunt, is commonly pledged to by suffering lycanthropes. He can grant almost total control over the curse, allowing victims to transform on will. Alternatively, he can be offered Aconite, removing the curse entirely.$(br2)Summoning him is rather elaborate, and will be outlined in this entry."
+	  "text": "herne, the lord of the wild hunt, is commonly pledged to by suffering lycanthropes. he can grant almost total control over the curse, allowing victims to transform on will. alternatively, he can be offered aconite, removing the curse entirely.$(br2)summoning him is rather elaborate, and will be outlined in this entry."
 	},
 	{
 	  "type": "entity",
@@ -15,12 +15,12 @@
 	},
 	{
 	  "type": "text",
-	  "title": "Summoning Herne",
-	  "text": "To summon Herne, several things are needed:$(li)a Mortal Coil Incense$(li)a Wolf $(li)a forest or taiga biome$(br2)First, start the incense in the right biome, at night. Then you will need to slay a Wolf with an Athame, not too far away."
+	  "title": "summoning herne",
+	  "text": "to summon herne, several things are needed:$(li)a mortal coil incense$(li)a wolf $(li)a forest or taiga biome$(br2)first, start the incense in the right biome, at night. then you will need to slay a wolf with an athame, not too far away."
 	},
 	{
 	  "type": "text",
-	  "text": "Choose the place for doing this wisely; you'll need to keep Herne around if you want to pledge to him.$(br2)Once pledged, you can toggle your Wolf-form by pressing [$(k:bewitchment.transformation_ability)]."
+	  "text": "choose the place for doing this wisely; you'll need to keep herne around if you want to pledge to him.$(br2)once pledged, you can toggle your wolf-form by pressing [$(k:bewitchment.transformation_ability)]."
 	}
   ]
 }

@@ -1,17 +1,17 @@
 {
   "category": "bewitchment:tools",
-  "name": "Specter Bangle",
+  "name": "specter bangle",
   "icon": "bewitchment:specter_bangle",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This magnificent trinket will bend the shadows around the wearer as long as they're sneaking.$(br)Doing so will consume ME and turn the user completely invisible, with only slight smoke hinting at them."
+	  "text": "this magnificent trinket will bend the shadows around the wearer as long as they're sneaking.$(br)doing so will consume me and turn the user completely invisible, with only slight smoke hinting at them."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:specter_bangle",
-	  "text": "The Specter Bangle can be equipped in the Aglet trinket slot."
+	  "text": "the specter bangle can be equipped in the aglet trinket slot."
 	}
   ]
 }

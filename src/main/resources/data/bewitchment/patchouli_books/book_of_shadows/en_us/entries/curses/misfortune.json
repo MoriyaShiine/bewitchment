@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:curses",
-  "name": "Misfortune",
+  "name": "misfortune",
   "icon": "minecraft:clay_ball",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This classic curse will occasionally apply nasty effects. These include but are not limited to poison, weakness, blindness and nausea."
+	  "text": "this classic curse will occasionally apply nasty effects. these include but are not limited to poison, weakness, blindness and nausea."
 	},
 	{
 	  "type": "bewitchment:curse",

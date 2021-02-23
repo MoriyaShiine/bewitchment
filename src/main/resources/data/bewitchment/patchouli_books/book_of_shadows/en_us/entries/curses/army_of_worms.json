@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:curses",
-  "name": "Army of Worms",
+  "name": "army of worms",
   "icon": "minecraft:poisonous_potato",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This curse poses an annoyance by calling on the worms. Any crops near the cursed individual will suffer in growth."
+	  "text": "this curse poses an annoyance by calling on the worms. any crops near the cursed individual will suffer in growth."
 	},
 	{
 	  "type": "bewitchment:curse",

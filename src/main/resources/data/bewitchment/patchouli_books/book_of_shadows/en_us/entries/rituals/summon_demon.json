@@ -1,17 +1,17 @@
 {
   "category": "bewitchment:rituals",
-  "name": "Summon Demon",
+  "name": "summon demon",
   "icon": "bewitchment:demon_spawn_egg",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This ritual separates a Demon from their hellish home, using a human's soul as bait.$(br2)Demons offer a variety of trades, but they will usually attack you unless you wear Besmirched Armor.$(br2)If they do attack you, keep them away from anything burnable."
+	  "text": "this ritual separates a demon from their hellish home, using a human's soul as bait.$(br2)demons offer a variety of trades, but they will usually attack you unless you wear besmirched armor.$(br2)if they do attack you, keep them away from anything burnable."
 	},
 	{
 	  "type": "bewitchment:ritual",
 	  "recipe": "bewitchment:rituals/summon_demon",
-	  "text": "The ritual is started by sacrificing a Villager or similar type of human with an Athame."
+	  "text": "the ritual is started by sacrificing a villager or similar type of human with an athame."
 	}
   ]
 }

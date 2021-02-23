@@ -1,17 +1,17 @@
 {
   "category": "bewitchment:tools",
-  "name": "Prickly Belt",
+  "name": "prickly belt",
   "icon": "bewitchment:prickly_belt",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The Prickly Belt is a handy trinket, able to store potion effects.$(br)When the wearer of the Belt is harmed, they will receive positive and neutral potion effects stored in the Belt. If a negative effect is stored in the Belt, it will instead be applied to the attacker, if present.$(br)Either way, this requires a tiny bit of ME."
+	  "text": "the prickly belt is a handy trinket, able to store potion effects.$(br)when the wearer of the belt is harmed, they will receive positive and neutral potion effects stored in the belt. if a negative effect is stored in the belt, it will instead be applied to the attacker, if present.$(br)either way, this requires a tiny bit of me."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:prickly_belt",
-	  "text": "To add a potion effect, simply combine the Belt with a Potion. The amount of uses is based off on both duration and amplifier of the used potion.$(br2)You can equip this in the Belt trinket slot."
+	  "text": "to add a potion effect, simply combine the belt with a potion. the amount of uses is based off on both duration and amplifier of the used potion.$(br2)you can equip this in the belt trinket slot."
 	}
   ]
 }

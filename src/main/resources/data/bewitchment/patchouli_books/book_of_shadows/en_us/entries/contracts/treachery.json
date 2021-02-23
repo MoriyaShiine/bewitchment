@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:contracts",
-  "name": "Treachery",
+  "name": "treachery",
   "icon": "bewitchment:demonic_contract",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "sortnum": 3,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This contract makes taking $(l:bewitchment:tools/taglock)Taglocks easier.$(br2)I repeat: this contract makes taking Taglocks easier."
+	  "text": "this contract makes taking taglocks easier.$(br2)i repeat: this contract makes taking taglocks easier."
 	}
   ]
 }

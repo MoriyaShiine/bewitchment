@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "Leeching",
+  "name": "leeching",
   "icon": "bewitchment:bottle_of_blood",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Heals the target based on damage dealt."
+	  "text": "heals the target based on damage dealt."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "Leeching",
+	  "title": "leeching",
 	  "item": "bewitchment:bottle_of_blood",
-	  "text": "The higher the intensity, the more health is healed."
+	  "text": "the higher the intensity, the more health is healed."
 	}
   ]
 }

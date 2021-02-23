@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:tools",
-  "name": "Hedgewitch Armor",
+  "name": "hedgewitch armor",
   "icon": "bewitchment:hedgewitch_robes",
   "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This old classic has proven itself over centuries of witchcraft. When worn, it increases crop yield.$(br2)Carpets of the same fabric can also be placed on Altars."
+	  "text": "this old classic has proven itself over centuries of witchcraft. when worn, it increases crop yield.$(br2)carpets of the same fabric can also be placed on altars."
 	},
 	{
 	  "type": "crafting",

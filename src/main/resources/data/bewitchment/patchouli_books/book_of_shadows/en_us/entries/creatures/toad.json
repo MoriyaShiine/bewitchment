@@ -1,24 +1,22 @@
 {
   "category": "bewitchment:creatures",
-  "name": "Toad",
+  "name": "toad",
   "icon": "bewitchment:toad_spawn_egg",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Toads can be found in jungles and swamps, jumping happily around."
+	  "text": "toads can be found in jungles and swamps, jumping happily around."
 	},
 	{
 	  "type": "text",
 	  "advancement": "bewitchment:hidden_unlocks/demon_heart",
-	  "text": "A Toad familiar grants the witch that bound it enhanced positive status effects.$(br2)Killing arthropods will also heal such witches by a quarter of their maximum health."
+	  "text": "a toad familiar grants the witch that bound it enhanced positive status effects.$(br2)killing arthropods will also heal such witches by a quarter of their maximum health."
 	},
 	{
 	  "type": "entity",
 	  "entity": "bewitchment:toad{Variant:1}",
-	  "rotate": false,
 	  "scale": 0.6,
-	  "default_rotation": 45,
-	  "text": "Toads can be tamed with Fermented Spider Eyes, and bred with normal Spider Eyes."
+	  "text": "toads can be tamed with fermented spider eyes, and bred with normal spider eyes."
 	}
   ]
 }

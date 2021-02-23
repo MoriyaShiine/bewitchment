@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:curses",
-  "name": "Unlucky",
+  "name": "unlucky",
   "icon": "minecraft:textures/mob_effect/unluck.png",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Fortune does not show favor to victims of this curse; this also means that beneficial status effects may fail to work."
+	  "text": "fortune does not show favor to victims of this curse; this also means that beneficial status effects may fail to work."
 	},
 	{
 	  "type": "bewitchment:curse",

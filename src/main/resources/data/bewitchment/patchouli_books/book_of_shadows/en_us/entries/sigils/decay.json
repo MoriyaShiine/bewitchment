@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:sigils",
-  "name": "Decay",
+  "name": "decay",
   "icon": "bewitchment:decay_sigil",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Decay is an active sigil that, when activated, will apply a strong Wither effect."
+	  "text": "decay is an active sigil that, when activated, will apply a strong wither effect."
 	},
 	{
 	  "type": "crafting",

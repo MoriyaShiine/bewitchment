@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:poppets",
-  "name": "Judgment",
+  "name": "judgment",
   "icon": "bewitchment:judgment_poppet",
   "advancement": "bewitchment:hidden_unlocks/taglock",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "When bound to a Judgment Poppet, any unholy being that attacks you will find their attack damage quartered.$(br2)This includes undead mobs, demons, Vampires, and Werewolves."
+	  "text": "when bound to a judgment poppet, any unholy being that attacks you will find their attack damage quartered.$(br2)this includes undead mobs, demons, vampires, and werewolves."
 	},
 	{
 	  "type": "crafting",

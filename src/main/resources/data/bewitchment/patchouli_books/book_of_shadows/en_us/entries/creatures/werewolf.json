@@ -1,19 +1,17 @@
 {
   "category": "bewitchment:creatures",
-  "name": "Werewolf",
+  "name": "werewolf",
   "icon": "bewitchment:werewolf_spawn_egg",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Werewolves - victims of lycanthropy - roam forests, taiga and icy biomes on full moons. They are heavily weak to Silver.$(br2)When the sun rises, they turn back into their human form."
+	  "text": "werewolves - victims of lycanthropy - roam forests, taiga and icy biomes on full moons. they are heavily weak to silver.$(br2)when the sun rises, they turn back into their human form."
 	},
 	{
 	  "type": "entity",
 	  "entity": "bewitchment:werewolf{Variant:1}",
 	  "offset": 0.1,
-	  "rotate": false,
-	  "default_rotation": 45,
-	  "text": "They are extremely resilient, so run when you see one."
+	  "text": "they are extremely resilient, so run when you see one."
 	}
   ]
 }

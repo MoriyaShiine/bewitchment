@@ -1,6 +1,6 @@
 {
   "category": "bewitchment:creatures",
-  "name": "Snake",
+  "name": "snake",
   "icon": "bewitchment:snake_spawn_egg",
   "extra_recipe_mappings": {
 	"bewitchment:snake_tongue": 0
@@ -8,19 +8,18 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Snakes usually appear in savannas, deserts and plains, where they prey on other animals, killing them with their venom. $(br2)Snakes may drop their Snake Tongue, which is commonly used in witchcraft (though it may also be acquired from some demonic entities)."
+	  "text": "snakes usually appear in savannas, deserts and plains, where they prey on other animals, killing them with their venom. $(br2)snakes may drop their snake tongue, which is commonly used in witchcraft (though it may also be acquired from some demonic entities)."
 	},
 	{
 	  "type": "text",
 	  "advancement": "bewitchment:hidden_unlocks/demon_heart",
-	  "text": "Snakes can be familiars. Witches with a Snake familiar are able to craft much more durable sigils. Additionally they benefit from poison; it does not harm them and refills their internal ME buffer."
+	  "text": "snakes can be familiars. witches with a snake familiar are able to craft much more durable sigils. additionally they benefit from poison; it does not harm them and refills their internal me buffer."
 	},
 	{
 	  "type": "entity",
 	  "entity": "bewitchment:snake{Variant:1}",
-	  "rotate": true,
 	  "scale": 0.6,
-	  "text": "Snakes can be tamed with Raw Rabbit, and bred with Raw Chicken."
+	  "text": "snakes can be tamed with raw rabbit, and bred with raw chicken."
 	}
   ]
 }

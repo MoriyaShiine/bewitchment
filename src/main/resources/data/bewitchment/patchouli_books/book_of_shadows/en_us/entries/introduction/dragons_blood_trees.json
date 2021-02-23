@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:introduction",
-  "name": "Dragon's Blood Trees",
+  "name": "dragon's blood trees",
   "icon": "bewitchment:dragons_blood_sapling",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "With crimson colored wood, one can easily see how the dragon's blood tree gets its name.$(br2)Cutting through the bark with an athame will cause it to bleed, yielding dragon's blood resin.$(br2)Blocks made with this wood almost give off an aura of power, and can be given active sigils."
+	  "text": "with crimson colored wood, one can easily see how the dragon's blood tree gets its name.$(br2)cutting through the bark with an athame will cause it to bleed, yielding dragon's blood resin.$(br2)blocks made with this wood almost give off an aura of power, and can be given active sigils."
 	},
 	{
 	  "type": "image",
@@ -14,7 +14,7 @@
 		"bewitchment:textures/gui/patchouli/dragons_blood_tree.png"
 	  ],
 	  "border": true,
-	  "text": "Dragon's blood saplings are found in nether fortresses."
+	  "text": "dragon's blood saplings are found in nether fortresses."
 	},
 	{
 	  "type": "crafting",

@@ -1,17 +1,17 @@
 {
   "category": "bewitchment:tools",
-  "name": "Hellish Bauble",
+  "name": "hellish bauble",
   "icon": "bewitchment:hellish_bauble",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Through the power of fire, the Hellish Bauble extinguishes any flames using some ME.$(br2)Note that this does not enable you to swim in the nether. The Bauble does not protect against direct damage from Lava."
+	  "text": "through the power of fire, the hellish bauble extinguishes any flames using some me.$(br2)note that this does not enable you to swim in the nether. the bauble does not protect against direct damage from lava."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:hellish_bauble",
-	  "text": "Being made out of Netherite, the Bauble is completely fireproof.$(br2)You can equip this in the Necklace trinket slot."
+	  "text": "being made out of netherite, the bauble is completely fireproof.$(br2)you can equip this in the necklace trinket slot."
 	}
   ]
 }

@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:sigils",
-  "name": "Mending",
+  "name": "mending",
   "icon": "bewitchment:mending_sigil",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Mending is an active sigil.$(br)When activated, it will give Regeneration and Resistance to whoever activated it."
+	  "text": "mending is an active sigil.$(br)when activated, it will give regeneration and resistance to whoever activated it."
 	},
 	{
 	  "type": "crafting",

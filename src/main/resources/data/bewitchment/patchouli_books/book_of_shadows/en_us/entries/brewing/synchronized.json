@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "Synchronized",
+  "name": "synchronized",
   "icon": "minecraft:ghast_tear",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The Synchronized effect will apply any potion effect you have to nearby entities."
+	  "text": "the synchronized effect will apply any potion effect you have to nearby entities."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "Synchronized",
+	  "title": "synchronized",
 	  "item": "minecraft:ghast_tear",
-	  "text": "Synchronized potion effects are cut in half.$(br2)This effect is not compatible with $(l:bewitchment:brewing/theft)Theft.$(br2)The higher this potion's intensity, the further it'll reach."
+	  "text": "synchronized potion effects are cut in half.$(br2)this effect is not compatible with theft.$(br2)the higher this potion's intensity, the further it'll reach."
 	}
   ]
 }

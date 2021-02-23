@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "Purity",
+  "name": "purity",
   "icon": "bewitchment:birch_bark",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "By applying the cleansing powers of Birch, the Purity effect can weaken the effects of harmful potions.$(br2)For each intensity, this potion will reduce the power of a negative potion, also reducing its own power."
+	  "text": "by applying the cleansing powers of birch, the purity effect can weaken the effects of harmful potions.$(br2)for each intensity, this potion will reduce the power of a negative potion, also reducing its own power."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "Purity",
+	  "title": "purity",
 	  "item": "bewitchment:birch_bark",
-	  "text": "In concrete terms, this means that you can remove more negative potion effects the stronger the potion is."
+	  "text": "in concrete terms, this means that you can remove more negative potion effects the stronger the potion is."
 	}
   ]
 }

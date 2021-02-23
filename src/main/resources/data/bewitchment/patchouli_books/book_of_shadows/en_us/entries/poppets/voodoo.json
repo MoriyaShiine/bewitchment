@@ -1,17 +1,17 @@
 {
   "category": "bewitchment:poppets",
-  "name": "Voodoo",
+  "name": "voodoo",
   "icon": "bewitchment:voodoo_poppet",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The Voodoo Poppet is a classic.$(br2)It can be used to throw whoever is bound to it, drown them, set them on fire, and even apply potion effects to them from anywhere!$(br2)Of course, to do the latter ones you will have to suffer the effects yourself."
+	  "text": "the voodoo poppet is a classic.$(br2)it can be used to throw whoever is bound to it, drown them, set them on fire, and even apply potion effects to them from anywhere!$(br2)of course, to do the latter ones you will have to suffer the effects yourself."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:voodoo_poppet",
-	  "text": "Voodoo Poppets do not work in Poppet Shelves."
+	  "text": "voodoo poppets do not work in poppet shelves."
 	}
   ]
 }

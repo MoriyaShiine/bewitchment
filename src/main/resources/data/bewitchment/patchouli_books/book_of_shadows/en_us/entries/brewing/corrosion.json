@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "Corrosion",
+  "name": "corrosion",
   "icon": "minecraft:dragon_breath",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The counterpiece to $(l:bewitchment:brewing/hardening)Hardening will reduce armor by a flat amount."
+	  "text": "the counterpart to hardening will reduce armor by a flat amount."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "Corrosion",
+	  "title": "corrosion",
 	  "item": "minecraft:dragon_breath",
-	  "text": "The armor decrease is proportional to the potion's strength."
+	  "text": "the armor decrease is proportional to the potion's strength."
 	}
   ]
 }

@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:contracts",
-  "name": "Wrath",
+  "name": "wrath",
   "icon": "bewitchment:demonic_contract",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "sortnum": 1,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Sometimes getting hurt makes you angry, and with the contract of Wrath you can finally manifest that anger reasonably! Signing this contract will increase your damage output with lower health.$(br2)It may also increase damage intake."
+	  "text": "sometimes getting hurt makes you angry, and with the contract of wrath you can finally manifest that anger reasonably! signing this contract will increase your damage output with lower health.$(br2)it may also increase damage intake."
 	}
   ]
 }

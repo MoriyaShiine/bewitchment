@@ -1,6 +1,6 @@
 {
   "category": "bewitchment:creatures",
-  "name": "Hellhound",
+  "name": "hellhound",
   "icon": "bewitchment:hellhound_spawn_egg",
   "advancement": "minecraft:nether/root",
   "extra_recipe_mappings": {
@@ -9,15 +9,13 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Hellhounds spawn in the Nether. $(br2)Filled with aggression, they will attack anyone nearby, though they will respect wearers of Besmirched Armor."
+	  "text": "hellhounds spawn in the nether. $(br2)filled with aggression, they will attack anyone nearby, though they will respect wearers of besmirched armor."
 	},
 	{
 	  "type": "entity",
 	  "entity": "bewitchment:hellhound{Variant:1}",
 	  "scale": 0.6,
-	  "rotate": false,
-	  "default_rotation": 45,
-	  "text": "Hellhounds will drop Demon Horns."
+	  "text": "hellhounds will drop demon horns."
 	}
   ]
 }

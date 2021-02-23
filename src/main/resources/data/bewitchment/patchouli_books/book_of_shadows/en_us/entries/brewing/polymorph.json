@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "Polymorph",
+  "name": "polymorph",
   "icon": "bewitchment:taglock{OwnerName:Aelpecyem}",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Polymorph must be one of the most versatile potion effects. When a Polymorph potion is consumed, the target will change its form into the target of the $(l:bewitchment:tools/taglock)Taglock used.$(br2)The brew can be made into a Splash Potion or similar variants, just like other brews."
+	  "text": "polymorph must be one of the most versatile potion effects. when a polymorph potion is consumed, the target will change its form into the target of the taglock used.$(br2)the brew can be made into a splash potion or similar variants, just like other brews."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "Polymorph",
+	  "title": "polymorph",
 	  "item": "bewitchment:taglock{FromPlayer: 1b, OwnerUUID: [I; 1672005179, -1854323673, -2070260447, 778045631], OwnerName:\"Aelpecyem\"}",
-	  "text": "Intensity does not have an effect on this potion.$(br2)This potion only works if created from a Taglock of another player."
+	  "text": "intensity does not have an effect on this potion.$(br2)this potion only works if created from a taglock of another player."
 	}
   ]
 }

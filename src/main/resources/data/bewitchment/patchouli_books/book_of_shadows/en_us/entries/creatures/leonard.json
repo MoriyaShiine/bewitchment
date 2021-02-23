@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:creatures",
-  "name": "Leonard",
+  "name": "leonard",
   "icon": "bewitchment:leonard_spawn_egg",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Leonard is the patron of witches, brewing and...$(br2)Leonard is a Greater Demon; he can be pledged to.$(br2)Witches pledged to Leonard are known to brew potent potions. Pledging to Leonard also allows players to warp using Cauldrons without using any ME."
+	  "text": "leonard is the patron of witches, brewing and...$(br2)leonard is a greater demon; he can be pledged to.$(br2)witches pledged to leonard are known to brew potent potions. pledging to leonard also allows players to warp using cauldrons without using any me."
 	},
 	{
 	  "type": "entity",

@@ -1,17 +1,17 @@
 {
   "category": "bewitchment:tools",
-  "name": "Zephyr Harness",
+  "name": "zephyr harness",
   "icon": "bewitchment:zephyr_harness",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The Zephy Harness makes its wearer unstoppable like the strongest wind, completely negating most forms of knockback.$(br2)Other than that, the Harness allows its wearer to hurl entities into the air when punching them with only their fist. This, however, consumes ME."
+	  "text": "the zephy harness makes its wearer unstoppable like the strongest wind, completely negating most forms of knockback.$(br2)other than that, the harness allows its wearer to hurl entities into the air when punching them with only their fist. this, however, consumes me."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:zephyr_harness",
-	  "text": "The Zephyr Harness can be equipped in the Belt trinket slot."
+	  "text": "the zephyr harness can be equipped in the belt trinket slot."
 	}
   ]
 }

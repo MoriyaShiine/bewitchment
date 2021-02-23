@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:contracts",
-  "name": "Heresy",
+  "name": "heresy",
   "icon": "bewitchment:demonic_contract",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "sortnum": 3,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Heresy!$(br2)This will reflect any curse cast upon you, but may give you Mortal Coil."
+	  "text": "heresy!$(br2)this will reflect any curse cast upon you, but may give you mortal coil."
 	}
   ]
 }

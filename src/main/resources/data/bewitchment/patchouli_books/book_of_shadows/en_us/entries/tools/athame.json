@@ -1,17 +1,17 @@
 {
   "category": "bewitchment:tools",
-  "name": "Athame",
+  "name": "athame",
   "priority": true,
   "icon": "bewitchment:athame",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The Athame is an essential tool to any witch. It can be used to gather special drops (such as heads) from mobs, and also has a lot of niche uses.$(br2)Being made out of Silver, it is perfectly usable against Vampires and Werewolves too."
+	  "text": "the athame is an essential tool to any witch. it can be used to gather special drops (such as heads) from mobs, and also has a lot of niche uses.$(br2)being made out of silver, it is perfectly usable against vampires and werewolves too."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:athame",
-	  "text": "By slaying a humanoid with an Athame while holding a Glass Bottle in the offhand, one can collect Bottles of Blood.$(br2)Athames are also used to start most sacrificial rituals."
+	  "text": "by slaying a humanoid with an athame while holding a glass bottle in the offhand, one can collect bottles of blood.$(br2)athames are also used to start most sacrificial rituals."
 	}
   ]
 }

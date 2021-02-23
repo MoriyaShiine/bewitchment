@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:tools",
-  "name": "Crystal Ball",
+  "name": "crystal ball",
   "icon": "bewitchment:crystal_ball",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Crystal Balls are common divination tools.$(br2)When used, they will give the caster a fortune, at the cost of some ME drawn from a nearby Altar.$(br2)Additionally, Crystal Balls may be used for scrying. When used with a Taglock, it will give precise information on the target."
+	  "text": "crystal balls are common divination tools.$(br2)when used, they will give the caster a fortune, at the cost of some me drawn from a nearby altar.$(br2)additionally, crystal balls may be used for scrying. when used with a taglock, it will give precise information on the target."
 	},
 	{
 	  "type": "crafting",

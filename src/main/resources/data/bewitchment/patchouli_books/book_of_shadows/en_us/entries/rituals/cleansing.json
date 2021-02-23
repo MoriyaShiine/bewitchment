@@ -1,17 +1,17 @@
 {
   "category": "bewitchment:rituals",
-  "name": "Cleansing",
+  "name": "cleansing",
   "icon": "minecraft:golden_apple",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The ritual of Cleansing calls on the Light to cleanse its target of curses. The target is specified with a Taglock.$(br2)The ritual is also applicable to Zombie Villagers. Doing so will turn them into normal Villagers."
+	  "text": "the ritual of cleansing calls on the light to cleanse its target of curses. the target is specified with a taglock.$(br2)the ritual is also applicable to zombie villagers. doing so will turn them into normal villagers."
 	},
 	{
 	  "type": "bewitchment:ritual",
 	  "recipe": "bewitchment:rituals/cleansing",
-	  "text": "Note that this ritual is not guaranteed to succeed. Some curses may be harder to get rid of, but -just like with washing- rubbing hard enough will get anything off."
+	  "text": "note that this ritual is not guaranteed to succeed. some curses may be harder to get rid of, but -just like with washing- rubbing hard enough will get anything off."
 	}
   ]
 }

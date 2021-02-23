@@ -1,17 +1,17 @@
 {
   "category": "bewitchment:curses",
-  "name": "Arachnophobia",
+  "name": "arachnophobia",
   "icon": "minecraft:spider_eye",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Through the power of magic and random asexual reproduction, this curse will cause a massive fear of spiders that may even extend over the duration of the actual curse."
+	  "text": "through the power of magic and random asexual reproduction, this curse will cause a massive fear of spiders that may even extend over the duration of the actual curse."
 	},
 	{
 	  "type": "bewitchment:curse",
 	  "recipe": "bewitchment:curses/arachnophobia",
-	  "text": "You do not want to be around spiders while under this curse."
+	  "text": "you do not want to be around spiders while under this curse."
 	}
   ]
 }

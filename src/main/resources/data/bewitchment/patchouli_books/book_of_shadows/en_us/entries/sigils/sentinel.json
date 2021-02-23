@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:sigils",
-  "name": "Sentinel",
+  "name": "sentinel",
   "icon": "bewitchment:sentinel_sigil",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The Sentinel sigil traps the spirit of a Ghost. When activated, it will apply a random debuff."
+	  "text": "the sentinel sigil traps the spirit of a ghost. when activated, it will apply a random debuff."
 	},
 	{
 	  "type": "crafting",

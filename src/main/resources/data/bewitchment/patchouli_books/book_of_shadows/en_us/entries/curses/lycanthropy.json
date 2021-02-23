@@ -1,16 +1,16 @@
 {
   "category": "bewitchment:curses",
-  "name": "Lycanthropy",
+  "name": "lycanthropy",
   "icon": "bewitchment:aconite",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Lycanthropy is a ferocious disease that scars the mind, the body, and the soul. Under a full moon, its victims transform into Werewolves craving fresh meat.$(br2)While physically strong, Silver will harm them, as will Aconite. Werewolves also exclusively feed on meat, no matter their form."
+	  "text": "lycanthropy is a ferocious disease that scars the mind, the body, and the soul. under a full moon, its victims transform into werewolves craving fresh meat.$(br2)while physically strong, silver will harm them, as will aconite. werewolves also exclusively feed on meat, no matter their form."
 	},
 	{
 	  "type": "text",
-	  "text": "Their weakness to Silver also implies an inability to hold tools such as an Athame for too long.$(br2)Lycanthropy is contracted from another Werewolf - as long as it's not a newly infected lycanthrope - while under the curse of Susceptibility; you must still somehow survive though.$(br2)That sounds like a wonderful idea!"
+	  "text": "their weakness to silver also implies an inability to hold tools such as an athame for too long.$(br2)lycanthropy is contracted from another werewolf - as long as it's not a newly infected lycanthrope - while under the curse of susceptibility; you must still somehow survive though.$(br2)that sounds like a wonderful idea!"
 	}
   ]
 }
