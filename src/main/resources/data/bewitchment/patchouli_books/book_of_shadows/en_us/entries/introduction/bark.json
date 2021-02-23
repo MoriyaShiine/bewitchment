@@ -6,12 +6,12 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Some say that bark is the most magically potent part of the tree, so early witches learned to strip bark from wood using an Athame.$(br2)Do note that some woods are simply too hard to strip bark from."
+	  "text": "Some say that bark is the most magically potent part of the tree, so early witches learned to strip bark from wood using an athame.$(br2)Do note that some woods are simply too hard to strip bark from."
 	},
 	{
 	  "type": "campfire",
 	  "recipe": "bewitchment:wood_ash_from_campfire_cooking",
-	  "text": "Bark can be used for many things, one of those being Wood Ash.$(br2)Wood Ash is created by putting Bark on a Campfire. When thrown into a filled Witch Cauldron, it will immediately empty it."
+	  "text": "Bark can be used for many things, one of those being wood ash.$(br2)Wood ash is created by putting bark on a campfire. When thrown into a filled witch cauldron, it will immediately empty it."
 	}
   ]
 }

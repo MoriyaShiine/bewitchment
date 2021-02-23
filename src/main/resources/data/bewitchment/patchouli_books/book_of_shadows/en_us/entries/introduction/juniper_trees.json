@@ -5,14 +5,14 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The Juniper Tree, in stark contrast to the Cypress Tree, represents life. You can insert up to three Taglocks into blocks made with this wood. On use, these blocks will gather Taglocks of anyone but their owner.$(br2)Taglocks are inserted by sneaking while using them on the block; you can gather them by using an Athame while sneaking."
+	  "text": "The juniper tree, in stark contrast to the cypress tree, represents life. You can insert up to three taglocks into blocks made with this wood. On use, these blocks will gather taglocks of anyone but their owner.$(br2)Taglocks are inserted by sneaking while using them on the block; you can gather them by using an athame while sneaking."
 	},
 	{
 	  "type": "image",
 	  "images": [
 		"bewitchment:textures/gui/patchouli/juniper_tree.png"
 	  ],
-	  "text": "The Juniper tree spawns exclusively in savannas.",
+	  "text": "The juniper tree spawns exclusively in savannas.",
 	  "border": true
 	},
 	{
