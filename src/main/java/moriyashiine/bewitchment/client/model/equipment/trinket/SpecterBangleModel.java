@@ -13,7 +13,7 @@ public class SpecterBangleModel extends EntityModel<Entity> {
 		textureWidth = 16;
 		textureHeight = 16;
 		spectreBangle = new ModelPart(this);
-		spectreBangle.setPivot(0, -2, 0);
+		spectreBangle.setPivot(0, -3, 0);
 		spectreBangle.setTextureOffset(0, 0).addCuboid(-2.0F, -1.0F, -2.0F, 4.0F, 2.0F, 4.0F, 0.1F, false);
 		
 		ModelPart eye = new ModelPart(this);
