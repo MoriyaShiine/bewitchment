@@ -376,12 +376,12 @@ public class WerewolfEntityModel<T extends WerewolfEntity> extends BipedEntityMo
 		rArm01.roll += 0.2356f;
 		copyRotation(BipedLeftLeg, super.leftLeg);
 		BipedLeftLeg.pitch /= 2;
-		BipedLeftLeg.pitch -= 3/4f;
+		BipedLeftLeg.pitch -= 3 / 4f;
 		BipedLeftLeg.yaw += -0.2269f;
 		BipedLeftLeg.roll -= 0.0873f;
 		copyRotation(BipedRightLeg, super.rightLeg);
 		BipedRightLeg.pitch /= 2;
-		BipedRightLeg.pitch -= 3/4f;
+		BipedRightLeg.pitch -= 3 / 4f;
 		BipedRightLeg.yaw -= -0.2269f;
 		BipedRightLeg.roll += 0.0873f;
 		tail01.roll = MathHelper.sin(animationProgress / 8) / 8;

@@ -30,7 +30,7 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
 	@Inject(method = "renderItem", at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/client/util/math/MatrixStack;translate(DDD)V"))
 	private void renderItem(LivingEntity entity, ItemStack stack, ModelTransformation.Mode transformationMode, Arm arm, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo callbackInfo) {
 		if (entity instanceof WerewolfEntity) {
-			matrices.translate((arm == Arm.LEFT ? 0.75f : -0.75f) / 3.5f, 1/3f, -7/8f);
+			matrices.translate((arm == Arm.LEFT ? 0.75f : -0.75f) / 3.5f, 1 / 3f, -7 / 8f);
 			matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(45));
 		}
 		else if (entity instanceof DemonEntity) {
