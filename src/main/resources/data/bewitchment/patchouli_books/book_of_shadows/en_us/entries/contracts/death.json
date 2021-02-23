@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The $(marked)Death$() Contract instantly kills its target.$(br2)It $(o)may$() also curse whoever uses it."
+	  "text": "The Death Contract instantly kills its target.$(br2)It may also curse whoever uses it."
 	}
   ]
 }

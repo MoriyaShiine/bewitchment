@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Beings under the $(marked)War$() contract cause aggression among nearby entities, causing them to attack each other first.$(br2)This may cause the last remaining entity in such a mayhem to become even stronger."
+	  "text": "Beings under the War contract cause aggression among nearby entities, causing them to attack each other first.$(br2)This may cause the last remaining entity in such a mayhem to become even stronger."
 	}
   ]
 }

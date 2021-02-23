@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Apathy$() withers the soul, making it unable to attain $(marked)Magical Energy$(). $(marked)Villagers$() and $(marked)Demons$() will reject trading, and animals will flee from the victim of this powerful curse."
+	  "text": "Apathy withers the soul, making it unable to attain Magical Energy. Villagers and Demons will reject trading, and animals will flee from the victim of this powerful curse."
 	},
 	{
 	  "type": "bewitchment:curse",

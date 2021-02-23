@@ -6,12 +6,12 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This spear is the hunting weapon of $(l:bewitchment:creatures/herne)Herne$().$(br2)Much like a $(item)Trident$(), it can be thrown towards a target."
+	  "text": "This spear is the hunting weapon of Herne.$(br2)Much like a Trident, it can be thrown towards a target."
 	},
 	{
 	  "type": "spotlight",
 	  "item": "bewitchment:horned_spear",
-	  "text": "The $(item)Horned Spear$() will always return to whoever threw it.$(br2)It can be repaired with $(item)Netherite Ingots$()."
+	  "text": "The Horned Spear will always return to whoever threw it.$(br2)It can be repaired with Netherite Ingots."
 	}
   ]
 }

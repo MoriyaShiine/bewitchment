@@ -6,12 +6,12 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The ritual of $(marked)Binding$() uses greater demonic power to cross the soul of the caster and an animal they hold dear, making it a $(marked)familiar$(). The animal the Ritual is applied to is defined via $(item)Taglock$().$(br2)Do note that not everything can be bound as a familiar; possible familiars are usually mentioned in this book."
+	  "text": "The ritual of Binding uses greater demonic power to cross the soul of the caster and an animal they hold dear, making it a familiar. The animal the Ritual is applied to is defined via Taglock.$(br2)Do note that not everything can be bound as a familiar; possible familiars are usually mentioned in this book."
 	},
 	{
 	  "type": "bewitchment:ritual",
 	  "recipe": "bewitchment:rituals/binding",
-	  "text": "Binding a familiar is a greater step and comes with several benefits depending on the animal chosen.$(br2)$(o)Entries for all possible familiars in this book have been expanded$()."
+	  "text": "Binding a familiar is a greater step and comes with several benefits depending on the animal chosen.$(br2)Entries for all possible familiars in this book have been expanded."
 	},
 	{
 	  "type": "text",
@@ -20,7 +20,7 @@
 	{
 	  "type": "bewitchment:ritual",
 	  "recipe": "bewitchment:rituals/severing",
-	  "text": "A Ritual of $(marked)Severing$() can be cast, should you wish to part ways with your familiar."
+	  "text": "A Ritual of Severing can be cast, should you wish to part ways with your familiar."
 	}
   ]
 }

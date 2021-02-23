@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The $(marked)Extending$() sigil will increase the duration of any nearby $(l:bewitchment:tools/incense)incense$() around it."
+	  "text": "The Extending sigil will increase the duration of any nearby incense around it."
 	},
 	{
 	  "type": "crafting",

@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Magic Sponge$() will reduce damage from magic sources, and in turn refill the target's internal $(marked)ME$() buffer based on the damage."
+	  "text": "Magic Sponge will reduce damage from magic sources, and in turn refill the target's internal ME buffer based on the damage."
 	},
 	{
 	  "type": "spotlight",

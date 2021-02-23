@@ -8,7 +8,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Ghosts are lost souls, wandering the Wake at night wherever they can.$(br2)Upon noticing nearby humans, they will apply their short-lived curses in the form of negative potion effects.$(br2)Ghosts are immune to mundane weapons, save for those of $(l:bewitchment:introduction/silver)$(item)Silver$() and those enchanted with $(marked)Smite$()."
+	  "text": "Ghosts are lost souls, wandering the Wake at night wherever they can.$(br2)Upon noticing nearby humans, they will apply their short-lived curses in the form of negative potion effects.$(br2)Ghosts are immune to mundane weapons, save for those of Silver and those enchanted with Smite."
 	},
 	{
 	  "type": "entity",
@@ -16,7 +16,7 @@
 	  "offset": 0.1,
 	  "rotate": false,
 	  "default_rotation": 45,
-	  "text": "Ghosts will drop $(item)Ectoplasm$()."
+	  "text": "Ghosts will drop Ectoplasm."
 	}
   ]
 }

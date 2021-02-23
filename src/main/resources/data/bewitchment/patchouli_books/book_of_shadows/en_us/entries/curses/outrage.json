@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This curse will make normally neutral mobs such as $(marked)Endermen$() or $(marked)Zombified Piglins$() aggressive towards the target."
+	  "text": "This curse will make normally neutral mobs such as Endermen or Zombified Piglins aggressive towards the target."
 	},
 	{
 	  "type": "bewitchment:curse",

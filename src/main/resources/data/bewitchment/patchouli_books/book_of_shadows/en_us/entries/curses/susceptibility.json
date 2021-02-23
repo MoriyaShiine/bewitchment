@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This curse weakens the flesh, making the target more susceptible to all of the Dark: poisons become more potent, demons hit harder and rumor has it that this curse is even tied to much worse fates such as $(l:bewitchment:curses/vampirism)$(marked)vampirism$() and $(l:bewitchment:curses/lycanthropy)$(marked)lycanthropy$()."
+	  "text": "This curse weakens the flesh, making the target more susceptible to all of the Dark: poisons become more potent, demons hit harder and rumor has it that this curse is even tied to much worse fates such as vampirism and lycanthropy."
 	},
 	{
 	  "type": "bewitchment:curse",

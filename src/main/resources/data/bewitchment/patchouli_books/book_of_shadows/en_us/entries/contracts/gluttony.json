@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Gluttony$() doubles the nourishing effect of food... or does it make you consume just as much?"
+	  "text": "Gluttony doubles the nourishing effect of food... or does it make you consume just as much?"
 	}
   ]
 }

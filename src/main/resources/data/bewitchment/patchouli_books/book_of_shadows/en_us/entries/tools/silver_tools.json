@@ -5,7 +5,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(item)Silver tools$() are a simple upgrade to $(item)Iron tools$(). $(br)They are crafted using a $(item)Smithing Table$(). While still having most of Iron's qualities, Silver tools inherit abilities from $(item)Golden tools$().$(br2)They are a great defense against $(marked)unholy entities$(), dealing more damage or taking less damage respectively."
+	  "text": "Silver tools are a simple upgrade to Iron tools. $(br)They are crafted using a Smithing Table. While still having most of Iron's qualities, Silver tools inherit abilities from Golden tools.$(br2)They are a great defense against unholy entities, dealing more damage or taking less damage respectively."
 	},
 	{
 	  "type": "smithing",
@@ -24,7 +24,7 @@
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:silver_arrow",
-	  "text": "$(item)Silver Arrows$() can be shot just like normal arrows, applying additional damage as Silver would."
+	  "text": "Silver Arrows can be shot just like normal arrows, applying additional damage as Silver would."
 	},
 	{
 	  "type": "smithing",

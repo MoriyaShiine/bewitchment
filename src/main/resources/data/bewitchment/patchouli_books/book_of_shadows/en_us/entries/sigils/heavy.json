@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The $(marked)Heavy$() sigil will magically increase fall damage on everything around it $(o)as long as it's not blacklisted$()."
+	  "text": "The Heavy sigil will magically increase fall damage on everything around it as long as it's not blacklisted."
 	},
 	{
 	  "type": "crafting",

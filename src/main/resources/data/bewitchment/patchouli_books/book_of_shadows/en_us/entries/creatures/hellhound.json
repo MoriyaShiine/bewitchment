@@ -9,7 +9,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Hellhounds$() spawn in the $(marked)Nether$(). $(br2)Filled with aggression, they will attack anyone nearby, though they will respect wearers of $(l:bewitchment:tools/besmirched_armor)$(item)Besmirched Armor$()."
+	  "text": "Hellhounds spawn in the Nether. $(br2)Filled with aggression, they will attack anyone nearby, though they will respect wearers of Besmirched Armor."
 	},
 	{
 	  "type": "entity",
@@ -17,7 +17,7 @@
 	  "scale": 0.6,
 	  "rotate": false,
 	  "default_rotation": 45,
-	  "text": "Hellhounds will drop $(item)Demon Horns$()."
+	  "text": "Hellhounds will drop Demon Horns."
 	}
   ]
 }

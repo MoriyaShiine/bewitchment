@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The active sigil of $(marked)Cleansing$() removes all harmful potion effects on whoever activates it."
+	  "text": "The active sigil of Cleansing removes all harmful potion effects on whoever activates it."
 	},
 	{
 	  "type": "crafting",

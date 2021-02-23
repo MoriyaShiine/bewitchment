@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(item)Waystones$() are infused with ender-energy, making them able to store locations.$(br)This, in turn, allows them to redirect $(l:bewitchment:rituals/rituals)rituals$(), casting them in a different place.$(br2)$(o)To redirect a ritual, use the Waystone on the Golden Chalk after the ritual has been started$()."
+	  "text": "Waystones are infused with ender-energy, making them able to store locations.$(br)This, in turn, allows them to redirect rituals, casting them in a different place.$(br2)To redirect a ritual, use the Waystone on the Golden Chalk after the ritual has been started."
 	},
 	{
 	  "type": "crafting",

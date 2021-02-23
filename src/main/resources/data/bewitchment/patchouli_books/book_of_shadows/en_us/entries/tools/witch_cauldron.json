@@ -6,18 +6,18 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "By reinforcing a regular cauldron with $(l:bewitchment:introduction/silver)Silver$(), you can create a $(item)Witch Cauldron$().$(br2)This magical cauldron is extremely versatile in use and is namely used for $(l:bewitchment:brewing/elemental_oils)Oil Crafting$(), $(l:bewitchment:brewing/brewing_basics)Brewing$() and $(l:bewitchment:tools/witch_cauldron#teleport)Teleportation$()."
+	  "text": "By reinforcing a regular cauldron with Silver, you can create a Witch Cauldron.$(br2)This magical cauldron is extremely versatile in use and is namely used for Oil Crafting, Brewing and Teleportation."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:witch_cauldron",
-	  "text": "$(marked)Items$() can be tossed into the $(item)Witch Cauldron$() once it $(marked)boils$(). To make it boil, place hot blocks such as $(item)Lava$() or $(item)Magma Blocks$() below it.$(br)Note that the $(item)Witch Cauldron$() often requires $(l:bewitchment:introduction/altars)Altar Power$(), except for $(l:bewitchment:brewing/elemental_oils)Oil Crafting$()."
+	  "text": "Items can be tossed into the Witch Cauldron once it boils. To make it boil, place hot blocks such as Lava or Magma Blocks below it.$(br)Note that the Witch Cauldron often requires Altar Power, except for Oil Crafting."
 	},
 	{
 	  "type": "text",
 	  "title": "Teleportation",
 	  "anchor": "teleport",
-	  "text": "To teleport with a $(item)Witch Cauldron$(), simply throw in an $(item)Ender Pearl$(), step on it and say your destination. That destination must be another $(item)Witch Cauldron$() that has been named with a $(item)Name Tag$().$(br2)Teleportation requires $(l:bewitchment:introduction/altars)Altar Power$()."
+	  "text": "To teleport with a Witch Cauldron, simply throw in an Ender Pearl, step on it and say your destination. That destination must be another Witch Cauldron that has been named with a Name Tag.$(br2)Teleportation requires Altar Power."
 	}
   ]
 }

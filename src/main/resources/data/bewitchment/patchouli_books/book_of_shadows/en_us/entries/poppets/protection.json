@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The $(item)Protection Poppet$() won't protect you from Zombies or Skeletons; however, it will ward off environmental damage sources such as $(marked)fire$(), $(marked)drowning$(), and $(marked)velocity$() from anyone bound to it."
+	  "text": "The Protection Poppet won't protect you from Zombies or Skeletons; however, it will ward off environmental damage sources such as fire, drowning, and velocity from anyone bound to it."
 	},
 	{
 	  "type": "crafting",

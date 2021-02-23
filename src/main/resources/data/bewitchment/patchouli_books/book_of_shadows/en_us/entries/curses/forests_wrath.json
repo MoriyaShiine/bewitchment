@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This curse casts nature's anguish back to mankind, causing anyone cursed with it to suffer the same way it does. This doubles damage from fire, as well as from $(item)Axes$()."
+	  "text": "This curse casts nature's anguish back to mankind, causing anyone cursed with it to suffer the same way it does. This doubles damage from fire, as well as from Axes."
 	},
 	{
 	  "type": "bewitchment:curse",

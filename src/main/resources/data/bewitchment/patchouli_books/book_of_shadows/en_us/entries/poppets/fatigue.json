@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "When bound to the $(item)Fatigue Poppet$(), enemies that attack you will be heavily weakened for a few seconds."
+	  "text": "When bound to the Fatigue Poppet, enemies that attack you will be heavily weakened for a few seconds."
 	},
 	{
 	  "type": "crafting",

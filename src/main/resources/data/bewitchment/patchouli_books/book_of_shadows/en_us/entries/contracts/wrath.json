@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Sometimes getting hurt makes you angry, and with the contract of $(marked)Wrath$() you can finally manifest that anger reasonably! Signing this contract will increase your damage output with lower health.$(br2)It may also increase damage intake."
+	  "text": "Sometimes getting hurt makes you angry, and with the contract of Wrath you can finally manifest that anger reasonably! Signing this contract will increase your damage output with lower health.$(br2)It may also increase damage intake."
 	}
   ]
 }

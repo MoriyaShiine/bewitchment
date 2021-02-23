@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Ethereal$() entities cannot receive any damage, but can also not deal any."
+	  "text": "Ethereal entities cannot receive any damage, but can also not deal any."
 	},
 	{
 	  "type": "spotlight",

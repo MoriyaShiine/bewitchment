@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The $(marked)Sentinel$() sigil traps the spirit of a $(l:bewitchment:creatures/ghost)$(marked)Ghost$(). When activated, it will apply a random debuff."
+	  "text": "The Sentinel sigil traps the spirit of a Ghost. When activated, it will apply a random debuff."
 	},
 	{
 	  "type": "crafting",

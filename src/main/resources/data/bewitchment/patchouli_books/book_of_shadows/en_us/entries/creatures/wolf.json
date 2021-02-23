@@ -6,13 +6,13 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Tamed $(marked)Wolves$() are precious creatures; when their friend is in need, they are usually ready to help, even risking their own life.$(br2)When bound as a familiar, Dogs will increase the durability of $(l:bewitchment:poppets/poppet_practice)$(marked)poppets$().$(br2)Their protective spirit will also naturally increase the armor of their witch."
+	  "text": "Tamed Wolves are precious creatures; when their friend is in need, they are usually ready to help, even risking their own life.$(br2)When bound as a familiar, Dogs will increase the durability of poppets.$(br2)Their protective spirit will also naturally increase the armor of their witch."
 	},
 	{
 	  "type": "entity",
 	  "entity": "minecraft:wolf",
 	  "name": "Wolf",
-	  "text": "$(o)Woof$()",
+	  "text": "Woof",
 	  "rotate": false,
 	  "default_rotation": 45,
 	  "scale": 0.6

@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This contract makes you crave $(marked)Violence$().$(br2)Anything slain by your hand will heal you, but you may hunger for more."
+	  "text": "This contract makes you crave Violence.$(br2)Anything slain by your hand will heal you, but you may hunger for more."
 	}
   ]
 }

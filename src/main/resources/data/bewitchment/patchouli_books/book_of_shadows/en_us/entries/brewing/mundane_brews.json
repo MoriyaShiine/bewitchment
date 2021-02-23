@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "While a $(item)Witch Cauldron$() can be used to make much more incredible brews, some witches may at times prefer to use more subtle brews.$(br)All brews in this entry can be obtained via other means, though the Witch Cauldron may allow you to make them stronger.$(br)Mundane brews fabricated in the Witches Cauldron use slightly different ingredients. "
+	  "text": "While a Witch Cauldron can be used to make much more incredible brews, some witches may at times prefer to use more subtle brews.$(br)All brews in this entry can be obtained via other means, though the Witch Cauldron may allow you to make them stronger.$(br)Mundane brews fabricated in the Witches Cauldron use slightly different ingredients."
 	},
 	{
 	  "type": "spotlight",
@@ -37,25 +37,25 @@
 	  "type": "spotlight",
 	  "title": "Haste",
 	  "item": "minecraft:dandelion",
-	  "text": "Increases $(marked)mining speed$()."
+	  "text": "Increases mining speed."
 	},
 	{
 	  "type": "spotlight",
 	  "title": "Hunger",
 	  "item": "minecraft:rotten_flesh",
-	  "text": "Applies a $(marked)Hunger$() effect."
+	  "text": "Applies a Hunger effect."
 	},
 	{
 	  "type": "spotlight",
 	  "title": "Instant Health",
 	  "item": "bewitchment:garlic",
-	  "text": "Instantly heals a flat amount of health, using the healing properties of $(l:bewitchment:introduction/crops)$(item)Garlic$()."
+	  "text": "Instantly heals a flat amount of health, using the healing properties of $(l:bewitchment:introduction/crops)Garlic."
 	},
 	{
 	  "type": "spotlight",
 	  "title": "Instant Damage",
 	  "item": "bewitchment:cypress_bark",
-	  "text": "Instantly damages a flat amount of health, harnessing the deadly energies of $(l:bewitchment:introduction/cypress_trees)$(item)Cypress$()."
+	  "text": "Instantly damages a flat amount of health, harnessing the deadly energies of $(l:bewitchment:introduction/cypress_trees)Cypress."
 	},
 	{
 	  "type": "spotlight",
@@ -67,7 +67,7 @@
 	  "type": "spotlight",
 	  "title": "Jump Boost",
 	  "item": "minecraft:rabbit_foot",
-	  "text": "$(marked)Jump Boost$() is self-explanatory."
+	  "text": "Jump Boost is self-explanatory."
 	},
 	{
 	  "type": "spotlight",
@@ -79,7 +79,7 @@
 	  "type": "spotlight",
 	  "title": "Mining Fatigue",
 	  "item": "minecraft:poppy",
-	  "text": "$(marked)Mining Fatigue$() makes the target hit much slower."
+	  "text": "Mining Fatigue makes the target hit much slower."
 	},
 	{
 	  "type": "spotlight",
@@ -103,7 +103,7 @@
 	  "type": "spotlight",
 	  "title": "Regeneration",
 	  "item": "bewitchment:juniper_bark",
-	  "text": "By utilizing the life energies from $(l:bewitchment:introduction/juniper_trees)Juniper$(), $(marked)Regeneration$() quickens the healing process when applied."
+	  "text": "By utilizing the life energies from $(l:bewitchment:introduction/juniper_trees)Juniper, Regeneration quickens the healing process when applied."
 	},
 	{
 	  "type": "spotlight",
@@ -127,13 +127,13 @@
 	  "type": "spotlight",
 	  "title": "Speed",
 	  "item": "minecraft:sugar_cane",
-	  "text": "Increases movement speed, using the energizing qualities of $(item)Sugar Cane$()."
+	  "text": "Increases movement speed, using the energizing qualities of Sugar Cane."
 	},
 	{
 	  "type": "spotlight",
 	  "title": "Strength",
 	  "item": "bewitchment:oak_bark",
-	  "text": "Using the powers of $(marked)Oak$(), this increases damage output."
+	  "text": "Using the powers of Oak, this increases damage output."
 	},
 	{
 	  "type": "spotlight",
@@ -145,7 +145,7 @@
 	  "type": "spotlight",
 	  "title": "Weakness",
 	  "item": "minecraft:red_mushroom",
-	  "text": "Reduces the target's damage.$(br2)You may also use a $(item)Brown Mushroom$() for this."
+	  "text": "Reduces the target's damage.$(br2)You may also use a Brown Mushroom for this."
 	},
 	{
 	  "type": "spotlight",

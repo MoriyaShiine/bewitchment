@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "By applying the cleansing powers of $(marked)Birch$(), the $(marked)Purity$() effect can weaken the effects of harmful potions.$(br2)For each intensity, this potion will reduce the power of a negative potion, also reducing its own power."
+	  "text": "By applying the cleansing powers of Birch, the Purity effect can weaken the effects of harmful potions.$(br2)For each intensity, this potion will reduce the power of a negative potion, also reducing its own power."
 	},
 	{
 	  "type": "spotlight",

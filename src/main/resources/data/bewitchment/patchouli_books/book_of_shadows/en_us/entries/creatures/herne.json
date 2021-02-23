@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Herne$(), the Lord of the Wild Hunt, is commonly pledged to by suffering $(l:bewitchment:curses/lycanthropy)$(marked)lycanthropes$(). He can grant almost total control over the curse, allowing victims to transform on will. Alternatively, he can be offered $(l:bewitchment:introduction/crops)$(item)Aconite$(), removing the curse entirely.$(br2)Summoning him is rather elaborate, and will be outlined in this entry."
+	  "text": "Herne, the Lord of the Wild Hunt, is commonly pledged to by suffering lycanthropes. He can grant almost total control over the curse, allowing victims to transform on will. Alternatively, he can be offered Aconite, removing the curse entirely.$(br2)Summoning him is rather elaborate, and will be outlined in this entry."
 	},
 	{
 	  "type": "entity",
@@ -16,11 +16,11 @@
 	{
 	  "type": "text",
 	  "title": "Summoning Herne",
-	  "text": "To summon Herne, several things are needed:$(li)a $(l:bewitchment:tools/incense#mortal_coil)$(marked)Mortal Coil Incense$()$(li)a $(marked)Wolf$() and $(li)a $(marked)forest or $(marked)taiga$() biome.$(br2)First, start the incense in the right biome, at night. Then you will need to slay a Wolf with an $(l:bewitchment:tools/athame)$(item)Athame$(), not too far away.$()"
+	  "text": "To summon Herne, several things are needed:$(li)a Mortal Coil Incense$(li)a Wolf $(li)a forest or taiga biome$(br2)First, start the incense in the right biome, at night. Then you will need to slay a Wolf with an Athame, not too far away."
 	},
 	{
 	  "type": "text",
-	  "text": "Choose the place for doing this wisely; you'll need to keep Herne around if you want to pledge to him.$(br2)$(o)Once pledged, you can toggle your Wolf-form by pressing [$(k:bewitchment.transformation_ability)].$()"
+	  "text": "Choose the place for doing this wisely; you'll need to keep Herne around if you want to pledge to him.$(br2)Once pledged, you can toggle your Wolf-form by pressing [$(k:bewitchment.transformation_ability)]."
 	}
   ]
 }

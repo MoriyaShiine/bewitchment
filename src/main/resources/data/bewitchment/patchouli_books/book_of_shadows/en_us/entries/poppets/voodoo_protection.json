@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The $(item)Voodoo Protection Poppet$() is the response-counterpart to the $(l:bewitchment:poppets/voodoo)$(item)Voodoo Poppet$().$(br2)By redirecting malicious energy, anyone bound to it is completely immune to the effects of a Voodoo Doll."
+	  "text": "The Voodoo Protection Poppet is the response-counterpart to the Voodoo Poppet.$(br2)By redirecting malicious energy, anyone bound to it is completely immune to the effects of a Voodoo Doll."
 	},
 	{
 	  "type": "crafting",

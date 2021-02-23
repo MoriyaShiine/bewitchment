@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The $(marked)Thorns$() effect does as its name implies. Every entity that tries to damage the user will receive some damage."
+	  "text": "The Thorns effect does as its name implies. Every entity that tries to damage the user will receive some damage."
 	},
 	{
 	  "type": "spotlight",

@@ -6,12 +6,12 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Cats$() are finicky things. Even so, their mere presence is soothing to many.$(br2)When bound as a familiar, Cats will greatly help with $(l:bewitchent:rituals/ritual_intro)$(marked)rituals$().$(br)In addition, $(marked)Creepers$() will stay away from witches with a Cat familiar."
+	  "text": "Cats are finicky things. Even so, their mere presence is soothing to many.$(br2)When bound as a familiar, Cats will greatly help with rituals.$(br)In addition, Creepers will stay away from witches with a Cat familiar."
 	},
 	{
 	  "type": "entity",
 	  "entity": "minecraft:cat",
-	  "text": "$(o)May bring dead birds by accident.$()",
+	  "text": "May bring dead birds by accident.",
 	  "rotate": false,
 	  "default_rotation": 45,
 	  "scale": 0.6

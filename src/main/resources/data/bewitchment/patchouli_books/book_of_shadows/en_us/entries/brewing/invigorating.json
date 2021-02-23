@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This will fill the internal $(marked)ME$() buffer of whoever consumes it by a flat amount."
+	  "text": "This will fill the internal ME buffer of whoever consumes it by a flat amount."
 	},
 	{
 	  "type": "spotlight",

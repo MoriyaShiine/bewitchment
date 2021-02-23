@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Polymorph$() must be one of the most versatile potion effects. When a Polymorph potion is consumed, the target will change its form into the target of the $(l:bewitchment:tools/taglock)$(item)Taglock$() used.$(br2)The brew can be made into a $(item)Splash Potion$() or similar variants, just like other brews."
+	  "text": "Polymorph must be one of the most versatile potion effects. When a Polymorph potion is consumed, the target will change its form into the target of the $(l:bewitchment:tools/taglock)Taglock used.$(br2)The brew can be made into a Splash Potion or similar variants, just like other brews."
 	},
 	{
 	  "type": "spotlight",

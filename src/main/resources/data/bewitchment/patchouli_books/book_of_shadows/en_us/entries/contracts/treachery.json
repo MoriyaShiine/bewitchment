@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This contract makes taking $(l:bewitchment:tools/taglock)$(item)Taglocks$() easier.$(br2)I repeat: this contract makes taking Taglocks easier."
+	  "text": "This contract makes taking $(l:bewitchment:tools/taglock)Taglocks easier.$(br2)I repeat: this contract makes taking Taglocks easier."
 	}
   ]
 }

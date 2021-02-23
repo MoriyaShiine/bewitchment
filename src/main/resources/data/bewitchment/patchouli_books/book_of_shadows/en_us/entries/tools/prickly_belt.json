@@ -6,12 +6,12 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The $(item)Prickly Belt$() is a handy $(marked)trinket$(), able to store $(marked)potion effects$().$(br)When the wearer of the Belt is harmed, they will receive $(marked)positive$() and $(marked)neutral$() potion effects stored in the Belt. If a $(marked)negative$() effect is stored in the Belt, it will instead be applied to the $(marked)attacker$(), if present.$(br)Either way, this requires a tiny bit of $(marked)ME$()."
+	  "text": "The Prickly Belt is a handy trinket, able to store potion effects.$(br)When the wearer of the Belt is harmed, they will receive positive and neutral potion effects stored in the Belt. If a negative effect is stored in the Belt, it will instead be applied to the attacker, if present.$(br)Either way, this requires a tiny bit of ME."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:prickly_belt",
-	  "text": "To add a potion effect, simply combine the Belt with a $(item)Potion$(). The amount of uses is based off on both $(marked)duration$() and $(marked)amplifier$() of the used potion.$(br2)$(o)You can equip this in the $(marked)Belt$()$(o) trinket slot."
+	  "text": "To add a potion effect, simply combine the Belt with a Potion. The amount of uses is based off on both duration and amplifier of the used potion.$(br2)You can equip this in the Belt trinket slot."
 	}
   ]
 }

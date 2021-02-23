@@ -5,7 +5,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The $(item)Taglock$() is yet another essential tool.$(br)It can gather an entity's hair, blood, and all things needed to establish a $(marked)connection$().$(br)To gather a Taglock from an entity, either sneak up from behind or search for their $(item)Bed$().$(br2)$(o)To gather a Taglock from a Bed, use the Taglock while sneaking so you don't accidentally sleep$()."
+	  "text": "The Taglock is yet another essential tool.$(br)It can gather an entity's hair, blood, and all things needed to establish a connection.$(br)To gather a Taglock from an entity, either sneak up from behind or search for their Bed.$(br2)To gather a Taglock from a Bed, use the Taglock while sneaking so you don't accidentally sleep."
 	},
 	{
 	  "type": "crafting",

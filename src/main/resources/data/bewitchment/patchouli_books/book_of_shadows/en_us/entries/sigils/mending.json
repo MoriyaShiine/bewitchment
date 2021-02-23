@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Mending$() is an $(marked)active sigil$().$(br)When activated, it will give $(marked)Regeneration$() and $(marked)Resistance$() to whoever activated it."
+	  "text": "Mending is an active sigil.$(br)When activated, it will give Regeneration and Resistance to whoever activated it."
 	},
 	{
 	  "type": "crafting",

@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This effect blocks whoever drinks it from using their internal $(marked)ME$() buffer. This means they can't use items that require magical energy."
+	  "text": "This effect blocks whoever drinks it from using their internal ME buffer. This means they can't use items that require magical energy."
 	},
 	{
 	  "type": "spotlight",

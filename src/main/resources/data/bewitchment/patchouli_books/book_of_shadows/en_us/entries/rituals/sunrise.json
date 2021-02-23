@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The ritual of $(marked)Sunrise$(), simply put, makes it day."
+	  "text": "The ritual of Sunrise, simply put, makes it day."
 	},
 	{
 	  "type": "bewitchment:ritual",

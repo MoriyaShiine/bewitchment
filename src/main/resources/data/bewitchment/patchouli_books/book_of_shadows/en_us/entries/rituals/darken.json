@@ -10,8 +10,7 @@
 	},
 	{
 	  "type": "bewitchment:ritual",
-	  "recipe": "bewitchment:rituals/darken",
-	  "text": "That's dark."
+	  "recipe": "bewitchment:rituals/darken"
 	}
   ]
 }

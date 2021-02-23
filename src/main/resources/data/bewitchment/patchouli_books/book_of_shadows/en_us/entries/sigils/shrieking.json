@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The $(marked)Shrieking$() sigil will cast a horrible sound when $(marked)activated$()."
+	  "text": "The Shrieking sigil will cast a horrible sound when activated."
 	},
 	{
 	  "type": "crafting",

@@ -6,12 +6,12 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This magnificent trinket will bend the shadows around the wearer $(o)as long as they're sneaking$().$(br)Doing so will consume $(marked)ME$() and turn the user completely invisible, with only slight smoke hinting at them."
+	  "text": "This magnificent trinket will bend the shadows around the wearer as long as they're sneaking.$(br)Doing so will consume ME and turn the user completely invisible, with only slight smoke hinting at them."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:specter_bangle",
-	  "text": "$(o)The Specter Bangle can be equipped in the $(marked)Aglet$()$(o) trinket slot$()."
+	  "text": "The Specter Bangle can be equipped in the Aglet trinket slot."
 	}
   ]
 }

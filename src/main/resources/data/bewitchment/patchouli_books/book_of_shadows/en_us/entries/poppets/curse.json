@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The ludicrous $(item)Curse Poppet$() will protect its owner from $(marked)$(l:bewitchment:curses/conducting_curses)curses$(). The poppet does so by absorbing the curse like a sponge. $(br2)Once the poppet has successfully absorbed a curse, it can be rebound and used to apply its absorbed curse to the target."
+	  "text": "The ludicrous Curse Poppet will protect its owner from curses. The poppet does so by absorbing the curse like a sponge. $(br2)Once the poppet has successfully absorbed a curse, it can be rebound and used to apply its absorbed curse to the target."
 	},
 	{
 	  "type": "crafting",

@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "A ritual that fills the air with water energies, making everything around it $(marked)wet$() and extinguishing flames.$(br2)Its range is rather limited, so you usually want to apply it in very special cases where you need something to be wet."
+	  "text": "A ritual that fills the air with water energies, making everything around it wet and extinguishing flames.$(br2)Its range is rather limited, so you usually want to apply it in very special cases where you need something to be wet."
 	},
 	{
 	  "type": "bewitchment:ritual",

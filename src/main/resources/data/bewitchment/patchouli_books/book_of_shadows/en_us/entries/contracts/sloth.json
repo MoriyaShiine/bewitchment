@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Sloth$() lets you regenerate faster when standing still, while also making you slower."
+	  "text": "Sloth lets you regenerate faster when standing still, while also making you slower."
 	}
   ]
 }

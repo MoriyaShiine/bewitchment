@@ -12,7 +12,7 @@
 	  "type": "spotlight",
 	  "title": "Ignition",
 	  "item": "minecraft:blaze_powder",
-	  "text": "$(marked)Ignition$() is not affected by intensity."
+	  "text": "Ignition is not affected by intensity."
 	}
   ]
 }

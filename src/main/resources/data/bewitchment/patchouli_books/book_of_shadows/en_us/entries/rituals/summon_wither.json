@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Summons the $(marked)Wither$().$(br2)Knowing the destructive tendencies of the Wither, you probably want to do this somewhere far away from your home."
+	  "text": "Summons the Wither.$(br2)Knowing the destructive tendencies of the Wither, you probably want to do this somewhere far away from your home."
 	},
 	{
 	  "type": "bewitchment:ritual",

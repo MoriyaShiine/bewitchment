@@ -5,7 +5,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(item)Silver$() is a prominent material in witchcraft, and a symbol of purity.$(br2)It is used as a base for many tools and ingredients that are all very effective against the undead and demons."
+	  "text": "Silver is a prominent material in witchcraft, and a symbol of purity.$(br2)It is used as a base for many tools and ingredients that are all very effective against the undead and demons."
 	},
 	{
 	  "type": "image",
@@ -18,7 +18,7 @@
 	{
 	  "type": "smelting",
 	  "recipe": "bewitchment:silver_ingot",
-	  "text": "Silver Ore can be processed in normal $(item)Furnaces$() and $(item)Blast Furnaces$()."
+	  "text": "Silver Ore can be processed in normal Furnaces and Blast Furnaces."
 	},
 	{
 	  "type": "crafting",

@@ -6,12 +6,12 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Via devilish courier, this ritual summons $(l:bewitchment:creatures/baphomet)Baphomet$(); you'll want to keep them away from other beings.$(br2)Prepare $(l:bewitchment:tools/grotesque_stew)$(item)Grotesque Stew$(), should you want to pledge to them."
+	  "text": "Via devilish courier, this ritual summons Baphomet; you'll want to keep them away from other beings.$(br2)Prepare Grotesque Stew, should you want to pledge to them."
 	},
 	{
 	  "type": "bewitchment:ritual",
 	  "recipe": "bewitchment:rituals/summon_baphomet",
-	  "text": "The ritual is started by sacrificing a $(marked)Sheep$() with an $(l:bewitchment:tools/athame)$(item)Athame$()."
+	  "text": "The ritual is started by sacrificing a Sheep with an Athame."
 	}
   ]
 }

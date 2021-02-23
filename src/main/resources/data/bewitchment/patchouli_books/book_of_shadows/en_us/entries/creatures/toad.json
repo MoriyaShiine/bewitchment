@@ -5,7 +5,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Toads$() can be found in $(marked)jungles$() and $(marked)swamps$(), jumping happily around."
+	  "text": "Toads can be found in jungles and swamps, jumping happily around."
 	},
 	{
 	  "type": "text",
@@ -18,7 +18,7 @@
 	  "rotate": false,
 	  "scale": 0.6,
 	  "default_rotation": 45,
-	  "text": "Toads can be tamed with $(item)Fermented Spider Eyes$(), and bred with normal $(item)Spider Eyes$()."
+	  "text": "Toads can be tamed with Fermented Spider Eyes, and bred with normal Spider Eyes."
 	}
   ]
 }

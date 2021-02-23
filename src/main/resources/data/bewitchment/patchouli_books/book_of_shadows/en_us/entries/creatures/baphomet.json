@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Baphomet$(), an ancient Greater Demon of magic, first Name of Fire, Flame etc. etc. provides contracts to many witches all over the world.$(br2)When pledging to them, one may acquire $(l:bewitchment:contracts/contracts_intro)$(item)Contracts$() for $(marked)experience$(), now without $(o)any$() drawbacks.$(br2)Baphomet can be $(l:bewitchment:rituals/summon_baphomet)$(marked)summoned$() by any sufficiently strong witch."
+	  "text": "Baphomet, an ancient Greater Demon of magic, first Name of Fire, Flame etc. etc. provides contracts to many witches all over the world.$(br2)When pledging to them, one may acquire Contracts for experience, now without any drawbacks.$(br2)Baphomet can be summoned by any sufficiently strong witch."
 	},
 	{
 	  "type": "entity",

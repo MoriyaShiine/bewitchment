@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Fraud$() makes Miss Fortune act in your favor.$(br2)$(marked)Villagers$() and $(l:bewitchment:creatures/demon)$(marked)Demons$() usually recognize frauds, refusing to trade with them."
+	  "text": "Fraud makes Miss Fortune act in your favor.$(br2)Villagers and $(l:bewitchment:creatures/demon)Demons usually recognize frauds, refusing to trade with them."
 	}
   ]
 }

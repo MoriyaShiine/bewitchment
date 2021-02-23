@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The ritual of $(marked)Divination$() searches the earth for the specific block under the center Glyph (that is under the block it is attached on).$(br2)It will not give away the exact position, just the count.$(br2)When searching for those blocks, keep in mind that the radius of this ritual is limited to a chunk (under normal conditions)."
+	  "text": "The ritual of Divination searches the earth for the specific block under the center Glyph (that is under the block it is attached on).$(br2)It will not give away the exact position, just the count.$(br2)When searching for those blocks, keep in mind that the radius of this ritual is limited to a chunk (under normal conditions)."
 	},
 	{
 	  "type": "bewitchment:ritual",

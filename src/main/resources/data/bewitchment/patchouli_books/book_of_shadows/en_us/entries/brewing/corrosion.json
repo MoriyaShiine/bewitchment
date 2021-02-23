@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The counterpiece to $(l:bewitchment:brewing/hardening)Hardening$() will reduce armor by a flat amount."
+	  "text": "The counterpiece to $(l:bewitchment:brewing/hardening)Hardening will reduce armor by a flat amount."
 	},
 	{
 	  "type": "spotlight",

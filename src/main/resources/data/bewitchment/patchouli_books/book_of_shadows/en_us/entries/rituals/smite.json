@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Smite$() summons a lightning bolt at the effective position of the Rite.$(br2)This works really well with $(l:bewitchment:tools/waystone)$(item)Waystones$()."
+	  "text": "Smite summons a lightning bolt at the effective position of the Rite.$(br2)This works really well with Waystones."
 	},
 	{
 	  "type": "bewitchment:ritual",

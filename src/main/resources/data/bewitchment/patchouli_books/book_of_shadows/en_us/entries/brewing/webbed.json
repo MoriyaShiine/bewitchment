@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Instantly places temporary $(item)Cobwebs$() around the target."
+	  "text": "Instantly places temporary Cobwebs around the target."
 	},
 	{
 	  "type": "spotlight",

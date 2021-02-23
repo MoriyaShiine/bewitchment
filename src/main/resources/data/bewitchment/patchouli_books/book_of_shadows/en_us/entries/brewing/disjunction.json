@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Disjuncts$() the target, attempting to teleport it in a small radius."
+	  "text": "Disjuncts the target, attempting to teleport it in a small radius."
 	},
 	{
 	  "type": "spotlight",

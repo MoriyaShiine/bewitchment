@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Decay$() is an active sigil that, when activated, will apply a strong $(marked)Wither$() effect."
+	  "text": "Decay is an active sigil that, when activated, will apply a strong Wither effect."
 	},
 	{
 	  "type": "crafting",

@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "By magically creating a magic wind, this ritual removes any nearby plants and leaves.$(br2)Unlike what its name implies, it does $(o)not$() fling away entities."
+	  "text": "By magically creating a magic wind, this ritual removes any nearby plants and leaves.$(br2)Unlike what its name implies, it does not fling away entities."
 	},
 	{
 	  "type": "bewitchment:ritual",

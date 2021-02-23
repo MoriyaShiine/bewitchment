@@ -1,6 +1,6 @@
 {
   "name": "Contracts",
-  "description": "Devilish Contracts sold by $(l:bewitchment:creatures/demon)$(marked)Demons$().",
+  "description": "Devilish Contracts sold by Demons.",
   "icon": "bewitchment:demonic_contract",
   "sortnum": 10
 }

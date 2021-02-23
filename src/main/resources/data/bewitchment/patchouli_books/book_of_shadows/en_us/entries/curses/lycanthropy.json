@@ -6,11 +6,11 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(marked)Lycanthropy$() is a ferocious disease that scars the mind, the body, and the soul. Under a full moon, its victims transform into $(l:bewitchment:creatures/werewolf)$(marked)Werewolves$() craving fresh meat.$(br2)While physically strong, $(l:bewitchment:introduction/silver)$(marked)Silver$() will harm them, as will $(l:bewitchment:introduction/crops)$(item)Aconite$(). Werewolves also exclusively feed on meat, no matter their form."
+	  "text": "Lycanthropy is a ferocious disease that scars the mind, the body, and the soul. Under a full moon, its victims transform into Werewolves craving fresh meat.$(br2)While physically strong, Silver will harm them, as will Aconite. Werewolves also exclusively feed on meat, no matter their form."
 	},
 	{
 	  "type": "text",
-	  "text": "Their weakness to Silver also implies an inability to hold tools such as an $(item)Athame$() for too long.$(br2)Lycanthropy is contracted from another Werewolf - as long as it's not a newly infected lycanthrope - while under the curse of $(l:bewitchment:curses/susceptibility)$(marked)Susceptibility$(); you must still $(l:bewitchment:poppets/death_protection)somehow$() survive though.$(br2)$(o)That sounds like a wonderful idea!$()"
+	  "text": "Their weakness to Silver also implies an inability to hold tools such as an Athame for too long.$(br2)Lycanthropy is contracted from another Werewolf - as long as it's not a newly infected lycanthrope - while under the curse of Susceptibility; you must still somehow survive though.$(br2)That sounds like a wonderful idea!"
 	}
   ]
 }

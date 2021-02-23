@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "By making a brew out of a $(item)Demon Heart$(), you can reverse positive potion effects into their negative counterpart."
+	  "text": "By making a brew out of a Demon Heart, you can reverse positive potion effects into their negative counterpart."
 	},
 	{
 	  "type": "spotlight",

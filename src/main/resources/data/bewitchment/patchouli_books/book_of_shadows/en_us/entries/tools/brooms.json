@@ -6,27 +6,27 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(item)Brooms$() are magical devices commonly used by witches. Through the use of $(marked)ME$(), they enable the user to fly through the skies.$(br2)Brooms come in four variants, each with unique properties."
+	  "text": "Brooms are magical devices commonly used by witches. Through the use of ME, they enable the user to fly through the skies.$(br2)Brooms come in four variants, each with unique properties."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:juniper_broom",
-	  "text": "$(item)Juniper Brooms$() are the fastest of all brooms, without any other special properties."
+	  "text": "Juniper Brooms are the fastest of all brooms, without any other special properties."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:cypress_broom",
-	  "text": "$(item)Cypress Brooms$() ward the user, reducing both damage input and output."
+	  "text": "Cypress Brooms ward the user, reducing both damage input and output."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:elder_broom",
-	  "text": "$(item)Elder Brooms$() will return the user to where they mounted it after dismounting."
+	  "text": "Elder Brooms will return the user to where they mounted it after dismounting."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:dragons_blood_broom",
-	  "text": "$(item)Dragon's Blood Brooms$() can have $(l:bewitchment:sigils/using_sigils)active sigils$() applied to them, much like any other $(l:bewitchment:introduction/dragons_blood_trees)Dragon's Blood$() block."
+	  "text": "Dragon's Blood Brooms can have active sigils applied to them, much like any other Dragon's Blood block."
 	}
   ]
 }
