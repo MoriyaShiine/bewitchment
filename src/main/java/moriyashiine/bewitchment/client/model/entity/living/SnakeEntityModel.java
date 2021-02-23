@@ -86,19 +86,19 @@ public class SnakeEntityModel<T extends SnakeEntity> extends AnimalModel<T> {
 		ModelPart snout = new ModelPart(this);
 		snout.setPivot(0.0F, -0.6F, -2.0F);
 		head.addChild(snout);
-		setRotationAngle(snout, 0.2618F, 0.0F, 0.0F);
+		setRotation(snout, 0.2618F, 0.0F, 0.0F);
 		snout.setTextureOffset(20, 7).addCuboid(-1.0F, -1.0F, -2.9F, 2.0F, 2.0F, 3.0F, 0.1F, false);
 		
 		lFang = new ModelPart(this);
 		lFang.setPivot(-0.7F, 0.1F, -2.1F);
 		snout.addChild(lFang);
-		setRotationAngle(lFang, -0.2618F, 0.0F, 0.0F);
+		setRotation(lFang, -0.2618F, 0.0F, 0.0F);
 		lFang.setTextureOffset(16, 0).addCuboid(-0.3F, 0.0F, -0.5F, 0.0F, 2.0F, 1.0F, 0.0F, false);
 		
 		rFang = new ModelPart(this);
 		rFang.setPivot(0.7F, 0.1F, -2.1F);
 		snout.addChild(rFang);
-		setRotationAngle(rFang, -0.2618F, 0.0F, 0.0F);
+		setRotation(rFang, -0.2618F, 0.0F, 0.0F);
 		rFang.setTextureOffset(16, 0).addCuboid(0.1F, 0.0F, -0.5F, 0.0F, 2.0F, 1.0F, 0.0F, true);
 		
 		tongue = new ModelPart(this);
@@ -156,7 +156,7 @@ public class SnakeEntityModel<T extends SnakeEntity> extends AnimalModel<T> {
 		return ImmutableList.of(bodyBase);
 	}
 	
-	private void setRotationAngle(ModelPart bone, float x, float y, float z) {
+	private void setRotation(ModelPart bone, float x, float y, float z) {
 		bone.pitch = x;
 		bone.yaw = y;
 		bone.roll = z;

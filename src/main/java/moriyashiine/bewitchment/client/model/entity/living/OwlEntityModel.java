@@ -34,79 +34,79 @@ public class OwlEntityModel<T extends OwlEntity> extends AnimalModel<T> {
 		lFoot = new ModelPart(this);
 		lFoot.setPivot(-1.8F, 8.9F, -0.4F);
 		body.addChild(lFoot);
-		setRotationAngle(lFoot, 0.0873F, 0.0873F, 0.0F);
+		setRotation(lFoot, 0.0873F, 0.0873F, 0.0F);
 		lFoot.setTextureOffset(32, 22).addCuboid(-1.0F, 0.0F, -3.4F, 2.0F, 2.0F, 4.0F, 0.0F, false);
 		
 		ModelPart lBackTalon01 = new ModelPart(this);
 		lBackTalon01.setPivot(-0.5F, 1.2F, 0.2F);
 		lFoot.addChild(lBackTalon01);
-		setRotationAngle(lBackTalon01, -0.1745F, -0.0698F, 0.0F);
+		setRotation(lBackTalon01, -0.1745F, -0.0698F, 0.0F);
 		lBackTalon01.setTextureOffset(39, 28).addCuboid(-0.5F, -1.0F, 0.0F, 1.0F, 2.0F, 2.0F, 0.0F, false);
 		
 		ModelPart lBackTalon02 = new ModelPart(this);
 		lBackTalon02.setPivot(0.5F, 1.2F, 0.2F);
 		lFoot.addChild(lBackTalon02);
-		setRotationAngle(lBackTalon02, -0.1745F, 0.0698F, 0.0F);
+		setRotation(lBackTalon02, -0.1745F, 0.0698F, 0.0F);
 		lBackTalon02.setTextureOffset(39, 28).addCuboid(-0.5F, -1.0F, 0.0F, 1.0F, 2.0F, 2.0F, 0.0F, false);
 		
 		ModelPart lFrontTalon02 = new ModelPart(this);
 		lFrontTalon02.setPivot(0.6F, 1.0F, -2.5F);
 		lFoot.addChild(lFrontTalon02);
-		setRotationAngle(lFrontTalon02, 0.0F, -0.0873F, 0.0F);
+		setRotation(lFrontTalon02, 0.0F, -0.0873F, 0.0F);
 		lFrontTalon02.setTextureOffset(32, 28).addCuboid(-0.5F, -1.01F, -2.5F, 1.0F, 2.0F, 2.0F, 0.0F, false);
 		
 		ModelPart lFrontTalon01 = new ModelPart(this);
 		lFrontTalon01.setPivot(-0.6F, 1.0F, -2.5F);
 		lFoot.addChild(lFrontTalon01);
-		setRotationAngle(lFrontTalon01, 0.0F, 0.0873F, 0.0F);
+		setRotation(lFrontTalon01, 0.0F, 0.0873F, 0.0F);
 		lFrontTalon01.setTextureOffset(32, 28).addCuboid(-0.5F, -1.01F, -2.5F, 1.0F, 2.0F, 2.0F, 0.0F, false);
 		
 		rFoot = new ModelPart(this);
 		rFoot.setPivot(1.8F, 8.9F, -0.4F);
 		body.addChild(rFoot);
-		setRotationAngle(rFoot, 0.0873F, -0.0873F, 0.0F);
+		setRotation(rFoot, 0.0873F, -0.0873F, 0.0F);
 		rFoot.setTextureOffset(32, 22).addCuboid(-1.0F, 0.0F, -3.4F, 2.0F, 2.0F, 4.0F, 0.0F, false);
 		
 		ModelPart rBackTalon01 = new ModelPart(this);
 		rBackTalon01.setPivot(0.5F, 1.2F, 0.2F);
 		rFoot.addChild(rBackTalon01);
-		setRotationAngle(rBackTalon01, -0.1745F, 0.0698F, 0.0F);
+		setRotation(rBackTalon01, -0.1745F, 0.0698F, 0.0F);
 		rBackTalon01.setTextureOffset(39, 28).addCuboid(-0.5F, -1.0F, 0.0F, 1.0F, 2.0F, 2.0F, 0.0F, false);
 		
 		ModelPart rBackTalon02 = new ModelPart(this);
 		rBackTalon02.setPivot(-0.5F, 1.2F, 0.2F);
 		rFoot.addChild(rBackTalon02);
-		setRotationAngle(rBackTalon02, -0.1745F, -0.0698F, 0.0F);
+		setRotation(rBackTalon02, -0.1745F, -0.0698F, 0.0F);
 		rBackTalon02.setTextureOffset(39, 28).addCuboid(-0.5F, -1.0F, 0.0F, 1.0F, 2.0F, 2.0F, 0.0F, false);
 		
 		ModelPart rFrontTalon02 = new ModelPart(this);
 		rFrontTalon02.setPivot(-0.6F, 1.0F, -2.5F);
 		rFoot.addChild(rFrontTalon02);
-		setRotationAngle(rFrontTalon02, 0.0F, 0.0873F, 0.0F);
+		setRotation(rFrontTalon02, 0.0F, 0.0873F, 0.0F);
 		rFrontTalon02.setTextureOffset(32, 28).addCuboid(-0.5F, -1.01F, -2.5F, 1.0F, 2.0F, 2.0F, 0.0F, false);
 		
 		ModelPart rFrontTalon01 = new ModelPart(this);
 		rFrontTalon01.setPivot(0.6F, 1.0F, -2.5F);
 		rFoot.addChild(rFrontTalon01);
-		setRotationAngle(rFrontTalon01, 0.0F, -0.0873F, 0.0F);
+		setRotation(rFrontTalon01, 0.0F, -0.0873F, 0.0F);
 		rFrontTalon01.setTextureOffset(32, 28).addCuboid(-0.5F, -1.01F, -2.5F, 1.0F, 2.0F, 2.0F, 0.0F, false);
 		
 		lWing01 = new ModelPart(this);
 		lWing01.setPivot(-3.9F, 1.0F, -0.2F);
 		body.addChild(lWing01);
-		setRotationAngle(lWing01, 0.0F, 0.9599F, -0.8727F);
+		setRotation(lWing01, 0.0F, 0.9599F, -0.8727F);
 		lWing01.setTextureOffset(34, 0).addCuboid(-5.0F, -0.7F, -0.5F, 5.0F, 8.0F, 1.0F, 0.0F, true);
 		
 		lWing02 = new ModelPart(this);
 		lWing02.setPivot(-4.5F, 0.0F, 0.1F);
 		lWing01.addChild(lWing02);
-		setRotationAngle(lWing02, 0.0F, 0.0F, -0.6981F);
+		setRotation(lWing02, 0.0F, 0.0F, -0.6981F);
 		lWing02.setTextureOffset(47, 0).addCuboid(-6.0F, -0.7F, -0.5F, 6.0F, 9.0F, 1.0F, 0.0F, true);
 		
 		lWing03 = new ModelPart(this);
 		lWing03.setPivot(-4.2F, -0.1F, 0.1F);
 		lWing02.addChild(lWing03);
-		setRotationAngle(lWing03, 0.0F, 0.0F, -0.6109F);
+		setRotation(lWing03, 0.0F, 0.0F, -0.6109F);
 		lWing03.setTextureOffset(32, 10).addCuboid(-6.0F, -0.6F, -0.5F, 6.0F, 10.0F, 1.0F, 0.0F, true);
 		
 		lWing04 = new ModelPart(this);
@@ -117,19 +117,19 @@ public class OwlEntityModel<T extends OwlEntity> extends AnimalModel<T> {
 		rWing01 = new ModelPart(this);
 		rWing01.setPivot(3.9F, 1.0F, -0.2F);
 		body.addChild(rWing01);
-		setRotationAngle(rWing01, 0.0F, -0.9599F, 0.8727F);
+		setRotation(rWing01, 0.0F, -0.9599F, 0.8727F);
 		rWing01.setTextureOffset(34, 0).addCuboid(0.0F, -0.7F, -0.5F, 5.0F, 8.0F, 1.0F, 0.0F, false);
 		
 		rWing02 = new ModelPart(this);
 		rWing02.setPivot(4.5F, 0.0F, 0.1F);
 		rWing01.addChild(rWing02);
-		setRotationAngle(rWing02, 0.0F, 0.0F, 1F);
+		setRotation(rWing02, 0.0F, 0.0F, 1F);
 		rWing02.setTextureOffset(47, 0).addCuboid(0.0F, -0.7F, -0.5F, 6.0F, 9.0F, 1.0F, 0.0F, false);
 		
 		rWing03 = new ModelPart(this);
 		rWing03.setPivot(4.2F, -0.1F, 0.1F);
 		rWing02.addChild(rWing03);
-		setRotationAngle(rWing03, 0.0F, 0.0F, 0.6109F);
+		setRotation(rWing03, 0.0F, 0.0F, 0.6109F);
 		rWing03.setTextureOffset(32, 10).addCuboid(0.0F, -0.6F, -0.5F, 6.0F, 10.0F, 1.0F, 0.0F, false);
 		
 		rWing04 = new ModelPart(this);
@@ -140,7 +140,7 @@ public class OwlEntityModel<T extends OwlEntity> extends AnimalModel<T> {
 		tail01 = new ModelPart(this);
 		tail01.setPivot(0.0F, 8.1F, 2.9F);
 		body.addChild(tail01);
-		setRotationAngle(tail01, -0.5236F, 0.0F, 0.0F);
+		setRotation(tail01, -0.5236F, 0.0F, 0.0F);
 		tail01.setTextureOffset(49, 10).addCuboid(-1.5F, -1.0F, 0.0F, 3.0F, 1.0F, 3.0F, 0.0F, false);
 		
 		ModelPart mTailPlume = new ModelPart(this);
@@ -151,49 +151,49 @@ public class OwlEntityModel<T extends OwlEntity> extends AnimalModel<T> {
 		ModelPart lTailPlume = new ModelPart(this);
 		lTailPlume.setPivot(0.9F, -0.3F, 1.2F);
 		tail01.addChild(lTailPlume);
-		setRotationAngle(lTailPlume, 0.0F, -0.3142F, -0.1745F);
+		setRotation(lTailPlume, 0.0F, -0.3142F, -0.1745F);
 		lTailPlume.setTextureOffset(44, 20).addCuboid(-4.0F, -0.7F, -0.2F, 4.0F, 0.0F, 6.0F, 0.0F, false);
 		
 		ModelPart rTailPlume = new ModelPart(this);
 		rTailPlume.setPivot(-0.9F, -0.3F, 1.2F);
 		tail01.addChild(rTailPlume);
-		setRotationAngle(rTailPlume, 0.0F, 0.3142F, 0.1745F);
+		setRotation(rTailPlume, 0.0F, 0.3142F, 0.1745F);
 		rTailPlume.setTextureOffset(44, 20).addCuboid(0.0F, -0.7F, -0.2F, 4.0F, 0.0F, 6.0F, 0.0F, false);
 		
 		head = new ModelPart(this);
 		head.setPivot(0.0F, -0.3F, 0.0F);
 		body.addChild(head);
-		setRotationAngle(head, -0.0698F, 0.0F, 0.0F);
+		setRotation(head, -0.0698F, 0.0F, 0.0F);
 		head.setTextureOffset(0, 0).addCuboid(-3.5F, -5.5F, -3.7F, 7.0F, 6.0F, 7.0F, 0.0F, false);
 		
 		ModelPart lEar = new ModelPart(this);
 		lEar.setPivot(-2.3F, -4.1F, 0.0F);
 		head.addChild(lEar);
-		setRotationAngle(lEar, -0.2618F, 0.0F, -0.4014F);
+		setRotation(lEar, -0.2618F, 0.0F, -0.4014F);
 		lEar.setTextureOffset(25, 1).addCuboid(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, true);
 		
 		ModelPart rEar = new ModelPart(this);
 		rEar.setPivot(2.3F, -4.1F, 0.0F);
 		head.addChild(rEar);
-		setRotationAngle(rEar, -0.2618F, 0.0F, 0.4014F);
+		setRotation(rEar, -0.2618F, 0.0F, 0.4014F);
 		rEar.setTextureOffset(25, 1).addCuboid(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
 		
 		ModelPart beak = new ModelPart(this);
 		beak.setPivot(0.0F, -2.0F, -3.3F);
 		head.addChild(beak);
-		setRotationAngle(beak, -0.0873F, 0.0F, 0.0F);
+		setRotation(beak, -0.0873F, 0.0F, 0.0F);
 		beak.setTextureOffset(0, 0).addCuboid(-0.5F, -0.5F, -0.7F, 1.0F, 3.0F, 1.0F, 0.0F, false);
 		
 		ModelPart lBeak = new ModelPart(this);
 		lBeak.setPivot(-0.6F, 0.1F, 0.0F);
 		beak.addChild(lBeak);
-		setRotationAngle(lBeak, 0.0F, 0.0F, -0.3491F);
+		setRotation(lBeak, 0.0F, 0.0F, -0.3491F);
 		lBeak.setTextureOffset(0, 0).addCuboid(-0.5F, -0.5F, -0.55F, 1.0F, 2.0F, 1.0F, 0.0F, false);
 		
 		ModelPart rBeak = new ModelPart(this);
 		rBeak.setPivot(0.6F, 0.1F, 0.0F);
 		beak.addChild(rBeak);
-		setRotationAngle(rBeak, 0.0F, 0.0F, 0.3491F);
+		setRotation(rBeak, 0.0F, 0.0F, 0.3491F);
 		rBeak.setTextureOffset(0, 0).addCuboid(-0.5F, -0.5F, -0.55F, 1.0F, 2.0F, 1.0F, 0.0F, false);
 	}
 	
@@ -265,7 +265,7 @@ public class OwlEntityModel<T extends OwlEntity> extends AnimalModel<T> {
 		return ImmutableList.of(body);
 	}
 	
-	private void setRotationAngle(ModelPart bone, float x, float y, float z) {
+	private void setRotation(ModelPart bone, float x, float y, float z) {
 		bone.pitch = x;
 		bone.yaw = y;
 		bone.roll = z;
