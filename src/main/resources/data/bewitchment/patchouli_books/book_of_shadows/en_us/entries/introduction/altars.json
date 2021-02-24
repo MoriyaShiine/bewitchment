@@ -1,21 +1,32 @@
 {
   "category": "bewitchment:introduction",
-  "name": "altars",
+  "name": "Altars",
   "icon": "bewitchment:stone_witch_altar",
   "advancement": "bewitchment:hidden_unlocks/barks",
   "priority": true,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "altars are the cornerstone of any witch's lair. they can be used to collect energy -henceforth referred to as me (magical energy). this energy is essential to most witchcraft, and is collected from nearby plants. you'll want many different plants to collect maximal power.$(br2)you may also place swords, pentacles, and wands atop the altar to modify it."
+	  "text": "Altars are the cornerstone of any witch's lair. they can be used to collect energy - henceforth referred to as ME (magical energy). This energy is essential to most witchcraft, and is collected from nearby plants. You'll want many different plants to collect maximum power."
 	},
 	{
 	  "type": "text",
-	  "text": "swords will increase the storage multiplier. pentacles, such as skulls and gems will increase gain. wands such as candelabras and torches will give a flat bonus on capacity.$(br2)altars are created by putting carpets on their base block. the base block is of cosmetic nature only and tied to one of the three realms.$(br2)nearby altars will fill a player's internal me buffer, which is used for magic such as trinkets."
+	  "text": "You may also place swords, pentacles, and wands atop the Altar to modify it.$(br2)Swords will increase the storage multiplier. Pentacles such as Skulls and Gems will increase gain. Wands such as $(l:bewitchment:tools/candelabras)Candelabras$(), Lanterns, and Torches will give a flat bonus on capacity."
+	},
+	{
+	  "type": "text",
+	  "text": "Altars are created by putting a Carpet on their base block. The choice of base block and carpet is of cosmetic nature only and tied to one of the three realms.$(br2)Nearby Altars will fill a player's internal ME buffer, which is used for magic such as trinkets or $(l:bewitchment:tools/brooms)Brooms$()."
+	},
+	{
+	  "type": "image",
+	  "images": [
+		"bewitchment:textures/gui/patchouli/altar.png"
+	  ],
+	  "border": true
 	},
 	{
 	  "type": "crafting",
-	  "title": "overworld",
+	  "title": "Overworld",
 	  "recipe": "bewitchment:stone_witch_altar",
 	  "recipe2": "bewitchment:mossy_cobblestone_witch_altar"
 	},
@@ -26,7 +37,7 @@
 	},
 	{
 	  "type": "crafting",
-	  "title": "the nether",
+	  "title": "The Nether",
 	  "recipe": "bewitchment:nether_brick_witch_altar",
 	  "recipe2": "bewitchment:blackstone_witch_altar"
 	},
@@ -37,7 +48,7 @@
 	},
 	{
 	  "type": "crafting",
-	  "title": "the end",
+	  "title": "The End",
 	  "recipe": "bewitchment:end_stone_witch_altar",
 	  "recipe2": "bewitchment:obsidian_witch_altar"
 	},

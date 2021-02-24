@@ -1,11 +1,11 @@
 {
   "category": "bewitchment:introduction",
-  "name": "cypress trees",
+  "name": "Cypress Trees",
   "icon": "bewitchment:cypress_sapling",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "cypress trees spawn in taiga and swamp biomes.$(br2)relating to death, blocks made from it will mask you from the undead."
+	  "text": "Cypress trees spawn in taiga and swamp biomes.$(br2)Relating to death, blocks made from it will mask you from the undead in a small area."
 	},
 	{
 	  "type": "image",

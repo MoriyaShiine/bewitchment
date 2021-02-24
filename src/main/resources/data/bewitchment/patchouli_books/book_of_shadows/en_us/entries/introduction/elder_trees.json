@@ -1,11 +1,11 @@
 {
   "category": "bewitchment:introduction",
-  "name": "elder trees",
+  "name": "Elder Trees",
   "icon": "bewitchment:elder_sapling",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "this noble tree spawns in forest biomes. it is often associated with knowledge and intelligence.$(br2)blocks made with this wood can be locked using a silver ingot.$(br2)locked blocks can be given taglocks to white/blacklist certain players. white/blacklist can be toggled using an athame while sneaking."
+	  "text": "This noble tree spawns in forest biomes. It is often associated with knowledge and intelligence.$(br2)Blocks made with this wood can be locked using a $(l:bewitchment:introduction/silver)Silver Ingot$().$(br2)Locked blocks can be given $(l:bewitchment:tools/taglock)Taglocks$() to white/blacklist certain players. The list can be toggled using an $(l:bewitchment:tools/athame)Athame$() while sneaking."
 	},
 	{
 	  "type": "image",

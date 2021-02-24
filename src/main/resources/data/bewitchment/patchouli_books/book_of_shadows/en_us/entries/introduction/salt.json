@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:introduction",
-  "name": "salt",
+  "name": "Salt",
   "icon": "bewitchment:salt",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "used since ancient times, salt can be placed as a dust to block unholy creatures, giving it a reputation as a protector. $(br2)other than being protective, salt also serves as a common witching material."
+	  "text": "Used since ancient times, Salt can be placed as a dust to block unholy creatures, giving it a reputation as a protector. $(br2)Other than being protective, Salt also serves as a common witching material."
 	},
 	{
 	  "type": "image",
 	  "images": [
 		"bewitchment:textures/gui/patchouli/salt_ore.png"
 	  ],
-	  "text": "salt can be found close to the surface, making it easy to mine.",
+	  "text": "Salt Ore can be found close to the surface, making it easy to mine.",
 	  "border": true
 	},
 	{
