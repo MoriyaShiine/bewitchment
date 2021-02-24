@@ -5,7 +5,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Coffins, originally emerging from $(l:bewitchment:creatures/vampire)Vampires$(), have recently found traction especially among night-active witches.$(br2)When you sleep in one, you can skip the day.$(br2)Coffins, much like Beds, can be dyed if they're white."
+	  "text": "Coffins, originally emerging from $(l:bewitchment:creatures/vampire)Vampires$(), have recently found traction especially among night-active witches.$(br2)When you sleep in one, you can skip the day.$(br2)Coffins, much like beds, can be dyed if they're white."
 	},
 	{
 	  "type": "crafting",

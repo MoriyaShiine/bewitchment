@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Polymorph must be one of the most versatile effects. Players under the Polymorph effect their form into the target of the $(l:bewitchment:tools/taglock)Taglock$() used.$(br2)The Brew can be made into a Splash Potion or similar variants, just like other Brews."
+	  "text": "Polymorph must be one of the most versatile effects. Players under the Polymorph effect change their form into the target of the $(l:bewitchment:tools/taglock)Taglock$() used.$(br2)The Brew can be made into a Splash Potion or similar variants, just like other brews."
 	},
 	{
 	  "type": "spotlight",

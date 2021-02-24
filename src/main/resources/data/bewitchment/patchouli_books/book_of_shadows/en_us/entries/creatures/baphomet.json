@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Baphomet, an ancient $(l:bewitchment:creatures/demon)Greater Demon$() of magic, first name of fire, flame etc. etc. provides $(l:bewitchment:contracts/concept_contracts)Contracts$() to many witches all over the world.$(br2)When $(l:bewitchment:tools/grotesque_stew)Pledging$() to them, one may acquire $(l:bewitchment:contracts/concept_contracts)Contracts$() for experience, now without any drawbacks.$(br2)Baphomet can be $(l:bewitchment:rituals/summon_baphomet)summoned$() by any sufficiently strong witch."
+	  "text": "Baphomet, an ancient $(l:bewitchment:creatures/demon)Greater Demon$() of magic, first name of fire, flame etc. etc. provides $(l:bewitchment:contracts/concept_contracts)Contracts$() to many witches all over the world.$(br2)When $(l:bewitchment:tools/grotesque_stew)Pledging$() to them, one may acquire $(l:bewitchment:contracts/concept_contracts)Contracts$() for experience, now without any drawbacks.$(br2)Baphomet can be $(l:bewitchment:rituals/summon_baphomet)Summoned$() by any sufficiently strong witch."
 	},
 	{
 	  "type": "entity",

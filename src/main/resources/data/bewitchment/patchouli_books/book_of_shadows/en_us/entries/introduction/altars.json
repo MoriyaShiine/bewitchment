@@ -11,11 +11,11 @@
 	},
 	{
 	  "type": "text",
-	  "text": "You may also place swords, pentacles, and wands atop the Altar to modify it.$(br2)Swords will increase the storage multiplier. Pentacles such as Skulls and Gems will increase gain. Wands such as $(l:bewitchment:tools/candelabras)Candelabras$(), Lanterns, and Torches will give a flat bonus on capacity."
+	  "text": "You may also place swords, pentacles, and wands atop the altar to modify it.$(br2)Swords will increase the storage multiplier. Pentacles such as Skulls and Gems will increase gain. Wands such as $(l:bewitchment:tools/candelabras)Candelabras$(), Lanterns, and Torches will give a flat bonus on capacity."
 	},
 	{
 	  "type": "text",
-	  "text": "Altars are created by putting a Carpet on their base block. The choice of base block and carpet is of cosmetic nature only and tied to one of the three realms.$(br2)Nearby Altars will fill a player's Internal ME Buffer, which is used for magic such as trinkets or $(l:bewitchment:tools/brooms)Brooms$().",
+	  "text": "Altars are created by putting a carpet on their base block. The choice of base block and carpet is of cosmetic nature only and tied to one of the three realms.$(br2)Nearby altars will fill a player's Internal ME Buffer, which is used for magic such as trinkets or $(l:bewitchment:tools/brooms)Brooms$().",
 	  "anchor": "internalme"
 	},
 	{

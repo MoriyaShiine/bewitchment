@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Decay is an $(l:bewitchment:sigils/using_sigils)Active Sigil$() that, when activated, will apply a strong wither effect."
+	  "text": "Decay is an $(l:bewitchment:sigils/using_sigils)Active Sigil$() that, when activated, will apply a strong Wither effect."
 	},
 	{
 	  "type": "crafting",

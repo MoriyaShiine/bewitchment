@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Vampirism is a terrible $(l:bewitchment:curses/conducting_curses)Curse$() that most consider terminal. $(br2)$(l:bewitchment:creatures/vampire)Vampires$() are technically immortal, though their immortality feeds on the blood of humans; without it, they die. Additionally, they are weak to $(l:bewitchment:introduction/silver)Silver$() and $(l:bewitchment:introduction/crops)Garlic$()."
+	  "text": "Vampirism is a terrible $(l:bewitchment:curses/conducting_curses)Curse$() that most consider terminal. $(br2)$(l:bewitchment:creatures/vampire)Vampires$() are technically immortal, though their immortality feeds on the blood of humans; without it, they die.$(br2)Vampires have a small bonus to movement speed and attack damage. Additionally, they are weak to $(l:bewitchment:introduction/silver)Silver$() and $(l:bewitchment:introduction/crops)Garlic$()."
 	},
 	{
 	  "type": "text",

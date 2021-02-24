@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Elemental Oils are essential crafting components in witchcraft. They are made out of a type of $(l:bewitchment:introduction/bark)Bark$() and other components.$(br2)To craft a few bottles of Oil, first throw a piece of $(l:bewitchment:introduction/bark)Bark$() into a boiling $(l:bewitchment:tools/witch_cauldron)Witch Caulron$(), then add the other ingredients. Once it reaches a pleasant, matching color, you can bottle it."
+	  "text": "Elemental Oils are essential crafting components in witchcraft. They are made out of a type of $(l:bewitchment:introduction/bark)Bark$() and other components.$(br2)To craft a few bottles of oil, first throw a piece of $(l:bewitchment:introduction/bark)Bark$() into a boiling $(l:bewitchment:tools/witch_cauldron)Witch Caulron$(), then add the other ingredients. Once it reaches a pleasant, matching color, you can bottle it."
 	},
 	{
 	  "type": "bewitchment:oil",

@@ -7,11 +7,11 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Gross.$(br2)This questionable stew is part of the Pledging rite.$(br2)By drinking while deeply looking into the eyes of a $(l:bewitchment:creatures/demon)Greater Demon$(), a witch can Pledge to them.$(br2)Pledging to a $(l:bewitchment:creatures/demon)Greater Demon$() has unique benefits depending on the $(l:bewitchment:creatures/demon)Demon$()."
+	  "text": "Gross.$(br2)This questionable stew is part of the pledging rite.$(br2)By drinking while deeply looking into the eyes of a $(l:bewitchment:creatures/demon)Greater Demon$(), a witch can pledge to them.$(br2)Pledging to a $(l:bewitchment:creatures/demon)Greater Demon$() has unique benefits depending on the $(l:bewitchment:creatures/demon)Demon$()."
 	},
 	{
 	  "type": "text",
-	  "text": "The exact benefits are outlined in the according entries.$(br2)A $(l:bewitchment:creatures/demon)Demon$() that is Pledged to has to remain in the world for the Pledge to be active.$(br2)Attacking the $(l:bewitchment:creatures/demon)Demon$() in any way will immediately revoke the Pledge."
+	  "text": "The exact benefits are outlined in the according entries.$(br2)A $(l:bewitchment:creatures/demon)Demon$() that is pledged to has to remain in the world for the pledge to be active.$(br2)Attacking the $(l:bewitchment:creatures/demon)Demon$() in any way will immediately revoke the pledge."
 	},
 	{
 	  "type": "crafting",

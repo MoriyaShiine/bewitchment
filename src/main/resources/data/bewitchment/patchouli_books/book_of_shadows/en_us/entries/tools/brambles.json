@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Brambles are witchy weeds, artificially created with the help of $(l:bewitchment:brewing/elemental_oils)Elemental Oil$().$(br2)Each Bramble has a unique effect connected to its element."
+	  "text": "Brambles are witchy weeds, artificially created with the help of $(l:bewitchment:brewing/elemental_oils)Elemental Oil$().$(br2)Each bramble has a unique effect connected to its element."
 	},
 	{
 	  "type": "crafting",

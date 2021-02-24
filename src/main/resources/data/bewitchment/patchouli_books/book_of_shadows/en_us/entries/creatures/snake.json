@@ -8,7 +8,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Snakes usually appear in savannas, deserts and plains, where they prey on other animals, killing them with their venom.$(br2)Snakes may drop their snake tongue, which is commonly used in witchcraft (though it may also be acquired from some $(l:bewitchment:creatures/demon)Demonic Entities$())."
+	  "text": "Snakes usually appear in savannas, deserts and plains, where they prey on other animals, killing them with their venom.$(br2)Snakes may drop their Snake Tongue, which is commonly used in witchcraft (though it may also be acquired from some $(l:bewitchment:creatures/demon)Demonic Entities$())."
 	},
 	{
 	  "type": "text",
