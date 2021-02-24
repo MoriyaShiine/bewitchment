@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:curses",
-  "name": "lightning rod",
+  "name": "Lightning Rod",
   "icon": "bewitchment:silver_nugget",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "makes the target more susceptible to lightning. any lightning bolt in the target's vicinity will instead redirect directly to it."
+	  "text": "Makes the target more susceptible to lightning. Any lightning bolt in the target's vicinity will instead redirect directly to it."
 	},
 	{
 	  "type": "bewitchment:curse",

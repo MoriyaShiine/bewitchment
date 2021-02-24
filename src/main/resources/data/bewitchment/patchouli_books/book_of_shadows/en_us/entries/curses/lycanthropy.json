@@ -1,16 +1,16 @@
 {
   "category": "bewitchment:curses",
-  "name": "lycanthropy",
+  "name": "Lycanthropy",
   "icon": "bewitchment:aconite",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "lycanthropy is a ferocious disease that scars the mind, the body, and the soul. under a full moon, its victims transform into werewolves craving fresh meat.$(br2)while physically strong, silver will harm them, as will aconite. werewolves also exclusively feed on meat, no matter their form."
+	  "text": "Lycanthropy is a ferocious disease that scars the mind, the body, and the soul. Under a full moon, its victims transform into a $(l:bewitchment:creatures/werewolf)Werewolf$() craving fresh meat.$(br2)While physically strong in beast form, $(l:bewitchment:introduction/silver)Silver$() will harm them, as will $(l:bewitchment:introduction/crops)Aconite$(). $(l:bewitchment:creatures/werewolf)Werewolves$() also exclusively feed on meat, no matter their form."
 	},
 	{
 	  "type": "text",
-	  "text": "their weakness to silver also implies an inability to hold tools such as an athame for too long.$(br2)lycanthropy is contracted from another werewolf - as long as it's not a newly infected lycanthrope - while under the curse of susceptibility; you must still somehow survive though.$(br2)that sounds like a wonderful idea!"
+	  "text": "Their weakness to $(l:bewitchment:introduction/silver)Silver$() also implies an inability to hold tools such as an $(l:bewitchment:tools/athame)Athame$() for too long.$(br2)Lycanthropy is contracted from another $(l:bewitchment:creatures/werewolf)Werewolf$() - as long as it's not a newly infected lycanthrope - while under the $(l:bewitchment:curses/conducting_curses)Curse$() of $(l:bewitchment:curses/susceptibility)Susceptibility$(); you must still $(l:bewitchment:poppets/death_protection)Somehow Survive$() though.$(br2)$(o)That sounds like a wonderful idea!$()"
 	}
   ]
 }

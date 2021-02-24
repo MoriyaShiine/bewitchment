@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:curses",
-  "name": "compromised",
+  "name": "Compromised",
   "icon": "minecraft:textures/mob_effect/weakness.png",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "this curse compromises the target's blood. this will cause negative effects to be stronger."
+	  "text": "This $(l:bewitchment:curses/conducting_curses)Curse$() compromises the target's blood. This will cause negative effects to be stronger."
 	},
 	{
 	  "type": "bewitchment:curse",
