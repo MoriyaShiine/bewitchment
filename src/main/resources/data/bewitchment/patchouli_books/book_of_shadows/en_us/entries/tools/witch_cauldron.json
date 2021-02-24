@@ -1,23 +1,27 @@
 {
   "category": "bewitchment:tools",
-  "name": "witch cauldron",
+  "name": "Witch Cauldron",
   "icon": "bewitchment:witch_cauldron",
   "priority": true,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "by reinforcing a regular cauldron with silver, you can create a witch cauldron.$(br2)this magical cauldron is extremely versatile in use and is namely used for oil crafting, brewing and teleportation."
-	},
-	{
-	  "type": "crafting",
-	  "recipe": "bewitchment:witch_cauldron",
-	  "text": "items can be tossed into the witch cauldron once it boils. to make it boil, place hot blocks such as lava or magma blocks below it.$(br)note that the witch cauldron often requires altar power, except for oil crafting."
+	  "text": "By reinforcing a regular Cauldron with $(l:bewitchment:introduction/silver)Silver$(), you can create a Witch Cauldron.$(br2)This magical cauldron is extremely versatile in use and is namely used for $(l:bewitchment:brewing/elemental_oils)Oil Crafting$(), $(l:bewitchment:brewing/brewing_basics)Brewing$() and Teleportation."
 	},
 	{
 	  "type": "text",
-	  "title": "teleportation",
+	  "title": "Teleportation",
 	  "anchor": "teleportation",
-	  "text": "to teleport with a witch cauldron, simply throw in an ender pearl, step on it and say your destination. that destination must be another witch cauldron that has been named with a name tag.$(br2)teleportation requires altar power."
+	  "text": "To teleport with a Witch Cauldron, simply throw in an Ender Pearl, step on it, and say your destination. That destination must be another Witch Cauldron that has been named with a Name Tag.$(br2)Teleportation requires $(l:bewitchment:introduction/altars)Altar Power$()."
+	},
+	{
+	  "type": "text",
+	  "title": "Usage",
+	  "text": "Items can be tossed into the Witch Cauldron once it boils. To make it boil, place hot blocks such as Lava or Magma Blocks below it.$(br2)Note that the Witch Cauldron often requires $(l:bewitchment:introduction/altars)Altar Power$(), except for $(l:bewitchment:brewing/elemental_oils)Oil Crafting$()."
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:witch_cauldron"
 	}
   ]
 }

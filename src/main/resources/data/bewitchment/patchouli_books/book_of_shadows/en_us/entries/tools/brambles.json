@@ -1,46 +1,45 @@
 {
   "category": "bewitchment:tools",
-  "name": "brambles",
+  "name": "Brambles",
   "icon": "bewitchment:thick_bramble",
   "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "brambles are witchy weeds, artificially created with the help of elemental oil.$(br2)each bramble has a unique effect connected to its element."
+	  "text": "Brambles are witchy weeds, artificially created with the help of $(l:bewitchment:brewing/elemental_oils)Elemental Oil$().$(br2)Each Bramble has a unique effect connected to its element."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:glowing_bramble",
-	  "text": "glowing bramble emits light and prevents mob spawning in a 24 block radius."
+	  "text": "Glowing Bramble emits light and prevents mob spawning in a 24 block radius."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:ender_bramble",
-	  "text": "ender bramble will teleport anything that collides with it to a random location within a 64 block radius."
+	  "text": "Ender Bramble will teleport anything that collides with it to a random location within a 64 block radius."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:fruiting_bramble",
-	  "text": "fruiting bramble will grow witchberries, which can be used to craft me-restoring goodies."
+	  "text": "Fruiting Bramble will grow Witchberries, which can be used to craft $(l:bewitchment:introduction/altars#internalme)ME$()-restoring goodies."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:scorched_bramble",
-	  "text": "scorched bramble will set entities on fire. it can also be used as a relatively decent fuel."
+	  "text": "Scorched Bramble will set entities on fire. It can also be used as a relatively decent fuel."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:thick_bramble",
-	  "text": "due to its incredible thickness, thick bramble can only be passed while sneaking."
+	  "text": "Due to its incredible thickness, Thick Bramble can only be passed while sneaking."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:fleeting_bramble",
-	  "text": "fleeting bramble will launch anything that enters it into the air, unless it's sneaking."
+	  "text": "Fleeting Bramble will launch anything that enters it into the air, unless it's sneaking."
 	},
 	{
 	  "type": "crafting",
-	  "anchor": "food",
 	  "recipe": "bewitchment:witchberry_pie",
 	  "recipe2": "bewitchment:witchberry_cookie"
 	}

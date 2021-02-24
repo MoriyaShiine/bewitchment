@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:tools",
-  "name": "besmirched armor",
+  "name": "Besmirched Armor",
   "icon": "bewitchment:besmirched_robes",
   "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "this profane clothing fits perfectly into the collection gothique. demons are unable to discern the wearer from their kin, enabling them to trade.$(br2)carpets of this cloth are perfect for altars."
+	  "text": "This profane clothing fits perfectly into the collection gothique. $(l:bewitchment:creatures/demon)Demons$() of any kind are unable to discern the wearer from their kin, enabling them to trade.$(br2)Carpets of this cloth are perfect for $(l:bewitchment:introduction/altars)Altars$()."
 	},
 	{
 	  "type": "crafting",

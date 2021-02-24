@@ -1,17 +1,16 @@
 {
   "category": "bewitchment:tools",
-  "name": "caduceus",
+  "name": "Caduceus",
   "icon": "bewitchment:caduceus",
   "advancement": "bewitchment:hidden_unlocks/caduceus",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "the caduceus is the baphomet's tool of choice.$(br2)it has multiple-tool functionality comparable to netherite. it can also be used to throw powerful fireballs."
+	  "text": "The Caduceus is the $(l:bewitchment:creatures/baphomet)Baphomet's$() tool of choice.$(br2)It has multiple-tool functionality comparable to Netherite. it can also be used to throw powerful fireballs at the cost of some $(l:bewitchment:introduction/altars#internalme)ME$().$(br2)The caduceus can be repaired with Netherite Ingots."
 	},
 	{
 	  "type": "spotlight",
-	  "item": "bewitchment:caduceus",
-	  "text": "the caduceus can be repaired with netherite ingots."
+	  "item": "bewitchment:caduceus"
 	}
   ]
 }

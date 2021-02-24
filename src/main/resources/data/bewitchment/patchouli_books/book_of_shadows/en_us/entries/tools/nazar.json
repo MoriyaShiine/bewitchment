@@ -1,17 +1,16 @@
 {
   "category": "bewitchment:tools",
-  "name": "nazar",
+  "name": "Nazar",
   "icon": "bewitchment:nazar",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "using the powers of the light, nazars are commonly used to protect against curses.$(br2)when worn, they will cut the duration of any curse in half. $(br)this requires about half of the wearer's me."
+	  "text": "Using the powers of The Light, Nazars are commonly used to protect against $(l:bewitchment:curses/conducting_curses)Curses$().$(br2)When worn, they will cut the duration of any $(l:bewitchment:curses/conducting_curses)Curse$() in half. $(br)this requires about half of the wearer's $(l:bewitchment:introduction/altars#internalme)ME$()."
 	},
 	{
 	  "type": "crafting",
-	  "recipe": "bewitchment:nazar",
-	  "text": "you can equip this in the necklace trinket slot."
+	  "recipe": "bewitchment:nazar"
 	}
   ]
 }

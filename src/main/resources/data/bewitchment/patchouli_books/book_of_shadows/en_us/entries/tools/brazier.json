@@ -1,23 +1,23 @@
 {
   "category": "bewitchment:tools",
-  "name": "brazier",
+  "name": "Brazier",
   "icon": "bewitchment:brazier",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "the brazier is an essential tool for curses. other than that, it can be used for incense.$(br2)a brazier can take up to four items. to start using it, you need to light it using a flint and steel."
+	  "text": "The Brazier is an essential tool for $(l:bewitchment:curses/conducting_curses)Curses$(). other than that, it can be used for Incense.$(br2)A Brazier can take up to four items. To start using it, you need to light it using a Flint and Steel."
 	},
 	{
 	  "type": "crafting",
 	  "recipe": "bewitchment:brazier",
-	  "text": "for convenience, braziers can also be attached to ceilings."
+	  "text": "For convenience, Braziers can also be attached to ceilings."
 	},
 	{
 	  "type": "text",
-	  "title": "incenses",
+	  "title": "Incenses",
 	  "anchor": "incense",
-	  "text": "incenses are a simple usage method of the brazier. incense can apply extended potion effects after waking up.$(br2)simply light a nearby brazier with the needed ingredients and go to sleep."
+	  "text": "Incenses are a simple usage method of the brazier. Incense can apply extended status effects after waking up.$(br2)Simply light a nearby brazier with the needed ingredients and go to sleep."
 	},
 	{
 	  "type": "bewitchment:incense_compressed",
@@ -44,7 +44,7 @@
 	  "advancement": "bewitchment:hidden_unlocks/demon_heart",
 	  "recipe": "bewitchment:incenses/mortal_coil",
 	  "anchor": "mortal_coil",
-	  "text": "the mortal coil incense is used for rather profane rites.$(br2)you may not want to prepare this before going to bed."
+	  "text": "The Mortal Coil Incense is used for rather profane rites.$(br2)$(o)You may not want to prepare this before going to bed$()."
 	}
   ]
 }

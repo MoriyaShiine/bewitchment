@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:tools",
-  "name": "alchemist armor",
+  "name": "Alchemist Armor",
   "icon": "bewitchment:alchemist_robes",
   "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "this high-end couture enables the wearer to master potion brewing, doubling the duration of brews.$(br2)carpets made from the same fabric can be placed on altars."
+	  "text": "This high-end couture enables the wearer to master $(l:bewitchment:brewing/brewing_basics)Potion Brewing$(), doubling the duration of $(l:bewitchment:brewing/brewing_basics)Brews$().$(br2)Carpets made from the same fabric can be placed on $(l:bewitchment:introduction/altars)Altars$()."
 	},
 	{
 	  "type": "crafting",

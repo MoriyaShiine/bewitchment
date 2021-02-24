@@ -1,11 +1,11 @@
 {
   "category": "bewitchment:tools",
-  "name": "candelabras",
+  "name": "Candelabras",
   "icon": "bewitchment:iron_candelabra",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "candelabras are one fancy source of lighting.$(br2)they can be lit with a flint and steel. when lit, they will repel ghosts, preventing them from going near it, with better materials increasing the repelling effect.$(br2)additionally, candelabras can be used as wands on altars."
+	  "text": "Candelabras are one fancy source of lighting.$(br2)They can be lit with a Flint and Steel. when lit, they will repel $(l:bewitchment:creatures/ghost)Ghosts$(), preventing them from going near it, with better materials increasing the repelling effect."
 	},
 	{
 	  "type": "crafting",
