@@ -24,6 +24,40 @@
 	  "type": "crafting",
 	  "recipe": "bewitchment:silver_block",
 	  "recipe2": "bewitchment:silver_nugget"
+	},
+	{
+	  "type": "text",
+	  "title": "Silver Tools",
+	  "text": "Silver tools are a simple upgrade to Iron tools.$(br)They are crafted using a Smithing Table. While still having most of Iron's qualities, Silver tools inherit abilities from Golden tools.$(br2)They are a great defense against unholy entities, dealing more damage or taking less damage respectively."
+	},
+	{
+	  "type": "smithing",
+	  "recipe": "bewitchment:silver_sword_smithing",
+	  "recipe2": "bewitchment:silver_pickaxe_smithing"
+	},
+	{
+	  "type": "smithing",
+	  "recipe": "bewitchment:silver_axe_smithing",
+	  "recipe2": "bewitchment:silver_shovel_smithing"
+	},
+	{
+	  "type": "smithing",
+	  "recipe": "bewitchment:silver_hoe_smithing"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:silver_arrow",
+	  "text": "silver arrows can be shot just like normal arrows, applying additional damage as silver would."
+	},
+	{
+	  "type": "smithing",
+	  "recipe": "bewitchment:silver_helmet_smithing",
+	  "recipe2": "bewitchment:silver_chestplate_smithing"
+	},
+	{
+	  "type": "smithing",
+	  "recipe": "bewitchment:silver_leggings_smithing",
+	  "recipe2": "bewitchment:silver_boots_smithing"
 	}
   ]
 }
