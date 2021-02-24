@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:contracts",
-  "name": "famine",
+  "name": "Famine",
   "icon": "bewitchment:demonic_contract",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "sortnum": 2,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "under the famine contract, damage is reduced the hungrier you are.$(br2)this goes both ways, which means that you give and take less damage."
+	  "text": "Under the Famine $(l:bewitchment:contracts/concept_contracts)Contract$(), damage is reduced the hungrier you are.$(br2)This goes both ways, which means that you give and take less damage."
 	}
   ]
 }

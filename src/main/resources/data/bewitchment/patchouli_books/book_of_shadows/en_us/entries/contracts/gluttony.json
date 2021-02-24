@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:contracts",
-  "name": "gluttony",
+  "name": "Gluttony",
   "icon": "bewitchment:demonic_contract",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "sortnum": 1,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "gluttony doubles the nourishing effect of food... or does it make you consume just as much?"
+	  "text": "Gluttony doubles the nourishing effect of food... or does it make you consume just as much?"
 	}
   ]
 }

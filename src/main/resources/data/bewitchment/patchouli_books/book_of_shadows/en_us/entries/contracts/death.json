@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:contracts",
-  "name": "death",
+  "name": "Death",
   "icon": "bewitchment:demonic_contract",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "sortnum": 2,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "the death contract instantly kills its target.$(br2)it may also curse whoever uses it."
+	  "text": "The Death $(l:bewitchment:contracts/concept_contracts)Contract$() instantly kills its target.$(br2)It may also $(l:bewitchment:curses/conducting_curses)Curse$() whoever uses it."
 	}
   ]
 }

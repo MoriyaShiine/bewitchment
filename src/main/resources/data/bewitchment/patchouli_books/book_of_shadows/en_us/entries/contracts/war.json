@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:contracts",
-  "name": "war",
+  "name": "War",
   "icon": "bewitchment:demonic_contract",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "sortnum": 2,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "beings under the war contract cause aggression among nearby entities, causing them to attack each other first.$(br2)this may cause the last remaining entity in such a mayhem to become even stronger."
+	  "text": "Beings under the War $(l:bewitchment:contracts/concept_contracts)Contract$() cause aggression among nearby entities, causing them to attack each other first.$(br2)This may cause the last remaining entity in such a mayhem to become even stronger."
 	}
   ]
 }
