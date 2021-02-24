@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:sigils",
-  "name": "extending",
+  "name": "Extending",
   "icon": "bewitchment:extending_sigil",
   "advancement": "minecraft:nether/find_fortress",
   "sortnum": 1,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "the extending sigil will increase the duration of any nearby incense around it."
+	  "text": "The Extending $(l:bewitchment:sigils/using_sigils)Passive Sigil$() will increase the duration of any nearby $(l:bewitchment:tools/brazier#incense)Incense$() around it."
 	},
 	{
 	  "type": "crafting",

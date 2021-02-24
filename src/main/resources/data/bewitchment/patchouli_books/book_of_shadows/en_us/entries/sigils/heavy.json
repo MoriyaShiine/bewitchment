@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:sigils",
-  "name": "heavy",
+  "name": "Heavy",
   "icon": "bewitchment:heavy_sigil",
   "advancement": "minecraft:nether/find_fortress",
   "sortnum": 1,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "the heavy sigil will magically increase fall damage on everything around it as long as it's not blacklisted."
+	  "text": "The Heavy $(l:bewitchment:sigils/using_sigils)Passive Sigil$() will magically increase fall damage on everything around it."
 	},
 	{
 	  "type": "crafting",

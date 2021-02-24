@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:sigils",
-  "name": "shrieking",
+  "name": "Shrieking",
   "icon": "bewitchment:shrieking_sigil",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "the shrieking sigil will cast a horrible sound when activated."
+	  "text": "The Shrieking $(l:bewitchment:sigils/using_sigils)Active Sigil$() will cast a horrible sound when activated."
 	},
 	{
 	  "type": "crafting",

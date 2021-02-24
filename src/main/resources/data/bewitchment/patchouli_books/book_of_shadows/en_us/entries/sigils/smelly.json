@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:sigils",
-  "name": "smelly",
+  "name": "Smelly",
   "icon": "bewitchment:smelly_sigil",
   "advancement": "minecraft:nether/find_fortress",
   "sortnum": 1,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "smelly sigils are stinky, causing nearby hostile entities to move towards it."
+	  "text": "Smelly $(l:bewitchment:sigils/using_sigils)Passive Sigil$() are stinky, causing nearby hostile entities to move towards it."
 	},
 	{
 	  "type": "crafting",
