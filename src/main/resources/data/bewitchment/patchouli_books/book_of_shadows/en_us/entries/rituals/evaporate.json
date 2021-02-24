@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:rituals",
-  "name": "evaporate",
+  "name": "Evaporate",
   "icon": "minecraft:netherrack",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "this ritual channels energies of fire, removing any nearby water."
+	  "text": "This $(l:bewitchment:rituals/rituals)Ritual$() channels energies of fire, removing any nearby water."
 	},
 	{
 	  "type": "bewitchment:ritual",

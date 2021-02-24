@@ -1,17 +1,16 @@
 {
   "category": "bewitchment:rituals",
-  "name": "smite",
+  "name": "Smite",
   "icon": "minecraft:redstone",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "smite summons a lightning bolt at the effective position of the rite.$(br2)this works really well with waystones."
+	  "text": "Smite summons a lightning bolt at the effective position of the $(l:bewitchment:rituals/rituals)Ritual$().$(br2)This works really well with $(l:bewitchment:tools/waystone)Waystones$()."
 	},
 	{
 	  "type": "bewitchment:ritual",
-	  "recipe": "bewitchment:rituals/smite",
-	  "text": ""
+	  "recipe": "bewitchment:rituals/smite"
 	}
   ]
 }

@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:rituals",
-  "name": "deluge",
+  "name": "Deluge",
   "icon": "minecraft:water_bucket",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "a lesser ritual that calls on water spirits to make it rain.$(br)the rain itself is supernatural, with a rough time span of up to half a day - that is assuming the ritual is not reinforced somehow."
+	  "text": "A lesser $(l:bewitchment:rituals/rituals)Ritual$() that calls on water spirits to make it rain.$(br2)The rain itself is supernatural, with a rough time span of up to half a day - that is assuming the $(l:bewitchment:rituals/rituals)Ritual$() is not $(l:bewitchment:creatures/cat)Reinforced$() somehow."
 	},
 	{
 	  "type": "bewitchment:ritual",

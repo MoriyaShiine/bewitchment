@@ -1,13 +1,17 @@
 {
   "category": "bewitchment:rituals",
-  "name": "rituals",
+  "name": "Rituals",
   "icon": "bewitchment:golden_chalk",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "priority": true,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "rituals are a powerful magic practice used to have a direct effect on the world. they are cast by drawing circles and throwing in the proper ingredients.$(br)rituals need an me-providing altar nearby; the amount of me needed is always noted in the ritual's entry.$(br)every ritual has an inner and an optional outer circle drawn with different chalk, depending on the ritual."
+	  "text": "Rituals are a powerful magic practice used to have a direct effect on the world. They are cast by drawing circles and throwing in the proper ingredients."
+	},
+	{
+	  "type": "text",
+	  "text": "Rituals need an $(l:bewitchment:introduction/altars)ME$()-providing $(l:bewitchment:introduction/altars)Altar$() nearby; the amount of $(l:bewitchment:introduction/altars)ME$() needed is always noted in the ritual's entry.$(br2)Every ritual has an inner and an optional outer circle drawn with different chalk, depending on the ritual."
 	},
 	{
 	  "type": "multiblock",
@@ -32,7 +36,7 @@
 		  ]
 		]
 	  },
-	  "text": "a golden gylph always forms the center of a circle."
+	  "text": "A Golden Gylph always forms the center of a circle."
 	},
 	{
 	  "type": "crafting",
