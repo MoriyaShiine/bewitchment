@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "climbing",
+  "name": "Climbing",
   "icon": "minecraft:spider_eye",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "allows whoever is affected to climb walls like spiders would."
+	  "text": "Allows whoever is affected to climb walls like Spiders would."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "climbing",
+	  "title": "Climbing",
 	  "item": "minecraft:spider_eye",
-	  "text": "this effect is not affected by intensity."
+	  "text": "This effect is not affected by intensity."
 	}
   ]
 }

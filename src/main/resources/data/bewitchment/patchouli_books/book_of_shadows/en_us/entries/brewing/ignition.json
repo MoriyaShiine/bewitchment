@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "ignition",
+  "name": "Ignition",
   "icon": "minecraft:blaze_powder",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "this will simply put the target on fire."
+	  "text": "This will put the target on fire as long as the effect is active."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "ignition",
+	  "title": "Ignition",
 	  "item": "minecraft:blaze_powder",
-	  "text": "ignition is not affected by intensity."
+	  "text": "Ignition is not affected by intensity."
 	}
   ]
 }

@@ -1,157 +1,157 @@
 {
   "category": "bewitchment:brewing",
-  "name": "mundane brews",
+  "name": "Mundane Brews",
   "icon": "bewitchment:witch_cauldron",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "priority": true,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "while a witch cauldron can be used to make much more incredible brews, some witches may at times prefer to use more subtle brews.$(br)all brews in this entry can be obtained via other means, though the witch cauldron may allow you to make them stronger.$(br)mundane brews fabricated in the witches cauldron use slightly different ingredients."
+	  "text": "While a $(l:bewitchment:tools/witch_cauldron)Witch Cauldron$() can be used to make much more incredible $(l:bewitchment:brewing/brewing_basics)Brews$(), some witches may at times prefer to use more subtle $(l:bewitchment:brewing/brewing_basics)Brews$().$(br)All $(l:bewitchment:brewing/brewing_basics)Brews$() in this entry can be obtained via other means, though the $(l:bewitchment:tools/witch_cauldron)Witch Cauldron$() may allow you to make them stronger.$(br)Mundane $(l:bewitchment:brewing/brewing_basics)Brews$() fabricated in the $(l:bewitchment:tools/witch_cauldron)Witch Cauldron$() use slightly different ingredients."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "absorption",
+	  "title": "Absorption",
 	  "item": "minecraft:honey_bottle",
-	  "text": "applies temporary extra-health."
+	  "text": "Applies temporary extra health."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "blindness",
+	  "title": "Blindness",
 	  "item": "minecraft:ink_sac",
-	  "text": "drastically reduces the target's field of vision, darkening everything around it."
+	  "text": "Drastically reduces the target's field of vision, darkening everything around it."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "fire resistance",
+	  "title": "Fire Resistance",
 	  "item": "minecraft:nether_wart",
-	  "text": "grants immunity to flame."
+	  "text": "Grants immunity to fire."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "glowing",
+	  "title": "Glowing",
 	  "item": "minecraft:glistering_melon_slice",
-	  "text": "makes the target glow obnoxiously."
+	  "text": "Makes the target glow obnoxiously."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "haste",
+	  "title": "Haste",
 	  "item": "minecraft:dandelion",
-	  "text": "increases mining speed."
+	  "text": "Increases mining speed and attack speed."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "hunger",
+	  "title": "Hunger",
 	  "item": "minecraft:rotten_flesh",
-	  "text": "applies a hunger effect."
+	  "text": "Applies a hunger effect."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "instant health",
+	  "title": "Instant Health",
 	  "item": "bewitchment:garlic",
-	  "text": "instantly heals a flat amount of health, using the healing properties of garlic."
+	  "text": "Instantly heals a flat amount of health, using the healing properties of $(l:bewitchment:introducton/crops)Garlic$()."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "instant damage",
+	  "title": "Instant Damage",
 	  "item": "bewitchment:cypress_bark",
-	  "text": "instantly damages a flat amount of health, harnessing the deadly energies of cypress."
+	  "text": "Instantly damages a flat amount of health, harnessing the deadly energies of $(l:bewitchment:introduction/cypress_trees)Cypress$()."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "invisibility",
+	  "title": "Invisibility",
 	  "item": "minecraft:vine",
-	  "text": "makes the target invisible."
+	  "text": "Makes the target invisible."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "jump boost",
+	  "title": "Jump Boost",
 	  "item": "minecraft:rabbit_foot",
-	  "text": "jump boost is self-explanatory."
+	  "text": "Jump boost is self-explanatory."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "levitation",
+	  "title": "Levitation",
 	  "item": "minecraft:chorus_fruit",
-	  "text": "slowly ascends the target into the sky."
+	  "text": "Slowly ascends the target into the sky."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "mining fatigue",
+	  "title": "Mining Fatigue",
 	  "item": "minecraft:poppy",
-	  "text": "mining fatigue makes the target hit much slower."
+	  "text": "Mining Fatigue makes the target hit much slower."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "nausea",
+	  "title": "Nausea",
 	  "item": "bewitchment:aconite",
-	  "text": "induces sickness by disorienting the target."
+	  "text": "Induces sickness by disorienting the target."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "night vision",
+	  "title": "Night Vision",
 	  "item": "minecraft:carrot",
-	  "text": "carrots are good for your eyes."
+	  "text": "Carrots are good for your eyes."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "poison",
+	  "title": "Poison",
 	  "item": "bewitchment:belladonna",
-	  "text": "fills the target's blood with deadly toxin."
+	  "text": "Fills the target's blood with deadly toxin."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "regeneration",
+	  "title": "Regeneration",
 	  "item": "bewitchment:juniper_bark",
-	  "text": "by utilizing the life energies from juniper, regeneration quickens the healing process when applied."
+	  "text": "By utilizing the life energies from $(l:bewitchment:introduction/juniper_trees)Juniper$(), Regeneration quickens the healing process when applied."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "resistance",
+	  "title": "Resistance",
 	  "item": "bewitchment:spruce_bark",
-	  "text": "reduces damage."
+	  "text": "Reduces damage taken."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "slow falling",
+	  "title": "Slow Falling",
 	  "item": "minecraft:feather",
-	  "text": "makes the target fall gently, like a feather."
+	  "text": "Makes the target fall gently, like a feather."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "slowness",
+	  "title": "Slowness",
 	  "item": "minecraft:slime_ball",
-	  "text": "reduces the target's movement speed."
+	  "text": "Reduces the target's movement speed."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "speed",
+	  "title": "Speed",
 	  "item": "minecraft:sugar_cane",
-	  "text": "increases movement speed, using the energizing qualities of sugar cane."
+	  "text": "Increases movement speed, using the energizing qualities of Sugar Cane."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "strength",
+	  "title": "Strength",
 	  "item": "bewitchment:oak_bark",
-	  "text": "using the powers of oak, this increases damage output."
+	  "text": "Using the powers of Oak, this increases damage output."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "water breathing",
+	  "title": "Water Breathing",
 	  "item": "minecraft:kelp",
-	  "text": "allows breathing in water."
+	  "text": "Allows breathing in water."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "weakness",
+	  "title": "Weakness",
 	  "item": "minecraft:red_mushroom",
-	  "text": "reduces the target's damage.$(br2)you may also use a brown mushroom for this."
+	  "text": "Reduces the target's attack damage.$(br2)You may also use a Brown Mushroom for this."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "wither",
+	  "title": "Wither",
 	  "item": "minecraft:wither_rose",
-	  "text": "gradually reduces the target's health."
+	  "text": "Gradually reduces the target's health."
 	}
   ]
 }

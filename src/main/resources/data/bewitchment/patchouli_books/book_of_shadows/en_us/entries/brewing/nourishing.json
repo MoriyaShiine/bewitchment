@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "nourishing",
+  "name": "Nourishing",
   "icon": "minecraft:bamboo",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "the nourishing potion increases the effectiveness of food, giving a flat increase in gain when consuming food."
+	  "text": "The Nourishing effect increases the effectiveness of food, giving a flat increase in gain when consuming food."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "nourishing",
+	  "title": "Nourishing",
 	  "item": "minecraft:bamboo",
-	  "text": "the gain increase scales with intensity."
+	  "text": "The gain increase scales with intensity."
 	}
   ]
 }

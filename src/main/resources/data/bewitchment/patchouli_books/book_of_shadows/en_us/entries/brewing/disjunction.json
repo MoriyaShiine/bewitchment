@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "disjunction",
+  "name": "Disjunction",
   "icon": "minecraft:ender_pearl",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "disjuncts the target, attempting to teleport it in a small radius."
+	  "text": "Disjuncts the target, attempting to teleport it in a small radius."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "disjunction",
+	  "title": "Disjunction",
 	  "item": "minecraft:ender_pearl",
-	  "text": "the teleportation radius is increased with higher intensity."
+	  "text": "The teleportation radius is increased with higher intensity."
 	}
   ]
 }

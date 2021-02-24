@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "gills",
+  "name": "Gills",
   "icon": "minecraft:cod",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "this malicious effect replaces the target's lungs with gills, making them able to only breathe underwater."
+	  "text": "This malicious effect replaces the target's lungs with gills, making them able to only breathe underwater."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "gills",
+	  "title": "Gills",
 	  "item": "minecraft:cod",
-	  "text": "any fish may be used for this."
+	  "text": "Any Fish may be used for this."
 	}
   ]
 }

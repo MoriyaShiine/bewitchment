@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "deflection",
+  "name": "Deflection",
   "icon": "minecraft:phantom_membrane",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "deflects arrows from the target, making them return faster from where they were shot from."
+	  "text": "Deflects Arrows from the target, making them return faster from where they were shot from."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "deflection",
+	  "title": "Deflection",
 	  "item": "minecraft:phantom_membrane",
-	  "text": "arrows get faster the stronger the deflection effect is."
+	  "text": "Arrows get faster the stronger the Deflection effect is."
 	}
   ]
 }

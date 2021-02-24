@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "ethereal",
+  "name": "Ethereal",
   "icon": "bewitchment:ectoplasm",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "ethereal entities cannot receive any damage, but can also not deal any."
+	  "text": "Ethereal entities cannot receive any damage, but can also not deal any."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "ethereal",
+	  "title": "Ethereal",
 	  "item": "bewitchment:ectoplasm",
-	  "text": "you are practically a ghost."
+	  "text": "Intensity does not affect this effect."
 	}
   ]
 }

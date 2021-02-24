@@ -1,43 +1,43 @@
 {
   "category": "bewitchment:brewing",
-  "name": "elemental oils",
+  "name": "Elemental Oils",
   "icon": "bewitchment:cleansing_balm",
   "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "priority": true,
   "pages": [
 	{
 	  "type": "text",
-	  "text": "elemental oils are essential crafting components in witchcraft. they are made out of a type of bark and other components.$(br2)to craft a few bottles of oil, first throw a piece of bark into a boiling witch cauldron, then add the other ingredients. once it reaches a pleasant, matching color, you can bottle it."
+	  "text": "Elemental Oils are essential crafting components in witchcraft. They are made out of a type of $(l:bewitchment:introduction/bark)Bark$() and other components.$(br2)To craft a few bottles of Oil, first throw a piece of $(l:bewitchment:introduction/bark)Bark$() into a boiling $(l:bewitchment:tools/witch_cauldron)Witch Caulron$(), then add the other ingredients. Once it reaches a pleasant, matching color, you can bottle it."
 	},
 	{
 	  "type": "bewitchment:oil",
 	  "recipe": "bewitchment:oil_crafting/cleansing_balm",
-	  "text": "cleansing balm is associated with light, and is just as bright."
+	  "text": "Cleansing Balm is associated with light, and is just as bright."
 	},
 	{
 	  "type": "bewitchment:oil",
 	  "recipe": "bewitchment:oil_crafting/grim_elixir",
-	  "text": "associated with the principle of darkness, grim elixir is dark, like blood."
+	  "text": "Associated with the principle of darkness, Grim Elixir is dark, like blood."
 	},
 	{
 	  "type": "bewitchment:oil",
 	  "recipe": "bewitchment:oil_crafting/aqua_cerate",
-	  "text": "aqua cerate is blue, like water.$(br2)any type of fish may be used for this."
+	  "text": "Aqua Cerate is blue, like water.$(br2)Any type of Fish may be used for this."
 	},
 	{
 	  "type": "bewitchment:oil",
 	  "recipe": "bewitchment:oil_crafting/fiery_serum",
-	  "text": "fiery serum is a bright orange. it incorporates the principle of the flame."
+	  "text": "Fiery Serum is a bright orange. It incorporates the principle of the flame."
 	},
 	{
 	  "type": "bewitchment:oil",
 	  "recipe": "bewitchment:oil_crafting/earth_ichor",
-	  "text": "this grass-green oil incorporates earth."
+	  "text": "This grass-green oil incorporates earth."
 	},
 	{
 	  "type": "bewitchment:oil",
 	  "recipe": "bewitchment:oil_crafting/heaven_extract",
-	  "text": "heaven extract is completely white and represents air.$(br2)be careful not to throw the mandrake root in first, or you might accidentally create a brew."
+	  "text": "Heaven extract is completely white and represents air.$(br2)Be careful not to throw the $(l:bewitchment:introduction/crops)Mandrake Root$() in first, or you might accidentally create a $(l:bewitchment:brewing/brewing_basics)Brew$()."
 	}
   ]
 }

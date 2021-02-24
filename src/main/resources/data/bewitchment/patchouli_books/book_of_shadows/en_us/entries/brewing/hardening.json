@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "hardening",
+  "name": "Hardening",
   "icon": "minecraft:scute",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "this potion hardens the skin, giving a flat bonus on armor."
+	  "text": "This effect hardens the skin, giving a flat bonus on armor."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "hardening",
+	  "title": "Hardening",
 	  "item": "minecraft:scute",
-	  "text": "the armor bonus is proportional to the potion's strength."
+	  "text": "The armor bonus is proportional to the effect's strength."
 	}
   ]
 }

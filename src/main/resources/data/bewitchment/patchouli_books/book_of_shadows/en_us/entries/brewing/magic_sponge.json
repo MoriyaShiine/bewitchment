@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "magic sponge",
+  "name": "Magic Sponge",
   "icon": "bewitchment:dragons_blood_resin",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "magic sponge will reduce damage from magic sources, and in turn refill the target's internal me buffer based on the damage."
+	  "text": "Magic Sponge will reduce damage from magic sources, and in turn refill the target's $(l:bewitchment:introduction/altars#internalme)Internal ME Buffer$() based on the damage."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "magic sponge",
+	  "title": "Magic Sponge",
 	  "item": "bewitchment:dragons_blood_resin",
-	  "text": "higher intensity increases magic damage reduction."
+	  "text": "Higher intensity increases magic damage reduction."
 	}
   ]
 }

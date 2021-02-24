@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "deafened",
+  "name": "Deafened",
   "icon": "minecraft:honeycomb",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "reduces all sound to whoever consumes a potion with this effect."
+	  "text": "Reduces all sound to whoever has this effect."
 	},
 	{
 	  "type": "spotlight",
-	  "title": "deafened",
+	  "title": "Deafened",
 	  "item": "minecraft:honeycomb",
-	  "text": "the higher the intensity of the potion, the more sound is reduced."
+	  "text": "The higher the intensity of the potion, the more sound is reduced."
 	}
   ]
 }

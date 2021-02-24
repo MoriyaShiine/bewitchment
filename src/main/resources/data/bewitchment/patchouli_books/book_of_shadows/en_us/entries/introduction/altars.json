@@ -15,7 +15,8 @@
 	},
 	{
 	  "type": "text",
-	  "text": "Altars are created by putting a Carpet on their base block. The choice of base block and carpet is of cosmetic nature only and tied to one of the three realms.$(br2)Nearby Altars will fill a player's internal ME buffer, which is used for magic such as trinkets or $(l:bewitchment:tools/brooms)Brooms$()."
+	  "text": "Altars are created by putting a Carpet on their base block. The choice of base block and carpet is of cosmetic nature only and tied to one of the three realms.$(br2)Nearby Altars will fill a player's Internal ME Buffer, which is used for magic such as trinkets or $(l:bewitchment:tools/brooms)Brooms$().",
+	  "anchor": "internalme"
 	},
 	{
 	  "type": "image",
