@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:poppets",
-  "name": "mending",
+  "name": "Mending",
   "icon": "bewitchment:mending_poppet",
   "advancement": "bewitchment:hidden_unlocks/taglock",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "like the rare and coveted enchantment, the mending poppet will repair the armor and held items of whoever is bound to it.$(br2)this effect is not passively applied; instead, it is applied whenever an item would normally break, resetting its durability and destroying the poppet instead."
+	  "text": "Like the rare and coveted enchantment, the Mending Poppet will repair the armor and held items of whoever is bound to it.$(br2)This effect is not passively applied; instead, it is applied whenever an item would normally break, resetting its durability and destroying the Poppet instead."
 	},
 	{
 	  "type": "crafting",

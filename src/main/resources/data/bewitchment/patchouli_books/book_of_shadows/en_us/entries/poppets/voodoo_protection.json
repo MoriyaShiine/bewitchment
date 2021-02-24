@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:poppets",
-  "name": "voodoo protection",
+  "name": "Voodoo Protection",
   "icon": "bewitchment:voodoo_protection_poppet",
   "advancement": "bewitchment:hidden_unlocks/taglock",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "the voodoo protection poppet is the response-counterpart to the voodoo poppet.$(br2)by redirecting malicious energy, anyone bound to it is completely immune to the effects of a voodoo doll."
+	  "text": "The Voodoo Protection Poppet is the response-counterpart to the $(l:bewitchment:poppets/voodoo)Voodoo Poppet$().$(br2)By redirecting malicious energy, anyone bound to it is completely immune to the effects of a $(l:bewitchment:poppets/voodoo)Voodoo Poppet$()."
 	},
 	{
 	  "type": "crafting",

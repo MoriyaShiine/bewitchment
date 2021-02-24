@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:poppets",
-  "name": "fatigue",
+  "name": "Fatigue",
   "icon": "bewitchment:fatigue_poppet",
   "advancement": "bewitchment:hidden_unlocks/taglock",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "when bound to the fatigue poppet, enemies that attack you will be heavily weakened for a few seconds."
+	  "text": "When bound to the Fatigue Poppet, enemies that attack you will be heavily weakened for a few seconds."
 	},
 	{
 	  "type": "crafting",
