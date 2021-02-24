@@ -16,7 +16,7 @@
 	{
 	  "type": "text",
 	  "title": "teleportation",
-	  "anchor": "teleport",
+	  "anchor": "teleportation",
 	  "text": "to teleport with a witch cauldron, simply throw in an ender pearl, step on it and say your destination. that destination must be another witch cauldron that has been named with a name tag.$(br2)teleportation requires altar power."
 	}
   ]

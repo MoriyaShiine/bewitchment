@@ -11,7 +11,7 @@
 	},
 	{
 	  "type": "text",
-	  "text": "Curses will wear off after seven days, but they can also be $(l:bewitchment:rituals/cleansing)Cleansed$() using the respective ritual.$(br2)Do note that all Curses need at least 400 ME available; Greater Curses require 800 ME."
+	  "text": "Curses will wear off after seven days, but they can also be $(l:bewitchment:rituals/cleansing)Cleansed$() using the respective ritual.$(br2)Do note that all Curses need at least 400 $(l:bewitchment:introduction/altars)ME$() available; Greater Curses require 800 $(l:bewitchment:introduction/altars)ME$()."
 	}
   ]
 }

@@ -1,22 +1,22 @@
 {
   "category": "bewitchment:creatures",
-  "name": "raven",
+  "name": "Raven",
   "icon": "bewitchment:raven_spawn_egg",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "ravens are dark birds that can be found in plains and forests. when killed, they will drop feathers."
+	  "text": "Ravens are dark birds that can be found in plains and forests. When killed, they will drop Feathers."
 	},
 	{
 	  "type": "text",
 	  "advancement": "bewitchment:hidden_unlocks/demon_heart",
-	  "text": "ravens can be bound as familiars, enabling the witch to occasionally reflect curses.$(br2)raven familiars also double the duration of curses cast by the witch, making them much more effective."
+	  "text": "Ravens can be bound as $(l:bewitchment:rituals/binding)Familiars$(), enabling the witch to occasionally reflect $(l:bewitchment:curses/conducting_curses)Curses$().$(br2)Raven $(l:bewitchment:rituals/binding)Familiars$() also double the duration of $(l:bewitchment:curses/conducting_curses)Curses$() cast by the witch, making them much more effective."
 	},
 	{
 	  "type": "entity",
 	  "entity": "bewitchment:raven{Variant:1}",
 	  "scale": 0.6,
-	  "text": "ravens can be tamed with gold or silver nuggets, and bred with wheat seeds."
+	  "text": "Ravens can be tamed with Gold Nuggets or Silver Nuggets, and bred with Wheat Seeds."
 	}
   ]
 }

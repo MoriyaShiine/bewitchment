@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:creatures",
-  "name": "lilith",
+  "name": "Lilith",
   "icon": "bewitchment:lilith_spawn_egg",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "lilith, the mountain-mother of vampires is often addressed to grant victims of vampirism higher powers.$(br2)pledging to her allows them to freely change their form into that of a bat, allowing them to roam freely. alternatively, she can be be offered garlic, freeing the victim of her curse."
+	  "text": "Lilith, the mountain-mother of $(l:bewitchment:creatures/vampire)Vampires$() is often addressed to grant victims of $(l:bewitchment:curses/vampirism)Vampirism$() higher powers.$(br2)$(l:bewitchment:tools/grotesque_stew)Pledging$() to her allows them to freely change their form into that of a bat, allowing them to roam freely. Alternatively, she can be be offered $(l:bewitchment:introduction/crops)Garlic$(), freeing the victim of her $(l:bewitchment:curses/conducting_curses)Curse$()."
 	},
 	{
 	  "type": "entity",
@@ -15,12 +15,12 @@
 	},
 	{
 	  "type": "text",
-	  "title": "summoning lilith",
-	  "text": "to summon lilith, several things are needed:$(li)a mortal coil incense$(li)a chicken $(li)a mountain biome$(br2)first, start the incense in the right biome, at night. then you will need to slay a chicken with an athame, not too far away."
+	  "title": "Summoning Lilith",
+	  "text": "To summon Lilith, several things are needed:$(li)a $(l:bewitchment:tools/brazier#mortal_coil)Mortal Coil Incense$()$(li)a Chicken $(li)a mountain biome$(br2)First, start the $(l:bewitchment:tools/brazier#incense)Incense$() in the right biome, at night. Then you will need to slay a Chicken with an $(l:bewitchment:tools/athame)Athame$(), not too far away."
 	},
 	{
 	  "type": "text",
-	  "text": "you want to keep lilith around if you want to pledge to her, so decide where to summon her wisely.$(br2)alternatively, you can attempt moving her using the warp ritual.$(br2)once pledged, you can toggle your bat-form by pressing [$(k:bewitchment.transformation_ability)]."
+	  "text": "You'll want to keep Lilith around if you want to $(l:bewitchment:tools/grotesque_stew)Pledge$() to her, so decide where to summon her wisely.$(br2)Alternatively, you can attempt moving her using the $(l:bewitchment:rituals/warp)Warp$() $(l:bewitchment:rituals/rituals)Ritual$().$(br2)Once $(l:bewitchment:tools/grotesque_stew)Pledged$(), you can toggle your bat-form by pressing [$(k:bewitchment.transformation_ability)]."
 	}
   ]
 }

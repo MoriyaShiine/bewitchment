@@ -1,6 +1,6 @@
 {
   "category": "bewitchment:creatures",
-  "name": "ghost",
+  "name": "Ghost",
   "icon": "bewitchment:ghost_spawn_egg",
   "extra_recipe_mappings": {
 	"bewitchment:ectoplasm": 1
@@ -8,13 +8,12 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "ghosts are lost souls, wandering the wake at night wherever they can.$(br2)upon noticing nearby humans, they will apply their short-lived curses in the form of negative potion effects.$(br2)ghosts are immune to mundane weapons, save for those of silver and those enchanted with smite."
+	  "text": "Ghosts are lost souls, wandering the wake at night wherever they can.$(br2)Upon noticing nearby humans, they will apply their short-lived curses in the form of negative status effects.$(br2)Ghosts are immune to mundane weapons, save for those of $(l:bewitchment:introduction/silver)Silver$() and those enchanted with Smite. Ghosts will drop Ectoplasm."
 	},
 	{
 	  "type": "entity",
 	  "entity": "bewitchment:ghost{Variant:1}",
-	  "offset": 0.1,
-	  "text": "ghosts will drop ectoplasm."
+	  "offset": 0.1
 	}
   ]
 }

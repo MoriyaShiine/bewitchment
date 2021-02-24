@@ -1,6 +1,6 @@
 {
   "category": "bewitchment:creatures",
-  "name": "demon",
+  "name": "Demon",
   "icon": "bewitchment:demon_spawn_egg",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "extra_recipe_mappings": {
@@ -9,13 +9,12 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "grim beings, crawling straight from the pits of hell. demons are usually summoned and, due to internal political conflicts, will attack any living being around them, including other demons, usually with fire.$(br2)demons can be safely approached with besmirched armor, offering their trades."
+	  "text": "Grim beings, crawling straight from the pits of Hell. Demons are usually $(l:bewitchment:rituals/summon_demon)Summoned$() and will attack any living being around them, including other Demons, usually with fire.$(br2)Demons can be safely approached with $(l:bewitchment:tools/besmirched_armor)Besmirched Armor$(), offering their trades.$(br2)Slaying a Demon will yield at least one precious Demon Heart."
 	},
 	{
 	  "type": "entity",
 	  "entity": "bewitchment:demon{Variant:2}",
-	  "offset": 0.2,
-	  "text": "slaying a demon will yield at least one precious demon heart."
+	  "offset": 0.2
 	}
   ]
 }

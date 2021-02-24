@@ -1,18 +1,16 @@
 {
   "category": "bewitchment:creatures",
-  "name": "wolf",
+  "name": "Wolf",
   "icon": "minecraft:wolf_spawn_egg",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "tamed wolves are precious creatures; when their friend is in need, they are usually ready to help, even risking their own life.$(br2)when bound as a familiar, dogs will increase the durability of poppets.$(br2)their protective spirit will also naturally increase the armor of their witch."
+	  "text": "Tamed Wolves are precious creatures; when their friend is in need, they are usually ready to help, even risking their own life.$(br2)When bound as a $(l:bewitchment:rituals/binding)Familiar$(), wolves will increase the durability of $(l:bewitchment:poppets/poppet_practice)Poppets$().$(br2)Their protective spirit will also naturally increase the armor of their witch."
 	},
 	{
 	  "type": "entity",
 	  "entity": "minecraft:wolf",
-	  "name": "wolf",
-	  "text": "woof",
 	  "scale": 0.6
 	}
   ]

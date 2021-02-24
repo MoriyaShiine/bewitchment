@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:creatures",
-  "name": "herne",
+  "name": "Herne",
   "icon": "bewitchment:herne_spawn_egg",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "herne, the lord of the wild hunt, is commonly pledged to by suffering lycanthropes. he can grant almost total control over the curse, allowing victims to transform on will. alternatively, he can be offered aconite, removing the curse entirely.$(br2)summoning him is rather elaborate, and will be outlined in this entry."
+	  "text": "Herne, the Lord of the Wild Hunt, is commonly $(l:bewitchment:tools/grotesque_stew)Pledged$() to by suffering $(l:bewitchment:curses/lycanthropy)Lycanthropes$(). He can grant almost total control over the $(l:bewitchment:curses/conducting_curses)Curse$(), allowing victims to transform at will. Alternatively, he can be offered $(l:bewitchment:introduction/crops)Aconite$(), removing the $(l:bewitchment:curses/conducting_curses)Curse$() entirely.$(br2)Summoning him is rather elaborate, and will be outlined in this entry."
 	},
 	{
 	  "type": "entity",
@@ -15,12 +15,12 @@
 	},
 	{
 	  "type": "text",
-	  "title": "summoning herne",
-	  "text": "to summon herne, several things are needed:$(li)a mortal coil incense$(li)a wolf $(li)a forest or taiga biome$(br2)first, start the incense in the right biome, at night. then you will need to slay a wolf with an athame, not too far away."
+	  "title": "Summoning Herne",
+	  "text": "To summon Herne, several things are needed:$(li)a $(l:bewitchment:tools/brazier#mortal_coil)Mortal Coil Incense$()$(li)a Wolf $(li)a forest or taiga biome$(br2)First, start the $(l:bewitchment:tools/brazier#incense)Incense$() in the right biome, at night. Then you will need to slay a Wolf with an $(l:bewitchment:tools/athame)Athame$(), not too far away."
 	},
 	{
 	  "type": "text",
-	  "text": "choose the place for doing this wisely; you'll need to keep herne around if you want to pledge to him.$(br2)once pledged, you can toggle your wolf-form by pressing [$(k:bewitchment.transformation_ability)]."
+	  "text": "Choose the place for doing this wisely; you'll need to keep Herne around if you want to $(l:bewitchment:tools/grotesque_stew)Pledge$() to him.$(br2)Once $(l:bewitchment:tools/grotesque_stew)Pledged$(), you can toggle your wolf-form by pressing [$(k:bewitchment.transformation_ability)]."
 	}
   ]
 }

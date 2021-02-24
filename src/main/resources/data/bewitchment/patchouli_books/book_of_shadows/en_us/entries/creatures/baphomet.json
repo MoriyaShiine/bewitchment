@@ -1,18 +1,17 @@
 {
   "category": "bewitchment:creatures",
-  "name": "baphomet",
+  "name": "Baphomet",
   "icon": "bewitchment:baphomet_spawn_egg",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "baphomet, an ancient greater demon of magic, first name of fire, flame etc. etc. provides contracts to many witches all over the world.$(br2)when pledging to them, one may acquire contracts for experience, now without any drawbacks.$(br2)baphomet can be summoned by any sufficiently strong witch."
+	  "text": "Baphomet, an ancient $(l:bewitchment:creatures/demon)Greater Demon$() of magic, first name of fire, flame etc. etc. provides $(l:bewitchment:contracts/concept_contracts)Contracts$() to many witches all over the world.$(br2)When $(l:bewitchment:tools/grotesque_stew)Pledging$() to them, one may acquire $(l:bewitchment:contracts/concept_contracts)Contracts$() for experience, now without any drawbacks.$(br2)Baphomet can be $(l:bewitchment:rituals/summon_baphomet)summoned$() by any sufficiently strong witch."
 	},
 	{
 	  "type": "entity",
 	  "entity": "bewitchment:baphomet",
-	  "offset": 0.2,
-	  "text": "baphomet, our majesty."
+	  "offset": 0.2
 	}
   ]
 }

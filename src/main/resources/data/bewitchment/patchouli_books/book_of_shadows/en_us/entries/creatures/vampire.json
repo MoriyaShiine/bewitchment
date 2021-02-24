@@ -1,11 +1,11 @@
 {
   "category": "bewitchment:creatures",
-  "name": "vampire",
+  "name": "Vampire",
   "icon": "bewitchment:vampire_spawn_egg",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "vampires are masters of the night, with few weaknesses. they appear in plains and taiga biomes, on new moons where there's the least light.$(br2)they are known to attack humans, so you should equip yourself against them with fire or silver. "
+	  "text": "Vampires are masters of the night, with few weaknesses. They appear in plains and taiga biomes, on new moons where there's the least light.$(br2)They are known to attack humans, so you should equip yourself against them with fire or $(l:bewitchment:introduction/silver)Silver$()."
 	},
 	{
 	  "type": "entity",

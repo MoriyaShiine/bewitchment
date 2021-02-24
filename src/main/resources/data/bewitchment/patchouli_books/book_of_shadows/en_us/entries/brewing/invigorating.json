@@ -12,7 +12,7 @@
 	  "type": "spotlight",
 	  "title": "Invigorating",
 	  "item": "bewitchment:elder_bark",
-	  "text": "Intensity will increase the amount of ME gained."
+	  "text": "Intensity will increase the amount of $(l:bewitchment:introduction/altars#internalme)ME$() gained."
 	}
   ]
 }
