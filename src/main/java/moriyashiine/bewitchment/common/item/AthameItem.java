@@ -71,7 +71,7 @@ public class AthameItem extends SwordItem {
 				world.setBlockState(pos, entry.strippedLog.getDefaultState().with(PillarBlock.AXIS, state.get(PillarBlock.AXIS)), 11);
 				if (player != null) {
 					context.getStack().damage(1, player, (user) -> user.sendToolBreakStatus(context.getHand()));
-					if (world.random.nextBoolean()) {
+					if (world.random.nextFloat() < 2 / 3f) {
 						ItemStack bark = entry.getOutput().copy();
 						if (!player.inventory.insertStack(bark)) {
 							player.dropStack(bark);
