@@ -301,6 +301,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		}
 	}
 	
+	@Inject(method = "isInvulnerableTo", at = @At("RETURN"), cancellable = true)
+	private void isInvulnerableTo(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
+		if (callbackInfo.getReturnValue() && source.isFire() && BewitchmentAPI.isVampire(this, true)) {
+			callbackInfo.setReturnValue(false);
+		}
+	}
+	
 	@Inject(method = "eatFood", at = @At("HEAD"))
 	private void eat(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> callbackInfo) {
 		if (!world.isClient) {

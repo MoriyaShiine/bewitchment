@@ -84,6 +84,13 @@ public abstract class EntityMixin implements WetAccessor {
 		return pose;
 	}
 	
+	@Inject(method = "isFireImmune", at = @At("RETURN"), cancellable = true)
+	private void isFireImmune(CallbackInfoReturnable<Boolean> callbackInfo) {
+		if (callbackInfo.getReturnValue() && BewitchmentAPI.isVampire((Entity) (Object) this, true)) {
+			callbackInfo.setReturnValue(false);
+		}
+	}
+	
 	@Inject(method = "isWet", at = @At("RETURN"), cancellable = true)
 	private void isWet(CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!callbackInfo.getReturnValue() && getWetTimer() > 0) {
