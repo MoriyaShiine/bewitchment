@@ -9,7 +9,6 @@ import moriyashiine.bewitchment.common.Bewitchment;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.client.model.Model;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
@@ -29,8 +28,6 @@ import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
 public class PricklyBeltItem extends TrinketItem {
-	@Environment(EnvType.CLIENT)
-	private static final Model MODEL = new PricklyBeltModel();
 	@Environment(EnvType.CLIENT)
 	private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/trinket/prickly_belt.png");
 	
@@ -58,6 +55,6 @@ public class PricklyBeltItem extends TrinketItem {
 	@Override
 	public void render(String slot, MatrixStack matrixStack, VertexConsumerProvider vertexConsumer, int light, PlayerEntityModel<AbstractClientPlayerEntity> model, AbstractClientPlayerEntity player, float headYaw, float headPitch) {
 		Trinket.translateToChest(matrixStack, model, player, headYaw, headPitch);
-		MODEL.render(matrixStack, vertexConsumer.getBuffer(RenderLayer.getEntityCutout(TEXTURE)), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
+		new PricklyBeltModel().render(matrixStack, vertexConsumer.getBuffer(RenderLayer.getEntityCutout(TEXTURE)), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
 	}
 }

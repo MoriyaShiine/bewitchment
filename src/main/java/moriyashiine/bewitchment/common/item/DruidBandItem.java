@@ -10,7 +10,6 @@ import moriyashiine.bewitchment.common.Bewitchment;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Fertilizable;
-import net.minecraft.client.model.Model;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
@@ -24,8 +23,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
 public class DruidBandItem extends TrinketItem {
-	@Environment(EnvType.CLIENT)
-	private static final Model MODEL = new DruidBandModel();
 	@Environment(EnvType.CLIENT)
 	private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/trinket/druid_band.png");
 	
@@ -56,6 +53,6 @@ public class DruidBandItem extends TrinketItem {
 	@Override
 	public void render(String slot, MatrixStack matrixStack, VertexConsumerProvider vertexConsumer, int light, PlayerEntityModel<AbstractClientPlayerEntity> model, AbstractClientPlayerEntity player, float headYaw, float headPitch) {
 		Trinket.translateToLeftLeg(matrixStack, model, player, headYaw, headPitch);
-		MODEL.render(matrixStack, vertexConsumer.getBuffer(RenderLayer.getArmorCutoutNoCull(TEXTURE)), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
+		new DruidBandModel().render(matrixStack, vertexConsumer.getBuffer(RenderLayer.getArmorCutoutNoCull(TEXTURE)), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
 	}
 }
