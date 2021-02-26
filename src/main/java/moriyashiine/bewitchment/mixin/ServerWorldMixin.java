@@ -61,29 +61,4 @@ public abstract class ServerWorldMixin extends World {
 			}
 		}
 	}
-	
-	@Inject(method = "tick", at = @At("HEAD"))
-	private void tick(BooleanSupplier shouldKeepTicking, CallbackInfo callbackInfo) {
-		boolean areAllPlayersAsleep = false;
-		for (PlayerEntity playerEntity : players) {
-			if (playerEntity.getSleepingPosition().isPresent() && playerEntity.isSleepingLongEnough() && getBlockState(playerEntity.getSleepingPosition().get()).getBlock() instanceof CoffinBlock) {
-				areAllPlayersAsleep = true;
-			}
-			else {
-				areAllPlayersAsleep = false;
-				break;
-			}
-		}
-		if (areAllPlayersAsleep) {
-			if (getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE)) {
-				while (getTimeOfDay() % 24000 < 13000) {
-					setTimeOfDay(getTimeOfDay() + 1);
-				}
-			}
-			wakeSleepingPlayers();
-			if (getGameRules().getBoolean(GameRules.DO_WEATHER_CYCLE)) {
-				resetWeather();
-			}
-		}
-	}
 }

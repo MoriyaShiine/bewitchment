@@ -6,6 +6,7 @@ import dev.emi.trinkets.api.TrinketSlots;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.common.block.CoffinBlock;
 import moriyashiine.bewitchment.common.network.packet.CauldronTeleportPacket;
 import moriyashiine.bewitchment.common.network.packet.TogglePressingForwardPacket;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
@@ -14,17 +15,21 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
+import top.theillusivec4.somnus.api.PlayerSleepEvents;
+import top.theillusivec4.somnus.api.WorldSleepEvents;
 
 public class Bewitchment implements ModInitializer {
 	public static final String MODID = "bewitchment";
-	
+
 	public static BWConfig config;
-	
+
 	public static final ItemGroup BEWITCHMENT_GROUP = FabricItemGroupBuilder.build(new Identifier(MODID, MODID), () -> new ItemStack(BWObjects.ATHAME));
-	
+
 	@Override
 	public void onInitialize() {
 		AutoConfig.register(BWConfig.class, GsonConfigSerializer::new);
@@ -60,5 +65,23 @@ public class Bewitchment implements ModInitializer {
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.END_STONE_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.OBSIDIAN_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.PURPUR_WITCH_ALTAR);
+		PlayerSleepEvents.CAN_SLEEP_NOW.register(((player, pos) -> {
+			if (player.world.getBlockState(pos).getBlock() instanceof CoffinBlock) {
+				if (player.world.isDay()) {
+					return TriState.TRUE;
+				} else {
+					player.sendMessage(new TranslatableText("block.minecraft.bed.coffin"), true);
+					return TriState.FALSE;
+				}
+			}
+			return TriState.DEFAULT;
+		}));
+		WorldSleepEvents.WORLD_WAKE_TIME.register((world, newTime, curTime) -> {
+			if (world.isDay()) {
+				return curTime + (13000L - (world.getTimeOfDay() % 24000L));
+			} else {
+				return newTime;
+			}
+		});
 	}
 }

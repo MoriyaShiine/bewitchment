@@ -39,6 +39,10 @@ repositories {
         name = "patchouli"
         url = "https://maven.blamejared.com"
     }
+    maven {
+        name = "somnus"
+        url = "https://maven.theillusivec4.top"
+    }
 }
 
 dependencies {
@@ -60,6 +64,8 @@ dependencies {
     modImplementation "io.github.ladysnake:Impersonate:${impersonate_version}"
     modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}"
     modImplementation "com.github.emilyalexandra:trinkets:${trinkets_version}"
+    modImplementation "top.theillusivec4.somnus:somnus-fabric:${somnus_version}"
+    include "top.theillusivec4.somnus:somnus-fabric:${somnus_version}"
 
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
     modRuntime "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"

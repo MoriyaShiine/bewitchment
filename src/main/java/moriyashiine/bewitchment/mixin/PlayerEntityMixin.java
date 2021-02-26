@@ -278,15 +278,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		return exhaustion;
 	}
 	
-	@Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;isDay()Z"))
-	private boolean coffinHack(World obj) {
-		Optional<BlockPos> pos = getSleepingPosition();
-		if (pos.isPresent() && world.getBlockState(pos.get()).getBlock() instanceof CoffinBlock) {
-			return obj.isNight();
-		}
-		return obj.isDay();
-	}
-	
 	@Inject(method = "getHurtSound", at = @At("HEAD"))
 	private void getHurtSound(DamageSource source, CallbackInfoReturnable<SoundEvent> callbackInfo) {
 		if (source == BWDamageSources.SUN) {
