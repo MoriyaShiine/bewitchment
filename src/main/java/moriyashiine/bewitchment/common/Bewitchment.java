@@ -7,29 +7,39 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
+import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
+import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
+import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
+import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.network.packet.CauldronTeleportPacket;
 import moriyashiine.bewitchment.common.network.packet.TogglePressingForwardPacket;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
+import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.util.TriState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import top.theillusivec4.somnus.api.PlayerSleepEvents;
 import top.theillusivec4.somnus.api.WorldSleepEvents;
 
 public class Bewitchment implements ModInitializer {
 	public static final String MODID = "bewitchment";
-
+	
 	public static BWConfig config;
-
+	
 	public static final ItemGroup BEWITCHMENT_GROUP = FabricItemGroupBuilder.build(new Identifier(MODID, MODID), () -> new ItemStack(BWObjects.ATHAME));
-
+	
+	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void onInitialize() {
 		AutoConfig.register(BWConfig.class, GsonConfigSerializer::new);
@@ -56,6 +66,39 @@ public class Bewitchment implements ModInitializer {
 		BWRecipeTypes.init();
 		BWWorldGenerators.init();
 		CommandRegistrationCallback.EVENT.register(BWCommands::init);
+		WorldSleepEvents.WORLD_WAKE_TIME.register((world, newTime, curTime) -> world.isDay() ? curTime + (13000 - (world.getTimeOfDay() % 24000)) : newTime);
+		PlayerSleepEvents.CAN_SLEEP_NOW.register((player, pos) -> {
+			if (player.world.getBlockState(pos).getBlock() instanceof CoffinBlock) {
+				return player.world.isDay() ? TriState.TRUE : TriState.FALSE;
+			}
+			return TriState.DEFAULT;
+		});
+		PlayerSleepEvents.TRY_SLEEP.register((player, pos) -> {
+			if (player.world.getBlockState(pos).getBlock() instanceof CoffinBlock && player.world.isNight()) {
+				player.sendMessage(new TranslatableText("block.minecraft.bed.coffin"), true);
+				return PlayerEntity.SleepFailureReason.OTHER_PROBLEM;
+			}
+			return null;
+		});
+		PlayerSleepEvents.WAKE_UP.register((player, reset, update) -> {
+			if (!player.world.isClient) {
+				BWUtil.getBlockPoses(player.getBlockPos(), 12, foundPos -> player.world.getBlockEntity(foundPos) instanceof BrazierBlockEntity && ((BrazierBlockEntity) player.world.getBlockEntity(foundPos)).incenseRecipe != null).forEach(foundPos -> {
+					IncenseRecipe recipe = ((BrazierBlockEntity) player.world.getBlockEntity(foundPos)).incenseRecipe;
+					int durationMultiplier = 1;
+					BlockPos nearestSigil = BWUtil.getClosestBlockPos(player.getBlockPos(), 16, foundSigil -> player.world.getBlockEntity(foundSigil) instanceof SigilBlockEntity && ((SigilBlockEntity) player.world.getBlockEntity(foundSigil)).getSigil() == BWSigils.EXTENDING);
+					if (nearestSigil != null) {
+						BlockEntity blockEntity = player.world.getBlockEntity(nearestSigil);
+						SigilHolder sigil = ((SigilHolder) blockEntity);
+						if (sigil.test(player)) {
+							sigil.setUses(sigil.getUses() - 1);
+							blockEntity.markDirty();
+							durationMultiplier = 2;
+						}
+					}
+					player.addStatusEffect(new StatusEffectInstance(recipe.effect, 24000 * durationMultiplier, recipe.amplifier, true, false));
+				});
+			}
+		});
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.STONE_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.MOSSY_COBBLESTONE_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.PRISMARINE_WITCH_ALTAR);
@@ -65,23 +108,5 @@ public class Bewitchment implements ModInitializer {
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.END_STONE_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.OBSIDIAN_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.PURPUR_WITCH_ALTAR);
-		PlayerSleepEvents.CAN_SLEEP_NOW.register(((player, pos) -> {
-			if (player.world.getBlockState(pos).getBlock() instanceof CoffinBlock) {
-				if (player.world.isDay()) {
-					return TriState.TRUE;
-				} else {
-					player.sendMessage(new TranslatableText("block.minecraft.bed.coffin"), true);
-					return TriState.FALSE;
-				}
-			}
-			return TriState.DEFAULT;
-		}));
-		WorldSleepEvents.WORLD_WAKE_TIME.register((world, newTime, curTime) -> {
-			if (world.isDay()) {
-				return curTime + (13000L - (world.getTimeOfDay() % 24000L));
-			} else {
-				return newTime;
-			}
-		});
 	}
 }

@@ -1,7 +1,6 @@
 package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
-import moriyashiine.bewitchment.common.block.CoffinBlock;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;

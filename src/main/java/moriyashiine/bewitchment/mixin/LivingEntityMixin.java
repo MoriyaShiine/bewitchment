@@ -7,9 +7,7 @@ import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.client.network.packet.SpawnExplosionParticlesPacket;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
-import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
-import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.entity.interfaces.*;
 import moriyashiine.bewitchment.common.entity.living.*;
@@ -19,7 +17,6 @@ import moriyashiine.bewitchment.common.item.PricklyBeltItem;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.recipe.AthameDropRecipe;
-import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
 import moriyashiine.bewitchment.common.registry.*;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
@@ -741,27 +738,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					break;
 				}
 			}
-		}
-	}
-	
-	@Inject(method = "wakeUp", at = @At("TAIL"))
-	private void wakeUp(CallbackInfo callbackInfo) {
-		if (!world.isClient) {
-			BWUtil.getBlockPoses(getBlockPos(), 12, foundPos -> world.getBlockEntity(foundPos) instanceof BrazierBlockEntity && ((BrazierBlockEntity) world.getBlockEntity(foundPos)).incenseRecipe != null).forEach(foundPos -> {
-				IncenseRecipe recipe = ((BrazierBlockEntity) world.getBlockEntity(foundPos)).incenseRecipe;
-				int durationMultiplier = 1;
-				BlockPos nearestSigil = BWUtil.getClosestBlockPos(getBlockPos(), 16, foundSigil -> world.getBlockEntity(foundSigil) instanceof SigilBlockEntity && ((SigilBlockEntity) world.getBlockEntity(foundSigil)).getSigil() == BWSigils.EXTENDING);
-				if (nearestSigil != null) {
-					BlockEntity blockEntity = world.getBlockEntity(nearestSigil);
-					SigilHolder sigil = ((SigilHolder) blockEntity);
-					if (sigil.test(this)) {
-						sigil.setUses(sigil.getUses() - 1);
-						blockEntity.markDirty();
-						durationMultiplier = 2;
-					}
-				}
-				addStatusEffect(new StatusEffectInstance(recipe.effect, 24000 * durationMultiplier, recipe.amplifier, true, false));
-			});
 		}
 	}
 	

@@ -28,6 +28,10 @@ repositories {
         url = "https://maven.jamieswhiteshirt.com/libs-release"
     }
     maven {
+        name = "somnus"
+        url = "https://maven.theillusivec4.top"
+    }
+    maven {
         name = "cardinal"
         url = "https://maven.abusedmaster.xyz/"
     }
@@ -54,18 +58,15 @@ dependencies {
     include "com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraform_wood_api_version}"
     modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${project.reach_version}"
     include "com.jamieswhiteshirt:reach-entity-attributes:${project.reach_version}"
-    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${cca_version}"
-    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${cca_version}"
 
     modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
+    modImplementation "top.theillusivec4.somnus:somnus-fabric:${project.somnus_version}"
     modImplementation "curse.maven:Pehkui-319596:${project.pehkui_version}"
     modImplementation "io.github.ladysnake:Impersonate:${impersonate_version}"
     modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}"
     modImplementation "com.github.emilyalexandra:trinkets:${trinkets_version}"
-    modImplementation "top.theillusivec4.somnus:somnus-fabric:${somnus_version}"
-    include "top.theillusivec4.somnus:somnus-fabric:${somnus_version}"
 
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
     modRuntime "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
