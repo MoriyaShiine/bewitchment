@@ -11,7 +11,7 @@
 	"Sunconure11"
   ],
   "contact": {
-	"website": "todo",
+	"website": "https://www.curseforge.com/minecraft/mc-mods/bewitchment",
 	"repo": "https://github.com/MoriyaShiine/bewitchment"
   },
   "license": "GPL-3.0",
@@ -29,7 +29,8 @@
 	]
   },
   "mixins": [
-	"bewitchment.mixins.json"
+	"bewitchment.mixins.json",
+	"bewitchment_vampire.mixins.json"
   ],
   "depends": {
 	"fabricloader": ">=0.11.0",
