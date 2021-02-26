@@ -31,6 +31,11 @@ public class SyncClientSerializableBlockEntity {
 	public static void handle(MinecraftClient client, ClientPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
 		BlockPos pos = BlockPos.fromLong(buf.readLong());
 		CompoundTag tag = buf.readCompoundTag();
-		client.execute(() -> ((BlockEntityClientSerializable) client.world.getBlockEntity(pos)).fromClientTag(tag));
+		client.execute(() -> {
+			BlockEntity blockEntity = client.world.getBlockEntity(pos);
+			if (blockEntity instanceof BlockEntityClientSerializable) {
+				((BlockEntityClientSerializable) blockEntity).fromClientTag(tag);
+			}
+		});
 	}
 }

@@ -5,6 +5,7 @@ import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,10 +34,13 @@ public class SyncWitchAltarBlockEntity {
 		ItemStack pentacle = buf.readItemStack();
 		ItemStack wand = buf.readItemStack();
 		client.execute(() -> {
-			WitchAltarBlockEntity altar = (WitchAltarBlockEntity) MinecraftClient.getInstance().world.getBlockEntity(pos);
-			altar.setStack(0, sword);
-			altar.setStack(1, pentacle);
-			altar.setStack(2, wand);
+			BlockEntity blockEntity = client.world.getBlockEntity(pos);
+			if (blockEntity instanceof WitchAltarBlockEntity) {
+				WitchAltarBlockEntity altar = (WitchAltarBlockEntity) blockEntity;
+				altar.setStack(0, sword);
+				altar.setStack(1, pentacle);
+				altar.setStack(2, wand);
+			}
 		});
 	}
 }

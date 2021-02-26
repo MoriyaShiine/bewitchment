@@ -5,6 +5,7 @@ import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.entity.player.PlayerEntity;
@@ -45,16 +46,19 @@ public class SyncPoppetShelfBlockEntity {
 		ItemStack eight = buf.readItemStack();
 		ItemStack nine = buf.readItemStack();
 		client.execute(() -> {
-			PoppetShelfBlockEntity poppetShelf = (PoppetShelfBlockEntity) client.world.getBlockEntity(pos);
-			poppetShelf.setStack(0, one);
-			poppetShelf.setStack(1, two);
-			poppetShelf.setStack(2, three);
-			poppetShelf.setStack(3, four);
-			poppetShelf.setStack(4, five);
-			poppetShelf.setStack(5, six);
-			poppetShelf.setStack(6, seven);
-			poppetShelf.setStack(7, eight);
-			poppetShelf.setStack(8, nine);
+			BlockEntity blockEntity = client.world.getBlockEntity(pos);
+			if (blockEntity instanceof PoppetShelfBlockEntity) {
+				PoppetShelfBlockEntity poppetShelf = (PoppetShelfBlockEntity) blockEntity;
+				poppetShelf.setStack(0, one);
+				poppetShelf.setStack(1, two);
+				poppetShelf.setStack(2, three);
+				poppetShelf.setStack(3, four);
+				poppetShelf.setStack(4, five);
+				poppetShelf.setStack(5, six);
+				poppetShelf.setStack(6, seven);
+				poppetShelf.setStack(7, eight);
+				poppetShelf.setStack(8, nine);
+			}
 		});
 	}
 }
