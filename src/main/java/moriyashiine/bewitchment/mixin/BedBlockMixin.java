@@ -27,18 +27,4 @@ public class BedBlockMixin {
 			callbackInfo.setReturnValue(ActionResult.success(!world.isClient));
 		}
 	}
-	
-	@Inject(method = "onUse", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/entity/player/PlayerEntity;trySleep(Lnet/minecraft/util/math/BlockPos;)Lcom/mojang/datafixers/util/Either;"), cancellable = true)
-	private void trySleep(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> callbackInfo) {
-		if (state.getBlock() instanceof CoffinBlock) {
-			if (world.isDay()) {
-				player.trySleep(pos);
-				player.sleep(pos);
-			}
-			else {
-				player.sendMessage(new TranslatableText("block.minecraft.bed.coffin"), true);
-			}
-			callbackInfo.setReturnValue(ActionResult.SUCCESS);
-		}
-	}
 }
