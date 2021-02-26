@@ -39,6 +39,9 @@
 	"StatusEffectMixin",
 	"TippedArrowRecipeMixin",
 	"TreeDecoratorTypeAccessor",
+	"VampireHackMixin",
+	"VampireHackMixin$LivingEntityMixin",
+	"VampireHackMixin$PlayerEntityMixin",
 	"VillagerEntityMixin",
 	"ZombieVillagerEntityAccessor"
   ],

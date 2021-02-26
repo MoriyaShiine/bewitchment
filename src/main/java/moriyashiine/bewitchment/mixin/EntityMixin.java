@@ -84,6 +84,27 @@ public abstract class EntityMixin implements WetAccessor {
 		return pose;
 	}
 	
+	@Inject(method = "isInvulnerableTo", at = @At("RETURN"), cancellable = true)
+	private void isInvulnerableTo(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
+		if (!world.isClient) {
+			if (!callbackInfo.getReturnValue() && this instanceof MasterAccessor) {
+				Entity attacker = source.getAttacker();
+				if (attacker instanceof LivingEntity) {
+					if (this instanceof MasterAccessor) {
+						if (attacker.getUuid().equals(((MasterAccessor) this).getMasterUUID())) {
+							callbackInfo.setReturnValue(true);
+						}
+					}
+					if (attacker instanceof MasterAccessor) {
+						if (getUuid().equals(((MasterAccessor) attacker).getMasterUUID())) {
+							callbackInfo.setReturnValue(true);
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	@Inject(method = "isFireImmune", at = @At("RETURN"), cancellable = true)
 	private void isFireImmune(CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (callbackInfo.getReturnValue() && BewitchmentAPI.isVampire((Entity) (Object) this, true)) {
@@ -102,25 +123,6 @@ public abstract class EntityMixin implements WetAccessor {
 	private void isTouchingWaterOrRain(CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!callbackInfo.getReturnValue() && getWetTimer() > 0) {
 			callbackInfo.setReturnValue(true);
-		}
-	}
-	
-	@Inject(method = "isInvulnerableTo", at = @At("RETURN"), cancellable = true)
-	private void isInvulnerableTo(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!callbackInfo.getReturnValue() && !world.isClient && this instanceof MasterAccessor) {
-			Entity attacker = source.getAttacker();
-			if (attacker instanceof LivingEntity) {
-				if (this instanceof MasterAccessor) {
-					if (attacker.getUuid().equals(((MasterAccessor) this).getMasterUUID())) {
-						callbackInfo.setReturnValue(true);
-					}
-				}
-				if (attacker instanceof MasterAccessor) {
-					if (getUuid().equals(((MasterAccessor) attacker).getMasterUUID())) {
-						callbackInfo.setReturnValue(true);
-					}
-				}
-			}
 		}
 	}
 	

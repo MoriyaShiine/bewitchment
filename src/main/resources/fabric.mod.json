@@ -29,8 +29,7 @@
 	]
   },
   "mixins": [
-	"bewitchment.mixins.json",
-	"bewitchment_vampire.mixins.json"
+	"bewitchment.mixins.json"
   ],
   "depends": {
 	"fabricloader": ">=0.11.0",

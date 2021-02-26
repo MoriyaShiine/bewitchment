@@ -97,10 +97,10 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	public abstract boolean clearStatusEffects();
 	
 	@Shadow
-	public abstract float getMaxHealth();
+	public abstract float getHealth();
 	
 	@Shadow
-	public abstract float getHealth();
+	public abstract float getMaxHealth();
 	
 	@Shadow
 	public abstract void heal(float amount);
@@ -403,10 +403,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damageHead(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
-			if (BewitchmentAPI.isVampire(this, true) && source.isFire()) {
-				callbackInfo.setReturnValue(damage(BWDamageSources.SUN, amount * 2));
-				return;
-			}
 			if (this instanceof InsanityTargetAccessor) {
 				if (((InsanityTargetAccessor) this).getInsanityTargetUUID().isPresent()) {
 					callbackInfo.setReturnValue(false);
@@ -657,7 +653,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "canBreatheInWater", at = @At("RETURN"), cancellable = true)
 	private void canBreatheInWater(CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (callbackInfo.getReturnValue() && !world.isClient && hasStatusEffect(BWStatusEffects.GILLS)) {
+		if (!callbackInfo.getReturnValue() && !world.isClient && hasStatusEffect(BWStatusEffects.GILLS)) {
 			callbackInfo.setReturnValue(true);
 		}
 	}
@@ -685,7 +681,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "fall", at = @At("HEAD"), cancellable = true)
 	private void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition, CallbackInfo callbackInfo) {
-		if ((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == BWEntityTypes.OWL && onGround) {
+		if ((Object) this instanceof PlayerEntity && onGround && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == BWEntityTypes.OWL) {
 			callbackInfo.cancel();
 		}
 	}

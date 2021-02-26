@@ -31,9 +31,6 @@ import net.minecraft.item.FoodComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -77,12 +74,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	
 	@Shadow
 	public abstract HungerManager getHungerManager();
-	
-	@Shadow
-	public abstract SoundCategory getSoundCategory();
-	
-	@Shadow
-	public abstract boolean damage(DamageSource source, float amount);
 	
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
@@ -252,7 +243,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	}
 	
 	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 0, target = "Lnet/minecraft/entity/player/PlayerEntity;getHealth()F"))
-	private float modifyDamage(float amount, DamageSource source) {
+	private float modifyDamage1(float amount, DamageSource source) {
 		if (!world.isClient) {
 			amount = BWDamageSources.handleDamage(this, source, amount);
 		}
@@ -275,23 +266,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		return exhaustion;
 	}
 	
-	@Inject(method = "getHurtSound", at = @At("HEAD"))
-	private void getHurtSound(DamageSource source, CallbackInfoReturnable<SoundEvent> callbackInfo) {
-		if (source == BWDamageSources.SUN) {
-			world.playSound(null, getBlockPos(), SoundEvents.BLOCK_FIRE_EXTINGUISH, getSoundCategory(), getSoundVolume(), getSoundPitch());
-		}
-	}
-	
 	@Inject(method = "canFoodHeal", at = @At("HEAD"), cancellable = true)
 	private void canFoodHeal(CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (BewitchmentAPI.isVampire(this, true)) {
-			callbackInfo.setReturnValue(false);
-		}
-	}
-	
-	@Inject(method = "isInvulnerableTo", at = @At("RETURN"), cancellable = true)
-	private void isInvulnerableTo(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (callbackInfo.getReturnValue() && source.isFire() && BewitchmentAPI.isVampire(this, true)) {
 			callbackInfo.setReturnValue(false);
 		}
 	}
