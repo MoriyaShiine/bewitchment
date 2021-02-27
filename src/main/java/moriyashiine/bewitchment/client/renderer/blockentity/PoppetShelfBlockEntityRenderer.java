@@ -12,7 +12,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
@@ -26,8 +25,7 @@ public class PoppetShelfBlockEntityRenderer extends BlockEntityRenderer<PoppetSh
 	public void render(PoppetShelfBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 		World world = entity.getWorld();
 		if (world != null) {
-			BlockPos pos = entity.getPos();
-			Direction direction = world.getBlockState(pos).get(Properties.HORIZONTAL_FACING);
+			Direction direction = entity.getCachedState().get(Properties.HORIZONTAL_FACING);
 			float rotation = -direction.asRotation();
 			renderRow(direction, rotation, entity.getStack(0), entity.getStack(1), entity.getStack(2), 0.8f, matrices, vertexConsumers, light, overlay);
 			renderRow(direction, rotation, entity.getStack(3), entity.getStack(4), entity.getStack(5), 0.5f, matrices, vertexConsumers, light, overlay);
