@@ -702,7 +702,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 							ItemScatterer.spawn(world, getX() + 0.5, getY() + 0.5, getZ() + 0.5, drop);
 						}
 					}
-					if (livingAttacker instanceof PlayerEntity && livingAttacker.getOffHandStack().getItem() == Items.GLASS_BOTTLE && getBlood() > 20) {
+					if (livingAttacker instanceof PlayerEntity && livingAttacker.getOffHandStack().getItem() == Items.GLASS_BOTTLE && getBlood() > 20 && BWTags.HAS_BLOOD.contains(getType())) {
 						world.playSound(null, attacker.getBlockPos(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1, 0.5f);
 						BWUtil.addItemToInventoryAndConsume((PlayerEntity) livingAttacker, Hand.OFF_HAND, new ItemStack(BWObjects.BOTTLE_OF_BLOOD));
 					}
