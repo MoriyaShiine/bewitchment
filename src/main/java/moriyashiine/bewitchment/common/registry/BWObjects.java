@@ -316,7 +316,7 @@ public class BWObjects {
 	public static final Item ACONITE_SEEDS = create("aconite_seeds", new AliasedBlockItem(ACONITE_CROP, gen()));
 	public static final Item BELLADONNA = create("belladonna", new Item(gen()));
 	public static final Item BELLADONNA_SEEDS = create("belladonna_seeds", new AliasedBlockItem(BELLADONNA_CROP, gen()));
-	public static final Item GARLIC = create("garlic", new AliasedBlockItem(GARLIC_CROP, gen().food(FoodComponents.CARROT)));
+	public static final Item GARLIC = create("garlic", new AliasedBlockItem(GARLIC_CROP, gen().food(FoodComponents.POTATO)));
 	public static final Item MANDRAKE_ROOT = create("mandrake_root", new Item(gen()));
 	public static final Item MANDRAKE_SEEDS = create("mandrake_seeds", new AliasedBlockItem(MANDRAKE_CROP, gen()));
 	public static final Item OAK_BARK = create("oak_bark", new Item(gen()));
@@ -332,8 +332,8 @@ public class BWObjects {
 	public static final Item DEMON_HORN = create("demon_horn", new Item(gen().fireproof()));
 	public static final Item DEMON_HEART = create("demon_heart", new Item(gen().food(BWFoodComponents.DEMON_HEART).rarity(Rarity.UNCOMMON).fireproof()));
 	public static final Item BOTTLE_OF_BLOOD = create("bottle_of_blood", new BottleOfBloodItem(gen().maxCount(16).recipeRemainder(Items.GLASS_BOTTLE)));
-	public static final Item GRILLED_GARLIC = create("grilled_garlic", new Item(gen().food(FoodComponents.BAKED_POTATO)));
-	public static final Item GARLIC_BREAD = create("garlic_bread", new Item(gen().food(FoodComponents.PUMPKIN_PIE)));
+	public static final Item GRILLED_GARLIC = create("grilled_garlic", new Item(gen().food(FoodComponents.CARROT)));
+	public static final Item GARLIC_BREAD = create("garlic_bread", new Item(gen().food(BWFoodComponents.GARLIC_BREAD)));
 	public static final Item WITCHBERRY = create("witchberry", new Item(gen().food(BWFoodComponents.WITCHBERRY)));
 	public static final Item WITCHBERRY_PIE = create("witchberry_pie", new Item(gen().food(BWFoodComponents.WITCHBERRY_PIE)));
 	public static final Item WITCHBERRY_COOKIE = create("witchberry_cookie", new Item(gen().food(BWFoodComponents.WITCHBERRY_COOKIE)));
