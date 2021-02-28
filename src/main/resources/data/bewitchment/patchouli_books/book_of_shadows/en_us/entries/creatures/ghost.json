@@ -12,7 +12,7 @@
 	},
 	{
 	  "type": "entity",
-	  "entity": "bewitchment:ghost{Variant:1}",
+	  "entity": "bewitchment:ghost",
 	  "offset": 0.1
 	}
   ]

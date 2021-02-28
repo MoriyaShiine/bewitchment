@@ -13,7 +13,7 @@
 	},
 	{
 	  "type": "entity",
-	  "entity": "bewitchment:hellhound{Variant:1}",
+	  "entity": "bewitchment:hellhound",
 	  "scale": 0.6
 	}
   ]

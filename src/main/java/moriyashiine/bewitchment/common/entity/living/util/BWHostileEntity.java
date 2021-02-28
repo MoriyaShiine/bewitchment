@@ -21,10 +21,29 @@ public abstract class BWHostileEntity extends HostileEntity {
 	}
 	
 	@Override
+	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable CompoundTag entityTag) {
+		int variants = getVariants();
+		if (variants > 1) {
+			if (hasShiny()) {
+				if (random.nextInt(8192) == 0) {
+					dataTracker.set(VARIANT, 0);
+				}
+				else {
+					dataTracker.set(VARIANT, random.nextInt(variants - 1) + 1);
+				}
+			}
+			else {
+				dataTracker.set(VARIANT, random.nextInt(variants));
+			}
+		}
+		return super.initialize(world, difficulty, spawnReason, entityData, entityTag);
+	}
+	
+	@Override
 	protected void initDataTracker() {
 		super.initDataTracker();
 		if (getVariants() > 1) {
-			dataTracker.startTracking(VARIANT, 0);
+			dataTracker.startTracking(VARIANT, 1);
 		}
 	}
 	
@@ -42,25 +61,6 @@ public abstract class BWHostileEntity extends HostileEntity {
 		if (getVariants() > 1) {
 			tag.putInt("Variant", dataTracker.get(VARIANT));
 		}
-	}
-	
-	@Override
-	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable CompoundTag entityTag) {
-		int variants = getVariants();
-		if (variants > 1) {
-			if (hasShiny()) {
-				if (random.nextInt(8192) == 0) {
-					dataTracker.set(VARIANT, 0);
-				}
-				else {
-					dataTracker.set(VARIANT, random.nextInt(variants - 1) + 1);
-				}
-			}
-			else {
-				dataTracker.set(VARIANT, random.nextInt(variants));
-			}
-		}
-		return super.initialize(world, difficulty, spawnReason, entityData, entityTag);
 	}
 	
 	protected abstract boolean hasShiny();

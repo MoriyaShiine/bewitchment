@@ -14,7 +14,7 @@
 	},
 	{
 	  "type": "entity",
-	  "entity": "bewitchment:raven{Variant:1}",
+	  "entity": "bewitchment:raven",
 	  "scale": 0.6,
 	  "text": "Ravens can be tamed with Gold Nuggets or Silver Nuggets, and bred with Wheat Seeds."
 	}

@@ -14,7 +14,7 @@
 	},
 	{
 	  "type": "entity",
-	  "entity": "bewitchment:owl{Variant:1}",
+	  "entity": "bewitchment:owl",
 	  "scale": 0.6,
 	  "text": "Owls can be tamed with Raw Rabbit, and bred with Raw Chicken."
 	}

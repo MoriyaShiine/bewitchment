@@ -9,7 +9,7 @@
 	},
 	{
 	  "type": "entity",
-	  "entity": "bewitchment:werewolf{Variant:1}",
+	  "entity": "bewitchment:werewolf",
 	  "offset": 0.1
 	}
   ]

@@ -14,7 +14,7 @@
 	},
 	{
 	  "type": "entity",
-	  "entity": "bewitchment:toad{Variant:1}",
+	  "entity": "bewitchment:toad",
 	  "scale": 0.6,
 	  "text": "Toads can be tamed with Fermented Spider Eyes, and bred with Normal Spider Eyes."
 	}

@@ -44,30 +44,6 @@ public abstract class BWTameableEntity extends TameableEntity {
 	}
 	
 	@Override
-	protected void initDataTracker() {
-		super.initDataTracker();
-		if (getVariants() > 1) {
-			dataTracker.startTracking(VARIANT, 0);
-		}
-	}
-	
-	@Override
-	public void readCustomDataFromTag(CompoundTag tag) {
-		super.readCustomDataFromTag(tag);
-		if (getVariants() > 1) {
-			dataTracker.set(VARIANT, tag.getInt("Variant"));
-		}
-	}
-	
-	@Override
-	public void writeCustomDataToTag(CompoundTag tag) {
-		super.writeCustomDataToTag(tag);
-		if (getVariants() > 1) {
-			tag.putInt("Variant", dataTracker.get(VARIANT));
-		}
-	}
-	
-	@Override
 	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable CompoundTag entityTag) {
 		int variants = getVariants();
 		if (variants > 1) {
@@ -125,6 +101,30 @@ public abstract class BWTameableEntity extends TameableEntity {
 			return ActionResult.success(client);
 		}
 		return super.interactMob(player, hand);
+	}
+	
+	@Override
+	protected void initDataTracker() {
+		super.initDataTracker();
+		if (getVariants() > 1) {
+			dataTracker.startTracking(VARIANT, 1);
+		}
+	}
+	
+	@Override
+	public void readCustomDataFromTag(CompoundTag tag) {
+		super.readCustomDataFromTag(tag);
+		if (getVariants() > 1) {
+			dataTracker.set(VARIANT, tag.getInt("Variant"));
+		}
+	}
+	
+	@Override
+	public void writeCustomDataToTag(CompoundTag tag) {
+		super.writeCustomDataToTag(tag);
+		if (getVariants() > 1) {
+			tag.putInt("Variant", dataTracker.get(VARIANT));
+		}
 	}
 	
 	protected abstract boolean hasShiny();
