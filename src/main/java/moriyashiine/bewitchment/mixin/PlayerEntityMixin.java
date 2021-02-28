@@ -8,36 +8,27 @@ import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.api.registry.Transformation;
-import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
-import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.entity.interfaces.*;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.*;
 import moriyashiine.bewitchment.common.statuseffect.PolymorphStatusEffect;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.ChickenEntity;
-import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.explosion.Explosion;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -318,36 +309,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 				}
 				owner.addVelocity(getRotationVector().x, getRotationVector().y, getRotationVector().z);
 				owner.velocityModified = true;
-			}
-		}
-	}
-	
-	@Inject(method = "onKilledOther", at = @At("HEAD"))
-	private void onKilledOther(ServerWorld serverWorld, LivingEntity livingEntity, CallbackInfo callbackInfo) {
-		if (!world.isClient) {
-			BlockPos pos = livingEntity.getBlockPos();
-			BlockPos glyph = BWUtil.getClosestBlockPos(pos, 6, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity);
-			if (glyph != null) {
-				((GlyphBlockEntity) world.getBlockEntity(glyph)).onUse(world, glyph, (PlayerEntity) (Object) this, Hand.MAIN_HAND, livingEntity);
-			}
-			if (world.isNight()) {
-				boolean chicken = livingEntity instanceof ChickenEntity;
-				if ((chicken && world.getBiome(pos).getCategory() == Biome.Category.EXTREME_HILLS) || (livingEntity instanceof WolfEntity && (world.getBiome(pos).getCategory() == Biome.Category.FOREST || world.getBiome(pos).getCategory() == Biome.Category.TAIGA))) {
-					BlockPos brazierPos = BWUtil.getClosestBlockPos(pos, 8, currentPos -> {
-						BlockEntity blockEntity = world.getBlockEntity(currentPos);
-						return blockEntity instanceof BrazierBlockEntity && ((BrazierBlockEntity) blockEntity).incenseRecipe.effect == BWStatusEffects.MORTAL_COIL;
-					});
-					if (brazierPos != null) {
-						world.breakBlock(brazierPos, false);
-						world.createExplosion(livingEntity, brazierPos.getX() + 0.5, brazierPos.getY() + 0.5, brazierPos.getZ() + 0.5, 3, Explosion.DestructionType.BREAK);
-						Entity entity = chicken ? BWEntityTypes.LILITH.create(world) : BWEntityTypes.HERNE.create(world);
-						if (entity instanceof MobEntity) {
-							((MobEntity) entity).initialize((ServerWorldAccess) world, world.getLocalDifficulty(brazierPos), SpawnReason.EVENT, null, null);
-							entity.updatePositionAndAngles(brazierPos.getX() + 0.5, brazierPos.getY(), brazierPos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
-							world.spawnEntity(entity);
-						}
-					}
-				}
 			}
 		}
 	}
