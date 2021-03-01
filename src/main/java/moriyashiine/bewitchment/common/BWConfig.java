@@ -28,7 +28,7 @@ public class BWConfig implements ConfigData {
 	public final int ravenMaxGroupCount = 3;
 	
 	public final List<String> snakeBiomeCategories = Arrays.asList(Biome.Category.PLAINS.getName(), Biome.Category.SAVANNA.getName(), Biome.Category.DESERT.getName());
-	public final int snakeWeight = 10;
+	public final int snakeWeight = 6;
 	public final int snakeMinGroupCount = 1;
 	public final int snakeMaxGroupCount = 2;
 	
