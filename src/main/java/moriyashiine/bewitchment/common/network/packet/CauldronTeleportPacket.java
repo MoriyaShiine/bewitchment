@@ -33,7 +33,7 @@ public class CauldronTeleportPacket {
 	
 	public static void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
 		BlockPos cauldronPos = BlockPos.fromLong(buf.readLong());
-		String message = buf.readString();
+		String message = buf.readString(Short.MAX_VALUE);
 		server.execute(() -> {
 			World world = player.world;
 			BWWorldState worldState = BWWorldState.get(world);
