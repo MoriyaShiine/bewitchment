@@ -19,6 +19,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FoodComponent;
@@ -66,6 +67,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	
 	@Shadow
 	public abstract HungerManager getHungerManager();
+	
+	@Shadow public abstract ActionResult interact(Entity entity, Hand hand);
 	
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
@@ -267,19 +270,22 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	
 	@Inject(method = "interact", at = @At("HEAD"), cancellable = true)
 	private void interact(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> callbackInfo) {
-		if (entity instanceof LivingEntity && hand == Hand.MAIN_HAND && isSneaking() && entity.isAlive() && BewitchmentAPI.isVampire(this, true) && BWTags.HAS_BLOOD.contains(entity.getType()) && getStackInHand(hand).isEmpty()) {
-			BloodAccessor thisBlood = (BloodAccessor) this;
-			BloodAccessor entityBlood = (BloodAccessor) entity;
-			if (thisBlood.fillBlood(5, true) && entityBlood.drainBlood(10, true)) {
-				if (!world.isClient && ((LivingEntity) entity).hurtTime == 0) {
-					world.playSound(null, getBlockPos(), SoundEvents.ITEM_HONEY_BOTTLE_DRINK, getSoundCategory(), getSoundVolume(), 0.5f);
-					if (!((LivingEntity) entity).isSleeping() || entityBlood.getBlood() < entityBlood.MAX_BLOOD / 2) {
-						entity.damage(BWDamageSources.VAMPIRE, 2);
+		if (entity instanceof LivingEntity && hand == Hand.MAIN_HAND && isSneaking() && entity.isAlive() && BewitchmentAPI.isVampire(this, true) && getStackInHand(hand).isEmpty()) {
+			int toGive = BWTags.HAS_BLOOD.contains(entity.getType()) ? 5 : entity instanceof AnimalEntity ? 1 : 0;
+			if (toGive > 0) {
+				BloodAccessor thisBlood = (BloodAccessor) this;
+				BloodAccessor entityBlood = (BloodAccessor) entity;
+				if (thisBlood.fillBlood(toGive, true) && entityBlood.drainBlood(10, true)) {
+					if (!world.isClient && ((LivingEntity) entity).hurtTime == 0) {
+						world.playSound(null, getBlockPos(), SoundEvents.ITEM_HONEY_BOTTLE_DRINK, getSoundCategory(), getSoundVolume(), 0.5f);
+						if (!((LivingEntity) entity).isSleeping() || entityBlood.getBlood() < entityBlood.MAX_BLOOD / 2) {
+							entity.damage(BWDamageSources.VAMPIRE, 2);
+						}
+						thisBlood.fillBlood(toGive, false);
+						entityBlood.drainBlood(10, false);
 					}
-					thisBlood.fillBlood(5, false);
-					entityBlood.drainBlood(10, false);
+					callbackInfo.setReturnValue(ActionResult.success(world.isClient));
 				}
-				callbackInfo.setReturnValue(ActionResult.success(world.isClient));
 			}
 		}
 	}
