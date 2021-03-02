@@ -18,15 +18,23 @@ public class GillsStatusEffect extends StatusEffect {
 	
 	@Override
 	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-		if (!entity.isSubmergedInWater() && !entity.world.hasRain(entity.getBlockPos())) {
+		boolean damage = false;
+		if (!entity.isSubmergedInWater() && !entity.world.hasRain(entity.getBlockPos().up())) {
 			entity.setAir(((LivingEntityAccessor) entity).bw_getNextAirUnderwater(entity.getAir() - ((LivingEntityAccessor) entity).bw_getNextAirOnLand(0)));
 			if (entity.getAir() == -20) {
-				entity.damage(DamageSource.GENERIC, 2);
-				entity.setAir(0);
+				damage = true;
 			}
 		}
 		else if (entity.getAir() < entity.getMaxAir()) {
 			entity.setAir(((LivingEntityAccessor) entity).bw_getNextAirOnLand(entity.getAir()));
+			return;
+		}
+		if (!damage) {
+			damage = entity.getAir() < -20;
+		}
+		if (damage) {
+			entity.damage(DamageSource.GENERIC, 2);
+			entity.setAir(0);
 		}
 	}
 }
