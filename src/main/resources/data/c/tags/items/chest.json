@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+	"bewitchment:juniper_chest",
+	"bewitchment:cypress_chest",
+	"bewitchment:elder_chest",
+	"bewitchment:dragons_blood_chest"
+  ]
+}
