@@ -12,9 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BWWorldState extends PersistentState {
-
-	// FIXME transition to using BlockPos instead, and NbtHelper for serialization
-	// caution: will break existing world states
 	public final List<Long> potentialCandelabras = new ArrayList<>();
 	public final List<Long> witchCauldrons = new ArrayList<>();
 	public final List<Long> poppetShelves = new ArrayList<>();

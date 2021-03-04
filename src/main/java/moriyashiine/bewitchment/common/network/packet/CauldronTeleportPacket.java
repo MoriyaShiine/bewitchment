@@ -21,45 +21,32 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.Iterator;
-import java.util.Locale;
-
 @SuppressWarnings("ConstantConditions")
 public class CauldronTeleportPacket {
 	public static final Identifier ID = new Identifier(Bewitchment.MODID, "cauldron_teleport");
-
+	
 	public static void send(BlockPos cauldronPos, String message) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		buf.writeBlockPos(cauldronPos);
 		buf.writeString(message);
 		ClientPlayNetworking.send(ID, buf);
 	}
-
+	
 	public static void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
 		BlockPos cauldronPos = buf.readBlockPos();
-		String message = buf.readString(Short.MAX_VALUE).toLowerCase(Locale.ROOT);
-		if(message.trim().isEmpty()) {
-			return; // invalid packet
-		}
+		String message = buf.readString(Short.MAX_VALUE);
 		server.execute(() -> {
 			World world = player.world;
-			BlockEntity origin = world.getBlockEntity(cauldronPos);
-			if (!(origin instanceof WitchCauldronBlockEntity)) {
-				return; // invalid packet
-			}
 			BWWorldState worldState = BWWorldState.get(world);
 			BlockPos closest = null;
-			for (Iterator<Long> iterator = worldState.witchCauldrons.iterator(); iterator.hasNext(); ) {
-				BlockPos pos = BlockPos.fromLong(iterator.next());
-				BlockEntity be = world.getBlockEntity(pos);
-				if (be instanceof WitchCauldronBlockEntity) {
-					WitchCauldronBlockEntity blockEntity = (WitchCauldronBlockEntity) be;
-					if (blockEntity.hasCustomName() && blockEntity.getCustomName().getString().toLowerCase(Locale.ROOT).equals(message) && (closest == null || pos.getSquaredDistance(player.getPos(), true) < closest.getSquaredDistance(player.getPos(), true))) {
+			for (Long longPos : worldState.witchCauldrons) {
+				BlockPos pos = BlockPos.fromLong(longPos);
+				BlockEntity blockEntity = world.getBlockEntity(pos);
+				if (blockEntity instanceof WitchCauldronBlockEntity) {
+					WitchCauldronBlockEntity cauldron = (WitchCauldronBlockEntity) blockEntity;
+					if (cauldron.hasCustomName() && cauldron.getCustomName().getString().equals(message) && (closest == null || pos.getSquaredDistance(player.getPos(), true) < closest.getSquaredDistance(player.getPos(), true))) {
 						closest = pos;
 					}
-				}
-				else { // position invalid
-					iterator.remove();
 				}
 			}
 			if (closest != null) {
@@ -68,7 +55,7 @@ public class CauldronTeleportPacket {
 					BlockPos altarPos = ((UsesAltarPower) world.getBlockEntity(cauldronPos)).getAltarPos();
 					if (altarPos != null) {
 						BlockEntity altarBE = world.getBlockEntity(altarPos);
-						if(altarBE instanceof WitchAltarBlockEntity) {
+						if (altarBE instanceof WitchAltarBlockEntity) {
 							WitchAltarBlockEntity altar = (WitchAltarBlockEntity) altarBE;
 							if (altar.drain((int) (Math.sqrt(closest.getSquaredDistance(player.getPos(), true)) * 2), false)) {
 								hasPower = true;

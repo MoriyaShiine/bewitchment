@@ -23,17 +23,17 @@ import java.util.Set;
 import java.util.UUID;
 
 public final class ContributorHornsFeatureRenderer extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
-	private static final Identifier texture = new Identifier(Bewitchment.MODID, "textures/entity/armor/contributor_horns.png");
-	private static final ContributorHornsModel model = new ContributorHornsModel();
-	private static final Set<UUID> contributors = new HashSet<>();
+	private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/armor/contributor_horns.png");
+	private static final ContributorHornsModel MODEL = new ContributorHornsModel();
+	private static final Set<UUID> CONTRIBUTORS = new HashSet<>();
 	private static final String CONTRIBUTORS_URL = "https://raw.githubusercontent.com/MoriyaShiine/bewitchment/master/contributors.properties";
-
+	
 	private static boolean init = false;
-
+	
 	public ContributorHornsFeatureRenderer(FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> context) {
 		super(context);
 	}
-
+	
 	@Override
 	public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, AbstractClientPlayerEntity player, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
 		if (!init) {
@@ -41,41 +41,41 @@ public final class ContributorHornsFeatureRenderer extends FeatureRenderer<Abstr
 			loader.start();
 			init = true;
 		}
-		else if (!player.isInvisible() && player.isPartVisible(PlayerModelPart.HAT) && contributors.contains(player.getUuid())) {
+		else if (!player.isInvisible() && player.isPartVisible(PlayerModelPart.HAT) && CONTRIBUTORS.contains(player.getUuid())) {
 			matrices.push();
 			if (player.isBaby()) {
 				matrices.translate(0, 0.75, 0);
 				matrices.scale(0.75f, 0.75f, 0.75f);
 			}
 			getContextModel().head.rotate(matrices);
-			model.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntitySolid(texture)), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
+			MODEL.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntitySolid(TEXTURE)), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
 			matrices.pop();
 		}
 	}
-
+	
 	private static class ContributorListLoaderThread extends Thread {
 		public ContributorListLoaderThread() {
 			setName("Bewitchment Contributor List Loader Thread");
 			setDaemon(true);
 		}
-
+		
 		@Override
 		public void run() {
 			try (BufferedInputStream stream = IOUtils.buffer(new URL(CONTRIBUTORS_URL).openStream())) {
 				Properties properties = new Properties();
 				properties.load(stream);
-				synchronized (contributors) {
-					contributors.clear();
+				synchronized (CONTRIBUTORS) {
+					CONTRIBUTORS.clear();
 					for (String key : properties.stringPropertyNames()) {
 						String value = properties.getProperty(key);
 						UUID uuid;
 						try {
 							uuid = UUID.fromString(value);
-
+							
 						} catch (IllegalArgumentException ignored) {
 							continue;
 						}
-						contributors.add(uuid);
+						CONTRIBUTORS.add(uuid);
 					}
 				}
 			} catch (IOException e) {
