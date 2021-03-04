@@ -39,6 +39,8 @@ public class Bewitchment implements ModInitializer {
 	
 	public static final ItemGroup BEWITCHMENT_GROUP = FabricItemGroupBuilder.build(new Identifier(MODID, MODID), () -> new ItemStack(BWObjects.ATHAME));
 	
+	public static boolean isNourishLoaded;
+	
 	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void onInitialize() {

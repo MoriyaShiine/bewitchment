@@ -1,9 +1,14 @@
 package moriyashiine.bewitchment.common.misc;
 
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+import dev.emi.nourish.NourishComponent;
+import dev.emi.nourish.NourishMain;
+import dev.emi.nourish.groups.NourishGroup;
+import dev.emi.nourish.groups.NourishGroups;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
 import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
 import moriyashiine.bewitchment.common.item.ScepterItem;
@@ -147,12 +152,28 @@ public class BWUtil {
 					hungerManager.add(1, 20);
 				}
 			}
+			if (Bewitchment.isNourishLoaded) {
+				NourishComponent nourishComponent = NourishMain.NOURISH.get(player);
+				for (NourishGroup group : NourishGroups.groups) {
+					if (nourishComponent.getValue(group) != group.getDefaultValue()) {
+						nourishComponent.setValue(group, group.getDefaultValue());
+					}
+				}
+			}
 		}
 		else {
 			if (alternateForm) {
 				TransformationAbilityPacket.useAbility(player, true);
 			}
 			hungerManager.addExhaustion(Float.MAX_VALUE);
+			if (Bewitchment.isNourishLoaded) {
+				NourishComponent nourishComponent = NourishMain.NOURISH.get(player);
+				for (NourishGroup group : NourishGroups.groups) {
+					if (nourishComponent.getValue(group) != 0) {
+						nourishComponent.setValue(group, 0);
+					}
+				}
+			}
 		}
 		if (alternateForm) {
 			if (!player.abilities.flying) {
