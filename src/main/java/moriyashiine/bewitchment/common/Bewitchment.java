@@ -50,21 +50,6 @@ public class Bewitchment implements ModInitializer {
 		ServerPlayNetworking.registerGlobalReceiver(CauldronTeleportPacket.ID, CauldronTeleportPacket::handle);
 		ServerPlayNetworking.registerGlobalReceiver(TransformationAbilityPacket.ID, TransformationAbilityPacket::handle);
 		ServerPlayNetworking.registerGlobalReceiver(TogglePressingForwardPacket.ID, TogglePressingForwardPacket::handle);
-		BWObjects.init();
-		BWBlockEntityTypes.init();
-		BWEntityTypes.init();
-		BWStatusEffects.init();
-		BWEnchantments.init();
-		BWRitualFunctions.init();
-		BWFortunes.init();
-		BWSigils.init();
-		BWCurses.init();
-		BWContracts.init();
-		BWTransformations.init();
-		BWSoundEvents.init();
-		BWParticleTypes.init();
-		BWRecipeTypes.init();
-		BWWorldGenerators.init();
 		CommandRegistrationCallback.EVENT.register(BWCommands::init);
 		WorldSleepEvents.WORLD_WAKE_TIME.register((world, newTime, curTime) -> world.isDay() ? curTime + (13000 - (world.getTimeOfDay() % 24000)) : newTime);
 		PlayerSleepEvents.CAN_SLEEP_NOW.register((player, pos) -> {
@@ -99,6 +84,21 @@ public class Bewitchment implements ModInitializer {
 				});
 			}
 		});
+		BWObjects.init();
+		BWBlockEntityTypes.init();
+		BWEntityTypes.init();
+		BWStatusEffects.init();
+		BWEnchantments.init();
+		BWRitualFunctions.init();
+		BWFortunes.init();
+		BWSigils.init();
+		BWCurses.init();
+		BWContracts.init();
+		BWTransformations.init();
+		BWSoundEvents.init();
+		BWParticleTypes.init();
+		BWRecipeTypes.init();
+		BWWorldGenerators.init();
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.STONE_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.MOSSY_COBBLESTONE_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.PRISMARINE_WITCH_ALTAR);
