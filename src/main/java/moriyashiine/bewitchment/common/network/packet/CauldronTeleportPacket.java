@@ -11,6 +11,7 @@ import moriyashiine.bewitchment.common.registry.BWPledges;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
@@ -20,44 +21,62 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.Iterator;
+import java.util.Locale;
+
 @SuppressWarnings("ConstantConditions")
 public class CauldronTeleportPacket {
 	public static final Identifier ID = new Identifier(Bewitchment.MODID, "cauldron_teleport");
-	
+
 	public static void send(BlockPos cauldronPos, String message) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-		buf.writeLong(cauldronPos.asLong());
+		buf.writeBlockPos(cauldronPos);
 		buf.writeString(message);
 		ClientPlayNetworking.send(ID, buf);
 	}
-	
+
 	public static void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
-		BlockPos cauldronPos = BlockPos.fromLong(buf.readLong());
-		String message = buf.readString(Short.MAX_VALUE);
+		BlockPos cauldronPos = buf.readBlockPos();
+		String message = buf.readString(Short.MAX_VALUE).toLowerCase(Locale.ROOT);
+		if(message.trim().isEmpty()) {
+			return; // invalid packet
+		}
 		server.execute(() -> {
 			World world = player.world;
+			BlockEntity origin = world.getBlockEntity(cauldronPos);
+			if (!(origin instanceof WitchCauldronBlockEntity)) {
+				return; // invalid packet
+			}
 			BWWorldState worldState = BWWorldState.get(world);
 			BlockPos closest = null;
-			for (long longPos : worldState.witchCauldrons) {
-				BlockPos pos = BlockPos.fromLong(longPos);
-				WitchCauldronBlockEntity blockEntity = (WitchCauldronBlockEntity) world.getBlockEntity(pos);
-				if (blockEntity.hasCustomName() && blockEntity.getCustomName().asString().equals(message) && (closest == null || pos.getSquaredDistance(player.getPos(), true) < closest.getSquaredDistance(player.getPos(), true))) {
-					closest = pos;
+			for (Iterator<Long> iterator = worldState.witchCauldrons.iterator(); iterator.hasNext(); ) {
+				BlockPos pos = BlockPos.fromLong(iterator.next());
+				BlockEntity be = world.getBlockEntity(pos);
+				if (be instanceof WitchCauldronBlockEntity) {
+					WitchCauldronBlockEntity blockEntity = (WitchCauldronBlockEntity) be;
+					if (blockEntity.hasCustomName() && blockEntity.getCustomName().getString().toLowerCase(Locale.ROOT).equals(message) && (closest == null || pos.getSquaredDistance(player.getPos(), true) < closest.getSquaredDistance(player.getPos(), true))) {
+						closest = pos;
+					}
+				}
+				else { // position invalid
+					iterator.remove();
 				}
 			}
 			if (closest != null) {
-				boolean pledgedToLeonard = BewitchmentAPI.isPledged(world, BWPledges.LEONARD, player.getUuid());
-				boolean hasPower = false;
-				if (!pledgedToLeonard) {
+				boolean hasPower = BewitchmentAPI.isPledged(world, BWPledges.LEONARD, player.getUuid());
+				if (!hasPower) {
 					BlockPos altarPos = ((UsesAltarPower) world.getBlockEntity(cauldronPos)).getAltarPos();
 					if (altarPos != null) {
-						WitchAltarBlockEntity altar = (WitchAltarBlockEntity) world.getBlockEntity(altarPos);
-						if (altar != null && altar.drain((int) (Math.sqrt(closest.getSquaredDistance(player.getPos(), true)) * 2), false)) {
-							hasPower = true;
+						BlockEntity altarBE = world.getBlockEntity(altarPos);
+						if(altarBE instanceof WitchAltarBlockEntity) {
+							WitchAltarBlockEntity altar = (WitchAltarBlockEntity) altarBE;
+							if (altar.drain((int) (Math.sqrt(closest.getSquaredDistance(player.getPos(), true)) * 2), false)) {
+								hasPower = true;
+							}
 						}
 					}
 				}
-				if (pledgedToLeonard || hasPower) {
+				if (hasPower) {
 					BWUtil.teleport(player, closest.getX() + 0.5, closest.getY() - 0.5, closest.getZ() + 0.5, true);
 				}
 				else {
