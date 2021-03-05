@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.event.PledgeCallback;
 import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
@@ -9,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
@@ -28,7 +30,7 @@ public class GrotestqueStewItem extends Item {
 						closest = livingEntity;
 					}
 				}
-				if (closest instanceof Pledgeable && closest.canSee(user)) {
+				if (closest instanceof Pledgeable && closest.canSee(user) && PledgeCallback.EVENT.invoker().pledge(user, closest, stack) != ActionResult.FAIL) {
 					BewitchmentAPI.pledge(world, ((Pledgeable) closest).getPledgeID(), user.getUuid());
 					BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
 					worldState.specificPledges.add(new Pair<>(user.getUuid(), closest.getUuid()));
