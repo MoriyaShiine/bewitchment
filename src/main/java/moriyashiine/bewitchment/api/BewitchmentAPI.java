@@ -5,14 +5,13 @@ import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
 import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
+import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
+import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
-import moriyashiine.bewitchment.common.registry.BWObjects;
-import moriyashiine.bewitchment.common.registry.BWStatusEffects;
-import moriyashiine.bewitchment.common.registry.BWTags;
-import moriyashiine.bewitchment.common.registry.BWTransformations;
+import moriyashiine.bewitchment.common.registry.*;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.minecraft.block.Block;
@@ -22,6 +21,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.EntityDamageSource;
+import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -107,6 +107,20 @@ public class BewitchmentAPI {
 			}
 		}
 		return ItemStack.EMPTY;
+	}
+	
+	public static LivingEntity getTransformedPlayerEntity(PlayerEntity player) {
+		if (BewitchmentAPI.isVampire(player, false)) {
+			BatEntity entity = EntityType.BAT.create(player.world);
+			entity.setRoosting(false);
+			return entity;
+		}
+		else if (BewitchmentAPI.isWerewolf(player, false)) {
+			WerewolfEntity entity = BWEntityTypes.WEREWOLF.create(player.world);
+			entity.getDataTracker().set(BWHostileEntity.VARIANT, ((WerewolfAccessor) player).getWerewolfVariant());
+			return entity;
+		}
+		return null;
 	}
 	
 	public static EntityType<?> getFamiliar(PlayerEntity player) {

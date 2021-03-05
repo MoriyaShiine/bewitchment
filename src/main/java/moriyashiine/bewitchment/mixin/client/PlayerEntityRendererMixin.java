@@ -18,6 +18,7 @@ import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.BatEntity;
@@ -31,7 +32,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Optional;
 
-@SuppressWarnings("ConstantConditions")
 @Environment(EnvType.CLIENT)
 @Mixin(PlayerEntityRenderer.class)
 public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
@@ -58,15 +58,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 		if (player.getVehicle() instanceof BroomEntity) {
 			matrixStack.translate(0, MathHelper.sin((player.getVehicle().age + player.getVehicle().getEntityId()) / 4f) / 16f, 0);
 		}
-		LivingEntity entity = null;
-		if (BewitchmentAPI.isVampire(player, false)) {
-			entity = EntityType.BAT.create(player.world);
-			((BatEntity) entity).setRoosting(false);
-		}
-		else if (BewitchmentAPI.isWerewolf(player, false)) {
-			entity = BWEntityTypes.WEREWOLF.create(player.world);
-			entity.getDataTracker().set(BWHostileEntity.VARIANT, ((WerewolfAccessor) player).getWerewolfVariant());
-		}
+		LivingEntity entity = BewitchmentAPI.getTransformedPlayerEntity(player);
 		if (entity != null) {
 			entity.age = player.age;
 			entity.hurtTime = player.hurtTime;
