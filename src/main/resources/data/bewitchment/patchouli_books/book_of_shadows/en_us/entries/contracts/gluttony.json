@@ -3,11 +3,11 @@
   "name": "Gluttony",
   "icon": "bewitchment:demonic_contract",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
-  "sortnum": 2,
+  "sortnum": 1,
   "pages": [
-    {
-      "type": "text",
-      "text": "$(marked)Gluttony$() doubles the nourishing effect of food...or does it make you consume just as much?"
-    }
+	{
+	  "type": "text",
+	  "text": "Gluttony doubles the nourishing effect of food... or does it make you consume just as much?"
+	}
   ]
 }

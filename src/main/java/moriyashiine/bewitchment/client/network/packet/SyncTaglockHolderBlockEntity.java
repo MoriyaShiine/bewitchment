@@ -34,10 +34,13 @@ public class SyncTaglockHolderBlockEntity {
 		ItemStack two = buf.readItemStack();
 		ItemStack three = buf.readItemStack();
 		client.execute(() -> {
-			TaglockHolder taglockHolder = (TaglockHolder) client.world.getBlockEntity(pos);
-			taglockHolder.getTaglockInventory().set(0, one);
-			taglockHolder.getTaglockInventory().set(1, two);
-			taglockHolder.getTaglockInventory().set(2, three);
+			BlockEntity blockEntity = client.world.getBlockEntity(pos);
+			if (blockEntity instanceof TaglockHolder) {
+				TaglockHolder taglockHolder = (TaglockHolder) blockEntity;
+				taglockHolder.getTaglockInventory().set(0, one);
+				taglockHolder.getTaglockInventory().set(1, two);
+				taglockHolder.getTaglockInventory().set(2, three);
+			}
 		});
 	}
 }

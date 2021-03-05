@@ -4,9 +4,14 @@
   "icon": "bewitchment:leonard_spawn_egg",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
-    {
-      "type": "text",
-      "text": "$(marked)Leonard$() is the patron of witches, brewing $(o)and$()...$(br2)Leonard is a Greater Demon; he can be pledged to.$(br)Witches pledged to Leonard are known to brew potent potions.$(br)Pledging to Leonard also allows to $(l:bewitchment:tools/cauldron#teleport)warp$() with Cauldrons without using any ME."
-    }
+	{
+	  "type": "text",
+	  "text": "Leonard is the patron of witches, $(l:bewitchment:brewing/brewing_basics)Brewing$() and...$(br2)Leonard is a $(l:bewitchment:creatures/demon)Greater Demon$(); he can be $(l:bewitchment:tools/grotesque_stew)Pledged$() to.$(br2)Witches $(l:bewitchment:tools/grotesque_stew)Pledged$() to Leonard are known to make more potent $(l:bewitchment:brewing/brewing_basics)Brews$(). $(l:bewitchment:tools/grotesque_stew)Pledging$() to Leonard also allows players to $(l:bewitchment:tools/witch_cauldron#teleportation)Warp$() using $(l:bewitchment:tools/witch_cauldron)Witch Cauldrons$() without using any $(l:bewitchment:introduction/altars)ME$()."
+	},
+	{
+	  "type": "entity",
+	  "entity": "bewitchment:leonard",
+	  "offset": 0.2
+	}
   ]
 }

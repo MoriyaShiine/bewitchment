@@ -2,32 +2,89 @@
   "category": "bewitchment:tools",
   "name": "Coffins",
   "icon": "bewitchment:white_coffin",
-  "extra_recipe_mappings": {
-    "bewitchment:orange_coffin": 1,
-    "bewitchment:magenta_coffin": 1,
-    "bewitchment:light_blue_coffin": 1,
-    "bewitchment:yellow_coffin": 1,
-    "bewitchment:lime_coffin": 1,
-    "bewitchment:pink_coffin": 1,
-    "bewitchment:gray_coffin": 1,
-    "bewitchment:light_gray_coffin": 1,
-    "bewitchment:cyan_coffin": 1,
-    "bewitchment:purple_coffin": 1,
-    "bewitchment:blue_coffin": 1,
-    "bewitchment:brown_coffin": 1,
-    "bewitchment:green_coffin": 1,
-    "bewitchment:red_coffin": 1,
-    "bewitchment:black_coffin": 1
-  },
   "pages": [
-    {
-      "type": "text",
-      "text": "$(item)Coffins$(), originally emerging from $(l:bewitchment:creatures/vampire)Vampires$(), have recently found traction especially among night-active witches.$(br)When you sleep in one, you can $(marked)skip the day$().$(br)Coffins, much like $(item)beds$(), can be $(marked)dyed$() if they're white."
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:white_coffin",
-      "text": "Coffins can be made from any type of bed."
-    }
+	{
+	  "type": "text",
+	  "text": "Coffins, originally emerging from $(l:bewitchment:creatures/vampire)Vampires$(), have recently found traction especially among night-active witches.$(br2)When you sleep in one, you can skip the day.$(br2)Coffins, much like beds, can be dyed if they're white."
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:white_coffin"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:orange_coffin",
+	  "recipe2": "bewitchment:orange_coffin_from_white_coffin"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:magenta_coffin",
+	  "recipe2": "bewitchment:magenta_coffin_from_white_coffin"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:light_blue_coffin",
+	  "recipe2": "bewitchment:light_blue_coffin_from_white_coffin"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:yellow_coffin",
+	  "recipe2": "bewitchment:yellow_coffin_from_white_coffin"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:lime_coffin",
+	  "recipe2": "bewitchment:lime_coffin_from_white_coffin"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:pink_coffin",
+	  "recipe2": "bewitchment:pink_coffin_from_white_coffin"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:gray_coffin",
+	  "recipe2": "bewitchment:gray_coffin_from_white_coffin"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:light_gray_coffin",
+	  "recipe2": "bewitchment:light_gray_coffin_from_white_coffin"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:cyan_coffin",
+	  "recipe2": "bewitchment:cyan_coffin_from_white_coffin"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:purple_coffin",
+	  "recipe2": "bewitchment:purple_coffin_from_white_coffin"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:blue_coffin",
+	  "recipe2": "bewitchment:blue_coffin_from_white_coffin"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:brown_coffin",
+	  "recipe2": "bewitchment:brown_coffin_from_white_coffin"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:green_coffin",
+	  "recipe2": "bewitchment:green_coffin_from_white_coffin"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:red_coffin",
+	  "recipe2": "bewitchment:red_coffin_from_white_coffin"
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:black_coffin",
+	  "recipe2": "bewitchment:black_coffin_from_white_coffin"
+	}
   ]
 }

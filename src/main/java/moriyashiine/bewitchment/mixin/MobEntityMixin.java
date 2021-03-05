@@ -1,7 +1,6 @@
 package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
@@ -11,7 +10,6 @@ import moriyashiine.bewitchment.common.entity.interfaces.MasterAccessor;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWContracts;
 import moriyashiine.bewitchment.common.registry.BWCurses;
-import moriyashiine.bewitchment.common.registry.BWDamageSources;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.Entity;
@@ -27,12 +25,8 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.CaveSpiderEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.SpiderEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -43,7 +37,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -162,25 +155,6 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 			}
 		}
 		return target;
-	}
-	
-	@Inject(method = "interact", at = @At("HEAD"), cancellable = true)
-	private void interact(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> callbackInfo) {
-		if (hand == Hand.MAIN_HAND && player.isSneaking() && isAlive() && BewitchmentAPI.isVampire(player, true) && BWTags.HAS_BLOOD.contains(getType()) && player.getStackInHand(hand).isEmpty()) {
-			BloodAccessor playerBlood = (BloodAccessor) player;
-			BloodAccessor thisBlood = (BloodAccessor) this;
-			if (playerBlood.fillBlood(5, true) && thisBlood.drainBlood(10, true)) {
-				if (!world.isClient && hurtTime == 0) {
-					world.playSound(null, getBlockPos(), SoundEvents.ITEM_HONEY_BOTTLE_DRINK, getSoundCategory(), getSoundVolume(), 0.5f);
-					if (!isSleeping() || thisBlood.getBlood() < thisBlood.MAX_BLOOD / 2) {
-						damage(BWDamageSources.VAMPIRE, 2);
-					}
-					playerBlood.fillBlood(5, false);
-					thisBlood.drainBlood(10, false);
-				}
-				callbackInfo.setReturnValue(ActionResult.success(world.isClient));
-			}
-		}
 	}
 	
 	@Inject(method = "dropLoot", at = @At("HEAD"))

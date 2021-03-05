@@ -3,17 +3,15 @@ package moriyashiine.bewitchment.common.item;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
-import moriyashiine.bewitchment.api.event.AthameSacrificeCallback;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.dragonsblood.DragonsBloodLogBlock;
-import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
-import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.Lockable;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
-import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.recipe.AthameStrippingRecipe;
-import moriyashiine.bewitchment.common.registry.*;
+import moriyashiine.bewitchment.common.registry.BWProperties;
+import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
+import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.DoorBlock;
@@ -22,15 +20,9 @@ import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.block.dispenser.FallibleItemDispenserBehavior;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.DoubleBlockHalf;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.ChickenEntity;
-import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -40,18 +32,13 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.explosion.Explosion;
 
 import java.util.UUID;
 
-@SuppressWarnings("ConstantConditions")
 public class AthameItem extends SwordItem {
 	private static final EntityAttributeModifier REACH_MODIFIER = new EntityAttributeModifier(UUID.fromString("1f362972-c5c5-4e9d-b69f-1fd13bd269e3"), "Weapon modifier", -1, EntityAttributeModifier.Operation.ADDITION);
 	
@@ -84,7 +71,7 @@ public class AthameItem extends SwordItem {
 				world.setBlockState(pos, entry.strippedLog.getDefaultState().with(PillarBlock.AXIS, state.get(PillarBlock.AXIS)), 11);
 				if (player != null) {
 					context.getStack().damage(1, player, (user) -> user.sendToolBreakStatus(context.getHand()));
-					if (world.random.nextBoolean()) {
+					if (world.random.nextFloat() < 2 / 3f) {
 						ItemStack bark = entry.getOutput().copy();
 						if (!player.inventory.insertStack(bark)) {
 							player.dropStack(bark);
@@ -101,7 +88,7 @@ public class AthameItem extends SwordItem {
 				if (!client && !sigil.getEntities().isEmpty()) {
 					boolean whitelist = sigil.getModeOnWhitelist();
 					world.playSound(null, pos, BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.BLOCKS, 1, whitelist ? 0.5f : 1);
-					player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.toggle_" +  (!whitelist ? "whitelist" : "blacklist")), true);
+					player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.toggle_" + (!whitelist ? "whitelist" : "blacklist")), true);
 					sigil.setModeOnWhitelist(!whitelist);
 					blockEntity.markDirty();
 				}
@@ -125,7 +112,7 @@ public class AthameItem extends SwordItem {
 				if (!client) {
 					boolean whitelist = lockable.getModeOnWhitelist();
 					world.playSound(null, pos, BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.BLOCKS, 1, whitelist ? 0.5f : 1);
-					player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.toggle_" +  (!whitelist ? "whitelist" : "blacklist")), true);
+					player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.toggle_" + (!whitelist ? "whitelist" : "blacklist")), true);
 					lockable.setModeOnWhitelist(!whitelist);
 					blockEntity.markDirty();
 				}
@@ -133,43 +120,6 @@ public class AthameItem extends SwordItem {
 			}
 		}
 		return super.useOnBlock(context);
-	}
-	
-	@Override
-	public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		if (attacker instanceof PlayerEntity) {
-			World world = attacker.world;
-			if (!world.isClient && target.isDead()) {
-				BlockPos pos = target.getBlockPos();
-				BlockPos glyph = BWUtil.getClosestBlockPos(pos, 6, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity);
-				if (glyph != null) {
-					((GlyphBlockEntity) world.getBlockEntity(glyph)).onUse(world, glyph, (PlayerEntity) attacker, Hand.MAIN_HAND, target);
-				}
-				if(AthameSacrificeCallback.EVENT.invoker().sacrifice(stack, target, attacker) == ActionResult.FAIL){
-					return super.postHit(stack, target, attacker);
-				}
-				if (world.isNight()) {
-					boolean chicken = target instanceof ChickenEntity;
-					if ((chicken && world.getBiome(pos).getCategory() == Biome.Category.EXTREME_HILLS) || (target instanceof WolfEntity && (world.getBiome(pos).getCategory() == Biome.Category.FOREST || world.getBiome(pos).getCategory() == Biome.Category.TAIGA))) {
-						BlockPos brazierPos = BWUtil.getClosestBlockPos(pos, 8, currentPos -> {
-							BlockEntity blockEntity = world.getBlockEntity(currentPos);
-							return blockEntity instanceof BrazierBlockEntity && ((BrazierBlockEntity) blockEntity).incenseRecipe.effect == BWStatusEffects.MORTAL_COIL;
-						});
-						if (brazierPos != null) {
-							world.breakBlock(brazierPos, false);
-							world.createExplosion(target, brazierPos.getX() + 0.5, brazierPos.getY() + 0.5, brazierPos.getZ() + 0.5, 3, Explosion.DestructionType.BREAK);
-							Entity entity = chicken ? BWEntityTypes.LILITH.create(world) : BWEntityTypes.HERNE.create(world);
-							if (entity instanceof MobEntity) {
-								((MobEntity) entity).initialize((ServerWorldAccess) world, world.getLocalDifficulty(brazierPos), SpawnReason.EVENT, null, null);
-								entity.updatePositionAndAngles(brazierPos.getX() + 0.5, brazierPos.getY(), brazierPos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
-								world.spawnEntity(entity);
-							}
-						}
-					}
-				}
-			}
-		}
-		return super.postHit(stack, target, attacker);
 	}
 	
 	@Override

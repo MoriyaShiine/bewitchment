@@ -1,5 +1,8 @@
 package moriyashiine.bewitchment.common.network.packet;
 
+import io.github.ladysnake.pal.AbilitySource;
+import io.github.ladysnake.pal.Pal;
+import io.github.ladysnake.pal.VanillaAbilities;
 import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
@@ -23,11 +26,19 @@ import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
+import virtuoel.pehkui.api.ScaleData;
 import virtuoel.pehkui.api.ScaleType;
 
 @SuppressWarnings("ConstantConditions")
 public class TransformationAbilityPacket {
 	public static final Identifier ID = new Identifier(Bewitchment.MODID, "transformation_ability");
+	
+	public static final AbilitySource VAMPIRE_FLIGHT_SOURCE = Pal.getAbilitySource(new Identifier(Bewitchment.MODID, "vampire_flight"));
+	
+	private static final float VAMPIRE_WIDTH = EntityType.BAT.getWidth() / EntityType.PLAYER.getWidth();
+	private static final float VAMPIRE_HEIGHT = EntityType.BAT.getHeight() / EntityType.PLAYER.getHeight();
+	private static final float WEREWOLF_WIDTH = BWEntityTypes.WEREWOLF.getWidth() / EntityType.PLAYER.getWidth();
+	private static final float WEREWOLF_HEIGHT = BWEntityTypes.WEREWOLF.getHeight() / EntityType.PLAYER.getHeight();
 	
 	public static void send() {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
@@ -55,20 +66,24 @@ public class TransformationAbilityPacket {
 	public static void useAbility(PlayerEntity player, boolean forced) {
 		World world = player.world;
 		boolean isInAlternateForm = ((TransformationAccessor) player).getAlternateForm();
+		ScaleData width = ScaleType.WIDTH.getScaleData(player);
+		ScaleData height = ScaleType.HEIGHT.getScaleData(player);
 		if (((TransformationAccessor) player).getTransformation() == BWTransformations.VAMPIRE && (forced || (BewitchmentAPI.isPledged(world, BWPledges.LILITH, player.getUuid()) && ((BloodAccessor) player).getBlood() > 0))) {
 			PlayerLookup.tracking(player).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, player));
 			SpawnSmokeParticlesPacket.send(player, player);
 			world.playSound(null, player.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, player.getSoundCategory(), 1, 1);
 			((TransformationAccessor) player).setAlternateForm(!isInAlternateForm);
 			if (isInAlternateForm) {
-				ScaleType.WIDTH.getScaleData(player).setScale(ScaleType.WIDTH.getScaleData(player).getScale() / (EntityType.BAT.getWidth() / EntityType.PLAYER.getWidth()));
-				ScaleType.HEIGHT.getScaleData(player).setScale(ScaleType.HEIGHT.getScaleData(player).getScale() / (EntityType.BAT.getHeight() / EntityType.PLAYER.getHeight()));
-				player.abilities.flying = false;
-				player.sendAbilitiesUpdate();
+				width.setScale(width.getScale() / VAMPIRE_WIDTH);
+				height.setScale(height.getScale() / VAMPIRE_HEIGHT);
+				VAMPIRE_FLIGHT_SOURCE.revokeFrom(player, VanillaAbilities.ALLOW_FLYING);
+				VAMPIRE_FLIGHT_SOURCE.revokeFrom(player, VanillaAbilities.FLYING);
 			}
 			else {
-				ScaleType.WIDTH.getScaleData(player).setScale(ScaleType.WIDTH.getScaleData(player).getScale() * (EntityType.BAT.getWidth() / EntityType.PLAYER.getWidth()));
-				ScaleType.HEIGHT.getScaleData(player).setScale(ScaleType.HEIGHT.getScaleData(player).getScale() * (EntityType.BAT.getHeight() / EntityType.PLAYER.getHeight()));
+				width.setScale(width.getScale() * VAMPIRE_WIDTH);
+				height.setScale(height.getScale() * VAMPIRE_HEIGHT);
+				VAMPIRE_FLIGHT_SOURCE.grantTo(player, VanillaAbilities.ALLOW_FLYING);
+				VAMPIRE_FLIGHT_SOURCE.grantTo(player, VanillaAbilities.FLYING);
 			}
 		}
 		else if (((TransformationAccessor) player).getTransformation() == BWTransformations.WEREWOLF && (forced || BewitchmentAPI.isPledged(world, BWPledges.HERNE, player.getUuid()))) {
@@ -77,15 +92,15 @@ public class TransformationAbilityPacket {
 			world.playSound(null, player.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, player.getSoundCategory(), 1, 1);
 			((TransformationAccessor) player).setAlternateForm(!isInAlternateForm);
 			if (isInAlternateForm) {
-				ScaleType.WIDTH.getScaleData(player).setScale(ScaleType.WIDTH.getScaleData(player).getScale() / (BWEntityTypes.WEREWOLF.getWidth() / EntityType.PLAYER.getWidth()));
-				ScaleType.HEIGHT.getScaleData(player).setScale(ScaleType.HEIGHT.getScaleData(player).getScale() / (BWEntityTypes.WEREWOLF.getHeight() / EntityType.PLAYER.getHeight()));
+				width.setScale(width.getScale() / WEREWOLF_WIDTH);
+				height.setScale(height.getScale() / WEREWOLF_HEIGHT);
 				if (player.hasStatusEffect(StatusEffects.NIGHT_VISION) && player.getStatusEffect(StatusEffects.NIGHT_VISION).isAmbient()) {
 					player.removeStatusEffect(StatusEffects.NIGHT_VISION);
 				}
 			}
 			else {
-				ScaleType.WIDTH.getScaleData(player).setScale(ScaleType.WIDTH.getScaleData(player).getScale() * (BWEntityTypes.WEREWOLF.getWidth() / EntityType.PLAYER.getWidth()));
-				ScaleType.HEIGHT.getScaleData(player).setScale(ScaleType.HEIGHT.getScaleData(player).getScale() * (BWEntityTypes.WEREWOLF.getHeight() / EntityType.PLAYER.getHeight()));
+				width.setScale(width.getScale() * WEREWOLF_WIDTH);
+				height.setScale(height.getScale() * WEREWOLF_HEIGHT);
 			}
 		}
 	}

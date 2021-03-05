@@ -4,14 +4,13 @@
   "icon": "minecraft:ender_pearl",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
-    {
-      "type": "text",
-      "text": "This powerful Rite teleports anything in its vicinity to a target location.$(br)This Rite works really well with $(item)Waystones$(), as it allows teleporting entities in remote places."
-    },
-    {
-      "type": "bewitchment:ritual",
-      "recipe": "bewitchment:rituals/warp",
-      "text": "Any location holder (e.g. a $(item)Taglock$() or a $(item)Waystone$()) may be used for this.$(br)If a Taglock is used, it must be bound to an entity."
-    }
+	{
+	  "type": "text",
+	  "text": "This powerful $(l:bewitchment:rituals/rituals)Ritual$() teleports anything in its vicinity to a target location.$(br2)This works really well with $(l:bewitchment:tools/waystone)Waystone$(), as it allows teleporting entities in remote places.$(br2)You may use either a $(l:bewitchment:tools/taglock)Taglock$() or $(l:bewitchment:tools/waystone)Waystone$() for this $(l:bewitchment:rituals/rituals)Ritual$()."
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/warp"
+	}
   ]
 }

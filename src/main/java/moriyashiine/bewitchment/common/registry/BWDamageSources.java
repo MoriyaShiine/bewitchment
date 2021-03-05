@@ -31,8 +31,8 @@ public class BWDamageSources {
 		return amount;
 	}
 	
-	private static boolean isEffective(DamageSource source, boolean vampire) {
-		if (source.isOutOfWorld() || (vampire && (source == MAGIC_COPY || source == BWDamageSources.SUN))) {
+	public static boolean isEffective(DamageSource source, boolean vampire) {
+		if (source.isOutOfWorld() || (vampire && (source == MAGIC_COPY || source == SUN))) {
 			return true;
 		}
 		Entity attacker = source.getSource();

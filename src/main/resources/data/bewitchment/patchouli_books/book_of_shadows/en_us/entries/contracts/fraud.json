@@ -5,9 +5,9 @@
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "sortnum": 3,
   "pages": [
-    {
-      "type": "text",
-      "text": "$(marked)Fraud$() makes Miss Fortune act in your favor.$(br2)$(l:bewitchment:creatures/demon)$(marked)Demons$() usually recognize frauds, refusing to trade with them."
-    }
+	{
+	  "type": "text",
+	  "text": "Fraud makes $(l:bewitchment:tools/crystal_ball)Miss Fortune$() act in your favor.$(br2)Villagers and $(l:bewitchment:creatures/demon)Demons$() usually recognize frauds, refusing to trade with them."
+	}
   ]
 }

@@ -65,6 +65,13 @@ public abstract class EntityMixin implements WetAccessor {
 		dataTracker.set(WET_TIMER, wetTimer);
 	}
 	
+	@Inject(method = "tick", at = @At("HEAD"))
+	private void tick(CallbackInfo callbackInfo) {
+		if (!world.isClient && getWetTimer() > 0) {
+			setWetTimer(getWetTimer() - 1);
+		}
+	}
+	
 	@ModifyVariable(method = "setPose", at = @At("HEAD"))
 	private EntityPose setPose(EntityPose pose) {
 		if (((Object) this) instanceof PlayerEntity) {
@@ -75,6 +82,34 @@ public abstract class EntityMixin implements WetAccessor {
 			}
 		}
 		return pose;
+	}
+	
+	@Inject(method = "isInvulnerableTo", at = @At("RETURN"), cancellable = true)
+	private void isInvulnerableTo(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
+		if (!world.isClient) {
+			if (!callbackInfo.getReturnValue() && this instanceof MasterAccessor) {
+				Entity attacker = source.getAttacker();
+				if (attacker instanceof LivingEntity) {
+					if (this instanceof MasterAccessor) {
+						if (attacker.getUuid().equals(((MasterAccessor) this).getMasterUUID())) {
+							callbackInfo.setReturnValue(true);
+						}
+					}
+					if (attacker instanceof MasterAccessor) {
+						if (getUuid().equals(((MasterAccessor) attacker).getMasterUUID())) {
+							callbackInfo.setReturnValue(true);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	@Inject(method = "isFireImmune", at = @At("RETURN"), cancellable = true)
+	private void isFireImmune(CallbackInfoReturnable<Boolean> callbackInfo) {
+		if (callbackInfo.getReturnValue() && BewitchmentAPI.isVampire((Entity) (Object) this, true)) {
+			callbackInfo.setReturnValue(false);
+		}
 	}
 	
 	@Inject(method = "isWet", at = @At("RETURN"), cancellable = true)
@@ -88,32 +123,6 @@ public abstract class EntityMixin implements WetAccessor {
 	private void isTouchingWaterOrRain(CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!callbackInfo.getReturnValue() && getWetTimer() > 0) {
 			callbackInfo.setReturnValue(true);
-		}
-	}
-	
-	@Inject(method = "isInvulnerableTo", at = @At("RETURN"), cancellable = true)
-	private void isInvulnerableTo(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!callbackInfo.getReturnValue() && !world.isClient && this instanceof MasterAccessor) {
-			Entity attacker = source.getAttacker();
-			if (attacker instanceof LivingEntity) {
-				if (this instanceof MasterAccessor) {
-					if (attacker.getUuid().equals(((MasterAccessor) this).getMasterUUID())) {
-						callbackInfo.setReturnValue(true);
-					}
-				}
-				if (attacker instanceof MasterAccessor) {
-					if (getUuid().equals(((MasterAccessor) attacker).getMasterUUID())) {
-						callbackInfo.setReturnValue(true);
-					}
-				}
-			}
-		}
-	}
-	
-	@Inject(method = "tick", at = @At("HEAD"))
-	private void tick(CallbackInfo callbackInfo) {
-		if (!world.isClient && getWetTimer() > 0) {
-			setWetTimer(getWetTimer() - 1);
 		}
 	}
 	

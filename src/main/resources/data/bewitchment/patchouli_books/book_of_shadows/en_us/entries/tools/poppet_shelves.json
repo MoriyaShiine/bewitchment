@@ -2,10 +2,11 @@
   "category": "bewitchment:tools",
   "name": "Poppet Shelves",
   "icon": "bewitchment:oak_poppet_shelf",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
   "pages": [
 	{
 	  "type": "text",
-	  "text": "$(item)Poppet Shelves$() make for nice furniture. They can store up to nine $(l:bewitchment:poppets/poppet_practice)$(item)poppets$(), which are all active.$(br)This makes Poppet Shelves good for freeing up inventory space, while still having all poppets ready."
+	  "text": "Poppet Shelves make for nice furniture. They can store up to nine $(l:bewitchment:poppets/poppet_practice)Poppets$(), which are all active.$(br2)This makes Poppet Shelves good for freeing up inventory space, while still having all $(l:bewitchment:poppets/poppet_practice)Poppets$() ready."
 	},
 	{
 	  "type": "crafting",

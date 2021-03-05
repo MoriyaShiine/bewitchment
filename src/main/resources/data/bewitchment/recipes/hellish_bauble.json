@@ -2,7 +2,7 @@
   "type": "crafting_shaped",
   "pattern": [
 	"S S",
-	"HIH",
+	"HNH",
 	" O "
   ],
   "key": {
@@ -12,8 +12,8 @@
 	"H": {
 	  "item": "bewitchment:demon_horn"
 	},
-	"I": {
-	  "item": "netherite_ingot"
+	"N": {
+	  "item": "netherite_scrap"
 	},
 	"O": {
 	  "item": "bewitchment:fiery_serum"

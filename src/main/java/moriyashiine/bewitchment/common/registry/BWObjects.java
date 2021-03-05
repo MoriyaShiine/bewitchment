@@ -293,7 +293,7 @@ public class BWObjects {
 	public static final Item RUIN_SIGIL = create("ruin_sigil", new SigilItem(gen(), BWSigils.RUIN));
 	public static final Item HEAVY_SIGIL = create("heavy_sigil", new SigilItem(gen(), BWSigils.HEAVY));
 	public static final PoppetItem PROTECTION_POPPET = create("protection_poppet", new PoppetItem(gen().maxDamage(128), true));
-	public static final PoppetItem DEATH_PROTECTION_POPPET = create("death_protection_poppet", new PoppetItem(gen().maxDamage(1), true));
+	public static final PoppetItem DEATH_PROTECTION_POPPET = create("death_protection_poppet", new PoppetItem(gen().maxDamage(1), false));
 	public static final PoppetItem VOODOO_POPPET = create("voodoo_poppet", new PoppetItem(gen().maxDamage(32), false));
 	public static final PoppetItem VOODOO_PROTECTION_POPPET = create("voodoo_protection_poppet", new PoppetItem(gen().maxDamage(32), true));
 	public static final PoppetItem MENDING_POPPET = create("mending_poppet", new PoppetItem(gen().maxDamage(1), true));
@@ -316,7 +316,7 @@ public class BWObjects {
 	public static final Item ACONITE_SEEDS = create("aconite_seeds", new AliasedBlockItem(ACONITE_CROP, gen()));
 	public static final Item BELLADONNA = create("belladonna", new Item(gen()));
 	public static final Item BELLADONNA_SEEDS = create("belladonna_seeds", new AliasedBlockItem(BELLADONNA_CROP, gen()));
-	public static final Item GARLIC = create("garlic", new AliasedBlockItem(GARLIC_CROP, gen().food(FoodComponents.CARROT)));
+	public static final Item GARLIC = create("garlic", new AliasedBlockItem(GARLIC_CROP, gen().food(FoodComponents.POTATO)));
 	public static final Item MANDRAKE_ROOT = create("mandrake_root", new Item(gen()));
 	public static final Item MANDRAKE_SEEDS = create("mandrake_seeds", new AliasedBlockItem(MANDRAKE_CROP, gen()));
 	public static final Item OAK_BARK = create("oak_bark", new Item(gen()));
@@ -332,8 +332,8 @@ public class BWObjects {
 	public static final Item DEMON_HORN = create("demon_horn", new Item(gen().fireproof()));
 	public static final Item DEMON_HEART = create("demon_heart", new Item(gen().food(BWFoodComponents.DEMON_HEART).rarity(Rarity.UNCOMMON).fireproof()));
 	public static final Item BOTTLE_OF_BLOOD = create("bottle_of_blood", new BottleOfBloodItem(gen().maxCount(16).recipeRemainder(Items.GLASS_BOTTLE)));
-	public static final Item GRILLED_GARLIC = create("grilled_garlic", new Item(gen().food(FoodComponents.BAKED_POTATO)));
-	public static final Item GARLIC_BREAD = create("garlic_bread", new Item(gen().food(FoodComponents.PUMPKIN_PIE)));
+	public static final Item GRILLED_GARLIC = create("grilled_garlic", new Item(gen().food(FoodComponents.CARROT)));
+	public static final Item GARLIC_BREAD = create("garlic_bread", new Item(gen().food(BWFoodComponents.GARLIC_BREAD)));
 	public static final Item WITCHBERRY = create("witchberry", new Item(gen().food(BWFoodComponents.WITCHBERRY)));
 	public static final Item WITCHBERRY_PIE = create("witchberry_pie", new Item(gen().food(BWFoodComponents.WITCHBERRY_PIE)));
 	public static final Item WITCHBERRY_COOKIE = create("witchberry_cookie", new Item(gen().food(BWFoodComponents.WITCHBERRY_COOKIE)));
@@ -344,9 +344,9 @@ public class BWObjects {
 	public static final Item SNAKE_SPAWN_EGG = create("snake_spawn_egg", new SpawnEggItem(BWEntityTypes.SNAKE, 0x7f3f00, 0x3f3f3f, gen()));
 	public static final Item TOAD_SPAWN_EGG = create("toad_spawn_egg", new SpawnEggItem(BWEntityTypes.TOAD, 0x3f3f00, 0x00c200, gen()));
 	public static final Item GHOST_SPAWN_EGG = create("ghost_spawn_egg", new SpawnEggItem(BWEntityTypes.GHOST, 0xcacaca, 0x969696, gen()));
-	public static final Item HELLHOUND_SPAWN_EGG = create("hellhound_spawn_egg", new SpawnEggItem(BWEntityTypes.HELLHOUND, 0xc82000, 0x802020, gen()));
 	public static final Item VAMPIRE_SPAWN_EGG = create("vampire_spawn_egg", new SpawnEggItem(BWEntityTypes.VAMPIRE, 0xddcca8, 0x7d0000, gen()));
 	public static final Item WEREWOLF_SPAWN_EGG = create("werewolf_spawn_egg", new SpawnEggItem(BWEntityTypes.WEREWOLF, 0x9f9a96, 0x532f0f, gen()));
+	public static final Item HELLHOUND_SPAWN_EGG = create("hellhound_spawn_egg", new SpawnEggItem(BWEntityTypes.HELLHOUND, 0xc82000, 0x802020, gen()));
 	public static final Item DEMON_SPAWN_EGG = create("demon_spawn_egg", new SpawnEggItem(BWEntityTypes.DEMON, 0x802020, 0xc82000, gen()));
 	public static final Item LEONARD_SPAWN_EGG = create("leonard_spawn_egg", new SpawnEggItem(BWEntityTypes.LEONARD, 0x5e3214, 0xa00303, gen()));
 	public static final Item BAPHOMET_SPAWN_EGG = create("baphomet_spawn_egg", new SpawnEggItem(BWEntityTypes.BAPHOMET, 0xa00303, 0x5e3214, gen()));

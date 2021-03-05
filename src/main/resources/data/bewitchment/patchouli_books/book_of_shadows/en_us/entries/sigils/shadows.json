@@ -5,13 +5,13 @@
   "advancement": "minecraft:nether/find_fortress",
   "sortnum": 1,
   "pages": [
-    {
-      "type": "text",
-      "text": "The $(marked)Shadows$() sigil casts a magical aura of darkness around it, preventing scrying from $(l:bewitchment:tools/crystal_ball)$(item)Crystal Balls$() that aim around it."
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:shadows_sigil"
-    }
+	{
+	  "type": "text",
+	  "text": "The Shadows $(l:bewitchment:sigils/using_sigils)Passive Sigil$() casts a magical aura of darkness around it, preventing scrying from $(l:bewitchment:tools/crystal_ball)Crystal Balls$() that aim around it."
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:shadows_sigil"
+	}
   ]
 }

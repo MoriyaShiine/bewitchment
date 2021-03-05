@@ -4,14 +4,13 @@
   "icon": "minecraft:obsidian",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
-    {
-      "type": "text",
-      "text": "This ritual releases a wave of darkness. It will destroy any easily destroyable light sources nearby."
-    },
-    {
-      "type": "bewitchment:ritual",
-      "recipe": "bewitchment:rituals/darken",
-      "text": "That's dark."
-    }
+	{
+	  "type": "text",
+	  "text": "This $(l:bewitchment:rituals/rituals)Ritual$() releases a wave of darkness. It will destroy any easily breakable light sources nearby."
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/darken"
+	}
   ]
 }

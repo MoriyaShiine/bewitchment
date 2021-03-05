@@ -11,7 +11,6 @@ import moriyashiine.bewitchment.client.network.packet.SpawnExplosionParticlesPac
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
-import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.entity.interfaces.*;
 import moriyashiine.bewitchment.common.entity.living.*;
@@ -21,17 +20,14 @@ import moriyashiine.bewitchment.common.item.PricklyBeltItem;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.recipe.AthameDropRecipe;
-import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
 import moriyashiine.bewitchment.common.registry.*;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityGroup;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -41,6 +37,9 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.passive.ChickenEntity;
+import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.entity.projectile.WitherSkullEntity;
@@ -60,7 +59,10 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -103,10 +105,10 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	public abstract boolean clearStatusEffects();
 	
 	@Shadow
-	public abstract float getMaxHealth();
+	public abstract float getHealth();
 	
 	@Shadow
-	public abstract float getHealth();
+	public abstract float getMaxHealth();
 	
 	@Shadow
 	public abstract void heal(float amount);
@@ -296,7 +298,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 				((FortuneAccessor) trueSource).getFortune().duration = 0;
 				amount *= 3;
 			}
-			if (trueSource instanceof PlayerEntity && BewitchmentAPI.isWeakToSilver((LivingEntity) trueSource)) {
+			if (trueSource instanceof LivingEntity && BewitchmentAPI.isWeakToSilver((LivingEntity) trueSource)) {
 				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.JUDGMENT_POPPET, this, null);
 				if (!poppet.isEmpty() && PoppetItem.usePoppet((LivingEntity) (Object) this, poppet)) {
 					amount /= 4;
@@ -400,10 +402,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damageHead(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
-			if (BewitchmentAPI.isVampire(this, true) && source.isFire()) {
-				callbackInfo.setReturnValue(damage(BWDamageSources.SUN, amount * 2));
-				return;
-			}
 			if (this instanceof InsanityTargetAccessor) {
 				if (((InsanityTargetAccessor) this).getInsanityTargetUUID().isPresent()) {
 					callbackInfo.setReturnValue(false);
@@ -499,7 +497,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 											}
 										}
 										else if (!hasStatusEffect(effect.getEffectType()) && BewitchmentAPI.usePlayerMagic((PlayerEntity) (Object) this, 2, true) && addStatusEffect(effect)) {
-											if (belt.getTag().contains("PolymorphUUID") && this instanceof PolymorphAccessor){
+											if (belt.getTag().contains("PolymorphUUID") && this instanceof PolymorphAccessor) {
 												PolymorphAccessor polymorphAccessor = (PolymorphAccessor) this;
 												polymorphAccessor.setPolymorphUUID(belt.getTag().getUuid("PolymorphUUID"));
 												polymorphAccessor.setPolymorphName(belt.getTag().getString("PolymorphName"));
@@ -511,7 +509,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 										belt.getTag().putInt("PotionUses", belt.getTag().getInt("PotionUses") - 1);
 										if (belt.getTag().getInt("PotionUses") <= 0) {
 											belt.getOrCreateTag().put("CustomPotionEffects", new ListTag());
-											if (belt.getTag().contains("PolymorphUUID")){
+											if (belt.getTag().contains("PolymorphUUID")) {
 												belt.getTag().remove("PolymorphUUID");
 												belt.getTag().remove("PolymorphName");
 											}
@@ -542,8 +540,13 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "getGroup", at = @At("HEAD"), cancellable = true)
 	private void getGroup(CallbackInfoReturnable<EntityGroup> callbackInfo) {
-		if (((Object) this instanceof PlayerEntity) && BewitchmentAPI.isVampire(this, true)) {
-			callbackInfo.setReturnValue(EntityGroup.UNDEAD);
+		if (((Object) this instanceof PlayerEntity)) {
+			if (BewitchmentAPI.isVampire(this, true)) {
+				callbackInfo.setReturnValue(EntityGroup.UNDEAD);
+			}
+			else if (BewitchmentAPI.isWerewolf(this, true)) {
+				callbackInfo.setReturnValue(BewitchmentAPI.DEMON);
+			}
 		}
 	}
 	
@@ -642,7 +645,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "canBreatheInWater", at = @At("RETURN"), cancellable = true)
 	private void canBreatheInWater(CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (callbackInfo.getReturnValue() && !world.isClient && hasStatusEffect(BWStatusEffects.GILLS)) {
+		if (!callbackInfo.getReturnValue() && !world.isClient && hasStatusEffect(BWStatusEffects.GILLS)) {
 			callbackInfo.setReturnValue(true);
 		}
 	}
@@ -663,39 +666,57 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "handleFallDamage", at = @At("HEAD"), cancellable = true)
 	private void handleFallDamage(float fallDistance, float damageMultiplier, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if ((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == BWEntityTypes.OWL) {
+		if (((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == BWEntityTypes.OWL) || (BewitchmentAPI.isWerewolf(this, false) && fallDistance <= 6)) {
 			callbackInfo.setReturnValue(false);
 		}
 	}
 	
 	@Inject(method = "fall", at = @At("HEAD"), cancellable = true)
 	private void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition, CallbackInfo callbackInfo) {
-		if ((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == BWEntityTypes.OWL && onGround) {
+		if ((Object) this instanceof PlayerEntity && onGround && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == BWEntityTypes.OWL) {
 			callbackInfo.cancel();
 		}
 	}
 	
-	@Inject(method = "dropEquipment", at = @At("TAIL"))
-	private void dropEquipment(DamageSource source, int lootingMultiplier, boolean allowDrops, CallbackInfo callbackInfo) {
-		if (!world.isClient && allowDrops) {
-			Entity attacker = source.getSource();
-			if (attacker instanceof LivingEntity) {
-				LivingEntity livingAttacker = (LivingEntity) attacker;
-				if (livingAttacker.getMainHandStack().getItem() instanceof AthameItem && livingAttacker.preferredHand == Hand.MAIN_HAND) {
-					for (AthameDropRecipe recipe : world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_DROP_RECIPE_TYPE)) {
-						if (recipe.entity_type.equals(getType()) && world.random.nextFloat() < recipe.chance * (lootingMultiplier + 1)) {
-							ItemStack drop = recipe.getOutput().copy();
-							if (recipe.entity_type == EntityType.PLAYER) {
-								drop.getOrCreateTag().putString("SkullOwner", getName().getString());
-							}
-							ItemScatterer.spawn(world, getX() + 0.5, getY() + 0.5, getZ() + 0.5, drop);
+	@Inject(method = "onDeath", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/entity/Entity;onKilledOther(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/LivingEntity;)V"))
+	private void onDeath(DamageSource source, CallbackInfo callbackInfo) {
+		Entity attacker = source.getSource();
+		if (attacker instanceof PlayerEntity && ((PlayerEntity) attacker).getMainHandStack().getItem() instanceof AthameItem) {
+			BlockPos glyph = BWUtil.getClosestBlockPos(getBlockPos(), 6, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity);
+			if (glyph != null) {
+				((GlyphBlockEntity) world.getBlockEntity(glyph)).onUse(world, glyph, (PlayerEntity) attacker, Hand.MAIN_HAND, (LivingEntity) (Object) this);
+			}
+			if (world.isNight()) {
+				boolean chicken = (Object) this instanceof ChickenEntity;
+				if ((chicken && world.getBiome(getBlockPos()).getCategory() == Biome.Category.EXTREME_HILLS) || ((Object) this instanceof WolfEntity && (world.getBiome(getBlockPos()).getCategory() == Biome.Category.FOREST || world.getBiome(getBlockPos()).getCategory() == Biome.Category.TAIGA))) {
+					BlockPos brazierPos = BWUtil.getClosestBlockPos(getBlockPos(), 8, currentPos -> {
+						BlockEntity blockEntity = world.getBlockEntity(currentPos);
+						return blockEntity instanceof BrazierBlockEntity && ((BrazierBlockEntity) blockEntity).incenseRecipe.effect == BWStatusEffects.MORTAL_COIL;
+					});
+					if (brazierPos != null) {
+						world.breakBlock(brazierPos, false);
+						world.createExplosion(null, brazierPos.getX() + 0.5, brazierPos.getY() + 0.5, brazierPos.getZ() + 0.5, 3, Explosion.DestructionType.BREAK);
+						Entity entity = chicken ? BWEntityTypes.LILITH.create(world) : BWEntityTypes.HERNE.create(world);
+						if (entity != null) {
+							((MobEntity) entity).initialize((ServerWorldAccess) world, world.getLocalDifficulty(brazierPos), SpawnReason.EVENT, null, null);
+							entity.updatePositionAndAngles(brazierPos.getX() + 0.5, brazierPos.getY(), brazierPos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
+							world.spawnEntity(entity);
 						}
 					}
-					if (livingAttacker instanceof PlayerEntity && livingAttacker.getOffHandStack().getItem() == Items.GLASS_BOTTLE && getBlood() > 20) {
-						world.playSound(null, attacker.getBlockPos(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1, 0.5f);
-						BWUtil.addItemToInventoryAndConsume((PlayerEntity) livingAttacker, Hand.OFF_HAND, new ItemStack(BWObjects.BOTTLE_OF_BLOOD));
-					}
 				}
+			}
+			for (AthameDropRecipe recipe : world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_DROP_RECIPE_TYPE)) {
+				if (recipe.entity_type.equals(getType()) && world.random.nextFloat() < recipe.chance * (EnchantmentHelper.getLooting((LivingEntity) attacker) + 1)) {
+					ItemStack drop = recipe.getOutput().copy();
+					if (recipe.entity_type == EntityType.PLAYER) {
+						drop.getOrCreateTag().putString("SkullOwner", getName().getString());
+					}
+					ItemScatterer.spawn(world, getX() + 0.5, getY() + 0.5, getZ() + 0.5, drop);
+				}
+			}
+			if (((PlayerEntity) attacker).getOffHandStack().getItem() == Items.GLASS_BOTTLE && ((BloodAccessor) this).getBlood() > 20 && BWTags.HAS_BLOOD.contains(getType())) {
+				world.playSound(null, attacker.getBlockPos(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1, 0.5f);
+				BWUtil.addItemToInventoryAndConsume((PlayerEntity) attacker, Hand.OFF_HAND, new ItemStack(BWObjects.BOTTLE_OF_BLOOD));
 			}
 		}
 	}
@@ -723,27 +744,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 					break;
 				}
 			}
-		}
-	}
-	
-	@Inject(method = "wakeUp", at = @At("TAIL"))
-	private void wakeUp(CallbackInfo callbackInfo) {
-		if (!world.isClient) {
-			BWUtil.getBlockPoses(getBlockPos(), 12, foundPos -> world.getBlockEntity(foundPos) instanceof BrazierBlockEntity && ((BrazierBlockEntity) world.getBlockEntity(foundPos)).incenseRecipe != null).forEach(foundPos -> {
-				IncenseRecipe recipe = ((BrazierBlockEntity) world.getBlockEntity(foundPos)).incenseRecipe;
-				int durationMultiplier = 1;
-				BlockPos nearestSigil = BWUtil.getClosestBlockPos(getBlockPos(), 16, foundSigil -> world.getBlockEntity(foundSigil) instanceof SigilBlockEntity && ((SigilBlockEntity) world.getBlockEntity(foundSigil)).getSigil() == BWSigils.EXTENDING);
-				if (nearestSigil != null) {
-					BlockEntity blockEntity = world.getBlockEntity(nearestSigil);
-					SigilHolder sigil = ((SigilHolder) blockEntity);
-					if (sigil.test(this)) {
-						sigil.setUses(sigil.getUses() - 1);
-						blockEntity.markDirty();
-						durationMultiplier = 2;
-					}
-				}
-				addStatusEffect(new StatusEffectInstance(recipe.effect, 24000 * durationMultiplier, recipe.amplifier, true, false));
-			});
 		}
 	}
 	

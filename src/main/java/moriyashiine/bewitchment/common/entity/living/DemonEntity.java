@@ -273,7 +273,7 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	@Override
 	protected void initDataTracker() {
 		super.initDataTracker();
-		dataTracker.startTracking(MALE, false);
+		dataTracker.startTracking(MALE, true);
 	}
 	
 	@Override

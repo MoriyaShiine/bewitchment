@@ -5,14 +5,19 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Used since ancient times, $(item)Salt$() can block against unholy creatures, giving it a reputation as a protector.$(br)It can be found close to the surface, making it easy to mine.$(br2)Other than being protective, Salt also serves as a common $(marked)witching material$()."
+	  "text": "Used since ancient times, Salt can be placed as a dust to block unholy creatures, giving it a reputation as a protector. $(br2)Other than being protective, Salt also serves as a common witching material."
 	},
 	{
 	  "type": "image",
 	  "images": [
 		"bewitchment:textures/gui/patchouli/salt_ore.png"
 	  ],
+	  "text": "Salt Ore can be found close to the surface, making it easy to mine.",
 	  "border": true
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:salt_block"
 	}
   ]
 }

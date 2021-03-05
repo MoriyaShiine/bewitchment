@@ -4,13 +4,13 @@
   "icon": "bewitchment:judgment_sigil",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
-    {
-      "type": "text",
-      "text": "The active sigil of $(marked)Judgment$() damages any unholy being that activates it, making it a good contraption against $(l:bewitchment:creatures/vampire)Vampires$() and $(l:bewitchment:creatures/werewolf)Werewolves$()."
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:judgment_sigil"
-    }
+	{
+	  "type": "text",
+	  "text": "The $(l:bewitchment:sigils/using_sigils)Active Sigil$() of Judgment damages any unholy being that activates it, making it a good contraption against $(l:bewitchment:creatures/vampire)Vampires$() and $(l:bewitchment:creatures/werewolf)Werewolves$()."
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:judgment_sigil"
+	}
   ]
 }

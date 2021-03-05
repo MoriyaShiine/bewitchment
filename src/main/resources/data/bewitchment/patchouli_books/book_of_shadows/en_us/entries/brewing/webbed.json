@@ -2,17 +2,17 @@
   "category": "bewitchment:brewing",
   "name": "Webbed",
   "icon": "minecraft:cobweb",
-  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
-    {
-      "type": "text",
-      "text": "Instantly places temporary $(item)Cobwebs$() around the target."
-    },
-    {
-      "type": "spotlight",
-      "title": "Webbed",
-      "item": "minecraft:cobweb",
-      "text": "Intensity increases the radius in which cobwebs are placed."
-    }
+	{
+	  "type": "text",
+	  "text": "Instantly places temporary Cobwebs around the target."
+	},
+	{
+	  "type": "spotlight",
+	  "title": "Webbed",
+	  "item": "minecraft:cobweb",
+	  "text": "Intensity increases the radius in which Cobwebs are placed."
+	}
   ]
 }

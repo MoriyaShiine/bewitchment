@@ -3,16 +3,14 @@
   "name": "Caduceus",
   "icon": "bewitchment:caduceus",
   "advancement": "bewitchment:hidden_unlocks/caduceus",
-  "secret": true,
   "pages": [
-    {
-      "type": "text",
-      "text": "The $(item)Caduceus$() is the $(l:bewitchment:creatures/baphomet)Baphomet$()'s tool of choice.$(br)It has multiple-tool functionality comparable to $(item)Netherite$()."
-    },
-    {
-      "type":"spotlight",
-      "item": "bewitchment:horned_spear",
-      "text": "The Caduceus can also hurl $marked)fire balls$()."
-    }
+	{
+	  "type": "text",
+	  "text": "The Caduceus is the $(l:bewitchment:creatures/baphomet)Baphomet's$() tool of choice.$(br2)It has multiple-tool functionality comparable to Netherite. it can also be used to throw powerful fireballs at the cost of some $(l:bewitchment:introduction/altars#internalme)ME$().$(br2)The Caduceus can be repaired with Netherite Ingots."
+	},
+	{
+	  "type": "spotlight",
+	  "item": "bewitchment:caduceus"
+	}
   ]
 }

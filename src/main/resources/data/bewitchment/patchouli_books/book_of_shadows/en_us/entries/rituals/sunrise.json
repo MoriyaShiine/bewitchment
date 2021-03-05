@@ -4,14 +4,13 @@
   "icon": "minecraft:gold_ingot",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
-    {
-      "type": "text",
-      "text": "The ritual of $(marked)Sunrise$(), simply put, makes it day."
-    },
-    {
-      "type": "bewitchment:ritual",
-      "recipe": "bewitchment:rituals/sunrise",
-      "text": ""
-    }
+	{
+	  "type": "text",
+	  "text": "The $(l:bewitchment:rituals/rituals)Ritual$() of Sunrise, simply put, makes it day."
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/sunrise"
+	}
   ]
 }

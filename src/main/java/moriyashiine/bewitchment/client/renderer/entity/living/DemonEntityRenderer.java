@@ -8,6 +8,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.MobEntityRenderer;
+import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
@@ -16,6 +17,7 @@ public class DemonEntityRenderer extends MobEntityRenderer<DemonEntity, DemonEnt
 	
 	public DemonEntityRenderer(EntityRenderDispatcher entityRenderDispatcher) {
 		super(entityRenderDispatcher, new DemonEntityModel<>(), 0.5f);
+		addFeature(new HeldItemFeatureRenderer<>(this));
 	}
 	
 	@Override

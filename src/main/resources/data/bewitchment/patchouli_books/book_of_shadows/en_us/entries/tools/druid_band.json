@@ -2,15 +2,15 @@
   "category": "bewitchment:tools",
   "name": "Druid Band",
   "icon": "bewitchment:druid_band",
+  "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
-    {
-      "type": "text",
-      "text": "The $(item)Druid Band$() is a powerful trinket of the Earth.$(br)When worn, it will increase your movement speed and regeneration, as long as you walk on natural soil such as $(item)Grass$().$(br)When active, the Druid Band consumes $(marked)ME$()."
-    },
-    {
-      "type": "crafting",
-      "recipe": "bewitchment:druid_band",
-      "text": "$(o)The Druid Band can be equipped in the $(marked)Aglet$()$(o) trinket slot$()."
-    }
+	{
+	  "type": "text",
+	  "text": "The Druid Band is a powerful trinket of the earth.$(br2)When worn, it will increase your movement speed and regeneration, as long as you walk on natural soil such as grass.$(br2)When active, the Druid Band consumes $(l:bewitchment:introduction/altars#internalme)ME$()."
+	},
+	{
+	  "type": "crafting",
+	  "recipe": "bewitchment:druid_band"
+	}
   ]
 }

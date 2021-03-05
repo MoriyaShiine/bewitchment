@@ -2,7 +2,7 @@ package moriyashiine.bewitchment.client;
 
 import com.terraformersmc.terraform.sign.SpriteIdentifierRegistry;
 import moriyashiine.bewitchment.client.misc.SpriteIdentifiers;
-import moriyashiine.bewitchment.client.model.armor.WitchArmorModel;
+import moriyashiine.bewitchment.client.model.equipment.armor.WitchArmorModel;
 import moriyashiine.bewitchment.client.network.packet.*;
 import moriyashiine.bewitchment.client.particle.CauldronBubbleParticle;
 import moriyashiine.bewitchment.client.particle.IncenseSmokeParticle;
@@ -72,6 +72,8 @@ public class BewitchmentClient implements ClientModInitializer {
 		FabricModelPredicateProviderRegistry.register(BWObjects.HEDGEWITCH_HAT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.getName().asString().toLowerCase().contains("faith") ? 1 : 0);
 		FabricModelPredicateProviderRegistry.register(BWObjects.ALCHEMIST_HAT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.getName().asString().toLowerCase().contains("faith") ? 1 : 0);
 		FabricModelPredicateProviderRegistry.register(BWObjects.BESMIRCHED_HAT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.getName().asString().toLowerCase().contains("faith") ? 1 : 0);
+		FabricModelPredicateProviderRegistry.register(BWObjects.NAZAR, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.hasTag() && stack.getTag().getBoolean("Worn") ? 1 : 0);
+		FabricModelPredicateProviderRegistry.register(BWObjects.PRICKLY_BELT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.hasTag() && stack.getTag().getInt("PotionUses") > 0 ? 1 : 0);
 		FabricModelPredicateProviderRegistry.register(BWObjects.HORNED_SPEAR, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1 : 0);
 		FabricModelPredicateProviderRegistry.register(BWObjects.TAGLOCK, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> TaglockItem.hasTaglock(stack) ? 1 : 0);
 		FabricModelPredicateProviderRegistry.register(BWObjects.WAYSTONE, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.hasTag() && stack.getOrCreateTag().contains("LocationPos") ? 1 : 0);
@@ -106,9 +108,9 @@ public class BewitchmentClient implements ClientModInitializer {
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.SNAKE, (dispatcher, context) -> new SnakeEntityRenderer(dispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.TOAD, (dispatcher, context) -> new ToadEntityRenderer(dispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.GHOST, (dispatcher, context) -> new GhostEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.HELLHOUND, (dispatcher, context) -> new HellhoundEntityRenderer(dispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.VAMPIRE, (dispatcher, context) -> new VampireEntityRenderer(dispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.WEREWOLF, (dispatcher, context) -> new WerewolfEntityRenderer(dispatcher));
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.HELLHOUND, (dispatcher, context) -> new HellhoundEntityRenderer(dispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.DEMON, (dispatcher, context) -> new DemonEntityRenderer(dispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.LEONARD, (dispatcher, context) -> new LeonardEntityRenderer(dispatcher));
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.BAPHOMET, (dispatcher, context) -> new BaphometEntityRenderer(dispatcher));

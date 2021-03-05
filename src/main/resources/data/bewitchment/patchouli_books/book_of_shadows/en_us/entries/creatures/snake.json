@@ -3,24 +3,23 @@
   "name": "Snake",
   "icon": "bewitchment:snake_spawn_egg",
   "extra_recipe_mappings": {
-    "bewitchment:snake_tongue": 0
+	"bewitchment:snake_tongue": 0
   },
   "pages": [
-    {
-      "type": "text",
-      "text": "$(marked)Snakes$() usually appear in $(marked)savannas$(), $(marked)deserts$() and $(marked)plains$(), where they prey for other animals, killing them with their poison. $(br)Snakes may drop their $(item)Snake Tongue$(), which is commonly used in witchcraft (though it may also be acquired from some demonic entities)."
-    },
-    {
-      "type": "text",
-      "advancement:": "bewitchment:hidden_unlocks/demon_heart",
-      "text": "Snakes can be $(l:bewitchment:rituals/binding)$(marked)familiars$().$(br)Witches with a Snake familiar are able to craft much more durable $(l:bewitchment:sigils/sigils_intro)$(marked)sigils$(). Additionally they benefit from $(marked)poison$(); it does not harm them and refills their internal $(markedME$() buffer."
-    },
-    {
-      "type": "entity",
-      "entity": "bewitchment:snake{Variant:1}",
-      "rotate": true,
-      "scale": 0.6,
-      "text": "Snakes can be tamed with $(item)Raw Rabbit$(), and bred with $(item)Raw Chicken$()."
-    }
+	{
+	  "type": "text",
+	  "text": "Snakes usually appear in savannas, deserts and plains, where they prey on other animals, killing them with their venom.$(br2)Snakes may drop their Snake Tongue, which is commonly used in witchcraft (though it may also be acquired from some $(l:bewitchment:creatures/demon)Demonic Entities$())."
+	},
+	{
+	  "type": "text",
+	  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+	  "text": "Snakes can be $(l:bewitchment:rituals/binding)Familiars$(). Witches with a Snake $(l:bewitchment:rituals/binding)Familiar$() are able to craft much more durable $(l:bewitchment:sigils/using_sigils)Sigils$(). Additionally they benefit from poison; it does not harm them and refills their $(l:bewitchment:introduction/altars#internalme)Internal ME Buffer$()."
+	},
+	{
+	  "type": "entity",
+	  "entity": "bewitchment:snake",
+	  "scale": 0.6,
+	  "text": "Snakes can be tamed with Raw Rabbit, and bred with Raw Chicken."
+	}
   ]
 }

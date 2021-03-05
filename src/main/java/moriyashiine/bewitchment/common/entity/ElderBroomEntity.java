@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 
 public class ElderBroomEntity extends BroomEntity {
 	private BlockPos originalPos = null;
-	private String originalWorld = "";
+	private String originalWorld = null;
 	
 	public ElderBroomEntity(EntityType<?> type, World world) {
 		super(type, world);
@@ -42,12 +42,12 @@ public class ElderBroomEntity extends BroomEntity {
 		Vec3d value = super.updatePassengerForDismount(passenger);
 		if (originalPos != null && world.getRegistryKey().toString().equals(originalWorld)) {
 			double x = originalPos.getX() + 0.5;
-			double y = originalPos.getY() + 0.5;
+			double y = originalPos.getY();
 			double z = originalPos.getZ() + 0.5;
 			value = new Vec3d(x, y, z);
 			BWUtil.teleport(this, x, y, z, false);
 			originalPos = null;
-			originalWorld = "";
+			originalWorld = null;
 		}
 		return value;
 	}

@@ -28,7 +28,7 @@ public class BWConfig implements ConfigData {
 	public final int ravenMaxGroupCount = 3;
 	
 	public final List<String> snakeBiomeCategories = Arrays.asList(Biome.Category.PLAINS.getName(), Biome.Category.SAVANNA.getName(), Biome.Category.DESERT.getName());
-	public final int snakeWeight = 10;
+	public final int snakeWeight = 6;
 	public final int snakeMinGroupCount = 1;
 	public final int snakeMaxGroupCount = 2;
 	
@@ -37,13 +37,9 @@ public class BWConfig implements ConfigData {
 	public final int toadMinGroupCount = 1;
 	public final int toadMaxGroupCount = 3;
 	
-	public final int ghostWeight = 8;
+	public final int ghostWeight = 6;
 	public final int ghostMinGroupCount = 1;
 	public final int ghostMaxGroupCount = 1;
-	
-	public final int hellhoundWeight = 6;
-	public final int hellhoundMinGroupCount = 1;
-	public final int hellhoundMaxGroupCount = 1;
 	
 	public final int vampireWeight = 10;
 	public final int vampireMinGroupCount = 1;
@@ -52,6 +48,10 @@ public class BWConfig implements ConfigData {
 	public final int werewolfWeight = 10;
 	public final int werewolfMinGroupCount = 1;
 	public final int werewolfMaxGroupCount = 1;
+	
+	public final int hellhoundWeight = 6;
+	public final int hellhoundMinGroupCount = 1;
+	public final int hellhoundMaxGroupCount = 1;
 	
 	public final boolean doDemonTradesRefresh = true;
 }

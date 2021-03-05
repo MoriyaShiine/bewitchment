@@ -6,12 +6,14 @@
   "description": "generic witchery clone lol",
   "authors": [
 	"MoriyaShiine",
-	"cybercat5555",
+	"cybercat5555"
+  ],
+  "contributors": [
 	"Aelpecyem",
-	"Sunconure11"
+	"Samaritans"
   ],
   "contact": {
-	"website": "todo",
+	"website": "https://www.curseforge.com/minecraft/mc-mods/bewitchment",
 	"repo": "https://github.com/MoriyaShiine/bewitchment"
   },
   "license": "GPL-3.0",
@@ -35,9 +37,11 @@
 	"fabricloader": ">=0.11.0",
 	"fabric": "*",
 	"minecraft": "1.16.5",
-	"cloth-config2": "*",
+	"cloth-config2": ">=4.10.13",
+	"somnus": "*",
 	"pehkui": ">=1.7.1+21w03a",
 	"impersonate": "*",
-	"patchouli": "*"
+	"patchouli": "*",
+	"trinkets": "*"
   }
 }

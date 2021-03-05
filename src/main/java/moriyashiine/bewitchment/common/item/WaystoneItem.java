@@ -25,16 +25,13 @@ public class WaystoneItem extends Item {
 	
 	@Override
 	public ActionResult useOnBlock(ItemUsageContext context) {
-		if (!(context.getStack().hasTag() && context.getStack().getOrCreateTag().contains("LocationPos"))) {
-			World world = context.getWorld();
-			boolean client = world.isClient;
-			if (!client) {
-				context.getStack().getOrCreateTag().putLong("LocationPos", context.getBlockPos().offset(context.getSide()).asLong());
-				context.getStack().getOrCreateTag().putString("LocationWorld", world.getRegistryKey().getValue().toString());
-			}
-			return ActionResult.success(client);
+		World world = context.getWorld();
+		boolean client = world.isClient;
+		if (!client) {
+			context.getStack().getOrCreateTag().putLong("LocationPos", context.getBlockPos().offset(context.getSide()).asLong());
+			context.getStack().getOrCreateTag().putString("LocationWorld", world.getRegistryKey().getValue().toString());
 		}
-		return super.useOnBlock(context);
+		return ActionResult.success(client);
 	}
 	
 	@Override

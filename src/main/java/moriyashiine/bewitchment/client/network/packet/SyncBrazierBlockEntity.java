@@ -5,6 +5,7 @@ import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,11 +36,14 @@ public class SyncBrazierBlockEntity {
 		ItemStack three = buf.readItemStack();
 		ItemStack four = buf.readItemStack();
 		client.execute(() -> {
-			BrazierBlockEntity brazier = (BrazierBlockEntity) client.world.getBlockEntity(pos);
-			brazier.setStack(0, one);
-			brazier.setStack(1, two);
-			brazier.setStack(2, three);
-			brazier.setStack(3, four);
+			BlockEntity blockEntity = client.world.getBlockEntity(pos);
+			if (blockEntity instanceof BrazierBlockEntity) {
+				BrazierBlockEntity brazier = (BrazierBlockEntity) blockEntity;
+				brazier.setStack(0, one);
+				brazier.setStack(1, two);
+				brazier.setStack(2, three);
+				brazier.setStack(3, four);
+			}
 		});
 	}
 }

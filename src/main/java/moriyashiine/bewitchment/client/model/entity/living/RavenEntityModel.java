@@ -29,49 +29,49 @@ public class RavenEntityModel<T extends RavenEntity> extends AnimalModel<T> {
 		
 		body = new ModelPart(this);
 		body.setPivot(0.0F, 18.2F, -1.6F);
-		setRotationAngle(body, -0.3142F, 0.0F, 0.0F);
+		setRotation(body, -0.3142F, 0.0F, 0.0F);
 		body.setTextureOffset(0, 0).addCuboid(-2.0F, -1.5F, -2.5F, 4.0F, 3.0F, 6.0F, 0.0F, false);
 		
 		ModelPart neck = new ModelPart(this);
 		neck.setPivot(0.0F, 0.0F, -0.9F);
 		body.addChild(neck);
-		setRotationAngle(neck, -0.5236F, 0.0F, 0.0F);
+		setRotation(neck, -0.5236F, 0.0F, 0.0F);
 		neck.setTextureOffset(16, 0).addCuboid(-1.5F, -1.3F, -3.0F, 3.0F, 2.0F, 3.0F, 0.0F, false);
 		
 		ModelPart neckFeathers01 = new ModelPart(this);
 		neckFeathers01.setPivot(0.0F, 1.1F, -1.7F);
 		neck.addChild(neckFeathers01);
-		setRotationAngle(neckFeathers01, -0.4014F, 0.0F, 0.0F);
+		setRotation(neckFeathers01, -0.4014F, 0.0F, 0.0F);
 		neckFeathers01.setTextureOffset(13, 27).addCuboid(-1.49F, -0.5F, -0.2F, 3.0F, 1.0F, 3.0F, 0.0F, false);
 		
 		ModelPart neckFeathers02 = new ModelPart(this);
 		neckFeathers02.setPivot(0.0F, 0.7F, -2.3F);
 		neck.addChild(neckFeathers02);
-		setRotationAngle(neckFeathers02, -0.8727F, 0.0F, 0.0F);
+		setRotation(neckFeathers02, -0.8727F, 0.0F, 0.0F);
 		neckFeathers02.setTextureOffset(0, 27).addCuboid(-1.5F, -0.5F, -0.2F, 3.0F, 1.0F, 3.0F, 0.0F, false);
 		
 		head = new ModelPart(this);
 		head.setPivot(0.0F, -0.4F, -2.5F);
 		neck.addChild(head);
-		setRotationAngle(head, 0.8727F, 0.0F, 0.0F);
+		setRotation(head, 0.8727F, 0.0F, 0.0F);
 		head.setTextureOffset(40, 0).addCuboid(-1.49F, -1.5F, -2.7F, 3.0F, 3.0F, 3.0F, 0.0F, false);
 		
 		ModelPart beakBottom = new ModelPart(this);
 		beakBottom.setPivot(0.0F, 0.8F, -1.9F);
 		head.addChild(beakBottom);
-		setRotationAngle(beakBottom, -0.0873F, 0.0F, 0.0F);
+		setRotation(beakBottom, -0.0873F, 0.0F, 0.0F);
 		beakBottom.setTextureOffset(54, 0).addCuboid(-0.49F, -0.5F, -2.8F, 1.0F, 1.0F, 3.0F, 0.0F, false);
 		
 		ModelPart beakTop = new ModelPart(this);
 		beakTop.setPivot(0.0F, -0.1F, -2.3F);
 		head.addChild(beakTop);
-		setRotationAngle(beakTop, 0.1396F, 0.0F, 0.0F);
+		setRotation(beakTop, 0.1396F, 0.0F, 0.0F);
 		beakTop.setTextureOffset(54, 0).addCuboid(-0.5F, -0.5F, -2.5F, 1.0F, 1.0F, 3.0F, 0.0F, false);
 		
 		ModelPart tail01 = new ModelPart(this);
 		tail01.setPivot(0.0F, -0.9F, 3.4F);
 		body.addChild(tail01);
-		setRotationAngle(tail01, 0.0524F, 0.0F, 0.0F);
+		setRotation(tail01, 0.0524F, 0.0F, 0.0F);
 		tail01.setTextureOffset(0, 10).addCuboid(-1.5F, -0.5F, 0.0F, 3.0F, 1.0F, 3.0F, 0.0F, false);
 		
 		ModelPart tail02 = new ModelPart(this);
@@ -87,79 +87,79 @@ public class RavenEntityModel<T extends RavenEntity> extends AnimalModel<T> {
 		ModelPart lTailPlume = new ModelPart(this);
 		lTailPlume.setPivot(-0.5F, 0.7F, 1.2F);
 		tail01.addChild(lTailPlume);
-		setRotationAngle(lTailPlume, 0.0F, -0.5236F, 0.1745F);
+		setRotation(lTailPlume, 0.0F, -0.5236F, 0.1745F);
 		lTailPlume.setTextureOffset(51, 13).addCuboid(-1.5F, -0.7F, -0.2F, 3.0F, 0.0F, 4.0F, 0.0F, false);
 		
 		ModelPart rTailPlume = new ModelPart(this);
 		rTailPlume.setPivot(0.5F, 0.7F, 1.2F);
 		tail01.addChild(rTailPlume);
-		setRotationAngle(rTailPlume, 0.0F, 0.5236F, -0.1745F);
+		setRotation(rTailPlume, 0.0F, 0.5236F, -0.1745F);
 		rTailPlume.setTextureOffset(51, 13).addCuboid(-1.5F, -0.7F, -0.2F, 3.0F, 0.0F, 4.0F, 0.0F, true);
 		
 		lLeg01 = new ModelPart(this);
 		lLeg01.setPivot(-1.2F, 0.1F, 2.3F);
 		body.addChild(lLeg01);
-		setRotationAngle(lLeg01, 0.3142F, 0.0F, 0.0F);
+		setRotation(lLeg01, 0.3142F, 0.0F, 0.0F);
 		lLeg01.setTextureOffset(34, 0).addCuboid(-1.0F, 0.2F, -1.0F, 1.0F, 2.0F, 2.0F, 0.0F, false);
 		
 		ModelPart lLeg02 = new ModelPart(this);
 		lLeg02.setPivot(-0.5F, 2.0F, 0.0F);
 		lLeg01.addChild(lLeg02);
-		setRotationAngle(lLeg02, -0.1396F, 0.0F, 0.0F);
+		setRotation(lLeg02, -0.1396F, 0.0F, 0.0F);
 		lLeg02.setTextureOffset(29, 0).addCuboid(-0.49F, 0.0F, -0.5F, 1.0F, 3.0F, 1.0F, 0.0F, false);
 		
 		ModelPart lFoot = new ModelPart(this);
 		lFoot.setPivot(0.0F, 2.6F, 0.0F);
 		lLeg02.addChild(lFoot);
-		setRotationAngle(lFoot, 0.1396F, 0.0F, 0.0F);
+		setRotation(lFoot, 0.1396F, 0.0F, 0.0F);
 		lFoot.setTextureOffset(29, 5).addCuboid(-0.51F, -0.5F, -2.0F, 1.0F, 1.0F, 2.0F, 0.0F, false);
 		
 		rLeg01 = new ModelPart(this);
 		rLeg01.setPivot(1.2F, 0.1F, 2.3F);
 		body.addChild(rLeg01);
-		setRotationAngle(rLeg01, 0.3142F, 0.0F, 0.0F);
+		setRotation(rLeg01, 0.3142F, 0.0F, 0.0F);
 		rLeg01.setTextureOffset(34, 0).addCuboid(0.0F, 0.2F, -1.0F, 1.0F, 2.0F, 2.0F, 0.0F, true);
 		
 		ModelPart rLeg02 = new ModelPart(this);
 		rLeg02.setPivot(0.5F, 2.0F, 0.0F);
 		rLeg01.addChild(rLeg02);
-		setRotationAngle(rLeg02, -0.1396F, 0.0F, 0.0F);
+		setRotation(rLeg02, -0.1396F, 0.0F, 0.0F);
 		rLeg02.setTextureOffset(29, 0).addCuboid(-0.51F, 0.0F, -0.5F, 1.0F, 3.0F, 1.0F, 0.0F, true);
 		
 		ModelPart rFoot = new ModelPart(this);
 		rFoot.setPivot(0.0F, 2.6F, 0.1F);
 		rLeg02.addChild(rFoot);
-		setRotationAngle(rFoot, 0.1396F, 0.0F, 0.0F);
+		setRotation(rFoot, 0.1396F, 0.0F, 0.0F);
 		rFoot.setTextureOffset(29, 5).addCuboid(-0.49F, -0.5F, -2.0F, 1.0F, 1.0F, 2.0F, 0.0F, true);
 		
 		ModelPart tail03 = new ModelPart(this);
 		tail03.setPivot(0.0F, 0.4F, 3.5F);
 		body.addChild(tail03);
-		setRotationAngle(tail03, 0.2094F, 0.0F, 0.0F);
+		setRotation(tail03, 0.2094F, 0.0F, 0.0F);
 		tail03.setTextureOffset(0, 20).addCuboid(-1.5F, 0.0F, -0.8F, 3.0F, 1.0F, 3.0F, 0.0F, false);
 		
 		ModelPart bodyFeathers = new ModelPart(this);
 		bodyFeathers.setPivot(0.0F, 1.1F, 1.1F);
 		body.addChild(bodyFeathers);
-		setRotationAngle(bodyFeathers, 0.1396F, 0.0F, 0.0F);
+		setRotation(bodyFeathers, 0.1396F, 0.0F, 0.0F);
 		bodyFeathers.setTextureOffset(26, 26).addCuboid(-1.5F, 0.0F, -2.5F, 3.0F, 1.0F, 5.0F, 0.0F, false);
 		
 		lWing01 = new ModelPart(this);
 		lWing01.setPivot(-1.9F, -0.3F, -1.1F);
 		body.addChild(lWing01);
-		setRotationAngle(lWing01, -0.0873F, 1.2741F, 0.0F);
+		setRotation(lWing01, -0.0873F, 1.2741F, 0.0F);
 		lWing01.setTextureOffset(10, 10).addCuboid(-4.0F, -0.5F, -1.0F, 4.0F, 1.0F, 6.0F, 0.0F, true);
 		
 		lWing02 = new ModelPart(this);
 		lWing02.setPivot(-3.5F, 0.0F, 0.0F);
 		lWing01.addChild(lWing02);
-		setRotationAngle(lWing02, 0.0F, 0.4538F, 0.0F);
+		setRotation(lWing02, 0.0F, 0.4538F, 0.0F);
 		lWing02.setTextureOffset(12, 18).addCuboid(-4.0F, -0.51F, -1.0F, 4.0F, 1.0F, 7.0F, 0.0F, true);
 		
 		lWing03 = new ModelPart(this);
 		lWing03.setPivot(-3.5F, 0.0F, 0.0F);
 		lWing02.addChild(lWing03);
-		setRotationAngle(lWing03, 0.0F, 0.4887F, 0.0F);
+		setRotation(lWing03, 0.0F, 0.4887F, 0.0F);
 		lWing03.setTextureOffset(31, 9).addCuboid(-4.0F, -0.5F, -1.0F, 4.0F, 1.0F, 7.0F, 0.0F, true);
 		
 		lWing04 = new ModelPart(this);
@@ -170,19 +170,19 @@ public class RavenEntityModel<T extends RavenEntity> extends AnimalModel<T> {
 		rWing01 = new ModelPart(this);
 		rWing01.setPivot(1.9F, -0.3F, -1.1F);
 		body.addChild(rWing01);
-		setRotationAngle(rWing01, -0.0873F, -1.2741F, 0.0F);
+		setRotation(rWing01, -0.0873F, -1.2741F, 0.0F);
 		rWing01.setTextureOffset(10, 10).addCuboid(0.0F, -0.5F, -1.0F, 4.0F, 1.0F, 6.0F, 0.0F, false);
 		
 		rWing02 = new ModelPart(this);
 		rWing02.setPivot(3.5F, 0.0F, 0.0F);
 		rWing01.addChild(rWing02);
-		setRotationAngle(rWing02, 0.0F, -0.4538F, 0.0F);
+		setRotation(rWing02, 0.0F, -0.4538F, 0.0F);
 		rWing02.setTextureOffset(12, 18).addCuboid(0.0F, -0.51F, -1.0F, 4.0F, 1.0F, 7.0F, 0.0F, false);
 		
 		rWing03 = new ModelPart(this);
 		rWing03.setPivot(3.5F, 0.0F, 0.0F);
 		rWing02.addChild(rWing03);
-		setRotationAngle(rWing03, 0.0F, -0.4887F, 0.0F);
+		setRotation(rWing03, 0.0F, -0.4887F, 0.0F);
 		rWing03.setTextureOffset(31, 9).addCuboid(0.0F, -0.51F, -1.0F, 4.0F, 1.0F, 7.0F, 0.0F, false);
 		
 		rWing04 = new ModelPart(this);
@@ -256,7 +256,7 @@ public class RavenEntityModel<T extends RavenEntity> extends AnimalModel<T> {
 		return ImmutableList.of(body);
 	}
 	
-	private void setRotationAngle(ModelPart bone, float x, float y, float z) {
+	private void setRotation(ModelPart bone, float x, float y, float z) {
 		bone.pitch = x;
 		bone.yaw = y;
 		bone.roll = z;

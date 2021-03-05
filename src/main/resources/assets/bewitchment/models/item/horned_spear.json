@@ -2,674 +2,674 @@
   "credit": "Made with Blockbench",
   "ambientocclusion": false,
   "textures": {
-    "particle": "bewitchment:item/horned_spear"
+	"particle": "bewitchment:item/horned_spear"
   },
   "overrides": [
-    {
-      "predicate": {
-        "bewitchment:variant": 1
-      },
-      "model": "bewitchment:item/horned_spear_variant"
-    }
+	{
+	  "predicate": {
+		"bewitchment:variant": 1
+	  },
+	  "model": "bewitchment:item/horned_spear_variant"
+	}
   ],
   "elements": [
-    {
-      "name": "grip",
-      "from": [
-        6.65,
-        2.15,
-        8.65
-      ],
-      "to": [
-        8.35,
-        10.85,
-        10.35
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "z",
-        "origin": [
-          8,
-          -1,
-          8
-        ]
-      },
-      "faces": {
-        "north": {
-          "uv": [
-            3.5,
-            5,
-            4.5,
-            9.5
-          ],
-          "texture": "#particle"
-        },
-        "east": {
-          "uv": [
-            2.5,
-            5,
-            3.5,
-            9.5
-          ],
-          "texture": "#particle"
-        },
-        "south": {
-          "uv": [
-            5.5,
-            5,
-            6.5,
-            9.5
-          ],
-          "texture": "#particle"
-        },
-        "west": {
-          "uv": [
-            4.5,
-            5,
-            5.5,
-            9.5
-          ],
-          "texture": "#particle"
-        },
-        "up": {
-          "uv": [
-            4.5,
-            5,
-            3.5,
-            4
-          ],
-          "texture": "#particle"
-        },
-        "down": {
-          "uv": [
-            5.5,
-            4,
-            4.5,
-            5
-          ],
-          "texture": "#particle"
-        }
-      }
-    },
-    {
-      "name": "thread01",
-      "from": [
-        7.5,
-        13,
-        6
-      ],
-      "to": [
-        7.5,
-        21,
-        9
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "z",
-        "origin": [
-          8,
-          7,
-          8
-        ]
-      },
-      "faces": {
-        "north": {
-          "uv": [
-            8,
-            10,
-            8,
-            13.5
-          ],
-          "texture": "#particle"
-        },
-        "east": {
-          "uv": [
-            6.5,
-            10,
-            8,
-            14
-          ],
-          "texture": "#particle"
-        },
-        "south": {
-          "uv": [
-            9.5,
-            10,
-            9.5,
-            13.5
-          ],
-          "texture": "#particle"
-        },
-        "west": {
-          "uv": [
-            8,
-            10,
-            9.5,
-            14
-          ],
-          "texture": "#particle"
-        },
-        "up": {
-          "uv": [
-            8,
-            10,
-            8,
-            8.5
-          ],
-          "texture": "#particle"
-        },
-        "down": {
-          "uv": [
-            8,
-            8.5,
-            8,
-            10
-          ],
-          "texture": "#particle"
-        }
-      }
-    },
-    {
-      "name": "spearheadCore",
-      "from": [
-        7,
-        21,
-        9
-      ],
-      "to": [
-        8,
-        24,
-        10
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            3,
-            0.5,
-            3.5,
-            2
-          ],
-          "texture": "#particle"
-        },
-        "east": {
-          "uv": [
-            2.5,
-            0.5,
-            3,
-            2
-          ],
-          "texture": "#particle"
-        },
-        "south": {
-          "uv": [
-            4,
-            0.5,
-            4.5,
-            2
-          ],
-          "texture": "#particle"
-        },
-        "west": {
-          "uv": [
-            3.5,
-            0.5,
-            4,
-            2
-          ],
-          "texture": "#particle"
-        },
-        "up": {
-          "uv": [
-            3.5,
-            0.5,
-            3,
-            0
-          ],
-          "texture": "#particle"
-        },
-        "down": {
-          "uv": [
-            4,
-            0,
-            3.5,
-            0.5
-          ],
-          "texture": "#particle"
-        }
-      }
-    },
-    {
-      "name": "speatheadEdgeRight",
-      "from": [
-        7.62,
-        21.45,
-        9.15
-      ],
-      "to": [
-        8.32,
-        24.15,
-        9.85
-      ],
-      "rotation": {
-        "angle": 22.5,
-        "axis": "z",
-        "origin": [
-          7.75,
-          23.5,
-          9.5
-        ]
-      },
-      "faces": {
-        "north": {
-          "uv": [
-            3,
-            0.5,
-            3.5,
-            2
-          ],
-          "texture": "#particle"
-        },
-        "east": {
-          "uv": [
-            2.5,
-            0.5,
-            3,
-            2
-          ],
-          "texture": "#particle"
-        },
-        "south": {
-          "uv": [
-            4,
-            0.5,
-            4.5,
-            2
-          ],
-          "texture": "#particle"
-        },
-        "west": {
-          "uv": [
-            3.5,
-            0.5,
-            4,
-            2
-          ],
-          "texture": "#particle"
-        },
-        "up": {
-          "uv": [
-            3.5,
-            0.5,
-            3,
-            0
-          ],
-          "texture": "#particle"
-        },
-        "down": {
-          "uv": [
-            4,
-            0,
-            3.5,
-            0.5
-          ],
-          "texture": "#particle"
-        }
-      }
-    },
-    {
-      "name": "shaft",
-      "from": [
-        7,
-        -10,
-        9
-      ],
-      "to": [
-        8,
-        21,
-        10
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "z",
-        "origin": [
-          8,
-          0,
-          8
-        ]
-      },
-      "faces": {
-        "north": {
-          "uv": [
-            0.5,
-            0.5,
-            1,
-            16
-          ],
-          "texture": "#particle"
-        },
-        "east": {
-          "uv": [
-            0,
-            0.5,
-            0.5,
-            16
-          ],
-          "texture": "#particle"
-        },
-        "south": {
-          "uv": [
-            1.5,
-            0.5,
-            2,
-            16
-          ],
-          "texture": "#particle"
-        },
-        "west": {
-          "uv": [
-            1,
-            0.5,
-            1.5,
-            16
-          ],
-          "texture": "#particle"
-        },
-        "up": {
-          "uv": [
-            1,
-            0.5,
-            0.5,
-            0
-          ],
-          "texture": "#particle"
-        },
-        "down": {
-          "uv": [
-            1.5,
-            0,
-            1,
-            0.5
-          ],
-          "texture": "#particle"
-        }
-      }
-    },
-    {
-      "name": "speatheadEdgeLeft",
-      "from": [
-        6.85,
-        21.55,
-        9.15
-      ],
-      "to": [
-        7.55,
-        24.25,
-        9.85
-      ],
-      "rotation": {
-        "angle": -22.5,
-        "axis": "z",
-        "origin": [
-          7,
-          24,
-          9.5
-        ]
-      },
-      "faces": {
-        "north": {
-          "uv": [
-            3,
-            0.5,
-            3.5,
-            2
-          ],
-          "texture": "#particle"
-        },
-        "east": {
-          "uv": [
-            2.5,
-            0.5,
-            3,
-            2
-          ],
-          "texture": "#particle"
-        },
-        "south": {
-          "uv": [
-            4,
-            0.5,
-            4.5,
-            2
-          ],
-          "texture": "#particle"
-        },
-        "west": {
-          "uv": [
-            3.5,
-            0.5,
-            4,
-            2
-          ],
-          "texture": "#particle"
-        },
-        "up": {
-          "uv": [
-            3.5,
-            0.5,
-            3,
-            0
-          ],
-          "texture": "#particle"
-        },
-        "down": {
-          "uv": [
-            4,
-            0,
-            3.5,
-            0.5
-          ],
-          "texture": "#particle"
-        }
-      }
-    },
-    {
-      "name": "spearTip",
-      "from": [
-        7.1,
-        23.85,
-        9.1
-      ],
-      "to": [
-        7.9,
-        24.65,
-        9.9
-      ],
-      "rotation": {
-        "angle": 45,
-        "axis": "z",
-        "origin": [
-          7.5,
-          24.25,
-          9.5
-        ]
-      },
-      "faces": {
-        "north": {
-          "uv": [
-            3,
-            3,
-            3.5,
-            3.5
-          ],
-          "texture": "#particle"
-        },
-        "east": {
-          "uv": [
-            2.5,
-            3,
-            3,
-            3.5
-          ],
-          "texture": "#particle"
-        },
-        "south": {
-          "uv": [
-            4,
-            3,
-            4.5,
-            3.5
-          ],
-          "texture": "#particle"
-        },
-        "west": {
-          "uv": [
-            3.5,
-            3,
-            4,
-            3.5
-          ],
-          "texture": "#particle"
-        },
-        "up": {
-          "uv": [
-            3.5,
-            3,
-            3,
-            2.5
-          ],
-          "texture": "#particle"
-        },
-        "down": {
-          "uv": [
-            4,
-            2.5,
-            3.5,
-            3
-          ],
-          "texture": "#particle"
-        }
-      }
-    },
-    {
-      "name": "thread00",
-      "from": [
-        7.5,
-        -3,
-        6
-      ],
-      "to": [
-        7.5,
-        3,
-        9
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "z",
-        "origin": [
-          8,
-          7,
-          8
-        ]
-      },
-      "faces": {
-        "north": {
-          "uv": [
-            4,
-            10,
-            4,
-            13
-          ],
-          "texture": "#particle"
-        },
-        "east": {
-          "uv": [
-            2.5,
-            10,
-            4,
-            13
-          ],
-          "texture": "#particle"
-        },
-        "south": {
-          "uv": [
-            5.5,
-            10,
-            5.5,
-            13
-          ],
-          "texture": "#particle"
-        },
-        "west": {
-          "uv": [
-            4,
-            10,
-            5.5,
-            13
-          ],
-          "texture": "#particle"
-        },
-        "up": {
-          "uv": [
-            4,
-            10,
-            4,
-            8.5
-          ],
-          "texture": "#particle"
-        },
-        "down": {
-          "uv": [
-            4,
-            8.5,
-            4,
-            10
-          ],
-          "texture": "#particle"
-        }
-      }
-    }
+	{
+	  "name": "grip",
+	  "from": [
+		6.65,
+		2.15,
+		8.65
+	  ],
+	  "to": [
+		8.35,
+		10.85,
+		10.35
+	  ],
+	  "rotation": {
+		"angle": 0,
+		"axis": "z",
+		"origin": [
+		  8,
+		  -1,
+		  8
+		]
+	  },
+	  "faces": {
+		"north": {
+		  "uv": [
+			3.5,
+			5,
+			4.5,
+			9.5
+		  ],
+		  "texture": "#particle"
+		},
+		"east": {
+		  "uv": [
+			2.5,
+			5,
+			3.5,
+			9.5
+		  ],
+		  "texture": "#particle"
+		},
+		"south": {
+		  "uv": [
+			5.5,
+			5,
+			6.5,
+			9.5
+		  ],
+		  "texture": "#particle"
+		},
+		"west": {
+		  "uv": [
+			4.5,
+			5,
+			5.5,
+			9.5
+		  ],
+		  "texture": "#particle"
+		},
+		"up": {
+		  "uv": [
+			4.5,
+			5,
+			3.5,
+			4
+		  ],
+		  "texture": "#particle"
+		},
+		"down": {
+		  "uv": [
+			5.5,
+			4,
+			4.5,
+			5
+		  ],
+		  "texture": "#particle"
+		}
+	  }
+	},
+	{
+	  "name": "thread01",
+	  "from": [
+		7.5,
+		13,
+		6
+	  ],
+	  "to": [
+		7.5,
+		21,
+		9
+	  ],
+	  "rotation": {
+		"angle": 0,
+		"axis": "z",
+		"origin": [
+		  8,
+		  7,
+		  8
+		]
+	  },
+	  "faces": {
+		"north": {
+		  "uv": [
+			8,
+			10,
+			8,
+			13.5
+		  ],
+		  "texture": "#particle"
+		},
+		"east": {
+		  "uv": [
+			6.5,
+			10,
+			8,
+			14
+		  ],
+		  "texture": "#particle"
+		},
+		"south": {
+		  "uv": [
+			9.5,
+			10,
+			9.5,
+			13.5
+		  ],
+		  "texture": "#particle"
+		},
+		"west": {
+		  "uv": [
+			8,
+			10,
+			9.5,
+			14
+		  ],
+		  "texture": "#particle"
+		},
+		"up": {
+		  "uv": [
+			8,
+			10,
+			8,
+			8.5
+		  ],
+		  "texture": "#particle"
+		},
+		"down": {
+		  "uv": [
+			8,
+			8.5,
+			8,
+			10
+		  ],
+		  "texture": "#particle"
+		}
+	  }
+	},
+	{
+	  "name": "spearheadCore",
+	  "from": [
+		7,
+		21,
+		9
+	  ],
+	  "to": [
+		8,
+		24,
+		10
+	  ],
+	  "faces": {
+		"north": {
+		  "uv": [
+			3,
+			0.5,
+			3.5,
+			2
+		  ],
+		  "texture": "#particle"
+		},
+		"east": {
+		  "uv": [
+			2.5,
+			0.5,
+			3,
+			2
+		  ],
+		  "texture": "#particle"
+		},
+		"south": {
+		  "uv": [
+			4,
+			0.5,
+			4.5,
+			2
+		  ],
+		  "texture": "#particle"
+		},
+		"west": {
+		  "uv": [
+			3.5,
+			0.5,
+			4,
+			2
+		  ],
+		  "texture": "#particle"
+		},
+		"up": {
+		  "uv": [
+			3.5,
+			0.5,
+			3,
+			0
+		  ],
+		  "texture": "#particle"
+		},
+		"down": {
+		  "uv": [
+			4,
+			0,
+			3.5,
+			0.5
+		  ],
+		  "texture": "#particle"
+		}
+	  }
+	},
+	{
+	  "name": "speatheadEdgeRight",
+	  "from": [
+		7.62,
+		21.45,
+		9.15
+	  ],
+	  "to": [
+		8.32,
+		24.15,
+		9.85
+	  ],
+	  "rotation": {
+		"angle": 22.5,
+		"axis": "z",
+		"origin": [
+		  7.75,
+		  23.5,
+		  9.5
+		]
+	  },
+	  "faces": {
+		"north": {
+		  "uv": [
+			3,
+			0.5,
+			3.5,
+			2
+		  ],
+		  "texture": "#particle"
+		},
+		"east": {
+		  "uv": [
+			2.5,
+			0.5,
+			3,
+			2
+		  ],
+		  "texture": "#particle"
+		},
+		"south": {
+		  "uv": [
+			4,
+			0.5,
+			4.5,
+			2
+		  ],
+		  "texture": "#particle"
+		},
+		"west": {
+		  "uv": [
+			3.5,
+			0.5,
+			4,
+			2
+		  ],
+		  "texture": "#particle"
+		},
+		"up": {
+		  "uv": [
+			3.5,
+			0.5,
+			3,
+			0
+		  ],
+		  "texture": "#particle"
+		},
+		"down": {
+		  "uv": [
+			4,
+			0,
+			3.5,
+			0.5
+		  ],
+		  "texture": "#particle"
+		}
+	  }
+	},
+	{
+	  "name": "shaft",
+	  "from": [
+		7,
+		-10,
+		9
+	  ],
+	  "to": [
+		8,
+		21,
+		10
+	  ],
+	  "rotation": {
+		"angle": 0,
+		"axis": "z",
+		"origin": [
+		  8,
+		  0,
+		  8
+		]
+	  },
+	  "faces": {
+		"north": {
+		  "uv": [
+			0.5,
+			0.5,
+			1,
+			16
+		  ],
+		  "texture": "#particle"
+		},
+		"east": {
+		  "uv": [
+			0,
+			0.5,
+			0.5,
+			16
+		  ],
+		  "texture": "#particle"
+		},
+		"south": {
+		  "uv": [
+			1.5,
+			0.5,
+			2,
+			16
+		  ],
+		  "texture": "#particle"
+		},
+		"west": {
+		  "uv": [
+			1,
+			0.5,
+			1.5,
+			16
+		  ],
+		  "texture": "#particle"
+		},
+		"up": {
+		  "uv": [
+			1,
+			0.5,
+			0.5,
+			0
+		  ],
+		  "texture": "#particle"
+		},
+		"down": {
+		  "uv": [
+			1.5,
+			0,
+			1,
+			0.5
+		  ],
+		  "texture": "#particle"
+		}
+	  }
+	},
+	{
+	  "name": "speatheadEdgeLeft",
+	  "from": [
+		6.85,
+		21.55,
+		9.15
+	  ],
+	  "to": [
+		7.55,
+		24.25,
+		9.85
+	  ],
+	  "rotation": {
+		"angle": -22.5,
+		"axis": "z",
+		"origin": [
+		  7,
+		  24,
+		  9.5
+		]
+	  },
+	  "faces": {
+		"north": {
+		  "uv": [
+			3,
+			0.5,
+			3.5,
+			2
+		  ],
+		  "texture": "#particle"
+		},
+		"east": {
+		  "uv": [
+			2.5,
+			0.5,
+			3,
+			2
+		  ],
+		  "texture": "#particle"
+		},
+		"south": {
+		  "uv": [
+			4,
+			0.5,
+			4.5,
+			2
+		  ],
+		  "texture": "#particle"
+		},
+		"west": {
+		  "uv": [
+			3.5,
+			0.5,
+			4,
+			2
+		  ],
+		  "texture": "#particle"
+		},
+		"up": {
+		  "uv": [
+			3.5,
+			0.5,
+			3,
+			0
+		  ],
+		  "texture": "#particle"
+		},
+		"down": {
+		  "uv": [
+			4,
+			0,
+			3.5,
+			0.5
+		  ],
+		  "texture": "#particle"
+		}
+	  }
+	},
+	{
+	  "name": "spearTip",
+	  "from": [
+		7.1,
+		23.85,
+		9.1
+	  ],
+	  "to": [
+		7.9,
+		24.65,
+		9.9
+	  ],
+	  "rotation": {
+		"angle": 45,
+		"axis": "z",
+		"origin": [
+		  7.5,
+		  24.25,
+		  9.5
+		]
+	  },
+	  "faces": {
+		"north": {
+		  "uv": [
+			3,
+			3,
+			3.5,
+			3.5
+		  ],
+		  "texture": "#particle"
+		},
+		"east": {
+		  "uv": [
+			2.5,
+			3,
+			3,
+			3.5
+		  ],
+		  "texture": "#particle"
+		},
+		"south": {
+		  "uv": [
+			4,
+			3,
+			4.5,
+			3.5
+		  ],
+		  "texture": "#particle"
+		},
+		"west": {
+		  "uv": [
+			3.5,
+			3,
+			4,
+			3.5
+		  ],
+		  "texture": "#particle"
+		},
+		"up": {
+		  "uv": [
+			3.5,
+			3,
+			3,
+			2.5
+		  ],
+		  "texture": "#particle"
+		},
+		"down": {
+		  "uv": [
+			4,
+			2.5,
+			3.5,
+			3
+		  ],
+		  "texture": "#particle"
+		}
+	  }
+	},
+	{
+	  "name": "thread00",
+	  "from": [
+		7.5,
+		-3,
+		6
+	  ],
+	  "to": [
+		7.5,
+		3,
+		9
+	  ],
+	  "rotation": {
+		"angle": 0,
+		"axis": "z",
+		"origin": [
+		  8,
+		  7,
+		  8
+		]
+	  },
+	  "faces": {
+		"north": {
+		  "uv": [
+			4,
+			10,
+			4,
+			13
+		  ],
+		  "texture": "#particle"
+		},
+		"east": {
+		  "uv": [
+			2.5,
+			10,
+			4,
+			13
+		  ],
+		  "texture": "#particle"
+		},
+		"south": {
+		  "uv": [
+			5.5,
+			10,
+			5.5,
+			13
+		  ],
+		  "texture": "#particle"
+		},
+		"west": {
+		  "uv": [
+			4,
+			10,
+			5.5,
+			13
+		  ],
+		  "texture": "#particle"
+		},
+		"up": {
+		  "uv": [
+			4,
+			10,
+			4,
+			8.5
+		  ],
+		  "texture": "#particle"
+		},
+		"down": {
+		  "uv": [
+			4,
+			8.5,
+			4,
+			10
+		  ],
+		  "texture": "#particle"
+		}
+	  }
+	}
   ],
   "display": {
-    "ground": {
-      "translation": [
-        0,
-        0.75,
-        0
-      ],
-      "scale": [
-        0.2,
-        0.2,
-        0.2
-      ]
-    },
-    "gui": {
-      "rotation": [
-        0,
-        0,
-       -45
-      ],
-      "scale": [
-        0.6,
-        0.6,
-        0.6
-      ]
-    },
-    "fixed": {
-      "rotation": [
-        0,
-        0,
-        45
-      ],
-      "translation": [
-        0,
-        0,
-        -2
-      ],
-      "scale": [
-        0.7,
-        0.7,
-        0.7
-      ]
-    }
+	"ground": {
+	  "translation": [
+		0,
+		2.75,
+		-0.3
+	  ],
+	  "scale": [
+		0.2,
+		0.2,
+		0.2
+	  ]
+	},
+	"gui": {
+	  "rotation": [
+		0,
+		0,
+		-45
+	  ],
+	  "scale": [
+		0.6,
+		0.6,
+		0.6
+	  ]
+	},
+	"fixed": {
+	  "rotation": [
+		0,
+		0,
+		45
+	  ],
+	  "translation": [
+		0,
+		0,
+		-2
+	  ],
+	  "scale": [
+		0.7,
+		0.7,
+		0.7
+	  ]
+	}
   }
 }

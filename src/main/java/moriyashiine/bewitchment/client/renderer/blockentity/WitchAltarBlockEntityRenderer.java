@@ -16,7 +16,6 @@ import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
@@ -30,8 +29,7 @@ public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAlta
 	public void render(WitchAltarBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 		World world = entity.getWorld();
 		if (world != null) {
-			BlockPos pos = entity.getPos();
-			Direction direction = world.getBlockState(pos).get(Properties.HORIZONTAL_FACING);
+			Direction direction = entity.getCachedState().get(Properties.HORIZONTAL_FACING);
 			float rotation = -direction.asRotation();
 			ItemStack sword = entity.getStack(0);
 			if (!sword.isEmpty()) {
