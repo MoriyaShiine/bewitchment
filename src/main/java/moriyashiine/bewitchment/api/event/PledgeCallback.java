@@ -7,6 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Called in GrotesqueStewItem when pledging to a demon
+ */
 public interface PledgeCallback {
     Event<PledgeCallback> EVENT = EventFactory.createArrayBacked(PledgeCallback.class,
             (listeners) -> (user, target, stack) -> {

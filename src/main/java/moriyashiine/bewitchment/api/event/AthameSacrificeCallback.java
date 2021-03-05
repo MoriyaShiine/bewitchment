@@ -5,7 +5,9 @@ import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-
+/**
+ * Fired whenever an Athame kills an Entity
+ */
 public interface AthameSacrificeCallback {
     Event<AthameSacrificeCallback> EVENT = EventFactory.createArrayBacked(AthameSacrificeCallback.class,
             (listeners) -> (stack, target, attacker) -> {

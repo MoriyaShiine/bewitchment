@@ -8,6 +8,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResult;
 
+/**
+ * Fired when the player assumes a new form (e.g. through transformations)
+ */
 @Environment(EnvType.CLIENT)
 public interface PlayerRerenderCallback {
     Event<PlayerRerenderCallback> EVENT = EventFactory.createArrayBacked(PlayerRerenderCallback.class,

@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.common.block;
 
 import moriyashiine.bewitchment.api.block.WitchAltarBlock;
+import moriyashiine.bewitchment.api.event.CauldronBrewingCallback;
 import moriyashiine.bewitchment.api.interfaces.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
@@ -140,7 +141,10 @@ public class WitchCauldronBlock extends CauldronBlock implements BlockEntityProv
 									}
 								}
 								if (bottle != null) {
-									BWUtil.addItemToInventoryAndConsume(player, hand, bottle);
+									ItemStack result = CauldronBrewingCallback.EVENT.invoker().brew(player, cauldron, bottle);
+									if (!result.isEmpty()) {
+										BWUtil.addItemToInventoryAndConsume(player, hand, result);
+									}
 								}
 							}
 							else if (waterBottle) {

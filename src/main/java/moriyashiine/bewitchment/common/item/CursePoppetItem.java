@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.item;
 
+import moriyashiine.bewitchment.api.event.CurseCallback;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.registry.Curse;
@@ -45,6 +46,7 @@ public class CursePoppetItem extends PoppetItem {
 					Entity entity = serverWorld.getEntity(uuid);
 					if (entity instanceof CurseAccessor) {
 						Curse curse = BWRegistries.CURSES.get(new Identifier(stack.getOrCreateTag().getString("Curse")));
+						CurseCallback.EVENT.invoker().curse(user, entity, curse, stack);
 						if (curse != null) {
 							((CurseAccessor) entity).addCurse(new Curse.Instance(curse, 168000));
 							world.playSound(null, user.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, SoundCategory.PLAYERS, 1, 1);
