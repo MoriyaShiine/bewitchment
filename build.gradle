@@ -28,6 +28,10 @@ repositories {
         url = "https://maven.jamieswhiteshirt.com/libs-release"
     }
     maven {
+        name = "pal"
+        url = "https://dl.bintray.com/ladysnake/libs"
+    }
+    maven {
         name = "somnus"
         url = "https://maven.theillusivec4.top"
     }
@@ -58,6 +62,8 @@ dependencies {
     include "com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraform_wood_api_version}"
     modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${project.reach_version}"
     include "com.jamieswhiteshirt:reach-entity-attributes:${project.reach_version}"
+    modImplementation "io.github.ladysnake:PlayerAbilityLib:${pal_version}"
+    include "io.github.ladysnake:PlayerAbilityLib:${pal_version}"
 
     modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")

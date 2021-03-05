@@ -1,5 +1,8 @@
 package moriyashiine.bewitchment.common.network.packet;
 
+import io.github.ladysnake.pal.AbilitySource;
+import io.github.ladysnake.pal.Pal;
+import io.github.ladysnake.pal.VanillaAbilities;
 import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
@@ -29,6 +32,8 @@ import virtuoel.pehkui.api.ScaleType;
 @SuppressWarnings("ConstantConditions")
 public class TransformationAbilityPacket {
 	public static final Identifier ID = new Identifier(Bewitchment.MODID, "transformation_ability");
+	
+	public static final AbilitySource VAMPIRE_FLIGHT_SOURCE = Pal.getAbilitySource(new Identifier(Bewitchment.MODID, "vampire_flight"));
 	
 	private static final float VAMPIRE_WIDTH = EntityType.BAT.getWidth() / EntityType.PLAYER.getWidth();
 	private static final float VAMPIRE_HEIGHT = EntityType.BAT.getHeight() / EntityType.PLAYER.getHeight();
@@ -71,12 +76,14 @@ public class TransformationAbilityPacket {
 			if (isInAlternateForm) {
 				width.setScale(width.getScale() / VAMPIRE_WIDTH);
 				height.setScale(height.getScale() / VAMPIRE_HEIGHT);
-				player.abilities.flying = false;
-				player.sendAbilitiesUpdate();
+				VAMPIRE_FLIGHT_SOURCE.revokeFrom(player, VanillaAbilities.ALLOW_FLYING);
+				VAMPIRE_FLIGHT_SOURCE.revokeFrom(player, VanillaAbilities.FLYING);
 			}
 			else {
 				width.setScale(width.getScale() * VAMPIRE_WIDTH);
 				height.setScale(height.getScale() * VAMPIRE_HEIGHT);
+				VAMPIRE_FLIGHT_SOURCE.grantTo(player, VanillaAbilities.ALLOW_FLYING);
+				VAMPIRE_FLIGHT_SOURCE.grantTo(player, VanillaAbilities.FLYING);
 			}
 		}
 		else if (((TransformationAccessor) player).getTransformation() == BWTransformations.WEREWOLF && (forced || BewitchmentAPI.isPledged(world, BWPledges.HERNE, player.getUuid()))) {

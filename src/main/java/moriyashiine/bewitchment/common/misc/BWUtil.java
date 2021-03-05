@@ -176,10 +176,6 @@ public class BWUtil {
 			}
 		}
 		if (alternateForm) {
-			if (!player.abilities.flying) {
-				player.abilities.flying = true;
-				player.sendAbilitiesUpdate();
-			}
 			hungerManager.addExhaustion(0.5f);
 			if (!pledgedToLilith) {
 				TransformationAbilityPacket.useAbility(player, true);
