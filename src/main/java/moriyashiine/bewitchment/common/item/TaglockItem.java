@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.common.item;
 
+import moriyashiine.bewitchment.api.event.CollectTaglockCallback;
 import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.interfaces.Lockable;
@@ -208,7 +209,7 @@ public class TaglockItem extends Item {
 	public static ActionResult useTaglock(PlayerEntity user, LivingEntity entity, Hand hand, boolean checkVisibility, boolean bed) {
 		ItemStack stack = user.getStackInHand(hand);
 		if (entity.isAlive() && !BWTags.UNTAGLOCKABLE.contains(entity.getType()) && !hasTaglock(stack)) {
-			boolean failed = false;
+			boolean failed = CollectTaglockCallback.EVENT.invoker().collect(user, entity, checkVisibility, bed, stack) != ActionResult.FAIL;
 			BlockPos sigilPos = BWUtil.getClosestBlockPos(entity.getBlockPos(), 16, currentPos -> user.world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) user.world.getBlockEntity(currentPos)).getSigil() == BWSigils.SLIPPERY);
 			if (sigilPos == null && bed) {
 				sigilPos = BWUtil.getClosestBlockPos(user.getBlockPos(), 16, currentPos -> user.world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) user.world.getBlockEntity(currentPos)).getSigil() == BWSigils.SLIPPERY);
