@@ -1,9 +1,11 @@
 package moriyashiine.bewitchment.common.item;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.minecraft.client.item.TooltipContext;
@@ -24,6 +26,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.UUID;
 
+@SuppressWarnings("ConstantConditions")
 public class CursePoppetItem extends PoppetItem {
 	public CursePoppetItem(Settings settings, boolean worksInShelf) {
 		super(settings, worksInShelf);
@@ -44,9 +47,19 @@ public class CursePoppetItem extends PoppetItem {
 				for (ServerWorld serverWorld : server.getWorlds()) {
 					Entity entity = serverWorld.getEntity(uuid);
 					if (entity instanceof CurseAccessor) {
+						boolean failed = false;
 						Curse curse = BWRegistries.CURSES.get(new Identifier(stack.getOrCreateTag().getString("Curse")));
+						ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, entity, null);
+						if (!poppet.isEmpty() && poppet.hasTag() && !poppet.getTag().getBoolean("Cursed")) {
+							poppet.getTag().putString("Curse", BWRegistries.CURSES.getId(curse).toString());
+							poppet.getTag().putBoolean("Cursed", true);
+							TaglockItem.removeTaglock(poppet);
+							failed = true;
+						}
 						if (curse != null) {
-							((CurseAccessor) entity).addCurse(new Curse.Instance(curse, 168000));
+							if (!failed) {
+								((CurseAccessor) entity).addCurse(new Curse.Instance(curse, 168000));
+							}
 							world.playSound(null, user.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, SoundCategory.PLAYERS, 1, 1);
 							if (!(user instanceof PlayerEntity && ((PlayerEntity) user).isCreative())) {
 								stack.decrement(1);
