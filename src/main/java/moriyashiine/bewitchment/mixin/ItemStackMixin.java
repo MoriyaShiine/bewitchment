@@ -1,11 +1,10 @@
 package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.registry.BWObjects;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -68,10 +67,7 @@ public abstract class ItemStackMixin {
 	private <T extends LivingEntity> void damage(int amount, T entity, Consumer<T> breakCallback, CallbackInfo callbackInfo) {
 		if (getDamage() == getMaxDamage()) {
 			ItemStack poppet = BewitchmentAPI.getPoppet(entity.world, BWObjects.MENDING_POPPET, entity, null);
-			if (!poppet.isEmpty()) {
-				if (poppet.damage(entity instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) entity) == EntityType.WOLF && entity.getRandom().nextBoolean() ? 0 : 1, entity.getRandom(), null) && poppet.getDamage() == poppet.getMaxDamage()) {
-					poppet.decrement(1);
-				}
+			if (!poppet.isEmpty() && PoppetItem.usePoppet(entity, poppet)) {
 				setDamage(0);
 				callbackInfo.cancel();
 			}

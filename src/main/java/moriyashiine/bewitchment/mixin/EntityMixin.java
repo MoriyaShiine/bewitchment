@@ -2,6 +2,7 @@ package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
+import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.common.entity.interfaces.InsanityTargetAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.MasterAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.WetAccessor;
@@ -9,7 +10,6 @@ import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPose;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -124,15 +124,9 @@ public abstract class EntityMixin implements WetAccessor {
 				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_POPPET, null, (PlayerEntity) (Object) this);
 				if (!poppet.isEmpty()) {
 					LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
-					if (!owner.getUuid().equals(getUuid()) && !owner.isOnFire()) {
-						if (poppet.damage(BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
-							poppet.decrement(1);
-						}
+					if (!owner.getUuid().equals(getUuid()) && !owner.isOnFire() && PoppetItem.usePoppet((PlayerEntity) (Object) this, poppet)) {
 						ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
-						if (!potentialPoppet.isEmpty()) {
-							if (potentialPoppet.damage(owner instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) owner) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
-								potentialPoppet.decrement(1);
-							}
+						if (!potentialPoppet.isEmpty() && PoppetItem.usePoppet(owner, poppet)) {
 							return;
 						}
 						owner.setOnFireFor(seconds);

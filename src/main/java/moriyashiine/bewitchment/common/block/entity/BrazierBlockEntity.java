@@ -6,6 +6,7 @@ import moriyashiine.bewitchment.api.event.CurseCallback;
 import moriyashiine.bewitchment.api.interfaces.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
+import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.client.network.packet.SyncBrazierBlockEntity;
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.Bewitchment;
@@ -146,7 +147,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 									}
 									if (target instanceof CurseAccessor) {
 										ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, target, null);
-										if (!poppet.isEmpty() && poppet.hasTag() && !poppet.getTag().getBoolean("Cursed")) {
+										if (!poppet.isEmpty() && PoppetItem.usePoppet(closestPlayer, poppet) && poppet.hasTag() && !poppet.getTag().getBoolean("Cursed")) {
 											poppet.getTag().putString("Curse", BWRegistries.CURSES.getId(curseRecipe.curse).toString());
 											poppet.getTag().putBoolean("Cursed", true);
 											TaglockItem.removeTaglock(poppet);

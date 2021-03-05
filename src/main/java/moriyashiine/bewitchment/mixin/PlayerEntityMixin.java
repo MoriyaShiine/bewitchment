@@ -6,6 +6,7 @@ import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.FortuneAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
+import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.api.registry.Transformation;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
@@ -325,15 +326,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	private void dropItem(ItemStack stack, boolean throwRandomly, boolean retainOwnership, CallbackInfoReturnable<ItemEntity> callbackInfo) {
 		if (!world.isClient && stack.getItem() == BWObjects.VOODOO_POPPET) {
 			LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, stack);
-			if (owner != null) {
-				if (stack.damage(BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && stack.getDamage() >= stack.getMaxDamage()) {
-					stack.decrement(1);
-				}
+			if (owner != null && PoppetItem.usePoppet((PlayerEntity) (Object) this, stack)) {
 				ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
-				if (!potentialPoppet.isEmpty()) {
-					if (potentialPoppet.damage(owner instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) owner) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
-						potentialPoppet.decrement(1);
-					}
+				if (!potentialPoppet.isEmpty() && PoppetItem.usePoppet(owner, potentialPoppet)) {
 					return;
 				}
 				owner.addVelocity(getRotationVector().x, getRotationVector().y, getRotationVector().z);
