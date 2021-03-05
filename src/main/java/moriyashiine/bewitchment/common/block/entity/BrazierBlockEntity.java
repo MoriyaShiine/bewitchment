@@ -11,7 +11,7 @@ import moriyashiine.bewitchment.client.network.packet.SyncBrazierBlockEntity;
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.item.TaglockItem;
-import moriyashiine.bewitchment.common.recipe.Curse;
+import moriyashiine.bewitchment.common.recipe.CurseRecipe;
 import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
@@ -54,7 +54,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 	private BlockPos altarPos = null;
 	
 	public IncenseRecipe incenseRecipe = null;
-	public Curse curseRecipe = null;
+	public CurseRecipe curseRecipe = null;
 	private int timer = 0;
 	
 	private boolean loaded = false, hasIncense;
@@ -280,7 +280,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 						syncBrazier();
 					}
 					else {
-						Curse foundCurseRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CURSE_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
+						CurseRecipe foundCurseRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CURSE_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
 						if (foundCurseRecipe != null && getTarget() != null) {
 							curseRecipe = foundCurseRecipe;
 							timer = -100;

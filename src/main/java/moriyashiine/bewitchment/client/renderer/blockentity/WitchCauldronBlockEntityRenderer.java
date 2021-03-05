@@ -47,7 +47,7 @@ public class WitchCauldronBlockEntityRenderer extends BlockEntityRenderer<WitchC
 		if (world != null) {
 			BlockPos pos = entity.getPos();
 			renderName(entity, pos, matrices, vertexConsumers, light);
-			int level = world.getBlockState(pos).get(WitchCauldronBlock.LEVEL);
+			int level = entity.getCachedState().get(WitchCauldronBlock.LEVEL);
 			if (RenderCauldronCallback.EVENT.invoker().render(entity, tickDelta, matrices, vertexConsumers, light, overlay, level) == ActionResult.FAIL){
 				return;
 			}

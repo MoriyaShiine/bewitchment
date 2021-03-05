@@ -34,8 +34,8 @@ public class BWRecipeTypes {
 	public static final RecipeSerializer<IncenseRecipe> INCENSE_RECIPE_SERIALIZER = create("incense_recipe", new IncenseRecipe.Serializer());
 	public static final RecipeType<IncenseRecipe> INCENSE_RECIPE_TYPE = create("incense_recipe");
 	
-	public static final RecipeSerializer<Curse> CURSE_RECIPE_SERIALIZER = create("curse_recipe", new Curse.Serializer());
-	public static final RecipeType<Curse> CURSE_RECIPE_TYPE = create("curse_recipe");
+	public static final RecipeSerializer<CurseRecipe> CURSE_RECIPE_SERIALIZER = create("curse_recipe", new CurseRecipe.Serializer());
+	public static final RecipeType<CurseRecipe> CURSE_RECIPE_TYPE = create("curse_recipe");
 	
 	public static final RecipeSerializer<TaglockCraftingRecipe> TAGLOCK_CRAFTING_SERIALIZER = create("taglock_crafting", new SpecialRecipeSerializer<>(TaglockCraftingRecipe::new));
 	public static final RecipeSerializer<ScepterCraftingRecipe> SCEPTER_CRAFTING_SERIALIZER = create("scepter_crafting", new SpecialRecipeSerializer<>(ScepterCraftingRecipe::new));

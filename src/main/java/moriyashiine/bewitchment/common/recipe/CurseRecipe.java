@@ -2,6 +2,7 @@ package moriyashiine.bewitchment.common.recipe;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
@@ -17,60 +18,60 @@ import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
-public class Curse implements Recipe<Inventory> {
+public class CurseRecipe implements Recipe<Inventory> {
 	private final Identifier identifier;
 	public final DefaultedList<Ingredient> input;
-	public final moriyashiine.bewitchment.api.registry.Curse curse;
+	public final Curse curse;
 	public final int cost;
-	
-	public Curse(Identifier identifier, DefaultedList<Ingredient> input, moriyashiine.bewitchment.api.registry.Curse curse, int cost) {
+
+	public CurseRecipe(Identifier identifier, DefaultedList<Ingredient> input, Curse curse, int cost) {
 		this.identifier = identifier;
 		this.input = input;
 		this.curse = curse;
 		this.cost = cost;
 	}
-	
+
 	@Override
 	public boolean matches(Inventory inv, World world) {
 		return RitualRecipe.matches(inv, input);
 	}
-	
+
 	@Override
 	public ItemStack craft(Inventory inv) {
 		return ItemStack.EMPTY;
 	}
-	
+
 	@Override
 	public boolean fits(int width, int height) {
 		return true;
 	}
-	
+
 	@Override
 	public ItemStack getOutput() {
 		return ItemStack.EMPTY;
 	}
-	
+
 	@Override
 	public Identifier getId() {
 		return identifier;
 	}
-	
+
 	@Override
 	public RecipeSerializer<?> getSerializer() {
 		return BWRecipeTypes.CURSE_RECIPE_SERIALIZER;
 	}
-	
+
 	@Override
 	public RecipeType<?> getType() {
 		return BWRecipeTypes.CURSE_RECIPE_TYPE;
 	}
-	
+
 	@SuppressWarnings("ConstantConditions")
-	public static class Serializer implements RecipeSerializer<Curse> {
+	public static class Serializer implements RecipeSerializer<CurseRecipe> {
 		private static final ItemStack TAGLOCK = new ItemStack(BWObjects.TAGLOCK);
-		
+
 		@Override
-		public Curse read(Identifier id, JsonObject json) {
+		public CurseRecipe read(Identifier id, JsonObject json) {
 			DefaultedList<Ingredient> ingredients = RitualRecipe.Serializer.getIngredients(JsonHelper.getArray(json, "ingredients"));
 			if (ingredients.isEmpty()) {
 				throw new JsonParseException("No ingredients for curse recipe");
@@ -88,20 +89,20 @@ public class Curse implements Recipe<Inventory> {
 			if (!foundTaglock) {
 				throw new JsonParseException("Taglock not found in curse recipe");
 			}
-			return new Curse(id, ingredients, BWRegistries.CURSES.get(new Identifier(JsonHelper.getString(json, "curse"))), JsonHelper.getInt(json, "cost"));
+			return new CurseRecipe(id, ingredients, BWRegistries.CURSES.get(new Identifier(JsonHelper.getString(json, "curse"))), JsonHelper.getInt(json, "cost"));
 		}
-		
+
 		@Override
-		public Curse read(Identifier id, PacketByteBuf buf) {
+		public CurseRecipe read(Identifier id, PacketByteBuf buf) {
 			DefaultedList<Ingredient> defaultedList = DefaultedList.ofSize(buf.readVarInt(), Ingredient.EMPTY);
 			for (int i = 0; i < defaultedList.size(); i++) {
 				defaultedList.set(i, Ingredient.fromPacket(buf));
 			}
-			return new Curse(id, defaultedList, BWRegistries.CURSES.get(new Identifier(buf.readString())), buf.readInt());
+			return new CurseRecipe(id, defaultedList, BWRegistries.CURSES.get(new Identifier(buf.readString())), buf.readInt());
 		}
-		
+
 		@Override
-		public void write(PacketByteBuf buf, Curse recipe) {
+		public void write(PacketByteBuf buf, CurseRecipe recipe) {
 			buf.writeVarInt(recipe.input.size());
 			for (Ingredient ingredient : recipe.input) {
 				ingredient.write(buf);
