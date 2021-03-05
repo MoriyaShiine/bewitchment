@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.common.item;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+import moriyashiine.bewitchment.api.event.AthameSacrificeCallback;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.dragonsblood.DragonsBloodLogBlock;
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
@@ -143,6 +144,9 @@ public class AthameItem extends SwordItem {
 				BlockPos glyph = BWUtil.getClosestBlockPos(pos, 6, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity);
 				if (glyph != null) {
 					((GlyphBlockEntity) world.getBlockEntity(glyph)).onUse(world, glyph, (PlayerEntity) attacker, Hand.MAIN_HAND, target);
+				}
+				if(AthameSacrificeCallback.EVENT.invoker().sacrifice(stack, target, attacker) == ActionResult.FAIL){
+					return super.postHit(stack, target, attacker);
 				}
 				if (world.isNight()) {
 					boolean chicken = target instanceof ChickenEntity;
