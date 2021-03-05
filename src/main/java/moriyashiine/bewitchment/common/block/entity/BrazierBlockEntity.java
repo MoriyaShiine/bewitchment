@@ -2,15 +2,15 @@ package moriyashiine.bewitchment.common.block.entity;
 
 import dev.emi.trinkets.api.TrinketsApi;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.event.CurseCallback;
 import moriyashiine.bewitchment.api.interfaces.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
-import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.client.network.packet.SyncBrazierBlockEntity;
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.item.TaglockItem;
-import moriyashiine.bewitchment.common.recipe.CurseRecipe;
+import moriyashiine.bewitchment.common.recipe.Curse;
 import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
@@ -35,6 +35,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.Tickable;
@@ -52,7 +53,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 	private BlockPos altarPos = null;
 	
 	public IncenseRecipe incenseRecipe = null;
-	public CurseRecipe curseRecipe = null;
+	public Curse curseRecipe = null;
 	private int timer = 0;
 	
 	private boolean loaded = false, hasIncense;
@@ -134,34 +135,34 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 						if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain(curseRecipe.cost, false)) {
 							if (closestPlayer != null) {
 								Entity target = getTarget();
-								if (target instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) target) == BWEntityTypes.RAVEN && world.random.nextBoolean()) {
-									target = closestPlayer;
-								}
-								else if (target instanceof ContractAccessor && ((ContractAccessor) target).hasContract(BWContracts.HERESY)) {
-									if (((ContractAccessor) target).hasNegativeEffects()) {
-										((LivingEntity) target).addStatusEffect(new StatusEffectInstance(BWStatusEffects.MORTAL_COIL, 12000));
-									}
-									target = closestPlayer;
-								}
-								if (target instanceof CurseAccessor) {
-									ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, target, null);
-									if (!poppet.isEmpty() && poppet.hasTag() && !poppet.getTag().getBoolean("Cursed")) {
-										poppet.getTag().putString("Curse", BWRegistries.CURSES.getId(curseRecipe.curse).toString());
-										poppet.getTag().putBoolean("Cursed", true);
-										TaglockItem.removeTaglock(poppet);
-									}
-									else {
-										int duration = 168000;
-										if (BewitchmentAPI.getFamiliar(closestPlayer) == BWEntityTypes.RAVEN) {
-											duration *= 2;
+								if (CurseCallback.EVENT.invoker().curse(closestPlayer, target, curseRecipe.curse, this) != ActionResult.FAIL){
+									if (target instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) target) == BWEntityTypes.RAVEN && world.random.nextBoolean()) {
+										target = closestPlayer;
+									} else if (target instanceof ContractAccessor && ((ContractAccessor) target).hasContract(BWContracts.HERESY)) {
+										if (((ContractAccessor) target).hasNegativeEffects()) {
+											((LivingEntity) target).addStatusEffect(new StatusEffectInstance(BWStatusEffects.MORTAL_COIL, 12000));
 										}
-										if (target instanceof PlayerEntity && TrinketsApi.getTrinketsInventory((PlayerEntity) target).containsAny(Collections.singleton(BWObjects.NAZAR)) && BewitchmentAPI.usePlayerMagic((PlayerEntity) target, 50, false)) {
-											duration /= 2;
-										}
-										((CurseAccessor) target).addCurse(new Curse.Instance(curseRecipe.curse, duration));
+										target = closestPlayer;
 									}
-									world.playSound(null, pos, BWSoundEvents.ENTITY_GENERIC_CURSE, SoundCategory.BLOCKS, 1, 1);
-									clear = true;
+									if (target instanceof CurseAccessor) {
+										ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, target, null);
+										if (!poppet.isEmpty() && poppet.hasTag() && !poppet.getTag().getBoolean("Cursed")) {
+											poppet.getTag().putString("Curse", BWRegistries.CURSES.getId(curseRecipe.curse).toString());
+											poppet.getTag().putBoolean("Cursed", true);
+											TaglockItem.removeTaglock(poppet);
+										} else {
+											int duration = 168000;
+											if (BewitchmentAPI.getFamiliar(closestPlayer) == BWEntityTypes.RAVEN) {
+												duration *= 2;
+											}
+											if (target instanceof PlayerEntity && TrinketsApi.getTrinketsInventory((PlayerEntity) target).containsAny(Collections.singleton(BWObjects.NAZAR)) && BewitchmentAPI.usePlayerMagic((PlayerEntity) target, 50, false)) {
+												duration /= 2;
+											}
+											((CurseAccessor) target).addCurse(new moriyashiine.bewitchment.api.registry.Curse.Instance(curseRecipe.curse, duration));
+										}
+										world.playSound(null, pos, BWSoundEvents.ENTITY_GENERIC_CURSE, SoundCategory.BLOCKS, 1, 1);
+										clear = true;
+									}
 								}
 							}
 							else {
@@ -278,7 +279,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 						syncBrazier();
 					}
 					else {
-						CurseRecipe foundCurseRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CURSE_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
+						Curse foundCurseRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CURSE_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
 						if (foundCurseRecipe != null && getTarget() != null) {
 							curseRecipe = foundCurseRecipe;
 							timer = -100;

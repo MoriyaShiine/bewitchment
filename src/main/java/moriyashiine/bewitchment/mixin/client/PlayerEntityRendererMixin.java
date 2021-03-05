@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.mixin.client;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.client.event.PlayerRerenderCallback;
 import moriyashiine.bewitchment.api.entity.BroomEntity;
 import moriyashiine.bewitchment.client.renderer.ContributorHornsFeatureRenderer;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
@@ -21,6 +22,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.BatEntity;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -68,6 +70,9 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 			entity.getDataTracker().set(BWHostileEntity.VARIANT, ((WerewolfAccessor) player).getWerewolfVariant());
 		}
 		if (entity != null) {
+			if (PlayerRerenderCallback.EVENT.invoker().rerender(player, entity) == ActionResult.FAIL){
+				return;
+			}
 			entity.age = player.age;
 			entity.hurtTime = player.hurtTime;
 			entity.maxHurtTime = Integer.MAX_VALUE;

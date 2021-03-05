@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.client.renderer.blockentity;
 
+import moriyashiine.bewitchment.api.client.event.RenderCauldronCallback;
 import moriyashiine.bewitchment.common.block.WitchCauldronBlock;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWParticleTypes;
@@ -19,6 +20,7 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Matrix4f;
@@ -46,6 +48,9 @@ public class WitchCauldronBlockEntityRenderer extends BlockEntityRenderer<WitchC
 			BlockPos pos = entity.getPos();
 			renderName(entity, pos, matrices, vertexConsumers, light);
 			int level = world.getBlockState(pos).get(WitchCauldronBlock.LEVEL);
+			if (RenderCauldronCallback.EVENT.invoker().render(entity, tickDelta, matrices, vertexConsumers, light, overlay, level) == ActionResult.FAIL){
+				return;
+			}
 			if (level > 0) {
 				matrices.push();
 				matrices.translate(0, HEIGHT[level], 0);

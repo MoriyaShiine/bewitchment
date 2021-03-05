@@ -8,7 +8,7 @@ import me.shedaniel.rei.api.RecipeDisplay;
 import me.shedaniel.rei.api.widgets.Widgets;
 import me.shedaniel.rei.gui.widget.Widget;
 import moriyashiine.bewitchment.common.Bewitchment;
-import moriyashiine.bewitchment.common.recipe.CurseRecipe;
+import moriyashiine.bewitchment.common.recipe.Curse;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import net.fabricmc.api.EnvType;
@@ -77,7 +77,7 @@ public class CurseCategory implements RecipeCategory<CurseCategory.Display> {
 		private final List<List<EntryStack>> input;
 		private final List<List<EntryStack>> output;
 		
-		public Display(CurseRecipe recipe) {
+		public Display(Curse recipe) {
 			List<List<EntryStack>> input = new ArrayList<>();
 			for (Ingredient ingredient : recipe.input) {
 				List<EntryStack> entries = new ArrayList<>();
