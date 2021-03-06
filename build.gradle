@@ -32,10 +32,6 @@ repositories {
         url = "https://dl.bintray.com/ladysnake/libs"
     }
     maven {
-        name = "somnus"
-        url = "https://maven.theillusivec4.top"
-    }
-    maven {
         name = "cardinal"
         url = "https://maven.abusedmaster.xyz/"
     }
