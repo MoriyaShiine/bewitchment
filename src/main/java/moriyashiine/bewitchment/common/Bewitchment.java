@@ -6,6 +6,7 @@ import dev.emi.trinkets.api.TrinketSlots;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
@@ -19,14 +20,22 @@ import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.util.TriState;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import top.theillusivec4.somnus.api.PlayerSleepEvents;
@@ -53,6 +62,28 @@ public class Bewitchment implements ModInitializer {
 		ServerPlayNetworking.registerGlobalReceiver(TransformationAbilityPacket.ID, TransformationAbilityPacket::handle);
 		ServerPlayNetworking.registerGlobalReceiver(TogglePressingForwardPacket.ID, TogglePressingForwardPacket::handle);
 		CommandRegistrationCallback.EVENT.register(BWCommands::init);
+		ServerLifecycleEvents.SERVER_STARTED.register(server -> isNourishLoaded = FabricLoader.getInstance().isModLoaded("nourish"));
+		UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
+			if (entity instanceof LivingEntity && hand == Hand.MAIN_HAND && player.isSneaking() && entity.isAlive() && BewitchmentAPI.isVampire(player, true) && player.getStackInHand(hand).isEmpty()) {
+				int toGive = BWTags.HAS_BLOOD.contains(entity.getType()) ? 5 : entity instanceof AnimalEntity ? 1 : 0;
+				if (toGive > 0) {
+					BloodAccessor playerBlood = (BloodAccessor) player;
+					BloodAccessor entityBlood = (BloodAccessor) entity;
+					if (playerBlood.fillBlood(toGive, true) && entityBlood.drainBlood(10, true)) {
+						if (!world.isClient && ((LivingEntity) entity).hurtTime == 0) {
+							world.playSound(null, player.getBlockPos(), SoundEvents.ITEM_HONEY_BOTTLE_DRINK, player.getSoundCategory(), 1, 0.5f);
+							if (!((LivingEntity) entity).isSleeping() || entityBlood.getBlood() < entityBlood.MAX_BLOOD / 2) {
+								entity.damage(BWDamageSources.VAMPIRE, 2);
+							}
+							playerBlood.fillBlood(toGive, false);
+							entityBlood.drainBlood(10, false);
+						}
+						return ActionResult.success(world.isClient);
+					}
+				}
+			}
+			return ActionResult.PASS;
+		});
 		WorldSleepEvents.WORLD_WAKE_TIME.register((world, newTime, curTime) -> world.isDay() ? curTime + (13000 - (world.getTimeOfDay() % 24000)) : newTime);
 		PlayerSleepEvents.CAN_SLEEP_NOW.register((player, pos) -> {
 			if (player.world.getBlockState(pos).getBlock() instanceof CoffinBlock) {

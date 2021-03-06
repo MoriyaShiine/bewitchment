@@ -2,14 +2,16 @@ package moriyashiine.bewitchment.mixin;
 
 import io.github.ladysnake.impersonate.Impersonator;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.entity.*;
+import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.FortuneAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.api.registry.Transformation;
 import moriyashiine.bewitchment.common.entity.interfaces.*;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.*;
 import moriyashiine.bewitchment.common.statuseffect.PolymorphStatusEffect;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
@@ -19,16 +21,12 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -263,28 +261,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 	private void canFoodHeal(CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (BewitchmentAPI.isVampire(this, true)) {
 			callbackInfo.setReturnValue(false);
-		}
-	}
-	
-	@Inject(method = "interact", at = @At("HEAD"), cancellable = true)
-	private void interact(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> callbackInfo) {
-		if (entity instanceof LivingEntity && hand == Hand.MAIN_HAND && isSneaking() && entity.isAlive() && BewitchmentAPI.isVampire(this, true) && getStackInHand(hand).isEmpty()) {
-			int toGive = BWTags.HAS_BLOOD.contains(entity.getType()) ? 5 : entity instanceof AnimalEntity ? 1 : 0;
-			if (toGive > 0) {
-				BloodAccessor thisBlood = (BloodAccessor) this;
-				BloodAccessor entityBlood = (BloodAccessor) entity;
-				if (thisBlood.fillBlood(toGive, true) && entityBlood.drainBlood(10, true)) {
-					if (!world.isClient && ((LivingEntity) entity).hurtTime == 0) {
-						world.playSound(null, getBlockPos(), SoundEvents.ITEM_HONEY_BOTTLE_DRINK, getSoundCategory(), getSoundVolume(), 0.5f);
-						if (!((LivingEntity) entity).isSleeping() || entityBlood.getBlood() < entityBlood.MAX_BLOOD / 2) {
-							entity.damage(BWDamageSources.VAMPIRE, 2);
-						}
-						thisBlood.fillBlood(toGive, false);
-						entityBlood.drainBlood(10, false);
-					}
-					callbackInfo.setReturnValue(ActionResult.success(world.isClient));
-				}
-			}
 		}
 	}
 	
