@@ -43,5 +43,8 @@
 	"impersonate": "*",
 	"patchouli": "*",
 	"trinkets": "*"
+  },
+  "breaks": {
+	"optifabric": "*"
   }
 }
