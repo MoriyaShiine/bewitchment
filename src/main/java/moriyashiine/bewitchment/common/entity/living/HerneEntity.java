@@ -149,7 +149,7 @@ public class HerneEntity extends BWHostileEntity implements Pledgeable {
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
 		if (isAlive() && getTarget() == null && BewitchmentAPI.isWerewolf(player, true)) {
 			ItemStack stack = player.getStackInHand(hand);
-			if (stack.getItem() == BWObjects.GARLIC) {
+			if (stack.getItem() == BWObjects.ACONITE) {
 				boolean client = world.isClient;
 				if (!client) {
 					if (!player.isCreative()) {
