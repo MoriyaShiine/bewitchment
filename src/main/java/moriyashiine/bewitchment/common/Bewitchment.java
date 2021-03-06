@@ -9,41 +9,57 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.*;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
+import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.TrueInvisibleAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
+import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.network.packet.CauldronTeleportPacket;
 import moriyashiine.bewitchment.common.network.packet.TogglePressingForwardPacket;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
+import moriyashiine.bewitchment.common.recipe.AthameDropRecipe;
 import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
 import moriyashiine.bewitchment.common.registry.*;
+import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.util.TriState;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityGroup;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.ChickenEntity;
+import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.item.Items;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.explosion.Explosion;
 import top.theillusivec4.somnus.api.PlayerSleepEvents;
 import top.theillusivec4.somnus.api.WorldSleepEvents;
 
@@ -84,6 +100,68 @@ public class Bewitchment implements ModInitializer {
 			((ContractAccessor) newPlayer).getContracts().addAll(((ContractAccessor) oldPlayer).getContracts());
 			((TransformationAccessor) newPlayer).setTransformation(((TransformationAccessor) oldPlayer).getTransformation());
 			((WerewolfAccessor) newPlayer).setWerewolfVariant(((WerewolfAccessor) oldPlayer).getWerewolfVariant());
+		});
+		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killedEntity) -> {
+			if (entity != null) {
+				if (entity instanceof PlayerEntity) {
+					PlayerEntity player = (PlayerEntity) entity;
+					if (killedEntity.getGroup() == EntityGroup.ARTHROPOD && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.TOAD) {
+						player.heal(player.getMaxHealth() * 1 / 4f);
+					}
+					if (player.getMainHandStack().getItem() instanceof AthameItem) {
+						BlockPos glyph = BWUtil.getClosestBlockPos(killedEntity.getBlockPos(), 6, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity);
+						if (glyph != null) {
+							((GlyphBlockEntity) world.getBlockEntity(glyph)).onUse(world, glyph, player, Hand.MAIN_HAND, killedEntity);
+						}
+						if (world.isNight()) {
+							boolean chicken = killedEntity instanceof ChickenEntity;
+							if ((chicken && world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.EXTREME_HILLS) || (killedEntity instanceof WolfEntity && (world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.FOREST || world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.TAIGA))) {
+								BlockPos brazierPos = BWUtil.getClosestBlockPos(killedEntity.getBlockPos(), 8, currentPos -> {
+									BlockEntity blockEntity = world.getBlockEntity(currentPos);
+									return blockEntity instanceof BrazierBlockEntity && ((BrazierBlockEntity) blockEntity).incenseRecipe.effect == BWStatusEffects.MORTAL_COIL;
+								});
+								if (brazierPos != null) {
+									world.breakBlock(brazierPos, false);
+									world.createExplosion(null, brazierPos.getX() + 0.5, brazierPos.getY() + 0.5, brazierPos.getZ() + 0.5, 3, Explosion.DestructionType.BREAK);
+									MobEntity boss = chicken ? BWEntityTypes.LILITH.create(world) : BWEntityTypes.HERNE.create(world);
+									if (boss != null) {
+										boss.initialize(world, world.getLocalDifficulty(brazierPos), SpawnReason.EVENT, null, null);
+										boss.updatePositionAndAngles(brazierPos.getX() + 0.5, brazierPos.getY(), brazierPos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
+										world.spawnEntity(boss);
+									}
+								}
+							}
+						}
+						for (AthameDropRecipe recipe : world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_DROP_RECIPE_TYPE)) {
+							if (recipe.entity_type.equals(killedEntity.getType()) && world.random.nextFloat() < recipe.chance * (EnchantmentHelper.getLooting((LivingEntity) entity) + 1)) {
+								ItemStack drop = recipe.getOutput().copy();
+								if (recipe.entity_type == EntityType.PLAYER) {
+									drop.getOrCreateTag().putString("SkullOwner", killedEntity.getName().getString());
+								}
+								ItemScatterer.spawn(world, killedEntity.getX() + 0.5, killedEntity.getY() + 0.5, killedEntity.getZ() + 0.5, drop);
+							}
+						}
+						if ((player).getOffHandStack().getItem() == Items.GLASS_BOTTLE && ((BloodAccessor) killedEntity).getBlood() > 20 && BWTags.HAS_BLOOD.contains(killedEntity.getType())) {
+							world.playSound(null, entity.getBlockPos(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1, 0.5f);
+							BWUtil.addItemToInventoryAndConsume(player, Hand.OFF_HAND, new ItemStack(BWObjects.BOTTLE_OF_BLOOD));
+						}
+					}
+				}
+				if (((ContractAccessor) entity).hasContract(BWContracts.VIOLENCE)) {
+					((LivingEntity) entity).heal(((LivingEntity) entity).getMaxHealth() * 1 / 4f);
+					if (((ContractAccessor) entity).hasNegativeEffects()) {
+						((LivingEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 600, 2));
+					}
+				}
+			}
+			BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
+			for (int i = worldState.familiars.size() - 1; i >= 0; i--) {
+				if (killedEntity.getUuid().equals(worldState.familiars.get(i).getRight().getUuid("UUID"))) {
+					worldState.familiars.remove(i);
+					worldState.markDirty();
+					break;
+				}
+			}
 		});
 		UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
 			if (entity instanceof LivingEntity && hand == Hand.MAIN_HAND && player.isSneaking() && entity.isAlive() && BewitchmentAPI.isVampire(player, true) && player.getStackInHand(hand).isEmpty()) {

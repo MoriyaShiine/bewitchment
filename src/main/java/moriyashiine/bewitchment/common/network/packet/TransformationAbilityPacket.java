@@ -24,7 +24,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import virtuoel.pehkui.api.ScaleData;
-import virtuoel.pehkui.api.ScaleType;
 
 @SuppressWarnings("ConstantConditions")
 public class TransformationAbilityPacket {
