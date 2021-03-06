@@ -99,17 +99,8 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 				if (getTarget() == null || !getTarget().getUuid().equals(uuid)) {
 					setTarget(entity);
 				}
-				if (age % 20 == 0) {
-					boolean remove = false;
-					if (random.nextFloat() < 1 / 100f) {
-						remove = true;
-					}
-					else if (entity instanceof CurseAccessor && !((CurseAccessor) entity).hasCurse(BWCurses.INSANITY)) {
-						remove = true;
-					}
-					if (remove) {
-						remove();
-					}
+				if (age % 20 == 0 && (random.nextFloat() < 1 / 100f || (entity instanceof CurseAccessor && !((CurseAccessor) entity).hasCurse(BWCurses.INSANITY)))) {
+					remove();
 				}
 			});
 		}
