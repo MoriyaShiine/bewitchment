@@ -71,14 +71,14 @@ public class TransformationAbilityPacket {
 			world.playSound(null, player.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, player.getSoundCategory(), 1, 1);
 			((TransformationAccessor) player).setAlternateForm(!isInAlternateForm);
 			if (isInAlternateForm) {
-				width.setScale(width.getScale() / VAMPIRE_WIDTH);
-				height.setScale(height.getScale() / VAMPIRE_HEIGHT);
+				width.setScale(width.getBaseScale() / VAMPIRE_WIDTH);
+				height.setScale(height.getBaseScale() / VAMPIRE_HEIGHT);
 				VAMPIRE_FLIGHT_SOURCE.revokeFrom(player, VanillaAbilities.ALLOW_FLYING);
 				VAMPIRE_FLIGHT_SOURCE.revokeFrom(player, VanillaAbilities.FLYING);
 			}
 			else {
-				width.setScale(width.getScale() * VAMPIRE_WIDTH);
-				height.setScale(height.getScale() * VAMPIRE_HEIGHT);
+				width.setScale(width.getBaseScale() * VAMPIRE_WIDTH);
+				height.setScale(height.getBaseScale() * VAMPIRE_HEIGHT);
 				VAMPIRE_FLIGHT_SOURCE.grantTo(player, VanillaAbilities.ALLOW_FLYING);
 				VAMPIRE_FLIGHT_SOURCE.grantTo(player, VanillaAbilities.FLYING);
 			}
@@ -89,15 +89,15 @@ public class TransformationAbilityPacket {
 			world.playSound(null, player.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, player.getSoundCategory(), 1, 1);
 			((TransformationAccessor) player).setAlternateForm(!isInAlternateForm);
 			if (isInAlternateForm) {
-				width.setScale(width.getScale() / WEREWOLF_WIDTH);
-				height.setScale(height.getScale() / WEREWOLF_HEIGHT);
+				width.setScale(width.getBaseScale() / WEREWOLF_WIDTH);
+				height.setScale(height.getBaseScale() / WEREWOLF_HEIGHT);
 				if (player.hasStatusEffect(StatusEffects.NIGHT_VISION) && player.getStatusEffect(StatusEffects.NIGHT_VISION).isAmbient()) {
 					player.removeStatusEffect(StatusEffects.NIGHT_VISION);
 				}
 			}
 			else {
-				width.setScale(width.getScale() * WEREWOLF_WIDTH);
-				height.setScale(height.getScale() * WEREWOLF_HEIGHT);
+				width.setScale(width.getBaseScale() * WEREWOLF_WIDTH);
+				height.setScale(height.getBaseScale() * WEREWOLF_HEIGHT);
 			}
 		}
 	}

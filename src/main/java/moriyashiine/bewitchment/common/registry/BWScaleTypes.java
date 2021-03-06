@@ -38,9 +38,11 @@ public class BWScaleTypes {
 				boolean onGround = entity.isOnGround();
 				entity.calculateDimensions();
 				entity.setOnGround(onGround);
-				ScaleData data = ScaleType.WIDTH.getScaleData(entity);
-				if (data.getBaseValueModifiers().contains(MODIFY_WIDTH_MODIFIER)) {
-					data.markForSync(true);
+				for (ScaleType type : ScaleRegistries.SCALE_TYPES.values()) {
+					ScaleData data = type.getScaleData(entity);
+					if (data.getBaseValueModifiers().contains(MODIFY_HEIGHT_MODIFIER)) {
+						data.markForSync(true);
+					}
 				}
 			}
 		});
@@ -50,9 +52,11 @@ public class BWScaleTypes {
 				boolean onGround = entity.isOnGround();
 				entity.calculateDimensions();
 				entity.setOnGround(onGround);
-				ScaleData data = ScaleType.HEIGHT.getScaleData(entity);
-				if (data.getBaseValueModifiers().contains(MODIFY_HEIGHT_MODIFIER)) {
-					data.markForSync(true);
+				for (ScaleType type : ScaleRegistries.SCALE_TYPES.values()) {
+					ScaleData data = type.getScaleData(entity);
+					if (data.getBaseValueModifiers().contains(MODIFY_HEIGHT_MODIFIER)) {
+						data.markForSync(true);
+					}
 				}
 			}
 		});
