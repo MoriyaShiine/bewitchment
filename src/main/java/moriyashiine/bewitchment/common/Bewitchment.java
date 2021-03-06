@@ -6,11 +6,15 @@ import dev.emi.trinkets.api.TrinketSlots;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.*;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
+import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
+import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
+import moriyashiine.bewitchment.common.entity.interfaces.TrueInvisibleAccessor;
+import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.network.packet.CauldronTeleportPacket;
 import moriyashiine.bewitchment.common.network.packet.TogglePressingForwardPacket;
@@ -20,6 +24,7 @@ import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -32,6 +37,7 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
@@ -62,6 +68,23 @@ public class Bewitchment implements ModInitializer {
 		ServerPlayNetworking.registerGlobalReceiver(TransformationAbilityPacket.ID, TransformationAbilityPacket::handle);
 		ServerPlayNetworking.registerGlobalReceiver(TogglePressingForwardPacket.ID, TogglePressingForwardPacket::handle);
 		CommandRegistrationCallback.EVENT.register(BWCommands::init);
+		ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
+			if (alive) {
+				((MagicAccessor) newPlayer).setMagic(((MagicAccessor) oldPlayer).getMagic());
+				((BloodAccessor) newPlayer).setBlood(((BloodAccessor) oldPlayer).getBlood());
+				((RespawnTimerAccessor) newPlayer).setRespawnTimer(((RespawnTimerAccessor) oldPlayer).getRespawnTimer());
+				((TransformationAccessor) newPlayer).setAlternateForm(((TransformationAccessor) oldPlayer).getAlternateForm());
+				((WerewolfAccessor) newPlayer).setForcedTransformation(((WerewolfAccessor) oldPlayer).getForcedTransformation());
+				((TrueInvisibleAccessor) newPlayer).setTrueInvisible(((TrueInvisibleAccessor) oldPlayer).getTrueInvisible());
+			}
+			((PolymorphAccessor) newPlayer).setPolymorphUUID(((PolymorphAccessor) oldPlayer).getPolymorphUUID());
+			((PolymorphAccessor) newPlayer).setPolymorphName(((PolymorphAccessor) oldPlayer).getPolymorphName());
+			((FortuneAccessor) newPlayer).setFortune(((FortuneAccessor) oldPlayer).getFortune());
+			((CurseAccessor) newPlayer).getCurses().addAll(((CurseAccessor) oldPlayer).getCurses());
+			((ContractAccessor) newPlayer).getContracts().addAll(((ContractAccessor) oldPlayer).getContracts());
+			((TransformationAccessor) newPlayer).setTransformation(((TransformationAccessor) oldPlayer).getTransformation());
+			((WerewolfAccessor) newPlayer).setWerewolfVariant(((WerewolfAccessor) oldPlayer).getWerewolfVariant());
+		});
 		UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
 			if (entity instanceof LivingEntity && hand == Hand.MAIN_HAND && player.isSneaking() && entity.isAlive() && BewitchmentAPI.isVampire(player, true) && player.getStackInHand(hand).isEmpty()) {
 				int toGive = BWTags.HAS_BLOOD.contains(entity.getType()) ? 5 : entity instanceof AnimalEntity ? 1 : 0;

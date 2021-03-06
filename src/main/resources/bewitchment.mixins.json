@@ -32,7 +32,6 @@
 	"PotionEntityMixin",
 	"PotionItemMixin",
 	"PounceAtTargetGoalMixin",
-	"ServerPlayerEntityMixin",
 	"ServerWorldMixin",
 	"SpawnHelperMixin",
 	"StatusEffectAccessor",
