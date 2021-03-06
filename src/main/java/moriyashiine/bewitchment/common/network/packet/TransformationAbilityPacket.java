@@ -10,10 +10,7 @@ import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
-import moriyashiine.bewitchment.common.registry.BWEntityTypes;
-import moriyashiine.bewitchment.common.registry.BWPledges;
-import moriyashiine.bewitchment.common.registry.BWSoundEvents;
-import moriyashiine.bewitchment.common.registry.BWTransformations;
+import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
@@ -66,8 +63,8 @@ public class TransformationAbilityPacket {
 	public static void useAbility(PlayerEntity player, boolean forced) {
 		World world = player.world;
 		boolean isInAlternateForm = ((TransformationAccessor) player).getAlternateForm();
-		ScaleData width = ScaleType.WIDTH.getScaleData(player);
-		ScaleData height = ScaleType.HEIGHT.getScaleData(player);
+		ScaleData width = BWScaleTypes.MODIFY_WIDTH_TYPE.getScaleData(player);
+		ScaleData height = BWScaleTypes.MODIFY_HEIGHT_TYPE.getScaleData(player);
 		if (((TransformationAccessor) player).getTransformation() == BWTransformations.VAMPIRE && (forced || (BewitchmentAPI.isPledged(world, BWPledges.LILITH, player.getUuid()) && ((BloodAccessor) player).getBlood() > 0))) {
 			PlayerLookup.tracking(player).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, player));
 			SpawnSmokeParticlesPacket.send(player, player);
