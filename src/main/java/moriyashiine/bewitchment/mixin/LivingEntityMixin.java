@@ -736,17 +736,19 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor,
 	
 	@Inject(method = "onKilledBy", at = @At("TAIL"))
 	private void onKilledBy(LivingEntity killer, CallbackInfo callbackInfo) {
-		if (!world.isClient && killer != null) {
-			if (killer instanceof PlayerEntity) {
-				PlayerEntity player = (PlayerEntity) killer;
-				if (getGroup() == EntityGroup.ARTHROPOD && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.TOAD) {
-					player.heal(player.getMaxHealth() * 1 / 4f);
+		if (!world.isClient) {
+			if (killer != null) {
+				if (killer instanceof PlayerEntity) {
+					PlayerEntity player = (PlayerEntity) killer;
+					if (getGroup() == EntityGroup.ARTHROPOD && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.TOAD) {
+						player.heal(player.getMaxHealth() * 1 / 4f);
+					}
 				}
-			}
-			if (((ContractAccessor) killer).hasContract(BWContracts.VIOLENCE)) {
-				killer.heal(killer.getMaxHealth() * 1 / 4f);
-				if (((ContractAccessor) killer).hasNegativeEffects()) {
-					killer.addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 600, 2));
+				if (((ContractAccessor) killer).hasContract(BWContracts.VIOLENCE)) {
+					killer.heal(killer.getMaxHealth() * 1 / 4f);
+					if (((ContractAccessor) killer).hasNegativeEffects()) {
+						killer.addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 600, 2));
+					}
 				}
 			}
 			BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
