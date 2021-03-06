@@ -161,7 +161,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 			boolean client = world.isClient;
 			if (!client) {
 				if (BewitchmentAPI.isPledged(world, getPledgeID(), player.getUuid())) {
-					if (player.experienceLevel >= 20 || player.isCreative()) {
+					if (player.isCreative() || player.experienceLevel >= 20) {
 						Contract contract = null;
 						while (contract == null || !contract.canBeGiven) {
 							contract = BWRegistries.CONTRACTS.get(random.nextInt(BWRegistries.CONTRACTS.getEntries().size()));
