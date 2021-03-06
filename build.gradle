@@ -16,10 +16,6 @@ repositories {
         url = "https://jitpack.io"
     }
     maven {
-        name = "pehkui"
-        url = "https://www.cursemaven.com"
-    }
-    maven {
         name = "wood api"
         url = "https://maven.terraformersmc.com/"
     }
@@ -58,22 +54,22 @@ dependencies {
     include "com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraform_wood_api_version}"
     modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${project.reach_version}"
     include "com.jamieswhiteshirt:reach-entity-attributes:${project.reach_version}"
-    modImplementation "io.github.ladysnake:PlayerAbilityLib:${pal_version}"
-    include "io.github.ladysnake:PlayerAbilityLib:${pal_version}"
+    modImplementation "io.github.ladysnake:PlayerAbilityLib:${project.pal_version}"
+    include "io.github.ladysnake:PlayerAbilityLib:${project.pal_version}"
 
-    modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
     modImplementation "top.theillusivec4.somnus:somnus-fabric:${project.somnus_version}"
-    modImplementation "curse.maven:Pehkui-319596:${project.pehkui_version}"
-    modImplementation "io.github.ladysnake:Impersonate:${impersonate_version}"
+    modImplementation ("com.github.virtuoel:pehkui:${project.pehkui_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    modImplementation "io.github.ladysnake:Impersonate:${project.impersonate_version}"
     modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}"
-    modImplementation "com.github.emilyalexandra:trinkets:${trinkets_version}"
+    modImplementation "com.github.emilyalexandra:trinkets:${project.trinkets_version}"
 
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
-    modRuntime "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
-    modCompileOnly "io.github.emilyalexandra:nourish:${project.nourish_version}"
-    modRuntime "io.github.emilyalexandra:nourish:${project.nourish_version}"
+    modImplementation "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
+    modImplementation "io.github.emilyalexandra:nourish:${project.nourish_version}"
 }
 
 processResources {
