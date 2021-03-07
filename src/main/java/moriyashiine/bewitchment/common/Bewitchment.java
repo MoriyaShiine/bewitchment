@@ -102,7 +102,7 @@ public class Bewitchment implements ModInitializer {
 			((WerewolfAccessor) newPlayer).setWerewolfVariant(((WerewolfAccessor) oldPlayer).getWerewolfVariant());
 		});
 		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killedEntity) -> {
-			if (entity != null) {
+			if (entity instanceof LivingEntity) {
 				if (entity instanceof PlayerEntity) {
 					PlayerEntity player = (PlayerEntity) entity;
 					if (killedEntity.getGroup() == EntityGroup.ARTHROPOD && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.TOAD) {
