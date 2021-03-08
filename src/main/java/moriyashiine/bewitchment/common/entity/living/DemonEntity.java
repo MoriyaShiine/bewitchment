@@ -412,19 +412,19 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 			stack.getOrCreateTag().putString("Contract", BWRegistries.CONTRACTS.getId(BWRegistries.CONTRACTS.get(random.nextInt(BWRegistries.CONTRACTS.getEntries().size()))).toString());
 			switch (random.nextInt(7)) {
 				case 0:
-					return new TradeOffer(new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(random, 24, 32)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 6, 12)), stack, 1, 0, 1);
+					return new TradeOffer(new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(random, 24, 32)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 5, 5)), stack, 1, 0, 1);
 				case 1:
-					return new TradeOffer(new ItemStack(Items.DIAMOND, MathHelper.nextInt(random, 8, 14)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 4, 10)), stack, 1, 0, 1);
+					return new TradeOffer(new ItemStack(Items.DIAMOND, MathHelper.nextInt(random, 8, 14)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 2, 5)), stack, 1, 0, 1);
 				case 2:
-					return new TradeOffer(new ItemStack(Items.BLAZE_ROD, MathHelper.nextInt(random, 32, 42)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 6, 8)), stack, 1, 0, 1);
+					return new TradeOffer(new ItemStack(Items.BLAZE_ROD, MathHelper.nextInt(random, 32, 42)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 2, 5)), stack, 1, 0, 1);
 				case 3:
-					return new TradeOffer(new ItemStack(getRandomHead(random), MathHelper.nextInt(random, 10, 20)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 12, 15)), stack, 1, 0, 1);
+					return new TradeOffer(new ItemStack(getRandomHead(random), MathHelper.nextInt(random, 10, 20)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 2, 5)), stack, 1, 0, 1);
 				case 4:
-					return new TradeOffer(new ItemStack(Items.WITHER_SKELETON_SKULL, MathHelper.nextInt(random, 3, 4)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 5, 12)), stack, 1, 0, 1);
+					return new TradeOffer(new ItemStack(Items.WITHER_SKELETON_SKULL, MathHelper.nextInt(random, 3, 4)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 2, 5)), stack, 1, 0, 1);
 				case 5:
-					return new TradeOffer(new ItemStack(BWObjects.SNAKE_TONGUE, MathHelper.nextInt(random, 20, 32)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 8, 12)), stack, 1, 0, 1);
+					return new TradeOffer(new ItemStack(BWObjects.SNAKE_TONGUE, MathHelper.nextInt(random, 20, 32)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 2, 5)), stack, 1, 0, 1);
 				case 6:
-					return new TradeOffer(new ItemStack(BWObjects.DEMON_HORN, MathHelper.nextInt(random, 20, 32)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 4, 8)), stack, 1, 0, 1);
+					return new TradeOffer(new ItemStack(BWObjects.DEMON_HORN, MathHelper.nextInt(random, 20, 32)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 2, 5)), stack, 1, 0, 1);
 			}
 			return null;
 		}
