@@ -84,18 +84,18 @@ public class BWWorldGenerators {
 			BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> Bewitchment.config.toadBiomeCategories.contains(context.getBiome().getCategory().getName())), BWEntityTypes.TOAD.getSpawnGroup(), BWEntityTypes.TOAD, Bewitchment.config.toadWeight, Bewitchment.config.toadMinGroupCount, Bewitchment.config.toadMaxGroupCount);
 		}
 		if (Bewitchment.config.ghostWeight > 0) {
-			BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> !context.getBiome().getSpawnSettings().getSpawnEntry(BWEntityTypes.GHOST.getSpawnGroup()).isEmpty() && context.getBiome().getCategory() != Biome.Category.OCEAN), BWEntityTypes.GHOST.getSpawnGroup(), BWEntityTypes.GHOST, Bewitchment.config.ghostWeight, Bewitchment.config.ghostMinGroupCount, Bewitchment.config.ghostMaxGroupCount);
+			BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(), BWEntityTypes.GHOST.getSpawnGroup(), BWEntityTypes.GHOST, Bewitchment.config.ghostWeight, Bewitchment.config.ghostMinGroupCount, Bewitchment.config.ghostMaxGroupCount);
 		}
 		if (Bewitchment.config.vampireWeight > 0) {
-			BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> !context.getBiome().getSpawnSettings().getSpawnEntry(BWEntityTypes.VAMPIRE.getSpawnGroup()).isEmpty() && context.getBiome().getCategory() != Biome.Category.OCEAN && (context.getBiome().getCategory() == Biome.Category.PLAINS || context.getBiome().getCategory() == Biome.Category.TAIGA)), BWEntityTypes.VAMPIRE.getSpawnGroup(), BWEntityTypes.VAMPIRE, Bewitchment.config.vampireWeight, Bewitchment.config.vampireMinGroupCount, Bewitchment.config.vampireMaxGroupCount);
+			BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> context.getBiome().getCategory() == Biome.Category.PLAINS || context.getBiome().getCategory() == Biome.Category.TAIGA), BWEntityTypes.VAMPIRE.getSpawnGroup(), BWEntityTypes.VAMPIRE, Bewitchment.config.vampireWeight, Bewitchment.config.vampireMinGroupCount, Bewitchment.config.vampireMaxGroupCount);
 			SpawnRestrictionAccessor.callRegister(BWEntityTypes.VAMPIRE, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.WORLD_SURFACE_WG, VampireEntity::canSpawn);
 		}
 		if (Bewitchment.config.werewolfWeight > 0) {
-			BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> !context.getBiome().getSpawnSettings().getSpawnEntry(BWEntityTypes.WEREWOLF.getSpawnGroup()).isEmpty() && context.getBiome().getCategory() != Biome.Category.OCEAN && (context.getBiome().getCategory() == Biome.Category.FOREST || context.getBiome().getCategory() == Biome.Category.TAIGA || context.getBiome().getCategory() == Biome.Category.ICY)), BWEntityTypes.WEREWOLF.getSpawnGroup(), BWEntityTypes.WEREWOLF, Bewitchment.config.werewolfWeight, Bewitchment.config.werewolfMinGroupCount, Bewitchment.config.werewolfMaxGroupCount);
+			BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> context.getBiome().getCategory() == Biome.Category.FOREST || context.getBiome().getCategory() == Biome.Category.TAIGA || context.getBiome().getCategory() == Biome.Category.ICY), BWEntityTypes.WEREWOLF.getSpawnGroup(), BWEntityTypes.WEREWOLF, Bewitchment.config.werewolfWeight, Bewitchment.config.werewolfMinGroupCount, Bewitchment.config.werewolfMaxGroupCount);
 			SpawnRestrictionAccessor.callRegister(BWEntityTypes.WEREWOLF, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.WORLD_SURFACE_WG, WerewolfEntity::canSpawn);
 		}
 		if (Bewitchment.config.hellhoundWeight > 0) {
-			BiomeModifications.addSpawn(BiomeSelectors.foundInTheNether().and(context -> !context.getBiome().getSpawnSettings().getSpawnEntry(BWEntityTypes.HELLHOUND.getSpawnGroup()).isEmpty()), BWEntityTypes.HELLHOUND.getSpawnGroup(), BWEntityTypes.HELLHOUND, Bewitchment.config.hellhoundWeight, Bewitchment.config.hellhoundMinGroupCount, Bewitchment.config.hellhoundMaxGroupCount);
+			BiomeModifications.addSpawn(BiomeSelectors.foundInTheNether(), BWEntityTypes.HELLHOUND.getSpawnGroup(), BWEntityTypes.HELLHOUND, Bewitchment.config.hellhoundWeight, Bewitchment.config.hellhoundMinGroupCount, Bewitchment.config.hellhoundMaxGroupCount);
 			SpawnRestrictionAccessor.callRegister(BWEntityTypes.HELLHOUND, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HellhoundEntity::canSpawn);
 		}
 		LootTableLoadingCallback.EVENT.register((resourceManager, lootManager, identifier, fabricLootSupplierBuilder, lootTableSetter) -> {
