@@ -1,7 +1,7 @@
 {
   "type": "bewitchment:cauldron_brewing_recipe",
   "ingredient": {
-	"item": "bewitchment:demon_heart"
+	"item": "bewitchment:demon_horn"
   },
   "effect": "bewitchment:corruption",
   "time": 1
