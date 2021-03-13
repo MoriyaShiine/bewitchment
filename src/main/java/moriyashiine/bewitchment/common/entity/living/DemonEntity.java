@@ -10,7 +10,6 @@ import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.PathNodeType;
@@ -24,7 +23,6 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.SmallFireballEntity;
-import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -50,8 +48,6 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	public static final TradeOfferList EMPTY = new TradeOfferList();
 	
 	public static final TrackedData<Boolean> MALE = DataTracker.registerData(DemonEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-	
-	private final SimpleInventory inventory = new SimpleInventory(6);
 	
 	private TradeOfferList tradeOffers = null;
 	private PlayerEntity customer = null;
@@ -252,7 +248,6 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	public void readCustomDataFromTag(CompoundTag tag) {
 		super.readCustomDataFromTag(tag);
 		dataTracker.set(MALE, tag.getBoolean("Male"));
-		inventory.readTags(tag.getList("Inventory", NbtType.COMPOUND));
 		if (tag.contains("Offers")) {
 			tradeOffers = new TradeOfferList(tag.getCompound("Offers"));
 		}
@@ -263,7 +258,6 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	public void writeCustomDataToTag(CompoundTag tag) {
 		super.writeCustomDataToTag(tag);
 		tag.putBoolean("Male", dataTracker.get(MALE));
-		tag.put("Inventory", inventory.getTags());
 		if (!getOffers().isEmpty()) {
 			tag.put("Offers", tradeOffers.toTag());
 		}
@@ -410,6 +404,7 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 		private static TradeOffer generateContractOffer(Random random) {
 			ItemStack stack = new ItemStack(BWObjects.DEMONIC_CONTRACT);
 			stack.getOrCreateTag().putString("Contract", BWRegistries.CONTRACTS.getId(BWRegistries.CONTRACTS.get(random.nextInt(BWRegistries.CONTRACTS.getEntries().size()))).toString());
+			stack.getOrCreateTag().putInt("Duration", 168000);
 			switch (random.nextInt(7)) {
 				case 0:
 					return new TradeOffer(new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(random, 24, 32)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 5, 5)), stack, 1, 0, 1);

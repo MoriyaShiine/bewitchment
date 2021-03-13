@@ -11,8 +11,8 @@ import net.minecraft.util.math.Box;
 import net.minecraft.world.ServerWorldAccess;
 
 public class PestilenceContract extends Contract {
-	public PestilenceContract(boolean canBeGiven) {
-		super(canBeGiven);
+	public PestilenceContract(boolean doesBaphometOffer) {
+		super(doesBaphometOffer);
 	}
 	
 	public void tick(LivingEntity target, boolean includeNegative) {

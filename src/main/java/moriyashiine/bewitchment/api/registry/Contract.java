@@ -3,10 +3,10 @@ package moriyashiine.bewitchment.api.registry;
 import net.minecraft.entity.LivingEntity;
 
 public class Contract {
-	public final boolean canBeGiven;
+	public final boolean doesBaphometOffer;
 	
-	public Contract(boolean canBeGiven) {
-		this.canBeGiven = canBeGiven;
+	public Contract(boolean doesBaphometOffer) {
+		this.doesBaphometOffer = doesBaphometOffer;
 	}
 	
 	public void tick(LivingEntity target, boolean includeNegative) {

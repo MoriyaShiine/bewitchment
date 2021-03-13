@@ -53,7 +53,7 @@ public class ContractItem extends Item {
 							Contract contract = BWRegistries.CONTRACTS.get(new Identifier(stack.getOrCreateTag().getString("Contract")));
 							if (contract != null) {
 								if (entity instanceof ContractAccessor) {
-									((ContractAccessor) entity).addContract(new Contract.Instance(contract, 168000));
+									((ContractAccessor) entity).addContract(new Contract.Instance(contract, stack.getTag().getInt("Duration")));
 									contract.finishUsing(user, ((ContractAccessor) user).hasNegativeEffects());
 									world.playSound(null, user.getBlockPos(), BWSoundEvents.ITEM_CONTRACT_USE, SoundCategory.PLAYERS, 1, 1);
 									if (!(user instanceof PlayerEntity && ((PlayerEntity) user).isCreative())) {
@@ -89,6 +89,7 @@ public class ContractItem extends Item {
 			BWRegistries.CONTRACTS.forEach(contract -> {
 				ItemStack stack = new ItemStack(this);
 				stack.getOrCreateTag().putString("Contract", BWRegistries.CONTRACTS.getId(contract).toString());
+				stack.getOrCreateTag().putInt("Duration", 168000);
 				stacks.add(stack);
 			});
 		}
@@ -102,6 +103,7 @@ public class ContractItem extends Item {
 		}
 		if (stack.hasTag() && stack.getOrCreateTag().contains("Contract")) {
 			tooltip.add(new TranslatableText("contract." + stack.getOrCreateTag().getString("Contract").replace(":", ".")).formatted(Formatting.DARK_RED));
+			tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.days", stack.getOrCreateTag().getInt("Duration") / 24000).formatted(Formatting.DARK_RED));
 		}
 	}
 }

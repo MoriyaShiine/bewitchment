@@ -2,14 +2,14 @@ package moriyashiine.bewitchment.common.entity.living;
 
 import com.google.common.collect.Sets;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
 import moriyashiine.bewitchment.api.registry.Contract;
-import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.*;
 import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
@@ -30,26 +30,34 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.village.Merchant;
+import net.minecraft.village.TradeOffer;
+import net.minecraft.village.TradeOfferList;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 
 @SuppressWarnings("ConstantConditions")
-public class BaphometEntity extends BWHostileEntity implements Pledgeable {
+public class BaphometEntity extends BWHostileEntity implements Pledgeable, Merchant {
 	private final ServerBossBar bossBar;
 	private int timeSinceLastAttack = 0;
 	
 	public int flameIndex = random.nextInt(8);
+	
+	private TradeOfferList tradeOffers = null;
+	private PlayerEntity customer = null;
+	
+	private int refreshTimer = 0;
 	
 	public BaphometEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
@@ -69,6 +77,16 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 		flameIndex = ++flameIndex % 8;
 		if (!world.isClient) {
 			bossBar.setPercent(getHealth() / getMaxHealth());
+			refreshTimer++;
+			if (refreshTimer >= 24000) {
+				for (TradeOffer offer : getOffers()) {
+					offer.resetUses();
+				}
+				refreshTimer = 0;
+			}
+			if (customer != null) {
+				navigation.stop();
+			}
 			LivingEntity target = getTarget();
 			int timer = age + getEntityId();
 			if (timer % 20 == 0) {
@@ -156,27 +174,25 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 	}
 	
 	@Override
+	public SoundEvent getYesSound() {
+		return getAmbientSound();
+	}
+	
+	@Override
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
-		if (isAlive() && getTarget() == null) {
-			boolean client = world.isClient;
-			if (!client) {
-				if (BewitchmentAPI.isPledged(world, getPledgeID(), player.getUuid())) {
-					if (player.isCreative() || player.experienceLevel >= 20) {
-						Contract contract = null;
-						while (contract == null || !contract.canBeGiven) {
-							contract = BWRegistries.CONTRACTS.get(random.nextInt(BWRegistries.CONTRACTS.getEntries().size()));
-						}
-						Contract.Instance instance = new Contract.Instance(contract, 168000);
-						((ContractAccessor) player).addContract(instance);
-						player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.baphomet_contract", new TranslatableText("contract." + BWRegistries.CONTRACTS.getId(contract).toString().replace(":", "."))), true);
-						if (!player.isCreative()) {
-							player.addExperience(-551);
-							world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_PLAYER_LEVELUP, player.getSoundCategory(), 1, 0.5f);
-						}
-					}
-				}
+		if (isAlive()) {
+			TradeOfferList offers = getOffers();
+			if (DemonEntity.rejectTrades(this)) {
+				offers = DemonEntity.EMPTY;
 			}
-			return ActionResult.success(client);
+			if (!offers.isEmpty() && getCurrentCustomer() == null && getTarget() == null) {
+				boolean client = world.isClient;
+				if (!client && BewitchmentAPI.isPledged(world, getPledgeID(), player.getUuid())) {
+					setCurrentCustomer(player);
+					sendOffers(player, getDisplayName(), 0);
+				}
+				return ActionResult.success(client);
+			}
 		}
 		return super.interactMob(player, hand);
 	}
@@ -213,6 +229,14 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 	}
 	
 	@Override
+	public void setTarget(@Nullable LivingEntity target) {
+		super.setTarget(target);
+		if (target != null) {
+			setCurrentCustomer(null);
+		}
+	}
+	
+	@Override
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
 		return false;
 	}
@@ -234,6 +258,67 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 	}
 	
 	@Override
+	public World getMerchantWorld() {
+		return world;
+	}
+	
+	@Nullable
+	@Override
+	public PlayerEntity getCurrentCustomer() {
+		return customer;
+	}
+	
+	@Override
+	public void setCurrentCustomer(@Nullable PlayerEntity customer) {
+		this.customer = customer;
+	}
+	
+	@Override
+	public TradeOfferList getOffers() {
+		if (tradeOffers == null) {
+			tradeOffers = new TradeOfferList();
+			for (Contract contract : BWRegistries.CONTRACTS) {
+				if (contract.doesBaphometOffer) {
+					ItemStack stack = new ItemStack(BWObjects.DEMONIC_CONTRACT);
+					stack.getOrCreateTag().putString("Contract", BWRegistries.CONTRACTS.getId(contract).toString());
+					stack.getOrCreateTag().putInt("Duration", 24000);
+					tradeOffers.add(new TradeOffer(new ItemStack(Items.PAPER), stack, 1, 0, 1));
+				}
+			}
+		}
+		return tradeOffers;
+	}
+	
+	@Override
+	public void trade(TradeOffer offer) {
+		offer.use();
+	}
+	
+	@Override
+	public void onSellingItem(ItemStack stack) {
+		world.playSound(null, getBlockPos(), getAmbientSound(), getSoundCategory(), getSoundVolume(), getSoundPitch());
+	}
+	
+	@Override
+	public boolean isLeveledMerchant() {
+		return false;
+	}
+	
+	@Override
+	public int getExperience() {
+		return 0;
+	}
+	
+	@Environment(EnvType.CLIENT)
+	@Override
+	public void setOffersFromServer(@Nullable TradeOfferList offers) {
+	}
+	
+	@Override
+	public void setExperienceFromServer(int experience) {
+	}
+	
+	@Override
 	public void onStoppedTrackingBy(ServerPlayerEntity player) {
 		super.onStoppedTrackingBy(player);
 		bossBar.removePlayer(player);
@@ -246,12 +331,20 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable {
 			bossBar.setName(getDisplayName());
 		}
 		timeSinceLastAttack = tag.getInt("TimeSinceLastAttack");
+		if (tag.contains("Offers")) {
+			tradeOffers = new TradeOfferList(tag.getCompound("Offers"));
+		}
+		refreshTimer = tag.getInt("RefreshTimer");
 	}
 	
 	@Override
 	public void writeCustomDataToTag(CompoundTag tag) {
 		super.writeCustomDataToTag(tag);
 		tag.putInt("TimeSinceLastAttack", timeSinceLastAttack);
+		if (!getOffers().isEmpty()) {
+			tag.put("Offers", tradeOffers.toTag());
+		}
+		tag.putInt("RefreshTimer", refreshTimer);
 	}
 	
 	@Override

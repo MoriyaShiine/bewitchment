@@ -14,8 +14,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import java.util.Collections;
 
 public class DeathContract extends Contract {
-	public DeathContract(boolean canBeGiven) {
-		super(canBeGiven);
+	public DeathContract(boolean doesBaphometOffer) {
+		super(doesBaphometOffer);
 	}
 	
 	public void tick(LivingEntity target, boolean includeNegative) {

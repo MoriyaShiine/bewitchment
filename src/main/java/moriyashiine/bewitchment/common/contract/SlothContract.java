@@ -6,8 +6,8 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 
 public class SlothContract extends Contract {
-	public SlothContract(boolean canBeGiven) {
-		super(canBeGiven);
+	public SlothContract(boolean doesBaphometOffer) {
+		super(doesBaphometOffer);
 	}
 	
 	public void tick(LivingEntity target, boolean includeNegative) {
