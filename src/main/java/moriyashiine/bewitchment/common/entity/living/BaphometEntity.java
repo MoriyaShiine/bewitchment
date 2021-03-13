@@ -79,9 +79,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Merch
 			bossBar.setPercent(getHealth() / getMaxHealth());
 			refreshTimer++;
 			if (refreshTimer >= 24000) {
-				for (TradeOffer offer : getOffers()) {
-					offer.resetUses();
-				}
+				resetTradeList();
 				refreshTimer = 0;
 			}
 			if (customer != null) {
@@ -276,15 +274,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Merch
 	@Override
 	public TradeOfferList getOffers() {
 		if (tradeOffers == null) {
-			tradeOffers = new TradeOfferList();
-			for (Contract contract : BWRegistries.CONTRACTS) {
-				if (contract.doesBaphometOffer) {
-					ItemStack stack = new ItemStack(BWObjects.DEMONIC_CONTRACT);
-					stack.getOrCreateTag().putString("Contract", BWRegistries.CONTRACTS.getId(contract).toString());
-					stack.getOrCreateTag().putInt("Duration", 24000);
-					tradeOffers.add(new TradeOffer(new ItemStack(Items.PAPER), stack, 1, 0, 1));
-				}
-			}
+			resetTradeList();
 		}
 		return tradeOffers;
 	}
@@ -356,5 +346,19 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Merch
 		goalSelector.add(3, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this));
 		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> entity.getGroup() != BewitchmentAPI.DEMON && BWUtil.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3 && !(entity instanceof PlayerEntity && BewitchmentAPI.isPledged(world, getPledgeID(), entity.getUuid()))));
+	}
+	
+	private void resetTradeList() {
+		tradeOffers = new TradeOfferList();
+		while (tradeOffers.size() < 5) {
+			Contract contract = null;
+			while (contract == null || !contract.doesBaphometOffer) {
+				contract = BWRegistries.CONTRACTS.get(random.nextInt(BWRegistries.CONTRACTS.getIds().size()));
+			}
+			ItemStack stack = new ItemStack(BWObjects.DEMONIC_CONTRACT);
+			stack.getOrCreateTag().putString("Contract", BWRegistries.CONTRACTS.getId(contract).toString());
+			stack.getOrCreateTag().putInt("Duration", 24000);
+			tradeOffers.add(new TradeOffer(new ItemStack(Items.PAPER), new ItemStack(BWObjects.BOTTLE_OF_BLOOD), stack, 1, 0, 1));
+		}
 	}
 }
