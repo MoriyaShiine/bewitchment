@@ -5,7 +5,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Silver is a prominent material in witchcraft, and a symbol of purity.$(br2)It is used as a base for many tools and ingredients that are all very effective against the undead and $(l:bewitchment:creatures/demon)Demons$() of all kinds."
+	  "text": "Silver is a prominent material in witchcraft, and a symbol of purity.$(br2)It is used as a base for many tools and ingredients that are all very effective against the undead and $(l:bewitchment:creatures/demon)Demons$() of all kinds.$(br2)Blocks of Silver will damage unholy entities that stand on top of it."
 	},
 	{
 	  "type": "image",
