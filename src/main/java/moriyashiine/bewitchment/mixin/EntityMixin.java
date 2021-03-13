@@ -156,14 +156,23 @@ public abstract class EntityMixin implements WetAccessor {
 	
 	@Inject(method = "remove", at = @At("TAIL"))
 	private void remove(CallbackInfo callbackInfo) {
-		if (!world.isClient && this instanceof Pledgeable) {
+		if (!world.isClient) {
 			BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-			for (int i = worldState.specificPledges.size() - 1; i >= 0; i--) {
-				Pair<UUID, UUID> pair = worldState.specificPledges.get(i);
-				if (pair.getRight().equals(getUuid())) {
-					BewitchmentAPI.unpledge(world, ((Pledgeable) this).getPledgeID(), pair.getLeft());
-					worldState.specificPledges.remove(i);
+			if (this instanceof Pledgeable) {
+				for (int i = worldState.specificPledges.size() - 1; i >= 0; i--) {
+					Pair<UUID, UUID> pair = worldState.specificPledges.get(i);
+					if (pair.getRight().equals(getUuid())) {
+						BewitchmentAPI.unpledge(world, ((Pledgeable) this).getPledgeID(), pair.getLeft());
+						worldState.specificPledges.remove(i);
+						worldState.markDirty();
+					}
+				}
+			}
+			for (int i = worldState.familiars.size() - 1; i >= 0; i--) {
+				if (getUuid().equals(worldState.familiars.get(i).getRight().getUuid("UUID"))) {
+					worldState.familiars.remove(i);
 					worldState.markDirty();
+					break;
 				}
 			}
 		}

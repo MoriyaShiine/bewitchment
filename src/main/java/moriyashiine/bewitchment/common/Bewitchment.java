@@ -24,7 +24,6 @@ import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacke
 import moriyashiine.bewitchment.common.recipe.AthameDropRecipe;
 import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
 import moriyashiine.bewitchment.common.registry.*;
-import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
@@ -152,14 +151,6 @@ public class Bewitchment implements ModInitializer {
 					if (((ContractAccessor) entity).hasNegativeEffects()) {
 						((LivingEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 600, 2));
 					}
-				}
-			}
-			BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-			for (int i = worldState.familiars.size() - 1; i >= 0; i--) {
-				if (killedEntity.getUuid().equals(worldState.familiars.get(i).getRight().getUuid("UUID"))) {
-					worldState.familiars.remove(i);
-					worldState.markDirty();
-					break;
 				}
 			}
 		});
