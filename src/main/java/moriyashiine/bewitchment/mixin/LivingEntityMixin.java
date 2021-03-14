@@ -12,6 +12,8 @@ import moriyashiine.bewitchment.common.entity.living.LilithEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.*;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -21,6 +23,8 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
@@ -49,6 +53,8 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor 
 	
 	@Shadow
 	public abstract boolean isSleeping();
+	
+	@Shadow public abstract Iterable<ItemStack> getArmorItems();
 	
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
@@ -97,6 +103,20 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor 
 				fillBlood(1, false);
 			}
 		}
+	}
+	
+	@ModifyVariable(method = "addStatusEffect", at = @At("HEAD"))
+	private StatusEffectInstance modifyStatusEffect(StatusEffectInstance effect) {
+		if (!world.isClient && !effect.isAmbient() && ((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.HARMFUL) {
+			float durationMultiplier = 1;
+			for (ItemStack stack : getArmorItems()) {
+				durationMultiplier -= EnchantmentHelper.getLevel(BWEnchantments.MAGIC_PROTECTION, stack) / 32f;
+			}
+			if (durationMultiplier < 1) {
+				return new StatusEffectInstance(effect.getEffectType(), (int) (effect.getDuration() * durationMultiplier), effect.getAmplifier(), false, effect.shouldShowParticles(), effect.shouldShowIcon());
+			}
+		}
+		return effect;
 	}
 	
 	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/entity/LivingEntity;getHealth()F"))

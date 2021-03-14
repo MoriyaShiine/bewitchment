@@ -68,11 +68,8 @@ public abstract class LivingEntityMixin extends Entity implements CurseAccessor 
 	
 	@ModifyVariable(method = "addStatusEffect", at = @At("HEAD"))
 	private StatusEffectInstance modifyStatusEffect(StatusEffectInstance effect) {
-		if (!world.isClient && !effect.isAmbient()) {
-			StatusEffectType type = ((StatusEffectAccessor) effect.getEffectType()).bw_getType();
-			if (type == StatusEffectType.HARMFUL && hasCurse(BWCurses.COMPROMISED)) {
-				return new StatusEffectInstance(effect.getEffectType(), effect.getDuration(), effect.getAmplifier() + 1, false, effect.shouldShowParticles(), effect.shouldShowIcon());
-			}
+		if (!world.isClient && !effect.isAmbient() && ((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.HARMFUL && hasCurse(BWCurses.COMPROMISED)) {
+			return new StatusEffectInstance(effect.getEffectType(), effect.getDuration(), effect.getAmplifier() + 1, false, effect.shouldShowParticles(), effect.shouldShowIcon());
 		}
 		return effect;
 	}
@@ -100,13 +97,8 @@ public abstract class LivingEntityMixin extends Entity implements CurseAccessor 
 	
 	@Inject(method = "canHaveStatusEffect", at = @At("RETURN"), cancellable = true)
 	private void canHaveStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (callbackInfo.getReturnValue() && !world.isClient && !effect.isAmbient()) {
-			StatusEffectType type = ((StatusEffectAccessor) effect.getEffectType()).bw_getType();
-			if (type == StatusEffectType.BENEFICIAL) {
-				if (hasCurse(BWCurses.UNLUCKY) && random.nextBoolean()) {
-					callbackInfo.setReturnValue(false);
-				}
-			}
+		if (callbackInfo.getReturnValue() && !world.isClient && !effect.isAmbient() && ((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.BENEFICIAL && hasCurse(BWCurses.UNLUCKY) && random.nextBoolean()) {
+			callbackInfo.setReturnValue(false);
 		}
 	}
 	
