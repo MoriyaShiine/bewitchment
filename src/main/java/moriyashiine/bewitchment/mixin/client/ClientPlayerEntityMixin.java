@@ -29,7 +29,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 				if (blockEntity instanceof WitchCauldronBlockEntity && ((WitchCauldronBlockEntity) blockEntity).mode == WitchCauldronBlockEntity.Mode.TELEPORTATION) {
 					CauldronTeleportPacket.send(blockEntity.getPos(), message);
 					callbackInfo.cancel();
-					break;
+					return;
 				}
 			}
 		}

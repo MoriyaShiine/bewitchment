@@ -135,7 +135,7 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
 		if (isAlive()) {
 			TradeOfferList offers = getOffers();
-			if (rejectTrades(this)) {
+			if (rejectTradesFromCurses(this) || rejectTradesFromContracts(this)) {
 				offers = EMPTY;
 			}
 			if (!offers.isEmpty() && getCurrentCustomer() == null && getTarget() == null) {
@@ -281,8 +281,12 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> !(entity instanceof Pledgeable) && BWUtil.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3));
 	}
 	
-	public static boolean rejectTrades(LivingEntity merchant) {
-		return !merchant.world.getEntitiesByClass(LivingEntity.class, new Box(merchant.getBlockPos()).expand(8), entity -> merchant.canSee(entity) && entity.isAlive() && (((CurseAccessor) entity).hasCurse(BWCurses.APATHY) || (((ContractAccessor) entity).hasContract(BWContracts.FRAUD) && ((ContractAccessor) entity).hasNegativeEffects()))).isEmpty();
+	public static boolean rejectTradesFromCurses(LivingEntity merchant) {
+		return !merchant.world.getEntitiesByClass(LivingEntity.class, new Box(merchant.getBlockPos()).expand(8), entity -> merchant.canSee(entity) && entity.isAlive() && ((CurseAccessor) entity).hasCurse(BWCurses.APATHY)).isEmpty();
+	}
+	
+	public static boolean rejectTradesFromContracts(LivingEntity merchant) {
+		return !merchant.world.getEntitiesByClass(LivingEntity.class, new Box(merchant.getBlockPos()).expand(8), entity -> merchant.canSee(entity) && entity.isAlive() && (((ContractAccessor) entity).hasContract(BWContracts.FRAUD) && ((ContractAccessor) entity).hasNegativeEffects())).isEmpty();
 	}
 	
 	@SuppressWarnings("ConstantConditions")

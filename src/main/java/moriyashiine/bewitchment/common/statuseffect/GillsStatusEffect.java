@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.statuseffect;
 
-import moriyashiine.bewitchment.mixin.LivingEntityAccessor;
+import moriyashiine.bewitchment.mixin.brew.LivingEntityAccessor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;

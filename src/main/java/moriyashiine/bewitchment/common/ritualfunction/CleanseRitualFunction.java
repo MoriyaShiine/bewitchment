@@ -5,7 +5,7 @@ import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
 import moriyashiine.bewitchment.common.item.TaglockItem;
-import moriyashiine.bewitchment.mixin.ZombieVillagerEntityAccessor;
+import moriyashiine.bewitchment.mixin.ritual.ZombieVillagerEntityAccessor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
 import net.minecraft.inventory.Inventory;
