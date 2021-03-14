@@ -43,12 +43,6 @@ import java.util.List;
 public abstract class LivingEntityMixin extends Entity implements CurseAccessor {
 	private final List<Curse.Instance> curses = new ArrayList<>();
 	
-	@Shadow
-	protected abstract float getSoundVolume();
-	
-	@Shadow
-	protected abstract float getSoundPitch();
-	
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
@@ -101,44 +95,6 @@ public abstract class LivingEntityMixin extends Entity implements CurseAccessor 
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient && this instanceof InsanityTargetAccessor && ((InsanityTargetAccessor) this).getInsanityTargetUUID().isPresent()) {
 			callbackInfo.setReturnValue(false);
-		}
-	}
-	
-	@Inject(method = "tryUseTotem", at = @At("RETURN"), cancellable = true)
-	private void tryUseTotem(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!world.isClient && !BewitchmentAPI.isVampire(this, true)) {
-			if (callbackInfo.getReturnValue() && this instanceof TransformationAccessor && hasCurse(BWCurses.SUSCEPTIBILITY) && ((TransformationAccessor) this).getTransformation() == BWTransformations.HUMAN) {
-				if (source.getSource() instanceof VampireEntity || (BewitchmentAPI.isVampire(source.getSource(), true) && BewitchmentAPI.isPledged(world, BWPledges.LILITH, source.getSource().getUuid()))) {
-					((TransformationAccessor) this).getTransformation().onRemoved((LivingEntity) (Object) this);
-					((TransformationAccessor) this).setTransformation(BWTransformations.VAMPIRE);
-					((TransformationAccessor) this).getTransformation().onAdded((LivingEntity) (Object) this);
-					PlayerLookup.tracking(this).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, this));
-					if ((Object) this instanceof PlayerEntity) {
-						SpawnSmokeParticlesPacket.send((PlayerEntity) (Object) this, this);
-					}
-					world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, getSoundCategory(), getSoundVolume(), getSoundPitch());
-				}
-				else if (BewitchmentAPI.isWerewolf(source.getSource(), false)) {
-					((TransformationAccessor) this).getTransformation().onRemoved((LivingEntity) (Object) this);
-					((TransformationAccessor) this).setTransformation(BWTransformations.WEREWOLF);
-					((TransformationAccessor) this).getTransformation().onAdded((LivingEntity) (Object) this);
-					int variant = -1;
-					if (source.getSource() instanceof WerewolfEntity) {
-						variant = source.getSource().getDataTracker().get(BWHostileEntity.VARIANT);
-					}
-					else if (source.getSource() instanceof WerewolfAccessor && BewitchmentAPI.isPledged(world, BWPledges.HERNE, source.getSource().getUuid())) {
-						variant = ((WerewolfAccessor) source.getSource()).getWerewolfVariant();
-					}
-					if (variant > -1) {
-						((WerewolfAccessor) this).setWerewolfVariant(variant);
-					}
-					PlayerLookup.tracking(this).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, this));
-					if ((Object) this instanceof PlayerEntity) {
-						SpawnSmokeParticlesPacket.send((PlayerEntity) (Object) this, this);
-					}
-					world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, getSoundCategory(), getSoundVolume(), getSoundPitch());
-				}
-			}
 		}
 	}
 	
