@@ -107,7 +107,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor 
 	
 	@ModifyVariable(method = "addStatusEffect", at = @At("HEAD"))
 	private StatusEffectInstance modifyStatusEffect(StatusEffectInstance effect) {
-		if (!world.isClient && !effect.isAmbient() && ((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.HARMFUL) {
+		if (!world.isClient && !effect.isAmbient() && !effect.getEffectType().isInstant() && ((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.HARMFUL) {
 			float durationMultiplier = 1;
 			for (ItemStack stack : getArmorItems()) {
 				durationMultiplier -= EnchantmentHelper.getLevel(BWEnchantments.MAGIC_PROTECTION, stack) / 32f;
