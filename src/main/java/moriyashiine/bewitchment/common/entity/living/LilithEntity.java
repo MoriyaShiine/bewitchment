@@ -220,6 +220,14 @@ public class LilithEntity extends BWHostileEntity implements Pledgeable {
 	}
 	
 	@Override
+	public void setTarget(@Nullable LivingEntity target) {
+		if (world.isDay()) {
+			target = null;
+		}
+		super.setTarget(target);
+	}
+	
+	@Override
 	public void setCustomName(@Nullable Text name) {
 		super.setCustomName(name);
 		bossBar.setName(getDisplayName());
