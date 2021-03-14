@@ -272,13 +272,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 					}
 					if (mode == Mode.BREWING) {
 						CauldronBrewingRecipe cauldronBrewingRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CAULDRON_BREWING_RECIPE_TYPE).stream().filter(recipe -> recipe.input.test(stack)).findFirst().orElse(null);
-						int glowstone = 0;
-						for (int i = 0; i < size(); i++) {
-							if (getStack(i).getItem() == Items.GLOWSTONE_DUST) {
-								glowstone++;
-							}
-						}
-						if (cauldronBrewingRecipe != null || (firstEmpty > 0 && (stack.getItem() == Items.REDSTONE || (stack.getItem() == Items.GLOWSTONE_DUST && glowstone == 1)))) {
+						if (cauldronBrewingRecipe != null || stack.getItem() == Items.REDSTONE || stack.getItem() == Items.GLOWSTONE_DUST) {
 							BlockPos altarPos = getAltarPos();
 							if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain(getBrewCost(), true)) {
 								setColor(PotionUtil.getColor(getPotion(null)));
@@ -311,7 +305,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 		if (world != null) {
 			List<StatusEffectInstance> effects = new ArrayList<>();
 			int durationBoost = creator != null && BWUtil.getArmorPieces(creator, armorStack -> armorStack.getItem() instanceof ArmorItem && ((ArmorItem) armorStack.getItem()).getMaterial() == BWMaterials.ALCHEMIST_ARMOR) >= 3 ? 1 : 0;
-			boolean glowstone = false;
+			int amplifierBoost = 0;
 			boolean leonard = creator != null && BewitchmentAPI.isPledged(world, BWPledges.LEONARD, creator.getUuid());
 			for (int i = 0; i < size(); i++) {
 				ItemStack stackInSlot = getStack(i);
@@ -327,7 +321,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 					durationBoost++;
 				}
 				else if (stackInSlot.getItem() == Items.GLOWSTONE_DUST) {
-					glowstone = true;
+					amplifierBoost++;
 				}
 			}
 			for (int i = 0; i < effects.size(); i++) {
@@ -336,11 +330,13 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 					int duration = effects.get(i).getDuration();
 					effects.set(i, new StatusEffectInstance(type, type.isInstant() ? duration : duration * 2));
 				}
-				if (glowstone) {
-					effects.set(i, new StatusEffectInstance(effects.get(i).getEffectType(), effects.get(i).getDuration() / 2, effects.get(i).getAmplifier() + 1));
-				}
-				if (leonard) {
-					effects.set(i, new StatusEffectInstance(effects.get(i).getEffectType(), effects.get(i).getDuration(), effects.get(i).getAmplifier() + 1));
+				for (int j = 0; j < amplifierBoost && j < 2; j++) {
+					if (j == 1 && !leonard) {
+						break;
+					}
+					StatusEffect type = effects.get(i).getEffectType();
+					int duration = effects.get(i).getDuration();
+					effects.set(i, new StatusEffectInstance(type, type.isInstant() ? duration : duration / 2, effects.get(i).getAmplifier() + 1));
 				}
 			}
 			List<StatusEffectInstance> finalEffects = new ArrayList<>();

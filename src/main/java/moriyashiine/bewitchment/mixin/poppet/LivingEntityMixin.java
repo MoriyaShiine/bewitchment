@@ -38,9 +38,11 @@ public abstract class LivingEntityMixin extends Entity {
 	@Shadow
 	public abstract void setHealth(float health);
 	
-	@Shadow protected abstract float getSoundVolume();
+	@Shadow
+	protected abstract float getSoundVolume();
 	
-	@Shadow protected abstract float getSoundPitch();
+	@Shadow
+	protected abstract float getSoundPitch();
 	
 	@Shadow
 	public int hurtTime;

@@ -91,7 +91,7 @@ public class BroomEntity extends Entity {
 			setVelocity(Vec3d.ZERO);
 		}
 		if (!world.isClient && damage > 0) {
-			damage -= 1/20f;
+			damage -= 1 / 20f;
 			damage = Math.max(damage, 0);
 		}
 	}

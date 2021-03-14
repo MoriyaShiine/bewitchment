@@ -12,7 +12,6 @@ import moriyashiine.bewitchment.common.entity.living.LilithEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.*;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -54,7 +53,8 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor 
 	@Shadow
 	public abstract boolean isSleeping();
 	
-	@Shadow public abstract Iterable<ItemStack> getArmorItems();
+	@Shadow
+	public abstract Iterable<ItemStack> getArmorItems();
 	
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
