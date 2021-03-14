@@ -223,6 +223,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Transfor
 		}
 	}
 	
+	@Inject(method = "canFoodHeal", at = @At("RETURN"), cancellable = true)
+	private void canFoodHeal(CallbackInfoReturnable<Boolean> callbackInfo) {
+		if (callbackInfo.getReturnValue() && BewitchmentAPI.isVampire(this, true)) {
+			callbackInfo.setReturnValue(false);
+		}
+	}
+	
 	@Inject(method = "eatFood", at = @At("HEAD"))
 	private void eat(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> callbackInfo) {
 		if (!world.isClient) {

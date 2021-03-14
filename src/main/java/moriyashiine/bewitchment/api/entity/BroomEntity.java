@@ -28,6 +28,8 @@ import java.util.UUID;
 public class BroomEntity extends Entity {
 	public ItemStack stack = ItemStack.EMPTY;
 	
+	private float damage = 0;
+	
 	private int lerpSteps;
 	private double lerpX;
 	private double lerpY;
@@ -46,11 +48,13 @@ public class BroomEntity extends Entity {
 	@Override
 	protected void readCustomDataFromTag(CompoundTag tag) {
 		stack = ItemStack.fromTag(tag.getCompound("Stack"));
+		damage = tag.getFloat("Damage");
 	}
 	
 	@Override
 	protected void writeCustomDataToTag(CompoundTag tag) {
 		tag.put("Stack", stack.toTag(new CompoundTag()));
+		tag.putFloat("Damage", damage);
 	}
 	
 	@Override
@@ -86,6 +90,10 @@ public class BroomEntity extends Entity {
 		else {
 			setVelocity(Vec3d.ZERO);
 		}
+		if (!world.isClient && damage > 0) {
+			damage -= 1/20f;
+			damage = Math.max(damage, 0);
+		}
 	}
 	
 	@Override
@@ -105,8 +113,11 @@ public class BroomEntity extends Entity {
 			return false;
 		}
 		if (!world.isClient && !removed) {
-			dropStack(getDroppedStack());
-			remove();
+			damage += amount;
+			if (damage > 4) {
+				dropStack(getDroppedStack());
+				remove();
+			}
 		}
 		return true;
 	}
