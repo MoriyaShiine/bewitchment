@@ -14,7 +14,7 @@ public class SolarHatredCurse extends Curse {
 		if (target instanceof RespawnTimerAccessor && ((RespawnTimerAccessor) target).getRespawnTimer() > 0) {
 			return;
 		}
-		if (target.age % 600 == 0 && target.world.isDay() && target.world.isSkyVisible(target.getBlockPos())) {
+		if (target.age % 400 == 0 && target.world.isDay() && target.world.isSkyVisible(target.getBlockPos())) {
 			target.setOnFireFor(8);
 		}
 	}
