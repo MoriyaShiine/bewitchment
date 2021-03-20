@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "With a Pride $(l:bewitchment:contracts/concept_contracts)Contract$() you can instantly smelt any ore, though that may come with spontaneous explosions instead.$(br2)But that's definitely worth it."
+	  "text": ""
 	}
   ]
 }

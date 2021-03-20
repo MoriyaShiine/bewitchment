@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "When under the $(l:bewitchment:contracts/concept_contracts)Contract$() of Greed, ores drop twice the amount of what they would normally drop.$(br2)Chances are that the ores also drop nothing at all."
+	  "text": "When under the $(l:bewitchment:contracts/concept_contracts)Contract$() of Greed, ores will automatically smelt and drop twice the amount of what they would normally drop.$(br2)Chances are that the ores also drop nothing at all."
 	}
   ]
 }
