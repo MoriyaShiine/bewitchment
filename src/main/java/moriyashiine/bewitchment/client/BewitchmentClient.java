@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.client;
 
 import com.terraformersmc.terraform.sign.SpriteIdentifierRegistry;
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.entity.BroomEntity;
 import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.client.misc.SpriteIdentifiers;
@@ -190,11 +191,11 @@ public class BewitchmentClient implements ClientModInitializer {
 						transformationAbilityCooldown = 20;
 						TransformationAbilityPacket.send();
 					}
-					if (MinecraftClient.getInstance().options.keyForward.isPressed() && minecraftClient.player.getVehicle() instanceof BroomEntity && ((MagicAccessor) minecraftClient.player).drainMagic(1, true)) {
-						TogglePressingForwardPacket.send(true);
-					}
-					else if (((BroomUserAccessor) minecraftClient.player).getPressingForward()) {
+					if (((BroomUserAccessor) minecraftClient.player).getPressingForward()) {
 						TogglePressingForwardPacket.send(false);
+					}
+					if (MinecraftClient.getInstance().options.keyForward.isPressed() && minecraftClient.player.getVehicle() instanceof BroomEntity && BewitchmentAPI.usePlayerMagic(minecraftClient.player, 1, true)) {
+						TogglePressingForwardPacket.send(true);
 					}
 				}
 			}
