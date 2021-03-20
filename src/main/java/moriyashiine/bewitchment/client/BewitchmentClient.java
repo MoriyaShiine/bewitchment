@@ -3,7 +3,6 @@ package moriyashiine.bewitchment.client;
 import com.terraformersmc.terraform.sign.SpriteIdentifierRegistry;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.entity.BroomEntity;
-import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.client.misc.SpriteIdentifiers;
 import moriyashiine.bewitchment.client.model.equipment.armor.WitchArmorModel;
 import moriyashiine.bewitchment.client.network.packet.*;

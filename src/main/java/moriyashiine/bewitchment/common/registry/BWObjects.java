@@ -1,7 +1,6 @@
 package moriyashiine.bewitchment.common.registry;
 
 import com.terraformersmc.terraform.boat.TerraformBoatItem;
-import com.terraformersmc.terraform.leaves.block.TerraformLeavesBlock;
 import com.terraformersmc.terraform.sign.block.TerraformSignBlock;
 import com.terraformersmc.terraform.sign.block.TerraformWallSignBlock;
 import com.terraformersmc.terraform.wood.block.*;
@@ -30,6 +29,7 @@ import moriyashiine.bewitchment.common.world.generator.tree.generator.CypressSap
 import moriyashiine.bewitchment.common.world.generator.tree.generator.DragonsBloodSaplingGenerator;
 import moriyashiine.bewitchment.common.world.generator.tree.generator.ElderSaplingGenerator;
 import moriyashiine.bewitchment.common.world.generator.tree.generator.JuniperSaplingGenerator;
+import moriyashiine.bewitchment.mixin.BlocksAccessor;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
@@ -86,7 +86,7 @@ public class BWObjects {
 	public static final Block STRIPPED_JUNIPER_WOOD = create("stripped_juniper_wood", new PillarBlock(copyOf(STRIPPED_JUNIPER_LOG)), true);
 	public static final Block JUNIPER_LOG = create("juniper_log", new StrippableLogBlock(() -> STRIPPED_JUNIPER_LOG, MaterialColor.BROWN, copyOf(STRIPPED_JUNIPER_LOG)), true);
 	public static final Block JUNIPER_WOOD = create("juniper_wood", new StrippableLogBlock(() -> STRIPPED_JUNIPER_WOOD, MaterialColor.BROWN, copyOf(STRIPPED_JUNIPER_LOG)), true);
-	public static final Block JUNIPER_LEAVES = create("juniper_leaves", new TerraformLeavesBlock(), true);
+	public static final Block JUNIPER_LEAVES = create("juniper_leaves", BlocksAccessor.callCreateLeavesBlock(), true);
 	public static final Block JUNIPER_SAPLING = create("juniper_sapling", new BWSaplingBlock(new JuniperSaplingGenerator(), copyOf(Blocks.OAK_SAPLING)), true);
 	public static final Block POTTED_JUNIPER_SAPLING = create("potted_juniper_sapling", new FlowerPotBlock(JUNIPER_SAPLING, copyOf(Blocks.POTTED_OAK_SAPLING)), false);
 	public static final Block JUNIPER_PLANKS = create("juniper_planks", new Block(copyOf(Blocks.OAK_PLANKS)), true);
@@ -111,7 +111,7 @@ public class BWObjects {
 	public static final Block STRIPPED_CYPRESS_WOOD = create("stripped_cypress_wood", new PillarBlock(copyOf(STRIPPED_CYPRESS_LOG)), true);
 	public static final Block CYPRESS_LOG = create("cypress_log", new StrippableLogBlock(() -> STRIPPED_CYPRESS_LOG, MaterialColor.BROWN, copyOf(STRIPPED_CYPRESS_LOG)), true);
 	public static final Block CYPRESS_WOOD = create("cypress_wood", new StrippableLogBlock(() -> STRIPPED_CYPRESS_WOOD, MaterialColor.BROWN, copyOf(STRIPPED_CYPRESS_LOG)), true);
-	public static final Block CYPRESS_LEAVES = create("cypress_leaves", new TerraformLeavesBlock(), true);
+	public static final Block CYPRESS_LEAVES = create("cypress_leaves", BlocksAccessor.callCreateLeavesBlock(), true);
 	public static final Block CYPRESS_SAPLING = create("cypress_sapling", new BWSaplingBlock(new CypressSaplingGenerator(), copyOf(JUNIPER_SAPLING)), true);
 	public static final Block POTTED_CYPRESS_SAPLING = create("potted_cypress_sapling", new FlowerPotBlock(CYPRESS_SAPLING, copyOf(POTTED_JUNIPER_SAPLING)), false);
 	public static final Block CYPRESS_PLANKS = create("cypress_planks", new Block(copyOf(JUNIPER_PLANKS)), true);
@@ -136,7 +136,7 @@ public class BWObjects {
 	public static final Block STRIPPED_ELDER_WOOD = create("stripped_elder_wood", new PillarBlock(copyOf(STRIPPED_ELDER_LOG)), true);
 	public static final Block ELDER_LOG = create("elder_log", new StrippableLogBlock(() -> STRIPPED_ELDER_LOG, MaterialColor.BROWN, copyOf(STRIPPED_ELDER_LOG)), true);
 	public static final Block ELDER_WOOD = create("elder_wood", new StrippableLogBlock(() -> STRIPPED_ELDER_WOOD, MaterialColor.BROWN, copyOf(STRIPPED_ELDER_LOG)), true);
-	public static final Block ELDER_LEAVES = create("elder_leaves", new TerraformLeavesBlock(), true);
+	public static final Block ELDER_LEAVES = create("elder_leaves", BlocksAccessor.callCreateLeavesBlock(), true);
 	public static final Block ELDER_SAPLING = create("elder_sapling", new BWSaplingBlock(new ElderSaplingGenerator(), copyOf(JUNIPER_SAPLING)), true);
 	public static final Block POTTED_ELDER_SAPLING = create("potted_elder_sapling", new FlowerPotBlock(ELDER_SAPLING, copyOf(POTTED_JUNIPER_SAPLING)), false);
 	public static final Block ELDER_PLANKS = create("elder_planks", new Block(copyOf(JUNIPER_PLANKS)), true);
@@ -161,7 +161,7 @@ public class BWObjects {
 	public static final Block STRIPPED_DRAGONS_BLOOD_WOOD = create("stripped_dragons_blood_wood", new PillarBlock(copyOf(STRIPPED_DRAGONS_BLOOD_LOG)), true);
 	public static final Block DRAGONS_BLOOD_LOG = create("dragons_blood_log", new DragonsBloodLogBlock(() -> STRIPPED_DRAGONS_BLOOD_LOG, MaterialColor.BROWN, copyOf(STRIPPED_DRAGONS_BLOOD_LOG).ticksRandomly()), true);
 	public static final Block DRAGONS_BLOOD_WOOD = create("dragons_blood_wood", new StrippableLogBlock(() -> STRIPPED_DRAGONS_BLOOD_WOOD, MaterialColor.BROWN, copyOf(STRIPPED_DRAGONS_BLOOD_LOG)), true);
-	public static final Block DRAGONS_BLOOD_LEAVES = create("dragons_blood_leaves", new TerraformLeavesBlock(), true);
+	public static final Block DRAGONS_BLOOD_LEAVES = create("dragons_blood_leaves", BlocksAccessor.callCreateLeavesBlock(), true);
 	public static final Block DRAGONS_BLOOD_SAPLING = create("dragons_blood_sapling", new BWSaplingBlock(new DragonsBloodSaplingGenerator(), copyOf(JUNIPER_SAPLING)), true);
 	public static final Block POTTED_DRAGONS_BLOOD_SAPLING = create("potted_dragons_blood_sapling", new FlowerPotBlock(DRAGONS_BLOOD_SAPLING, copyOf(POTTED_JUNIPER_SAPLING)), false);
 	public static final Block DRAGONS_BLOOD_PLANKS = create("dragons_blood_planks", new Block(copyOf(JUNIPER_PLANKS)), true);

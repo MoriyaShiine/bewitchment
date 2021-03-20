@@ -7,6 +7,7 @@
 	"AbstractBlockStateMixin",
 	"BlockEntityMixin",
 	"BlockMixin",
+	"BlocksAccessor",
 	"DamageEnchantmentMixin",
 	"EntityMixin",
 	"EntityShapeContextMixin",
