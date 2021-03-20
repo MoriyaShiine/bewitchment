@@ -68,6 +68,7 @@
 	"transformation.EntityMixin",
 	"transformation.LivingEntityMixin",
 	"transformation.PlayerEntityMixin",
+	"transformation.ProtectionEnchantmentMixin",
 	"transformation.VampireHackMixin",
 	"transformation.VillagerEntityMixin",
 	"trinket.LivingEntityMixin"
