@@ -94,7 +94,7 @@ public abstract class LivingEntityMixin extends Entity {
 				callbackInfo.setReturnValue(false);
 			}
 			else if (amount > 0 && hurtTime == 0) {
-				if (directSource instanceof LivingEntity &&  ((LivingEntity) directSource).hasStatusEffect(BWStatusEffects.LEECHING)) {
+				if (directSource instanceof LivingEntity && ((LivingEntity) directSource).hasStatusEffect(BWStatusEffects.LEECHING)) {
 					((LivingEntity) directSource).heal(amount * (((LivingEntity) directSource).getStatusEffect(BWStatusEffects.LEECHING).getAmplifier() + 1) / 4);
 				}
 				if (hasStatusEffect(BWStatusEffects.THORNS) && !(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns())) {

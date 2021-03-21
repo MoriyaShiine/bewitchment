@@ -107,7 +107,7 @@ public class BWUtil {
 	
 	public static void doWerewolfLogic(PlayerEntity player, boolean alternateForm) {
 		boolean forced = ((WerewolfAccessor) player).getForcedTransformation();
-		if (!alternateForm && BewitchmentAPI.getMoonPhase(player.world) == 0 && player.world.isNight() && player.world.isSkyVisible(player.getBlockPos())) {
+		if (!alternateForm && player.world.isNight() && BewitchmentAPI.getMoonPhase(player.world) == 0 && player.world.isSkyVisible(player.getBlockPos())) {
 			TransformationAbilityPacket.useAbility(player, true);
 			((WerewolfAccessor) player).setForcedTransformation(true);
 		}

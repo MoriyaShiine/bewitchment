@@ -24,7 +24,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Contract
 	@Shadow
 	public abstract HungerManager getHungerManager();
 	
-	@Shadow public abstract boolean damage(DamageSource source, float amount);
+	@Shadow
+	public abstract boolean damage(DamageSource source, float amount);
 	
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
