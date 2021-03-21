@@ -4,6 +4,7 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.interfaces.MasterAccessor;
+import moriyashiine.bewitchment.common.entity.living.GhostEntity;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
@@ -67,6 +68,9 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 	@ModifyVariable(method = "setTarget", at = @At("HEAD"))
 	private LivingEntity modifyTarget(LivingEntity target) {
 		if (!world.isClient && target != null) {
+			if (target instanceof GhostEntity) {
+				return null;
+			}
 			if (this instanceof Pledgeable) {
 				if (target instanceof MasterAccessor && getUuid().equals(((MasterAccessor) target).getMasterUUID())) {
 					return null;
