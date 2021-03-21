@@ -9,11 +9,10 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 
 public class BWTags {
-	public static final Tag<EntityType<?>> BOSSES = TagRegistry.entityType(new Identifier("c", "bosses"));
 	public static final Tag<EntityType<?>> VULNERABLE_TO_SILVER = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "vulnerable_to_silver"));
 	public static final Tag<EntityType<?>> IMMUNE_TO_SILVER = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "immune_to_silver"));
 	public static final Tag<EntityType<?>> HAS_BLOOD = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "has_blood"));
-	public static final Tag<EntityType<?>> UNTAGLOCKABLE = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "untaglockable"));
+	public static final Tag<EntityType<?>> TAGLOCK_BLACKLIST = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "taglock_blacklist"));
 	public static final Tag<EntityType<?>> ENCOUNTER_FORTUNE = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "encounter_fortune"));
 	public static final Tag<EntityType<?>> INSANITY_BLACKLIST = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "insanity_blacklist"));
 	
