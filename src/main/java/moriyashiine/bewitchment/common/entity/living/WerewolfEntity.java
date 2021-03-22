@@ -1,5 +1,7 @@
 package moriyashiine.bewitchment.common.entity.living;
 
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+import dev.emi.stepheightentityattribute.StepHeightEntityAttributeMain;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
@@ -37,7 +39,7 @@ public class WerewolfEntity extends BWHostileEntity {
 	}
 	
 	public static DefaultAttributeContainer.Builder createAttributes() {
-		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 20).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6).add(EntityAttributes.GENERIC_ARMOR, 20).add(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, 10).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.4);
+		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 20).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5).add(EntityAttributes.GENERIC_ARMOR, 20).add(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, 10).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.4).add(ReachEntityAttributes.ATTACK_RANGE, 1).add(StepHeightEntityAttributeMain.STEP_HEIGHT, 1);
 	}
 	
 	@Override
