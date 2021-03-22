@@ -132,12 +132,12 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	
 	@Override
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
-		if (isAlive()) {
+		if (isAlive() && getCurrentCustomer() == null && getTarget() == null) {
 			TradeOfferList offers = getOffers();
 			if (rejectTradesFromCurses(this) || rejectTradesFromContracts(this)) {
 				offers = EMPTY;
 			}
-			if (!offers.isEmpty() && getCurrentCustomer() == null && getTarget() == null) {
+			if (!offers.isEmpty()) {
 				boolean client = world.isClient;
 				if (!client) {
 					setCurrentCustomer(player);
