@@ -253,7 +253,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Transfor
 	
 	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
 	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		
 		tag.putString("Transformation", BWRegistries.TRANSFORMATIONS.getId(getTransformation()).toString());
 		tag.putBoolean("AlternateForm", getAlternateForm());
 		tag.putBoolean("ForcedTransformation", getForcedTransformation());

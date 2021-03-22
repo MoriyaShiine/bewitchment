@@ -6,6 +6,7 @@ import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.interfaces.VillagerWerewolfAccessor;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
+import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.*;
@@ -42,24 +43,33 @@ public class WerewolfEntity extends BWHostileEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		if (!world.isClient && storedVillager != null && age % 20 == 0 && (world.isDay() || BewitchmentAPI.getMoonPhase(world) != 0)) {
-			VillagerEntity entity = EntityType.VILLAGER.create(world);
-			if (entity instanceof VillagerWerewolfAccessor) {
-				PlayerLookup.tracking(this).forEach(player -> SpawnSmokeParticlesPacket.send(player, this));
-				world.playSound(null, getX(), getY(), getZ(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, getSoundCategory(), getSoundVolume(), getSoundPitch());
-				entity.fromTag(storedVillager);
-				entity.updatePositionAndAngles(getX(), getY(), getZ(), random.nextFloat() * 360, 0);
-				entity.setHealth(entity.getMaxHealth() * (getHealth() / getMaxHealth()));
-				entity.setFireTicks(getFireTicks());
-				entity.clearStatusEffects();
-				getStatusEffects().forEach(entity::addStatusEffect);
-				((CurseAccessor) entity).getCurses().clear();
-				((CurseAccessor) this).getCurses().forEach(((CurseAccessor) entity)::addCurse);
-				((ContractAccessor) entity).getContracts().clear();
-				((ContractAccessor) this).getContracts().forEach(((ContractAccessor) entity)::addContract);
-				((VillagerWerewolfAccessor) entity).setStoredWerewolf(toTag(new CompoundTag()));
-				world.spawnEntity(entity);
-				remove();
+		if (!world.isClient) {
+			getArmorItems().forEach(stack -> dropStack(stack.split(1)));
+			if (BWUtil.isTool(getMainHandStack())) {
+				dropStack(getMainHandStack().split(1));
+			}
+			if (BWUtil.isTool(getOffHandStack())) {
+				dropStack(getOffHandStack().split(1));
+			}
+			if (storedVillager != null && age % 20 == 0 && (world.isDay() || BewitchmentAPI.getMoonPhase(world) != 0)) {
+				VillagerEntity entity = EntityType.VILLAGER.create(world);
+				if (entity instanceof VillagerWerewolfAccessor) {
+					PlayerLookup.tracking(this).forEach(player -> SpawnSmokeParticlesPacket.send(player, this));
+					world.playSound(null, getX(), getY(), getZ(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, getSoundCategory(), getSoundVolume(), getSoundPitch());
+					entity.fromTag(storedVillager);
+					entity.updatePositionAndAngles(getX(), getY(), getZ(), random.nextFloat() * 360, 0);
+					entity.setHealth(entity.getMaxHealth() * (getHealth() / getMaxHealth()));
+					entity.setFireTicks(getFireTicks());
+					entity.clearStatusEffects();
+					getStatusEffects().forEach(entity::addStatusEffect);
+					((CurseAccessor) entity).getCurses().clear();
+					((CurseAccessor) this).getCurses().forEach(((CurseAccessor) entity)::addCurse);
+					((ContractAccessor) entity).getContracts().clear();
+					((ContractAccessor) this).getContracts().forEach(((ContractAccessor) entity)::addContract);
+					((VillagerWerewolfAccessor) entity).setStoredWerewolf(toTag(new CompoundTag()));
+					world.spawnEntity(entity);
+					remove();
+				}
 			}
 		}
 	}
