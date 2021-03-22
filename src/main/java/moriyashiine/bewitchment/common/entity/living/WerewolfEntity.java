@@ -127,7 +127,6 @@ public class WerewolfEntity extends BWHostileEntity {
 		if (spawnReason == SpawnReason.NATURAL) {
 			storedVillager = EntityType.VILLAGER.create((World) world).toTag(new CompoundTag());
 		}
-		storedVillager = EntityType.VILLAGER.create((World) world).toTag(new CompoundTag());
 		return data;
 	}
 	
