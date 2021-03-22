@@ -145,7 +145,7 @@ public abstract class LivingEntityMixin extends Entity {
 					}
 					world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, getSoundCategory(), getSoundVolume(), getSoundPitch());
 				}
-				else if (BewitchmentAPI.isWerewolf(source.getSource(), false)) {
+				else if (source.getSource() instanceof WerewolfEntity || (BewitchmentAPI.isWerewolf(source.getSource(), false) && BewitchmentAPI.isPledged(world, BWPledges.HERNE, source.getSource().getUuid()))) {
 					((TransformationAccessor) this).getTransformation().onRemoved((LivingEntity) (Object) this);
 					((TransformationAccessor) this).setTransformation(BWTransformations.WEREWOLF);
 					((TransformationAccessor) this).getTransformation().onAdded((LivingEntity) (Object) this);
@@ -153,7 +153,7 @@ public abstract class LivingEntityMixin extends Entity {
 					if (source.getSource() instanceof WerewolfEntity) {
 						variant = source.getSource().getDataTracker().get(BWHostileEntity.VARIANT);
 					}
-					else if (source.getSource() instanceof WerewolfAccessor && BewitchmentAPI.isPledged(world, BWPledges.HERNE, source.getSource().getUuid())) {
+					else if (source.getSource() instanceof WerewolfAccessor) {
 						variant = ((WerewolfAccessor) source.getSource()).getWerewolfVariant();
 					}
 					if (variant > -1) {

@@ -2,10 +2,13 @@ package moriyashiine.bewitchment.mixin.transformation;
 
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.api.registry.Transformation;
+import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
-import moriyashiine.bewitchment.common.misc.BWUtil;
+import moriyashiine.bewitchment.common.item.ScepterItem;
+import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
 import moriyashiine.bewitchment.common.registry.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -18,9 +21,9 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.FoodComponent;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -112,8 +115,15 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Transfor
 		dataTracker.set(WEREWOLF_VARIANT, variant);
 	}
 	
+	@Inject(method = "tick", at = @At("HEAD"))
+	private void tickHead(CallbackInfo callbackInfo) {
+		if (BewitchmentAPI.isWerewolf(this, false)) {
+			flyingSpeed *= 1.5f;
+		}
+	}
+	
 	@Inject(method = "tick", at = @At("TAIL"))
-	private void tick(CallbackInfo callbackInfo) {
+	private void tickTail(CallbackInfo callbackInfo) {
 		if (!world.isClient) {
 			PlayerEntity player = (PlayerEntity) (Object) this;
 			boolean vampire = BewitchmentAPI.isVampire(player, true);
@@ -179,10 +189,59 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Transfor
 				movementSpeedAttribute.removeModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_1);
 			}
 			if (vampire) {
-				BWUtil.doVampireLogic(player, getAlternateForm());
+				boolean pledgedToLilith = BewitchmentAPI.isPledged(player.world, BWPledges.LILITH, player.getUuid());
+				player.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
+				if (((RespawnTimerAccessor) player).getRespawnTimer() <= 0 && player.world.isDay() && !player.world.isRaining() && player.world.isSkyVisible(player.getBlockPos())) {
+					player.setOnFireFor(8);
+				}
+				HungerManager hungerManager = player.getHungerManager();
+				if (((BloodAccessor) player).getBlood() > 0) {
+					if (player.age % (pledgedToLilith ? 30 : 40) == 0) {
+						if (player.getHealth() < player.getMaxHealth()) {
+							player.heal(1);
+							hungerManager.addExhaustion(3);
+						}
+						if ((hungerManager.isNotFull() || hungerManager.getSaturationLevel() < 10) && ((BloodAccessor) player).drainBlood(1, false)) {
+							hungerManager.add(1, 20);
+						}
+					}
+				}
+				else {
+					if (getAlternateForm()) {
+						TransformationAbilityPacket.useAbility(player, true);
+					}
+					hungerManager.addExhaustion(Float.MAX_VALUE);
+				}
+				if (getAlternateForm()) {
+					hungerManager.addExhaustion(0.5f);
+					if (!pledgedToLilith) {
+						TransformationAbilityPacket.useAbility(player, true);
+					}
+				}
 			}
 			if (BewitchmentAPI.isWerewolf(player, true)) {
-				BWUtil.doWerewolfLogic(player, getAlternateForm());
+				boolean forced = ((WerewolfAccessor) player).getForcedTransformation();
+				if (!getAlternateForm() && player.world.isNight() && BewitchmentAPI.getMoonPhase(player.world) == 0 && player.world.isSkyVisible(player.getBlockPos())) {
+					TransformationAbilityPacket.useAbility(player, true);
+					((WerewolfAccessor) player).setForcedTransformation(true);
+				}
+				else if (getAlternateForm() && forced && (player.world.isDay() || BewitchmentAPI.getMoonPhase(player.world) != 0)) {
+					TransformationAbilityPacket.useAbility(player, true);
+					((WerewolfAccessor) player).setForcedTransformation(false);
+				}
+				if (getAlternateForm()) {
+					player.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
+					player.getArmorItems().forEach(stack -> player.dropStack(stack.split(1)));
+					if (isTool(player.getMainHandStack())) {
+						player.dropStack(player.getMainHandStack().split(1));
+					}
+					if (isTool(player.getOffHandStack())) {
+						player.dropStack(player.getOffHandStack().split(1));
+					}
+					if (!forced && !BewitchmentAPI.isPledged(player.world, BWPledges.HERNE, player.getUuid())) {
+						TransformationAbilityPacket.useAbility(player, true);
+					}
+				}
 			}
 		}
 	}
@@ -264,5 +323,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Transfor
 		dataTracker.startTracking(TRANSFORMATION, BWRegistries.TRANSFORMATIONS.getId(BWTransformations.HUMAN).toString());
 		dataTracker.startTracking(ALTERNATE_FORM, false);
 		dataTracker.startTracking(WEREWOLF_VARIANT, 0);
+	}
+	
+	private static boolean isTool(ItemStack stack) {
+		Item item = stack.getItem();
+		return item instanceof ToolItem || item instanceof RangedWeaponItem || item instanceof ScepterItem || item instanceof ShieldItem || item instanceof TridentItem;
 	}
 }
