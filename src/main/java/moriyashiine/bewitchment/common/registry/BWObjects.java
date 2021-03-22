@@ -193,7 +193,7 @@ public class BWObjects {
 		@Override
 		public void onSteppedOn(World world, BlockPos pos, Entity entity) {
 			if (!world.isClient && entity instanceof LivingEntity && BewitchmentAPI.isWeakToSilver((LivingEntity) entity)) {
-				entity.damage(DamageSource.MAGIC, 1);
+				entity.damage(BWDamageSources.MAGIC_COPY, 1);
 			}
 			super.onSteppedOn(world, pos, entity);
 		}
