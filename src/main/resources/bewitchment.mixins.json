@@ -52,6 +52,7 @@
 	"familiar.CreeperEntityMixin",
 	"familiar.EntityMixin",
 	"familiar.LivingEntityMixin",
+	"familiar.PhantomEntitySwoopMovementGoalMixin",
 	"familiar.PlayerEntityMixin",
 	"familiar.StatusEffectMixin",
 	"fortune.BlockMixin",
