@@ -65,6 +65,6 @@ public class CaduceusItem extends MiningToolItem {
 	
 	@Override
 	public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
-		return miningSpeed;
+		return miningSpeed * 0.75f;
 	}
 }

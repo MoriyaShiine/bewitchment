@@ -137,7 +137,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor 
 			Entity directSource = source.getSource();
 			if (directSource instanceof FireballEntity) {
 				if (trueSource instanceof PlayerEntity && ((CaduceusFireballAccessor) directSource).getFromCaduceus()) {
-					amount *= 2;
+					amount *= 1.5f;
 				}
 				if (trueSource instanceof BaphometEntity) {
 					amount *= 3;
