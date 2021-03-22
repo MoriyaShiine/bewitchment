@@ -26,7 +26,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(VillagerEntity.class)
 public abstract class VillagerEntityMixin extends MerchantEntity implements VillagerWerewolfAccessor {
 	private CompoundTag storedWerewolf;
-	private int despawnTimer = 40;
+	private int despawnTimer = 2400;
 	
 	public VillagerEntityMixin(EntityType<? extends MerchantEntity> entityType, World world) {
 		super(entityType, world);
@@ -62,7 +62,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Vill
 					((ContractAccessor) entity).getContracts().clear();
 					((ContractAccessor) this).getContracts().forEach(((ContractAccessor) entity)::addContract);
 					if (despawnTimer >= 0) {
-						despawnTimer = 40;
+						despawnTimer = 2400;
 					}
 					entity.storedVillager = toTag(new CompoundTag());
 					world.spawnEntity(entity);
