@@ -61,6 +61,8 @@ dependencies {
     include "com.terraformersmc.terraform-api:terraform-wood-api-v1:${terraform_wood_api_version}"
     modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${reach_version}"
     include "com.jamieswhiteshirt:reach-entity-attributes:${reach_version}"
+    modImplementation "com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}"
+    include "com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}"
     modImplementation "io.github.ladysnake:PlayerAbilityLib:${pal_version}"
     include "io.github.ladysnake:PlayerAbilityLib:${pal_version}"
 

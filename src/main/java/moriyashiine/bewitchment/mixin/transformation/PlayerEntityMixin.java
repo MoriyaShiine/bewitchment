@@ -1,13 +1,14 @@
 package moriyashiine.bewitchment.mixin.transformation;
 
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+import dev.emi.stepheightentityattribute.StepHeightEntityAttributeMain;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.api.registry.Transformation;
 import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
-import moriyashiine.bewitchment.common.item.ScepterItem;
+import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
 import moriyashiine.bewitchment.common.registry.*;
 import net.minecraft.entity.EntityType;
@@ -23,7 +24,8 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.FoodComponent;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -52,6 +54,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Transfor
 	private static final EntityAttributeModifier WEREWOLF_ARMOR_MODIFIER = new EntityAttributeModifier(UUID.fromString("f00b0b0f-8ad6-4a2f-bdf5-6c337ffee56c"), "Transformation modifier", 20, EntityAttributeModifier.Operation.ADDITION);
 	private static final EntityAttributeModifier WEREWOLF_ATTACK_RANGE_MODIFIER = new EntityAttributeModifier(UUID.fromString("ae0e4c0a-971f-4629-99ad-60c115112c1d"), "Transformation modifier", 1, EntityAttributeModifier.Operation.ADDITION);
 	private static final EntityAttributeModifier WEREWOLF_REACH_MODIFIER = new EntityAttributeModifier(UUID.fromString("4c6d90ab-41ad-4d8a-b77a-7329361d3a7b"), "Transformation modifier", 1, EntityAttributeModifier.Operation.ADDITION);
+	private static final EntityAttributeModifier WEREWOLF_STEP_HEIGHT_MODIFIER = new EntityAttributeModifier(UUID.fromString("af386c1c-b4fc-429d-97b6-b2559826fa9d"), "Transformation modifier", 0.4, EntityAttributeModifier.Operation.ADDITION);
 	
 	private static final EntityAttributeModifier WEREWOLF_ATTACK_DAMAGE_MODIFIER_0 = new EntityAttributeModifier(UUID.fromString("06861902-ebc4-4e6e-956c-59c1ae3085c7"), "Transformation modifier", 7, EntityAttributeModifier.Operation.ADDITION);
 	private static final EntityAttributeModifier WEREWOLF_ATTACK_DAMAGE_MODIFIER_1 = new EntityAttributeModifier(UUID.fromString("10c0bedf-bde5-4cae-8acc-90b1204731dd"), "Transformation modifier", 14, EntityAttributeModifier.Operation.ADDITION);
@@ -135,6 +138,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Transfor
 			EntityAttributeInstance movementSpeedAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
 			EntityAttributeInstance attackRange = player.getAttributeInstance(ReachEntityAttributes.ATTACK_RANGE);
 			EntityAttributeInstance reach = player.getAttributeInstance(ReachEntityAttributes.REACH);
+			EntityAttributeInstance stepHeight = player.getAttributeInstance(StepHeightEntityAttributeMain.STEP_HEIGHT);
 			boolean shouldHave = vampire && !BewitchmentAPI.isPledged(player.world, BWPledges.LILITH, player.getUuid());
 			if (shouldHave && !attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0)) {
 				attackDamageAttribute.addPersistentModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0);
@@ -159,12 +163,14 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Transfor
 				armorAttribute.addPersistentModifier(WEREWOLF_ARMOR_MODIFIER);
 				attackRange.addPersistentModifier(WEREWOLF_ATTACK_RANGE_MODIFIER);
 				reach.addPersistentModifier(WEREWOLF_REACH_MODIFIER);
+				stepHeight.addPersistentModifier(WEREWOLF_STEP_HEIGHT_MODIFIER);
 			}
 			else if (!shouldHave && attackSpeedAttribute.hasModifier(WEREWOLF_ATTACK_SPEED_MODIFIER)) {
 				attackSpeedAttribute.removeModifier(WEREWOLF_ATTACK_SPEED_MODIFIER);
 				armorAttribute.removeModifier(WEREWOLF_ARMOR_MODIFIER);
 				attackRange.removeModifier(WEREWOLF_ATTACK_RANGE_MODIFIER);
 				reach.removeModifier(WEREWOLF_REACH_MODIFIER);
+				stepHeight.removeModifier(WEREWOLF_STEP_HEIGHT_MODIFIER);
 			}
 			shouldHave = werewolfBeast && !BewitchmentAPI.isPledged(player.world, BWPledges.HERNE, player.getUuid());
 			if (shouldHave && !attackDamageAttribute.hasModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_0)) {
@@ -232,10 +238,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Transfor
 				if (getAlternateForm()) {
 					player.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
 					player.getArmorItems().forEach(stack -> player.dropStack(stack.split(1)));
-					if (isTool(player.getMainHandStack())) {
+					if (BWUtil.isTool(player.getMainHandStack())) {
 						player.dropStack(player.getMainHandStack().split(1));
 					}
-					if (isTool(player.getOffHandStack())) {
+					if (BWUtil.isTool(player.getOffHandStack())) {
 						player.dropStack(player.getOffHandStack().split(1));
 					}
 					if (!forced && !BewitchmentAPI.isPledged(player.world, BWPledges.HERNE, player.getUuid())) {
@@ -323,10 +329,5 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Transfor
 		dataTracker.startTracking(TRANSFORMATION, BWRegistries.TRANSFORMATIONS.getId(BWTransformations.HUMAN).toString());
 		dataTracker.startTracking(ALTERNATE_FORM, false);
 		dataTracker.startTracking(WEREWOLF_VARIANT, 0);
-	}
-	
-	private static boolean isTool(ItemStack stack) {
-		Item item = stack.getItem();
-		return item instanceof ToolItem || item instanceof RangedWeaponItem || item instanceof ScepterItem || item instanceof ShieldItem || item instanceof TridentItem;
 	}
 }

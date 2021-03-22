@@ -1,13 +1,14 @@
 package moriyashiine.bewitchment.common.misc;
 
 import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
+import moriyashiine.bewitchment.common.item.ScepterItem;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -41,6 +42,11 @@ public class BWUtil {
 			}
 		}
 		return pos;
+	}
+	
+	public static boolean isTool(ItemStack stack) {
+		Item item = stack.getItem();
+		return item instanceof ToolItem || item instanceof RangedWeaponItem || item instanceof ScepterItem || item instanceof ShieldItem || item instanceof TridentItem;
 	}
 	
 	public static int getArmorPieces(LivingEntity livingEntity, Predicate<ItemStack> predicate) {
