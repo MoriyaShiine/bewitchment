@@ -12,62 +12,68 @@ group = project.maven_group
 
 repositories {
     maven {
-        name = "jitpack"
-        url = "https://jitpack.io"
+        name "terraform wood api, trinkets"
+        url "https://maven.terraformersmc.com"
     }
     maven {
-        name = "wood api"
-        url = "https://maven.terraformersmc.com/"
+        name "reach entity attributes"
+        url "https://maven.jamieswhiteshirt.com/libs-release"
+        content {
+            includeGroup "com.jamieswhiteshirt"
+        }
     }
     maven {
-        name = "reach"
-        url = "https://maven.jamieswhiteshirt.com/libs-release"
+        name "player ability lib, impersonate"
+        url "https://dl.bintray.com/ladysnake/libs"
     }
     maven {
-        name = "pal"
-        url = "https://dl.bintray.com/ladysnake/libs"
+        name "cloth config, roughly enough items"
+        url "https://maven.shedaniel.me"
     }
     maven {
-        name = "cardinal"
-        url = "https://maven.abusedmaster.xyz/"
+        name "somnus"
+        url "https://maven.theillusivec4.top"
     }
     maven {
-        name = "cloth config"
-        url = "https://maven.shedaniel.me/"
+        name "patchouli"
+        url "https://maven.blamejared.com"
     }
     maven {
-        name = "patchouli"
-        url = "https://maven.blamejared.com"
+        name "trinkets"
+        url "https://maven.abusedmaster.xyz"
     }
     maven {
-        name = "somnus"
-        url = "https://maven.theillusivec4.top"
+        name "jitpack"
+        url "https://jitpack.io"
     }
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    modImplementation "com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraform_wood_api_version}"
-    include "com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraform_wood_api_version}"
-    modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${project.reach_version}"
-    include "com.jamieswhiteshirt:reach-entity-attributes:${project.reach_version}"
-    modImplementation "io.github.ladysnake:PlayerAbilityLib:${project.pal_version}"
-    include "io.github.ladysnake:PlayerAbilityLib:${project.pal_version}"
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings "net.fabricmc:yarn:${yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    modImplementation "com.terraformersmc.terraform-api:terraform-wood-api-v1:${terraform_wood_api_version}"
+    include "com.terraformersmc.terraform-api:terraform-wood-api-v1:${terraform_wood_api_version}"
+    modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${reach_version}"
+    include "com.jamieswhiteshirt:reach-entity-attributes:${reach_version}"
+    modImplementation "io.github.ladysnake:PlayerAbilityLib:${pal_version}"
+    include "io.github.ladysnake:PlayerAbilityLib:${pal_version}"
 
-    modImplementation "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}"
-    modImplementation "top.theillusivec4.somnus:somnus-fabric:${project.somnus_version}"
-    modImplementation("com.github.virtuoel:pehkui:${project.pehkui_version}") {
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-    modImplementation "io.github.ladysnake:Impersonate:${project.impersonate_version}"
-    modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}"
-    modImplementation "com.github.emilyalexandra:trinkets:${project.trinkets_version}"
+    modImplementation "top.theillusivec4.somnus:somnus-fabric:${somnus_version}"
+    modImplementation("com.github.virtuoel:pehkui:${pehkui_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    modImplementation "io.github.ladysnake:Impersonate:${impersonate_version}"
+    modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}"
+    modImplementation "dev.emi:trinkets:${trinkets_version}"
 
-    modImplementation "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
-    modImplementation "io.github.emilyalexandra:nourish:${project.nourish_version}"
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${rei_version}"
+    modRuntime "me.shedaniel:RoughlyEnoughItems:${rei_version}"
+    modImplementation "io.github.emilyalexandra:nourish:${nourish_version}"
 }
 
 processResources {
