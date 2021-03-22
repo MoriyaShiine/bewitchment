@@ -178,7 +178,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Merch
 	
 	@Override
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
-		if (isAlive()) {
+		if (!world.isClient && isAlive()) {
 			TradeOfferList offers = getOffers();
 			if (DemonEntity.rejectTradesFromCurses(this) || DemonEntity.rejectTradesFromContracts(this)) {
 				offers = DemonEntity.EMPTY;

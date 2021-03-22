@@ -6,6 +6,7 @@ import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.misc.BWUtil;
+import moriyashiine.bewitchment.common.recipe.DemonTrade;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -26,7 +27,12 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.loot.condition.EntityPropertiesLootCondition;
+import net.minecraft.loot.condition.LootCondition;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -132,21 +138,21 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	
 	@Override
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
-		if (isAlive()) {
+		if (!world.isClient && isAlive()) {
+			if (getCurrentCustomer() == null){
+				setCurrentCustomer(player);
+			}
 			TradeOfferList offers = getOffers();
 			if (rejectTradesFromCurses(this) || rejectTradesFromContracts(this)) {
 				offers = EMPTY;
 			}
-			if (!offers.isEmpty() && getCurrentCustomer() == null && getTarget() == null) {
-				boolean client = world.isClient;
-				if (!client) {
-					setCurrentCustomer(player);
-					sendOffers(player, getDisplayName(), 0);
-				}
-				return ActionResult.success(client);
+			if (!offers.isEmpty() && getTarget() == null) {
+				sendOffers(player, getDisplayName(), 0);
+			}else{
+				setCurrentCustomer(null);
 			}
 		}
-		return super.interactMob(player, hand);
+		return ActionResult.success(world.isClient);
 	}
 	
 	@Override
@@ -203,7 +209,7 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	@Override
 	public TradeOfferList getOffers() {
 		if (tradeOffers == null) {
-			tradeOffers = TradeGenerator.build(random);
+			tradeOffers = TradeGenerator.build((ServerWorld) world, getCurrentCustomer() != null ? getCurrentCustomer().getLuck() : 0F);
 		}
 		return tradeOffers;
 	}
@@ -290,12 +296,16 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	
 	@SuppressWarnings("ConstantConditions")
 	private static class TradeGenerator {
-		public static TradeOfferList build(Random random) {
+		public static TradeOfferList build(ServerWorld world, float luck) {
 			TradeOfferList offers = new TradeOfferList();
-			for (int i = 0; i < 5; i++) {
-				offers.add(generateOffer(random));
+			LootContext context = new LootContext.Builder(world).luck(luck).build(LootContextTypes.EMPTY);
+			for (DemonTrade trade : DemonTrade.TRADES.values()) {
+				offers.add(trade.generate(context));
 			}
-			offers.add(generateContractOffer(random));
+			/*for (int i = 0; i < 5; i++) { todo add trades properly
+				offers.add(generateOffer(random));
+			}*/
+			offers.add(generateContractOffer(world.random));
 			return offers;
 		}
 		

@@ -1,0 +1,39 @@
+{
+  "first_buy": {
+    "item": "diamond",
+    "functions": [
+      {
+        "function": "minecraft:set_count",
+        "count": {
+          "type": "minecraft:uniform",
+          "min": 10.0,
+          "max": 28.0
+        },
+        "add": false
+      }
+    ]
+  },
+  "second_buy": {
+    "item": "diamond",
+    "functions": [
+      {
+        "function": "minecraft:set_count",
+        "count": {
+          "type": "minecraft:uniform",
+          "min": 10.0,
+          "max": 28.0
+        },
+        "add": false
+      }
+    ]
+  },
+  "sell": {
+    "item": "bewitchment:athame",
+    "functions": [
+      {
+        "function": "minecraft:enchant_randomly"
+      }
+    ]
+  },
+  "maxUses": 1
+}
