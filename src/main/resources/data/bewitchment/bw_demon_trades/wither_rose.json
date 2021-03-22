@@ -1,0 +1,35 @@
+{
+  "first_buy": {
+    "item": "rose",
+    "functions": [
+      {
+        "function": "minecraft:set_count",
+        "count": {
+          "type": "minecraft:uniform",
+          "min": 1.0,
+          "max": 3.0
+        },
+        "add": false
+      }
+    ]
+  },
+  "second_buy": {
+    "item": "bewitchment:grim_elixir",
+    "functions": [
+      {
+        "function": "minecraft:set_count",
+        "count": {
+          "type": "minecraft:uniform",
+          "min": 2.0,
+          "max": 3.0
+        }
+      }
+    ]
+  },
+  "sell": {
+    "item": "wither_rose"
+  },
+  "max_uses": 4,
+  "chance": 0.35,
+  "luck_bonus": 0.15
+}

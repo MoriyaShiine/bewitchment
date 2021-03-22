@@ -27,16 +27,24 @@ public class DemonTrade {
     private final Function<LootContext, ItemStack> secondBuy;
     private final Function<LootContext, ItemStack> sell;
     private final int maxUses;
+    private final float chance;
+    private final float luckBonus;
 
-    public DemonTrade(Function<LootContext, ItemStack> firstBuy, Function<LootContext, ItemStack> secondBuy, Function<LootContext, ItemStack> sell, int maxUses) {
+    public DemonTrade(Function<LootContext, ItemStack> firstBuy, Function<LootContext, ItemStack> secondBuy, Function<LootContext, ItemStack> sell, int maxUses, float chance, float luckBonus) {
         this.firstBuy = firstBuy;
         this.secondBuy = secondBuy;
         this.sell = sell;
         this.maxUses = maxUses;
+        this.chance = chance;
+        this.luckBonus = luckBonus;
     }
 
     public TradeOffer generate(LootContext context) {
         return new TradeOffer(firstBuy.apply(context), secondBuy.apply(context), sell.apply(context), maxUses, 0, 1);
+    }
+
+    public float getChance(LootContext context) {
+        return chance + luckBonus * context.getLuck();
     }
 
     public static class Loader extends JsonDataLoader {
@@ -70,7 +78,7 @@ public class DemonTrade {
             return new DemonTrade(deserializeSupplier(context, JsonHelper.getObject(json, "first_buy")),
                     json.has("second_buy") ? deserializeSupplier(context, JsonHelper.getObject(json, "second_buy")) : (lootContext) -> ItemStack.EMPTY,
                     deserializeSupplier(context, JsonHelper.getObject(json, "sell")),
-                    JsonHelper.getInt(json, "max_uses", 10));
+                    JsonHelper.getInt(json, "max_uses", 10), JsonHelper.getFloat(json, "chance", 1F), JsonHelper.getFloat(json, "luck_bonus", 0.5F));
         }
 
         //maybe also a serialization method?

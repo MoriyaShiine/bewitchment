@@ -1,0 +1,42 @@
+{
+  "first_buy": {
+    "item": "spider_eye",
+    "functions": [
+      {
+        "function": "minecraft:set_count",
+        "count": {
+          "type": "minecraft:uniform",
+          "min": 4.0,
+          "max": 6.0
+        }
+      }
+    ]
+  },
+  "second_buy": {
+    "item": "bewitchment:bottle_of_blood",
+    "functions": [
+      {
+        "function": "minecraft:set_count",
+        "count": {
+          "type": "minecraft:uniform",
+          "min": 1.0,
+          "max": 2.0
+        }
+      }
+    ]
+  },
+  "sell": {
+    "item": "nether_wart",
+    "functions": [
+      {
+        "function": "minecraft:set_count",
+        "count": {
+          "type": "minecraft:uniform",
+          "min": 4.0,
+          "max": 12.0
+        }
+      }
+    ]
+  },
+  "max_uses": 12
+}
