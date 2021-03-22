@@ -94,7 +94,7 @@ public class HellhoundEntity extends BWHostileEntity {
 		goalSelector.add(4, new LookAtEntityGoal(this, PlayerEntity.class, 8));
 		goalSelector.add(4, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this).setGroupRevenge());
-		targetSelector.add(1, new FollowTargetGoal<>(this, PlayerEntity.class, 10, true, false, entity -> entity.getGroup() != BewitchmentAPI.DEMON && BWUtil.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3));
+		targetSelector.add(1, new FollowTargetGoal<>(this, PlayerEntity.class, 10, true, false, entity -> entity.getGroup() != BewitchmentAPI.DEMON && !BewitchmentAPI.isVampire(entity, true) && BWUtil.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3));
 	}
 	
 	public static boolean canSpawn(EntityType<HellhoundEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
