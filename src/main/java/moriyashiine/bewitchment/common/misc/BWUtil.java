@@ -16,6 +16,7 @@ import moriyashiine.bewitchment.common.registry.BWPledges;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -137,8 +138,8 @@ public class BWUtil {
 	
 	public static int getArmorPieces(LivingEntity livingEntity, Predicate<ItemStack> predicate) {
 		int amount = 0;
-		for (ItemStack stack : livingEntity.getArmorItems()) {
-			if (predicate.test(stack)) {
+		for (EquipmentSlot slot : EquipmentSlot.values()) {
+			if (slot.getType() == EquipmentSlot.Type.ARMOR && predicate.test(livingEntity.getEquippedStack(slot))) {
 				amount++;
 			}
 		}

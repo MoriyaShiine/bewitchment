@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.common;
 import dev.emi.trinkets.api.SlotGroups;
 import dev.emi.trinkets.api.Slots;
 import dev.emi.trinkets.api.TrinketSlots;
+import ladysnake.requiem.api.v1.RequiemApi;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
@@ -16,6 +17,7 @@ import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.TrueInvisibleAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
+import moriyashiine.bewitchment.common.integration.requiem.BWRequiemPlugin;
 import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.network.packet.CauldronTeleportPacket;
@@ -69,7 +71,7 @@ public class Bewitchment implements ModInitializer {
 	
 	public static final ItemGroup BEWITCHMENT_GROUP = FabricItemGroupBuilder.build(new Identifier(MODID, MODID), () -> new ItemStack(BWObjects.ATHAME));
 	
-	public static boolean isNourishLoaded;
+	public static boolean isNourishLoaded, isRequiemLoaded;
 	
 	@SuppressWarnings("ConstantConditions")
 	@Override
@@ -234,5 +236,9 @@ public class Bewitchment implements ModInitializer {
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.OBSIDIAN_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.PURPUR_WITCH_ALTAR);
 		isNourishLoaded = FabricLoader.getInstance().isModLoaded("nourish");
+		isRequiemLoaded = FabricLoader.getInstance().isModLoaded("requiem");
+		if (isRequiemLoaded) {
+			RequiemApi.registerPlugin(new BWRequiemPlugin());
+		}
 	}
 }

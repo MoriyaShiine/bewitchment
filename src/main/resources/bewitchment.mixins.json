@@ -57,6 +57,8 @@
 	"fortune.BlockMixin",
 	"fortune.LivingEntityMixin",
 	"fortune.PlayerEntityMixin",
+	"integration.requiem.BewitchmentAPIMixin",
+	"integration.requiem.PlayerEntityMixin",
 	"poppet.EntityMixin",
 	"poppet.ItemStackMixin",
 	"poppet.LivingEntityMixin",

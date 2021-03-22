@@ -43,6 +43,10 @@ repositories {
         url "https://maven.abusedmaster.xyz"
     }
     maven {
+        name "requiem"
+        url "https://dl.bintray.com/ladysnake/mods"
+    }
+    maven {
         name "jitpack"
         url "https://jitpack.io"
     }
@@ -74,6 +78,8 @@ dependencies {
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${rei_version}"
     modRuntime "me.shedaniel:RoughlyEnoughItems:${rei_version}"
     modImplementation "io.github.emilyalexandra:nourish:${nourish_version}"
+    modImplementation "io.github.ladysnake:requiem-api:${requiem_version}"
+    modRuntime "io.github.ladysnake:requiem:${requiem_version}"
 }
 
 processResources {

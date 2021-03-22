@@ -1,0 +1,12 @@
+{
+  "bewitchment:owl": {
+	"flightMode": "ENABLED"
+  },
+  "bewitchment:raven": {
+	"flightMode": "ENABLED"
+  },
+  "bewitchment:ghost": {
+	"flightMode": "FORCED",
+	"phasesThroughWalls": true
+  }
+}
