@@ -12,16 +12,21 @@ import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.passive.VillagerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(VillagerEntity.class)
 public abstract class VillagerEntityMixin extends MerchantEntity implements VillagerWerewolfAccessor {
 	private CompoundTag storedWerewolf;
+	private int despawnTimer = 40;
 	
 	public VillagerEntityMixin(EntityType<? extends MerchantEntity> entityType, World world) {
 		super(entityType, world);
@@ -34,32 +39,51 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Vill
 	
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo callbackInfo) {
-		if (!world.isClient && storedWerewolf != null && age % 20 == 0 && world.isNight() && BewitchmentAPI.getMoonPhase(world) == 0 && world.isSkyVisible(getBlockPos())) {
-			WerewolfEntity entity = BWEntityTypes.WEREWOLF.create(world);
-			if (entity != null) {
-				PlayerLookup.tracking(this).forEach(player -> SpawnSmokeParticlesPacket.send(player, this));
-				world.playSound(null, getX(), getY(), getZ(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, getSoundCategory(), getSoundVolume(), getSoundPitch());
-				entity.fromTag(storedWerewolf);
-				entity.updatePositionAndAngles(getX(), getY(), getZ(), random.nextFloat() * 360, 0);
-				entity.setHealth(entity.getMaxHealth() * (getHealth() / getMaxHealth()));
-				entity.setFireTicks(getFireTicks());
-				entity.clearStatusEffects();
-				getStatusEffects().forEach(entity::addStatusEffect);
-				((CurseAccessor) entity).getCurses().clear();
-				((CurseAccessor) this).getCurses().forEach(((CurseAccessor) entity)::addCurse);
-				((ContractAccessor) entity).getContracts().clear();
-				((ContractAccessor) this).getContracts().forEach(((ContractAccessor) entity)::addContract);
-				entity.storedVillager = toTag(new CompoundTag());
-				world.spawnEntity(entity);
-				remove();
+		if (!world.isClient && storedWerewolf != null) {
+			if (despawnTimer > 0) {
+				despawnTimer--;
+				if (despawnTimer == 0) {
+					remove();
+				}
+			}
+			if (age % 20 == 0 && world.isNight() && BewitchmentAPI.getMoonPhase(world) == 0 && world.isSkyVisible(getBlockPos())) {
+				WerewolfEntity entity = BWEntityTypes.WEREWOLF.create(world);
+				if (entity != null) {
+					PlayerLookup.tracking(this).forEach(player -> SpawnSmokeParticlesPacket.send(player, this));
+					world.playSound(null, getX(), getY(), getZ(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, getSoundCategory(), getSoundVolume(), getSoundPitch());
+					entity.fromTag(storedWerewolf);
+					entity.updatePositionAndAngles(getX(), getY(), getZ(), random.nextFloat() * 360, 0);
+					entity.setHealth(entity.getMaxHealth() * (getHealth() / getMaxHealth()));
+					entity.setFireTicks(getFireTicks());
+					entity.clearStatusEffects();
+					getStatusEffects().forEach(entity::addStatusEffect);
+					((CurseAccessor) entity).getCurses().clear();
+					((CurseAccessor) this).getCurses().forEach(((CurseAccessor) entity)::addCurse);
+					((ContractAccessor) entity).getContracts().clear();
+					((ContractAccessor) this).getContracts().forEach(((ContractAccessor) entity)::addContract);
+					if (despawnTimer >= 0) {
+						despawnTimer = 40;
+					}
+					entity.storedVillager = toTag(new CompoundTag());
+					world.spawnEntity(entity);
+					remove();
+				}
 			}
 		}
+	}
+	
+	@Inject(method = "interactMob", at = @At("HEAD"))
+	private void interactMob(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> callbackInfo) {
+		despawnTimer = -1;
 	}
 	
 	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
 	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
 		if (tag.contains("StoredWerewolf")) {
 			storedWerewolf = tag.getCompound("StoredWerewolf");
+		}
+		if (tag.contains("DespawnTimer")) {
+			despawnTimer = tag.getInt("DespawnTimer");
 		}
 	}
 	
@@ -68,5 +92,6 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Vill
 		if (storedWerewolf != null) {
 			tag.put("StoredWerewolf", storedWerewolf);
 		}
+		tag.putInt("DespawnTimer", despawnTimer);
 	}
 }
