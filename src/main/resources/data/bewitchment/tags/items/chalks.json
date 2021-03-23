@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+	"bewitchment:chalk",
+	"bewitchment:golden_chalk",
+	"bewitchment:fiery_chalk",
+	"bewitchment:eldritch_chalk"
+  ]
+}
