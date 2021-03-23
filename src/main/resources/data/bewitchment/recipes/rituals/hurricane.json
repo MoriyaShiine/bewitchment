@@ -13,6 +13,6 @@
   ],
   "inner": "normal",
   "outer": "normal",
-  "ritual_function": "bewitchment:destroy_plants",
+  "ritual_function": "bewitchment:hurricane",
   "cost": 600
 }

@@ -33,6 +33,7 @@
   "mixins": [
 	"bewitchment.mixins.json"
   ],
+  "accessWidener": "bewitchment.accesswidener",
   "depends": {
 	"fabricloader": ">=0.11.0",
 	"fabric": "*",

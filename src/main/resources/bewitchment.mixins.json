@@ -55,6 +55,7 @@
     "familiar.LivingEntityMixin",
     "familiar.PlayerEntityMixin",
     "familiar.StatusEffectMixin",
+    "familiar.SwoopMovementGoalMixin",
     "fortune.BlockMixin",
     "fortune.LivingEntityMixin",
     "fortune.PlayerEntityMixin",

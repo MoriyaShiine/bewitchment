@@ -3,7 +3,6 @@ package moriyashiine.bewitchment.common;
 import dev.emi.trinkets.api.SlotGroups;
 import dev.emi.trinkets.api.Slots;
 import dev.emi.trinkets.api.TrinketSlots;
-import ladysnake.requiem.api.v1.RequiemApi;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
@@ -17,7 +16,7 @@ import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.TrueInvisibleAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
-import moriyashiine.bewitchment.common.integration.requiem.BWRequiemPlugin;
+import moriyashiine.bewitchment.common.integration.requiem.BWRequiemCompat;
 import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.network.packet.CauldronTeleportPacket;
@@ -238,7 +237,7 @@ public class Bewitchment implements ModInitializer {
 		isNourishLoaded = FabricLoader.getInstance().isModLoaded("nourish");
 		isRequiemLoaded = FabricLoader.getInstance().isModLoaded("requiem");
 		if (isRequiemLoaded) {
-			RequiemApi.registerPlugin(new BWRequiemPlugin());
+			BWRequiemCompat.init();
 		}
 	}
 }

@@ -61,7 +61,7 @@ public class ScepterItem extends Item {
 					potionStack.getOrCreateTag().putString("PolymorphName", stack.getOrCreateTag().getString("PolymorphName"));
 				}
 				potion.setItem(potionStack);
-				potion.setProperties(user, user.pitch, user.yaw, -20.0F, 0.5F, 1.0F);
+				potion.setProperties(user, user.pitch, user.yaw, -20, 0.5f, 1);
 				world.spawnEntity(potion);
 				world.playSound(null, user.getBlockPos(), SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 1, 1);
 				if (!((PlayerEntity) user).isCreative()) {

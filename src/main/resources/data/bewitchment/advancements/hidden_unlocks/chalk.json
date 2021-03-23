@@ -1,12 +1,12 @@
 {
   "parent": "recipes/root",
   "criteria": {
-	"chalk": {
-	  "trigger": "minecraft:inventory_changed",
+	"has_item": {
+	  "trigger": "inventory_changed",
 	  "conditions": {
 		"items": [
 		  {
-			"item": "bewitchment:chalk"
+			"tag": "bewitchment:chalks"
 		  }
 		]
 	  }
@@ -14,7 +14,7 @@
   },
   "requirements": [
 	[
-	  "chalk"
+	  "has_item"
 	]
   ]
 }

@@ -57,7 +57,7 @@ public class CauldronTeleportPacket {
 						BlockEntity altarBE = world.getBlockEntity(altarPos);
 						if (altarBE instanceof WitchAltarBlockEntity) {
 							WitchAltarBlockEntity altar = (WitchAltarBlockEntity) altarBE;
-							if (altar.drain((int) (Math.sqrt(closest.getSquaredDistance(player.getPos(), true)) * 2), false)) {
+							if (altar.drain((int) Math.sqrt(closest.getSquaredDistance(player.getPos(), true)) / 2, false)) {
 								hasPower = true;
 							}
 						}
