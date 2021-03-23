@@ -47,7 +47,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("ConstantConditions")
 public class DemonEntity extends BWHostileEntity implements Merchant {
@@ -140,14 +139,15 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	@Override
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
 		if (!world.isClient && isAlive() && getCurrentCustomer() == null && getTarget() == null) {
-        setCurrentCustomer(player);
-        TradeOfferList offers = getOffers();
-      if (rejectTradesFromCurses(this) || rejectTradesFromContracts(this)) {
+			setCurrentCustomer(player);
+			TradeOfferList offers = getOffers();
+			if (rejectTradesFromCurses(this) || rejectTradesFromContracts(this)) {
 				offers = EMPTY;
 			}
 			if (!offers.isEmpty()) {
 				sendOffers(player, getDisplayName(), 0);
-			}else{
+			}
+			else {
 				setCurrentCustomer(null);
 			}
 		}
@@ -301,7 +301,7 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 			List<DemonTrade> trades = new ArrayList<>(DemonTrade.TRADES.values());
 			int amount = (int) (4 + world.random.nextInt(4) + 2 * luck);
 			for (int i = 0; i < amount; i++) {
-				if (trades.isEmpty()){
+				if (trades.isEmpty()) {
 					break;
 				}
 				DemonTrade trade = trades.get(world.random.nextInt(trades.size()));
@@ -336,7 +336,7 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 			}
 			return null;
 		}
-
+		
 		private static Item getRandomHead(Random random) {
 			int value = random.nextInt(3);
 			return value == 0 ? Items.ZOMBIE_HEAD : value == 1 ? Items.CREEPER_HEAD : Items.SKELETON_SKULL;

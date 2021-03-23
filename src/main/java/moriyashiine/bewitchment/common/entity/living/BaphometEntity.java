@@ -178,16 +178,17 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Merch
 	
 	@Override
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
-    	if (!world.isClient && isAlive() && getCurrentCustomer() == null && getTarget() == null) {
-        setCurrentCustomer(player);
-        TradeOfferList offers = getOffers();
+		if (!world.isClient && isAlive() && getCurrentCustomer() == null && getTarget() == null) {
+			setCurrentCustomer(player);
+			TradeOfferList offers = getOffers();
 			if (DemonEntity.rejectTradesFromCurses(this) || DemonEntity.rejectTradesFromContracts(this)) {
-				offers = EMPTY;
+				offers = DemonEntity.EMPTY;
 			}
-
+			
 			if (!offers.isEmpty() && BewitchmentAPI.isPledged(world, getPledgeID(), player.getUuid())) {
 				sendOffers(player, getDisplayName(), 0);
-			}else{
+			}
+			else {
 				setCurrentCustomer(null);
 			}
 		}

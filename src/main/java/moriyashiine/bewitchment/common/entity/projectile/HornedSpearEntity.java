@@ -48,10 +48,9 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 	protected void onEntityHit(EntityHitResult result) {
 		Entity owner = getOwner();
 		Entity entity = result.getEntity();
-		float damage = 9;
-		if (entity instanceof LivingEntity && entity instanceof MasterAccessor && owner != null && !owner.getUuid().equals(((MasterAccessor) entity).getMasterUUID())) {
-			LivingEntity livingEntity = (LivingEntity) entity;
-			damage += EnchantmentHelper.getAttackDamage(spear, livingEntity.getGroup());
+		float damage = 7;
+		if (entity instanceof LivingEntity) {
+			damage += EnchantmentHelper.getAttackDamage(spear, ((LivingEntity) entity).getGroup());
 		}
 		if (owner instanceof HerneEntity) {
 			damage *= 3;
