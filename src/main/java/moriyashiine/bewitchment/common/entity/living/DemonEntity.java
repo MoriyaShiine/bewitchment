@@ -6,6 +6,7 @@ import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.misc.BWUtil;
+import moriyashiine.bewitchment.common.recipe.DemonTrade;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -26,7 +27,10 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -40,7 +44,10 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("ConstantConditions")
 public class DemonEntity extends BWHostileEntity implements Merchant {
@@ -132,21 +139,19 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	
 	@Override
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
-		if (isAlive() && getCurrentCustomer() == null && getTarget() == null) {
-			TradeOfferList offers = getOffers();
-			if (rejectTradesFromCurses(this) || rejectTradesFromContracts(this)) {
+		if (!world.isClient && isAlive() && getCurrentCustomer() == null && getTarget() == null) {
+        setCurrentCustomer(player);
+        TradeOfferList offers = getOffers();
+      if (rejectTradesFromCurses(this) || rejectTradesFromContracts(this)) {
 				offers = EMPTY;
 			}
 			if (!offers.isEmpty()) {
-				boolean client = world.isClient;
-				if (!client) {
-					setCurrentCustomer(player);
-					sendOffers(player, getDisplayName(), 0);
-				}
-				return ActionResult.success(client);
+				sendOffers(player, getDisplayName(), 0);
+			}else{
+				setCurrentCustomer(null);
 			}
 		}
-		return super.interactMob(player, hand);
+		return ActionResult.success(world.isClient);
 	}
 	
 	@Override
@@ -203,7 +208,7 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	@Override
 	public TradeOfferList getOffers() {
 		if (tradeOffers == null) {
-			tradeOffers = TradeGenerator.build(random);
+			tradeOffers = TradeGenerator.build((ServerWorld) world, getCurrentCustomer() != null ? getCurrentCustomer().getLuck() : 0F);
 		}
 		return tradeOffers;
 	}
@@ -290,118 +295,23 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 	
 	@SuppressWarnings("ConstantConditions")
 	private static class TradeGenerator {
-		public static TradeOfferList build(Random random) {
+		public static TradeOfferList build(ServerWorld world, float luck) {
 			TradeOfferList offers = new TradeOfferList();
-			for (int i = 0; i < 5; i++) {
-				offers.add(generateOffer(random));
+			LootContext context = new LootContext.Builder(world).luck(luck).build(LootContextTypes.EMPTY);
+			List<DemonTrade> trades = new ArrayList<>(DemonTrade.TRADES.values());
+			int amount = (int) (4 + world.random.nextInt(4) + 2 * luck);
+			for (int i = 0; i < amount; i++) {
+				if (trades.isEmpty()){
+					break;
+				}
+				DemonTrade trade = trades.get(world.random.nextInt(trades.size()));
+				if (world.random.nextFloat() < trade.getChance(context)) {
+					offers.add(trade.generate(context));
+					trades.remove(trade);
+				}
 			}
-			offers.add(generateContractOffer(random));
+			offers.add(generateContractOffer(world.random));
 			return offers;
-		}
-		
-		private static TradeOffer generateOffer(Random random) {
-			switch (random.nextInt(9)) {
-				case 0:
-					switch (random.nextInt(5)) {
-						case 0:
-							return new TradeOffer(new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(random, 15, 21)), new ItemStack(Items.GHAST_TEAR, MathHelper.nextInt(random, 1, 2)), 3, 0, 1);
-						case 1:
-							return new TradeOffer(new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(random, 16, 24)), new ItemStack(Items.NETHERITE_SCRAP, MathHelper.nextInt(random, 1, 2)), 3, 0, 1);
-						case 2:
-							return new TradeOffer(new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(random, 12, 18)), new ItemStack(Items.SKELETON_SKULL), 3, 0, 1);
-						case 3:
-							return new TradeOffer(new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(random, 15, 20)), new ItemStack(Items.WITHER_SKELETON_SKULL), 3, 0, 1);
-						case 4:
-							return new TradeOffer(new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(random, 8, 12)), new ItemStack(Items.GILDED_BLACKSTONE, MathHelper.nextInt(random, 10, 32)), 3, 0, 1);
-					}
-				case 1:
-					switch (random.nextInt(4)) {
-						case 0:
-							return new TradeOffer(new ItemStack(Items.DIAMOND, MathHelper.nextInt(random, 3, 8)), new ItemStack(Items.GHAST_TEAR, MathHelper.nextInt(random, 1, 3)), 3, 0, 1);
-						case 1:
-							return new TradeOffer(new ItemStack(Items.DIAMOND, MathHelper.nextInt(random, 6, 10)), new ItemStack(Items.NETHERITE_SCRAP, 2), 3, 0, 1);
-						case 2:
-							return new TradeOffer(new ItemStack(Items.DIAMOND, MathHelper.nextInt(random, 1, 2)), new ItemStack(Items.SKELETON_SKULL, MathHelper.nextInt(random, 1, 2)), 3, 0, 1);
-						case 3:
-							return new TradeOffer(new ItemStack(Items.DIAMOND, MathHelper.nextInt(random, 4, 6)), new ItemStack(Items.WITHER_SKELETON_SKULL), 3, 0, 1);
-					}
-				case 2:
-					switch (random.nextInt(4)) {
-						case 0:
-							return new TradeOffer(new ItemStack(Items.BLAZE_ROD, MathHelper.nextInt(random, 12, 24)), new ItemStack(Items.GHAST_TEAR, MathHelper.nextInt(random, 1, 3)), 3, 0, 1);
-						case 1:
-							return new TradeOffer(new ItemStack(Items.BLAZE_ROD, MathHelper.nextInt(random, 16, 28)), new ItemStack(Items.NETHERITE_SCRAP, MathHelper.nextInt(random, 1, 2)), 3, 0, 1);
-						case 2:
-							return new TradeOffer(new ItemStack(Items.BLAZE_ROD, MathHelper.nextInt(random, 10, 15)), new ItemStack(Items.SKELETON_SKULL), 3, 0, 1);
-						case 3:
-							return new TradeOffer(new ItemStack(Items.BLAZE_ROD, MathHelper.nextInt(random, 20, 28)), new ItemStack(Items.WITHER_SKELETON_SKULL), 3, 0, 1);
-					}
-				case 3:
-					switch (random.nextInt(4)) {
-						case 0:
-							return new TradeOffer(new ItemStack(Items.FERMENTED_SPIDER_EYE, MathHelper.nextInt(random, 10, 18)), new ItemStack(Items.GHAST_TEAR), 3, 0, 1);
-						case 1:
-							return new TradeOffer(new ItemStack(Items.FERMENTED_SPIDER_EYE, MathHelper.nextInt(random, 4, 8)), new ItemStack(Items.WARPED_FUNGUS, MathHelper.nextInt(random, 2, 6)), 3, 0, 1);
-						case 2:
-							return new TradeOffer(new ItemStack(Items.FERMENTED_SPIDER_EYE, MathHelper.nextInt(random, 6, 12)), new ItemStack(Items.SKELETON_SKULL), 3, 0, 1);
-						case 3:
-							return new TradeOffer(new ItemStack(Items.FERMENTED_SPIDER_EYE, MathHelper.nextInt(random, 10, 20)), new ItemStack(Items.GILDED_BLACKSTONE, MathHelper.nextInt(random, 10, 25)), 3, 0, 1);
-					}
-				case 4:
-					switch (random.nextInt(3)) {
-						case 0:
-							return new TradeOffer(new ItemStack(getRandomHead(random), MathHelper.nextInt(random, 3, 6)), new ItemStack(Items.GHAST_TEAR, MathHelper.nextInt(random, 1, 2)), 3, 0, 1);
-						case 1:
-							return new TradeOffer(new ItemStack(getRandomHead(random), MathHelper.nextInt(random, 12, 16)), new ItemStack(Items.NETHERITE_SCRAP), 3, 0, 1);
-						case 2:
-							return new TradeOffer(new ItemStack(getRandomHead(random), MathHelper.nextInt(random, 3, 6)), new ItemStack(Items.GILDED_BLACKSTONE, MathHelper.nextInt(random, 10, 35)), 3, 0, 1);
-					}
-				case 5:
-					switch (random.nextInt(3)) {
-						case 0:
-							return new TradeOffer(new ItemStack(Items.WITHER_SKELETON_SKULL, 2), new ItemStack(Items.GHAST_TEAR, MathHelper.nextInt(random, 2, 3)), 3, 0, 1);
-						case 1:
-							return new TradeOffer(new ItemStack(Items.WITHER_SKELETON_SKULL, MathHelper.nextInt(random, 1, 3)), new ItemStack(Items.NETHERITE_SCRAP, MathHelper.nextInt(random, 1, 2)), 3, 0, 1);
-						case 2:
-							return new TradeOffer(new ItemStack(Items.WITHER_SKELETON_SKULL), new ItemStack(Items.GILDED_BLACKSTONE, MathHelper.nextInt(random, 30, 45)), 3, 0, 1);
-					}
-				case 6:
-					switch (random.nextInt(4)) {
-						case 0:
-							return new TradeOffer(new ItemStack(BWObjects.BESMIRCHED_WOOL, MathHelper.nextInt(random, 8, 12)), new ItemStack(Items.GHAST_TEAR), 3, 0, 1);
-						case 1:
-							return new TradeOffer(new ItemStack(BWObjects.BESMIRCHED_WOOL, MathHelper.nextInt(random, 4, 10)), new ItemStack(Items.WARPED_FUNGUS, MathHelper.nextInt(random, 4, 8)), 3, 0, 1);
-						case 2:
-							return new TradeOffer(new ItemStack(BWObjects.BESMIRCHED_WOOL, MathHelper.nextInt(random, 4, 6)), new ItemStack(Items.SKELETON_SKULL), 3, 0, 1);
-						case 3:
-							return new TradeOffer(new ItemStack(BWObjects.BESMIRCHED_WOOL, MathHelper.nextInt(random, 4, 10)), new ItemStack(Items.GILDED_BLACKSTONE, MathHelper.nextInt(random, 10, 25)), 3, 0, 1);
-					}
-				case 7:
-					switch (random.nextInt(4)) {
-						case 0:
-							return new TradeOffer(new ItemStack(BWObjects.SNAKE_TONGUE, MathHelper.nextInt(random, 6, 10)), new ItemStack(Items.GHAST_TEAR, MathHelper.nextInt(random, 1, 2)), 3, 0, 1);
-						case 1:
-							return new TradeOffer(new ItemStack(BWObjects.SNAKE_TONGUE, MathHelper.nextInt(random, 14, 25)), new ItemStack(Items.NETHERITE_SCRAP), 3, 0, 1);
-						case 2:
-							return new TradeOffer(new ItemStack(BWObjects.SNAKE_TONGUE, MathHelper.nextInt(random, 16, 24)), new ItemStack(Items.WITHER_SKELETON_SKULL), 3, 0, 1);
-						case 3:
-							return new TradeOffer(new ItemStack(BWObjects.SNAKE_TONGUE, MathHelper.nextInt(random, 8, 12)), new ItemStack(Items.GILDED_BLACKSTONE, MathHelper.nextInt(random, 10, 25)), 3, 0, 1);
-					}
-				case 8:
-					switch (random.nextInt(5)) {
-						case 0:
-							return new TradeOffer(new ItemStack(BWObjects.DEMON_HORN, MathHelper.nextInt(random, 6, 14)), new ItemStack(Items.GHAST_TEAR, MathHelper.nextInt(random, 1, 2)), 3, 0, 1);
-						case 1:
-							return new TradeOffer(new ItemStack(BWObjects.DEMON_HORN, MathHelper.nextInt(random, 12, 16)), new ItemStack(Items.NETHERITE_SCRAP), 3, 0, 1);
-						case 2:
-							return new TradeOffer(new ItemStack(BWObjects.DEMON_HORN, MathHelper.nextInt(random, 6, 12)), new ItemStack(Items.SKELETON_SKULL), 3, 0, 1);
-						case 3:
-							return new TradeOffer(new ItemStack(BWObjects.DEMON_HORN, MathHelper.nextInt(random, 12, 18)), new ItemStack(Items.WITHER_SKELETON_SKULL), 3, 0, 1);
-						case 4:
-							return new TradeOffer(new ItemStack(BWObjects.DEMON_HORN, MathHelper.nextInt(random, 6, 10)), new ItemStack(Items.GILDED_BLACKSTONE, MathHelper.nextInt(random, 15, 35)), 3, 0, 1);
-					}
-			}
-			return null;
 		}
 		
 		private static TradeOffer generateContractOffer(Random random) {
@@ -410,23 +320,23 @@ public class DemonEntity extends BWHostileEntity implements Merchant {
 			stack.getOrCreateTag().putInt("Duration", 168000);
 			switch (random.nextInt(7)) {
 				case 0:
-					return new TradeOffer(new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(random, 24, 32)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 5, 5)), stack, 1, 0, 1);
+					return new TradeOffer(new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(random, 10, 20)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 2, 4)), stack, 1, 0, 1);
 				case 1:
-					return new TradeOffer(new ItemStack(Items.DIAMOND, MathHelper.nextInt(random, 8, 14)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 2, 5)), stack, 1, 0, 1);
+					return new TradeOffer(new ItemStack(Items.DIAMOND, MathHelper.nextInt(random, 3, 4)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 2, 4)), stack, 1, 0, 1);
 				case 2:
-					return new TradeOffer(new ItemStack(Items.BLAZE_ROD, MathHelper.nextInt(random, 32, 42)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 2, 5)), stack, 1, 0, 1);
+					return new TradeOffer(new ItemStack(Items.BLAZE_ROD, MathHelper.nextInt(random, 6, 13)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 2, 3)), stack, 1, 0, 1);
 				case 3:
-					return new TradeOffer(new ItemStack(getRandomHead(random), MathHelper.nextInt(random, 10, 20)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 2, 5)), stack, 1, 0, 1);
+					return new TradeOffer(new ItemStack(getRandomHead(random), MathHelper.nextInt(random, 1, 3)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 2, 3)), stack, 1, 0, 1);
 				case 4:
-					return new TradeOffer(new ItemStack(Items.WITHER_SKELETON_SKULL, MathHelper.nextInt(random, 3, 4)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 2, 5)), stack, 1, 0, 1);
+					return new TradeOffer(new ItemStack(Items.WITHER_SKELETON_SKULL, 1), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 2, 5)), stack, 1, 0, 1);
 				case 5:
-					return new TradeOffer(new ItemStack(BWObjects.SNAKE_TONGUE, MathHelper.nextInt(random, 20, 32)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 2, 5)), stack, 1, 0, 1);
+					return new TradeOffer(new ItemStack(BWObjects.SNAKE_TONGUE, MathHelper.nextInt(random, 5, 8)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 1, 3)), stack, 1, 0, 1);
 				case 6:
-					return new TradeOffer(new ItemStack(BWObjects.DEMON_HORN, MathHelper.nextInt(random, 20, 32)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 2, 5)), stack, 1, 0, 1);
+					return new TradeOffer(new ItemStack(BWObjects.DEMON_HORN, MathHelper.nextInt(random, 3, 8)), new ItemStack(BWObjects.BOTTLE_OF_BLOOD, MathHelper.nextInt(random, 2, 3)), stack, 1, 0, 1);
 			}
 			return null;
 		}
-		
+
 		private static Item getRandomHead(Random random) {
 			int value = random.nextInt(3);
 			return value == 0 ? Items.ZOMBIE_HEAD : value == 1 ? Items.CREEPER_HEAD : Items.SKELETON_SKULL;

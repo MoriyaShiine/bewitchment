@@ -1,0 +1,35 @@
+{
+  "first_buy": {
+    "item": "golden_apple",
+    "functions": [
+      {
+        "function": "minecraft:set_count",
+        "count": {
+          "type": "minecraft:uniform",
+          "min": 1.0,
+          "max": 2.0
+        },
+        "add": false
+      }
+    ]
+  },
+  "second_buy": {
+    "item": "bewitchment:grim_elixir",
+    "functions": [
+      {
+        "function": "minecraft:set_count",
+        "count": {
+          "type": "minecraft:uniform",
+          "min": 2.0,
+          "max": 4.0
+        }
+      }
+    ]
+  },
+  "sell": {
+    "item": "enchanted_golden_apple"
+  },
+  "max_uses": 1,
+  "chance": 0.25,
+  "luck_bonus": 0.5
+}

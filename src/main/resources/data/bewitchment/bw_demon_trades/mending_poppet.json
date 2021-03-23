@@ -1,0 +1,34 @@
+{
+  "first_buy": {
+    "item": "bewitchment:besmirched_wool",
+    "functions": [
+      {
+        "function": "minecraft:set_count",
+        "count": {
+          "type": "minecraft:uniform",
+          "min": 2.0,
+          "max": 4.0
+        }
+      }
+    ]
+  },
+  "second_buy": {
+    "item": "iron_ingot",
+    "functions": [
+      {
+        "function": "minecraft:set_count",
+        "count": {
+          "type": "minecraft:uniform",
+          "min": 4.0,
+          "max": 10.0
+        }
+      }
+    ]
+  },
+  "sell": {
+    "item": "bewitchment:mending_poppet"
+  },
+  "max_uses": 1,
+  "chance": 0.75,
+  "luck_bonus": 0.25
+}

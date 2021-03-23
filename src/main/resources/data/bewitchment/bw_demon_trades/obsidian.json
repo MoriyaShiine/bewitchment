@@ -1,0 +1,22 @@
+{
+  "first_buy": {
+    "item": "stone",
+    "functions": [
+      {
+        "function": "minecraft:set_count",
+        "count": {
+          "type": "minecraft:uniform",
+          "min": 1.0,
+          "max": 4.0
+        }
+      }
+    ]
+  },
+  "second_buy": {
+    "item": "bewitchment:grim_elixir"
+  },
+  "sell": {
+    "item": "obsidian"
+  },
+  "max_uses": 16
+}

@@ -1,0 +1,34 @@
+{
+  "first_buy": {
+    "item": "bewitchment:besmirched_wool",
+    "functions": [
+      {
+        "function": "minecraft:set_count",
+        "count": {
+          "type": "minecraft:uniform",
+          "min": 2.0,
+          "max": 4.0
+        }
+      }
+    ]
+  },
+  "second_buy": {
+    "item": "bewitchment:bottle_of_blood",
+    "functions": [
+      {
+        "function": "minecraft:set_count",
+        "count": {
+          "type": "minecraft:uniform",
+          "min": 1.0,
+          "max": 3.0
+        }
+      }
+    ]
+  },
+  "sell": {
+    "item": "bewitchment:curse_poppet"
+  },
+  "max_uses": 1,
+  "chance": 0.50,
+  "luck_bonus": 0.25
+}
