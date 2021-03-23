@@ -230,7 +230,7 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 		goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8));
 		goalSelector.add(3, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this));
-		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> entity.getGroup() != BewitchmentAPI.DEMON && !BewitchmentAPI.isVampire(entity, true) && BWUtil.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3 && !(entity instanceof PlayerEntity && BewitchmentAPI.isPledged(world, getPledgeID(), entity.getUuid()))));
+		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> BWUtil.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3 && (entity.getGroup() != BewitchmentAPI.DEMON || entity instanceof PlayerEntity) && !BewitchmentAPI.isPledged(world, getPledgeID(), entity.getUuid())));
 	}
 	
 	private void spawnPotion(BlockPos target, Potion potionType) {
