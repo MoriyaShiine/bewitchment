@@ -31,7 +31,7 @@ public class BWRitualFunctions {
 	public static final RitualFunction SEARCH_BLOCKS = create("search_blocks", new SearchBlocksRitualFunction(ParticleTypes.MYCELIUM, null));
 	public static final RitualFunction SPAWN_LIGHTNING = create("spawn_lightning", new SpawnLightningRitualFunction(ParticleTypes.CLOUD, null));
 	public static final RitualFunction PUSH_MOBS = create("push_mobs", new PushMobsRitualFunction(ParticleTypes.CLOUD, null));
-	public static final RitualFunction DESTROY_PLANTS = create("destroy_plants", new DestroyPlantsRitualFunction(ParticleTypes.CLOUD, null));
+	public static final RitualFunction HURRICANE = create("hurricane", new HurricaneRitualFunction(ParticleTypes.CLOUD, null));
 	
 	public static final RitualFunction BIND_FAMILIAR = create("bind_familiar", new BindFamiliarRitualFunction(ParticleTypes.PORTAL, null));
 	public static final RitualFunction UNBIND_FAMILIAR = create("unbind_familiar", new UnbindFamiliarRitualFunction(ParticleTypes.PORTAL, null));
