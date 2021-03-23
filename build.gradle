@@ -10,6 +10,10 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
+minecraft {
+    accessWidener "src/main/resources/bewitchment.accesswidener"
+}
+
 repositories {
     maven {
         name "terraform wood api, trinkets"
