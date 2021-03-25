@@ -76,7 +76,8 @@
 	"transformation.ProtectionEnchantmentMixin",
 	"transformation.VampireHackMixin",
 	"transformation.VillagerEntityMixin",
-	"trinket.LivingEntityMixin"
+	"trinket.LivingEntityMixin",
+	"trinket.PlayerEntityMixin"
   ],
   "client": [
 	"client.ClientPlayerEntityMixin",

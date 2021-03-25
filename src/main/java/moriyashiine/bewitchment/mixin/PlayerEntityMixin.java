@@ -3,7 +3,6 @@ package moriyashiine.bewitchment.mixin;
 import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.BroomUserAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
-import moriyashiine.bewitchment.common.entity.interfaces.TrueInvisibleAccessor;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -22,13 +21,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity implements MagicAccessor, RespawnTimerAccessor, BroomUserAccessor, TrueInvisibleAccessor {
+public abstract class PlayerEntityMixin extends LivingEntity implements MagicAccessor, RespawnTimerAccessor, BroomUserAccessor {
 	private static final TrackedData<Integer> MAGIC = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	private static final TrackedData<Integer> MAGIC_TIMER = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	
 	private static final TrackedData<Boolean> PRESSING_FORWARD = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-	
-	private static final TrackedData<Boolean> TRUE_INVISIBLE = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
 	private int respawnTimer = 400;
 	
@@ -76,24 +73,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		dataTracker.set(PRESSING_FORWARD, pressingForward);
 	}
 	
-	@Override
-	public boolean getTrueInvisible() {
-		return dataTracker.get(TRUE_INVISIBLE);
-	}
-	
-	@Override
-	public void setTrueInvisible(boolean pressingForward) {
-		dataTracker.set(TRUE_INVISIBLE, pressingForward);
-	}
-	
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo callbackInfo) {
 		if (!world.isClient) {
 			if (getMagicTimer() > 0) {
 				setMagicTimer(getMagicTimer() - 1);
-			}
-			if (getTrueInvisible()) {
-				setTrueInvisible(false);
 			}
 			if (getRespawnTimer() > 0) {
 				setRespawnTimer(getRespawnTimer() - 1);
@@ -116,7 +100,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		setMagic(tag.getInt("Magic"));
 		setRespawnTimer(tag.getInt("RespawnTimer"));
 		setPressingForward(tag.getBoolean("PressingForward"));
-		setTrueInvisible(tag.getBoolean("TrueInvisible"));
 	}
 	
 	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
@@ -124,7 +107,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		tag.putInt("Magic", getMagic());
 		tag.putInt("RespawnTimer", getRespawnTimer());
 		tag.putBoolean("PressingForward", getPressingForward());
-		tag.putBoolean("TrueInvisible", getTrueInvisible());
 	}
 	
 	@Inject(method = "initDataTracker", at = @At("TAIL"))
@@ -132,6 +114,5 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		dataTracker.startTracking(MAGIC, 0);
 		dataTracker.startTracking(MAGIC_TIMER, 60);
 		dataTracker.startTracking(PRESSING_FORWARD, false);
-		dataTracker.startTracking(TRUE_INVISIBLE, false);
 	}
 }
