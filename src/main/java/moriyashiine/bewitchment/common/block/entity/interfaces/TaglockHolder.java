@@ -12,7 +12,6 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -41,11 +40,10 @@ public interface TaglockHolder {
 		}
 	}
 	
-	default ActionResult use(World world, BlockPos pos, LivingEntity user) {
+	default void use(World world, BlockPos pos, LivingEntity user) {
 		if (!user.getUuid().equals(getOwner())) {
 			addTaglock(world, pos, user);
 		}
-		return ActionResult.PASS;
 	}
 	
 	default void addTaglock(World world, BlockPos pos, Entity entity) {
@@ -91,11 +89,10 @@ public interface TaglockHolder {
 		}
 	}
 	
-	static ActionResult onUse(World world, BlockPos pos, LivingEntity user) {
+	static void onUse(World world, BlockPos pos, LivingEntity user) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity instanceof TaglockHolder) {
-			return ((TaglockHolder) blockEntity).use(world, pos, user);
+			((TaglockHolder) blockEntity).use(world, pos, user);
 		}
-		return ActionResult.PASS;
 	}
 }

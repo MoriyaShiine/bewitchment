@@ -15,14 +15,9 @@ import net.minecraft.util.math.MathHelper;
 public class GhostEntityModel<T extends GhostEntity> extends BipedEntityModel<T> {
 	private final ModelPart body;
 	private final ModelPart bodyTrail00;
-	private final ModelPart bodyTrail01;
 	private final ModelPart BipedLeftArm;
-	private final ModelPart lArmWisp;
 	private final ModelPart BipedRightArm;
-	private final ModelPart rArmWisp;
 	private final ModelPart head;
-	private final ModelPart skull;
-	private final ModelPart skullJaw;
 	
 	private boolean realArm = false;
 	
@@ -39,7 +34,7 @@ public class GhostEntityModel<T extends GhostEntity> extends BipedEntityModel<T>
 		setRotation(bodyTrail00, 0.1047F, 0.0F, 0.0F);
 		bodyTrail00.setTextureOffset(33, 51).addCuboid(-4.5F, 0.0F, -2.5F, 9.0F, 6.0F, 5.0F, 0.0F, false);
 		
-		bodyTrail01 = new ModelPart(this);
+		ModelPart bodyTrail01 = new ModelPart(this);
 		bodyTrail01.setPivot(0.0F, 5.8F, 0.1F);
 		bodyTrail00.addChild(bodyTrail01);
 		setRotation(bodyTrail01, 0.1047F, 0.0F, 0.0F);
@@ -50,7 +45,7 @@ public class GhostEntityModel<T extends GhostEntity> extends BipedEntityModel<T>
 		setRotation(BipedLeftArm, -1.3963F, 0.0F, -0.1F);
 		BipedLeftArm.setTextureOffset(40, 16).addCuboid(-1.0F, -2.0F, -2.0F, 4.0F, 13.0F, 4.0F, 0.0F, true);
 		
-		lArmWisp = new ModelPart(this);
+		ModelPart lArmWisp = new ModelPart(this);
 		lArmWisp.setPivot(1.0F, 2.7F, 1.7F);
 		BipedLeftArm.addChild(lArmWisp);
 		lArmWisp.setTextureOffset(40, 34).addCuboid(-1.5F, -4.5F, 0.1F, 3.0F, 11.0F, 4.0F, 0.0F, true);
@@ -60,7 +55,7 @@ public class GhostEntityModel<T extends GhostEntity> extends BipedEntityModel<T>
 		setRotation(BipedRightArm, -1.3963F, 0.0F, 0.1F);
 		BipedRightArm.setTextureOffset(40, 16).addCuboid(-3.0F, -2.0F, -2.0F, 4.0F, 13.0F, 4.0F, 0.0F, true);
 		
-		rArmWisp = new ModelPart(this);
+		ModelPart rArmWisp = new ModelPart(this);
 		rArmWisp.setPivot(-1.0F, 2.7F, 1.7F);
 		BipedRightArm.addChild(rArmWisp);
 		rArmWisp.setTextureOffset(40, 34).addCuboid(-1.5F, -4.5F, 0.1F, 3.0F, 11.0F, 4.0F, 0.0F, true);
@@ -69,12 +64,12 @@ public class GhostEntityModel<T extends GhostEntity> extends BipedEntityModel<T>
 		head.setPivot(0.0F, 0.0F, 0.0F);
 		head.setTextureOffset(0, 0).addCuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, 0.0F, false);
 		
-		skull = new ModelPart(this);
+		ModelPart skull = new ModelPart(this);
 		skull.setPivot(0.0F, 0.0F, 0.0F);
 		head.addChild(skull);
 		skull.setTextureOffset(34, 0).addCuboid(-3.5F, -7.5F, -3.0F, 7.0F, 5.0F, 6.0F, 0.0F, false);
 		
-		skullJaw = new ModelPart(this);
+		ModelPart skullJaw = new ModelPart(this);
 		skullJaw.setPivot(0.0F, -1.9F, 0.9F);
 		skull.addChild(skullJaw);
 		setRotation(skullJaw, 0.1745F, 0.0F, 0.0F);

@@ -33,10 +33,7 @@ public class JuniperDoorBlock extends TerraformDoorBlock implements BlockEntityP
 	
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		ActionResult result = TaglockHolder.onUse(world, state.get(HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos, player);
-		if (result != ActionResult.PASS) {
-			return result;
-		}
+		TaglockHolder.onUse(world, state.get(HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos, player);
 		return super.onUse(state, world, pos, player, hand, hit);
 	}
 	

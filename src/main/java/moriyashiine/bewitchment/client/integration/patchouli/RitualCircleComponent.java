@@ -14,7 +14,7 @@ import java.util.function.UnaryOperator;
 
 public class RitualCircleComponent implements ICustomComponent {
 	transient int x, y;
-	transient Identifier[] circles = new Identifier[2];
+	final transient Identifier[] circles = new Identifier[2];
 	IVariable inner;
 	IVariable outer;
 	

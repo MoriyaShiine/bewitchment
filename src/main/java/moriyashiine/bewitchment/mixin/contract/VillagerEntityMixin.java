@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.mixin.contract;
 
 import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
-import moriyashiine.bewitchment.common.entity.living.DemonEntity;
+import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWContracts;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -36,9 +36,9 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
 	
 	@Inject(method = "interactMob", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/entity/passive/VillagerEntity;getOffers()Lnet/minecraft/village/TradeOfferList;"), cancellable = true)
 	private void getOffers(PlayerEntity player, Hand hand, CallbackInfoReturnable<TradeOfferList> callbackInfo) {
-		if (!world.isClient && DemonEntity.rejectTradesFromContracts(this)) {
+		if (!world.isClient && BWUtil.rejectTradesFromContracts(this)) {
 			sayNo();
-			callbackInfo.setReturnValue(DemonEntity.EMPTY);
+			callbackInfo.setReturnValue(BWUtil.EMPTY_TRADES);
 		}
 	}
 	

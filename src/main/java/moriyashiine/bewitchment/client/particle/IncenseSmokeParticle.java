@@ -20,11 +20,6 @@ public class IncenseSmokeParticle extends LargeFireSmokeParticle {
 		return ParticleTextureSheet.PARTICLE_SHEET_OPAQUE;
 	}
 	
-	@Override
-	public void tick() {
-		super.tick();
-	}
-	
 	@Environment(EnvType.CLIENT)
 	public static class Factory implements ParticleFactory<DefaultParticleType> {
 		private final SpriteProvider spriteProvider;

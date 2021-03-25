@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.curse;
 
-import moriyashiine.bewitchment.common.entity.living.DemonEntity;
+import moriyashiine.bewitchment.common.misc.BWUtil;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.passive.VillagerEntity;
@@ -25,9 +25,9 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
 	
 	@Inject(method = "interactMob", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/entity/passive/VillagerEntity;getOffers()Lnet/minecraft/village/TradeOfferList;"), cancellable = true)
 	private void interactMob(PlayerEntity player, Hand hand, CallbackInfoReturnable<TradeOfferList> callbackInfo) {
-		if (!world.isClient && DemonEntity.rejectTradesFromCurses(this)) {
+		if (!world.isClient && BWUtil.rejectTradesFromCurses(this)) {
 			sayNo();
-			callbackInfo.setReturnValue(DemonEntity.EMPTY);
+			callbackInfo.setReturnValue(BWUtil.EMPTY_TRADES);
 		}
 	}
 }

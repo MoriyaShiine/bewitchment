@@ -1,7 +1,11 @@
 package moriyashiine.bewitchment.common.misc;
 
+import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
 import moriyashiine.bewitchment.common.item.ScepterItem;
+import moriyashiine.bewitchment.common.registry.BWContracts;
+import moriyashiine.bewitchment.common.registry.BWCurses;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.Entity;
@@ -11,14 +15,18 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.village.TradeOfferList;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 
 public class BWUtil {
+	public static final TradeOfferList EMPTY_TRADES = new TradeOfferList();
+	
 	public static Set<BlockPos> getBlockPoses(BlockPos origin, int radius, Predicate<BlockPos> provider) {
 		Set<BlockPos> blockPoses = new HashSet<>();
 		BlockPos.Mutable mutable = new BlockPos.Mutable();
@@ -47,6 +55,14 @@ public class BWUtil {
 	public static boolean isTool(ItemStack stack) {
 		Item item = stack.getItem();
 		return item instanceof ToolItem || item instanceof RangedWeaponItem || item instanceof ScepterItem || item instanceof ShieldItem || item instanceof TridentItem;
+	}
+	
+	public static boolean rejectTradesFromCurses(LivingEntity merchant) {
+		return !merchant.world.getEntitiesByClass(LivingEntity.class, new Box(merchant.getBlockPos()).expand(8), entity -> merchant.canSee(entity) && entity.isAlive() && ((CurseAccessor) entity).hasCurse(BWCurses.APATHY)).isEmpty();
+	}
+	
+	public static boolean rejectTradesFromContracts(LivingEntity merchant) {
+		return !merchant.world.getEntitiesByClass(LivingEntity.class, new Box(merchant.getBlockPos()).expand(8), entity -> merchant.canSee(entity) && entity.isAlive() && (((ContractAccessor) entity).hasContract(BWContracts.FRAUD) && ((ContractAccessor) entity).hasNegativeEffects())).isEmpty();
 	}
 	
 	public static int getArmorPieces(LivingEntity livingEntity, Predicate<ItemStack> predicate) {

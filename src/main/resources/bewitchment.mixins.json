@@ -20,7 +20,6 @@
 	"MobEntityMixin",
 	"PlayerEntityMixin",
 	"PounceAtTargetGoalMixin",
-	"ServerResourceManagerMixin",
 	"SpawnHelperMixin",
 	"StatusEffectAccessor",
 	"TreeDecoratorTypeAccessor",

@@ -14,7 +14,7 @@ import java.util.Map;
 public class BWEnchantments {
 	private static final Map<Enchantment, Identifier> ENCHANTMENTS = new LinkedHashMap<>();
 	
-	public static Enchantment MAGIC_PROTECTION = create("magic_protection", new MagicProtectionEnchantment(Enchantment.Rarity.UNCOMMON, ProtectionEnchantment.Type.FIRE, EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET));
+	public static final Enchantment MAGIC_PROTECTION = create("magic_protection", new MagicProtectionEnchantment(Enchantment.Rarity.UNCOMMON, ProtectionEnchantment.Type.FIRE, EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET));
 	
 	private static <T extends Enchantment> T create(String name, T enchantment) {
 		ENCHANTMENTS.put(enchantment, new Identifier(Bewitchment.MODID, name));
