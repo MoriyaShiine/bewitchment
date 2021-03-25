@@ -1,9 +1,7 @@
 package moriyashiine.bewitchment.common.registry;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.Bewitchment;
-import moriyashiine.bewitchment.common.entity.living.HellhoundEntity;
-import moriyashiine.bewitchment.common.entity.living.VampireEntity;
-import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
@@ -15,6 +13,7 @@ import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.entry.LootTableEntry;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
@@ -88,15 +87,15 @@ public class BWWorldGenerators {
 		}
 		if (Bewitchment.config.vampireWeight > 0) {
 			BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> context.getBiome().getCategory() == Biome.Category.PLAINS || context.getBiome().getCategory() == Biome.Category.TAIGA), BWEntityTypes.VAMPIRE.getSpawnGroup(), BWEntityTypes.VAMPIRE, Bewitchment.config.vampireWeight, Bewitchment.config.vampireMinGroupCount, Bewitchment.config.vampireMaxGroupCount);
-			SpawnRestrictionAccessor.callRegister(BWEntityTypes.VAMPIRE, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.WORLD_SURFACE_WG, VampireEntity::canSpawn);
+			SpawnRestrictionAccessor.callRegister(BWEntityTypes.VAMPIRE, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, serverWorldAccess, spawnReason, pos, random) -> BewitchmentAPI.getMoonPhase(serverWorldAccess) == 4);
 		}
 		if (Bewitchment.config.werewolfWeight > 0) {
 			BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> context.getBiome().getCategory() == Biome.Category.FOREST || context.getBiome().getCategory() == Biome.Category.TAIGA || context.getBiome().getCategory() == Biome.Category.ICY), BWEntityTypes.WEREWOLF.getSpawnGroup(), BWEntityTypes.WEREWOLF, Bewitchment.config.werewolfWeight, Bewitchment.config.werewolfMinGroupCount, Bewitchment.config.werewolfMaxGroupCount);
-			SpawnRestrictionAccessor.callRegister(BWEntityTypes.WEREWOLF, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.WORLD_SURFACE_WG, WerewolfEntity::canSpawn);
+			SpawnRestrictionAccessor.callRegister(BWEntityTypes.WEREWOLF, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, serverWorldAccess, spawnReason, pos, random) -> BewitchmentAPI.getMoonPhase(serverWorldAccess) == 0);
 		}
 		if (Bewitchment.config.hellhoundWeight > 0) {
 			BiomeModifications.addSpawn(BiomeSelectors.foundInTheNether(), BWEntityTypes.HELLHOUND.getSpawnGroup(), BWEntityTypes.HELLHOUND, Bewitchment.config.hellhoundWeight, Bewitchment.config.hellhoundMinGroupCount, Bewitchment.config.hellhoundMaxGroupCount);
-			SpawnRestrictionAccessor.callRegister(BWEntityTypes.HELLHOUND, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HellhoundEntity::canSpawn);
+			SpawnRestrictionAccessor.callRegister(BWEntityTypes.HELLHOUND, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, serverWorldAccess, spawnReason, pos, random) -> !BlockTags.WART_BLOCKS.contains(serverWorldAccess.getBlockState(pos.down()).getBlock()));
 		}
 		LootTableLoadingCallback.EVENT.register((resourceManager, lootManager, identifier, fabricLootSupplierBuilder, lootTableSetter) -> {
 			Identifier seeds = new Identifier(Bewitchment.MODID, "inject/seeds");

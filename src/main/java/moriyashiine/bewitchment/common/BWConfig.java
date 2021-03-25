@@ -37,7 +37,7 @@ public class BWConfig implements ConfigData {
 	public final int toadMinGroupCount = 1;
 	public final int toadMaxGroupCount = 3;
 	
-	public final int ghostWeight = 6;
+	public final int ghostWeight = 10;
 	public final int ghostMinGroupCount = 1;
 	public final int ghostMaxGroupCount = 1;
 	
@@ -52,6 +52,4 @@ public class BWConfig implements ConfigData {
 	public final int hellhoundWeight = 6;
 	public final int hellhoundMinGroupCount = 1;
 	public final int hellhoundMaxGroupCount = 1;
-	
-	public final boolean doDemonTradesRefresh = true;
 }

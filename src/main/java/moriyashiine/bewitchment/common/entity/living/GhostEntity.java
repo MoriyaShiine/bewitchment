@@ -6,6 +6,7 @@ import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.registry.BWDamageSources;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
+import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.Block;
@@ -148,7 +149,7 @@ public class GhostEntity extends BWHostileEntity {
 	}
 	
 	public static StatusEffectInstance getEffect(int type, int duration) {
-		return new StatusEffectInstance(type == 1 ? StatusEffects.HUNGER : type == 2 ? StatusEffects.BLINDNESS : type == 3 ? StatusEffects.SLOWNESS : StatusEffects.NAUSEA, duration);
+		return new StatusEffectInstance(type == 1 ? StatusEffects.HUNGER : type == 2 ? StatusEffects.SLOWNESS : type == 3 ? BWStatusEffects.CORROSION : BWStatusEffects.SINKING, duration);
 	}
 	
 	private class GhostMoveControl extends MoveControl {

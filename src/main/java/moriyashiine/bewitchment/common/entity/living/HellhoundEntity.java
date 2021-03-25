@@ -7,7 +7,10 @@ import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWMaterials;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityGroup;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -18,14 +21,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.BlockTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Random;
 
 public class HellhoundEntity extends BWHostileEntity {
 	public HellhoundEntity(EntityType<? extends HostileEntity> entityType, World world) {
@@ -95,9 +92,5 @@ public class HellhoundEntity extends BWHostileEntity {
 		goalSelector.add(4, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this).setGroupRevenge());
 		targetSelector.add(1, new FollowTargetGoal<>(this, PlayerEntity.class, 10, true, false, entity -> entity.getGroup() != BewitchmentAPI.DEMON && !BewitchmentAPI.isVampire(entity, true) && BWUtil.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3));
-	}
-	
-	public static boolean canSpawn(EntityType<HellhoundEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-		return world.getDifficulty() != Difficulty.PEACEFUL && !BlockTags.WART_BLOCKS.contains(world.getBlockState(pos.down()).getBlock());
 	}
 }

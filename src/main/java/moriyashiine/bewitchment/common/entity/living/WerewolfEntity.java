@@ -24,11 +24,10 @@ import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.*;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Random;
 
 @SuppressWarnings("ConstantConditions")
 public class WerewolfEntity extends BWHostileEntity {
@@ -161,9 +160,5 @@ public class WerewolfEntity extends BWHostileEntity {
 	
 	public static int getVariantsStatic() {
 		return 7;
-	}
-	
-	public static boolean canSpawn(EntityType<WerewolfEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-		return world.getDifficulty() != Difficulty.PEACEFUL && BewitchmentAPI.getMoonPhase(world) == 0;
 	}
 }
