@@ -7,6 +7,8 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.*;
+import moriyashiine.bewitchment.client.screen.BaphometScreenHandler;
+import moriyashiine.bewitchment.client.screen.DemonScreenHandler;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
@@ -32,6 +34,7 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.fabricmc.fabric.api.util.TriState;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BlockEntity;
@@ -47,9 +50,12 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.TranslatableText;
@@ -71,7 +77,10 @@ public class Bewitchment implements ModInitializer {
 	public static final ItemGroup BEWITCHMENT_GROUP = FabricItemGroupBuilder.build(new Identifier(MODID, MODID), () -> new ItemStack(BWObjects.ATHAME));
 	
 	public static boolean isNourishLoaded, isRequiemLoaded;
-	
+
+	public static ScreenHandlerType<DemonScreenHandler> DEMON_SCREEN_HANDLER =  ScreenHandlerRegistry.registerSimple(new Identifier(MODID, "demon_screen"), (syncId, inventory) -> new DemonScreenHandler(syncId));
+	public static ScreenHandlerType<DemonScreenHandler> BAPHOMET_SCREEN_HANDLER =  ScreenHandlerRegistry.registerSimple(new Identifier(MODID, "baphomet_screen"), (syncId, inventory) -> new BaphometScreenHandler(syncId));
+
 	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void onInitialize() {

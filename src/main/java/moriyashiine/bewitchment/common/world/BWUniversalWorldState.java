@@ -78,7 +78,6 @@ public class BWUniversalWorldState extends PersistentState {
 		ListTag familiars = tag.getList("Familiars", NbtType.COMPOUND);
 		for (int i = 0; i < familiars.size(); i++) {
 			CompoundTag familiarTag = familiars.getCompound(i);
-			//todo fix occasional null pointer here that I'm 90% sure causes server lag on startup
 			this.familiars.add(new Pair<>(familiarTag.getUuid("Player"), familiarTag.getCompound("Familiar")));
 		}
 	}
