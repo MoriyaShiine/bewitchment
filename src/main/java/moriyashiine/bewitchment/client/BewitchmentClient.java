@@ -193,7 +193,7 @@ public class BewitchmentClient implements ClientModInitializer {
 					if (((BroomUserAccessor) minecraftClient.player).getPressingForward()) {
 						TogglePressingForwardPacket.send(false);
 					}
-					if (MinecraftClient.getInstance().options.keyForward.isPressed() && minecraftClient.player.getVehicle() instanceof BroomEntity && BewitchmentAPI.usePlayerMagic(minecraftClient.player, 1, true)) {
+					if (MinecraftClient.getInstance().options.keyForward.isPressed() && minecraftClient.player.getVehicle() instanceof BroomEntity) {
 						TogglePressingForwardPacket.send(true);
 					}
 				}

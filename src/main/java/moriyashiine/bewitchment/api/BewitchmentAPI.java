@@ -136,6 +136,9 @@ public class BewitchmentAPI {
 	}
 	
 	public static boolean usePlayerMagic(PlayerEntity player, int amount, boolean simulate) {
+		if (player.world.isClient) {
+			return false;
+		}
 		if (player.isCreative()) {
 			return true;
 		}
