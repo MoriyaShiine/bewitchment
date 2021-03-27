@@ -105,6 +105,31 @@ tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
 
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = "sources"
+    from sourceSets.main.allSource
+}
+
 jar {
     from "LICENSE"
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            // add all the jars that should be included when publishing to maven
+            artifact(remapJar) {
+                builtBy remapJar
+            }
+            artifact(sourcesJar) {
+                builtBy remapSourcesJar
+            }
+        }
+    }
+
+    repositories {
+        // select the repositories you want to publish to
+        // uncomment to publish to the local maven
+        // mavenLocal()
+    }
 }

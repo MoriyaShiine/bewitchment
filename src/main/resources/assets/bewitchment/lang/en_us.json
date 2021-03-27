@@ -497,6 +497,7 @@
   "bewitchment.tooltip.cost": "Cost: %d",
   "bewitchment.tooltip.running_time": "Running Time: %d seconds",
   "bewitchment.tooltip.days": "Days: %d",
+  "bewitchment.tooltip.signed": "Signed",
   "rei.bewitchment.athame_stripping": "Athame Stripping",
   "rei.bewitchment.athame_drops": "Athame Drops",
   "rei.bewitchment.rituals": "Rituals",
@@ -507,5 +508,6 @@
   "chalk.bewitchment.normal": "Normal",
   "chalk.bewitchment.fiery": "Fiery",
   "chalk.bewitchment.eldritch": "Eldritch",
-  "chalk.bewitchment.any": "Any"
+  "chalk.bewitchment.any": "Any",
+  "screen.bewitchment.demon_deal": "Demon Deal"
 }
