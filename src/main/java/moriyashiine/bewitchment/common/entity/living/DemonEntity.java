@@ -5,7 +5,6 @@ import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.client.network.packet.SyncDemonTradesPacket;
 import moriyashiine.bewitchment.client.screen.DemonScreenHandler;
-import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.interfaces.DemonMerchant;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.misc.BWUtil;
@@ -23,8 +22,6 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.MerchantEntity;
-import net.minecraft.entity.passive.WanderingTraderEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.item.ArmorItem;
@@ -51,7 +48,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 	public static final TrackedData<Boolean> MALE = DataTracker.registerData(DemonEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	private final List<DemonEntity.DemonTradeOffer> offers = new ArrayList<>();
 	private PlayerEntity customer = null;
-
+	
 	public DemonEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 		setPathfindingPenalty(PathNodeType.DANGER_FIRE, 0);
@@ -62,7 +59,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 200).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6).add(EntityAttributes.GENERIC_ARMOR, 4).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.75);
 	}
-
+	
 	@Override
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
 		if (!world.isClient && isAlive() && getTarget() == null) {
@@ -72,19 +69,18 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 			if (getCurrentCustomer() == null) {
 				setCurrentCustomer(player);
 			}
-
+			
 			if (!getOffers().isEmpty()) {
-				player.openHandledScreen(new SimpleNamedScreenHandlerFactory((ix, playerInventory, playerEntityx) -> new DemonScreenHandler(ix, this), getDisplayName())).ifPresent(syncId -> {
-					SyncDemonTradesPacket.send(player, this, syncId);
-				});
-			} else {
+				player.openHandledScreen(new SimpleNamedScreenHandlerFactory((id, playerInventory, customer) -> new DemonScreenHandler(id, this), getDisplayName())).ifPresent(syncId -> SyncDemonTradesPacket.send(player, this, syncId));
+			}
+			else {
 				setCurrentCustomer(null);
 			}
 		}
 		return ActionResult.success(world.isClient);
 	}
-
-
+	
+	
 	@Override
 	public void tick() {
 		//todo trades reset?
@@ -205,13 +201,13 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 		targetSelector.add(0, new RevengeGoal(this));
 		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> BWUtil.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3 && (entity.getGroup() != BewitchmentAPI.DEMON || entity instanceof PlayerEntity)));
 	}
-
+	
 	@Override
 	public void onDeath(DamageSource source) {
 		super.onDeath(source);
 		setCurrentCustomer(null);
 	}
-
+	
 	@Override
 	public void setTarget(@Nullable LivingEntity target) {
 		super.setTarget(target);
@@ -219,12 +215,12 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 			setCurrentCustomer(null);
 		}
 	}
-
+	
 	@Override
 	public List<DemonEntity.DemonTradeOffer> getOffers() {
 		if (offers.isEmpty()) {
 			List<Contract> availableContracts = BWRegistries.CONTRACTS.stream().collect(Collectors.toList());
-			for(int i = 0; i < 3; i++){
+			for (int i = 0; i < 3; i++) {
 				Contract contract = availableContracts.get(random.nextInt(availableContracts.size()));
 				offers.add(new DemonTradeOffer(contract, 2 + random.nextInt(2) * 2, 168000));
 				availableContracts.remove(contract);
@@ -232,12 +228,12 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 		}
 		return offers;
 	}
-
+	
 	@Override
 	public LivingEntity getDemonTrader() {
 		return this;
 	}
-
+	
 	@Override
 	public void onSell(DemonEntity.DemonTradeOffer offer) {
 		if (!world.isClient) {
@@ -245,50 +241,51 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 			world.playSound(null, getBlockPos(), getAmbientSound(), getSoundCategory(), getSoundVolume(), getSoundPitch());
 		}
 	}
-
+	
 	@Override
 	public void setCurrentCustomer(PlayerEntity customer) {
 		this.customer = customer;
 	}
-
+	
 	@Override
 	public @Nullable PlayerEntity getCurrentCustomer() {
 		return customer;
 	}
-
+	
+	@SuppressWarnings("ConstantConditions")
 	public static class DemonTradeOffer {
 		private final Contract contract;
 		private final int cost;
 		private final int duration;
 		private int usesLeft;
-
+		
 		public DemonTradeOffer(Contract contract, int cost, int duration) {
 			this(contract, cost, duration, 1);
 		}
-
+		
 		public DemonTradeOffer(CompoundTag compoundTag) {
 			this(BWRegistries.CONTRACTS.get(new Identifier(compoundTag.getString("Contract"))), compoundTag.getInt("Cost"), compoundTag.getInt("Duration"), compoundTag.getInt("Uses"));
 		}
-
+		
 		private DemonTradeOffer(Contract contract, int cost, int duration, int usesLeft) {
 			this.contract = contract;
 			this.cost = cost;
 			this.duration = duration;
 			this.usesLeft = usesLeft;
 		}
-
+		
 		public void resetUses() {
 			this.usesLeft = 0;
 		}
-
+		
 		public boolean isUsable() {
 			return usesLeft > 0;
 		}
-
+		
 		public void decrementUses() {
 			this.usesLeft--;
 		}
-
+		
 		public CompoundTag toTag() {
 			CompoundTag tag = new CompoundTag();
 			tag.putString("Contract", BWRegistries.CONTRACTS.getId(contract).toString());
@@ -297,7 +294,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 			tag.putInt("Uses", usesLeft);
 			return tag;
 		}
-
+		
 		public static void toPacket(List<DemonTradeOffer> offers, PacketByteBuf buf) {
 			buf.writeInt(offers.size());
 			for (DemonTradeOffer offer : offers) {
@@ -307,7 +304,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 				buf.writeInt(offer.usesLeft);
 			}
 		}
-
+		
 		public static List<DemonTradeOffer> fromPacket(PacketByteBuf buf) {
 			int count = buf.readInt();
 			List<DemonTradeOffer> offers = new ArrayList<>(count);
@@ -316,7 +313,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 			}
 			return offers;
 		}
-
+		
 		public void apply(DemonMerchant merchant) {
 			decrementUses();
 			if (merchant.getCurrentCustomer() != null) {
@@ -325,35 +322,36 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 				contract.finishUsing(customer, ((ContractAccessor) customer).hasNegativeEffects());
 			}
 		}
-
+		
 		public Contract getContract() {
 			return contract;
 		}
-
+		
 		public int getCost(DemonMerchant merchant) {
 			return merchant.isDiscount() ? 1 : cost;
 		}
-
+		
 		public int getDuration() {
 			return duration;
 		}
 	}
-
+	
 	//the same but for demons hahayes
-	public static class LookAtCustomerGoal <T extends MobEntity & DemonMerchant> extends LookAtEntityGoal {
+	public static class LookAtCustomerGoal<T extends MobEntity & DemonMerchant> extends LookAtEntityGoal {
 		private final T merchant;
-
+		
 		public LookAtCustomerGoal(T merchant) {
 			super(merchant, PlayerEntity.class, 8.0F);
 			this.merchant = merchant;
 			setControls(EnumSet.of(Control.MOVE, Control.LOOK));
 		}
-
+		
 		public boolean canStart() {
 			if (this.merchant.getCurrentCustomer() != null) {
 				this.target = this.merchant.getCurrentCustomer();
 				return true;
-			} else {
+			}
+			else {
 				return false;
 			}
 		}

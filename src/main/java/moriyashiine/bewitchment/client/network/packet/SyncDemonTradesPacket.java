@@ -18,33 +18,34 @@ import net.minecraft.util.Identifier;
 
 import java.util.List;
 
+@SuppressWarnings("ConstantConditions")
 public class SyncDemonTradesPacket {
-    public static final Identifier ID = new Identifier(Bewitchment.MODID, "demon_trades");
-
-    public static void send(PlayerEntity player, DemonMerchant merchant, int syncId) {
-        PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-        buf.writeInt(syncId);
-        DemonEntity.DemonTradeOffer.toPacket(merchant.getOffers(), buf);
-        buf.writeInt(merchant.getDemonTrader().getEntityId());
-        buf.writeBoolean(merchant.isDiscount());
-        ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
-    }
-
-    public static void handle(MinecraftClient client, ClientPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
-        int syncId = buf.readInt();
-        List<DemonEntity.DemonTradeOffer> offers = DemonEntity.DemonTradeOffer.fromPacket(buf);
-        int traderId = buf.readInt();
-        boolean discount = buf.readBoolean();
-        client.execute(() -> {
-            if (client.player != null) {
-                ScreenHandler screenHandler = client.player.currentScreenHandler;
-                if (syncId == screenHandler.syncId && screenHandler instanceof DemonScreenHandler) {
-                    ((DemonScreenHandler) screenHandler).demonMerchant.setOffersClientside(offers);
-                    ((DemonScreenHandler) screenHandler).demonMerchant.setCurrentCustomer(client.player);
-                    ((DemonScreenHandler) screenHandler).demonMerchant.setDemonTraderClientside((LivingEntity) client.world.getEntityById(traderId));
-                    ((DemonScreenHandler) screenHandler).demonMerchant.setDiscountClientside(discount);
-                }
-            }
-        });
-    }
+	public static final Identifier ID = new Identifier(Bewitchment.MODID, "sync_demon_trades");
+	
+	public static void send(PlayerEntity player, DemonMerchant merchant, int syncId) {
+		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+		buf.writeInt(syncId);
+		DemonEntity.DemonTradeOffer.toPacket(merchant.getOffers(), buf);
+		buf.writeInt(merchant.getDemonTrader().getEntityId());
+		buf.writeBoolean(merchant.isDiscount());
+		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
+	}
+	
+	public static void handle(MinecraftClient client, ClientPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
+		int syncId = buf.readInt();
+		List<DemonEntity.DemonTradeOffer> offers = DemonEntity.DemonTradeOffer.fromPacket(buf);
+		int traderId = buf.readInt();
+		boolean discount = buf.readBoolean();
+		client.execute(() -> {
+			if (client.player != null) {
+				ScreenHandler screenHandler = client.player.currentScreenHandler;
+				if (syncId == screenHandler.syncId && screenHandler instanceof DemonScreenHandler) {
+					((DemonScreenHandler) screenHandler).demonMerchant.setOffersClientside(offers);
+					((DemonScreenHandler) screenHandler).demonMerchant.setCurrentCustomer(client.player);
+					((DemonScreenHandler) screenHandler).demonMerchant.setDemonTraderClientside((LivingEntity) client.world.getEntityById(traderId));
+					((DemonScreenHandler) screenHandler).demonMerchant.setDiscountClientside(discount);
+				}
+			}
+		});
+	}
 }

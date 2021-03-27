@@ -1,7 +1,6 @@
 package moriyashiine.bewitchment.client;
 
 import com.terraformersmc.terraform.sign.SpriteIdentifierRegistry;
-import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.entity.BroomEntity;
 import moriyashiine.bewitchment.client.misc.SpriteIdentifiers;
 import moriyashiine.bewitchment.client.model.equipment.armor.WitchArmorModel;
@@ -22,10 +21,7 @@ import moriyashiine.bewitchment.common.item.ContractItem;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.network.packet.TogglePressingForwardPacket;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
-import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
-import moriyashiine.bewitchment.common.registry.BWEntityTypes;
-import moriyashiine.bewitchment.common.registry.BWObjects;
-import moriyashiine.bewitchment.common.registry.BWParticleTypes;
+import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -145,8 +141,8 @@ public class BewitchmentClient implements ClientModInitializer {
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), BWObjects.PURPUR_WITCH_ALTAR);
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(), BWObjects.CRYSTAL_BALL);
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), BWObjects.BRAZIER);
-		ScreenRegistry.register(Bewitchment.DEMON_SCREEN_HANDLER, DemonScreen::new);
-		ScreenRegistry.register(Bewitchment.BAPHOMET_SCREEN_HANDLER, DemonScreen::new);
+		ScreenRegistry.register(BWScreenHandlers.DEMON_SCREEN_HANDLER, DemonScreen::new);
+		ScreenRegistry.register(BWScreenHandlers.BAPHOMET_SCREEN_HANDLER, DemonScreen::new);
 		SpriteIdentifierRegistry.INSTANCE.addIdentifier(SpriteIdentifiers.JUNIPER);
 		SpriteIdentifierRegistry.INSTANCE.addIdentifier(SpriteIdentifiers.TRAPPED_JUNIPER);
 		SpriteIdentifierRegistry.INSTANCE.addIdentifier(SpriteIdentifiers.JUNIPER_LEFT);

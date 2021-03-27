@@ -53,10 +53,10 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 	private final ServerBossBar bossBar;
 	private int timeSinceLastAttack = 0;
 	public int flameIndex = random.nextInt(8);
-
+	
 	private final List<DemonEntity.DemonTradeOffer> offers = new ArrayList<>();
 	private PlayerEntity customer = null;
-
+	
 	public BaphometEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 		bossBar = new ServerBossBar(getDisplayName(), BossBar.Color.RED, BossBar.Style.PROGRESS);
@@ -68,7 +68,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 375).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12).add(EntityAttributes.GENERIC_ARMOR, 6).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.75).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 32);
 	}
-
+	
 	@Override
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
 		if (!world.isClient && isAlive() && getTarget() == null && BewitchmentAPI.isPledged(world, BWPledges.BAPHOMET, player.getUuid())) {
@@ -78,18 +78,17 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 			if (getCurrentCustomer() == null) {
 				setCurrentCustomer(player);
 			}
-
+			
 			if (!getOffers().isEmpty()) {
-				player.openHandledScreen(new SimpleNamedScreenHandlerFactory((ix, playerInventory, playerEntityx) -> new BaphometScreenHandler(ix, this), getDisplayName())).ifPresent(syncId -> {
-					SyncDemonTradesPacket.send(player, this, syncId);
-				});
-			} else {
+				player.openHandledScreen(new SimpleNamedScreenHandlerFactory((id, playerInventory, customer) -> new BaphometScreenHandler(id, this), getDisplayName())).ifPresent(syncId -> SyncDemonTradesPacket.send(player, this, syncId));
+			}
+			else {
 				setCurrentCustomer(null);
 			}
 		}
 		return ActionResult.success(world.isClient);
 	}
-
+	
 	@Override
 	public void tick() {
 		super.tick();
@@ -227,13 +226,13 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 		super.setCustomName(name);
 		bossBar.setName(getDisplayName());
 	}
-
+	
 	@Override
 	public void onDeath(DamageSource source) {
 		super.onDeath(source);
 		setCurrentCustomer(null);
 	}
-
+	
 	@Override
 	public void setTarget(@Nullable LivingEntity target) {
 		super.setTarget(target);
@@ -241,7 +240,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 			setCurrentCustomer(null);
 		}
 	}
-
+	
 	@Override
 	public void onStartedTrackingBy(ServerPlayerEntity player) {
 		super.onStartedTrackingBy(player);
@@ -294,12 +293,12 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 		targetSelector.add(0, new RevengeGoal(this));
 		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> BWUtil.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3 && (entity.getGroup() != BewitchmentAPI.DEMON || entity instanceof PlayerEntity) && !BewitchmentAPI.isPledged(world, getPledgeID(), entity.getUuid())));
 	}
-
+	
 	@Override
 	public List<DemonEntity.DemonTradeOffer> getOffers() {
 		if (offers.isEmpty()) {
 			List<Contract> availableContracts = BWRegistries.CONTRACTS.stream().collect(Collectors.toList());
-			for(int i = 0; i < 5; i++){
+			for (int i = 0; i < 5; i++) {
 				Contract contract = availableContracts.get(random.nextInt(availableContracts.size()));
 				offers.add(new DemonEntity.DemonTradeOffer(contract, 2 + random.nextInt(2) * 2, 72000));
 				availableContracts.remove(contract);
@@ -307,12 +306,12 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 		}
 		return offers;
 	}
-
+	
 	@Override
 	public LivingEntity getDemonTrader() {
 		return this;
 	}
-
+	
 	@Override
 	public void onSell(DemonEntity.DemonTradeOffer offer) {
 		if (!world.isClient) {
@@ -320,12 +319,12 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 			world.playSound(null, getBlockPos(), getAmbientSound(), getSoundCategory(), getSoundVolume(), getSoundPitch());
 		}
 	}
-
+	
 	@Override
 	public void setCurrentCustomer(PlayerEntity customer) {
 		this.customer = customer;
 	}
-
+	
 	@Override
 	public @Nullable PlayerEntity getCurrentCustomer() {
 		return customer;

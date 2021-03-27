@@ -34,9 +34,8 @@ public class ContractItem extends Item {
 	public ContractItem(Settings settings) {
 		super(settings);
 	}
-
-
-
+	
+	
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		return ItemUsage.consumeHeldItem(world, user, hand);
@@ -104,15 +103,17 @@ public class ContractItem extends Item {
 			tooltip.add(new LiteralText(TaglockItem.getTaglockName(stack)).formatted(Formatting.GRAY));
 		}
 		if (stack.hasTag() && stack.getOrCreateTag().contains("Contract")) {
-
+			
 			tooltip.add(new TranslatableText("contract." + stack.getOrCreateTag().getString("Contract").replace(":", ".")).formatted(Formatting.DARK_RED));
 			if (!isSigned(stack)) {
 				tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.days", stack.getOrCreateTag().getInt("Duration") / 24000).formatted(Formatting.DARK_RED));
-			}else{
+			}
+			else {
 				tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.signed").formatted(Formatting.DARK_RED));
 			}
 		}
 	}
+	
 	public static boolean isSigned(ItemStack stack) {
 		return stack.hasTag() && stack.getTag().getBoolean("Signed");
 	}
