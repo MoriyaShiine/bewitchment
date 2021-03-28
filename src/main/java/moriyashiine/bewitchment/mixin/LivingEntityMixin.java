@@ -9,6 +9,7 @@ import moriyashiine.bewitchment.common.entity.living.BaphometEntity;
 import moriyashiine.bewitchment.common.entity.living.HerneEntity;
 import moriyashiine.bewitchment.common.entity.living.LeonardEntity;
 import moriyashiine.bewitchment.common.entity.living.LilithEntity;
+import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.*;
@@ -80,10 +81,10 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor 
 			int damage = 0;
 			if (BewitchmentAPI.isWeakToSilver(livingEntity)) {
 				damage += BWUtil.getArmorPieces(livingEntity, stack -> BWTags.SILVER_ARMOR.contains(stack.getItem()));
-				if (BewitchmentAPI.isHoldingSilver(livingEntity, Hand.MAIN_HAND)) {
+				if (!(livingEntity.getMainHandStack().getItem() instanceof AthameItem) && BewitchmentAPI.isHoldingSilver(livingEntity, Hand.MAIN_HAND)) {
 					damage++;
 				}
-				if (BewitchmentAPI.isHoldingSilver(livingEntity, Hand.OFF_HAND)) {
+				if (!(livingEntity.getOffHandStack().getItem() instanceof AthameItem) && BewitchmentAPI.isHoldingSilver(livingEntity, Hand.OFF_HAND)) {
 					damage++;
 				}
 			}
