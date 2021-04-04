@@ -13,7 +13,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.LocalDifficulty;
@@ -66,39 +65,40 @@ public abstract class BWTameableEntity extends TameableEntity {
 	public ActionResult interactMob(PlayerEntity player, Hand hand) {
 		boolean client = world.isClient;
 		ItemStack stack = player.getStackInHand(hand);
-		if (!isTamed() && isTamingItem(stack)) {
-			if (!player.abilities.creativeMode) {
-				stack.decrement(1);
-			}
-			if (!isSilent()) {
-				world.playSound(null, getX(), getY(), getZ(), SoundEvents.ENTITY_PARROT_EAT, getSoundCategory(), 1, 1 + (random.nextFloat() - random.nextFloat()) * 0.2f);
-			}
-			if (!client) {
-				if (random.nextInt(4) == 0) {
-					setOwner(player);
-					setSitting(true);
-					navigation.stop();
-					world.sendEntityStatus(this, (byte) 7);
-				}
-				else {
-					world.sendEntityStatus(this, (byte) 6);
-				}
-			}
-			return ActionResult.success(client);
-		}
-		else if (isTamed() && isOwner(player)) {
-			if (!client) {
-				if (isBreedingItem(stack) && getHealth() < getMaxHealth()) {
-					if (!player.abilities.creativeMode) {
-						stack.decrement(1);
-					}
+		if (isBreedingItem(stack)) {
+			if (getHealth() < getMaxHealth()) {
+				if (!client) {
+					eat(player, stack);
 					heal(4);
 				}
-				else {
-					setSitting(!isSitting());
+				return ActionResult.success(client);
+			}
+		}
+		else {
+			if (!isTamed()) {
+				if (isTamingItem(stack)) {
+					if (!client) {
+						eat(player, stack);
+						if (random.nextInt(4) == 0) {
+							setOwner(player);
+							setSitting(true);
+							setTarget(null);
+							navigation.stop();
+							world.sendEntityStatus(this, (byte) 7);
+						}
+						else {
+							world.sendEntityStatus(this, (byte) 6);
+						}
+					}
+					return ActionResult.success(client);
 				}
 			}
-			return ActionResult.success(client);
+			else if (isOwner(player)) {
+				if (!client) {
+					setSitting(!isSitting());
+				}
+				return ActionResult.success(client);
+			}
 		}
 		return super.interactMob(player, hand);
 	}
