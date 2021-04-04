@@ -1,7 +1,5 @@
 package moriyashiine.bewitchment.mixin;
 
-import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.interfaces.MasterAccessor;
 import moriyashiine.bewitchment.common.entity.living.GhostEntity;
@@ -25,7 +23,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.UUID;
 
-@SuppressWarnings("ConstantConditions")
 @Mixin(MobEntity.class)
 public abstract class MobEntityMixin extends LivingEntity implements MasterAccessor {
 	private UUID masterUUID = null;
@@ -71,15 +68,8 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 			if (target instanceof GhostEntity) {
 				return null;
 			}
-			if (this instanceof Pledgeable) {
-				if (target instanceof MasterAccessor && getUuid().equals(((MasterAccessor) target).getMasterUUID())) {
-					return null;
-				}
-				Pledgeable pledgeable = (Pledgeable) this;
-				if (BewitchmentAPI.isPledged(world, pledgeable.getPledgeID(), target.getUuid())) {
-					BewitchmentAPI.unpledge(world, pledgeable.getPledgeID(), target.getUuid());
-				}
-				pledgeable.summonMinions((MobEntity) (Object) this);
+			if (target instanceof MasterAccessor && getUuid().equals(((MasterAccessor) target).getMasterUUID())) {
+				return null;
 			}
 			if (isUndead() && !BWUtil.getBlockPoses(target.getBlockPos(), 2, foundPos -> BWTags.UNDEAD_MASK.contains(world.getBlockState(foundPos).getBlock())).isEmpty()) {
 				return null;

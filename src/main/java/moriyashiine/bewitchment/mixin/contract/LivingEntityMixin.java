@@ -53,7 +53,7 @@ public abstract class LivingEntityMixin extends Entity implements ContractAccess
 	
 	@Override
 	public boolean hasNegativeEffects() {
-		return !world.isClient && !BewitchmentAPI.isPledged(world, BWPledges.BAPHOMET, getUuid());
+		return !world.isClient && !((Object) this instanceof PlayerEntity && BewitchmentAPI.isPledged((PlayerEntity) (Object) this, BWPledges.BAPHOMET));
 	}
 	
 	@Inject(method = "tick", at = @At("TAIL"))

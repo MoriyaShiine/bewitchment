@@ -135,7 +135,7 @@ public abstract class LivingEntityMixin extends Entity {
 				callbackInfo.setReturnValue(true);
 			}
 			if (callbackInfo.getReturnValue() && this instanceof TransformationAccessor && ((CurseAccessor) this).hasCurse(BWCurses.SUSCEPTIBILITY) && ((TransformationAccessor) this).getTransformation() == BWTransformations.HUMAN) {
-				if (source.getSource() instanceof VampireEntity || (BewitchmentAPI.isVampire(source.getSource(), true) && BewitchmentAPI.isPledged(world, BWPledges.LILITH, source.getSource().getUuid()))) {
+				if (source.getSource() instanceof VampireEntity || (BewitchmentAPI.isVampire(source.getSource(), true) && BewitchmentAPI.isPledged((PlayerEntity) source.getSource(), BWPledges.LILITH))) {
 					((TransformationAccessor) this).getTransformation().onRemoved((LivingEntity) (Object) this);
 					((TransformationAccessor) this).setTransformation(BWTransformations.VAMPIRE);
 					((TransformationAccessor) this).getTransformation().onAdded((LivingEntity) (Object) this);
@@ -145,7 +145,7 @@ public abstract class LivingEntityMixin extends Entity {
 					}
 					world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, getSoundCategory(), getSoundVolume(), getSoundPitch());
 				}
-				else if (source.getSource() instanceof WerewolfEntity || (BewitchmentAPI.isWerewolf(source.getSource(), false) && BewitchmentAPI.isPledged(world, BWPledges.HERNE, source.getSource().getUuid()))) {
+				else if (source.getSource() instanceof WerewolfEntity || (BewitchmentAPI.isWerewolf(source.getSource(), false) && BewitchmentAPI.isPledged((PlayerEntity) source.getSource(), BWPledges.HERNE))) {
 					((TransformationAccessor) this).getTransformation().onRemoved((LivingEntity) (Object) this);
 					((TransformationAccessor) this).setTransformation(BWTransformations.WEREWOLF);
 					((TransformationAccessor) this).getTransformation().onAdded((LivingEntity) (Object) this);

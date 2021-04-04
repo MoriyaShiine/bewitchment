@@ -1,16 +1,21 @@
 package moriyashiine.bewitchment.common.misc;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
+import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
 import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
 import moriyashiine.bewitchment.common.item.ScepterItem;
 import moriyashiine.bewitchment.common.registry.BWContracts;
 import moriyashiine.bewitchment.common.registry.BWCurses;
+import moriyashiine.bewitchment.common.registry.BWMaterials;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.FollowTargetGoal;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.util.Hand;
@@ -50,6 +55,20 @@ public class BWUtil {
 			}
 		}
 		return pos;
+	}
+	
+	public static FollowTargetGoal<LivingEntity> createGenericPledgeableTargetGoal(MobEntity entity) {
+		return new FollowTargetGoal<>(entity, LivingEntity.class, 10, true, false, foundEntity -> {
+			if (foundEntity instanceof PlayerEntity) {
+				if (BewitchmentAPI.isPledged((PlayerEntity) foundEntity, ((Pledgeable) entity).getPledgeID())) {
+					return false;
+				}
+			}
+			else if (foundEntity.getGroup() == BewitchmentAPI.DEMON) {
+				return false;
+			}
+			return BWUtil.getArmorPieces(foundEntity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3;
+		});
 	}
 	
 	public static boolean isTool(ItemStack stack) {

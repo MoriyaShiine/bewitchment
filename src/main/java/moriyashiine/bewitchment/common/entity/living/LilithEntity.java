@@ -30,7 +30,6 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.WitherSkullEntity;
-import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -44,9 +43,14 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 public class LilithEntity extends BWHostileEntity implements Pledgeable {
 	private final ServerBossBar bossBar;
+	
+	private final Set<UUID> pledgedPlayerUUIDS = new HashSet<>();
 	private int timeSinceLastAttack = 0;
 	
 	public LilithEntity(EntityType<? extends HostileEntity> entityType, World world) {
@@ -107,6 +111,11 @@ public class LilithEntity extends BWHostileEntity implements Pledgeable {
 	}
 	
 	@Override
+	public Collection<UUID> getPledgedPlayerUUIDs() {
+		return pledgedPlayerUUIDS;
+	}
+	
+	@Override
 	public EntityType<?> getMinionType() {
 		return BWEntityTypes.VAMPIRE;
 	}
@@ -114,6 +123,11 @@ public class LilithEntity extends BWHostileEntity implements Pledgeable {
 	@Override
 	public Collection<StatusEffectInstance> getMinionBuffs() {
 		return Sets.newHashSet(new StatusEffectInstance(StatusEffects.STRENGTH, Integer.MAX_VALUE, 1), new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE, 1), new StatusEffectInstance(BWStatusEffects.HARDENING, Integer.MAX_VALUE, 1));
+	}
+	
+	@Override
+	public int getTimeSinceLastAttack() {
+		return timeSinceLastAttack;
 	}
 	
 	@Override
@@ -251,13 +265,13 @@ public class LilithEntity extends BWHostileEntity implements Pledgeable {
 		if (hasCustomName()) {
 			bossBar.setName(getDisplayName());
 		}
-		timeSinceLastAttack = tag.getInt("TimeSinceLastAttack");
+		fromTagPledgeable(tag);
 	}
 	
 	@Override
 	public void writeCustomDataToTag(CompoundTag tag) {
 		super.writeCustomDataToTag(tag);
-		tag.putInt("TimeSinceLastAttack", timeSinceLastAttack);
+		toTagPledgeable(tag);
 	}
 	
 	@Override
@@ -268,6 +282,6 @@ public class LilithEntity extends BWHostileEntity implements Pledgeable {
 		goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8));
 		goalSelector.add(3, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this));
-		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> BWUtil.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3 && (entity.getGroup() != BewitchmentAPI.DEMON || entity instanceof PlayerEntity) && !BewitchmentAPI.isPledged(world, getPledgeID(), entity.getUuid())));
+		targetSelector.add(1, BWUtil.createGenericPledgeableTargetGoal(this));
 	}
 }

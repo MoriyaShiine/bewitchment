@@ -9,7 +9,10 @@ import moriyashiine.bewitchment.client.screen.BaphometScreenHandler;
 import moriyashiine.bewitchment.common.entity.interfaces.DemonMerchant;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.misc.BWUtil;
-import moriyashiine.bewitchment.common.registry.*;
+import moriyashiine.bewitchment.common.registry.BWPledges;
+import moriyashiine.bewitchment.common.registry.BWRegistries;
+import moriyashiine.bewitchment.common.registry.BWSoundEvents;
+import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -30,7 +33,6 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
-import net.minecraft.item.ArmorItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -44,13 +46,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BaphometEntity extends BWHostileEntity implements Pledgeable, DemonMerchant {
 	private final ServerBossBar bossBar;
+	
+	private final Set<UUID> pledgedPlayerUUIDS = new HashSet<>();
 	private int timeSinceLastAttack = 0;
 	public int flameIndex = random.nextInt(8);
 	
@@ -67,26 +69,6 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 	
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 375).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12).add(EntityAttributes.GENERIC_ARMOR, 6).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.75).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 32);
-	}
-	
-	@Override
-	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
-		if (!world.isClient && isAlive() && getTarget() == null && BewitchmentAPI.isPledged(world, BWPledges.BAPHOMET, player.getUuid())) {
-			if (BWUtil.rejectTradesFromCurses(this) || BWUtil.rejectTradesFromContracts(this)) {
-				return ActionResult.FAIL;
-			}
-			if (getCurrentCustomer() == null) {
-				setCurrentCustomer(player);
-			}
-			
-			if (!getOffers().isEmpty()) {
-				player.openHandledScreen(new SimpleNamedScreenHandlerFactory((id, playerInventory, customer) -> new BaphometScreenHandler(id, this), getDisplayName())).ifPresent(syncId -> SyncDemonTradesPacket.send(player, this, syncId));
-			}
-			else {
-				setCurrentCustomer(null);
-			}
-		}
-		return ActionResult.success(world.isClient);
 	}
 	
 	@Override
@@ -136,6 +118,11 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 	}
 	
 	@Override
+	public Collection<UUID> getPledgedPlayerUUIDs() {
+		return pledgedPlayerUUIDS;
+	}
+	
+	@Override
 	public EntityType<?> getMinionType() {
 		return EntityType.BLAZE;
 	}
@@ -143,6 +130,11 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 	@Override
 	public Collection<StatusEffectInstance> getMinionBuffs() {
 		return Sets.newHashSet(new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE), new StatusEffectInstance(BWStatusEffects.HARDENING, Integer.MAX_VALUE, 1));
+	}
+	
+	@Override
+	public int getTimeSinceLastAttack() {
+		return timeSinceLastAttack;
 	}
 	
 	@Override
@@ -179,6 +171,26 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 	@Override
 	protected SoundEvent getDeathSound() {
 		return BWSoundEvents.ENTITY_BAPHOMET_DEATH;
+	}
+	
+	@Override
+	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
+		if (!world.isClient && isAlive() && getTarget() == null && BewitchmentAPI.isPledged(player, getPledgeID())) {
+			if (BWUtil.rejectTradesFromCurses(this) || BWUtil.rejectTradesFromContracts(this)) {
+				return ActionResult.FAIL;
+			}
+			if (getCurrentCustomer() == null) {
+				setCurrentCustomer(player);
+			}
+			
+			if (!getOffers().isEmpty()) {
+				player.openHandledScreen(new SimpleNamedScreenHandlerFactory((id, playerInventory, customer) -> new BaphometScreenHandler(id, this), getDisplayName())).ifPresent(syncId -> SyncDemonTradesPacket.send(player, this, syncId));
+			}
+			else {
+				setCurrentCustomer(null);
+			}
+		}
+		return ActionResult.success(world.isClient);
 	}
 	
 	@Override
@@ -259,7 +271,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 		if (hasCustomName()) {
 			bossBar.setName(getDisplayName());
 		}
-		timeSinceLastAttack = tag.getInt("TimeSinceLastAttack");
+		fromTagPledgeable(tag);
 		if (tag.contains("Offers")) {
 			offers.clear();
 			ListTag offersTag = tag.getList("Offers", 10);
@@ -272,7 +284,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 	@Override
 	public void writeCustomDataToTag(CompoundTag tag) {
 		super.writeCustomDataToTag(tag);
-		tag.putInt("TimeSinceLastAttack", timeSinceLastAttack);
+		toTagPledgeable(tag);
 		if (!offers.isEmpty()) {
 			ListTag offersTag = new ListTag();
 			for (DemonEntity.DemonTradeOffer offer : offers) {
@@ -291,7 +303,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 		goalSelector.add(4, new LookAtEntityGoal(this, PlayerEntity.class, 8));
 		goalSelector.add(5, new LookAroundGoal(this));
 		targetSelector.add(0, new RevengeGoal(this));
-		targetSelector.add(1, new FollowTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> BWUtil.getArmorPieces(entity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3 && (entity.getGroup() != BewitchmentAPI.DEMON || entity instanceof PlayerEntity) && !BewitchmentAPI.isPledged(world, getPledgeID(), entity.getUuid())));
+		targetSelector.add(1, BWUtil.createGenericPledgeableTargetGoal(this));
 	}
 	
 	@Override

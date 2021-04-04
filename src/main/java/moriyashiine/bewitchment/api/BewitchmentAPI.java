@@ -5,6 +5,7 @@ import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
 import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
+import moriyashiine.bewitchment.common.entity.interfaces.PledgeAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
@@ -178,74 +179,25 @@ public class BewitchmentAPI {
 		if (BWTags.IMMUNE_TO_SILVER.contains(livingEntity.getType())) {
 			return false;
 		}
-		return livingEntity.isUndead() || livingEntity.getGroup() == DEMON || isWerewolf(livingEntity, true) || BWTags.VULNERABLE_TO_SILVER.contains(livingEntity.getType());
+		return livingEntity.isUndead() || livingEntity.getGroup() == DEMON || BWTags.VULNERABLE_TO_SILVER.contains(livingEntity.getType());
 	}
 	
-	public static boolean hasPledge(World world, UUID entity) {
-		BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-		for (Pair<String, List<UUID>> pair : worldState.pledges) {
-			for (UUID player : pair.getRight()) {
-				if (player.equals(entity)) {
-					return true;
+	public static boolean isPledged(PlayerEntity player, String pledge) {
+		if (!player.world.isClient) {
+			BWUniversalWorldState worldState = BWUniversalWorldState.get(player.world);
+			for (int i = worldState.pledgesToRemove.size() - 1; i >= 0; i--) {
+				if (worldState.pledgesToRemove.get(i).equals(player.getUuid())) {
+					((PledgeAccessor) player).setPledge(BWPledges.NONE);
+					worldState.pledgesToRemove.remove(i);
+					return false;
 				}
 			}
 		}
-		return false;
+		return ((PledgeAccessor) player).getPledge().equals(pledge);
 	}
 	
-	public static boolean isPledged(World world, String pledgeable, UUID entity) {
-		BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-		for (Pair<String, List<UUID>> pair : worldState.pledges) {
-			if (pair.getLeft().equals(pledgeable)) {
-				for (UUID livingUUID : pair.getRight()) {
-					if (livingUUID.equals(entity)) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-	
-	public static void pledge(World world, String pledgeable, UUID entity) {
-		BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-		List<UUID> currentPlayers = new ArrayList<>();
-		for (Pair<String, List<UUID>> pair : worldState.pledges) {
-			if (pair.getLeft().equals(pledgeable)) {
-				currentPlayers = pair.getRight();
-				break;
-			}
-		}
-		currentPlayers.add(entity);
-		boolean found = false;
-		for (int i = 0; i < worldState.pledges.size(); i++) {
-			if (worldState.pledges.get(i).getLeft().equals(pledgeable)) {
-				worldState.pledges.set(i, new Pair<>(pledgeable, currentPlayers));
-				found = true;
-				break;
-			}
-		}
-		if (!found) {
-			worldState.pledges.add(new Pair<>(pledgeable, currentPlayers));
-		}
-		worldState.markDirty();
-	}
-	
-	public static void unpledge(World world, String pledgeable, UUID entity) {
-		BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-		for (int i = worldState.pledges.size() - 1; i >= 0; i--) {
-			if (worldState.pledges.get(i).getLeft().equals(pledgeable)) {
-				for (int j = worldState.pledges.get(i).getRight().size() - 1; j >= 0; j--) {
-					if (worldState.pledges.get(i).getRight().get(j).equals(entity)) {
-						worldState.pledges.get(i).getRight().remove(j);
-					}
-				}
-				if (worldState.pledges.get(i).getRight().isEmpty()) {
-					worldState.pledges.remove(i);
-				}
-			}
-		}
-		worldState.markDirty();
+	public static void unpledge(PlayerEntity player) {
+		((PledgeAccessor) player).setPledge(BWPledges.NONE);
 	}
 	
 	public static int getMoonPhase(WorldAccess world) {

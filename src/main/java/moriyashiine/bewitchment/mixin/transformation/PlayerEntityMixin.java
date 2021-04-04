@@ -139,7 +139,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Transfor
 			EntityAttributeInstance attackRange = player.getAttributeInstance(ReachEntityAttributes.ATTACK_RANGE);
 			EntityAttributeInstance reach = player.getAttributeInstance(ReachEntityAttributes.REACH);
 			EntityAttributeInstance stepHeight = player.getAttributeInstance(StepHeightEntityAttributeMain.STEP_HEIGHT);
-			boolean shouldHave = vampire && !BewitchmentAPI.isPledged(player.world, BWPledges.LILITH, player.getUuid());
+			boolean shouldHave = vampire && !BewitchmentAPI.isPledged(player, BWPledges.LILITH);
 			if (shouldHave && !attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0)) {
 				attackDamageAttribute.addPersistentModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0);
 				movementSpeedAttribute.addPersistentModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_0);
@@ -148,7 +148,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Transfor
 				attackDamageAttribute.removeModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0);
 				movementSpeedAttribute.removeModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_0);
 			}
-			shouldHave = vampire && BewitchmentAPI.isPledged(player.world, BWPledges.LILITH, player.getUuid());
+			shouldHave = vampire && BewitchmentAPI.isPledged(player, BWPledges.LILITH);
 			if (shouldHave && !attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_1)) {
 				attackDamageAttribute.addPersistentModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_1);
 				movementSpeedAttribute.addPersistentModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_1);
@@ -172,7 +172,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Transfor
 				reach.removeModifier(WEREWOLF_REACH_MODIFIER);
 				stepHeight.removeModifier(WEREWOLF_STEP_HEIGHT_MODIFIER);
 			}
-			shouldHave = werewolfBeast && !BewitchmentAPI.isPledged(player.world, BWPledges.HERNE, player.getUuid());
+			shouldHave = werewolfBeast && !BewitchmentAPI.isPledged(player, BWPledges.HERNE);
 			if (shouldHave && !attackDamageAttribute.hasModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_0)) {
 				attackDamageAttribute.addPersistentModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_0);
 				armorToughnessAttribute.addPersistentModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_0);
@@ -183,7 +183,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Transfor
 				armorToughnessAttribute.removeModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_0);
 				movementSpeedAttribute.removeModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_0);
 			}
-			shouldHave = werewolfBeast && BewitchmentAPI.isPledged(player.world, BWPledges.HERNE, player.getUuid());
+			shouldHave = werewolfBeast && BewitchmentAPI.isPledged(player, BWPledges.HERNE);
 			if (shouldHave && !attackDamageAttribute.hasModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_1)) {
 				attackDamageAttribute.addPersistentModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_1);
 				armorToughnessAttribute.addPersistentModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_1);
@@ -195,7 +195,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Transfor
 				movementSpeedAttribute.removeModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_1);
 			}
 			if (vampire) {
-				boolean pledgedToLilith = BewitchmentAPI.isPledged(player.world, BWPledges.LILITH, player.getUuid());
+				boolean pledgedToLilith = BewitchmentAPI.isPledged(player, BWPledges.LILITH);
 				player.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
 				if (((RespawnTimerAccessor) player).getRespawnTimer() <= 0 && player.world.isDay() && !player.world.isRaining() && player.world.isSkyVisible(player.getBlockPos())) {
 					player.setOnFireFor(8);
@@ -244,7 +244,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Transfor
 					if (BWUtil.isTool(player.getOffHandStack())) {
 						player.dropStack(player.getOffHandStack().split(1));
 					}
-					if (!forced && !BewitchmentAPI.isPledged(player.world, BWPledges.HERNE, player.getUuid())) {
+					if (!forced && !BewitchmentAPI.isPledged(player, BWPledges.HERNE)) {
 						TransformationAbilityPacket.useAbility(player, true);
 					}
 				}

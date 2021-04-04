@@ -61,27 +61,6 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 	}
 	
 	@Override
-	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
-		if (!world.isClient && isAlive() && getTarget() == null) {
-			if (BWUtil.rejectTradesFromCurses(this) || BWUtil.rejectTradesFromContracts(this)) {
-				return ActionResult.FAIL;
-			}
-			if (getCurrentCustomer() == null) {
-				setCurrentCustomer(player);
-			}
-			
-			if (!getOffers().isEmpty()) {
-				player.openHandledScreen(new SimpleNamedScreenHandlerFactory((id, playerInventory, customer) -> new DemonScreenHandler(id, this), getDisplayName())).ifPresent(syncId -> SyncDemonTradesPacket.send(player, this, syncId));
-			}
-			else {
-				setCurrentCustomer(null);
-			}
-		}
-		return ActionResult.success(world.isClient);
-	}
-	
-	
-	@Override
 	public void tick() {
 		//todo trades reset?
 		super.tick();
@@ -129,6 +108,26 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 	@Override
 	protected SoundEvent getDeathSound() {
 		return BWSoundEvents.ENTITY_DEMON_DEATH;
+	}
+	
+	@Override
+	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
+		if (!world.isClient && isAlive() && getTarget() == null) {
+			if (BWUtil.rejectTradesFromCurses(this) || BWUtil.rejectTradesFromContracts(this)) {
+				return ActionResult.FAIL;
+			}
+			if (getCurrentCustomer() == null) {
+				setCurrentCustomer(player);
+			}
+			
+			if (!getOffers().isEmpty()) {
+				player.openHandledScreen(new SimpleNamedScreenHandlerFactory((id, playerInventory, customer) -> new DemonScreenHandler(id, this), getDisplayName())).ifPresent(syncId -> SyncDemonTradesPacket.send(player, this, syncId));
+			}
+			else {
+				setCurrentCustomer(null);
+			}
+		}
+		return ActionResult.success(world.isClient);
 	}
 	
 	@Override
@@ -336,7 +335,6 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 		}
 	}
 	
-	//the same but for demons hahayes
 	public static class LookAtCustomerGoal<T extends MobEntity & DemonMerchant> extends LookAtEntityGoal {
 		private final T merchant;
 		

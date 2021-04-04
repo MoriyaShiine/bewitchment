@@ -11,7 +11,7 @@
 	},
 	{
 	  "type": "text",
-	  "text": "The exact benefits are outlined in the according entries.$(br2)A $(l:bewitchment:creatures/demon)Demon$() that is pledged to has to remain in the world for the pledge to be active.$(br2)Attacking the $(l:bewitchment:creatures/demon)Demon$() in any way will immediately revoke the pledge."
+	  "text": "The exact benefits are outlined in the according entries.$(br2)A $(l:bewitchment:creatures/demon)Demon$() that is pledged to has to remain in the world for the pledge to be active.$(br2)Attacking the $(l:bewitchment:creatures/demon)Demon$() in any way will immediately revoke the pledge.$(br2)It is important to note that witches that taint their soul this way are prone to the same weaknesses as $(l:bewitchment:creatures/demon)Demons$()."
 	},
 	{
 	  "type": "crafting",

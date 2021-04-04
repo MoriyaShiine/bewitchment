@@ -50,7 +50,7 @@ public class CauldronTeleportPacket {
 				}
 			}
 			if (closest != null) {
-				boolean hasPower = BewitchmentAPI.isPledged(world, BWPledges.LEONARD, player.getUuid());
+				boolean hasPower = BewitchmentAPI.isPledged(player, BWPledges.LEONARD);
 				if (!hasPower) {
 					BlockPos altarPos = ((UsesAltarPower) world.getBlockEntity(cauldronPos)).getAltarPos();
 					if (altarPos != null) {

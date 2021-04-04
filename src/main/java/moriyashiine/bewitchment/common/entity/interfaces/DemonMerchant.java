@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.common.entity.interfaces;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.common.entity.living.BaphometEntity;
 import moriyashiine.bewitchment.common.entity.living.DemonEntity;
 import moriyashiine.bewitchment.common.registry.BWPledges;
 import net.fabricmc.api.EnvType;
@@ -29,7 +30,7 @@ public interface DemonMerchant {
 	@Nullable PlayerEntity getCurrentCustomer();
 	
 	default boolean isDiscount() {
-		return getCurrentCustomer() != null && BewitchmentAPI.isPledged(getCurrentCustomer().world, BWPledges.BAPHOMET, getCurrentCustomer().getUuid());
+		return this instanceof BaphometEntity && getCurrentCustomer() != null && BewitchmentAPI.isPledged(getCurrentCustomer(), BWPledges.BAPHOMET);
 	}
 	
 	@Environment(EnvType.CLIENT)
