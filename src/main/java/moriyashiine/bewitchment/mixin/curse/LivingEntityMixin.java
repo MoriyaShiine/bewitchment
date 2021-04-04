@@ -1,6 +1,5 @@
 package moriyashiine.bewitchment.mixin.curse;
 
-import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.common.entity.interfaces.InsanityTargetAccessor;
@@ -9,7 +8,6 @@ import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -73,7 +71,7 @@ public abstract class LivingEntityMixin extends Entity implements CurseAccessor 
 			if (hasCurse(BWCurses.FORESTS_WRATH) && (source.isFire() || ((directSource instanceof LivingEntity && ((LivingEntity) directSource).getMainHandStack().getItem() instanceof AxeItem)))) {
 				amount *= 2;
 			}
-			if (hasCurse(BWCurses.SUSCEPTIBILITY) && (source.isFire() || (directSource instanceof LivingEntity && (((LivingEntity) directSource).getGroup() == EntityGroup.AQUATIC || ((LivingEntity) directSource).getGroup() == BewitchmentAPI.DEMON)))) {
+			if (hasCurse(BWCurses.SUSCEPTIBILITY) && source.getMagic()) {
 				amount *= 2;
 			}
 		}

@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "This $(l:bewitchment:curses/conducting_curses)Curse$() weakens the flesh, making the target more susceptible to all of the dark: poisons become more potent, $(l:bewitchment:creatures/demon)Demons$() of all kinds hit harder, water greatly slows them, and rumor has it that this $(l:bewitchment:curses/conducting_curses)Curse$() is even tied to much worse fates such as $(l:bewitchment:curses/vampirism)Vampirism$() and $(l:bewitchment:curses/lycanthropy)Lycanthropy$()."
+	  "text": "This $(l:bewitchment:curses/conducting_curses)Curse$() weakens the body, making the target take twice as much magic damage and makes it harder for them to move.$(br2)Rumor has it that this $(l:bewitchment:curses/conducting_curses)Curse$() is even tied to much worse fates such as $(l:bewitchment:curses/vampirism)Vampirism$() and $(l:bewitchment:curses/lycanthropy)Lycanthropy$()."
 	},
 	{
 	  "type": "bewitchment:curse",
