@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
 import moriyashiine.bewitchment.api.registry.Contract;
+import moriyashiine.bewitchment.client.network.packet.SyncContractsPacket;
 import moriyashiine.bewitchment.client.network.packet.SyncDemonTradesPacket;
 import moriyashiine.bewitchment.client.screen.BaphometScreenHandler;
 import moriyashiine.bewitchment.common.entity.interfaces.DemonMerchant;
@@ -190,6 +191,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 				setCurrentCustomer(player);
 			}
 			if (!getOffers().isEmpty()) {
+				SyncContractsPacket.send(player);
 				player.openHandledScreen(new SimpleNamedScreenHandlerFactory((id, playerInventory, customer) -> new BaphometScreenHandler(id, this), getDisplayName())).ifPresent(syncId -> SyncDemonTradesPacket.send(player, this, syncId));
 			}
 			else {

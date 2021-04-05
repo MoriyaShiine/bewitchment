@@ -5,6 +5,7 @@ import moriyashiine.bewitchment.client.network.packet.SyncContractsPacket;
 import moriyashiine.bewitchment.client.network.packet.SyncDemonTradesPacket;
 import moriyashiine.bewitchment.common.entity.interfaces.DemonMerchant;
 import moriyashiine.bewitchment.common.entity.living.DemonEntity;
+import moriyashiine.bewitchment.common.registry.BWDamageSources;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWScreenHandlers;
@@ -73,6 +74,14 @@ public class DemonScreenHandler extends ScreenHandler {
 				if (!demonMerchant.getDemonTrader().world.isClient) {
 					SyncContractsPacket.send(playerEntity);
 					SyncDemonTradesPacket.send(playerEntity, demonMerchant, syncId);
+					int cost = offer.getCost(demonMerchant);
+					if (playerEntity.getMaxHealth() - cost <= 0) {
+						((ContractAccessor) playerEntity).getContracts().clear();
+						playerEntity.damage(BWDamageSources.DEATH, Float.MAX_VALUE);
+					}
+					else if (playerEntity.getHealth() > playerEntity.getMaxHealth() - cost) {
+						playerEntity.setHealth(playerEntity.getMaxHealth() - cost);
+					}
 				}
 			}
 			return ItemStack.EMPTY;

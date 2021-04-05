@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.common.entity.living;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.registry.Contract;
+import moriyashiine.bewitchment.client.network.packet.SyncContractsPacket;
 import moriyashiine.bewitchment.client.network.packet.SyncDemonTradesPacket;
 import moriyashiine.bewitchment.client.screen.DemonScreenHandler;
 import moriyashiine.bewitchment.common.entity.interfaces.DemonMerchant;
@@ -127,6 +128,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 				setCurrentCustomer(player);
 			}
 			if (!getOffers().isEmpty()) {
+				SyncContractsPacket.send(player);
 				player.openHandledScreen(new SimpleNamedScreenHandlerFactory((id, playerInventory, customer) -> new DemonScreenHandler(id, this), getDisplayName())).ifPresent(syncId -> SyncDemonTradesPacket.send(player, this, syncId));
 			}
 			else {

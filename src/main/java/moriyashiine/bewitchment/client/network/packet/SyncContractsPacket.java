@@ -33,6 +33,7 @@ public class SyncContractsPacket {
 		CompoundTag contractsTag = buf.readCompoundTag();
 		client.execute(() -> {
 			if (client.player != null) {
+				((ContractAccessor) client.player).getContracts().clear();
 				ListTag contracts = contractsTag.getList("Contracts", NbtType.COMPOUND);
 				for (int i = 0; i < contracts.size(); i++) {
 					CompoundTag contract = contracts.getCompound(i);

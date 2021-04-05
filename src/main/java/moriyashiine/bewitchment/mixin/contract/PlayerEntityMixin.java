@@ -3,7 +3,10 @@ package moriyashiine.bewitchment.mixin.contract;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.registry.Contract;
-import moriyashiine.bewitchment.common.registry.*;
+import moriyashiine.bewitchment.common.registry.BWContracts;
+import moriyashiine.bewitchment.common.registry.BWPledges;
+import moriyashiine.bewitchment.common.registry.BWRegistries;
+import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -68,13 +71,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Contract
 			}
 			if (level > 0) {
 				addStatusEffect(new StatusEffectInstance(BWStatusEffects.PACT, 10, level - 1, true, false));
-				if (getHealth() > getMaxHealth()) {
-					setHealth(getMaxHealth());
-				}
-				if (level >= defaultMaxHealth) {
-					contracts.clear();
-					damage(BWDamageSources.DEATH, Float.MAX_VALUE);
-				}
 			}
 		}
 	}
