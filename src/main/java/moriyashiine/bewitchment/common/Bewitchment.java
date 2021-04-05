@@ -12,10 +12,7 @@ import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
-import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
-import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
-import moriyashiine.bewitchment.common.entity.interfaces.TrueInvisibleAccessor;
-import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
+import moriyashiine.bewitchment.common.entity.interfaces.*;
 import moriyashiine.bewitchment.common.integration.requiem.BWRequiemCompat;
 import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.misc.BWUtil;
@@ -98,59 +95,58 @@ public class Bewitchment implements ModInitializer {
 			((FortuneAccessor) newPlayer).setFortune(((FortuneAccessor) oldPlayer).getFortune());
 			((CurseAccessor) newPlayer).getCurses().addAll(((CurseAccessor) oldPlayer).getCurses());
 			((ContractAccessor) newPlayer).getContracts().addAll(((ContractAccessor) oldPlayer).getContracts());
+			((PledgeAccessor) newPlayer).setPledge(((PledgeAccessor) oldPlayer).getPledge());
 			((TransformationAccessor) newPlayer).setTransformation(((TransformationAccessor) oldPlayer).getTransformation());
 			((WerewolfAccessor) newPlayer).setWerewolfVariant(((WerewolfAccessor) oldPlayer).getWerewolfVariant());
 		});
 		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killedEntity) -> {
-			if (entity instanceof LivingEntity) {
-				if (entity instanceof PlayerEntity) {
-					PlayerEntity player = (PlayerEntity) entity;
-					if (killedEntity.getGroup() == EntityGroup.ARTHROPOD && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.TOAD) {
-						player.heal(player.getMaxHealth() * 1 / 4f);
+			if (entity instanceof PlayerEntity) {
+				PlayerEntity player = (PlayerEntity) entity;
+				if (killedEntity.getGroup() == EntityGroup.ARTHROPOD && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.TOAD) {
+					player.heal(player.getMaxHealth() * 1 / 4f);
+				}
+				if (player.getMainHandStack().getItem() instanceof AthameItem) {
+					BlockPos glyph = BWUtil.getClosestBlockPos(killedEntity.getBlockPos(), 6, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity);
+					if (glyph != null) {
+						((GlyphBlockEntity) world.getBlockEntity(glyph)).onUse(world, glyph, player, Hand.MAIN_HAND, killedEntity);
 					}
-					if (player.getMainHandStack().getItem() instanceof AthameItem) {
-						BlockPos glyph = BWUtil.getClosestBlockPos(killedEntity.getBlockPos(), 6, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity);
-						if (glyph != null) {
-							((GlyphBlockEntity) world.getBlockEntity(glyph)).onUse(world, glyph, player, Hand.MAIN_HAND, killedEntity);
-						}
-						if (world.isNight()) {
-							boolean chicken = killedEntity instanceof ChickenEntity;
-							if ((chicken && world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.EXTREME_HILLS) || (killedEntity instanceof WolfEntity && (world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.FOREST || world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.TAIGA))) {
-								BlockPos brazierPos = BWUtil.getClosestBlockPos(killedEntity.getBlockPos(), 8, currentPos -> {
-									BlockEntity blockEntity = world.getBlockEntity(currentPos);
-									return blockEntity instanceof BrazierBlockEntity && ((BrazierBlockEntity) blockEntity).incenseRecipe.effect == BWStatusEffects.MORTAL_COIL;
-								});
-								if (brazierPos != null) {
-									world.breakBlock(brazierPos, false);
-									world.createExplosion(null, brazierPos.getX() + 0.5, brazierPos.getY() + 0.5, brazierPos.getZ() + 0.5, 3, Explosion.DestructionType.BREAK);
-									MobEntity boss = chicken ? BWEntityTypes.LILITH.create(world) : BWEntityTypes.HERNE.create(world);
-									if (boss != null) {
-										boss.initialize(world, world.getLocalDifficulty(brazierPos), SpawnReason.EVENT, null, null);
-										boss.updatePositionAndAngles(brazierPos.getX() + 0.5, brazierPos.getY(), brazierPos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
-										world.spawnEntity(boss);
-									}
+					if (world.isNight()) {
+						boolean chicken = killedEntity instanceof ChickenEntity;
+						if ((chicken && world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.EXTREME_HILLS) || (killedEntity instanceof WolfEntity && (world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.FOREST || world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.TAIGA))) {
+							BlockPos brazierPos = BWUtil.getClosestBlockPos(killedEntity.getBlockPos(), 8, currentPos -> {
+								BlockEntity blockEntity = world.getBlockEntity(currentPos);
+								return blockEntity instanceof BrazierBlockEntity && ((BrazierBlockEntity) blockEntity).incenseRecipe.effect == BWStatusEffects.MORTAL_COIL;
+							});
+							if (brazierPos != null) {
+								world.breakBlock(brazierPos, false);
+								world.createExplosion(null, brazierPos.getX() + 0.5, brazierPos.getY() + 0.5, brazierPos.getZ() + 0.5, 3, Explosion.DestructionType.BREAK);
+								MobEntity boss = chicken ? BWEntityTypes.LILITH.create(world) : BWEntityTypes.HERNE.create(world);
+								if (boss != null) {
+									boss.initialize(world, world.getLocalDifficulty(brazierPos), SpawnReason.EVENT, null, null);
+									boss.updatePositionAndAngles(brazierPos.getX() + 0.5, brazierPos.getY(), brazierPos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
+									world.spawnEntity(boss);
 								}
 							}
 						}
-						for (AthameDropRecipe recipe : world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_DROP_RECIPE_TYPE)) {
-							if (recipe.entity_type.equals(killedEntity.getType()) && world.random.nextFloat() < recipe.chance * (EnchantmentHelper.getLooting((LivingEntity) entity) + 1)) {
-								ItemStack drop = recipe.getOutput().copy();
-								if (recipe.entity_type == EntityType.PLAYER) {
-									drop.getOrCreateTag().putString("SkullOwner", killedEntity.getName().getString());
-								}
-								ItemScatterer.spawn(world, killedEntity.getX() + 0.5, killedEntity.getY() + 0.5, killedEntity.getZ() + 0.5, drop);
+					}
+					for (AthameDropRecipe recipe : world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_DROP_RECIPE_TYPE)) {
+						if (recipe.entity_type.equals(killedEntity.getType()) && world.random.nextFloat() < recipe.chance * (EnchantmentHelper.getLooting(player) + 1)) {
+							ItemStack drop = recipe.getOutput().copy();
+							if (recipe.entity_type == EntityType.PLAYER) {
+								drop.getOrCreateTag().putString("SkullOwner", killedEntity.getName().getString());
 							}
+							ItemScatterer.spawn(world, killedEntity.getX() + 0.5, killedEntity.getY() + 0.5, killedEntity.getZ() + 0.5, drop);
 						}
-						if ((player).getOffHandStack().getItem() == Items.GLASS_BOTTLE && ((BloodAccessor) killedEntity).getBlood() > 20 && BWTags.HAS_BLOOD.contains(killedEntity.getType())) {
-							world.playSound(null, entity.getBlockPos(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1, 0.5f);
-							BWUtil.addItemToInventoryAndConsume(player, Hand.OFF_HAND, new ItemStack(BWObjects.BOTTLE_OF_BLOOD));
-						}
+					}
+					if (player.getOffHandStack().getItem() == Items.GLASS_BOTTLE && ((BloodAccessor) killedEntity).getBlood() > 20 && BWTags.HAS_BLOOD.contains(killedEntity.getType())) {
+						world.playSound(null, entity.getBlockPos(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1, 0.5f);
+						BWUtil.addItemToInventoryAndConsume(player, Hand.OFF_HAND, new ItemStack(BWObjects.BOTTLE_OF_BLOOD));
 					}
 				}
 				if (((ContractAccessor) entity).hasContract(BWContracts.VIOLENCE)) {
-					((LivingEntity) entity).heal(((LivingEntity) entity).getMaxHealth() * 1 / 4f);
+					player.heal(player.getMaxHealth() / 4f);
 					if (((ContractAccessor) entity).hasNegativeEffects()) {
-						((LivingEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 600, 2));
+						player.addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 600, 2));
 					}
 				}
 			}

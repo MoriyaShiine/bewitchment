@@ -11,6 +11,7 @@ import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWMaterials;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
+import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.PathNodeType;
@@ -46,8 +47,10 @@ import java.util.stream.Collectors;
 
 public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 	public static final TrackedData<Boolean> MALE = DataTracker.registerData(DemonEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+	
 	private final List<DemonEntity.DemonTradeOffer> offers = new ArrayList<>();
 	private PlayerEntity customer = null;
+	private int tradeResetTimer = 0;
 	
 	public DemonEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
@@ -62,9 +65,13 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 	
 	@Override
 	public void tick() {
-		//todo trades reset?
 		super.tick();
 		if (!world.isClient) {
+			tradeResetTimer++;
+			if (tradeResetTimer >= 168000) {
+				tradeResetTimer = 0;
+				offers.clear();
+			}
 			LivingEntity target = getTarget();
 			if (target != null) {
 				lookAtEntity(target, 360, 360);
@@ -113,13 +120,12 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 	@Override
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
 		if (!world.isClient && isAlive() && getTarget() == null) {
-			if (BWUtil.rejectTradesFromCurses(this) || BWUtil.rejectTradesFromContracts(this)) {
+			if (BWUtil.rejectTrades(this)) {
 				return ActionResult.FAIL;
 			}
 			if (getCurrentCustomer() == null) {
 				setCurrentCustomer(player);
 			}
-			
 			if (!getOffers().isEmpty()) {
 				player.openHandledScreen(new SimpleNamedScreenHandlerFactory((id, playerInventory, customer) -> new DemonScreenHandler(id, this), getDisplayName())).ifPresent(syncId -> SyncDemonTradesPacket.send(player, this, syncId));
 			}
@@ -163,11 +169,12 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 		dataTracker.set(MALE, tag.getBoolean("Male"));
 		if (tag.contains("Offers")) {
 			offers.clear();
-			ListTag offersTag = tag.getList("Offers", 10);
+			ListTag offersTag = tag.getList("Offers", NbtType.COMPOUND);
 			for (Tag offerTag : offersTag) {
 				offers.add(new DemonTradeOffer((CompoundTag) offerTag));
 			}
 		}
+		tradeResetTimer = tag.getInt("TradeResetTimer");
 	}
 	
 	@Override
@@ -181,6 +188,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 			}
 			tag.put("Offers", offersTag);
 		}
+		tag.putInt("TradeResetTimer", tradeResetTimer);
 	}
 	
 	@Override
@@ -221,7 +229,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 			List<Contract> availableContracts = BWRegistries.CONTRACTS.stream().collect(Collectors.toList());
 			for (int i = 0; i < 3; i++) {
 				Contract contract = availableContracts.get(random.nextInt(availableContracts.size()));
-				offers.add(new DemonTradeOffer(contract, 2 + random.nextInt(2) * 2, 168000));
+				offers.add(new DemonTradeOffer(contract, 168000, 2 + random.nextInt(2) * 2));
 				availableContracts.remove(contract);
 			}
 		}
@@ -254,43 +262,23 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 	@SuppressWarnings("ConstantConditions")
 	public static class DemonTradeOffer {
 		private final Contract contract;
-		private final int cost;
-		private final int duration;
-		private int usesLeft;
+		private final int duration, cost;
 		
-		public DemonTradeOffer(Contract contract, int cost, int duration) {
-			this(contract, cost, duration, 1);
+		public DemonTradeOffer(CompoundTag tag) {
+			this(BWRegistries.CONTRACTS.get(new Identifier(tag.getString("Contract"))), tag.getInt("Duration"), tag.getInt("Cost"));
 		}
 		
-		public DemonTradeOffer(CompoundTag compoundTag) {
-			this(BWRegistries.CONTRACTS.get(new Identifier(compoundTag.getString("Contract"))), compoundTag.getInt("Cost"), compoundTag.getInt("Duration"), compoundTag.getInt("Uses"));
-		}
-		
-		private DemonTradeOffer(Contract contract, int cost, int duration, int usesLeft) {
+		public DemonTradeOffer(Contract contract, int duration, int cost) {
 			this.contract = contract;
-			this.cost = cost;
 			this.duration = duration;
-			this.usesLeft = usesLeft;
-		}
-		
-		public void resetUses() {
-			this.usesLeft = 0;
-		}
-		
-		public boolean isUsable() {
-			return usesLeft > 0;
-		}
-		
-		public void decrementUses() {
-			this.usesLeft--;
+			this.cost = cost;
 		}
 		
 		public CompoundTag toTag() {
 			CompoundTag tag = new CompoundTag();
 			tag.putString("Contract", BWRegistries.CONTRACTS.getId(contract).toString());
-			tag.putInt("Cost", cost);
 			tag.putInt("Duration", duration);
-			tag.putInt("Uses", usesLeft);
+			tag.putInt("Cost", cost);
 			return tag;
 		}
 		
@@ -298,9 +286,8 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 			buf.writeInt(offers.size());
 			for (DemonTradeOffer offer : offers) {
 				buf.writeIdentifier(BWRegistries.CONTRACTS.getId(offer.getContract()));
-				buf.writeInt(offer.cost);
 				buf.writeInt(offer.duration);
-				buf.writeInt(offer.usesLeft);
+				buf.writeInt(offer.cost);
 			}
 		}
 		
@@ -308,16 +295,15 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 			int count = buf.readInt();
 			List<DemonTradeOffer> offers = new ArrayList<>(count);
 			for (int i = 0; i < count; i++) {
-				offers.add(new DemonTradeOffer(BWRegistries.CONTRACTS.get(buf.readIdentifier()), buf.readInt(), buf.readInt(), buf.readInt()));
+				offers.add(new DemonTradeOffer(BWRegistries.CONTRACTS.get(buf.readIdentifier()), buf.readInt(), buf.readInt()));
 			}
 			return offers;
 		}
 		
 		public void apply(DemonMerchant merchant) {
-			decrementUses();
 			if (merchant.getCurrentCustomer() != null) {
 				PlayerEntity customer = merchant.getCurrentCustomer();
-				((ContractAccessor) customer).addContract(new Contract.Instance(contract, getDuration()));
+				((ContractAccessor) customer).addContract(new Contract.Instance(contract, getDuration(), getCost(merchant)));
 				contract.finishUsing(customer, ((ContractAccessor) customer).hasNegativeEffects());
 			}
 		}
@@ -326,12 +312,12 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 			return contract;
 		}
 		
-		public int getCost(DemonMerchant merchant) {
-			return merchant.isDiscount() ? 1 : cost;
-		}
-		
 		public int getDuration() {
 			return duration;
+		}
+		
+		public int getCost(DemonMerchant merchant) {
+			return merchant.isDiscount() ? 1 : cost;
 		}
 	}
 	
@@ -339,7 +325,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 		private final T merchant;
 		
 		public LookAtCustomerGoal(T merchant) {
-			super(merchant, PlayerEntity.class, 8.0F);
+			super(merchant, PlayerEntity.class, 8);
 			this.merchant = merchant;
 			setControls(EnumSet.of(Control.MOVE, Control.LOOK));
 		}

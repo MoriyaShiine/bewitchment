@@ -32,6 +32,7 @@ public class BWStatusEffects {
 	public static final StatusEffect MAGIC_SPONGE = create("magic_sponge", new EmptyStatusEffect(StatusEffectType.BENEFICIAL, 0xa264aa));
 	public static final StatusEffect MORTAL_COIL = create("mortal_coil", new MortalCoilStatusEffect(StatusEffectType.HARMFUL, 0x2d2d2d));
 	public static final StatusEffect NOURISHING = create("nourishing", new EmptyStatusEffect(StatusEffectType.BENEFICIAL, 0x71bc78));
+	public static final StatusEffect PACT = create("pact", new EmptyStatusEffect(StatusEffectType.HARMFUL, 0x7d0000).addAttributeModifier(EntityAttributes.GENERIC_MAX_HEALTH, "be0cf4d3-6e4b-43e6-9831-9e7d14aa14a7", -1, EntityAttributeModifier.Operation.ADDITION));
 	public static final StatusEffect POLYMORPH = create("polymorph", new PolymorphStatusEffect(StatusEffectType.NEUTRAL, 0xb154a9));
 	public static final StatusEffect PURITY = create("purity", new PurityStatusEffect(StatusEffectType.BENEFICIAL, 0xded3d5));
 	public static final StatusEffect SINKING = create("sinking", new SinkingStatusEffect(StatusEffectType.HARMFUL, 0x6c6c6c));

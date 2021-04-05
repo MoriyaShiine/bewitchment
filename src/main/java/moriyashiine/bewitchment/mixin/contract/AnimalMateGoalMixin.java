@@ -29,7 +29,7 @@ public abstract class AnimalMateGoalMixin extends Goal {
 	@Inject(method = "breed", at = @At("HEAD"))
 	private void breed(CallbackInfo callbackInfo) {
 		ServerPlayerEntity player = animal.getLovingPlayer();
-		if (player instanceof ContractAccessor) {
+		if (player != null) {
 			ContractAccessor contractAccessor = (ContractAccessor) player;
 			if (contractAccessor.hasContract(BWContracts.LUST)) {
 				if (contractAccessor.hasNegativeEffects() && player.getRandom().nextFloat() < 1 / 4f) {

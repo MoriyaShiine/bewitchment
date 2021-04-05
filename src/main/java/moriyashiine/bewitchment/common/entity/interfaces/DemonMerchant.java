@@ -18,7 +18,7 @@ public interface DemonMerchant {
 	LivingEntity getDemonTrader();
 	
 	default void trade(DemonEntity.DemonTradeOffer offer) {
-		if (!getDemonTrader().world.isClient && offer.isUsable()) {
+		if (!getDemonTrader().world.isClient) {
 			offer.apply(this);
 		}
 	}
@@ -34,14 +34,14 @@ public interface DemonMerchant {
 	}
 	
 	@Environment(EnvType.CLIENT)
-	default void setDiscountClientside(boolean discount) {
-	}
-	
-	@Environment(EnvType.CLIENT)
 	default void setOffersClientside(List<DemonEntity.DemonTradeOffer> offers) {
 	}
 	
 	@Environment(EnvType.CLIENT)
 	default void setDemonTraderClientside(LivingEntity trader) {
+	}
+	
+	@Environment(EnvType.CLIENT)
+	default void setDiscountClientside(boolean discount) {
 	}
 }

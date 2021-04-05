@@ -3,7 +3,6 @@ package moriyashiine.bewitchment.common.entity.living;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import dev.emi.stepheightentityattribute.StepHeightEntityAttributeMain;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.interfaces.VillagerWerewolfAccessor;
@@ -65,8 +64,6 @@ public class WerewolfEntity extends BWHostileEntity {
 					getStatusEffects().forEach(entity::addStatusEffect);
 					((CurseAccessor) entity).getCurses().clear();
 					((CurseAccessor) this).getCurses().forEach(((CurseAccessor) entity)::addCurse);
-					((ContractAccessor) entity).getContracts().clear();
-					((ContractAccessor) this).getContracts().forEach(((ContractAccessor) entity)::addContract);
 					((VillagerWerewolfAccessor) entity).setStoredWerewolf(toTag(new CompoundTag()));
 					world.spawnEntity(entity);
 					remove();

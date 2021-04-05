@@ -14,6 +14,7 @@ import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
+import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
@@ -58,6 +59,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 	
 	private final List<DemonEntity.DemonTradeOffer> offers = new ArrayList<>();
 	private PlayerEntity customer = null;
+	private int tradeResetTimer = 0;
 	
 	public BaphometEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
@@ -77,6 +79,11 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 		flameIndex = ++flameIndex % 8;
 		if (!world.isClient) {
 			bossBar.setPercent(getHealth() / getMaxHealth());
+			tradeResetTimer++;
+			if (tradeResetTimer >= 168000) {
+				tradeResetTimer = 0;
+				offers.clear();
+			}
 			LivingEntity target = getTarget();
 			int timer = age + getEntityId();
 			if (timer % 20 == 0) {
@@ -176,13 +183,12 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 	@Override
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
 		if (!world.isClient && isAlive() && getTarget() == null && BewitchmentAPI.isPledged(player, getPledgeID())) {
-			if (BWUtil.rejectTradesFromCurses(this) || BWUtil.rejectTradesFromContracts(this)) {
+			if (BWUtil.rejectTrades(this)) {
 				return ActionResult.FAIL;
 			}
 			if (getCurrentCustomer() == null) {
 				setCurrentCustomer(player);
 			}
-			
 			if (!getOffers().isEmpty()) {
 				player.openHandledScreen(new SimpleNamedScreenHandlerFactory((id, playerInventory, customer) -> new BaphometScreenHandler(id, this), getDisplayName())).ifPresent(syncId -> SyncDemonTradesPacket.send(player, this, syncId));
 			}
@@ -274,11 +280,12 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 		fromTagPledgeable(tag);
 		if (tag.contains("Offers")) {
 			offers.clear();
-			ListTag offersTag = tag.getList("Offers", 10);
+			ListTag offersTag = tag.getList("Offers", NbtType.COMPOUND);
 			for (Tag offerTag : offersTag) {
 				offers.add(new DemonEntity.DemonTradeOffer((CompoundTag) offerTag));
 			}
 		}
+		tradeResetTimer = tag.getInt("TradeResetTimer");
 	}
 	
 	@Override
@@ -292,6 +299,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 			}
 			tag.put("Offers", offersTag);
 		}
+		tag.putInt("TradeResetTimer", tradeResetTimer);
 	}
 	
 	@Override
@@ -312,7 +320,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 			List<Contract> availableContracts = BWRegistries.CONTRACTS.stream().collect(Collectors.toList());
 			for (int i = 0; i < 5; i++) {
 				Contract contract = availableContracts.get(random.nextInt(availableContracts.size()));
-				offers.add(new DemonEntity.DemonTradeOffer(contract, 2 + random.nextInt(2) * 2, 72000));
+				offers.add(new DemonEntity.DemonTradeOffer(contract, 72000, 2 + random.nextInt(2) * 2));
 				availableContracts.remove(contract);
 			}
 		}

@@ -17,11 +17,12 @@ public class Contract {
 	
 	public static class Instance {
 		public final Contract contract;
-		public int duration;
+		public int duration, cost;
 		
-		public Instance(Contract contract, int duration) {
+		public Instance(Contract contract, int duration, int cost) {
 			this.contract = contract;
 			this.duration = duration;
+			this.cost = cost;
 		}
 	}
 }

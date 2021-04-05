@@ -76,12 +76,16 @@ public class BWUtil {
 		return item instanceof ToolItem || item instanceof RangedWeaponItem || item instanceof ScepterItem || item instanceof ShieldItem || item instanceof TridentItem;
 	}
 	
-	public static boolean rejectTradesFromCurses(LivingEntity merchant) {
-		return !merchant.world.getEntitiesByClass(LivingEntity.class, new Box(merchant.getBlockPos()).expand(8), entity -> merchant.canSee(entity) && entity.isAlive() && ((CurseAccessor) entity).hasCurse(BWCurses.APATHY)).isEmpty();
-	}
-	
-	public static boolean rejectTradesFromContracts(LivingEntity merchant) {
-		return !merchant.world.getEntitiesByClass(LivingEntity.class, new Box(merchant.getBlockPos()).expand(8), entity -> merchant.canSee(entity) && entity.isAlive() && (((ContractAccessor) entity).hasContract(BWContracts.FRAUD) && ((ContractAccessor) entity).hasNegativeEffects())).isEmpty();
+	public static boolean rejectTrades(LivingEntity merchant) {
+		return !merchant.world.getEntitiesByClass(PlayerEntity.class, new Box(merchant.getBlockPos()).expand(8), entity -> {
+			if (merchant.canSee(entity) && entity.isAlive()) {
+				if (((CurseAccessor) entity).hasCurse(BWCurses.APATHY)) {
+					return true;
+				}
+				return ((ContractAccessor) entity).hasNegativeEffects() && ((ContractAccessor) entity).hasContract(BWContracts.FRAUD);
+			}
+			return false;
+		}).isEmpty();
 	}
 	
 	public static int getArmorPieces(LivingEntity livingEntity, Predicate<ItemStack> predicate) {

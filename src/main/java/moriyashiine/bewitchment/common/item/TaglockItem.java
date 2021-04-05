@@ -236,7 +236,7 @@ public class TaglockItem extends Item {
 			if (((ContractAccessor) user).hasContract(BWContracts.TREACHERY)) {
 				failed = false;
 			}
-			else if (((ContractAccessor) entity).hasContract(BWContracts.TREACHERY) && ((ContractAccessor) entity).hasNegativeEffects()) {
+			else if (entity instanceof PlayerEntity && ((ContractAccessor) entity).hasNegativeEffects() && ((ContractAccessor) entity).hasContract(BWContracts.TREACHERY)) {
 				failed = false;
 			}
 			if (failed) {

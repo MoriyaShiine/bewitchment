@@ -1,5 +1,7 @@
 package moriyashiine.bewitchment.client.screen;
 
+import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
+import moriyashiine.bewitchment.client.network.packet.SyncContractsPacket;
 import moriyashiine.bewitchment.client.network.packet.SyncDemonTradesPacket;
 import moriyashiine.bewitchment.common.entity.interfaces.DemonMerchant;
 import moriyashiine.bewitchment.common.entity.living.DemonEntity;
@@ -65,10 +67,11 @@ public class DemonScreenHandler extends ScreenHandler {
 		Slot slot = slots.get(i);
 		if (slot instanceof DemonTradeSlot) {
 			DemonEntity.DemonTradeOffer offer = ((DemonTradeSlot) slot).getOffer();
-			if (offer.isUsable()) {
+			if (!((ContractAccessor) playerEntity).hasContract(offer.getContract())) {
 				demonMerchant.onSell(offer);
 				demonMerchant.trade(offer);
 				if (!demonMerchant.getDemonTrader().world.isClient) {
+					SyncContractsPacket.send(playerEntity);
 					SyncDemonTradesPacket.send(playerEntity, demonMerchant, syncId);
 				}
 			}
@@ -114,9 +117,6 @@ public class DemonScreenHandler extends ScreenHandler {
 				ItemStack contract = new ItemStack(BWObjects.DEMONIC_CONTRACT);
 				contract.getOrCreateTag().putString("Contract", BWRegistries.CONTRACTS.getId(getOffer().getContract()).toString());
 				contract.getOrCreateTag().putInt("Duration", getOffer().getDuration());
-				if (!getOffer().isUsable()) {
-					contract.getOrCreateTag().putBoolean("Signed", true);
-				}
 				return contract;
 			}
 			return ItemStack.EMPTY;
@@ -168,14 +168,14 @@ public class DemonScreenHandler extends ScreenHandler {
 		
 		@Override
 		@Environment(EnvType.CLIENT)
-		public void setDemonTraderClientside(LivingEntity trader) {
-			this.trader = trader;
+		public void setOffersClientside(List<DemonEntity.DemonTradeOffer> offers) {
+			this.offers = offers;
 		}
 		
 		@Override
 		@Environment(EnvType.CLIENT)
-		public void setOffersClientside(List<DemonEntity.DemonTradeOffer> offers) {
-			this.offers = offers;
+		public void setDemonTraderClientside(LivingEntity trader) {
+			this.trader = trader;
 		}
 		
 		@Override

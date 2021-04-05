@@ -40,8 +40,8 @@ public class SyncDemonTradesPacket {
 			if (client.player != null) {
 				ScreenHandler screenHandler = client.player.currentScreenHandler;
 				if (syncId == screenHandler.syncId && screenHandler instanceof DemonScreenHandler) {
-					((DemonScreenHandler) screenHandler).demonMerchant.setOffersClientside(offers);
 					((DemonScreenHandler) screenHandler).demonMerchant.setCurrentCustomer(client.player);
+					((DemonScreenHandler) screenHandler).demonMerchant.setOffersClientside(offers);
 					((DemonScreenHandler) screenHandler).demonMerchant.setDemonTraderClientside((LivingEntity) client.world.getEntityById(traderId));
 					((DemonScreenHandler) screenHandler).demonMerchant.setDiscountClientside(discount);
 				}

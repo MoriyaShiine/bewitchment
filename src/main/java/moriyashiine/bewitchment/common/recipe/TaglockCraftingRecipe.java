@@ -1,7 +1,6 @@
 package moriyashiine.bewitchment.common.recipe;
 
 import moriyashiine.bewitchment.api.item.PoppetItem;
-import moriyashiine.bewitchment.common.item.ContractItem;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
 import net.minecraft.inventory.CraftingInventory;
@@ -64,7 +63,7 @@ public class TaglockCraftingRecipe extends SpecialCraftingRecipe {
 	}
 	
 	private static boolean isTaglockCraftable(ItemStack stack) {
-		if (stack.getItem() instanceof PoppetItem || stack.getItem() instanceof ContractItem) {
+		if (stack.getItem() instanceof PoppetItem) {
 			return TaglockItem.getTaglockUUID(stack) == null;
 		}
 		return false;

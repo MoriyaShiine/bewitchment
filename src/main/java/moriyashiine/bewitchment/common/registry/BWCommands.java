@@ -186,7 +186,7 @@ public class BWCommands {
 			Entity target = EntityArgumentType.getEntity(context, "target");
 			if (target instanceof ContractAccessor) {
 				Contract contract = ContractArgumentType.getContract(context, "contract");
-				((ContractAccessor) target).addContract(new Contract.Instance(contract, 168000));
+				((ContractAccessor) target).addContract(new Contract.Instance(contract, 168000, 0));
 				context.getSource().sendFeedback(new LiteralText("Added contract " + BWRegistries.CONTRACTS.getId(contract).toString() + " to " + target.getEntityName() + " for 7 days"), true);
 				return 1;
 			}
@@ -196,7 +196,7 @@ public class BWCommands {
 			if (target instanceof ContractAccessor) {
 				Contract contract = ContractArgumentType.getContract(context, "contract");
 				int days = IntegerArgumentType.getInteger(context, "days");
-				((ContractAccessor) target).addContract(new Contract.Instance(contract, days * 24000));
+				((ContractAccessor) target).addContract(new Contract.Instance(contract, days * 24000, 0));
 				context.getSource().sendFeedback(new LiteralText("Added contract " + BWRegistries.CONTRACTS.getId(contract).toString() + " to " + target.getEntityName() + " for " + days + (days == 1 ? " day" : " days")), true);
 				return 1;
 			}

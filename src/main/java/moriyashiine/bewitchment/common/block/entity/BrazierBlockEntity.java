@@ -19,7 +19,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
@@ -137,9 +136,9 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 								if (target instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) target) == BWEntityTypes.RAVEN && world.random.nextBoolean()) {
 									target = closestPlayer;
 								}
-								else if (target instanceof ContractAccessor && ((ContractAccessor) target).hasContract(BWContracts.HERESY)) {
+								else if (target instanceof PlayerEntity && ((ContractAccessor) target).hasContract(BWContracts.HERESY)) {
 									if (((ContractAccessor) target).hasNegativeEffects()) {
-										((LivingEntity) target).addStatusEffect(new StatusEffectInstance(BWStatusEffects.MORTAL_COIL, 12000));
+										((PlayerEntity) target).addStatusEffect(new StatusEffectInstance(BWStatusEffects.MORTAL_COIL, 12000));
 									}
 									target = closestPlayer;
 								}

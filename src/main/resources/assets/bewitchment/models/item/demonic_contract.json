@@ -2,13 +2,5 @@
   "parent": "item/generated",
   "textures": {
 	"layer0": "bewitchment:item/demonic_contract"
-  },
-  "overrides": [
-	{
-	  "predicate": {
-		"bewitchment:variant": 1
-	  },
-	  "model": "bewitchment:item/demonic_contract_variant"
-	}
-  ]
+  }
 }

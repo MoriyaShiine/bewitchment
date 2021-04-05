@@ -1,7 +1,6 @@
 package moriyashiine.bewitchment.mixin.transformation;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.interfaces.VillagerWerewolfAccessor;
@@ -59,8 +58,6 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Vill
 					getStatusEffects().forEach(entity::addStatusEffect);
 					((CurseAccessor) entity).getCurses().clear();
 					((CurseAccessor) this).getCurses().forEach(((CurseAccessor) entity)::addCurse);
-					((ContractAccessor) entity).getContracts().clear();
-					((ContractAccessor) this).getContracts().forEach(((ContractAccessor) entity)::addContract);
 					if (despawnTimer >= 0) {
 						despawnTimer = 2400;
 					}

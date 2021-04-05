@@ -11,6 +11,8 @@ import java.util.List;
 public interface ContractAccessor {
 	List<Contract.Instance> getContracts();
 	
+	boolean hasNegativeEffects();
+	
 	default boolean hasContract(Contract contract) {
 		return getContracts().stream().anyMatch(instance -> instance.contract == contract);
 	}
@@ -43,10 +45,9 @@ public interface ContractAccessor {
 			CompoundTag contractTag = new CompoundTag();
 			contractTag.putString("Contract", BWRegistries.CONTRACTS.getId(instance.contract).toString());
 			contractTag.putInt("Duration", instance.duration);
+			contractTag.putInt("Cost", instance.cost);
 			contracts.add(contractTag);
 		}
 		return contracts;
 	}
-	
-	boolean hasNegativeEffects();
 }
