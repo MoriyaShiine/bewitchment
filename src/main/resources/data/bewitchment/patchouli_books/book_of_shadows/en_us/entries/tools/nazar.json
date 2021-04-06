@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Using the powers of the light, Nazars are commonly used to protect against $(l:bewitchment:curses/conducting_curses)Curses$().$(br2)When worn, they will cut the duration of any $(l:bewitchment:curses/conducting_curses)Curse$() in half. $(br)this requires about half of the wearer's $(l:bewitchment:introduction/altars#internalme)ME$()."
+	  "text": "Using the powers of the light, Nazars are commonly used to protect against $(l:bewitchment:curses/conducting_curses)Curses$().$(br2)When worn, they will cut the duration of any $(l:bewitchment:curses/conducting_curses)Curse$() in half.$(br2)This requires about half of the wearer's $(l:bewitchment:introduction/altars#internalme)ME$()."
 	},
 	{
 	  "type": "crafting",

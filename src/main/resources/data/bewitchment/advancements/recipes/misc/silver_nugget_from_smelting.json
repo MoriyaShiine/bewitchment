@@ -6,102 +6,12 @@
 	]
   },
   "criteria": {
-	"has_athame": {
+	"has_item": {
 	  "trigger": "inventory_changed",
 	  "conditions": {
 		"items": [
 		  {
 			"item": "bewitchment:athame"
-		  }
-		]
-	  }
-	},
-	"has_silver_sword": {
-	  "trigger": "inventory_changed",
-	  "conditions": {
-		"items": [
-		  {
-			"item": "bewitchment:silver_sword"
-		  }
-		]
-	  }
-	},
-	"has_silver_pickaxe": {
-	  "trigger": "inventory_changed",
-	  "conditions": {
-		"items": [
-		  {
-			"item": "bewitchment:silver_pickaxe"
-		  }
-		]
-	  }
-	},
-	"has_silver_axe": {
-	  "trigger": "inventory_changed",
-	  "conditions": {
-		"items": [
-		  {
-			"item": "bewitchment:silver_axe"
-		  }
-		]
-	  }
-	},
-	"has_silver_shovel": {
-	  "trigger": "inventory_changed",
-	  "conditions": {
-		"items": [
-		  {
-			"item": "bewitchment:silver_shovel"
-		  }
-		]
-	  }
-	},
-	"has_silver_hoe": {
-	  "trigger": "inventory_changed",
-	  "conditions": {
-		"items": [
-		  {
-			"item": "bewitchment:silver_hoe"
-		  }
-		]
-	  }
-	},
-	"has_silver_helmet": {
-	  "trigger": "inventory_changed",
-	  "conditions": {
-		"items": [
-		  {
-			"item": "bewitchment:silver_helmet"
-		  }
-		]
-	  }
-	},
-	"has_silver_chestplate": {
-	  "trigger": "inventory_changed",
-	  "conditions": {
-		"items": [
-		  {
-			"item": "bewitchment:silver_chestplate"
-		  }
-		]
-	  }
-	},
-	"has_silver_leggings": {
-	  "trigger": "inventory_changed",
-	  "conditions": {
-		"items": [
-		  {
-			"item": "bewitchment:silver_leggings"
-		  }
-		]
-	  }
-	},
-	"has_silver_boots": {
-	  "trigger": "inventory_changed",
-	  "conditions": {
-		"items": [
-		  {
-			"item": "bewitchment:silver_boots"
 		  }
 		]
 	  }
@@ -115,16 +25,7 @@
   },
   "requirements": [
 	[
-	  "has_athame",
-	  "has_silver_sword",
-	  "has_silver_pickaxe",
-	  "has_silver_axe",
-	  "has_silver_shovel",
-	  "has_silver_hoe",
-	  "has_silver_helmet",
-	  "has_silver_chestplate",
-	  "has_silver_leggings",
-	  "has_silver_boots",
+	  "has_item",
 	  "has_the_recipe"
 	]
   ]

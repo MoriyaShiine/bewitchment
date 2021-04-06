@@ -8,7 +8,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Snakes usually appear in savannas, deserts and plains, where they prey on other animals, killing them with their venom.$(br2)Snakes may drop their Snake Tongue, which is commonly used in witchcraft (though it may also be acquired from some $(l:bewitchment:creatures/demon)Demonic Entities$())."
+	  "text": "Snakes usually appear in savannas, deserts and plains, where they prey on other animals, killing them with their venom.$(br2)Snakes may drop their Snake Tongue, though it may also be acquired from $(l:bewitchment:creatures/hellhound)Hellhounds$().$(br2)Snakes can be tamed with Raw Rabbit, and bred with Raw Chicken."
 	},
 	{
 	  "type": "text",
@@ -18,8 +18,7 @@
 	{
 	  "type": "entity",
 	  "entity": "bewitchment:snake",
-	  "scale": 0.6,
-	  "text": "Snakes can be tamed with Raw Rabbit, and bred with Raw Chicken."
+	  "scale": 0.6
 	}
   ]
 }

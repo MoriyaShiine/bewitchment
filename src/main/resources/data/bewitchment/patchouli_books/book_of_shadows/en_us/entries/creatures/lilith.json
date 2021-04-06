@@ -20,7 +20,7 @@
 	},
 	{
 	  "type": "text",
-	  "text": "You'll want to keep Lilith around if you want to $(l:bewitchment:tools/grotesque_stew)Pledge$() to her, so decide where to summon her wisely.$(br2)Alternatively, you can attempt moving her using the $(l:bewitchment:rituals/warp)Warp$() $(l:bewitchment:rituals/rituals)Ritual$().$(br2)Once $(l:bewitchment:tools/grotesque_stew)Pledged$(), you can toggle your bat-form by pressing [$(k:bewitchment.transformation_ability)]."
+	  "text": "You'll want to keep Lilith around if you want to $(l:bewitchment:tools/grotesque_stew)Pledge$() to her, so decide where to summon her wisely.$(br2)Once $(l:bewitchment:tools/grotesque_stew)Pledged$(), you can toggle your bat-form by pressing [$(k:bewitchment.transformation_ability)]."
 	}
   ]
 }

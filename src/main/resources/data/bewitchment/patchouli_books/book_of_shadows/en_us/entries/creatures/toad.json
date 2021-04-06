@@ -5,7 +5,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Toads can be found in jungles and swamps, jumping happily around. When killed, Toads will drop Slimeballs."
+	  "text": "Toads can be found in jungles and swamps, jumping happily around. When killed, Toads will drop Slimeballs.$(br2)Toads can be tamed with Fermented Spider Eyes, and bred with Normal Spider Eyes."
 	},
 	{
 	  "type": "text",
@@ -15,8 +15,7 @@
 	{
 	  "type": "entity",
 	  "entity": "bewitchment:toad",
-	  "scale": 0.6,
-	  "text": "Toads can be tamed with Fermented Spider Eyes, and bred with Normal Spider Eyes."
+	  "scale": 0.6
 	}
   ]
 }

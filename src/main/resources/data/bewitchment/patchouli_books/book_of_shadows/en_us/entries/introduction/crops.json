@@ -14,7 +14,7 @@
 	  "item3": "bewitchment:garlic",
 	  "item4": "bewitchment:mandrake_root",
 	  "header": "Regular Crops",
-	  "text": "The four regular crops are Aconite, Belladonna, Garlic, and Mandrake.$(br2)Aconite is mostly used as a neurotoxin, whereas Belladonna is known for causing physical harm. Mandrake enhances magic, and Garlic embodies healing."
+	  "text": "The four regular crops are Aconite, Belladonna, Garlic, and Mandrake.$(br2)Aconite is mostly used as a neurotoxin, whereas Belladonna is known for causing physical harm. Garlic embodies healing, and Mandrake enhances magic."
 	},
 	{
 	  "type": "smelting",

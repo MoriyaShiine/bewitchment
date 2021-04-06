@@ -3,33 +3,6 @@
   "ingredient": [
 	{
 	  "item": "bewitchment:athame"
-	},
-	{
-	  "item": "bewitchment:silver_sword"
-	},
-	{
-	  "item": "bewitchment:silver_pickaxe"
-	},
-	{
-	  "item": "bewitchment:silver_axe"
-	},
-	{
-	  "item": "bewitchment:silver_shovel"
-	},
-	{
-	  "item": "bewitchment:silver_hoe"
-	},
-	{
-	  "item": "bewitchment:silver_helmet"
-	},
-	{
-	  "item": "bewitchment:silver_chestplate"
-	},
-	{
-	  "item": "bewitchment:silver_leggings"
-	},
-	{
-	  "item": "bewitchment:silver_boots"
 	}
   ],
   "result": "bewitchment:silver_nugget",

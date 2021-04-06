@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The Extending $(l:bewitchment:sigils/using_sigils)Passive Sigil$() will increase the duration of any nearby $(l:bewitchment:tools/brazier#incense)Incense$() around it."
+	  "text": "The Extending $(l:bewitchment:sigils/using_sigils)Passive Sigil$() will double the duration of any nearby $(l:bewitchment:tools/brazier#incense)Incense$() around it."
 	},
 	{
 	  "type": "crafting",

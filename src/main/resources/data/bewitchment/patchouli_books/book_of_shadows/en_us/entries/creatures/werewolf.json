@@ -5,7 +5,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Werewolves - victims of $(l:bewitchment:curses/lycanthropy)Lycanthropy$() - roam forests, taiga and icy biomes on full moons. They are heavily weak to $(l:bewitchment:introduction/silver)Silver$().$(br2)When the sun rises, they turn back into their human form."
+	  "text": "Werewolves - victims of $(l:bewitchment:curses/lycanthropy)Lycanthropy$() - roam forests, taiga and icy biomes on full moons. They are heavily weak to Smite.$(br2)When the sun rises, they turn back into their human form."
 	},
 	{
 	  "type": "entity",

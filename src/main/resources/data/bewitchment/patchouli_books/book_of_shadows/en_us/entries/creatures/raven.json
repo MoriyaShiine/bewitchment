@@ -5,7 +5,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Ravens are dark birds that can be found in plains and forests. When killed, they will drop Feathers."
+	  "text": "Ravens are dark birds that can be found in plains and forests. When killed, they will drop Feathers.$(br2)Ravens can be tamed with Gold Nuggets or Silver Nuggets, and bred with Wheat Seeds."
 	},
 	{
 	  "type": "text",
@@ -15,8 +15,7 @@
 	{
 	  "type": "entity",
 	  "entity": "bewitchment:raven",
-	  "scale": 0.6,
-	  "text": "Ravens can be tamed with Gold Nuggets or Silver Nuggets, and bred with Wheat Seeds."
+	  "scale": 0.6
 	}
   ]
 }

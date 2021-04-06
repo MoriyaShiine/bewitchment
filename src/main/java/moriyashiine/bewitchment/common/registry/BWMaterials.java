@@ -9,48 +9,6 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 
 public class BWMaterials {
-	public static final ArmorMaterial SILVER_ARMOR = new ArmorMaterial() {
-		@Override
-		public int getDurability(EquipmentSlot slot) {
-			return ArmorMaterials.IRON.getDurability(slot);
-		}
-		
-		@Override
-		public int getProtectionAmount(EquipmentSlot slot) {
-			return ArmorMaterials.IRON.getProtectionAmount(slot);
-		}
-		
-		@Override
-		public int getEnchantability() {
-			return ArmorMaterials.GOLD.getEnchantability();
-		}
-		
-		@Override
-		public SoundEvent getEquipSound() {
-			return ArmorMaterials.GOLD.getEquipSound();
-		}
-		
-		@Override
-		public Ingredient getRepairIngredient() {
-			return Ingredient.ofItems(BWObjects.SILVER_INGOT);
-		}
-		
-		@Override
-		public String getName() {
-			return "silver";
-		}
-		
-		@Override
-		public float getToughness() {
-			return ArmorMaterials.IRON.getToughness();
-		}
-		
-		@Override
-		public float getKnockbackResistance() {
-			return ArmorMaterials.IRON.getKnockbackResistance();
-		}
-	};
-	
 	public static final ArmorMaterial HEDGEWITCH_ARMOR = new ArmorMaterial() {
 		@Override
 		public int getDurability(EquipmentSlot slot) {

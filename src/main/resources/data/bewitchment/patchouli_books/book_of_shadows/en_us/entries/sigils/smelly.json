@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Smelly $(l:bewitchment:sigils/using_sigils)Passive Sigil$() are stinky, causing nearby hostile entities to move towards it."
+	  "text": "The Smelly $(l:bewitchment:sigils/using_sigils)Passive Sigil$() is stinky, causing nearby hostile entities to move towards it."
 	},
 	{
 	  "type": "crafting",

@@ -35,11 +35,6 @@
 	  "recipe2": "bewitchment:incenses/air"
 	},
 	{
-	  "type": "bewitchment:incense_compressed",
-	  "recipe1": "bewitchment:incenses/earth",
-	  "recipe2": "bewitchment:incenses/air"
-	},
-	{
 	  "type": "bewitchment:incense",
 	  "advancement": "bewitchment:hidden_unlocks/demon_heart",
 	  "recipe": "bewitchment:incenses/mortal_coil",

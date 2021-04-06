@@ -9,7 +9,6 @@ import moriyashiine.bewitchment.common.entity.living.BaphometEntity;
 import moriyashiine.bewitchment.common.entity.living.HerneEntity;
 import moriyashiine.bewitchment.common.entity.living.LeonardEntity;
 import moriyashiine.bewitchment.common.entity.living.LilithEntity;
-import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.*;
@@ -18,7 +17,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -79,15 +77,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor 
 		if (!world.isClient) {
 			LivingEntity livingEntity = (LivingEntity) (Object) this;
 			int damage = 0;
-			if (BewitchmentAPI.isWeakToSilver(livingEntity)) {
-				damage += BWUtil.getArmorPieces(livingEntity, stack -> BWTags.SILVER_ARMOR.contains(stack.getItem()));
-				if (!(livingEntity.getMainHandStack().getItem() instanceof AthameItem) && BewitchmentAPI.isHoldingSilver(livingEntity, Hand.MAIN_HAND)) {
-					damage++;
-				}
-				if (!(livingEntity.getOffHandStack().getItem() instanceof AthameItem) && BewitchmentAPI.isHoldingSilver(livingEntity, Hand.OFF_HAND)) {
-					damage++;
-				}
-			}
 			if (livingEntity.getMainHandStack().getItem() == BWObjects.GARLIC && BewitchmentAPI.isVampire(this, true)) {
 				damage++;
 			}
@@ -146,16 +135,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor 
 			}
 			if (directSource instanceof WitherSkullEntity && trueSource instanceof LilithEntity) {
 				amount *= 3;
-			}
-			if (!(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns()) && directSource instanceof LivingEntity) {
-				LivingEntity livingAttacker = (LivingEntity) directSource;
-				if (BewitchmentAPI.isWeakToSilver(livingAttacker)) {
-					int armorPieces = BWUtil.getArmorPieces(livingAttacker, stack -> BWTags.SILVER_ARMOR.contains(stack.getItem()));
-					if (armorPieces > 0) {
-						directSource.damage(DamageSource.thorns(this), armorPieces);
-					}
-					amount *= (1 - (0.125f * armorPieces));
-				}
 			}
 			if (source.getMagic() && (Object) this instanceof LivingEntity) {
 				int armorPieces = BWUtil.getArmorPieces((LivingEntity) (Object) this, stack -> {

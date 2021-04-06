@@ -11,6 +11,7 @@ import moriyashiine.bewitchment.common.entity.living.VampireEntity;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
+import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.registry.*;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
@@ -21,7 +22,6 @@ import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -30,7 +30,6 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.DyeColor;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
@@ -164,15 +163,10 @@ public class BewitchmentAPI {
 	}
 	
 	public static boolean isSourceFromSilver(DamageSource source) {
-		Entity attacker = source.getSource();
-		if (source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns()) {
-			return false;
+		if (source.getSource() instanceof LivingEntity && ((LivingEntity) source.getSource()).getMainHandStack().getItem() instanceof AthameItem) {
+			return true;
 		}
-		return (attacker instanceof LivingEntity && isHoldingSilver((LivingEntity) attacker, Hand.MAIN_HAND)) || attacker instanceof SilverArrowEntity;
-	}
-	
-	public static boolean isHoldingSilver(LivingEntity livingEntity, Hand hand) {
-		return BWTags.SILVER_TOOLS.contains(livingEntity.getStackInHand(hand).getItem());
+		return source.getSource() instanceof SilverArrowEntity;
 	}
 	
 	public static boolean isWeakToSilver(LivingEntity livingEntity) {

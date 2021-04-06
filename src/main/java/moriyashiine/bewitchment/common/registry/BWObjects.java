@@ -21,10 +21,7 @@ import moriyashiine.bewitchment.common.block.util.BWCropBlock;
 import moriyashiine.bewitchment.common.block.util.BWOreBlock;
 import moriyashiine.bewitchment.common.block.util.BWSaplingBlock;
 import moriyashiine.bewitchment.common.item.*;
-import moriyashiine.bewitchment.common.item.util.BWAxeItem;
 import moriyashiine.bewitchment.common.item.util.BWBookItem;
-import moriyashiine.bewitchment.common.item.util.BWHoeItem;
-import moriyashiine.bewitchment.common.item.util.BWPickaxeItem;
 import moriyashiine.bewitchment.common.world.generator.tree.generator.CypressSaplingGenerator;
 import moriyashiine.bewitchment.common.world.generator.tree.generator.DragonsBloodSaplingGenerator;
 import moriyashiine.bewitchment.common.world.generator.tree.generator.ElderSaplingGenerator;
@@ -256,10 +253,6 @@ public class BWObjects {
 	public static final Block RED_COFFIN = create("red_coffin", new CoffinBlock(DyeColor.RED, copyOf(CYPRESS_PLANKS).nonOpaque()), true);
 	public static final Block BLACK_COFFIN = create("black_coffin", new CoffinBlock(DyeColor.BLACK, copyOf(CYPRESS_PLANKS).nonOpaque()), true);
 	//armor
-	public static final Item SILVER_HELMET = create("silver_helmet", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.HEAD, gen()));
-	public static final Item SILVER_CHESTPLATE = create("silver_chestplate", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.CHEST, gen()));
-	public static final Item SILVER_LEGGINGS = create("silver_leggings", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.LEGS, gen()));
-	public static final Item SILVER_BOOTS = create("silver_boots", new ArmorItem(BWMaterials.SILVER_ARMOR, EquipmentSlot.FEET, gen()));
 	public static final Item HEDGEWITCH_HOOD = create("hedgewitch_hood", new ArmorItem(BWMaterials.HEDGEWITCH_ARMOR, EquipmentSlot.HEAD, gen()));
 	public static final Item HEDGEWITCH_HAT = create("hedgewitch_hat", new ArmorItem(BWMaterials.HEDGEWITCH_ARMOR, EquipmentSlot.HEAD, gen()));
 	public static final Item HEDGEWITCH_ROBES = create("hedgewitch_robes", new ArmorItem(BWMaterials.HEDGEWITCH_ARMOR, EquipmentSlot.CHEST, gen()));
@@ -281,11 +274,6 @@ public class BWObjects {
 	public static final Item DRUID_BAND = create("druid_band", new DruidBandItem(gen().maxCount(1)));
 	public static final Item ZEPHYR_HARNESS = create("zephyr_harness", new ZephyrHarnessItem(gen().maxCount(1)));
 	//tool
-	public static final Item SILVER_SWORD = create("silver_sword", new SwordItem(BWMaterials.SILVER_TOOL, 3, -2.4f, gen()));
-	public static final Item SILVER_PICKAXE = create("silver_pickaxe", new BWPickaxeItem(BWMaterials.SILVER_TOOL, 1, -2.8f, gen()));
-	public static final Item SILVER_AXE = create("silver_axe", new BWAxeItem(BWMaterials.SILVER_TOOL, 6, -3, gen()));
-	public static final Item SILVER_SHOVEL = create("silver_shovel", new ShovelItem(BWMaterials.SILVER_TOOL, 1.5f, -2.8f, gen()));
-	public static final Item SILVER_HOE = create("silver_hoe", new BWHoeItem(BWMaterials.SILVER_TOOL, -2, -3, gen()));
 	public static final Item ATHAME = create("athame", new AthameItem(BWMaterials.SILVER_TOOL, 1, -2, gen()));
 	public static final Item SILVER_ARROW = create("silver_arrow", new SilverArrowItem(gen()));
 	public static final Item SCEPTER = create("scepter", new ScepterItem(gen().rarity(Rarity.RARE).maxDamage(64).fireproof()));
