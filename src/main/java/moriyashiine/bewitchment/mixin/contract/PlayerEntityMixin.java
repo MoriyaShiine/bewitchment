@@ -63,7 +63,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Contract
 			for (int i = contracts.size() - 1; i >= 0; i--) {
 				Contract.Instance instance = contracts.get(i);
 				level += instance.cost;
-				instance.contract.tick(this, hasNegativeEffects());
+				instance.contract.tick((PlayerEntity) (Object) this, hasNegativeEffects());
 				instance.duration--;
 				if (instance.duration <= 0) {
 					contracts.remove(i);

@@ -41,7 +41,7 @@ public class ContractItem extends Item {
 			Contract contract = BWRegistries.CONTRACTS.get(new Identifier(stack.getOrCreateTag().getString("Contract")));
 			if (contract != null) {
 				((ContractAccessor) user).addContract(new Contract.Instance(contract, stack.getTag().getInt("Duration"), 0));
-				contract.finishUsing(user, ((ContractAccessor) user).hasNegativeEffects());
+				contract.finishUsing((PlayerEntity) user, ((ContractAccessor) user).hasNegativeEffects());
 				world.playSound(null, user.getBlockPos(), BWSoundEvents.ITEM_CONTRACT_USE, SoundCategory.PLAYERS, 1, 1);
 				if (!((PlayerEntity) user).isCreative()) {
 					stack.decrement(1);

@@ -1,18 +1,12 @@
 package moriyashiine.bewitchment.api.registry;
 
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 
 public class Contract {
-	public final boolean doesBaphometOffer;
-	
-	public Contract(boolean doesBaphometOffer) {
-		this.doesBaphometOffer = doesBaphometOffer;
+	public void tick(PlayerEntity target, boolean includeNegative) {
 	}
 	
-	public void tick(LivingEntity target, boolean includeNegative) {
-	}
-	
-	public void finishUsing(LivingEntity user, boolean includeNegative) {
+	public void finishUsing(PlayerEntity user, boolean includeNegative) {
 	}
 	
 	public static class Instance {
