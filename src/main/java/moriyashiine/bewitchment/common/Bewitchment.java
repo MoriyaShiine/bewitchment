@@ -86,9 +86,10 @@ public class Bewitchment implements ModInitializer {
 				((MagicAccessor) newPlayer).setMagic(((MagicAccessor) oldPlayer).getMagic());
 				((BloodAccessor) newPlayer).setBlood(((BloodAccessor) oldPlayer).getBlood());
 				((RespawnTimerAccessor) newPlayer).setRespawnTimer(((RespawnTimerAccessor) oldPlayer).getRespawnTimer());
+				((TrueInvisibleAccessor) newPlayer).setTrueInvisible(((TrueInvisibleAccessor) oldPlayer).getTrueInvisible());
+				((SubmergedInWaterAccessor) newPlayer).setSubmergedInWater(((SubmergedInWaterAccessor) oldPlayer).getSubmergedInWater());
 				((TransformationAccessor) newPlayer).setAlternateForm(((TransformationAccessor) oldPlayer).getAlternateForm());
 				((WerewolfAccessor) newPlayer).setForcedTransformation(((WerewolfAccessor) oldPlayer).getForcedTransformation());
-				((TrueInvisibleAccessor) newPlayer).setTrueInvisible(((TrueInvisibleAccessor) oldPlayer).getTrueInvisible());
 			}
 			((PolymorphAccessor) newPlayer).setPolymorphUUID(((PolymorphAccessor) oldPlayer).getPolymorphUUID());
 			((PolymorphAccessor) newPlayer).setPolymorphName(((PolymorphAccessor) oldPlayer).getPolymorphName());
