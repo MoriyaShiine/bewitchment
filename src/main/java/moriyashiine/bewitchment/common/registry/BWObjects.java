@@ -303,8 +303,8 @@ public class BWObjects {
 	public static final Item HEAVY_SIGIL = create("heavy_sigil", new SigilItem(gen(), BWSigils.HEAVY));
 	public static final PoppetItem PROTECTION_POPPET = create("protection_poppet", new PoppetItem(gen().maxDamage(128), true));
 	public static final PoppetItem DEATH_PROTECTION_POPPET = create("death_protection_poppet", new PoppetItem(gen().maxDamage(1), false));
-	public static final PoppetItem VOODOO_POPPET = create("voodoo_poppet", new PoppetItem(gen().maxDamage(32), false));
-	public static final PoppetItem VOODOO_PROTECTION_POPPET = create("voodoo_protection_poppet", new PoppetItem(gen().maxDamage(32), true));
+	public static final PoppetItem VOODOO_POPPET = create("voodoo_poppet", new PoppetItem(gen().maxDamage(128), false));
+	public static final PoppetItem VOODOO_PROTECTION_POPPET = create("voodoo_protection_poppet", new PoppetItem(gen().maxDamage(128), true));
 	public static final PoppetItem MENDING_POPPET = create("mending_poppet", new PoppetItem(gen().maxDamage(1), true));
 	public static final PoppetItem CURSE_POPPET = create("curse_poppet", new CursePoppetItem(gen().maxDamage(1), true));
 	public static final PoppetItem VAMPIRIC_POPPET = create("vampiric_poppet", new PoppetItem(gen().maxDamage(128), false));

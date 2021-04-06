@@ -4,6 +4,7 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
+import moriyashiine.bewitchment.common.entity.interfaces.SubmergedInWaterAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
@@ -14,21 +15,28 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity {
+public abstract class LivingEntityMixin extends Entity implements SubmergedInWaterAccessor {
+	private static final TrackedData<Boolean> SUBMERGED_IN_WATER = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+	
 	@Shadow
 	public abstract boolean addStatusEffect(StatusEffectInstance effect);
 	
@@ -44,11 +52,25 @@ public abstract class LivingEntityMixin extends Entity {
 	@Shadow
 	protected abstract float getSoundPitch();
 	
-	@Shadow
-	public int hurtTime;
-	
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
+	}
+	
+	@Override
+	public boolean getSubmergedInWater() {
+		return dataTracker.get(SUBMERGED_IN_WATER);
+	}
+	
+	@Override
+	public void setSubmergedInWater(boolean submergedInWater) {
+		dataTracker.set(SUBMERGED_IN_WATER, submergedInWater);
+	}
+	
+	@Inject(method = "tick", at = @At("TAIL"))
+	private void tick(CallbackInfo callbackInfo) {
+		if (!world.isClient && getSubmergedInWater()) {
+			setSubmergedInWater(false);
+		}
 	}
 	
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
@@ -94,29 +116,6 @@ public abstract class LivingEntityMixin extends Entity {
 			}
 		}
 		return amount;
-	}
-	
-	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
-	private void damageHead(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!world.isClient && amount > 0 && hurtTime == 0 && (Object) this instanceof PlayerEntity && source == DamageSource.DROWN) {
-			ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_POPPET, null, (PlayerEntity) (Object) this);
-			if (!poppet.isEmpty()) {
-				LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
-				if (!owner.getUuid().equals(getUuid())) {
-					if (poppet.damage(BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
-						poppet.decrement(1);
-					}
-					ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
-					if (!potentialPoppet.isEmpty()) {
-						if (potentialPoppet.damage(owner instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) owner) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
-							potentialPoppet.decrement(1);
-						}
-						return;
-					}
-					owner.damage(source, amount);
-				}
-			}
-		}
 	}
 	
 	@Inject(method = "tryUseTotem", at = @At("RETURN"), cancellable = true)
@@ -169,26 +168,18 @@ public abstract class LivingEntityMixin extends Entity {
 		}
 	}
 	
-	@Inject(method = "addStatusEffect", at = @At("HEAD"))
-	private void addStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!world.isClient && !effect.isAmbient() && (Object) this instanceof PlayerEntity) {
-			ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_POPPET, null, (PlayerEntity) (Object) this);
-			if (!poppet.isEmpty()) {
-				LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
-				if (!owner.getUuid().equals(getUuid())) {
-					if (poppet.damage(BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
-						poppet.decrement(1);
-					}
-					ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
-					if (!potentialPoppet.isEmpty()) {
-						if (potentialPoppet.damage(owner instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) owner) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
-							potentialPoppet.decrement(1);
-						}
-						return;
-					}
-					owner.addStatusEffect(effect);
-				}
-			}
-		}
+	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
+	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
+		setSubmergedInWater(tag.getBoolean("SubmergedInWater"));
+	}
+	
+	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
+	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
+		tag.putBoolean("SubmergedInWater", getSubmergedInWater());
+	}
+	
+	@Inject(method = "initDataTracker", at = @At("TAIL"))
+	private void initDataTracker(CallbackInfo callbackInfo) {
+		dataTracker.startTracking(SUBMERGED_IN_WATER, false);
 	}
 }
