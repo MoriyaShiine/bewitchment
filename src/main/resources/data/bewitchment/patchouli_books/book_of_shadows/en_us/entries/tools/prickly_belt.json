@@ -6,12 +6,11 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The Prickly Belt is a handy trinket, able to store status effects.$(br2)When the wearer of the belt is harmed by an attacker, they will receive positive and neutral status effects stored in the belt. If a negative effect is stored in the belt, it will instead be applied to the attacker. Both of these functions cost some $(l:bewitchment:introduction/altars#internalme)ME$()."
+	  "text": "The Prickly Belt is a handy trinket, able to store status effects.$(br2)When attacked, the wearer will receive positive effects, and the attacker negative, at the cost of $(l:bewitchment:introduction/altars#internalme)ME$().$(br2)To add a status effect, simply combine the belt with a Potion."
 	},
 	{
 	  "type": "crafting",
-	  "recipe": "bewitchment:prickly_belt",
-	  "text": "To add a status effect, simply combine the belt with a Potion. The amount of uses is dependent on both duration and amplifier of the used Potion."
+	  "recipe": "bewitchment:prickly_belt"
 	}
   ]
 }
