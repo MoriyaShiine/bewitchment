@@ -2,8 +2,6 @@ package moriyashiine.bewitchment.api.event;
 
 import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
 import net.fabricmc.fabric.api.event.Event;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 
 import static net.fabricmc.fabric.api.event.EventFactory.createArrayBacked;
 
@@ -31,6 +29,4 @@ public final class BloodSetEvents {
     public interface OnDrainBlood {
         void onDrainBlood(BloodAccessor entity, int amount, boolean simulate);
     }
-
-
 }

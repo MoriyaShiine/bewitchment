@@ -1,6 +1,5 @@
 package moriyashiine.bewitchment.api.event;
 
-import moriyashiine.bewitchment.api.registry.Transformation;
 import net.fabricmc.fabric.api.event.Event;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,6 +32,4 @@ public final class BloodSuckEvents {
     public interface SetBloodAmount {
         int onBloodSuck(PlayerEntity player, LivingEntity target, int currentBloodToGive);
     }
-
-
 }
