@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.mixin.poppet;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.event.ReviveEvents;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
@@ -122,7 +123,8 @@ public abstract class LivingEntityMixin extends Entity implements SubmergedInWat
 	private void tryUseTotem(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!callbackInfo.getReturnValue() && !world.isClient) {
 			ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.DEATH_PROTECTION_POPPET, this, null);
-			if (!poppet.isEmpty()) {
+			if (!poppet.isEmpty() && !ReviveEvents.CANCEL_REVIVE.invoker().shouldCancel((PlayerEntity) (Object) this, source, poppet)) {
+				ReviveEvents.ON_REVIVE.invoker().onRevive((PlayerEntity) (Object) this, source, poppet);
 				if (poppet.damage((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
 					poppet.decrement(1);
 				}
