@@ -94,11 +94,11 @@ public class Bewitchment implements ModInitializer {
 			((PolymorphAccessor) newPlayer).setPolymorphUUID(((PolymorphAccessor) oldPlayer).getPolymorphUUID());
 			((PolymorphAccessor) newPlayer).setPolymorphName(((PolymorphAccessor) oldPlayer).getPolymorphName());
 			((FortuneAccessor) newPlayer).setFortune(((FortuneAccessor) oldPlayer).getFortune());
-			((CurseAccessor) newPlayer).getCurses().addAll(((CurseAccessor) oldPlayer).getCurses());
-			((ContractAccessor) newPlayer).getContracts().addAll(((ContractAccessor) oldPlayer).getContracts());
 			((PledgeAccessor) newPlayer).setPledge(((PledgeAccessor) oldPlayer).getPledge());
 			((TransformationAccessor) newPlayer).setTransformation(((TransformationAccessor) oldPlayer).getTransformation());
 			((WerewolfAccessor) newPlayer).setWerewolfVariant(((WerewolfAccessor) oldPlayer).getWerewolfVariant());
+			((ContractAccessor) newPlayer).getContracts().addAll(((ContractAccessor) oldPlayer).getContracts());
+			((CurseAccessor) newPlayer).getCurses().addAll(((CurseAccessor) oldPlayer).getCurses());
 		});
 		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killedEntity) -> {
 			if (entity instanceof PlayerEntity) {
@@ -215,9 +215,9 @@ public class Bewitchment implements ModInitializer {
 		BWRitualFunctions.init();
 		BWFortunes.init();
 		BWSigils.init();
-		BWCurses.init();
-		BWContracts.init();
 		BWTransformations.init();
+		BWContracts.init();
+		BWCurses.init();
 		BWSoundEvents.init();
 		BWParticleTypes.init();
 		BWRecipeTypes.init();
