@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.mixin.transformation;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import dev.emi.stepheightentityattribute.StepHeightEntityAttributeMain;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.event.OnTransformationSet;
 import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.api.registry.Transformation;
@@ -85,6 +86,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Transfor
 	
 	@Override
 	public void setTransformation(Transformation transformation) {
+		OnTransformationSet.EVENT.invoker().onTransformationSet((PlayerEntity) (Object) this, transformation);
 		dataTracker.set(TRANSFORMATION, BWRegistries.TRANSFORMATIONS.getId(transformation).toString());
 	}
 	
