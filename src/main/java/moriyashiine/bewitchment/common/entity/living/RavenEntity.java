@@ -6,6 +6,7 @@ import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.BirdNavigation;
@@ -57,8 +58,11 @@ public class RavenEntity extends BWTameableEntity {
 	@Override
 	public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
 		RavenEntity child = BWEntityTypes.RAVEN.create(world);
-		if (child != null && entity instanceof RavenEntity) {
-			child.dataTracker.set(VARIANT, random.nextBoolean() ? dataTracker.get(VARIANT) : entity.getDataTracker().get(VARIANT));
+		if (child != null) {
+			child.initialize(world, world.getLocalDifficulty(getBlockPos()), SpawnReason.BREEDING, null, null);
+			if (entity instanceof RavenEntity && random.nextFloat() < 95 / 100f) {
+				child.dataTracker.set(VARIANT, random.nextBoolean() ? dataTracker.get(VARIANT) : entity.getDataTracker().get(VARIANT));
+			}
 		}
 		return child;
 	}

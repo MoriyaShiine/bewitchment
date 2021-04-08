@@ -5,6 +5,7 @@ import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.BirdNavigation;
@@ -55,8 +56,11 @@ public class OwlEntity extends BWTameableEntity {
 	@Override
 	public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
 		OwlEntity child = BWEntityTypes.OWL.create(world);
-		if (child != null && entity instanceof OwlEntity) {
-			child.dataTracker.set(VARIANT, random.nextBoolean() ? dataTracker.get(VARIANT) : entity.getDataTracker().get(VARIANT));
+		if (child != null) {
+			child.initialize(world, world.getLocalDifficulty(getBlockPos()), SpawnReason.BREEDING, null, null);
+			if (entity instanceof OwlEntity && random.nextFloat() < 95 / 100f) {
+				child.dataTracker.set(VARIANT, random.nextBoolean() ? dataTracker.get(VARIANT) : entity.getDataTracker().get(VARIANT));
+			}
 		}
 		return child;
 	}
