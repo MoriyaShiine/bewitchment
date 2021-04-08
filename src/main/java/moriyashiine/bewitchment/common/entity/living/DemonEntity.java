@@ -36,6 +36,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -231,7 +232,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 			List<Contract> availableContracts = BWRegistries.CONTRACTS.stream().collect(Collectors.toList());
 			for (int i = 0; i < 3; i++) {
 				Contract contract = availableContracts.get(random.nextInt(availableContracts.size()));
-				offers.add(new DemonTradeOffer(contract, 168000, 2 + random.nextInt(2) * 2));
+				offers.add(new DemonTradeOffer(contract, 168000, MathHelper.nextInt(random, 3, 6)));
 				availableContracts.remove(contract);
 			}
 		}
@@ -306,7 +307,6 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 			if (merchant.getCurrentCustomer() != null) {
 				PlayerEntity customer = merchant.getCurrentCustomer();
 				((ContractAccessor) customer).addContract(new Contract.Instance(contract, getDuration(), getCost(merchant)));
-				contract.finishUsing(customer, ((ContractAccessor) customer).hasNegativeEffects());
 			}
 		}
 		

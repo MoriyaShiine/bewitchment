@@ -38,7 +38,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.ChickenEntity;
@@ -144,11 +143,8 @@ public class Bewitchment implements ModInitializer {
 						BWUtil.addItemToInventoryAndConsume(player, Hand.OFF_HAND, new ItemStack(BWObjects.BOTTLE_OF_BLOOD));
 					}
 				}
-				if (((ContractAccessor) entity).hasContract(BWContracts.VIOLENCE)) {
+				if (((ContractAccessor) entity).hasContract(BWContracts.DEATH)) {
 					player.heal(player.getMaxHealth() / 4f);
-					if (((ContractAccessor) entity).hasNegativeEffects()) {
-						player.addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 600, 2));
-					}
 				}
 			}
 		});

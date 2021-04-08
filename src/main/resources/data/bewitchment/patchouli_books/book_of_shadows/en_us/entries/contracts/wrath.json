@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Sometimes getting hurt makes you angry, and with the $(l:bewitchment:contracts/concept_contracts)Contract$() of wrath you can finally manifest that anger reasonably!$(br2)Signing this $(l:bewitchment:contracts/concept_contracts)Contract$() will increase your damage output with lower health.$(br2)It may also increase damage intake."
+	  "text": "Sometimes getting hurt makes you angry, and with the $(l:bewitchment:contracts/concept_contracts)Contract$() of Wrath you can finally manifest that anger reasonably!$(br2)Signing this $(l:bewitchment:contracts/concept_contracts)Contract$() will increase your damage output with lower health."
 	}
   ]
 }

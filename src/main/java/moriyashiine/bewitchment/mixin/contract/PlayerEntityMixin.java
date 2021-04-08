@@ -1,10 +1,8 @@
 package moriyashiine.bewitchment.mixin.contract;
 
-import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.common.registry.BWContracts;
-import moriyashiine.bewitchment.common.registry.BWPledges;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import net.fabricmc.fabric.api.util.NbtType;
@@ -20,7 +18,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
-import net.minecraft.world.explosion.Explosion;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -51,11 +48,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Contract
 		return contracts;
 	}
 	
-	@Override
-	public boolean hasNegativeEffects() {
-		return !(BewitchmentAPI.isPledged((PlayerEntity) (Object) this, BWPledges.BAPHOMET));
-	}
-	
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo callbackInfo) {
 		if (!world.isClient) {
@@ -63,7 +55,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Contract
 			for (int i = contracts.size() - 1; i >= 0; i--) {
 				Contract.Instance instance = contracts.get(i);
 				level += instance.cost;
-				instance.contract.tick((PlayerEntity) (Object) this, hasNegativeEffects());
+				instance.contract.tick((PlayerEntity) (Object) this);
 				instance.duration--;
 				if (instance.duration <= 0) {
 					contracts.remove(i);
@@ -75,14 +67,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Contract
 		}
 	}
 	
-	@ModifyVariable(method = "addExhaustion", at = @At("HEAD"))
-	private float modifyExhaustion(float exhaustion) {
-		if (!world.isClient && hasNegativeEffects() && hasContract(BWContracts.GLUTTONY)) {
-			exhaustion *= 1.5f;
-		}
-		return exhaustion;
-	}
-	
 	@ModifyVariable(method = "addExperience", at = @At("HEAD"))
 	private int modifyAddExperience(int experience) {
 		if (hasContract(BWContracts.PRIDE)) {
@@ -91,22 +75,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Contract
 		return experience;
 	}
 	
-	@Inject(method = "addExperience", at = @At(value = "INVOKE", ordinal = 2, target = "Lnet/minecraft/entity/player/PlayerEntity;addExperienceLevels(I)V"))
-	private void addExperience(int experience, CallbackInfo callbackInfo) {
-		if (!world.isClient && hasNegativeEffects() && hasContract(BWContracts.PRIDE)) {
-			damage(DamageSource.explosion(this), getMaxHealth() / 2);
-			world.createExplosion(this, getX(), getY(), getZ(), 2, Explosion.DestructionType.NONE);
-		}
-	}
-	
 	@Inject(method = "eatFood", at = @At("HEAD"))
 	private void eatFood(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> callbackInfo) {
 		if (!world.isClient) {
 			FoodComponent foodComponent = stack.getItem().getFoodComponent();
-			if (foodComponent != null) {
-				if (hasContract(BWContracts.GLUTTONY)) {
-					getHungerManager().add(foodComponent.getHunger(), foodComponent.getSaturationModifier());
-				}
+			if (foodComponent != null && hasContract(BWContracts.GLUTTONY)) {
+				getHungerManager().add(foodComponent.getHunger(), foodComponent.getSaturationModifier());
 			}
 		}
 	}

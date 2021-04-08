@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "The Pride $(l:bewitchment:contracts/concept_contracts)Contract$() will double the amount of experience you gain.$(br2)May contain explosions."
+	  "text": "The Pride $(l:bewitchment:contracts/concept_contracts)Contract$() will double the amount of experience you gain."
 	}
   ]
 }

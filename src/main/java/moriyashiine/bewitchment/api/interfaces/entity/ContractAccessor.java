@@ -11,8 +11,6 @@ import java.util.List;
 public interface ContractAccessor {
 	List<Contract.Instance> getContracts();
 	
-	boolean hasNegativeEffects();
-	
 	default boolean hasContract(Contract contract) {
 		return getContracts().stream().anyMatch(instance -> instance.contract == contract);
 	}

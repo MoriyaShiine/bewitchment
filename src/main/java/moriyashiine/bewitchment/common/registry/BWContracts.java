@@ -2,8 +2,6 @@ package moriyashiine.bewitchment.common.registry;
 
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.common.Bewitchment;
-import moriyashiine.bewitchment.common.contract.DeathContract;
-import moriyashiine.bewitchment.common.contract.PestilenceContract;
 import moriyashiine.bewitchment.common.contract.SlothContract;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -23,14 +21,9 @@ public class BWContracts {
 	public static final Contract PRIDE = create("pride", new Contract());
 	
 	public static final Contract FAMINE = create("famine", new Contract());
-	public static final Contract PESTILENCE = create("pestilence", new PestilenceContract());
+	public static final Contract PESTILENCE = create("pestilence", new Contract());
 	public static final Contract WAR = create("war", new Contract());
-	public static final Contract DEATH = create("death", new DeathContract());
-	
-	public static final Contract HERESY = create("heresy", new Contract());
-	public static final Contract VIOLENCE = create("violence", new Contract());
-	public static final Contract FRAUD = create("fraud", new Contract());
-	public static final Contract TREACHERY = create("treachery", new Contract());
+	public static final Contract DEATH = create("death", new Contract());
 	
 	private static <T extends Contract> T create(String name, T contract) {
 		CONTRACTS.put(contract, new Identifier(Bewitchment.MODID, name));

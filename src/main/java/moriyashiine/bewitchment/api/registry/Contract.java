@@ -3,10 +3,7 @@ package moriyashiine.bewitchment.api.registry;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class Contract {
-	public void tick(PlayerEntity target, boolean includeNegative) {
-	}
-	
-	public void finishUsing(PlayerEntity user, boolean includeNegative) {
+	public void tick(PlayerEntity player) {
 	}
 	
 	public static class Instance {

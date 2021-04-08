@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Lust brings love in the air~$(br2)This causes animals bred under whoever has this $(l:bewitchment:contracts/concept_contracts)Contract$() to breed thrice the usual amount.$(br2)A side effect may be the spawning of $(l:bewitchment:creatures/hellhound)Hellhounds$()."
+	  "text": "Lust brings love in the air~$(br2)This causes animals bred under whoever has this $(l:bewitchment:contracts/concept_contracts)Contract$() to breed thrice the usual amount."
 	}
   ]
 }

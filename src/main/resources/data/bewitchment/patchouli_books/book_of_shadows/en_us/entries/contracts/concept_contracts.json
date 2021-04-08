@@ -7,11 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Contracts are otherworldly pacts purchased from $(l:bewitchment:creatures/demon)Demons$().$(br2)They can be signed with a $(l:bewitchment:tools/taglock)Taglock$(), after which using it will apply its conditions on whoever \"signed\" it.$(br2)While most contracts are usually signed in self-interest, some, like $(l:bewitchment:contracts/death)Death$(), are best used on other people."
-	},
-	{
-	  "type": "text",
-	  "text": "Always keep in mind that contracts, as demonic things do, are usually two sided, and will affect whoever signed them or forced them.$(br2)Maybe attaining $(l:bewitchment:creatures/baphomet)Someone's$() favor could negate that.$(br2)Contracts last seven days, and cannot be broken."
+	  "text": "Contracts are otherworldly pacts purchased from $(l:bewitchment:creatures/demon)Demons$() at the cost of health.$(br2)Contracts usually last seven days, and cannot be broken."
 	}
   ]
 }

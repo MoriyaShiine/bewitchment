@@ -33,7 +33,6 @@ public abstract class BlockMixin {
 			if (!drops.isEmpty() && !EnchantmentHelper.get(stack).containsKey(Enchantments.SILK_TOUCH)) {
 				ContractAccessor contractAccessor = (ContractAccessor) entity;
 				if (contractAccessor.hasContract(BWContracts.GREED)) {
-					boolean foundOre = false;
 					for (int i = 0; i < drops.size(); i++) {
 						if (BWTags.ORES.contains(state.getBlock().asItem())) {
 							for (Recipe<?> smeltingRecipe : world.getRecipeManager().listAllOfType(RecipeType.SMELTING)) {
@@ -46,11 +45,7 @@ public abstract class BlockMixin {
 								}
 							}
 							drops.set(i, new ItemStack(drops.get(i).getItem(), drops.get(i).getCount() * 2));
-							foundOre = true;
 						}
-					}
-					if (foundOre && contractAccessor.hasNegativeEffects() && world.random.nextFloat() < 1 / 3f) {
-						drops.clear();
 					}
 				}
 			}

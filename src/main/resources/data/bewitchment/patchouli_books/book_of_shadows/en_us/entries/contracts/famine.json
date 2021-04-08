@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "Under the Famine $(l:bewitchment:contracts/concept_contracts)Contract$(), damage is reduced the hungrier you are.$(br2)This goes both ways, which means that you give and take less damage."
+	  "text": "Under the Famine $(l:bewitchment:contracts/concept_contracts)Contract$(), damage taken is reduced the hungrier you are."
 	}
   ]
 }

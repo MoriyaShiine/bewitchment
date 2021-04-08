@@ -1,12 +1,10 @@
 package moriyashiine.bewitchment.common.misc;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
 import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
 import moriyashiine.bewitchment.common.item.ScepterItem;
-import moriyashiine.bewitchment.common.registry.BWContracts;
 import moriyashiine.bewitchment.common.registry.BWCurses;
 import moriyashiine.bewitchment.common.registry.BWMaterials;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
@@ -77,15 +75,7 @@ public class BWUtil {
 	}
 	
 	public static boolean rejectTrades(LivingEntity merchant) {
-		return !merchant.world.getEntitiesByClass(PlayerEntity.class, new Box(merchant.getBlockPos()).expand(8), entity -> {
-			if (merchant.canSee(entity) && entity.isAlive()) {
-				if (((CurseAccessor) entity).hasCurse(BWCurses.APATHY)) {
-					return true;
-				}
-				return ((ContractAccessor) entity).hasNegativeEffects() && ((ContractAccessor) entity).hasContract(BWContracts.FRAUD);
-			}
-			return false;
-		}).isEmpty();
+		return !merchant.world.getEntitiesByClass(PlayerEntity.class, new Box(merchant.getBlockPos()).expand(8), entity -> merchant.canSee(entity) && entity.isAlive() && ((CurseAccessor) entity).hasCurse(BWCurses.APATHY)).isEmpty();
 	}
 	
 	public static int getArmorPieces(LivingEntity livingEntity, Predicate<ItemStack> predicate) {

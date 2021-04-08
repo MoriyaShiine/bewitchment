@@ -1,12 +1,14 @@
 package moriyashiine.bewitchment.common.item;
 
-import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.interfaces.Lockable;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
 import moriyashiine.bewitchment.common.misc.BWUtil;
-import moriyashiine.bewitchment.common.registry.*;
+import moriyashiine.bewitchment.common.registry.BWObjects;
+import moriyashiine.bewitchment.common.registry.BWSigils;
+import moriyashiine.bewitchment.common.registry.BWSoundEvents;
+import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BedBlock;
@@ -232,12 +234,6 @@ public class TaglockItem extends Item {
 					targetYaw += 360;
 				}
 				failed = Math.abs(targetYaw - userYaw) > 120;
-			}
-			if (((ContractAccessor) user).hasContract(BWContracts.TREACHERY)) {
-				failed = false;
-			}
-			else if (entity instanceof PlayerEntity && ((ContractAccessor) entity).hasNegativeEffects() && ((ContractAccessor) entity).hasContract(BWContracts.TREACHERY)) {
-				failed = false;
 			}
 			if (failed) {
 				if (entity instanceof PlayerEntity) {

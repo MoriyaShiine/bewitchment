@@ -36,20 +36,15 @@ public abstract class LivingEntityMixin extends Entity {
 		if (!world.isClient) {
 			Entity directSource = source.getSource();
 			if ((Object) this instanceof PlayerEntity && ((ContractAccessor) this).hasContract(BWContracts.FAMINE)) {
-				amount *= (1 - (0.025f * (20 - ((PlayerEntity) (Object) this).getHungerManager().getFoodLevel())));
-			}
-			if (directSource instanceof PlayerEntity && ((ContractAccessor) directSource).hasNegativeEffects() && ((ContractAccessor) directSource).hasContract(BWContracts.FAMINE)) {
-				amount *= (1 - (0.025f * (20 - ((PlayerEntity) directSource).getHungerManager().getFoodLevel())));
+				amount *= (1 - (0.035f * (20 - ((PlayerEntity) (Object) this).getHungerManager().getFoodLevel())));
 			}
 			if (directSource instanceof PlayerEntity && ((ContractAccessor) directSource).hasContract(BWContracts.WRATH)) {
-				amount *= (1 + (0.025f * (((LivingEntity) directSource).getMaxHealth() - ((LivingEntity) directSource).getHealth())));
-			}
-			if ((Object) this instanceof PlayerEntity && ((ContractAccessor) this).hasNegativeEffects() && ((ContractAccessor) this).hasContract(BWContracts.WRATH)) {
-				amount *= (1 + (0.025f * (getMaxHealth() - getHealth())));
+				amount *= (1 + (0.035f * (((LivingEntity) directSource).getMaxHealth() - ((LivingEntity) directSource).getHealth())));
 			}
 			if (directSource instanceof PlayerEntity && ((ContractAccessor) directSource).hasContract(BWContracts.PESTILENCE)) {
-				addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100));
 				addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100));
+				addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 100));
+				addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 100));
 			}
 		}
 		return amount;
