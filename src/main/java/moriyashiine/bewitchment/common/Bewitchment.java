@@ -6,6 +6,7 @@ import dev.emi.trinkets.api.TrinketSlots;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.event.BloodSuckEvents;
 import moriyashiine.bewitchment.api.interfaces.entity.*;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
@@ -151,11 +152,13 @@ public class Bewitchment implements ModInitializer {
 		UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
 			if (entity instanceof LivingEntity && hand == Hand.MAIN_HAND && player.isSneaking() && entity.isAlive() && BewitchmentAPI.isVampire(player, true) && player.getStackInHand(hand).isEmpty()) {
 				int toGive = BWTags.HAS_BLOOD.contains(entity.getType()) ? 5 : entity instanceof AnimalEntity ? 1 : 0;
+				toGive = BloodSuckEvents.BLOOD_AMOUNT.invoker().onBloodSuck(player, (LivingEntity) entity, toGive);
 				if (toGive > 0) {
 					BloodAccessor playerBlood = (BloodAccessor) player;
 					BloodAccessor entityBlood = (BloodAccessor) entity;
 					if (playerBlood.fillBlood(toGive, true) && entityBlood.drainBlood(10, true)) {
 						if (!world.isClient && ((LivingEntity) entity).hurtTime == 0) {
+							BloodSuckEvents.ON_BLOOD_SUCK.invoker().onBloodSuck(player, (LivingEntity) entity, toGive);
 							world.playSound(null, player.getBlockPos(), SoundEvents.ITEM_HONEY_BOTTLE_DRINK, player.getSoundCategory(), 1, 0.5f);
 							if (!((LivingEntity) entity).isSleeping() || entityBlood.getBlood() < entityBlood.MAX_BLOOD / 2) {
 								entity.damage(BWDamageSources.VAMPIRE, 2);
