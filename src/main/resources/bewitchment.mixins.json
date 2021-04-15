@@ -4,6 +4,7 @@
   "package": "moriyashiine.bewitchment.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+	"AbstractBlockMixin",
 	"AbstractBlockStateMixin",
 	"BlockEntityMixin",
 	"BlockMixin",
