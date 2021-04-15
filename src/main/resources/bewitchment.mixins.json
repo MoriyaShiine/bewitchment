@@ -20,7 +20,6 @@
 	"LivingEntityMixin",
 	"MobEntityMixin",
 	"PlayerEntityMixin",
-	"PounceAtTargetGoalMixin",
 	"SpawnHelperMixin",
 	"StatusEffectAccessor",
 	"TreeDecoratorTypeAccessor",

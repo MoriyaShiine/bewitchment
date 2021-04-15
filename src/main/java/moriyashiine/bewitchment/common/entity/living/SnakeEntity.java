@@ -157,7 +157,13 @@ public class SnakeEntity extends BWTameableEntity {
 	protected void initGoals() {
 		goalSelector.add(0, new SwimGoal(this));
 		goalSelector.add(1, new SitGoal(this));
-		goalSelector.add(2, new PounceAtTargetGoal(this, 0.25f));
+		goalSelector.add(2, new PounceAtTargetGoal(this, 0.25f) {
+			@Override
+			public void start() {
+				super.start();
+				toggleAttack(true);
+			}
+		});
 		goalSelector.add(3, new MeleeAttackGoal(this, 1, true));
 		goalSelector.add(4, new FollowOwnerGoal(this, 1, 10, 2, false));
 		goalSelector.add(5, new AnimalMateGoal(this, 1));
