@@ -1,7 +1,7 @@
 {
   "type": "bewitchment:cauldron_brewing_recipe",
   "ingredient": {
-	"item": "bewitchment:oak_bark"
+	"item": "oak_sapling"
   },
   "effect": "strength",
   "time": 1200

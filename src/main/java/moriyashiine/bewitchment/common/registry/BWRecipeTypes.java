@@ -16,9 +16,6 @@ public class BWRecipeTypes {
 	private static final Map<RecipeSerializer<?>, Identifier> RECIPE_SERIALIZERS = new LinkedHashMap<>();
 	private static final Map<RecipeType<?>, Identifier> RECIPE_TYPES = new LinkedHashMap<>();
 	
-	public static final RecipeSerializer<AthameStrippingRecipe> ATHAME_STRIPPING_RECIPE_SERIALIZER = create("athame_stripping", new AthameStrippingRecipe.Serializer());
-	public static final RecipeType<AthameStrippingRecipe> ATHAME_STRIPPING_RECIPE_TYPE = create("athame_stripping");
-	
 	public static final RecipeSerializer<AthameDropRecipe> ATHAME_DROP_RECIPE_SERIALIZER = create("athame_drop", new AthameDropRecipe.Serializer());
 	public static final RecipeType<AthameDropRecipe> ATHAME_DROP_RECIPE_TYPE = create("athame_drop");
 	

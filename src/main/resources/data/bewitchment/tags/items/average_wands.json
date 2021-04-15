@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-	"bewitchment:golden_candelabra",
-	"bewitchment:silver_candelabra"
+	"bewitchment:golden_candelabra"
   ]
 }

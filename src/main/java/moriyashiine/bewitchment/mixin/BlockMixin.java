@@ -32,7 +32,7 @@ public abstract class BlockMixin {
 	private static void getDroppedStacks(BlockState state, ServerWorld world, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity entity, ItemStack stack, CallbackInfoReturnable<List<ItemStack>> callbackInfo) {
 		if (entity instanceof LivingEntity) {
 			boolean damage = false;
-			if (state.getBlock() instanceof SaltLineBlock && BewitchmentAPI.isWeakToSilver((LivingEntity) entity)) {
+			if (state.getBlock() instanceof SaltLineBlock && BewitchmentAPI.isWeakToSmite((LivingEntity) entity)) {
 				damage = true;
 			}
 			else if (state.getBlock() == BWObjects.GARLIC_CROP && BewitchmentAPI.isVampire(entity, true)) {

@@ -19,10 +19,7 @@ public class BWDamageSources {
 	public static final DamageSource SUN = new ArmorPiercingDamageSource("onFire");
 	
 	public static float handleDamage(LivingEntity entity, DamageSource source, float amount) {
-		if (BewitchmentAPI.isWeakToSilver(entity) && BewitchmentAPI.isSourceFromSilver(source)) {
-			amount += 4;
-		}
-		else if (BewitchmentAPI.isWerewolf(entity, false) && !isEffective(source, false)) {
+		if (BewitchmentAPI.isWerewolf(entity, false) && !isEffective(source, false)) {
 			amount *= 2 / 3f;
 		}
 		else if (BewitchmentAPI.isVampire(entity, true)) {
@@ -44,7 +41,7 @@ public class BWDamageSources {
 				return true;
 			}
 		}
-		return BewitchmentAPI.isSourceFromSilver(source);
+		return BewitchmentAPI.isHoldingAthame(source);
 	}
 	
 	private static float handleVampireDamage(LivingEntity entity, DamageSource source, float amount) {

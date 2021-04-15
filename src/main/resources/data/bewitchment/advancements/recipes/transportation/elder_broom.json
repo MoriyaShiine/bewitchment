@@ -2,7 +2,7 @@
   "parent": "recipes/root",
   "rewards": {
 	"recipes": [
-	  "bewitchment:silver_nugget_from_smelting"
+	  "bewitchment:elder_broom"
 	]
   },
   "criteria": {
@@ -11,7 +11,7 @@
 	  "conditions": {
 		"items": [
 		  {
-			"item": "bewitchment:athame"
+			"item": "bewitchment:demon_heart"
 		  }
 		]
 	  }
@@ -19,7 +19,7 @@
 	"has_the_recipe": {
 	  "trigger": "recipe_unlocked",
 	  "conditions": {
-		"recipe": "bewitchment:silver_nugget_from_smelting"
+		"recipe": "bewitchment:elder_broom"
 	  }
 	}
   },

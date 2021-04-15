@@ -1,7 +1,7 @@
 {
   "type": "crafting_shaped",
   "pattern": [
-	"ABA",
+	"ASA",
 	"ACA",
 	"ACA"
   ],
@@ -9,8 +9,8 @@
 	"A": {
 	  "item": "bewitchment:wood_ash"
 	},
-	"B": {
-	  "tag": "bewitchment:barks"
+	"S": {
+	  "tag": "saplings"
 	},
 	"C": {
 	  "item": "cobblestone"

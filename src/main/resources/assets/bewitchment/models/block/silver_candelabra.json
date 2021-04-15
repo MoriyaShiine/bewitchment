@@ -1,6 +1,0 @@
-{
-  "parent": "bewitchment:block/iron_candelabra",
-  "textures": {
-	"particle": "bewitchment:block/silver_candelabra"
-  }
-}

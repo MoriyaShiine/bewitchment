@@ -100,7 +100,7 @@ public abstract class LivingEntityMixin extends Entity implements SubmergedInWat
 					return 0;
 				}
 			}
-			if (trueSource instanceof LivingEntity && BewitchmentAPI.isWeakToSilver((LivingEntity) trueSource)) {
+			if (trueSource instanceof LivingEntity && BewitchmentAPI.isWeakToSmite((LivingEntity) trueSource)) {
 				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.JUDGMENT_POPPET, this, null);
 				if (!poppet.isEmpty()) {
 					if (poppet.damage((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {

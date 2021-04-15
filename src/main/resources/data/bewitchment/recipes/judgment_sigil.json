@@ -13,7 +13,7 @@
 	  "item": "paper"
 	},
 	"A": {
-	  "tag": "c:silver_ingots"
+	  "item": "bewitchment:garlic"
 	},
 	"B": {
 	  "tag": "c:salt_dusts"

@@ -10,10 +10,10 @@
 	  "item": "gold_ingot"
 	},
 	"B": {
-	  "tag": "bewitchment:barks"
+	  "tag": "saplings"
 	},
 	"S": {
-	  "tag": "c:silver_ingots"
+	  "tag": "c:salt_dusts"
 	}
   },
   "result": {

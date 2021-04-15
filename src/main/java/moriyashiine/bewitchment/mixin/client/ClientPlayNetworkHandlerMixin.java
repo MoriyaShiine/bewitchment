@@ -5,7 +5,6 @@ import moriyashiine.bewitchment.common.entity.DragonsBloodBroomEntity;
 import moriyashiine.bewitchment.common.entity.ElderBroomEntity;
 import moriyashiine.bewitchment.common.entity.JuniperBroomEntity;
 import moriyashiine.bewitchment.common.entity.projectile.HornedSpearEntity;
-import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -45,9 +44,6 @@ public class ClientPlayNetworkHandlerMixin {
 		}
 		else if (type == BWEntityTypes.DRAGONS_BLOOD_BROOM) {
 			entity = new DragonsBloodBroomEntity(BWEntityTypes.DRAGONS_BLOOD_BROOM, world);
-		}
-		else if (type == BWEntityTypes.SILVER_ARROW) {
-			entity = new SilverArrowEntity(world, x, y, z);
 		}
 		else if (type == BWEntityTypes.HORNED_SPEAR) {
 			entity = new HornedSpearEntity(world, x, y, z);

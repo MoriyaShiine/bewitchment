@@ -1,7 +1,7 @@
 {
   "type": "bewitchment:cauldron_brewing_recipe",
   "ingredient": {
-	"tag": "c:silver_ingots"
+	"item": "iron_ingot"
   },
   "effect": "bewitchment:inhibited",
   "time": 1200

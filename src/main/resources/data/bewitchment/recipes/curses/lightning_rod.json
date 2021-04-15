@@ -11,7 +11,7 @@
 	  "item": "iron_ingot"
 	},
 	{
-	  "item": "bewitchment:aconite"
+	  "tag": "c:salt_dusts"
 	}
   ],
   "curse": "bewitchment:lightning_rod",

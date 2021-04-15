@@ -1,7 +1,7 @@
 {
   "category": "bewitchment:brewing",
   "name": "Invigorating",
-  "icon": "bewitchment:elder_bark",
+  "icon": "bewitchment:elder_sapling",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
@@ -11,7 +11,7 @@
 	{
 	  "type": "spotlight",
 	  "title": "Invigorating",
-	  "item": "bewitchment:elder_bark",
+	  "item": "bewitchment:elder_sapling",
 	  "text": "Intensity will increase the amount of $(l:bewitchment:introduction/altars#internalme)ME$() gained."
 	}
   ]

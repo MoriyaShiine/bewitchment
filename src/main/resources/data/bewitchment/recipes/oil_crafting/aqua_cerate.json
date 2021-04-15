@@ -2,7 +2,7 @@
   "type": "bewitchment:oil_recipe",
   "ingredients": [
 	{
-	  "item": "bewitchment:birch_bark"
+	  "item": "birch_sapling"
 	},
 	{
 	  "tag": "fishes"

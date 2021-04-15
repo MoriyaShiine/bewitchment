@@ -14,8 +14,7 @@
 	},
 	{
 	  "type": "crafting",
-	  "recipe": "bewitchment:silver_candelabra",
-	  "recipe2": "bewitchment:netherite_candelabra"
+	  "recipe": "bewitchment:netherite_candelabra"
 	}
   ]
 }

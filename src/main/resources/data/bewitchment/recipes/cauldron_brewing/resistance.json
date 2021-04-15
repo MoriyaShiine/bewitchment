@@ -1,7 +1,7 @@
 {
   "type": "bewitchment:cauldron_brewing_recipe",
   "ingredient": {
-	"item": "bewitchment:spruce_bark"
+	"item": "spruce_sapling"
   },
   "effect": "resistance",
   "time": 600

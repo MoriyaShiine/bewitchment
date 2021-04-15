@@ -16,7 +16,7 @@ public class JudgmentSigil extends Sigil {
 	
 	@Override
 	public ActionResult use(World world, BlockPos pos, LivingEntity user, Hand hand) {
-		if (BewitchmentAPI.isWeakToSilver(user) && user.damage(DamageSource.MAGIC, 8)) {
+		if (BewitchmentAPI.isWeakToSmite(user) && user.damage(DamageSource.MAGIC, 8)) {
 			return ActionResult.SUCCESS;
 		}
 		return super.use(world, pos, user, hand);

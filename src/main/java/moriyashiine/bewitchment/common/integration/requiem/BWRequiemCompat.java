@@ -14,7 +14,7 @@ public class BWRequiemCompat {
 		RequiemApi.registerPlugin(new RequiemPlugin() {
 			@Override
 			public void onRequiemInitialize() {
-				PossessionStateChangeCallback.EVENT.register((player, possessed) -> ((RequiemCompatAccessor) player).setWeakToSilverFromRequiem(possessed != null && BewitchmentAPI.isWeakToSilver(possessed)));
+				PossessionStateChangeCallback.EVENT.register((player, possessed) -> ((RequiemCompatAccessor) player).setWeakToSmiteFromRequiem(possessed != null && BewitchmentAPI.isWeakToSmite(possessed)));
 				RemnantStateChangeCallback.EVENT.register((player, state) -> {
 					((TransformationAccessor) player).setAlternateForm(false);
 					if (state.isVagrant()) {

@@ -1,7 +1,7 @@
 {
   "category": "bewitchment:brewing",
   "name": "Inhibited",
-  "icon": "bewitchment:silver_ingot",
+  "icon": "minecraft:iron_ingot",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
@@ -11,7 +11,7 @@
 	{
 	  "type": "spotlight",
 	  "title": "Inhibited",
-	  "item": "bewitchment:silver_ingot",
+	  "item": "minecraft:iron_ingot",
 	  "text": "Intensity does not affect this effect."
 	}
   ]

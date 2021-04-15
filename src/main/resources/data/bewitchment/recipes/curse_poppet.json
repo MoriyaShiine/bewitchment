@@ -16,7 +16,7 @@
 	  "item": "dried_kelp"
 	},
 	"A": {
-	  "tag": "c:silver_ingots"
+	  "item": "iron_ingot"
 	},
 	"B": {
 	  "item": "bewitchment:snake_tongue"

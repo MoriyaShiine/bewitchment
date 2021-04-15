@@ -1,8 +1,0 @@
-{
-  "type": "bewitchment:athame_stripping",
-  "log": "spruce_wood",
-  "stripped_log": "stripped_spruce_wood",
-  "result": {
-	"item": "bewitchment:spruce_bark"
-  }
-}

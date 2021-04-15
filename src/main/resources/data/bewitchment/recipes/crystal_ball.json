@@ -13,7 +13,7 @@
 	  "item": "diamond"
 	},
 	"S": {
-	  "tag": "c:silver_ingots"
+	  "item": "iron_ingot"
 	}
   },
   "result": {

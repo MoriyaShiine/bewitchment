@@ -1,8 +1,0 @@
-{
-  "type": "bewitchment:athame_stripping",
-  "log": "bewitchment:juniper_wood",
-  "stripped_log": "bewitchment:stripped_juniper_wood",
-  "result": {
-	"item": "bewitchment:juniper_bark"
-  }
-}

@@ -1,8 +1,0 @@
-{
-  "type": "bewitchment:athame_stripping",
-  "log": "bewitchment:elder_wood",
-  "stripped_log": "bewitchment:stripped_elder_wood",
-  "result": {
-	"item": "bewitchment:elder_bark"
-  }
-}

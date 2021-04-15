@@ -16,10 +16,10 @@
 	  "item": "dried_kelp"
 	},
 	"A": {
-	  "item": "bewitchment:oak_bark"
+	  "item": "oak_sapling"
 	},
 	"B": {
-	  "item": "bewitchment:birch_bark"
+	  "item": "birch_sapling"
 	}
   },
   "result": {

@@ -22,7 +22,6 @@ public class BewitchmentREIPlugin implements REIPluginV0 {
 	
 	@Override
 	public void registerPluginCategories(RecipeHelper recipeHelper) {
-		recipeHelper.registerCategory(new AthameStrippingCategory());
 		recipeHelper.registerCategory(new AthameDropsCategory());
 		recipeHelper.registerCategory(new RitualCategory());
 		recipeHelper.registerCategory(new OilCraftingCategory());
@@ -35,7 +34,6 @@ public class BewitchmentREIPlugin implements REIPluginV0 {
 	public void registerRecipeDisplays(RecipeHelper recipeHelper) {
 		World world = MinecraftClient.getInstance().world;
 		if (world != null) {
-			world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_STRIPPING_RECIPE_TYPE).forEach(recipe -> recipeHelper.registerDisplay(new AthameStrippingCategory.Display(recipe)));
 			world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_DROP_RECIPE_TYPE).forEach(recipe -> recipeHelper.registerDisplay(new AthameDropsCategory.Display(recipe)));
 			world.getRecipeManager().listAllOfType(BWRecipeTypes.RITUAL_RECIPE_TYPE).forEach(recipe -> recipeHelper.registerDisplay(new RitualCategory.Display(recipe)));
 			world.getRecipeManager().listAllOfType(BWRecipeTypes.OIL_RECIPE_TYPE).forEach(recipe -> recipeHelper.registerDisplay(new OilCraftingCategory.Display(recipe)));
@@ -47,7 +45,6 @@ public class BewitchmentREIPlugin implements REIPluginV0 {
 	
 	@Override
 	public void registerOthers(RecipeHelper recipeHelper) {
-		recipeHelper.registerWorkingStations(AthameStrippingCategory.IDENTIFIER, AthameStrippingCategory.LOGO);
 		recipeHelper.registerWorkingStations(AthameDropsCategory.IDENTIFIER, AthameDropsCategory.LOGO);
 		recipeHelper.registerWorkingStations(RitualCategory.IDENTIFIER, RitualCategory.LOGO);
 		recipeHelper.registerWorkingStations(OilCraftingCategory.IDENTIFIER, OilCraftingCategory.LOGO);

@@ -10,13 +10,13 @@ import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
-import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
 import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.registry.*;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
@@ -162,18 +162,12 @@ public class BewitchmentAPI {
 		return entity instanceof WerewolfEntity;
 	}
 	
-	public static boolean isSourceFromSilver(DamageSource source) {
-		if (source.getSource() instanceof LivingEntity && ((LivingEntity) source.getSource()).getMainHandStack().getItem() instanceof AthameItem) {
-			return true;
-		}
-		return source.getSource() instanceof SilverArrowEntity;
+	public static boolean isHoldingAthame(DamageSource source) {
+		return source.getSource() instanceof LivingEntity && ((LivingEntity) source.getSource()).getMainHandStack().getItem() instanceof AthameItem;
 	}
 	
-	public static boolean isWeakToSilver(LivingEntity livingEntity) {
-		if (BWTags.IMMUNE_TO_SILVER.contains(livingEntity.getType())) {
-			return false;
-		}
-		return livingEntity.isUndead() || livingEntity.getGroup() == DEMON || BWTags.VULNERABLE_TO_SILVER.contains(livingEntity.getType());
+	public static boolean isWeakToSmite(LivingEntity livingEntity) {
+		return Enchantments.SMITE.getAttackDamage(1, livingEntity.getGroup()) > 0;
 	}
 	
 	public static boolean isPledged(PlayerEntity player, String pledge) {

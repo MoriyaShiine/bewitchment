@@ -2,7 +2,7 @@
   "type": "campfire_cooking",
   "ingredient": [
 	{
-	  "tag": "bewitchment:barks"
+	  "tag": "saplings"
 	}
   ],
   "result": "bewitchment:wood_ash",

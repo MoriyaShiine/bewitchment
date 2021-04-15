@@ -1,8 +1,0 @@
-{
-  "type": "bewitchment:athame_stripping",
-  "log": "dark_oak_log",
-  "stripped_log": "stripped_dark_oak_log",
-  "result": {
-	"item": "bewitchment:oak_bark"
-  }
-}

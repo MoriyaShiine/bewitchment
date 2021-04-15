@@ -2,7 +2,6 @@ package moriyashiine.bewitchment.mixin.fortune;
 
 import moriyashiine.bewitchment.api.interfaces.entity.FortuneAccessor;
 import moriyashiine.bewitchment.common.registry.BWFortunes;
-import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -40,7 +39,7 @@ public abstract class BlockMixin {
 					if (fortuneAccessor.getFortune().fortune == BWFortunes.TREASURE && world.random.nextFloat() < 1 / 25f) {
 						Set<ItemStack> treasure = new HashSet<>();
 						for (int i = 0; i < world.random.nextInt(1) + 1; i++) {
-							switch (world.random.nextInt(4)) {
+							switch (world.random.nextInt(3)) {
 								case 0:
 									treasure.add(new ItemStack(Items.DIAMOND, MathHelper.nextInt(world.random, 1, 3)));
 									break;
@@ -49,9 +48,6 @@ public abstract class BlockMixin {
 									break;
 								case 2:
 									treasure.add(new ItemStack(Items.IRON_INGOT, MathHelper.nextInt(world.random, 2, 10)));
-									break;
-								case 3:
-									treasure.add(new ItemStack(BWObjects.SILVER_INGOT, MathHelper.nextInt(world.random, 1, 5)));
 									break;
 								default:
 									treasure.add(ItemStack.EMPTY);

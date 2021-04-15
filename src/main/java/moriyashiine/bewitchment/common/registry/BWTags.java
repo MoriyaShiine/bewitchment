@@ -9,8 +9,6 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 
 public class BWTags {
-	public static final Tag<EntityType<?>> VULNERABLE_TO_SILVER = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "vulnerable_to_silver"));
-	public static final Tag<EntityType<?>> IMMUNE_TO_SILVER = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "immune_to_silver"));
 	public static final Tag<EntityType<?>> HAS_BLOOD = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "has_blood"));
 	public static final Tag<EntityType<?>> TAGLOCK_BLACKLIST = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "taglock_blacklist"));
 	public static final Tag<EntityType<?>> ENCOUNTER_FORTUNE = TagRegistry.entityType(new Identifier(Bewitchment.MODID, "encounter_fortune"));
@@ -22,9 +20,6 @@ public class BWTags {
 	public static final Tag<Block> HEATS_CAULDRON = TagRegistry.block(new Identifier(Bewitchment.MODID, "heats_cauldron"));
 	public static final Tag<Block> UNDEAD_MASK = TagRegistry.block(new Identifier(Bewitchment.MODID, "undead_mask"));
 	
-	public static final Tag<Item> SILVER_INGOTS = TagRegistry.item(new Identifier("c", "silver_ingots"));
-	public static final Tag<Item> SILVER_NUGGETS = TagRegistry.item(new Identifier("c", "silver_nuggets"));
-	public static final Tag<Item> BARKS = TagRegistry.item(new Identifier(Bewitchment.MODID, "barks"));
 	public static final Tag<Item> WITCHBERRY_FOODS = TagRegistry.item(new Identifier(Bewitchment.MODID, "witchberry_foods"));
 	
 	public static final Tag<Item> SWORDS = TagRegistry.item(new Identifier(Bewitchment.MODID, "swords"));

@@ -1,7 +1,7 @@
 {
   "type": "bewitchment:cauldron_brewing_recipe",
   "ingredient": {
-	"item": "bewitchment:elder_bark"
+	"item": "bewitchment:elder_sapling"
   },
   "effect": "bewitchment:invigorating",
   "time": 1

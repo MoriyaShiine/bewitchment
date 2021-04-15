@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class PlayerEntityMixin extends LivingEntity implements RequiemCompatAccessor {
 	private static final TrackedData<String> CACHED_TRANSFORMATION_FOR_REQUIEM = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.STRING);
 	
-	private boolean weakToSilverFromRequiem = false;
+	private boolean weakToSmiteFromRequiem = false;
 	
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
@@ -41,19 +41,19 @@ public abstract class PlayerEntityMixin extends LivingEntity implements RequiemC
 	}
 	
 	@Override
-	public boolean getWeakToSilverFromRequiem() {
-		return weakToSilverFromRequiem;
+	public boolean getWeakToSmiteFromRequiem() {
+		return weakToSmiteFromRequiem;
 	}
 	
 	@Override
-	public void setWeakToSilverFromRequiem(boolean weakToSilver) {
-		this.weakToSilverFromRequiem = weakToSilver;
+	public void setWeakToSmiteFromRequiem(boolean weakToSmite) {
+		this.weakToSmiteFromRequiem = weakToSmite;
 	}
 	
 	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
 	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
 		if (Bewitchment.isRequiemLoaded) {
-			setWeakToSilverFromRequiem(tag.getBoolean("WeakToSilverFromRequiem"));
+			setWeakToSmiteFromRequiem(tag.getBoolean("WeakToSmiteFromRequiem"));
 			if (tag.contains("CachedTransformationForRequiem")) {
 				setCachedTransformationForRequiem(BWRegistries.TRANSFORMATIONS.get(new Identifier(tag.getString("CachedTransformationForRequiem"))));
 			}
@@ -63,7 +63,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements RequiemC
 	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
 	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
 		if (Bewitchment.isRequiemLoaded) {
-			tag.putBoolean("WeakToSilverFromRequiem", getWeakToSilverFromRequiem());
+			tag.putBoolean("WeakToSmiteFromRequiem", getWeakToSmiteFromRequiem());
 			tag.putString("CachedTransformationForRequiem", BWRegistries.TRANSFORMATIONS.getId(getCachedTransformationForRequiem()).toString());
 		}
 	}
