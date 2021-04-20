@@ -2,7 +2,7 @@
   "parent": "recipes/root",
   "rewards": {
 	"recipes": [
-	  "bewitchment:dragons_blood_broom"
+	  "bewitchment:silver_ingot_from_blasting"
 	]
   },
   "criteria": {
@@ -11,7 +11,7 @@
 	  "conditions": {
 		"items": [
 		  {
-			"item": "bewitchment:demon_heart"
+			"item": "bewitchment:silver_ore"
 		  }
 		]
 	  }
@@ -19,7 +19,7 @@
 	"has_the_recipe": {
 	  "trigger": "recipe_unlocked",
 	  "conditions": {
-		"recipe": "bewitchment:dragons_blood_broom"
+		"recipe": "bewitchment:silver_ingot_from_blasting"
 	  }
 	}
   },

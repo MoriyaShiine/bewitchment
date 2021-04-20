@@ -2,7 +2,7 @@
   "type": "bewitchment:oil_recipe",
   "ingredients": [
 	{
-	  "item": "oak_sapling"
+	  "item": "bewitchment:oak_bark"
 	},
 	{
 	  "tag": "coals"

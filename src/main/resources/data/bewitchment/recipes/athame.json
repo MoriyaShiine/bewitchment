@@ -1,15 +1,15 @@
 {
   "type": "crafting_shaped",
   "pattern": [
-	" I",
-	"F "
+	" X",
+	"# "
   ],
   "key": {
-	"I": {
-	  "item": "iron_ingot"
-	},
-	"F": {
+	"#": {
 	  "item": "flint"
+	},
+	"X": {
+	  "tag": "c:silver_ingots"
 	}
   },
   "result": {

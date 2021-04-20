@@ -10,10 +10,10 @@
 	  "item": "mossy_cobblestone"
 	},
 	"B": {
-	  "tag": "saplings"
+	  "tag": "bewitchment:barks"
 	},
 	"S": {
-	  "tag": "c:salt_dusts"
+	  "tag": "c:silver_ingots"
 	}
   },
   "result": {

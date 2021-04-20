@@ -3,7 +3,7 @@
   "pattern": [
 	"OS ",
 	"S L",
-	" LE"
+	" LI"
   ],
   "key": {
 	"O": {
@@ -15,8 +15,8 @@
 	"L": {
 	  "item": "lapis_lazuli"
 	},
-	"E": {
-	  "item": "bewitchment:ectoplasm"
+	"I": {
+	  "tag": "c:silver_ingots"
 	}
   },
   "result": {

@@ -1,0 +1,8 @@
+{
+  "type": "bewitchment:athame_stripping",
+  "log": "bewitchment:cypress_log",
+  "stripped_log": "bewitchment:stripped_cypress_log",
+  "result": {
+	"item": "bewitchment:cypress_bark"
+  }
+}

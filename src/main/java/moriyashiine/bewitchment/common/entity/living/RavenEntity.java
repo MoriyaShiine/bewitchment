@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.common.entity.living;
 import moriyashiine.bewitchment.common.entity.living.util.BWTameableEntity;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
+import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -50,7 +51,7 @@ public class RavenEntity extends BWTameableEntity {
 	
 	@Override
 	protected boolean isTamingItem(ItemStack stack) {
-		return stack.getItem() == Items.GOLD_NUGGET;
+		return stack.getItem() == Items.GOLD_NUGGET || BWTags.SILVER_NUGGETS.contains(stack.getItem());
 	}
 	
 	@Nullable

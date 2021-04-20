@@ -7,10 +7,10 @@
   ],
   "key": {
 	"B": {
-	  "tag": "saplings"
+	  "tag": "bewitchment:barks"
 	},
 	"S": {
-	  "item": "iron_ingot"
+	  "tag": "c:silver_ingots"
 	},
 	"C": {
 	  "item": "cauldron"

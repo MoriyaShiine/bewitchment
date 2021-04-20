@@ -1,0 +1,23 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	"N",
+	"S",
+	"F"
+  ],
+  "key": {
+	"N": {
+	  "tag": "c:silver_nuggets"
+	},
+	"S": {
+	  "item": "stick"
+	},
+	"F": {
+	  "item": "feather"
+	}
+  },
+  "result": {
+	"item": "bewitchment:silver_arrow",
+	"count": 4
+  }
+}

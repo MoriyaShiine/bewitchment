@@ -1,13 +1,13 @@
 {
   "type": "crafting_shaped",
   "pattern": [
-	" S ",
-	"SMA",
-	" DO"
+	" B ",
+	"BMA",
+	" IO"
   ],
   "key": {
-	"S": {
-	  "tag": "saplings"
+	"B": {
+	  "tag": "bewitchment:barks"
 	},
 	"M": {
 	  "item": "bewitchment:mandrake_root"
@@ -15,8 +15,8 @@
 	"A": {
 	  "item": "golden_apple"
 	},
-	"D": {
-	  "tag": "c:salt_dusts"
+	"I": {
+	  "tag": "c:silver_ingots"
 	},
 	"O": {
 	  "item": "bewitchment:earth_ichor"

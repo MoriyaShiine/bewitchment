@@ -8,11 +8,14 @@ import moriyashiine.bewitchment.common.block.dragonsblood.DragonsBloodLogBlock;
 import moriyashiine.bewitchment.common.block.entity.interfaces.Lockable;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
+import moriyashiine.bewitchment.common.recipe.AthameStrippingRecipe;
 import moriyashiine.bewitchment.common.registry.BWProperties;
+import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.DoorBlock;
+import net.minecraft.block.PillarBlock;
 import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.block.dispenser.FallibleItemDispenserBehavior;
 import net.minecraft.block.entity.BlockEntity;
@@ -61,6 +64,23 @@ public class AthameItem extends SwordItem {
 		BlockState state = world.getBlockState(pos);
 		PlayerEntity player = context.getPlayer();
 		boolean client = world.isClient;
+		AthameStrippingRecipe entry = world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_STRIPPING_RECIPE_TYPE).stream().filter(recipe -> recipe.log == state.getBlock()).findFirst().orElse(null);
+		if (entry != null) {
+			world.playSound(player, pos, BWSoundEvents.ITEM_ATHAME_STRIP, SoundCategory.BLOCKS, 1, 1);
+			if (!client) {
+				world.setBlockState(pos, entry.strippedLog.getDefaultState().with(PillarBlock.AXIS, state.get(PillarBlock.AXIS)), 11);
+				if (player != null) {
+					context.getStack().damage(1, player, (user) -> user.sendToolBreakStatus(context.getHand()));
+					if (world.random.nextFloat() < 2 / 3f) {
+						ItemStack bark = entry.getOutput().copy();
+						if (!player.inventory.insertStack(bark)) {
+							player.dropStack(bark);
+						}
+					}
+				}
+			}
+			return ActionResult.success(client);
+		}
 		BlockEntity blockEntity = world.getBlockEntity(state.getBlock() instanceof DoorBlock && state.get(DoorBlock.HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos);
 		if (blockEntity instanceof SigilHolder) {
 			SigilHolder sigil = (SigilHolder) blockEntity;

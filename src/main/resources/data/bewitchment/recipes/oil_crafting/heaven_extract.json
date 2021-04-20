@@ -2,7 +2,7 @@
   "type": "bewitchment:oil_recipe",
   "ingredients": [
 	{
-	  "item": "bewitchment:juniper_sapling"
+	  "item": "bewitchment:juniper_bark"
 	},
 	{
 	  "item": "feather"

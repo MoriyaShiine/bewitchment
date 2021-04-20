@@ -2,7 +2,7 @@
   "type": "bewitchment:oil_recipe",
   "ingredients": [
 	{
-	  "item": "bewitchment:cypress_sapling"
+	  "item": "bewitchment:cypress_bark"
 	},
 	{
 	  "item": "bewitchment:snake_tongue"

@@ -1,7 +1,7 @@
 {
   "category": "bewitchment:brewing",
   "name": "Purity",
-  "icon": "minecraft:birch_sapling",
+  "icon": "bewitchment:birch_bark",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
@@ -11,7 +11,7 @@
 	{
 	  "type": "spotlight",
 	  "title": "Purity",
-	  "item": "minecraft:birch_sapling",
+	  "item": "bewitchment:birch_bark",
 	  "text": "In concrete terms, this means that you can remove more negative effects the stronger the effect is."
 	}
   ]

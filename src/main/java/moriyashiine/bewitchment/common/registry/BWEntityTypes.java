@@ -9,6 +9,7 @@ import moriyashiine.bewitchment.common.entity.ElderBroomEntity;
 import moriyashiine.bewitchment.common.entity.JuniperBroomEntity;
 import moriyashiine.bewitchment.common.entity.living.*;
 import moriyashiine.bewitchment.common.entity.projectile.HornedSpearEntity;
+import moriyashiine.bewitchment.common.entity.projectile.SilverArrowEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.*;
@@ -32,6 +33,7 @@ public class BWEntityTypes {
 	public static final EntityType<ElderBroomEntity> ELDER_BROOM = create("elder_broom", FabricEntityTypeBuilder.create(SpawnGroup.MISC, ElderBroomEntity::new).dimensions(JUNIPER_BROOM.getDimensions()).build());
 	public static final EntityType<DragonsBloodBroomEntity> DRAGONS_BLOOD_BROOM = create("dragons_blood_broom", FabricEntityTypeBuilder.create(SpawnGroup.MISC, DragonsBloodBroomEntity::new).dimensions(JUNIPER_BROOM.getDimensions()).build());
 	
+	public static final EntityType<SilverArrowEntity> SILVER_ARROW = create("silver_arrow", FabricEntityTypeBuilder.<SilverArrowEntity>create(SpawnGroup.MISC, SilverArrowEntity::new).dimensions(EntityType.ARROW.getDimensions()).build());
 	public static final EntityType<HornedSpearEntity> HORNED_SPEAR = create("horned_spear", FabricEntityTypeBuilder.<HornedSpearEntity>create(SpawnGroup.MISC, HornedSpearEntity::new).dimensions(EntityType.TRIDENT.getDimensions()).build());
 	
 	public static final EntityType<OwlEntity> OWL = create("owl", OwlEntity.createAttributes(), FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, OwlEntity::new).dimensions(EntityDimensions.changing(0.5f, 0.75f)).build());

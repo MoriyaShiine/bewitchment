@@ -54,7 +54,7 @@
 	{
 	  "type": "spotlight",
 	  "title": "Instant Damage",
-	  "item": "bewitchment:cypress_sapling",
+	  "item": "bewitchment:cypress_bark",
 	  "text": "Instantly damages a flat amount of health, harnessing the deadly energies of $(l:bewitchment:introduction/cypress_trees)Cypress$()."
 	},
 	{
@@ -102,13 +102,13 @@
 	{
 	  "type": "spotlight",
 	  "title": "Regeneration",
-	  "item": "bewitchment:juniper_sapling",
+	  "item": "bewitchment:juniper_bark",
 	  "text": "By utilizing the life energies from $(l:bewitchment:introduction/juniper_trees)Juniper$(), Regeneration quickens the healing process when applied."
 	},
 	{
 	  "type": "spotlight",
 	  "title": "Resistance",
-	  "item": "minecraft:spruce_sapling",
+	  "item": "bewitchment:spruce_bark",
 	  "text": "Reduces damage taken."
 	},
 	{
@@ -132,7 +132,7 @@
 	{
 	  "type": "spotlight",
 	  "title": "Strength",
-	  "item": "minecraft:oak_sapling",
+	  "item": "bewitchment:oak_bark",
 	  "text": "Using the powers of Oak, this increases damage output."
 	},
 	{

@@ -13,10 +13,10 @@
 	  "item": "paper"
 	},
 	"A": {
-	  "item": "bewitchment:juniper_sapling"
+	  "item": "bewitchment:juniper_bark"
 	},
 	"B": {
-	  "item": "spruce_sapling"
+	  "item": "bewitchment:spruce_bark"
 	}
   },
   "result": {

@@ -7,7 +7,7 @@ public interface RequiemCompatAccessor {
 	
 	void setCachedTransformationForRequiem(Transformation transformation);
 	
-	boolean getWeakToSmiteFromRequiem();
+	boolean getWeakToSilverFromRequiem();
 	
-	void setWeakToSmiteFromRequiem(boolean weakToSmite);
+	void setWeakToSilverFromRequiem(boolean weakToSilver);
 }

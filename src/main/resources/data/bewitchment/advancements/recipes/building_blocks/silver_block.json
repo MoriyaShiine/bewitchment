@@ -2,7 +2,7 @@
   "parent": "recipes/root",
   "rewards": {
 	"recipes": [
-	  "bewitchment:cypress_broom"
+	  "bewitchment:silver_block"
 	]
   },
   "criteria": {
@@ -11,7 +11,7 @@
 	  "conditions": {
 		"items": [
 		  {
-			"item": "bewitchment:demon_heart"
+			"item": "bewitchment:silver_ingot"
 		  }
 		]
 	  }
@@ -19,7 +19,7 @@
 	"has_the_recipe": {
 	  "trigger": "recipe_unlocked",
 	  "conditions": {
-		"recipe": "bewitchment:cypress_broom"
+		"recipe": "bewitchment:silver_block"
 	  }
 	}
   },

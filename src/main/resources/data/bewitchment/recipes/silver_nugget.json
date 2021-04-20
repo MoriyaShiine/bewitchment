@@ -1,0 +1,12 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+	{
+	  "item": "bewitchment:silver_ingot"
+	}
+  ],
+  "result": {
+	"item": "bewitchment:silver_nugget",
+	"count": 9
+  }
+}

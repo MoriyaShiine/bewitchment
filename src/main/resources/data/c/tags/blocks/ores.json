@@ -11,6 +11,7 @@
 	"nether_quartz_ore",
 	"nether_gold_ore",
 	"ancient_debris",
+	"#c:silver_ores",
 	"#c:salt_ores"
   ]
 }

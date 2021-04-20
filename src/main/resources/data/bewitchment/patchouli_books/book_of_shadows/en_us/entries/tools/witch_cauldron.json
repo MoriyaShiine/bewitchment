@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "text",
-	  "text": "By reinforcing a regular Cauldron with aaaaaaaaaaaaaaaaaaaa, you can create a Witch Cauldron.$(br2)This magical cauldron is extremely versatile in use and is namely used for $(l:bewitchment:brewing/elemental_oils)Oil Crafting$(), $(l:bewitchment:brewing/brewing_basics)Brewing$() and Teleportation."
+	  "text": "By reinforcing a regular Cauldron with $(l:bewitchment:introduction/silver)Silver$(), you can create a Witch Cauldron.$(br2)This magical cauldron is extremely versatile in use and is namely used for $(l:bewitchment:brewing/elemental_oils)Oil Crafting$(), $(l:bewitchment:brewing/brewing_basics)Brewing$() and Teleportation."
 	},
 	{
 	  "type": "crafting",

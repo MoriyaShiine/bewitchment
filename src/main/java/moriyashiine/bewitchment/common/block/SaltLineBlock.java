@@ -69,7 +69,7 @@ public class SaltLineBlock extends Block {
 	public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		if (context instanceof EntityShapeContextAdditionAccessor) {
 			Entity entity = ((EntityShapeContextAdditionAccessor) context).bw_getEntity();
-			if (entity instanceof LivingEntity && BewitchmentAPI.isWeakToSmite((LivingEntity) entity)) {
+			if (entity instanceof LivingEntity && BewitchmentAPI.isWeakToSilver((LivingEntity) entity)) {
 				return VoxelShapes.fullCube();
 			}
 		}

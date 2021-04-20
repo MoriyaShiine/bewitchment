@@ -2,7 +2,7 @@
   "type": "bewitchment:oil_recipe",
   "ingredients": [
 	{
-	  "item": "spruce_sapling"
+	  "item": "bewitchment:spruce_bark"
 	},
 	{
 	  "item": "stone"

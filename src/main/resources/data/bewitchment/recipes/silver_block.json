@@ -1,0 +1,16 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+	"###",
+	"###",
+	"###"
+  ],
+  "key": {
+	"#": {
+	  "item": "bewitchment:silver_ingot"
+	}
+  },
+  "result": {
+	"item": "bewitchment:silver_block"
+  }
+}

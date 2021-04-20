@@ -11,9 +11,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = BewitchmentAPI.class, remap = false)
 public class BewitchmentAPIMixin {
-	@Inject(method = "isWeakToSmite", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "isWeakToSilver", at = @At("HEAD"), cancellable = true)
 	private static void isWeakToSilver(LivingEntity livingEntity, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (Bewitchment.isRequiemLoaded && livingEntity instanceof RequiemCompatAccessor && ((RequiemCompatAccessor) livingEntity).getWeakToSmiteFromRequiem()) {
+		if (Bewitchment.isRequiemLoaded && livingEntity instanceof RequiemCompatAccessor && ((RequiemCompatAccessor) livingEntity).getWeakToSilverFromRequiem()) {
 			callbackInfo.setReturnValue(true);
 		}
 	}

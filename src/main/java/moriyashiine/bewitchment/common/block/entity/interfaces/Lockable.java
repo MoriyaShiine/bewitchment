@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.common.block.entity.interfaces;
 
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
+import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.util.NbtType;
@@ -9,7 +10,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -66,7 +66,7 @@ public interface Lockable {
 		if (user.getUuid().equals(getOwner())) {
 			ItemStack stack = user.getStackInHand(hand);
 			if (!getLocked()) {
-				if (stack.getItem() == Items.IRON_INGOT) {
+				if (BWTags.SILVER_INGOTS.contains(stack.getItem())) {
 					BlockEntity blockEntity = world.getBlockEntity(pos);
 					if (blockEntity instanceof Lockable) {
 						if (!world.isClient) {

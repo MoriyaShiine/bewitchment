@@ -16,7 +16,7 @@
 	  "item": "dried_kelp"
 	},
 	"A": {
-	  "item": "bewitchment:garlic"
+	  "tag": "c:silver_ingots"
 	},
 	"B": {
 	  "tag": "c:salt_dusts"

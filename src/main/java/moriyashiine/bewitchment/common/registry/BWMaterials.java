@@ -177,7 +177,7 @@ public class BWMaterials {
 		}
 	};
 	
-	public static final ToolMaterial ATHAME = new ToolMaterial() {
+	public static final ToolMaterial SILVER_TOOL = new ToolMaterial() {
 		@Override
 		public int getDurability() {
 			return ToolMaterials.IRON.getDurability();
@@ -205,7 +205,7 @@ public class BWMaterials {
 		
 		@Override
 		public Ingredient getRepairIngredient() {
-			return ToolMaterials.IRON.getRepairIngredient();
+			return Ingredient.ofItems(BWObjects.SILVER_INGOT);
 		}
 	};
 }

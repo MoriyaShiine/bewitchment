@@ -2,7 +2,7 @@
   "type": "bewitchment:oil_recipe",
   "ingredients": [
 	{
-	  "item": "bewitchment:elder_sapling"
+	  "item": "bewitchment:elder_bark"
 	},
 	{
 	  "tag": "c:salt_dusts"
