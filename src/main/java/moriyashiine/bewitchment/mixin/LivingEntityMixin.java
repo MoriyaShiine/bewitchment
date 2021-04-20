@@ -174,14 +174,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor 
 			if (trueSource instanceof Pledgeable) {
 				((Pledgeable) trueSource).setTimeSinceLastAttack(0);
 			}
-			Entity directSource = source.getSource();
-			if (directSource instanceof PlayerEntity) {
-				ItemStack stack = ((PlayerEntity) directSource).getMainHandStack();
-				if (stack.getItem() instanceof TaglockItem) {
-					TaglockItem.useTaglock((PlayerEntity) directSource, (LivingEntity) (Object) this, Hand.MAIN_HAND, true, false);
-					callbackInfo.setReturnValue(false);
-				}
-			}
 		}
 	}
 	
