@@ -31,7 +31,8 @@ public class GrowRitualFunction extends RitualFunction {
 						passiveEntity.growUp(world.random.nextInt(), true);
 					}
 				}
-				for (BlockPos growable : BWUtil.getBlockPoses(effectivePos, radius, currentPos -> !(world.getBlockState(currentPos).getBlock() instanceof GrassBlock) && world.getBlockState(currentPos).getBlock() instanceof Fertilizable && ((Fertilizable) world.getBlockState(currentPos).getBlock()).canGrow(world, world.random, currentPos, world.getBlockState(currentPos)))) {
+				for (BlockPos growable : BWUtil.getBlockPoses(effectivePos, radius, currentPos -> !(world.getBlockState(currentPos).getBlock() instanceof GrassBlock) && world.getBlockState(currentPos).getBlock() instanceof Fertilizable
+						&& ((Fertilizable) world.getBlockState(currentPos).getBlock()).isFertilizable(world, currentPos, world.getBlockState(currentPos), false) && ((Fertilizable) world.getBlockState(currentPos).getBlock()).canGrow(world, world.random, currentPos, world.getBlockState(currentPos)))) {
 					((Fertilizable) world.getBlockState(growable).getBlock()).grow((ServerWorld) world, world.random, growable, world.getBlockState(growable));
 				}
 			}
