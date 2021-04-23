@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.event.BloodSetEvents;
 import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
 import moriyashiine.bewitchment.common.entity.interfaces.CaduceusFireballAccessor;
@@ -69,6 +70,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor 
 	
 	@Override
 	public void setBlood(int blood) {
+		BloodSetEvents.ON_BLOOD_SET.invoker().onSetBlood(this, blood);
 		dataTracker.set(BLOOD, blood);
 	}
 	
