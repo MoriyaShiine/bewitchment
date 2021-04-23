@@ -113,7 +113,7 @@ public class Bewitchment implements ModInitializer {
 					}
 					if (world.isNight()) {
 						boolean chicken = killedEntity instanceof ChickenEntity;
-						if ((chicken && world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.EXTREME_HILLS) || (killedEntity instanceof WolfEntity && (world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.FOREST || world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.TAIGA))) {
+						if ((chicken && (world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.EXTREME_HILLS || world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.ICY)) || (killedEntity instanceof WolfEntity && (world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.TAIGA || world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.FOREST))) {
 							BlockPos brazierPos = BWUtil.getClosestBlockPos(killedEntity.getBlockPos(), 8, currentPos -> {
 								BlockEntity blockEntity = world.getBlockEntity(currentPos);
 								return blockEntity instanceof BrazierBlockEntity && ((BrazierBlockEntity) blockEntity).incenseRecipe.effect == BWStatusEffects.MORTAL_COIL;

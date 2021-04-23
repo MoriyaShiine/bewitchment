@@ -16,7 +16,7 @@
 	{
 	  "type": "text",
 	  "title": "Summoning Lilith",
-	  "text": "To summon Lilith, several things are needed:$(li)a $(l:bewitchment:tools/brazier#mortal_coil)Mortal Coil Incense$()$(li)a Chicken $(li)a mountain biome$(br2)First, start the $(l:bewitchment:tools/brazier#incense)Incense$() in the right biome, at night. Then you will need to slay a Chicken with an $(l:bewitchment:tools/athame)Athame$(), not too far away."
+	  "text": "To summon Lilith, several things are needed:$(li)a $(l:bewitchment:tools/brazier#mortal_coil)Mortal Coil Incense$()$(li)a Chicken $(li)a mountain or icy biome$(br2)First, start the $(l:bewitchment:tools/brazier#incense)Incense$() in the right biome, at night. Then you will need to slay a Chicken with an $(l:bewitchment:tools/athame)Athame$(), not too far away."
 	},
 	{
 	  "type": "text",
