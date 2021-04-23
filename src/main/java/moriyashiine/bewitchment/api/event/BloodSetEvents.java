@@ -17,21 +17,21 @@ public final class BloodSetEvents {
 			listener.onDrainBlood(entity, amount, simulate);
 		}
 	});
-
+	
 	public static final Event<OnSetBlood> ON_BLOOD_SET = createArrayBacked(OnSetBlood.class, listeners -> (entity, amount) -> {
 		for (OnSetBlood listener : listeners) {
 			listener.onSetBlood(entity, amount);
 		}
 	});
-
+	
 	public interface OnFillBlood {
 		void onFillBlood(BloodAccessor entity, int amount, boolean simulate);
 	}
-
+	
 	public interface OnDrainBlood {
 		void onDrainBlood(BloodAccessor entity, int amount, boolean simulate);
 	}
-
+	
 	public interface OnSetBlood {
 		void onSetBlood(BloodAccessor entity, int amount);
 	}
