@@ -145,11 +145,6 @@ public class TaglockItem extends Item {
 		return super.useOnBlock(context);
 	}
 	
-	@Override
-	public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
-		return useTaglock(user, entity, hand, true, false);
-	}
-	
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
