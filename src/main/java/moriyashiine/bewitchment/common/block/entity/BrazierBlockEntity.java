@@ -108,11 +108,11 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 	public void tick() {
 		if (world != null) {
 			if (!loaded) {
-				if (!world.isClient) {
-					markDirty();
+				if (!world.isClient && getCachedState().get(Properties.LIT)) {
 					incenseRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.INCENSE_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
 					curseRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CURSE_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
 					hasIncense = incenseRecipe != null;
+					markDirty();
 					syncBrazier();
 				}
 				loaded = true;
@@ -290,6 +290,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 				}
 			}
 		}
+		markDirty();
 	}
 	
 	private Entity getTarget() {
