@@ -84,14 +84,14 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 		}
 		return target;
 	}
-
+	
 	@Inject(method = "method_29506", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;"), cancellable = true, locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-	private void collectTaglock(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> callbackInfoReturnable, ItemStack heldStack){
-		if (heldStack.getItem() instanceof TaglockItem){
+	private void collectTaglock(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> callbackInfoReturnable, ItemStack heldStack) {
+		if (heldStack.getItem() instanceof TaglockItem) {
 			callbackInfoReturnable.setReturnValue(TaglockItem.useTaglock(player, this, hand, true, false));
 		}
 	}
-
+	
 	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
 	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
 		if (tag.contains("MasterUUID")) {
