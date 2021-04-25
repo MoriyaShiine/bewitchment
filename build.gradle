@@ -51,6 +51,10 @@ repositories {
         url "https://dl.bintray.com/ladysnake/mods"
     }
     maven {
+        name "fall flying lib"
+        url "https://dl.bintray.com/adriantodt/maven"
+    }
+    maven {
         name "jitpack"
         url "https://jitpack.io"
     }
@@ -86,6 +90,10 @@ dependencies {
     modImplementation "io.github.emilyalexandra:nourish:${nourish_version}"
     modImplementation "io.github.ladysnake:requiem-api:${requiem_version}"
     modRuntime "io.github.ladysnake:requiem:${requiem_version}"
+    modImplementation "net.adriantodt.fabricmc:fallflyinglib:${project.ffl_version}"
+    modImplementation ("com.github.apace100:origins-fabric:${project.origins_version}") {
+        exclude(group: "*")
+    }
 }
 
 processResources {

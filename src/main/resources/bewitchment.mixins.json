@@ -58,6 +58,7 @@
 	"fortune.LivingEntityMixin",
 	"fortune.PlayerEntityMixin",
 	"integration.nourish.PlayerEntityMixin",
+	"integration.origins.PreventItemUsePowerMixin",
 	"integration.requiem.BewitchmentAPIMixin",
 	"integration.requiem.PlayerEntityMixin",
 	"pledge.EntityMixin",
