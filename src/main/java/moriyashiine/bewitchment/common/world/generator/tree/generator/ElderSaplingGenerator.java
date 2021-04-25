@@ -10,8 +10,7 @@ import java.util.Random;
 
 public class ElderSaplingGenerator extends SaplingGenerator {
 	@Override
-	protected @Nullable
-	ConfiguredFeature<TreeFeatureConfig, ?> createTreeFeature(Random random, boolean bl) {
+	protected @Nullable ConfiguredFeature<TreeFeatureConfig, ?> createTreeFeature(Random random, boolean bl) {
 		return BWWorldGenerators.ELDER_TREE;
 	}
 }

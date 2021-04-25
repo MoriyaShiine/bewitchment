@@ -91,7 +91,7 @@ dependencies {
     modImplementation "io.github.ladysnake:requiem-api:${requiem_version}"
     modRuntime "io.github.ladysnake:requiem:${requiem_version}"
     modImplementation "net.adriantodt.fabricmc:fallflyinglib:${project.ffl_version}"
-    modImplementation ("com.github.apace100:origins-fabric:${project.origins_version}") {
+    modImplementation("com.github.apace100:origins-fabric:${project.origins_version}") {
         exclude(group: "*")
     }
 }

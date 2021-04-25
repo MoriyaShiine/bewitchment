@@ -27,20 +27,17 @@ public class AthameStrippingCategory implements RecipeCategory<AthameStrippingCa
 	public static final EntryStack LOGO = EntryStack.create(BWObjects.ATHAME);
 	
 	@Override
-	public @NotNull
-	Identifier getIdentifier() {
+	public @NotNull Identifier getIdentifier() {
 		return IDENTIFIER;
 	}
 	
 	@Override
-	public @NotNull
-	String getCategoryName() {
+	public @NotNull String getCategoryName() {
 		return I18n.translate("rei." + IDENTIFIER.toString().replaceAll(":", "."));
 	}
 	
 	@Override
-	public @NotNull
-	EntryStack getLogo() {
+	public @NotNull EntryStack getLogo() {
 		return LOGO;
 	}
 	
@@ -50,8 +47,7 @@ public class AthameStrippingCategory implements RecipeCategory<AthameStrippingCa
 	}
 	
 	@Override
-	public @NotNull
-	List<Widget> setupDisplay(Display recipeDisplay, Rectangle bounds) {
+	public @NotNull List<Widget> setupDisplay(Display recipeDisplay, Rectangle bounds) {
 		Point startPoint = new Point(bounds.getCenterX() - 64, bounds.getCenterY() - 16);
 		Point outputPoint = new Point(startPoint.x + 84, startPoint.y + 8);
 		List<Widget> widgets = new ArrayList<>();
@@ -73,20 +69,17 @@ public class AthameStrippingCategory implements RecipeCategory<AthameStrippingCa
 		}
 		
 		@Override
-		public @NotNull
-		List<List<EntryStack>> getInputEntries() {
+		public @NotNull List<List<EntryStack>> getInputEntries() {
 			return input;
 		}
 		
 		@Override
-		public @NotNull
-		List<List<EntryStack>> getResultingEntries() {
+		public @NotNull List<List<EntryStack>> getResultingEntries() {
 			return output;
 		}
 		
 		@Override
-		public @NotNull
-		Identifier getRecipeCategory() {
+		public @NotNull Identifier getRecipeCategory() {
 			return IDENTIFIER;
 		}
 	}
