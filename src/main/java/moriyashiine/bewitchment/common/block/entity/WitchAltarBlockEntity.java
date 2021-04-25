@@ -124,7 +124,7 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 					}
 					PlayerLookup.around((ServerWorld) world, Vec3d.of(pos), 24).forEach(playerEntity -> {
 						MagicAccessor magicAccessor = (MagicAccessor) playerEntity;
-						if (!((CurseAccessor)playerEntity).hasCurse(BWCurses.APATHY) && magicAccessor.fillMagic(5, true) && drain(10, true)) {
+						if (!((CurseAccessor) playerEntity).hasCurse(BWCurses.APATHY) && magicAccessor.fillMagic(5, true) && drain(10, true)) {
 							magicAccessor.fillMagic(5, false);
 							drain(10, false);
 						}

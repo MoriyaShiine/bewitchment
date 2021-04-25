@@ -10,7 +10,8 @@ import java.util.Random;
 
 public class CypressSaplingGenerator extends SaplingGenerator {
 	@Override
-	protected @Nullable ConfiguredFeature<TreeFeatureConfig, ?> createTreeFeature(Random random, boolean bl) {
+	protected @Nullable
+	ConfiguredFeature<TreeFeatureConfig, ?> createTreeFeature(Random random, boolean bl) {
 		return BWWorldGenerators.CYPRESS_TREE;
 	}
 }

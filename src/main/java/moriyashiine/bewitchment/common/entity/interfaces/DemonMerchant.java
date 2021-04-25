@@ -27,7 +27,8 @@ public interface DemonMerchant {
 	
 	void setCurrentCustomer(PlayerEntity customer);
 	
-	@Nullable PlayerEntity getCurrentCustomer();
+	@Nullable
+	PlayerEntity getCurrentCustomer();
 	
 	default boolean isDiscount() {
 		return this instanceof BaphometEntity && getCurrentCustomer() != null && BewitchmentAPI.isPledged(getCurrentCustomer(), BWPledges.BAPHOMET);

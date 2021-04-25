@@ -10,7 +10,8 @@ import java.util.Random;
 
 public class JuniperSaplingGenerator extends SaplingGenerator {
 	@Override
-	protected @Nullable ConfiguredFeature<TreeFeatureConfig, ?> createTreeFeature(Random random, boolean bl) {
+	protected @Nullable
+	ConfiguredFeature<TreeFeatureConfig, ?> createTreeFeature(Random random, boolean bl) {
 		return BWWorldGenerators.JUNIPER_TREE;
 	}
 }

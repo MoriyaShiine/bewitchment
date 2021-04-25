@@ -348,7 +348,8 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 	}
 	
 	@Override
-	public @Nullable PlayerEntity getCurrentCustomer() {
+	public @Nullable
+	PlayerEntity getCurrentCustomer() {
 		return customer;
 	}
 }

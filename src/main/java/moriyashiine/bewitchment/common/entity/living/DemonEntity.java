@@ -258,7 +258,8 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 	}
 	
 	@Override
-	public @Nullable PlayerEntity getCurrentCustomer() {
+	public @Nullable
+	PlayerEntity getCurrentCustomer() {
 		return customer;
 	}
 	
