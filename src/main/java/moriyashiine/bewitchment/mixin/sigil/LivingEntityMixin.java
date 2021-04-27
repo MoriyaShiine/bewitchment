@@ -31,7 +31,7 @@ public abstract class LivingEntityMixin extends Entity {
 	private float modifyDamage(float amount, DamageSource source) {
 		if (!world.isClient && source == DamageSource.FALL) {
 			BWWorldState worldState = BWWorldState.get(world);
-			BlockPos sigilPos = BWUtil.getClosestBlockPos(getBlockPos(), 16, currentPos -> worldState.potentialHeavySigils.contains(currentPos.asLong()) && world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.HEAVY);
+			BlockPos sigilPos = BWUtil.getClosestBlockPos(getBlockPos(), 16, currentPos -> worldState.potentialSigils.contains(currentPos.asLong()) && world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.HEAVY);
 			if (sigilPos != null) {
 				BlockEntity blockEntity = world.getBlockEntity(sigilPos);
 				SigilHolder sigil = (SigilHolder) blockEntity;
@@ -48,7 +48,8 @@ public abstract class LivingEntityMixin extends Entity {
 	@Inject(method = "canHaveStatusEffect", at = @At("RETURN"), cancellable = true)
 	private void canHaveStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (callbackInfo.getReturnValue() && !world.isClient && !effect.isAmbient() && ((StatusEffectAccessor) effect.getEffectType()).bw_getType() != StatusEffectType.HARMFUL) {
-			BlockPos sigilPos = BWUtil.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.RUIN);
+			BWWorldState worldState = BWWorldState.get(world);
+			BlockPos sigilPos = BWUtil.getClosestBlockPos(getBlockPos(), 16, currentPos -> worldState.potentialSigils.contains(currentPos.asLong()) && world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.RUIN);
 			if (sigilPos != null) {
 				BlockEntity blockEntity = world.getBlockEntity(sigilPos);
 				SigilHolder sigil = (SigilHolder) blockEntity;

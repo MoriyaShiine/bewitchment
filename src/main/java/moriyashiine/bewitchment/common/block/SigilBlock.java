@@ -88,7 +88,7 @@ public class SigilBlock extends HorizontalFacingBlock implements BlockEntityProv
 	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
 		if (!world.isClient && state.getBlock() != oldState.getBlock()) {
 			BWWorldState worldState = BWWorldState.get(world);
-			worldState.potentialHeavySigils.add(pos.asLong());
+			worldState.potentialSigils.add(pos.asLong());
 			worldState.markDirty();
 		}
 	}
@@ -97,9 +97,9 @@ public class SigilBlock extends HorizontalFacingBlock implements BlockEntityProv
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!world.isClient && state.getBlock() != newState.getBlock()) {
 			BWWorldState worldState = BWWorldState.get(world);
-			for (int i = worldState.potentialHeavySigils.size() - 1; i >= 0; i--) {
-				if (worldState.potentialHeavySigils.get(i) == pos.asLong()) {
-					worldState.potentialHeavySigils.remove(i);
+			for (int i = worldState.potentialSigils.size() - 1; i >= 0; i--) {
+				if (worldState.potentialSigils.get(i) == pos.asLong()) {
+					worldState.potentialSigils.remove(i);
 					worldState.markDirty();
 				}
 			}

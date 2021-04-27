@@ -13,7 +13,7 @@ import java.util.List;
 
 public class BWWorldState extends PersistentState {
 	public final List<Long> potentialCandelabras = new ArrayList<>();
-	public final List<Long> potentialHeavySigils = new ArrayList<>();
+	public final List<Long> potentialSigils = new ArrayList<>();
 	public final List<Long> witchCauldrons = new ArrayList<>();
 	public final List<Long> poppetShelves = new ArrayList<>();
 	public final List<Long> glowingBrambles = new ArrayList<>();
@@ -31,13 +31,13 @@ public class BWWorldState extends PersistentState {
 			potentialCandelabras.add(posTag);
 		}
 		tag.put("PotentialCandelabras", potentialCandelabras);
-		ListTag potentialHeavySigils = new ListTag();
-		for (long pos : this.potentialHeavySigils) {
+		ListTag potentialSigils = new ListTag();
+		for (long pos : this.potentialSigils) {
 			CompoundTag posTag = new CompoundTag();
 			posTag.putLong("Pos", pos);
-			potentialHeavySigils.add(posTag);
+			potentialSigils.add(posTag);
 		}
-		tag.put("PotentialHeavySigils", potentialHeavySigils);
+		tag.put("PotentialSigils", potentialSigils);
 		ListTag witchCauldrons = new ListTag();
 		for (long pos : this.witchCauldrons) {
 			CompoundTag posTag = new CompoundTag();
@@ -69,10 +69,10 @@ public class BWWorldState extends PersistentState {
 			CompoundTag posTag = potentialCandelabras.getCompound(i);
 			this.potentialCandelabras.add(posTag.getLong("Pos"));
 		}
-		ListTag potentialHeavySigils = tag.getList("PotentialHeavySigils", NbtType.COMPOUND);
-		for (int i = 0; i < potentialHeavySigils.size(); i++) {
-			CompoundTag posTag = potentialHeavySigils.getCompound(i);
-			this.potentialHeavySigils.add(posTag.getLong("Pos"));
+		ListTag potentialSigils = tag.getList("PotentialSigils", NbtType.COMPOUND);
+		for (int i = 0; i < potentialSigils.size(); i++) {
+			CompoundTag posTag = potentialSigils.getCompound(i);
+			this.potentialSigils.add(posTag.getLong("Pos"));
 		}
 		ListTag witchCauldrons = tag.getList("WitchCauldrons", NbtType.COMPOUND);
 		for (int i = 0; i < witchCauldrons.size(); i++) {
