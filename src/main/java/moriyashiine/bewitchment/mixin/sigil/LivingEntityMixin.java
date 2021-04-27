@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.mixin.sigil;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWSigils;
+import moriyashiine.bewitchment.common.world.BWWorldState;
 import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
@@ -29,7 +30,8 @@ public abstract class LivingEntityMixin extends Entity {
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
 	private float modifyDamage(float amount, DamageSource source) {
 		if (!world.isClient && source == DamageSource.FALL) {
-			BlockPos sigilPos = BWUtil.getClosestBlockPos(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.HEAVY);
+			BWWorldState worldState = BWWorldState.get(world);
+			BlockPos sigilPos = BWUtil.getClosestBlockPos(getBlockPos(), 16, currentPos -> worldState.potentialHeavySigils.contains(currentPos.asLong()) && world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.HEAVY);
 			if (sigilPos != null) {
 				BlockEntity blockEntity = world.getBlockEntity(sigilPos);
 				SigilHolder sigil = (SigilHolder) blockEntity;

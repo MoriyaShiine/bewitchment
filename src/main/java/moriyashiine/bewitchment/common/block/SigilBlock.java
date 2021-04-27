@@ -5,6 +5,7 @@ import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWProperties;
+import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
@@ -81,6 +82,29 @@ public class SigilBlock extends HorizontalFacingBlock implements BlockEntityProv
 	@Override
 	public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
 		BWObjects.SALT_LINE.neighborUpdate(state, world, pos, block, fromPos, notify);
+	}
+	
+	@Override
+	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
+		if (!world.isClient && state.getBlock() != oldState.getBlock()) {
+			BWWorldState worldState = BWWorldState.get(world);
+			worldState.potentialHeavySigils.add(pos.asLong());
+			worldState.markDirty();
+		}
+	}
+	
+	@Override
+	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+		if (!world.isClient && state.getBlock() != newState.getBlock()) {
+			BWWorldState worldState = BWWorldState.get(world);
+			for (int i = worldState.potentialHeavySigils.size() - 1; i >= 0; i--) {
+				if (worldState.potentialHeavySigils.get(i) == pos.asLong()) {
+					worldState.potentialHeavySigils.remove(i);
+					worldState.markDirty();
+				}
+			}
+		}
+		super.onStateReplaced(state, world, pos, newState, moved);
 	}
 	
 	@Override
