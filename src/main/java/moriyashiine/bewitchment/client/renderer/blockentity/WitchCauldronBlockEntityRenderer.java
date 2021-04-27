@@ -1,5 +1,7 @@
 package moriyashiine.bewitchment.client.renderer.blockentity;
 
+import moriyashiine.bewitchment.client.misc.SpriteIdentifiers;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.WitchCauldronBlock;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWParticleTypes;
@@ -12,13 +14,16 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.texture.Sprite;
+import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Matrix4f;
@@ -32,7 +37,6 @@ import java.util.stream.IntStream;
 @Environment(EnvType.CLIENT)
 public class WitchCauldronBlockEntityRenderer extends BlockEntityRenderer<WitchCauldronBlockEntity> {
 	private static final List<RenderLayer> PORTAL_LAYERS = IntStream.range(1, 16).mapToObj((i) -> RenderLayer.getEndPortal(i + 1)).collect(Collectors.toList());
-	private static final Sprite FLUID = MinecraftClient.getInstance().getBlockRenderManager().getModel(Blocks.WATER.getDefaultState()).getSprite();
 	private static final float[] HEIGHT = {0, 0.25f, 0.4375f, 0.625f};
 	
 	public WitchCauldronBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
@@ -52,7 +56,7 @@ public class WitchCauldronBlockEntityRenderer extends BlockEntityRenderer<WitchC
 				if (entity.mode == WitchCauldronBlockEntity.Mode.TELEPORTATION) {
 					renderPortal(entity, pos, matrices, vertexConsumers);
 				}
-				renderWater(entity, matrices, vertexConsumers.getBuffer(RenderLayer.getTranslucent()), light, overlay);
+				renderWater(entity, matrices, vertexConsumers.getBuffer(RenderLayer.getTranslucent()), light, overlay, SpriteIdentifiers.CAULDRON_WATER.getSprite());//sprite is queried dynamically
 				matrices.pop();
 				if (entity.heatTimer >= 60 && !MinecraftClient.getInstance().isPaused()) {
 					float fluidHeight = 0;
@@ -121,19 +125,19 @@ public class WitchCauldronBlockEntityRenderer extends BlockEntityRenderer<WitchC
 		matrices.pop();
 	}
 	
-	private void renderWater(WitchCauldronBlockEntity entity, MatrixStack matrices, VertexConsumer buffer, int light, int overlay) {
+	private void renderWater(WitchCauldronBlockEntity entity, MatrixStack matrices, VertexConsumer buffer, int light, int overlay, Sprite sprite) {
 		matrices.push();
 		Matrix4f mat = matrices.peek().getModel();
 		float sizeFactor = 0.125f;
-		float maxV = (FLUID.getMaxV() - FLUID.getMinV()) * sizeFactor;
-		float minV = (FLUID.getMaxV() - FLUID.getMinV()) * (1 - sizeFactor);
+		float maxV = (sprite.getMaxV() - sprite.getMinV()) * sizeFactor;
+		float minV = (sprite.getMaxV() - sprite.getMinV()) * (1 - sizeFactor);
 		int red = (entity.color >> 16) & 0xff;
 		int green = (entity.color >> 8) & 0xff;
 		int blue = entity.color & 0xff;
-		buffer.vertex(mat, sizeFactor, 0, 1 - sizeFactor).color(red, green, blue, 255).texture(FLUID.getMinU(), FLUID.getMinV() + maxV).light(light).overlay(overlay).normal(1, 1, 1).next();
-		buffer.vertex(mat, 1 - sizeFactor, 0, 1 - sizeFactor).color(red, green, blue, 255).texture(FLUID.getMaxU(), FLUID.getMinV() + maxV).light(light).overlay(overlay).normal(1, 1, 1).next();
-		buffer.vertex(mat, 1 - sizeFactor, 0, sizeFactor).color(red, green, blue, 255).texture(FLUID.getMaxU(), FLUID.getMinV() + minV).light(light).overlay(overlay).normal(1, 1, 1).next();
-		buffer.vertex(mat, sizeFactor, 0, sizeFactor).color(red, green, blue, 255).texture(FLUID.getMinU(), FLUID.getMinV() + minV).light(light).overlay(overlay).normal(1, 1, 1).next();
+		buffer.vertex(mat, sizeFactor, 0, 1 - sizeFactor).color(red, green, blue, 255).texture(sprite.getMinU(), sprite.getMinV() + maxV).light(light).overlay(overlay).normal(1, 1, 1).next();
+		buffer.vertex(mat, 1 - sizeFactor, 0, 1 - sizeFactor).color(red, green, blue, 255).texture(sprite.getMaxU(), sprite.getMinV() + maxV).light(light).overlay(overlay).normal(1, 1, 1).next();
+		buffer.vertex(mat, 1 - sizeFactor, 0, sizeFactor).color(red, green, blue, 255).texture(sprite.getMaxU(), sprite.getMinV() + minV).light(light).overlay(overlay).normal(1, 1, 1).next();
+		buffer.vertex(mat, sizeFactor, 0, sizeFactor).color(red, green, blue, 255).texture(sprite.getMinU(), sprite.getMinV() + minV).light(light).overlay(overlay).normal(1, 1, 1).next();
 		matrices.pop();
 	}
 	
