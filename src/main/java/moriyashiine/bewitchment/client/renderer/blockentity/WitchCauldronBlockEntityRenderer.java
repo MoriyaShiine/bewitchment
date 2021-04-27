@@ -1,29 +1,24 @@
 package moriyashiine.bewitchment.client.renderer.blockentity;
 
 import moriyashiine.bewitchment.client.misc.SpriteIdentifiers;
-import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.WitchCauldronBlock;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWParticleTypes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Matrix4f;
@@ -56,7 +51,7 @@ public class WitchCauldronBlockEntityRenderer extends BlockEntityRenderer<WitchC
 				if (entity.mode == WitchCauldronBlockEntity.Mode.TELEPORTATION) {
 					renderPortal(entity, pos, matrices, vertexConsumers);
 				}
-				renderWater(entity, matrices, vertexConsumers.getBuffer(RenderLayer.getTranslucent()), light, overlay, SpriteIdentifiers.CAULDRON_WATER.getSprite());//sprite is queried dynamically
+				renderWater(entity, matrices, vertexConsumers.getBuffer(RenderLayer.getTranslucent()), light, overlay, SpriteIdentifiers.CAULDRON_WATER.getSprite());
 				matrices.pop();
 				if (entity.heatTimer >= 60 && !MinecraftClient.getInstance().isPaused()) {
 					float fluidHeight = 0;
