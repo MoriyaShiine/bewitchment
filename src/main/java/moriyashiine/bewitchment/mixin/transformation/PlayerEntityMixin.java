@@ -3,6 +3,8 @@ package moriyashiine.bewitchment.mixin.transformation;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import dev.emi.stepheightentityattribute.StepHeightEntityAttributeMain;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.event.AllowVampireBurn;
+import moriyashiine.bewitchment.api.event.AllowVampireHeal;
 import moriyashiine.bewitchment.api.event.OnTransformationSet;
 import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
@@ -199,11 +201,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Transfor
 			if (vampire) {
 				boolean pledgedToLilith = BewitchmentAPI.isPledged(player, BWPledges.LILITH);
 				player.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
-				if (((RespawnTimerAccessor) player).getRespawnTimer() <= 0 && player.world.isDay() && !player.world.isRaining() && player.world.isSkyVisible(player.getBlockPos())) {
+				if (((RespawnTimerAccessor) player).getRespawnTimer() <= 0 && player.world.isDay() && !player.world.isRaining() && player.world.isSkyVisible(player.getBlockPos()) && AllowVampireBurn.EVENT.invoker().allowBurn(player)) {
 					player.setOnFireFor(8);
 				}
 				HungerManager hungerManager = player.getHungerManager();
-				if (((BloodAccessor) player).getBlood() > 0) {
+				if (((BloodAccessor) player).getBlood() > 0 && AllowVampireHeal.EVENT.invoker().allowHeal((PlayerEntity) (Object) this, pledgedToLilith)) {
 					if (player.age % (pledgedToLilith ? 30 : 40) == 0) {
 						if (player.getHealth() < player.getMaxHealth()) {
 							player.heal(1);
