@@ -130,6 +130,7 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 			if (ritualFunction != null) {
 				BlockPos targetPos = effectivePos == null ? pos : effectivePos;
 				timer++;
+				ritualFunction.tick(world, pos, targetPos, catFamiliar);
 				if (world.isClient) {
 					world.addParticle(ParticleTypes.END_ROD, true, pos.getX() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), pos.getY() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), pos.getZ() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), 0, 0, 0);
 					if (timer < 0) {
@@ -139,7 +140,6 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 					}
 				}
 				if (timer >= 0) {
-					ritualFunction.tick(world, pos, targetPos, catFamiliar);
 					if (!world.isClient) {
 						world.getWorldChunk(effectivePos);
 						if (timer == 0) {
