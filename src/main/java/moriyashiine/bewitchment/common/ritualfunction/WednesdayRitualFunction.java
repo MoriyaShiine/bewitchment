@@ -16,6 +16,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.function.Predicate;
 
 public class WednesdayRitualFunction extends RitualFunction {
@@ -30,8 +32,7 @@ public class WednesdayRitualFunction extends RitualFunction {
 	
 	@Override
 	public boolean isValid(ServerWorld world, BlockPos pos, Inventory inventory) {
-		return true;
-		//		return LocalDateTime.now().getDayOfWeek() == DayOfWeek.WEDNESDAY;
+		return LocalDateTime.now().getDayOfWeek() == DayOfWeek.WEDNESDAY;
 	}
 	
 	@Override
