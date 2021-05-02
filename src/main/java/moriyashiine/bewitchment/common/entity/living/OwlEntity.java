@@ -26,6 +26,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.UUID;
+
 @SuppressWarnings("ConstantConditions")
 public class OwlEntity extends BWTameableEntity {
 	public OwlEntity(EntityType<? extends TameableEntity> type, World world) {
@@ -58,6 +60,11 @@ public class OwlEntity extends BWTameableEntity {
 		OwlEntity child = BWEntityTypes.OWL.create(world);
 		if (child != null) {
 			child.initialize(world, world.getLocalDifficulty(getBlockPos()), SpawnReason.BREEDING, null, null);
+			UUID owner = getOwnerUuid();
+			if (owner != null) {
+				child.setOwnerUuid(owner);
+				child.setTamed(true);
+			}
 			if (entity instanceof OwlEntity && random.nextFloat() < 95 / 100f) {
 				child.dataTracker.set(VARIANT, random.nextBoolean() ? dataTracker.get(VARIANT) : entity.getDataTracker().get(VARIANT));
 			}

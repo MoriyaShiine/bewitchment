@@ -31,6 +31,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.UUID;
+
 @SuppressWarnings("ConstantConditions")
 public class SnakeEntity extends BWTameableEntity {
 	public int tongueFlick = 0, attackTick = 0;
@@ -79,6 +81,11 @@ public class SnakeEntity extends BWTameableEntity {
 		SnakeEntity child = BWEntityTypes.SNAKE.create(world);
 		if (child != null) {
 			child.initialize(world, world.getLocalDifficulty(getBlockPos()), SpawnReason.BREEDING, null, null);
+			UUID owner = getOwnerUuid();
+			if (owner != null) {
+				child.setOwnerUuid(owner);
+				child.setTamed(true);
+			}
 			if (entity instanceof SnakeEntity && random.nextFloat() < 95 / 100f) {
 				child.dataTracker.set(VARIANT, random.nextBoolean() ? dataTracker.get(VARIANT) : entity.getDataTracker().get(VARIANT));
 			}

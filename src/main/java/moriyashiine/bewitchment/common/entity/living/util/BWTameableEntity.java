@@ -1,13 +1,13 @@
 package moriyashiine.bewitchment.common.entity.living.util;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.mob.CreeperEntity;
+import net.minecraft.entity.mob.GhastEntity;
+import net.minecraft.entity.passive.HorseBaseEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
@@ -101,6 +101,20 @@ public abstract class BWTameableEntity extends TameableEntity {
 			}
 		}
 		return super.interactMob(player, hand);
+	}
+	
+	@Override
+	public boolean canAttackWithOwner(LivingEntity target, LivingEntity owner) {
+		if (target instanceof TameableEntity && ((TameableEntity) target).isTamed()) {
+			return false;
+		}
+		if (target instanceof HorseBaseEntity && ((HorseBaseEntity) target).isTame()) {
+			return false;
+		}
+		if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity) owner).shouldDamagePlayer((PlayerEntity) target)) {
+			return false;
+		}
+		return !(target instanceof CreeperEntity) && !(target instanceof GhastEntity);
 	}
 	
 	@Override
