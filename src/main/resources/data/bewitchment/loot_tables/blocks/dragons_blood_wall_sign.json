@@ -1,0 +1,19 @@
+{
+  "type": "block",
+  "pools": [
+	{
+	  "rolls": 1,
+	  "entries": [
+		{
+		  "type": "item",
+		  "name": "bewitchment:dragons_blood_sign"
+		}
+	  ],
+	  "conditions": [
+		{
+		  "condition": "survives_explosion"
+		}
+	  ]
+	}
+  ]
+}
