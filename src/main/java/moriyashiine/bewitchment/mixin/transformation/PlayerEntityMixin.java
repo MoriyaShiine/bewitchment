@@ -205,14 +205,16 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Transfor
 					player.setOnFireFor(8);
 				}
 				HungerManager hungerManager = player.getHungerManager();
-				if (((BloodAccessor) player).getBlood() > 0 && AllowVampireHeal.EVENT.invoker().allowHeal((PlayerEntity) (Object) this, pledgedToLilith)) {
-					if (player.age % (pledgedToLilith ? 30 : 40) == 0) {
-						if (player.getHealth() < player.getMaxHealth()) {
-							player.heal(1);
-							hungerManager.addExhaustion(3);
-						}
-						if ((hungerManager.isNotFull() || hungerManager.getSaturationLevel() < 10) && ((BloodAccessor) player).drainBlood(1, false)) {
-							hungerManager.add(1, 20);
+				if (((BloodAccessor) player).getBlood() > 0) {
+					if (AllowVampireHeal.EVENT.invoker().allowHeal((PlayerEntity) (Object) this, pledgedToLilith)) {
+						if (player.age % (pledgedToLilith ? 30 : 40) == 0) {
+							if (player.getHealth() < player.getMaxHealth()) {
+								player.heal(1);
+								hungerManager.addExhaustion(3);
+							}
+							if ((hungerManager.isNotFull() || hungerManager.getSaturationLevel() < 10) && ((BloodAccessor) player).drainBlood(1, false)) {
+								hungerManager.add(1, 20);
+							}
 						}
 					}
 				}
