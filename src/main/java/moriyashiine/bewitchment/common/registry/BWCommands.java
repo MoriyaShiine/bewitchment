@@ -20,9 +20,7 @@ import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.api.registry.Transformation;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
 import net.minecraft.command.CommandSource;
-import net.minecraft.command.argument.ArgumentTypes;
 import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.CommandManager;
@@ -35,12 +33,6 @@ import java.util.concurrent.CompletableFuture;
 @SuppressWarnings("ConstantConditions")
 public class BWCommands {
 	public static void init(CommandDispatcher<ServerCommandSource> dispatcher, boolean dedicated) {
-		if (dedicated) {
-			ArgumentTypes.register("fortune", FortuneArgumentType.class, new ConstantArgumentSerializer<>(FortuneArgumentType::fortune));
-			ArgumentTypes.register("transformation", TransformationArgumentType.class, new ConstantArgumentSerializer<>(TransformationArgumentType::transformation));
-			ArgumentTypes.register("contract", ContractArgumentType.class, new ConstantArgumentSerializer<>(ContractArgumentType::contract));
-			ArgumentTypes.register("curse", CurseArgumentType.class, new ConstantArgumentSerializer<>(CurseArgumentType::curse));
-		}
 		dispatcher.register(CommandManager.literal("fortune").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.literal("get").then(CommandManager.argument("player", EntityArgumentType.player()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
 			Fortune.Instance fortune = ((FortuneAccessor) player).getFortune();
