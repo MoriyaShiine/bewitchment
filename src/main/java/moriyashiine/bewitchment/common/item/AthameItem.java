@@ -3,12 +3,14 @@ package moriyashiine.bewitchment.common.item;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.dragonsblood.DragonsBloodLogBlock;
 import moriyashiine.bewitchment.common.block.entity.interfaces.Lockable;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
 import moriyashiine.bewitchment.common.recipe.AthameStrippingRecipe;
+import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWProperties;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
@@ -32,9 +34,13 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.UUID;
@@ -46,8 +52,14 @@ public class AthameItem extends SwordItem {
 		@Override
 		protected ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
 			World world = pointer.getWorld();
-			BlockPos pos = pointer.getBlockPos();
-			setSuccess(cutLog(world, pos.offset(pointer.getBlockState().get(Properties.FACING)), stack));
+			BlockPos pos = pointer.getBlockPos().offset(pointer.getBlockState().get(Properties.FACING));
+			if (cutLog(world, pos, stack)) {
+				setSuccess(true);
+			}
+			else if (world.getBlockState(pos).getBlock() == BWObjects.GOLDEN_GLYPH) {
+				BWObjects.GOLDEN_GLYPH.onUse(world.getBlockState(pos), world, pos, BewitchmentAPI.getFakePlayer(world), Hand.MAIN_HAND, BlockHitResult.createMissed(new Vec3d(pos.getX(), pos.getY(), pos.getZ()), Direction.DOWN, pos));
+				setSuccess(true);
+			}
 			return stack;
 		}
 	};

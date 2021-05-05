@@ -10,7 +10,8 @@
 	},
 	{
 	  "type": "crafting",
-	  "recipe": "bewitchment:athame"
+	  "recipe": "bewitchment:athame",
+	  "text": "Athames can also be used to start $(l:bewitchment:rituals/rituals)Rituals$() from a Dispenser."
 	}
   ]
 }

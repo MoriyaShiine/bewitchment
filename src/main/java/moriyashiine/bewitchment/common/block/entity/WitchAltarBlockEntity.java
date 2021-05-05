@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.block.entity;
 
-import com.mojang.authlib.GameProfile;
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
@@ -17,11 +17,8 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.network.ServerPlayerInteractionManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.Hand;
@@ -37,10 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Tickable, Inventory {
-	private static final GameProfile FAKE_PLAYER_PROFILE = new GameProfile(null, "FAKE_PLAYER");
-	
 	private int loadingTimer = 20;
-	private PlayerEntity fakePlayer = null;
 	
 	private final Map<Block, Integer> checked = new HashMap<>();
 	private final BlockPos.Mutable checking = new BlockPos.Mutable();
@@ -94,17 +88,8 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 			if (loadingTimer > 0) {
 				loadingTimer--;
 				if (loadingTimer == 0) {
-					MinecraftServer server = world.getServer();
-					if (server != null) {
-						markDirty();
-						ServerWorld overworld = server.getOverworld();
-						fakePlayer = new ServerPlayerEntity(server, overworld, FAKE_PLAYER_PROFILE, new ServerPlayerInteractionManager(overworld));
-						fakePlayer.setStackInHand(Hand.MAIN_HAND, new ItemStack(Items.WOODEN_AXE));
-						markedForScan = true;
-					}
-					else {
-						loadingTimer = 20;
-					}
+					markDirty();
+					markedForScan = true;
 				}
 			}
 			else {
@@ -207,7 +192,7 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 						BlockState original = overworld.getBlockState(checking);
 						overworld.setBlockState(checking, checkedBlock.getDefaultState());
 						BlockState checkingState = overworld.getBlockState(checking);
-						checkingState.getBlock().onUse(checkingState, world, checking, fakePlayer, Hand.MAIN_HAND, new BlockHitResult(Vec3d.ZERO, Direction.UP, checking, false));
+						checkingState.getBlock().onUse(checkingState, world, checking, BewitchmentAPI.getFakePlayer(world), Hand.MAIN_HAND, new BlockHitResult(Vec3d.ZERO, Direction.UP, checking, false));
 						if (Registry.BLOCK.getId(overworld.getBlockState(checking).getBlock()).getPath().contains("stripped")) {
 							strippedLog = true;
 						}

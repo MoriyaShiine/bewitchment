@@ -91,11 +91,6 @@ public class GlyphBlock extends HorizontalFacingBlock implements BlockEntityProv
 	}
 	
 	@Override
-	public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
-		BWObjects.SALT_LINE.neighborUpdate(state, world, pos, block, fromPos, notify);
-	}
-	
-	@Override
 	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
 		if (!world.isClient && state.getBlock() != oldState.getBlock()) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);

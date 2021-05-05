@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.api;
 
+import com.mojang.authlib.GameProfile;
 import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
 import moriyashiine.bewitchment.api.item.PoppetItem;
@@ -30,6 +31,7 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
@@ -45,6 +47,8 @@ public class BewitchmentAPI {
 	
 	@SuppressWarnings("InstantiationOfUtilityClass")
 	public static final EntityGroup DEMON = new EntityGroup();
+	
+	public static PlayerEntity fakePlayer = null;
 	
 	public static LivingEntity getTaglockOwner(World world, ItemStack taglock) {
 		if (world instanceof ServerWorld && (taglock.getItem() instanceof TaglockItem || taglock.getItem() instanceof PoppetItem) && TaglockItem.hasTaglock(taglock)) {
@@ -107,6 +111,24 @@ public class BewitchmentAPI {
 			}
 		}
 		return ItemStack.EMPTY;
+	}
+	
+	public static PlayerEntity getFakePlayer(World world) {
+		if (fakePlayer == null) {
+			fakePlayer = new PlayerEntity(world, BlockPos.ORIGIN, 0, new GameProfile(UUID.randomUUID(), "FAKE_PLAYER")) {
+				@Override
+				public boolean isSpectator() {
+					return false;
+				}
+				
+				@Override
+				public boolean isCreative() {
+					return false;
+				}
+			};
+			fakePlayer.setStackInHand(Hand.MAIN_HAND, new ItemStack(Items.WOODEN_AXE));
+		}
+		return fakePlayer;
 	}
 	
 	public static LivingEntity getTransformedPlayerEntity(PlayerEntity player) {
