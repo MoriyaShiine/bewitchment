@@ -40,7 +40,7 @@
 	"minecraft": "1.16.5",
 	"cloth-config2": ">=4.10.13",
 	"somnus": "*",
-	"pehkui": ">=2.0.0",
+	"pehkui": ">=2.1.0",
 	"impersonate": "*",
 	"patchouli": "*",
 	"trinkets": "*"
