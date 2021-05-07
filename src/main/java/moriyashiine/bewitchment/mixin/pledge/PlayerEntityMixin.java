@@ -35,7 +35,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PledgeAc
 	
 	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
 	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		setPledge(tag.getString("Pledge"));
+		String pledge = tag.getString("Pledge");
+		if (pledge.isEmpty()) {
+			pledge = BWPledges.NONE;
+		}
+		setPledge(pledge);
 	}
 	
 	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
