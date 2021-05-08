@@ -5,6 +5,8 @@ import moriyashiine.bewitchment.client.screen.DemonScreenHandler;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.interfaces.DemonMerchant;
 import moriyashiine.bewitchment.common.entity.living.DemonEntity;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
@@ -30,22 +32,6 @@ public class SyncDemonTradesPacket {
 		buf.writeBoolean(merchant.isDiscount());
 		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
 	}
-	
-	public static void handle(MinecraftClient client, ClientPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
-		int syncId = buf.readInt();
-		List<DemonEntity.DemonTradeOffer> offers = DemonEntity.DemonTradeOffer.fromPacket(buf);
-		int traderId = buf.readInt();
-		boolean discount = buf.readBoolean();
-		client.execute(() -> {
-			if (client.player != null) {
-				ScreenHandler screenHandler = client.player.currentScreenHandler;
-				if (syncId == screenHandler.syncId && screenHandler instanceof DemonScreenHandler) {
-					((DemonScreenHandler) screenHandler).demonMerchant.setCurrentCustomer(client.player);
-					((DemonScreenHandler) screenHandler).demonMerchant.setOffersClientside(offers);
-					((DemonScreenHandler) screenHandler).demonMerchant.setDemonTraderClientside((LivingEntity) client.world.getEntityById(traderId));
-					((DemonScreenHandler) screenHandler).demonMerchant.setDiscountClientside(discount);
-				}
-			}
-		});
-	}
+
+	//@Environment notoriously fails on this specific method even when it's empty so here we are
 }

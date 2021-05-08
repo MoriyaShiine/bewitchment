@@ -34,6 +34,8 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.util.TriState;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.command.argument.ArgumentTypes;
+import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
@@ -237,5 +239,6 @@ public class Bewitchment implements ModInitializer {
 		if (isRequiemLoaded) {
 			BWRequiemCompat.init();
 		}
+		BWCommands.registerArgumentTypes();
 	}
 }

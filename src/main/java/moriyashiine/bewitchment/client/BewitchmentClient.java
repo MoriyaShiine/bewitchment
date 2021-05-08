@@ -14,9 +14,11 @@ import moriyashiine.bewitchment.client.renderer.blockentity.WitchCauldronBlockEn
 import moriyashiine.bewitchment.client.renderer.entity.*;
 import moriyashiine.bewitchment.client.renderer.entity.living.*;
 import moriyashiine.bewitchment.client.screen.DemonScreen;
+import moriyashiine.bewitchment.client.screen.DemonScreenHandler;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.BWChestBlockEntity;
 import moriyashiine.bewitchment.common.entity.interfaces.BroomUserAccessor;
+import moriyashiine.bewitchment.common.entity.living.DemonEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.network.packet.TogglePressingForwardPacket;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
@@ -35,10 +37,12 @@ import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
+import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.TexturedRenderLayers;
@@ -48,8 +52,13 @@ import net.minecraft.client.render.entity.BoatEntityRenderer;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.List;
 
 @Environment(EnvType.CLIENT)
 public class BewitchmentClient implements ClientModInitializer {
@@ -58,7 +67,23 @@ public class BewitchmentClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		ClientPlayNetworking.registerGlobalReceiver(SyncContractsPacket.ID, SyncContractsPacket::handle);
-		ClientPlayNetworking.registerGlobalReceiver(SyncDemonTradesPacket.ID, SyncDemonTradesPacket::handle);
+		ClientPlayNetworking.registerGlobalReceiver(SyncDemonTradesPacket.ID, (client, network, buf, sender) -> {
+			int syncId = buf.readInt();
+			List<DemonEntity.DemonTradeOffer> offers = DemonEntity.DemonTradeOffer.fromPacket(buf);
+			int traderId = buf.readInt();
+			boolean discount = buf.readBoolean();
+			client.execute(() -> {
+				if (client.player != null) {
+					ScreenHandler screenHandler = client.player.currentScreenHandler;
+					if (syncId == screenHandler.syncId && screenHandler instanceof DemonScreenHandler) {
+						((DemonScreenHandler) screenHandler).demonMerchant.setCurrentCustomer(client.player);
+						((DemonScreenHandler) screenHandler).demonMerchant.setOffersClientside(offers);
+						((DemonScreenHandler) screenHandler).demonMerchant.setDemonTraderClientside((LivingEntity) client.world.getEntityById(traderId));
+						((DemonScreenHandler) screenHandler).demonMerchant.setDiscountClientside(discount);
+					}
+				}
+			});
+		});
 		ClientPlayNetworking.registerGlobalReceiver(SyncHornedSpearEntity.ID, SyncHornedSpearEntity::handle);
 		ClientPlayNetworking.registerGlobalReceiver(SyncClientSerializableBlockEntity.ID, SyncClientSerializableBlockEntity::handle);
 		ClientPlayNetworking.registerGlobalReceiver(SyncWitchAltarBlockEntity.ID, SyncWitchAltarBlockEntity::handle);
