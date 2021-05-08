@@ -34,13 +34,6 @@ import java.util.concurrent.CompletableFuture;
 
 @SuppressWarnings("ConstantConditions")
 public class BWCommands {
-	public static void registerArgumentTypes() {
-		ArgumentTypes.register("bewitchment:contract", ContractArgumentType.class, new ConstantArgumentSerializer<>(ContractArgumentType::contract));
-		ArgumentTypes.register("bewitchment:curse", CurseArgumentType.class, new ConstantArgumentSerializer<>(CurseArgumentType::curse));
-		ArgumentTypes.register("bewitchment:transformation", TransformationArgumentType.class, new ConstantArgumentSerializer<>(TransformationArgumentType::transformation));
-		ArgumentTypes.register("bewitchment:fortune", FortuneArgumentType.class, new ConstantArgumentSerializer<>(FortuneArgumentType::fortune));
-	}
-	
 	public static void init(CommandDispatcher<ServerCommandSource> dispatcher, boolean dedicated) {
 		dispatcher.register(CommandManager.literal("fortune").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.literal("get").then(CommandManager.argument("player", EntityArgumentType.player()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
@@ -212,6 +205,12 @@ public class BWCommands {
 		}))));
 	}
 	
+	public static void registerArgumentTypes() {
+		ArgumentTypes.register("bewitchment:fortune", FortuneArgumentType.class, new ConstantArgumentSerializer<>(FortuneArgumentType::fortune));
+		ArgumentTypes.register("bewitchment:transformation", TransformationArgumentType.class, new ConstantArgumentSerializer<>(TransformationArgumentType::transformation));
+		ArgumentTypes.register("bewitchment:contract", ContractArgumentType.class, new ConstantArgumentSerializer<>(ContractArgumentType::contract));
+		ArgumentTypes.register("bewitchment:curse", CurseArgumentType.class, new ConstantArgumentSerializer<>(CurseArgumentType::curse));
+	}
 	
 	private static class FortuneArgumentType implements ArgumentType<Fortune> {
 		public static final DynamicCommandExceptionType INVALID_FORTUNE_EXCEPTION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.fortune.not_found", object));

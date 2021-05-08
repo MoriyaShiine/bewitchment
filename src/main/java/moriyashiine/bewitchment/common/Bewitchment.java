@@ -82,6 +82,7 @@ public class Bewitchment implements ModInitializer {
 		ServerPlayNetworking.registerGlobalReceiver(TransformationAbilityPacket.ID, TransformationAbilityPacket::handle);
 		ServerPlayNetworking.registerGlobalReceiver(TogglePressingForwardPacket.ID, TogglePressingForwardPacket::handle);
 		CommandRegistrationCallback.EVENT.register(BWCommands::init);
+		BWCommands.registerArgumentTypes();
 		ServerLifecycleEvents.SERVER_STOPPED.register(server -> BewitchmentAPI.fakePlayer = null);
 		ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
 			if (alive) {
@@ -237,6 +238,5 @@ public class Bewitchment implements ModInitializer {
 		if (isRequiemLoaded) {
 			BWRequiemCompat.init();
 		}
-		BWCommands.registerArgumentTypes();
 	}
 }
