@@ -1,24 +1,14 @@
 package moriyashiine.bewitchment.client.network.packet;
 
 import io.netty.buffer.Unpooled;
-import moriyashiine.bewitchment.client.screen.DemonScreenHandler;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.interfaces.DemonMerchant;
 import moriyashiine.bewitchment.common.entity.living.DemonEntity;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
-
-import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
 public class SyncDemonTradesPacket {
@@ -32,6 +22,6 @@ public class SyncDemonTradesPacket {
 		buf.writeBoolean(merchant.isDiscount());
 		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
 	}
-
+	
 	//@Environment notoriously fails on this specific method even when it's empty so here we are
 }

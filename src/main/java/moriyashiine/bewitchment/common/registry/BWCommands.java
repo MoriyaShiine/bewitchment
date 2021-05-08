@@ -40,6 +40,7 @@ public class BWCommands {
 		ArgumentTypes.register("bewitchment:transformation", TransformationArgumentType.class, new ConstantArgumentSerializer<>(TransformationArgumentType::transformation));
 		ArgumentTypes.register("bewitchment:fortune", FortuneArgumentType.class, new ConstantArgumentSerializer<>(FortuneArgumentType::fortune));
 	}
+	
 	public static void init(CommandDispatcher<ServerCommandSource> dispatcher, boolean dedicated) {
 		dispatcher.register(CommandManager.literal("fortune").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.literal("get").then(CommandManager.argument("player", EntityArgumentType.player()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
@@ -210,9 +211,8 @@ public class BWCommands {
 			return 0;
 		}))));
 	}
-
-
-
+	
+	
 	private static class FortuneArgumentType implements ArgumentType<Fortune> {
 		public static final DynamicCommandExceptionType INVALID_FORTUNE_EXCEPTION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.fortune.not_found", object));
 		public static final DynamicCommandExceptionType GET_NO_FORTUNE_EXCEPTION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.fortune.get.no_fortune", object));
@@ -237,7 +237,7 @@ public class BWCommands {
 			return CommandSource.suggestIdentifiers(BWRegistries.FORTUNES.getIds(), builder);
 		}
 	}
-
+	
 	private static class TransformationArgumentType implements ArgumentType<Transformation> {
 		public static final DynamicCommandExceptionType INVALID_TRANSFORMATION_EXCEPTION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.transformation.not_found", object));
 		
@@ -260,7 +260,7 @@ public class BWCommands {
 			return CommandSource.suggestIdentifiers(BWRegistries.TRANSFORMATIONS.getIds(), builder);
 		}
 	}
-
+	
 	private static class ContractArgumentType implements ArgumentType<Contract> {
 		public static final DynamicCommandExceptionType INVALID_CONTRACT_EXCEPTION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.contract.not_found", object));
 		public static final DynamicCommandExceptionType GET_NO_CONTRACTS_EXCEPTION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.contract.get.no_contracts", object));
@@ -287,7 +287,7 @@ public class BWCommands {
 			return CommandSource.suggestIdentifiers(BWRegistries.CONTRACTS.getIds(), builder);
 		}
 	}
-
+	
 	private static class CurseArgumentType implements ArgumentType<Curse> {
 		public static final DynamicCommandExceptionType INVALID_CURSE_EXCEPTION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.curse.not_found", object));
 		public static final DynamicCommandExceptionType GET_NO_CURSES_EXCEPTION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.curse.get.no_curses", object));
