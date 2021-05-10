@@ -177,9 +177,16 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor 
 		}
 	}
 	
+	@Inject(method = "dropLoot", at = @At("HEAD"), cancellable = true)
+	private void dropLoot(DamageSource source, boolean causedByPlayer, CallbackInfo callbackInfo) {
+		if (this instanceof MasterAccessor && ((MasterAccessor) this).getMasterUUID() != null) {
+			callbackInfo.cancel();
+		}
+	}
+	
 	@Inject(method = "isAffectedBySplashPotions", at = @At("RETURN"), cancellable = true)
 	private void isAffectedBySplashPotions(CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (callbackInfo.getReturnValue() && !world.isClient && this instanceof MasterAccessor && ((MasterAccessor) this).getMasterUUID() != null) {
+		if (callbackInfo.getReturnValue() && this instanceof MasterAccessor && ((MasterAccessor) this).getMasterUUID() != null) {
 			callbackInfo.setReturnValue(false);
 		}
 	}

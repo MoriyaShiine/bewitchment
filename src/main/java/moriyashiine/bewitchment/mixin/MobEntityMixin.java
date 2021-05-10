@@ -86,7 +86,7 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 	}
 	
 	@Inject(method = "method_29506", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;"), cancellable = true, locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-	private void collectTaglock(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> callbackInfoReturnable, ItemStack heldStack) {
+	private void method_29506(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> callbackInfoReturnable, ItemStack heldStack) {
 		if (heldStack.getItem() instanceof TaglockItem) {
 			callbackInfoReturnable.setReturnValue(TaglockItem.useTaglock(player, this, hand, true, false));
 		}
