@@ -37,7 +37,6 @@ import net.minecraft.world.gen.trunk.StraightTrunkPlacer;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@SuppressWarnings("ConstantConditions")
 public class BWWorldGenerators {
 	private static final Map<ConfiguredFeature<?, ?>, Identifier> CONFIGURED_FEATURES = new LinkedHashMap<>();
 	
