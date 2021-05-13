@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.common.block.juniper;
 import com.terraformersmc.terraform.wood.block.TerraformDoorBlock;
 import moriyashiine.bewitchment.common.block.entity.TaglockHolderBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
+import moriyashiine.bewitchment.common.block.util.SpecialDoor;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -20,7 +21,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("ConstantConditions")
-public class JuniperDoorBlock extends TerraformDoorBlock implements BlockEntityProvider {
+public class JuniperDoorBlock extends TerraformDoorBlock implements BlockEntityProvider, SpecialDoor {
 	public JuniperDoorBlock(Settings settings) {
 		super(settings);
 	}
@@ -36,7 +37,13 @@ public class JuniperDoorBlock extends TerraformDoorBlock implements BlockEntityP
 		TaglockHolder.onUse(world, state.get(HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos, player);
 		return super.onUse(state, world, pos, player, hand, hit);
 	}
-	
+
+	@Override
+	public ActionResult onSpecialUse(BlockState state, World world, BlockPos pos, LivingEntity user, Hand hand) {
+		TaglockHolder.onUse(world, state.get(HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos, user);
+		return ActionResult.PASS;
+	}
+
 	@Override
 	public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
 		super.onPlaced(world, pos, state, placer, itemStack);
