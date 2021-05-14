@@ -1,10 +1,15 @@
 package moriyashiine.bewitchment.common.registry;
 
-import moriyashiine.bewitchment.api.registry.*;
+import moriyashiine.bewitchment.api.registry.Curse;
+import moriyashiine.bewitchment.api.registry.Fortune;
+import moriyashiine.bewitchment.api.registry.RitualFunction;
+import moriyashiine.bewitchment.api.registry.Sigil;
 import moriyashiine.bewitchment.common.Bewitchment;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
+import net.minecraft.client.render.model.json.Transformation;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import org.jetbrains.annotations.Contract;
 
 public class BWRegistries {
 	public static final Registry<RitualFunction> RITUAL_FUNCTIONS = FabricRegistryBuilder.createSimple(RitualFunction.class, new Identifier(Bewitchment.MODID, "ritual_functions")).buildAndRegister();
