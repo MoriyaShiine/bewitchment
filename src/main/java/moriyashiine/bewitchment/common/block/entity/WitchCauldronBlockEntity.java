@@ -314,7 +314,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 					stack.getOrCreateTag().putString("PolymorphName", TaglockItem.getTaglockName(stackInSlot));
 				}
 				CauldronBrewingRecipe cauldronBrewingRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CAULDRON_BREWING_RECIPE_TYPE).stream().filter(recipe -> recipe.input.test(stackInSlot)).findFirst().orElse(null);
-				if (cauldronBrewingRecipe != null) {
+				if (cauldronBrewingRecipe != null && effects.stream().noneMatch(effect -> effect.getEffectType() == cauldronBrewingRecipe.output)) {
 					effects.add(new StatusEffectInstance(cauldronBrewingRecipe.output, cauldronBrewingRecipe.time));
 				}
 				else if (stackInSlot.getItem() == Items.REDSTONE) {
