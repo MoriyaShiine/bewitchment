@@ -103,13 +103,15 @@
 	  "type": "spotlight",
 	  "title": "Regeneration",
 	  "item": "bewitchment:juniper_bark",
-	  "text": "By utilizing the life energies from $(l:bewitchment:introduction/juniper_trees)Juniper$(), Regeneration quickens the healing process when applied."
+	  "text": "By utilizing the life energies from $(l:bewitchment:introduction/juniper_trees)Juniper$(), Regeneration quickens the healing process when applied.",
+	  "anchor": "regeneration"
 	},
 	{
 	  "type": "spotlight",
 	  "title": "Resistance",
 	  "item": "bewitchment:spruce_bark",
-	  "text": "Reduces damage taken."
+	  "text": "Reduces damage taken.",
+	  "anchor": "resistance"
 	},
 	{
 	  "type": "spotlight",
@@ -133,7 +135,8 @@
 	  "type": "spotlight",
 	  "title": "Strength",
 	  "item": "bewitchment:oak_bark",
-	  "text": "Using the powers of Oak, this increases damage output."
+	  "text": "Using the powers of Oak, this increases damage output.",
+	  "anchor": "strength"
 	},
 	{
 	  "type": "spotlight",

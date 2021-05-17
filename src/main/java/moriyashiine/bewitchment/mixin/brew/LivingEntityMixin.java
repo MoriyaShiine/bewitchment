@@ -12,6 +12,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -94,8 +95,8 @@ public abstract class LivingEntityMixin extends Entity {
 				callbackInfo.setReturnValue(false);
 			}
 			else if (amount > 0 && hurtTime == 0) {
-				if (directSource instanceof LivingEntity && ((LivingEntity) directSource).hasStatusEffect(BWStatusEffects.LEECHING)) {
-					((LivingEntity) directSource).heal(amount * (((LivingEntity) directSource).getStatusEffect(BWStatusEffects.LEECHING).getAmplifier() + 1) / 4);
+				if (!hasStatusEffect(StatusEffects.STRENGTH) && !hasStatusEffect(StatusEffects.REGENERATION) && !hasStatusEffect(StatusEffects.RESISTANCE) && directSource instanceof LivingEntity && ((LivingEntity) directSource).hasStatusEffect(BWStatusEffects.LEECHING)) {
+					((LivingEntity) directSource).heal(amount * (((LivingEntity) directSource).getStatusEffect(BWStatusEffects.LEECHING).getAmplifier() + 1) / 8);
 				}
 				if (hasStatusEffect(BWStatusEffects.THORNS) && !(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns())) {
 					directSource.damage(DamageSource.thorns(directSource), 2 * (getStatusEffect(BWStatusEffects.THORNS).getAmplifier() + 1));
