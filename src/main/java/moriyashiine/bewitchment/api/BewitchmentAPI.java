@@ -29,7 +29,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.network.ServerPlayerInteractionManager;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -48,7 +51,7 @@ public class BewitchmentAPI {
 	@SuppressWarnings("InstantiationOfUtilityClass")
 	public static final EntityGroup DEMON = new EntityGroup();
 	
-	public static PlayerEntity fakePlayer = null;
+	public static ServerPlayerEntity fakePlayer = null;
 	
 	public static LivingEntity getTaglockOwner(World world, ItemStack taglock) {
 		if (world instanceof ServerWorld && (taglock.getItem() instanceof TaglockItem || taglock.getItem() instanceof PoppetItem) && TaglockItem.hasTaglock(taglock)) {
@@ -113,22 +116,19 @@ public class BewitchmentAPI {
 		return ItemStack.EMPTY;
 	}
 	
-	public static PlayerEntity getFakePlayer(World world) {
-		if (fakePlayer == null) {
-			fakePlayer = new PlayerEntity(world, BlockPos.ORIGIN, 0, new GameProfile(UUID.randomUUID(), "FAKE_PLAYER")) {
-				@Override
-				public boolean isSpectator() {
-					return false;
-				}
-				
-				@Override
-				public boolean isCreative() {
-					return false;
-				}
-			};
-			fakePlayer.setStackInHand(Hand.MAIN_HAND, new ItemStack(Items.WOODEN_AXE));
+	public static ServerPlayerEntity getFakePlayer(World world) {
+		if (!world.isClient) {
+			if (fakePlayer == null || fakePlayer.getMainHandStack().getItem() != Items.WOODEN_AXE) {
+				fakePlayer = new ServerPlayerEntity(world.getServer(), (ServerWorld) world, new GameProfile(UUID.randomUUID(), "FAKE_PLAYER"), new ServerPlayerInteractionManager((ServerWorld) world)) {
+					@Override
+					public void sendMessage(Text message, boolean actionBar) {
+					}
+				};
+				fakePlayer.setStackInHand(Hand.MAIN_HAND, new ItemStack(Items.WOODEN_AXE));
+			}
+			return fakePlayer;
 		}
-		return fakePlayer;
+		return null;
 	}
 	
 	public static LivingEntity getTransformedPlayerEntity(PlayerEntity player) {
