@@ -175,7 +175,16 @@ public class Bewitchment implements ModInitializer {
 			}
 			return ActionResult.PASS;
 		});
-		WorldSleepEvents.WORLD_WAKE_TIME.register((world, newTime, curTime) -> world.isDay() ? curTime + (13000 - (world.getTimeOfDay() % 24000)) : newTime);
+		WorldSleepEvents.WORLD_WAKE_TIME.register((world, newTime, curTime) -> {
+			if (world.isDay()) {
+				long time = curTime;
+				while (time % 24000 < 13000) {
+					time++;
+				}
+				return time;
+			}
+			return newTime;
+		});
 		PlayerSleepEvents.CAN_SLEEP_NOW.register((player, pos) -> {
 			if (player.world.getBlockState(pos).getBlock() instanceof CoffinBlock) {
 				return player.world.isDay() ? TriState.TRUE : TriState.FALSE;
