@@ -13,6 +13,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.FollowTargetGoal;
+import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
@@ -57,6 +58,9 @@ public class BWUtil {
 	
 	public static FollowTargetGoal<LivingEntity> createGenericPledgeableTargetGoal(MobEntity entity) {
 		return new FollowTargetGoal<>(entity, LivingEntity.class, 10, true, false, foundEntity -> {
+			if (foundEntity instanceof ArmorStandEntity) {
+				return false;
+			}
 			if (foundEntity instanceof PlayerEntity) {
 				if (BewitchmentAPI.isPledged((PlayerEntity) foundEntity, ((Pledgeable) entity).getPledgeID())) {
 					return false;
