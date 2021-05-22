@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.brew;
 
-import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.client.network.packet.SpawnExplosionParticlesPacket;
 import moriyashiine.bewitchment.common.registry.BWDamageSources;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
@@ -76,8 +76,8 @@ public abstract class LivingEntityMixin extends Entity {
 			if (hasStatusEffect(BWStatusEffects.MAGIC_SPONGE) && source.getMagic()) {
 				float magicAmount = (0.3f + (0.1f * getStatusEffect(BWStatusEffects.MAGIC_SPONGE).getAmplifier()));
 				amount *= (1 - magicAmount);
-				if (this instanceof MagicAccessor) {
-					((MagicAccessor) this).fillMagic((int) (amount * magicAmount), false);
+				if ((Object) this instanceof PlayerEntity) {
+					BewitchmentAPI.fillMagic((PlayerEntity) (Object) this, (int) (amount * magicAmount), false);
 				}
 			}
 		}

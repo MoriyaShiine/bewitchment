@@ -42,7 +42,7 @@ public class DruidBandItem extends TrinketItem {
 			StatusEffectInstance regeneration = new StatusEffectInstance(StatusEffects.REGENERATION, 300, 0, true, false);
 			boolean canApply = player.canHaveStatusEffect(speed) && !player.hasStatusEffect(StatusEffects.SPEED);
 			canApply |= player.canHaveStatusEffect(regeneration) && !player.hasStatusEffect(StatusEffects.REGENERATION);
-			if (canApply && BewitchmentAPI.usePlayerMagic(player, 1, false)) {
+			if (canApply && BewitchmentAPI.drainMagic(player, 1, false)) {
 				player.addStatusEffect(speed);
 				player.addStatusEffect(regeneration);
 			}

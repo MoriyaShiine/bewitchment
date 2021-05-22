@@ -36,10 +36,10 @@ public class SpecterBangleItem extends TrinketItem {
 	
 	@Override
 	public void tick(PlayerEntity player, ItemStack stack) {
-		if (player.isSneaking() && BewitchmentAPI.usePlayerMagic(player, 1, true)) {
+		if (player.isSneaking() && BewitchmentAPI.drainMagic(player, 1, true)) {
 			if (!player.world.isClient) {
 				if (player.getRandom().nextFloat() < 1 / 40f) {
-					BewitchmentAPI.usePlayerMagic(player, 1, false);
+					BewitchmentAPI.drainMagic(player, 1, false);
 				}
 				if (!((TrueInvisibleAccessor) player).getTrueInvisible()) {
 					((TrueInvisibleAccessor) player).setTrueInvisible(true);

@@ -157,7 +157,14 @@ public class BewitchmentAPI {
 		return null;
 	}
 	
-	public static boolean usePlayerMagic(PlayerEntity player, int amount, boolean simulate) {
+	public static boolean fillMagic(PlayerEntity player, int amount, boolean simulate) {
+		if (player.world.isClient) {
+			return false;
+		}
+		return ((MagicAccessor) player).fillMagic(amount, simulate);
+	}
+	
+	public static boolean drainMagic(PlayerEntity player, int amount, boolean simulate) {
 		if (player.world.isClient) {
 			return false;
 		}

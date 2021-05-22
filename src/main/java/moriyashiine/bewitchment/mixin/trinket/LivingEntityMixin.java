@@ -65,11 +65,11 @@ public abstract class LivingEntityMixin extends Entity {
 								List<StatusEffectInstance> effects = PotionUtil.getPotionEffects(belt);
 								for (StatusEffectInstance effect : effects) {
 									if (((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.HARMFUL) {
-										if (!(((LivingEntity) directSource).hasStatusEffect(effect.getEffectType())) && BewitchmentAPI.usePlayerMagic((PlayerEntity) (Object) this, 2, true) && ((LivingEntity) directSource).addStatusEffect(effect)) {
+										if (!(((LivingEntity) directSource).hasStatusEffect(effect.getEffectType())) && BewitchmentAPI.drainMagic((PlayerEntity) (Object) this, 2, true) && ((LivingEntity) directSource).addStatusEffect(effect)) {
 											used = true;
 										}
 									}
-									else if (!hasStatusEffect(effect.getEffectType()) && BewitchmentAPI.usePlayerMagic((PlayerEntity) (Object) this, 2, true) && addStatusEffect(effect)) {
+									else if (!hasStatusEffect(effect.getEffectType()) && BewitchmentAPI.drainMagic((PlayerEntity) (Object) this, 2, true) && addStatusEffect(effect)) {
 										if (belt.getTag().contains("PolymorphUUID") && this instanceof PolymorphAccessor) {
 											PolymorphAccessor polymorphAccessor = (PolymorphAccessor) this;
 											polymorphAccessor.setPolymorphUUID(belt.getTag().getUuid("PolymorphUUID"));
@@ -98,7 +98,7 @@ public abstract class LivingEntityMixin extends Entity {
 	
 	@Inject(method = "damage", at = @At("RETURN"))
 	private void damageReturn(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (callbackInfo.getReturnValue() && !world.isClient && source.getSource() instanceof PlayerEntity && ((PlayerEntity) source.getSource()).getMainHandStack().isEmpty() && TrinketsApi.getTrinketsInventory((PlayerEntity) source.getSource()).containsAny(Collections.singleton(BWObjects.ZEPHYR_HARNESS)) && BewitchmentAPI.usePlayerMagic((PlayerEntity) source.getSource(), 1, false)) {
+		if (callbackInfo.getReturnValue() && !world.isClient && source.getSource() instanceof PlayerEntity && ((PlayerEntity) source.getSource()).getMainHandStack().isEmpty() && TrinketsApi.getTrinketsInventory((PlayerEntity) source.getSource()).containsAny(Collections.singleton(BWObjects.ZEPHYR_HARNESS)) && BewitchmentAPI.drainMagic((PlayerEntity) source.getSource(), 1, false)) {
 			addVelocity(0, 2 / 3f, 0);
 		}
 	}

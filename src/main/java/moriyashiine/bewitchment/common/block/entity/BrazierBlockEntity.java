@@ -146,7 +146,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 										if (BewitchmentAPI.getFamiliar(closestPlayer) == BWEntityTypes.RAVEN) {
 											duration *= 2;
 										}
-										if (target instanceof PlayerEntity && TrinketsApi.getTrinketsInventory((PlayerEntity) target).containsAny(Collections.singleton(BWObjects.NAZAR)) && BewitchmentAPI.usePlayerMagic((PlayerEntity) target, 50, false)) {
+										if (target instanceof PlayerEntity && TrinketsApi.getTrinketsInventory((PlayerEntity) target).containsAny(Collections.singleton(BWObjects.NAZAR)) && BewitchmentAPI.drainMagic((PlayerEntity) target, 50, false)) {
 											duration /= 2;
 										}
 										((CurseAccessor) target).addCurse(new Curse.Instance(curseRecipe.curse, duration));

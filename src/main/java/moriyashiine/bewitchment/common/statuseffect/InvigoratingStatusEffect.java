@@ -1,9 +1,10 @@
 package moriyashiine.bewitchment.common.statuseffect;
 
-import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectType;
+import net.minecraft.entity.player.PlayerEntity;
 
 public class InvigoratingStatusEffect extends StatusEffect {
 	public InvigoratingStatusEffect(StatusEffectType type, int color) {
@@ -22,8 +23,8 @@ public class InvigoratingStatusEffect extends StatusEffect {
 	
 	@Override
 	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-		if (entity instanceof MagicAccessor) {
-			((MagicAccessor) entity).fillMagic(20 * (amplifier + 1), false);
+		if (entity instanceof PlayerEntity) {
+			BewitchmentAPI.fillMagic((PlayerEntity) entity, 20 * (amplifier + 1), false);
 		}
 	}
 }

@@ -26,11 +26,11 @@ public class TogglePressingForwardPacket {
 		boolean pressingForward = buf.readBoolean();
 		server.execute(() -> {
 			if (pressingForward && BewitchmentAPI.getFamiliar(player) != BWEntityTypes.OWL) {
-				if (!BewitchmentAPI.usePlayerMagic(player, 1, true)) {
+				if (!BewitchmentAPI.drainMagic(player, 1, true)) {
 					return;
 				}
 				if (player.age % 60 == 0) {
-					BewitchmentAPI.usePlayerMagic(player, 1, false);
+					BewitchmentAPI.drainMagic(player, 1, false);
 				}
 			}
 			((BroomUserAccessor) player).setPressingForward(pressingForward);

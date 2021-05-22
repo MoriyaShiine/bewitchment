@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.mixin;
 
+import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.BroomUserAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
@@ -90,7 +91,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		if (!world.isClient) {
 			FoodComponent foodComponent = stack.getItem().getFoodComponent();
 			if (foodComponent != null && BWTags.WITCHBERRY_FOODS.contains(stack.getItem())) {
-				fillMagic(foodComponent.getHunger(), false);
+				BewitchmentAPI.fillMagic((PlayerEntity) (Object) this, foodComponent.getHunger(), false);
 			}
 		}
 	}
