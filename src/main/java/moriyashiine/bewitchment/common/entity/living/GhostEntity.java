@@ -15,6 +15,7 @@ import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -33,10 +34,12 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
+import java.util.Random;
 
 public class GhostEntity extends BWHostileEntity {
 	public static final TrackedData<Boolean> HAS_TARGET = DataTracker.registerData(GhostEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -48,6 +51,35 @@ public class GhostEntity extends BWHostileEntity {
 	
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 20).add(EntityAttributes.GENERIC_FLYING_SPEED, 0.25).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 8);
+	}
+
+	public static boolean canGhostSpawn(EntityType<GhostEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+		for (Long longPos : BWWorldState.get(world.toServerWorld()).potentialCandelabras) {
+			BlockPos candelabraPos = BlockPos.fromLong(longPos);
+			double distance = Math.sqrt(candelabraPos.getSquaredDistance(pos));
+			if (distance <= Byte.MAX_VALUE) {
+				int radius = -1;
+				BlockEntity blockEntity = world.getBlockEntity(candelabraPos);
+				BlockState state = world.getBlockState(candelabraPos);
+				if (blockEntity instanceof WitchAltarBlockEntity) {
+					WitchAltarBlockEntity witchAltar = (WitchAltarBlockEntity) blockEntity;
+					for (int i = 0; i < witchAltar.size(); i++) {
+						Block block = Block.getBlockFromItem(witchAltar.getStack(i).getItem());
+						if (block instanceof CandelabraBlock) {
+							radius = ((CandelabraBlock) block).repellentRadius;
+							break;
+						}
+					}
+				}
+				else if (state.getBlock() instanceof CandelabraBlock && state.get(Properties.LIT)) {
+					radius = ((CandelabraBlock) state.getBlock()).repellentRadius;
+				}
+				if (distance <= radius) {
+					return false;
+				}
+			}
+		}
+		return MobEntity.canMobSpawn(type, world, spawnReason, pos, random);
 	}
 	
 	@Override
