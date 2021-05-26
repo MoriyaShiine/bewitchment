@@ -31,6 +31,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -52,34 +53,9 @@ public class GhostEntity extends BWHostileEntity {
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 20).add(EntityAttributes.GENERIC_FLYING_SPEED, 0.25).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 8);
 	}
-
-	public static boolean canGhostSpawn(EntityType<GhostEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-		for (Long longPos : BWWorldState.get(world.toServerWorld()).potentialCandelabras) {
-			BlockPos candelabraPos = BlockPos.fromLong(longPos);
-			double distance = Math.sqrt(candelabraPos.getSquaredDistance(pos));
-			if (distance <= Byte.MAX_VALUE) {
-				int radius = -1;
-				BlockEntity blockEntity = world.getBlockEntity(candelabraPos);
-				BlockState state = world.getBlockState(candelabraPos);
-				if (blockEntity instanceof WitchAltarBlockEntity) {
-					WitchAltarBlockEntity witchAltar = (WitchAltarBlockEntity) blockEntity;
-					for (int i = 0; i < witchAltar.size(); i++) {
-						Block block = Block.getBlockFromItem(witchAltar.getStack(i).getItem());
-						if (block instanceof CandelabraBlock) {
-							radius = ((CandelabraBlock) block).repellentRadius;
-							break;
-						}
-					}
-				}
-				else if (state.getBlock() instanceof CandelabraBlock && state.get(Properties.LIT)) {
-					radius = ((CandelabraBlock) state.getBlock()).repellentRadius;
-				}
-				if (distance <= radius) {
-					return false;
-				}
-			}
-		}
-		return MobEntity.canMobSpawn(type, world, spawnReason, pos, random);
+	
+	public static boolean canSpawn(EntityType<GhostEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+		return findPos(world, pos) == null && MobEntity.canMobSpawn(type, world, spawnReason, pos, random);
 	}
 	
 	@Override
@@ -254,34 +230,43 @@ public class GhostEntity extends BWHostileEntity {
 					target.set(target.getX(), target.getY() - 1, target.getZ());
 				}
 				target.set(target.getX(), target.getY() + random.nextInt(8), target.getZ());
-				for (Long longPos : BWWorldState.get(world).potentialCandelabras) {
-					BlockPos candelabraPos = BlockPos.fromLong(longPos);
-					double distance = Math.sqrt(candelabraPos.getSquaredDistance(target));
-					if (distance <= Byte.MAX_VALUE) {
-						int radius = -1;
-						BlockEntity blockEntity = world.getBlockEntity(candelabraPos);
-						BlockState state = world.getBlockState(candelabraPos);
-						if (blockEntity instanceof WitchAltarBlockEntity) {
-							WitchAltarBlockEntity witchAltar = (WitchAltarBlockEntity) blockEntity;
-							for (int i = 0; i < witchAltar.size(); i++) {
-								Block block = Block.getBlockFromItem(witchAltar.getStack(i).getItem());
-								if (block instanceof CandelabraBlock) {
-									radius = ((CandelabraBlock) block).repellentRadius;
-									break;
-								}
-							}
-						}
-						else if (state.getBlock() instanceof CandelabraBlock && state.get(Properties.LIT)) {
-							radius = ((CandelabraBlock) state.getBlock()).repellentRadius;
-						}
-						if (distance <= radius) {
-							return findTarget(target.set(candelabraPos.getX() + MathHelper.nextDouble(random, -radius, radius), candelabraPos.getY() + MathHelper.nextDouble(random, -radius, radius), candelabraPos.getZ() + MathHelper.nextDouble(random, -radius, radius)), ++tries);
-						}
-					}
+				Pair<BlockPos, Integer> validSpot = findPos((ServerWorldAccess) world, target);
+				if (validSpot != null) {
+					int radius = validSpot.getRight();
+					return findTarget(target.set(validSpot.getLeft().getX() + MathHelper.nextDouble(random, -radius, radius), validSpot.getLeft().getY() + MathHelper.nextDouble(random, -radius, radius), validSpot.getLeft().getZ() + MathHelper.nextDouble(random, -radius, radius)), ++tries);
 				}
 				return target.toImmutable();
 			}
 			return null;
 		}
+	}
+	
+	private static Pair<BlockPos, Integer> findPos(ServerWorldAccess world, BlockPos pos) {
+		for (Long longPos : BWWorldState.get(world.toServerWorld()).potentialCandelabras) {
+			BlockPos candelabraPos = BlockPos.fromLong(longPos);
+			double distance = Math.sqrt(candelabraPos.getSquaredDistance(pos));
+			if (distance <= Byte.MAX_VALUE) {
+				int radius = -1;
+				BlockEntity blockEntity = world.getBlockEntity(candelabraPos);
+				BlockState state = world.getBlockState(candelabraPos);
+				if (blockEntity instanceof WitchAltarBlockEntity) {
+					WitchAltarBlockEntity witchAltar = (WitchAltarBlockEntity) blockEntity;
+					for (int i = 0; i < witchAltar.size(); i++) {
+						Block block = Block.getBlockFromItem(witchAltar.getStack(i).getItem());
+						if (block instanceof CandelabraBlock) {
+							radius = ((CandelabraBlock) block).repellentRadius;
+							break;
+						}
+					}
+				}
+				else if (state.getBlock() instanceof CandelabraBlock && state.get(Properties.LIT)) {
+					radius = ((CandelabraBlock) state.getBlock()).repellentRadius;
+				}
+				if (distance <= radius) {
+					return new Pair<>(candelabraPos, radius);
+				}
+			}
+		}
+		return null;
 	}
 }
