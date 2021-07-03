@@ -23,10 +23,12 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
@@ -72,6 +74,11 @@ public class GlyphBlock extends HorizontalFacingBlock implements BlockEntityProv
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
 		return super.getPlacementState(ctx).with(FACING, ctx.getPlayerFacing()).with(Properties.AGE_5, ctx.getWorld().random.nextInt(6));
+	}
+	
+	@Override
+	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
+		return Blocks.TORCH.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
 	}
 	
 	@Environment(EnvType.CLIENT)
