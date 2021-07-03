@@ -21,7 +21,7 @@ public abstract class LivingEntityMixin extends Entity {
 	
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
 	private float modifyDamage(float amount, DamageSource source) {
-		if (!world.isClient && !source.isOutOfWorld() && !BWUtil.getBlockPoses(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity && ((GlyphBlockEntity) world.getBlockEntity(currentPos)).ritualFunction == BWRitualFunctions.PREVENT_DAMAGE).isEmpty()) {
+		if (!world.isClient && !source.isOutOfWorld() && world.getWorldBorder().contains(getBlockPos()) && !BWUtil.getBlockPoses(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity && ((GlyphBlockEntity) world.getBlockEntity(currentPos)).ritualFunction == BWRitualFunctions.PREVENT_DAMAGE).isEmpty()) {
 			return 0;
 		}
 		return amount;
