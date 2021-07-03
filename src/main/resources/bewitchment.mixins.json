@@ -15,6 +15,7 @@
 	"ExplosiveProjectileEntityMixin",
 	"FireballEntityMixin",
 	"FollowTargetGoalMixin",
+	"HopperBlockEntityMixin",
 	"ItemStackArgumentMixin",
 	"LandPathNodeMakerMixin",
 	"LivingEntityMixin",
