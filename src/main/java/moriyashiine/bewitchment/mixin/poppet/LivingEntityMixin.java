@@ -121,19 +121,21 @@ public abstract class LivingEntityMixin extends Entity implements SubmergedInWat
 	
 	@Inject(method = "tryUseTotem", at = @At("RETURN"), cancellable = true)
 	private void tryUseTotem(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!callbackInfo.getReturnValue() && !world.isClient) {
-			ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.DEATH_PROTECTION_POPPET, this, null);
-			if (!poppet.isEmpty() && !ReviveEvents.CANCEL_REVIVE.invoker().shouldCancel((PlayerEntity) (Object) this, source, poppet)) {
-				ReviveEvents.ON_REVIVE.invoker().onRevive((PlayerEntity) (Object) this, source, poppet);
-				if (poppet.damage((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
-					poppet.decrement(1);
+		if (!world.isClient) {
+			if (!callbackInfo.getReturnValue()) {
+				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.DEATH_PROTECTION_POPPET, this, null);
+				if (!poppet.isEmpty() && !ReviveEvents.CANCEL_REVIVE.invoker().shouldCancel((PlayerEntity) (Object) this, source, poppet)) {
+					ReviveEvents.ON_REVIVE.invoker().onRevive((PlayerEntity) (Object) this, source, poppet);
+					if (poppet.damage((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
+						poppet.decrement(1);
+					}
+					setHealth(1);
+					clearStatusEffects();
+					addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1));
+					addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1));
+					addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 800, 0));
+					callbackInfo.setReturnValue(true);
 				}
-				setHealth(1);
-				clearStatusEffects();
-				addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1));
-				addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1));
-				addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 800, 0));
-				callbackInfo.setReturnValue(true);
 			}
 			if (callbackInfo.getReturnValue() && (Object) this instanceof PlayerEntity && ((CurseAccessor) this).hasCurse(BWCurses.SUSCEPTIBILITY) && ((TransformationAccessor) this).getTransformation() == BWTransformations.HUMAN) {
 				if (source.getSource() instanceof VampireEntity || (BewitchmentAPI.isVampire(source.getSource(), true) && BewitchmentAPI.isPledged((PlayerEntity) source.getSource(), BWPledges.LILITH))) {
