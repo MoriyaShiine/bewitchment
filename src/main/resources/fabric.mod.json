@@ -16,7 +16,7 @@
 	"website": "https://www.curseforge.com/minecraft/mc-mods/bewitchment",
 	"repo": "https://github.com/MoriyaShiine/bewitchment"
   },
-  "license": "GPL-3.0",
+  "license": "CC BY-NC-ND 4.0",
   "icon": "assets/bewitchment/icon.png",
   "environment": "*",
   "entrypoints": {
