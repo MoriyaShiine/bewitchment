@@ -39,7 +39,7 @@ public class TeleportEntitiesRitualFunction extends RitualFunction {
 				break;
 			}
 		}
-		if (location != null) {
+		if (location != null && world.getWorldBorder().contains(location)) {
 			int radius = catFamiliar ? 9 : 3;
 			for (Entity entity : world.getNonSpectatingEntities(Entity.class, new Box(effectivePos).expand(radius))) {
 				BWUtil.teleport(entity, location.getX() + 0.5, location.getY() - 0.5, location.getZ() + 0.5, true);
