@@ -27,11 +27,15 @@ repositories {
         }
     }
     maven {
-        name "player ability lib, impersonate"
-        url "https://dl.bintray.com/ladysnake/libs"
+        name "player ability lib, impersonate, trinkets, requiem"
+        url "https://ladysnake.jfrog.io/artifactory/mods"
+        content {
+            includeGroup "io.github.ladysnake"
+            includeGroupByRegex 'io\\.github\\.onyxstudios.*'
+        }
     }
     maven {
-        name "cloth config, roughly enough items"
+        name "cloth config, rei"
         url "https://maven.shedaniel.me"
     }
     maven {
@@ -39,20 +43,16 @@ repositories {
         url "https://maven.theillusivec4.top"
     }
     maven {
+        name "impersonate, requiem"
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+    maven {
         name "patchouli"
         url "https://maven.blamejared.com"
     }
     maven {
-        name "trinkets"
-        url "https://maven.abusedmaster.xyz"
-    }
-    maven {
-        name "requiem"
-        url "https://dl.bintray.com/ladysnake/mods"
-    }
-    maven {
         name "fall flying lib"
-        url "https://dl.bintray.com/adriantodt/maven"
+        url "https://maven.cafeteria.dev"
     }
     maven {
         name "jitpack"
@@ -87,13 +87,9 @@ dependencies {
 
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${rei_version}"
     modRuntime "me.shedaniel:RoughlyEnoughItems:${rei_version}"
-    modImplementation "io.github.emilyalexandra:nourish:${nourish_version}"
     modImplementation "io.github.ladysnake:requiem-api:${requiem_version}"
     modRuntime "io.github.ladysnake:requiem:${requiem_version}"
-    modImplementation "net.adriantodt.fabricmc:fallflyinglib:${project.ffl_version}"
-    modImplementation("com.github.apace100:origins-fabric:${project.origins_version}") {
-        exclude(group: "*")
-    }
+    modImplementation "com.github.apace100:origins-fabric:${project.origins_version}"
 }
 
 processResources {
