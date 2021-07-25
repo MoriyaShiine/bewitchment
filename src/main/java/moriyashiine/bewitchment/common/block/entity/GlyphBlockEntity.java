@@ -212,11 +212,11 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 		}
 	}
 	
-	public void onUse(World world, BlockPos pos, PlayerEntity player, Hand hand, LivingEntity sacrifice) {
-		ItemStack stack = player.getStackInHand(hand);
+	public void onUse(World world, BlockPos pos, LivingEntity user, Hand hand, LivingEntity sacrifice) {
+		ItemStack stack = user.getStackInHand(hand);
 		if (ritualFunction != null && pos.equals(effectivePos) && stack.getItem() instanceof WaystoneItem && stack.hasTag() && stack.getOrCreateTag().contains("LocationPos")) {
 			effectivePos = BlockPos.fromLong(stack.getOrCreateTag().getLong("LocationPos"));
-			stack.damage(1, player, user -> user.sendToolBreakStatus(hand));
+			stack.damage(1, user, stackUser -> stackUser.sendToolBreakStatus(hand));
 			syncGlyph();
 		}
 		else {
@@ -229,10 +229,12 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 				RitualRecipe recipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.RITUAL_RECIPE_TYPE).stream().filter(ritualRecipe -> ritualRecipe.matches(test, world)).findFirst().orElse(null);
 				if (recipe != null && recipe.input.size() == items.size() && hasValidChalk(recipe)) {
 					if (recipe.ritualFunction.isValid((ServerWorld) world, pos, test) || (recipe.ritualFunction.sacrifice != null && sacrifice != null && recipe.ritualFunction.sacrifice.test(sacrifice))) {
-						boolean cat = BewitchmentAPI.getFamiliar(player) == EntityType.CAT;
+						boolean cat = user instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) user) == EntityType.CAT;
 						if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain((int) (recipe.cost * (cat ? 0.75f : 1)), false)) {
 							world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FIRE, SoundCategory.BLOCKS, 1, 1);
-							player.sendMessage(new TranslatableText("ritual." + recipe.getId().toString().replace(":", ".").replace("/", ".")), true);
+							if (user instanceof PlayerEntity) {
+								((PlayerEntity) user).sendMessage(new TranslatableText("ritual." + recipe.getId().toString().replace(":", ".").replace("/", ".")), true);
+							}
 							for (int i = 0; i < items.size(); i++) {
 								for (PlayerEntity foundPlayer : PlayerLookup.tracking(items.get(i))) {
 									SpawnSmokeParticlesPacket.send(foundPlayer, items.get(i));
@@ -248,15 +250,21 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 							return;
 						}
 						world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FAIL, SoundCategory.BLOCKS, 1, 1);
-						player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.insufficent_altar_power"), true);
+						if (user instanceof PlayerEntity) {
+							((PlayerEntity) user).sendMessage(new TranslatableText(Bewitchment.MODID + ".message.insufficent_altar_power"), true);
+						}
 						return;
 					}
 					world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FAIL, SoundCategory.BLOCKS, 1, 1);
-					player.sendMessage(new TranslatableText(recipe.ritualFunction.getInvalidMessage()), true);
+					if (user instanceof PlayerEntity) {
+						((PlayerEntity) user).sendMessage(new TranslatableText(recipe.ritualFunction.getInvalidMessage()), true);
+					}
 					return;
 				}
 				world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FAIL, SoundCategory.BLOCKS, 1, 1);
-				player.sendMessage(new TranslatableText("ritual.none"), true);
+				if (user instanceof PlayerEntity) {
+					((PlayerEntity) user).sendMessage(new TranslatableText("ritual.none"), true);
+				}
 			}
 			else if (sacrifice == null) {
 				world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FAIL, SoundCategory.BLOCKS, 1, 1);

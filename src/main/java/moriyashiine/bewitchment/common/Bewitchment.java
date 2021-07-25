@@ -104,15 +104,15 @@ public class Bewitchment implements ModInitializer {
 			((CurseAccessor) newPlayer).getCurses().addAll(((CurseAccessor) oldPlayer).getCurses());
 		});
 		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killedEntity) -> {
-			if (entity instanceof PlayerEntity) {
-				PlayerEntity player = (PlayerEntity) entity;
-				if (killedEntity.getGroup() == EntityGroup.ARTHROPOD && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.TOAD) {
-					player.heal(player.getMaxHealth() * 1 / 4f);
+			if (entity instanceof LivingEntity) {
+				LivingEntity livingEntity = (LivingEntity) entity;
+				if (livingEntity instanceof PlayerEntity && killedEntity.getGroup() == EntityGroup.ARTHROPOD && BewitchmentAPI.getFamiliar((PlayerEntity) livingEntity) == BWEntityTypes.TOAD) {
+					livingEntity.heal(livingEntity.getMaxHealth() * 1 / 4f);
 				}
-				if (player.getMainHandStack().getItem() instanceof AthameItem) {
+				if (livingEntity.getMainHandStack().getItem() instanceof AthameItem) {
 					BlockPos glyph = BWUtil.getClosestBlockPos(killedEntity.getBlockPos(), 6, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity);
 					if (glyph != null) {
-						((GlyphBlockEntity) world.getBlockEntity(glyph)).onUse(world, glyph, player, Hand.MAIN_HAND, killedEntity);
+						((GlyphBlockEntity) world.getBlockEntity(glyph)).onUse(world, glyph, livingEntity, Hand.MAIN_HAND, killedEntity);
 					}
 					if (world.isNight()) {
 						boolean chicken = killedEntity instanceof ChickenEntity;
@@ -134,7 +134,7 @@ public class Bewitchment implements ModInitializer {
 						}
 					}
 					for (AthameDropRecipe recipe : world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_DROP_RECIPE_TYPE)) {
-						if (recipe.entity_type.equals(killedEntity.getType()) && world.random.nextFloat() < recipe.chance * (EnchantmentHelper.getLooting(player) + 1)) {
+						if (recipe.entity_type.equals(killedEntity.getType()) && world.random.nextFloat() < recipe.chance * (EnchantmentHelper.getLooting(livingEntity) + 1)) {
 							ItemStack drop = recipe.getOutput().copy();
 							if (recipe.entity_type == EntityType.PLAYER) {
 								drop.getOrCreateTag().putString("SkullOwner", killedEntity.getName().getString());
@@ -142,13 +142,13 @@ public class Bewitchment implements ModInitializer {
 							ItemScatterer.spawn(world, killedEntity.getX() + 0.5, killedEntity.getY() + 0.5, killedEntity.getZ() + 0.5, drop);
 						}
 					}
-					if (player.getOffHandStack().getItem() == Items.GLASS_BOTTLE && ((BloodAccessor) killedEntity).getBlood() > 20 && BWTags.HAS_BLOOD.contains(killedEntity.getType())) {
-						world.playSound(null, entity.getBlockPos(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1, 0.5f);
-						BWUtil.addItemToInventoryAndConsume(player, Hand.OFF_HAND, new ItemStack(BWObjects.BOTTLE_OF_BLOOD));
+					if (livingEntity instanceof PlayerEntity && livingEntity.getOffHandStack().getItem() == Items.GLASS_BOTTLE && ((BloodAccessor) killedEntity).getBlood() > 20 && BWTags.HAS_BLOOD.contains(killedEntity.getType())) {
+						world.playSound(null, livingEntity.getBlockPos(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1, 0.5f);
+						BWUtil.addItemToInventoryAndConsume((PlayerEntity) livingEntity, Hand.OFF_HAND, new ItemStack(BWObjects.BOTTLE_OF_BLOOD));
 					}
 				}
-				if (((ContractAccessor) entity).hasContract(BWContracts.DEATH)) {
-					player.heal(player.getMaxHealth() / 4f);
+				if (livingEntity instanceof ContractAccessor && ((ContractAccessor) livingEntity).hasContract(BWContracts.DEATH)) {
+					livingEntity.heal(livingEntity.getMaxHealth() / 4f);
 				}
 			}
 		});
