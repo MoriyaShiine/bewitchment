@@ -6,6 +6,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.World;
@@ -36,6 +37,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements TrueInvi
 	private void tick(CallbackInfo callbackInfo) {
 		if (!world.isClient && getTrueInvisible()) {
 			setTrueInvisible(false);
+			setInvisible(false);
+			removeStatusEffect(StatusEffects.INVISIBILITY);
 		}
 	}
 	

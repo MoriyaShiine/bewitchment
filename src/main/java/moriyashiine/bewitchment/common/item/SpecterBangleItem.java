@@ -43,6 +43,7 @@ public class SpecterBangleItem extends TrinketItem {
 				}
 				if (!((TrueInvisibleAccessor) player).getTrueInvisible()) {
 					((TrueInvisibleAccessor) player).setTrueInvisible(true);
+					player.setInvisible(true);
 				}
 			}
 			else if (player.getRandom().nextFloat() < 1 / 6f) {
