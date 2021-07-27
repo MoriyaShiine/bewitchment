@@ -6,10 +6,12 @@ import dev.emi.trinkets.api.Trinket;
 import dev.emi.trinkets.api.TrinketItem;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.client.model.equipment.trinket.SpecterBangleModel;
+import moriyashiine.bewitchment.client.network.packet.SpawnSpecterBangleParticlesPacket;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.interfaces.TrueInvisibleAccessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
@@ -37,17 +39,16 @@ public class SpecterBangleItem extends TrinketItem {
 	@Override
 	public void tick(PlayerEntity player, ItemStack stack) {
 		if (player.isSneaking() && BewitchmentAPI.drainMagic(player, 1, true)) {
-			if (!player.world.isClient) {
-				if (player.getRandom().nextFloat() < 1 / 40f) {
-					BewitchmentAPI.drainMagic(player, 1, false);
-				}
-				if (!((TrueInvisibleAccessor) player).getTrueInvisible()) {
-					((TrueInvisibleAccessor) player).setTrueInvisible(true);
-					player.setInvisible(true);
-				}
+			if (player.getRandom().nextFloat() < 1 / 40f) {
+				BewitchmentAPI.drainMagic(player, 1, false);
 			}
-			else if (player.getRandom().nextFloat() < 1 / 6f) {
-				player.world.addParticle(ParticleTypes.SMOKE, player.getParticleX(1), player.getY(), player.getParticleZ(1), 0, 0, 0);
+			if (!((TrueInvisibleAccessor) player).getTrueInvisible()) {
+				((TrueInvisibleAccessor) player).setTrueInvisible(true);
+				player.setInvisible(true);
+			}
+			if (player.getRandom().nextFloat() < 1 / 6f) {
+				SpawnSpecterBangleParticlesPacket.send(player, player);
+				PlayerLookup.tracking(player).forEach(playerEntity -> SpawnSpecterBangleParticlesPacket.send(playerEntity, player));
 			}
 		}
 	}
