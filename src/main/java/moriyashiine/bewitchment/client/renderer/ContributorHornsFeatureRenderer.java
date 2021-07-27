@@ -63,15 +63,7 @@ public final class ContributorHornsFeatureRenderer extends FeatureRenderer<Abstr
 				synchronized (CONTRIBUTORS) {
 					CONTRIBUTORS.clear();
 					for (String key : properties.stringPropertyNames()) {
-						String value = properties.getProperty(key);
-						UUID uuid;
-						try {
-							uuid = UUID.fromString(value);
-							
-						} catch (IllegalArgumentException ignored) {
-							continue;
-						}
-						CONTRIBUTORS.add(uuid);
+						CONTRIBUTORS.add(UUID.fromString(properties.getProperty(key)));
 					}
 				}
 			} catch (IOException e) {
