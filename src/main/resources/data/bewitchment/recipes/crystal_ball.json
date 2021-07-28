@@ -2,7 +2,7 @@
   "type": "crafting_shaped",
   "pattern": [
 	"GGG",
-	"GDG",
+	"GAG",
 	"S S"
   ],
   "key": {
@@ -10,7 +10,7 @@
 	  "item": "glass"
 	},
 	"D": {
-	  "item": "diamond"
+	  "item": "amethyst"
 	},
 	"S": {
 	  "tag": "c:silver_ingots"
