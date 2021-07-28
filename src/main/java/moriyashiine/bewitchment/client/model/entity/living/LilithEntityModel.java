@@ -40,7 +40,7 @@ public class LilithEntityModel<T extends LilithEntity> extends BipedEntityModel<
 	}
 	
 	public static TexturedModelData getTexturedModelData() {
-		ModelData data = new ModelData();
+		ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0);
 		ModelPartData root = data.getRoot();
 		ModelPartData body = root.addChild("body", ModelPartBuilder.create().uv(20, 16).cuboid(-4.0F, 0.0F, -2.5F, 8.0F, 6.0F, 5.0F), ModelTransform.of(0.0F, -12.0F, 1.2F, 0.0F, 0.0F, 0.0F));
 		ModelPartData stomach = body.addChild("stomach", ModelPartBuilder.create().uv(19, 28).cuboid(-3.5F, 0.0F, -2.5F, 7.0F, 6.0F, 5.0F), ModelTransform.of(0.0F, 6.0F, 0.0F, 0.0F, 0.0F, 0.0F));

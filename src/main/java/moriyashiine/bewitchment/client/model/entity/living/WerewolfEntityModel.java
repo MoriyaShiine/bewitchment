@@ -34,7 +34,7 @@ public class WerewolfEntityModel<T extends WerewolfEntity> extends BipedEntityMo
 	}
 	
 	public static TexturedModelData getTexturedModelData() {
-		ModelData data = new ModelData();
+		ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0);
 		ModelPartData root = data.getRoot();
 		ModelPartData body = root.addChild("body", ModelPartBuilder.create().uv(49, 15).cuboid(-5.5F, -3.3F, -2.0F, 11.0F, 11.0F, 8.0F), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F));
 		body.addChild("head", ModelPartBuilder.create().uv(1, 2).cuboid(-0.5F, 0.7F, -0.4F, 1.0F, 1.0F, 1.0F), ModelTransform.of(0.0F, -2.0F, 2.0F, 0.0F, 0.0F, 0.0F));

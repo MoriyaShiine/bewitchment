@@ -40,7 +40,7 @@ public class LeonardEntityModel<T extends LeonardEntity> extends BipedEntityMode
 	}
 	
 	public static TexturedModelData getTexturedModelData() {
-		ModelData data = new ModelData();
+		ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0);
 		ModelPartData root = data.getRoot();
 		ModelPartData body = root.addChild("body", ModelPartBuilder.create().uv(20, 16).cuboid(-4.5F, 0.0F, -2.5F, 9.0F, 7.0F, 5.0F), ModelTransform.of(0.0F, -9.4F, 0.0F, 0.0F, 0.0F, 0.0F));
 		body.addChild("lPec", ModelPartBuilder.create().uv(14, 42).cuboid(-2.5F, -2.5F, -3.0F, 5.0F, 5.0F, 3.0F), ModelTransform.of(2.2F, 3.1F, -0.1F, 0.0F, 0.0F, 0.0F));

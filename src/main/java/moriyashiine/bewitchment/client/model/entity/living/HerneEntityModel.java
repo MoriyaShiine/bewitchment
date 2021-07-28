@@ -44,7 +44,7 @@ public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T>
 	}
 	
 	public static TexturedModelData getTexturedModelData() {
-		ModelData data = new ModelData();
+		ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0);
 		ModelPartData root = data.getRoot();
 		ModelPartData bipedLeftLeg = root.addChild("bipedLeftLeg", ModelPartBuilder.create().uv(0, 16).cuboid(-2.5F, -0.7F, -3.0F, 5.0F, 12.0F, 6.0F, new Dilation(-0.2F, -0.2F, -0.2F)), ModelTransform.of(2.5F, -0.2F, 0.6F, 0.0F, 0.0F, 0.0F));
 		ModelPartData lLeg02 = bipedLeftLeg.addChild("lLeg02", ModelPartBuilder.create().uv(0, 34).cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 8.0F, 4.0F, new Dilation(-0.3F, -0.3F, -0.3F)), ModelTransform.of(0.0F, 9.5F, -0.7F, 0.0F, 0.0F, 0.0F));

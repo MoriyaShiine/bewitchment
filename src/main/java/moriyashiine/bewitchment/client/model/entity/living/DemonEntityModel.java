@@ -38,7 +38,7 @@ public class DemonEntityModel<T extends DemonEntity> extends BipedEntityModel<T>
 	}
 	
 	public static TexturedModelData getTexturedModelData() {
-		ModelData data = new ModelData();
+		ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0);
 		ModelPartData root = data.getRoot();
 		ModelPartData body = root.addChild("body", ModelPartBuilder.create().uv(19, 17).cuboid(-4.0F, 0.0F, -2.0F, 8.0F, 13.0F, 4.0F), ModelTransform.of(0.0F, -4.4F, 0.0F, 0.0F, 0.0F, 0.0F));
 		ModelPartData tail01 = body.addChild("tail01", ModelPartBuilder.create().uv(13, 37).cuboid(-1.0F, -1.0F, 0.0F, 2.0F, 2.0F, 4.0F), ModelTransform.of(0.0F, 10.1F, 1.3F, 0.0F, 0.0F, 0.0F));
