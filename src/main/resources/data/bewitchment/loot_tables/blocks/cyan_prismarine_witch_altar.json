@@ -1,17 +1,17 @@
 {
-  "type": "block",
+  "type": "minecraft:block",
   "pools": [
 	{
 	  "rolls": 1,
 	  "entries": [
 		{
-		  "type": "item",
+		  "type": "minecraft:item",
 		  "name": "bewitchment:prismarine_witch_altar"
 		}
 	  ],
 	  "conditions": [
 		{
-		  "condition": "survives_explosion"
+		  "condition": "minecraft:survives_explosion"
 		}
 	  ]
 	},
@@ -19,13 +19,13 @@
 	  "rolls": 1,
 	  "entries": [
 		{
-		  "type": "item",
+		  "type": "minecraft:item",
 		  "name": "cyan_carpet"
 		}
 	  ],
 	  "conditions": [
 		{
-		  "condition": "survives_explosion"
+		  "condition": "minecraft:survives_explosion"
 		}
 	  ]
 	}

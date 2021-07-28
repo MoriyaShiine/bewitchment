@@ -1,5 +1,5 @@
 {
-  "type": "crafting_shaped",
+  "type": "minecraft:crafting_shaped",
   "pattern": [
 	"GGG",
 	"GAG",
@@ -9,8 +9,8 @@
 	"G": {
 	  "item": "glass"
 	},
-	"D": {
-	  "item": "amethyst"
+	"A": {
+	  "item": "amethyst_shard"
 	},
 	"S": {
 	  "tag": "c:silver_ingots"

@@ -1,14 +1,14 @@
 {
-  "type": "block",
+  "type": "minecraft:block",
   "pools": [
 	{
 	  "rolls": 1,
 	  "entries": [
 		{
-		  "type": "alternatives",
+		  "type": "minecraft:alternatives",
 		  "children": [
 			{
-			  "type": "item",
+			  "type": "minecraft:item",
 			  "conditions": [
 				{
 				  "condition": "match_tool",
@@ -27,7 +27,7 @@
 			  "name": "bewitchment:salt_ore"
 			},
 			{
-			  "type": "item",
+			  "type": "minecraft:item",
 			  "functions": [
 				{
 				  "function": "set_count",
@@ -46,7 +46,7 @@
 				  }
 				},
 				{
-				  "function": "explosion_decay"
+				  "function": "minecraft:explosion_decay"
 				}
 			  ],
 			  "name": "bewitchment:salt"

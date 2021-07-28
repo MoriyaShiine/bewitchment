@@ -1,14 +1,14 @@
 {
-  "type": "block",
+  "type": "minecraft:block",
   "pools": [
 	{
-	  "rolls": 1.0,
+	  "rolls": 1,
 	  "entries": [
 		{
-		  "type": "alternatives",
+		  "type": "minecraft:alternatives",
 		  "children": [
 			{
-			  "type": "item",
+			  "type": "minecraft:item",
 			  "conditions": [
 				{
 				  "condition": "block_state_property",
@@ -21,7 +21,7 @@
 			  "name": "bewitchment:mandrake_root"
 			},
 			{
-			  "type": "item",
+			  "type": "minecraft:item",
 			  "name": "bewitchment:mandrake_seeds"
 			}
 		  ]
@@ -29,10 +29,10 @@
 	  ]
 	},
 	{
-	  "rolls": 1.0,
+	  "rolls": 1,
 	  "entries": [
 		{
-		  "type": "item",
+		  "type": "minecraft:item",
 		  "functions": [
 			{
 			  "function": "apply_bonus",
@@ -60,7 +60,7 @@
   ],
   "functions": [
 	{
-	  "function": "explosion_decay"
+	  "function": "minecraft:explosion_decay"
 	}
   ]
 }

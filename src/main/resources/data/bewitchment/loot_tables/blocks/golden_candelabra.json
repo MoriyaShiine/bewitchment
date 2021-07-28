@@ -1,17 +1,17 @@
 {
-  "type": "block",
+  "type": "minecraft:block",
   "pools": [
 	{
 	  "rolls": 1,
 	  "entries": [
 		{
-		  "type": "item",
+		  "type": "minecraft:item",
 		  "name": "bewitchment:golden_candelabra"
 		}
 	  ],
 	  "conditions": [
 		{
-		  "condition": "survives_explosion"
+		  "condition": "minecraft:survives_explosion"
 		}
 	  ]
 	}

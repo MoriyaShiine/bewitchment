@@ -1,14 +1,14 @@
 {
-  "type": "block",
+  "type": "minecraft:block",
   "pools": [
 	{
 	  "rolls": 1,
 	  "entries": [
 		{
-		  "type": "alternatives",
+		  "type": "minecraft:alternatives",
 		  "children": [
 			{
-			  "type": "item",
+			  "type": "minecraft:item",
 			  "conditions": [
 				{
 				  "condition": "alternative",
@@ -38,10 +38,10 @@
 			  "name": "bewitchment:cypress_leaves"
 			},
 			{
-			  "type": "item",
+			  "type": "minecraft:item",
 			  "conditions": [
 				{
-				  "condition": "survives_explosion"
+				  "condition": "minecraft:survives_explosion"
 				},
 				{
 				  "condition": "table_bonus",
@@ -64,7 +64,7 @@
 	  "rolls": 1,
 	  "entries": [
 		{
-		  "type": "item",
+		  "type": "minecraft:item",
 		  "conditions": [
 			{
 			  "condition": "table_bonus",
@@ -88,7 +88,7 @@
 			  }
 			},
 			{
-			  "function": "explosion_decay"
+			  "function": "minecraft:explosion_decay"
 			}
 		  ],
 		  "name": "stick"

@@ -1,15 +1,15 @@
 {
-  "type": "block",
+  "type": "minecraft:block",
   "pools": [
 	{
-	  "rolls": 1.0,
+	  "rolls": 1,
 	  "bonus_rolls": 0.0,
 	  "entries": [
 		{
-		  "type": "alternatives",
+		  "type": "minecraft:alternatives",
 		  "children": [
 			{
-			  "type": "item",
+			  "type": "minecraft:item",
 			  "conditions": [
 				{
 				  "condition": "match_tool",
@@ -28,7 +28,7 @@
 			  "name": "bewitchment:silver_ore"
 			},
 			{
-			  "type": "item",
+			  "type": "minecraft:item",
 			  "functions": [
 				{
 				  "function": "apply_bonus",
@@ -36,7 +36,7 @@
 				  "formula": "ore_drops"
 				},
 				{
-				  "function": "explosion_decay"
+				  "function": "minecraft:explosion_decay"
 				}
 			  ],
 			  "name": "bewitchment:raw_silver"

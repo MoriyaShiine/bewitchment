@@ -1,11 +1,11 @@
 {
-  "type": "block",
+  "type": "minecraft:block",
   "pools": [
 	{
 	  "rolls": 1,
 	  "entries": [
 		{
-		  "type": "item",
+		  "type": "minecraft:item",
 		  "conditions": [
 			{
 			  "condition": "block_state_property",
@@ -20,7 +20,7 @@
 	  ],
 	  "conditions": [
 		{
-		  "condition": "survives_explosion"
+		  "condition": "minecraft:survives_explosion"
 		}
 	  ]
 	}

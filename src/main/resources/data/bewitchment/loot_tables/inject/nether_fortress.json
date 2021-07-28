@@ -5,7 +5,7 @@
 	  "rolls": 1,
 	  "entries": [
 		{
-		  "type": "item",
+		  "type": "minecraft:item",
 		  "weight": 6,
 		  "functions": [
 			{
