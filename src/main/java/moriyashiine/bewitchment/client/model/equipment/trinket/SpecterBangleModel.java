@@ -16,8 +16,17 @@ public class SpecterBangleModel extends EntityModel<Entity> {
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = new ModelData();
 		ModelPartData root = data.getRoot();
-		ModelPartData spectreBangle = root.addChild("spectreBangle", ModelPartBuilder.create().cuboid(-2.0F, -1.0F, -2.0F, 4.0F, 2.0F, 4.0F, new Dilation(0.1F, 0.1F, 0.1F)), ModelTransform.of(0.0F, -3.0F, 0.0F, 0.0F, 0.0F, 0.0F));
-		spectreBangle.addChild("eye", ModelPartBuilder.create().uv(0, 7).cuboid(-0.5F, -0.5F, -1.0F, 2.0F, 2.0F, 1.0F, new Dilation(-0.1F, -0.1F, -0.1F)).uv(0, 11).cuboid(1.0F, -0.5F, -1.0F, 1.0F, 2.0F, 1.0F, new Dilation(-0.2F, -0.2F, -0.2F)).cuboid(-1.0F, -0.5F, -1.0F, 1.0F, 2.0F, 1.0F, new Dilation(-0.2F, -0.2F, -0.2F)).uv(5, 11).cuboid(0.0F, 0.0F, -1.1F, 1.0F, 1.0F, 1.0F, new Dilation(-0.1F, -0.1F, -0.1F)), ModelTransform.of(-0.5F, -0.5F, -1.5F, 0.0F, 0.0F, 0.0F));
+		ModelPartData spectreBangle = root.addChild("spectreBangle",
+				ModelPartBuilder.create()
+						.cuboid(-2.0F, -1.0F, -2.0F, 4.0F, 2.0F, 4.0F, new Dilation(0.1F, 0.1F, 0.1F)),
+				ModelTransform.of(0.0F, -3.0F, 0.0F, 0.0F, 0.0F, 0.0F));
+		spectreBangle.addChild("eye",
+				ModelPartBuilder.create()
+						.uv(0, 7).cuboid(-0.5F, -0.5F, -1.0F, 2.0F, 2.0F, 1.0F, new Dilation(-0.1F, -0.1F, -0.1F))
+						.uv(0, 11).cuboid(1.0F, -0.5F, -1.0F, 1.0F, 2.0F, 1.0F, new Dilation(-0.2F, -0.2F, -0.2F))
+						.cuboid(-1.0F, -0.5F, -1.0F, 1.0F, 2.0F, 1.0F, new Dilation(-0.2F, -0.2F, -0.2F))
+						.uv(5, 11).cuboid(0.0F, 0.0F, -1.1F, 1.0F, 1.0F, 1.0F, new Dilation(-0.1F, -0.1F, -0.1F)),
+				ModelTransform.of(-0.5F, -0.5F, -1.5F, 0.0F, 0.0F, 0.0F));
 		return TexturedModelData.of(data, 16, 16);
 	}
 	
