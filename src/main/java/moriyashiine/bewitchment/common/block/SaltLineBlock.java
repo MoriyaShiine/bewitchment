@@ -3,7 +3,6 @@ package moriyashiine.bewitchment.common.block;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.common.misc.interfaces.EntityShapeContextAdditionAccessor;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.WireConnection;
 import net.minecraft.entity.Entity;

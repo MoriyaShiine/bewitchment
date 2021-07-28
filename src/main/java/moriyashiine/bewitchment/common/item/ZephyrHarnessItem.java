@@ -12,8 +12,6 @@ import net.minecraft.item.ItemStack;
 import java.util.UUID;
 
 public class ZephyrHarnessItem extends TrinketItem {
-	private static EntityAttributeModifier KNOCKBACK_RESISTANCE;
-	
 	public ZephyrHarnessItem(Settings settings) {
 		super(settings);
 	}
@@ -21,10 +19,7 @@ public class ZephyrHarnessItem extends TrinketItem {
 	@Override
 	public Multimap<EntityAttribute, EntityAttributeModifier> getModifiers(ItemStack stack, SlotReference slot, LivingEntity entity, UUID uuid) {
 		Multimap<EntityAttribute, EntityAttributeModifier> modifiers = super.getModifiers(stack, slot, entity, uuid);
-		if (KNOCKBACK_RESISTANCE == null) {
-			KNOCKBACK_RESISTANCE = new EntityAttributeModifier(uuid, "Trinket modifier", 1, EntityAttributeModifier.Operation.ADDITION);
-		}
-		modifiers.put(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, KNOCKBACK_RESISTANCE);
+		modifiers.put(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, new EntityAttributeModifier(uuid, "Trinket modifier", 0.1, EntityAttributeModifier.Operation.ADDITION));
 		return modifiers;
 	}
 }

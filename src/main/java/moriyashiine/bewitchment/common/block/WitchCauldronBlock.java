@@ -47,7 +47,7 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 	
 	public WitchCauldronBlock(Settings settings) {
 		super(settings);
-//		setDefaultState(getDefaultState().with(Properties.WATERLOGGED, false).with(Properties.LEVEL_3, 0));
+		//		setDefaultState(getDefaultState().with(Properties.WATERLOGGED, false).with(Properties.LEVEL_3, 0));
 	}
 	
 	@Nullable
