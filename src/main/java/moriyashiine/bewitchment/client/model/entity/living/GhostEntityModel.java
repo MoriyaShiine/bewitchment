@@ -31,7 +31,7 @@ public class GhostEntityModel<T extends GhostEntity> extends BipedEntityModel<T>
 	}
 	
 	public static TexturedModelData getTexturedModelData() {
-		ModelData data = new ModelData();
+		ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0);
 		ModelPartData root = data.getRoot();
 		ModelPartData BipedRightArm = root.addChild("BipedRightArm", ModelPartBuilder.create().uv(40, 16).cuboid(-3.0F, -2.0F, -2.0F, 4.0F, 13.0F, 4.0F), ModelTransform.of(-5.0F, 2.0F, 0.0F, 0.0F, 0.0F, 0.0F));
 		BipedRightArm.addChild("rArmWisp", ModelPartBuilder.create().uv(40, 34).cuboid(-1.5F, -4.5F, 0.1F, 3.0F, 11.0F, 4.0F), ModelTransform.of(-1.0F, 2.7F, 1.7F, 0.0F, 0.0F, 0.0F));

@@ -45,7 +45,7 @@ public class BaphometEntityModel<T extends BaphometEntity> extends BipedEntityMo
 	}
 	
 	public static TexturedModelData getTexturedModelData() {
-		ModelData data = new ModelData();
+		ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0);
 		ModelPartData root = data.getRoot();
 		ModelPartData body = root.addChild("body", ModelPartBuilder.create().uv(20, 19).cuboid(-4.0F, 0.0F, -2.5F, 8.0F, 6.0F, 5.0F), ModelTransform.of(0.0F, -12.7F, 0.0F, 0.0F, 0.0F, 0.0F));
 		body.addChild("boobLeft", ModelPartBuilder.create().uv(18, 52).cuboid(-1.5F, 0.5F, -1.8F, 3.0F, 3.0F, 3.0F), ModelTransform.of(1.6F, 1.9F, -0.8F, 0.0F, 0.0F, 0.0F));

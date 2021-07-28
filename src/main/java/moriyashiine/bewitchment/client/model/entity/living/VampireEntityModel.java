@@ -37,7 +37,7 @@ public class VampireEntityModel<T extends VampireEntity> extends BipedEntityMode
 	}
 	
 	public static TexturedModelData getTexturedModelData() {
-		ModelData data = new ModelData();
+		ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0);
 		ModelPartData root = data.getRoot();
 		root.addChild("rLeg", ModelPartBuilder.create().uv(0, 22).cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F), ModelTransform.of(-2.0F, 12.0F, 0.0F, 0.0F, 0.0F, 0.0F));
 		root.addChild("crossedArms", ModelPartBuilder.create().uv(44, 22).cuboid(4.0F, -2.0F, -2.0F, 4.0F, 8.0F, 4.0F).cuboid(-8.0F, -2.0F, -2.0F, 4.0F, 8.0F, 4.0F).uv(40, 38).mirrored(true).cuboid(-4.0F, 2.0F, -2.0F, 8.0F, 4.0F, 4.0F), ModelTransform.of(0.0F, 3.0F, -1.0F, 0.0F, 0.0F, 0.0F));

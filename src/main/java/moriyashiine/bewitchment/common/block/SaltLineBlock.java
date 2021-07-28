@@ -4,10 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.misc.interfaces.EntityShapeContextAdditionAccessor;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.block.enums.WireConnection;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -67,8 +64,8 @@ public class SaltLineBlock extends Block {
 	
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-		if (context instanceof EntityShapeContextAdditionAccessor) {
-			Entity entity = ((EntityShapeContextAdditionAccessor) context).bw_getEntity();
+		if (context instanceof EntityShapeContext entityShapeContext && entityShapeContext.getEntity().isPresent()) {
+			Entity entity = entityShapeContext.getEntity().get();
 			if (entity instanceof LivingEntity && BewitchmentAPI.isWeakToSilver((LivingEntity) entity)) {
 				return VoxelShapes.fullCube();
 			}
