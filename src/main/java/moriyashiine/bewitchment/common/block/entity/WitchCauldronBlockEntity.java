@@ -141,15 +141,15 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 				blockEntity.oilRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.OIL_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(blockEntity, world)).findFirst().orElse(null);
 				blockEntity.loaded = true;
 			}
-			blockEntity.heatTimer = MathHelper.clamp(blockEntity.heatTimer + (state.get(Properties.LIT) && state.get(Properties.LEVEL_3) > 0 ? 1 : -1), 0, 160);
+			blockEntity.heatTimer = MathHelper.clamp(blockEntity.heatTimer + (state.get(Properties.LIT) && state.get(BWProperties.LEVEL) > 0 ? 1 : -1), 0, 160);
 			if (!world.isClient) {
-				if (blockEntity.heatTimer >= 60 && state.get(Properties.LEVEL_3) > 0) {
+				if (blockEntity.heatTimer >= 60 && state.get(BWProperties.LEVEL) > 0) {
 					if (world.random.nextFloat() <= 0.075f) {
 						world.playSound(null, pos, SoundEvents.BLOCK_BUBBLE_COLUMN_UPWARDS_AMBIENT, SoundCategory.BLOCKS, 1 / 3f, blockEntity.mode == Mode.FAILED ? 0.5f : 1);
 					}
 					if (world.getTime() % 5 == 0) {
 						world.getEntitiesByType(EntityType.ITEM, blockEntity.box, entity -> true).forEach(itemEntity -> {
-							if (itemEntity.getStack().getItem() == BWObjects.WOOD_ASH || state.get(Properties.LEVEL_3) == 3) {
+							if (itemEntity.getStack().getItem() == BWObjects.WOOD_ASH || state.get(BWProperties.LEVEL) == 3) {
 								world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_SPLASH, SoundCategory.BLOCKS, 1 / 3f, 1);
 								ItemStack stack = itemEntity.getStack();
 								if (stack.getItem().hasRecipeRemainder()) {
@@ -230,7 +230,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 			setColor(0x3f76e4);
 			clear();
 			oilRecipe = null;
-			world.setBlockState(pos, getCachedState().with(Properties.LEVEL_3, 0));
+			world.setBlockState(pos, getCachedState().with(BWProperties.LEVEL, 0));
 		}
 		return Mode.NORMAL;
 	}
@@ -363,7 +363,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	
 	public int getTargetLevel(ItemStack stack) {
 		Item item = stack.getItem();
-		int level = getCachedState().get(Properties.LEVEL_3);
+		int level = getCachedState().get(BWProperties.LEVEL);
 		if (mode == Mode.NORMAL) {
 			if (item == Items.BUCKET && level == 3) {
 				return 0;

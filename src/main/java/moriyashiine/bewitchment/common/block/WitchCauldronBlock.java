@@ -6,6 +6,7 @@ import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.recipe.OilRecipe;
+import moriyashiine.bewitchment.common.registry.BWProperties;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.minecraft.block.*;
@@ -47,7 +48,7 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 	
 	public WitchCauldronBlock(Settings settings) {
 		super(settings);
-		//		setDefaultState(getDefaultState().with(Properties.WATERLOGGED, false).with(Properties.LEVEL_3, 0));
+		setDefaultState(getDefaultState().with(Properties.WATERLOGGED, false).with(BWProperties.LEVEL, 0));
 	}
 	
 	@Nullable
@@ -82,7 +83,7 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
 		if (state.get(Properties.WATERLOGGED)) {
 			world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
-			state = state.with(Properties.LEVEL_3, 0);
+			state = state.with(BWProperties.LEVEL, 0);
 			state = state.with(Properties.LIT, false);
 		}
 		else {
@@ -156,7 +157,7 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 							if (targetLevel == 0) {
 								cauldron.mode = cauldron.reset();
 							}
-							world.setBlockState(pos, state.with(Properties.LEVEL_3, targetLevel));
+							world.setBlockState(pos, state.with(BWProperties.LEVEL, targetLevel));
 							world.playSound(null, pos, bucket ? SoundEvents.ITEM_BUCKET_FILL : waterBucket ? SoundEvents.ITEM_BUCKET_EMPTY : glassBottle ? SoundEvents.ITEM_BOTTLE_FILL : SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1, 1);
 						}
 					}
@@ -175,7 +176,7 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 	
 	@Override
 	public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
-		return state.get(Properties.LEVEL_3);
+		return state.get(BWProperties.LEVEL);
 	}
 	
 	@Override
@@ -206,7 +207,7 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 	
 	@Override
 	public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
-		if (world.getBlockState(pos).get(Properties.LEVEL_3) > 0 && entity instanceof LivingEntity) {
+		if (world.getBlockState(pos).get(BWProperties.LEVEL) > 0 && entity instanceof LivingEntity) {
 			WitchCauldronBlockEntity blockEntity = (WitchCauldronBlockEntity) world.getBlockEntity(pos);
 			if (blockEntity.heatTimer >= 60 && blockEntity.mode != WitchCauldronBlockEntity.Mode.TELEPORTATION) {
 				entity.damage(DamageSource.HOT_FLOOR, 1);
@@ -216,6 +217,6 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 	
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-		builder.add(Properties.WATERLOGGED, Properties.LEVEL_3, Properties.LIT);
+		builder.add(Properties.WATERLOGGED, BWProperties.LEVEL, Properties.LIT);
 	}
 }

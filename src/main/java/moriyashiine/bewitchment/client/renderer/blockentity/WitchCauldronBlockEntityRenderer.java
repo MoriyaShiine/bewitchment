@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.client.renderer.blockentity;
 import moriyashiine.bewitchment.client.misc.SpriteIdentifiers;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWParticleTypes;
+import moriyashiine.bewitchment.common.registry.BWProperties;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -15,7 +16,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -23,7 +23,6 @@ import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.World;
 
-@SuppressWarnings("ConstantConditions")
 @Environment(EnvType.CLIENT)
 public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<WitchCauldronBlockEntity> {
 	private static final float[] HEIGHT = {0, 0.25f, 0.4375f, 0.625f};
@@ -34,7 +33,7 @@ public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<Wit
 		if (world != null) {
 			BlockPos pos = entity.getPos();
 			renderName(entity, pos, matrices, vertexConsumers, light);
-			int level = entity.getCachedState().get(Properties.LEVEL_3);
+			int level = entity.getCachedState().get(BWProperties.LEVEL);
 			if (level > 0) {
 				matrices.push();
 				matrices.translate(0, HEIGHT[level], 0);
@@ -46,7 +45,7 @@ public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<Wit
 				if (entity.heatTimer >= 60 && !MinecraftClient.getInstance().isPaused()) {
 					float fluidHeight = 0;
 					float width = 0.35f;
-					switch (entity.getCachedState().get(Properties.LEVEL_3)) {
+					switch (entity.getCachedState().get(BWProperties.LEVEL)) {
 						case 1 -> fluidHeight = 0.225f;
 						case 2 -> {
 							fluidHeight = 0.425f;
