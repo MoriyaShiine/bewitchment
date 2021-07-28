@@ -25,6 +25,9 @@
 	],
 	"client": [
 	  "moriyashiine.bewitchment.client.BewitchmentClient"
+	],
+	"rei_plugins": [
+	  "moriyashiine.bewitchment.client.integration.rei.BWREIPlugin"
 	]
   },
   "mixins": [
