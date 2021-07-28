@@ -5,7 +5,7 @@
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Victims of this $(l:bewitchment:curses/conducting_curses)Curse$() have a hard time breathing.$(br)When underwater, they will immediately start drowning."
 	},
 	{

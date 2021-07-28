@@ -5,11 +5,11 @@
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Cats are finicky things. Even so, their mere presence is soothing to many.$(br2)When bound as a $(l:bewitchment:rituals/binding)Familiar$(), Cats will greatly help with $(l:bewitchment:rituals/rituals)Rituals$().$(br2)In addition, Creepers and Phantoms will stay away from witches with a Cat $(l:bewitchment:rituals/binding)Familiar$()."
 	},
 	{
-	  "type": "entity",
+	  "type": "patchouli:entity",
 	  "entity": "minecraft:cat",
 	  "scale": 0.6
 	}

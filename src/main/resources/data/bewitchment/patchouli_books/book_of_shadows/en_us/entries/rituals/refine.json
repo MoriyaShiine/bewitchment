@@ -5,7 +5,7 @@
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "This $(l:bewitchment:rituals/rituals)Ritual$() calls on fire spirits, basically making the circle a very big smelting pot.$(br2)Any item thrown into it is smelted as if it were thrown into a Furnace.$(br2)This $(l:bewitchment:rituals/rituals)Ritual$() lasts a few minutes."
 	},
 	{

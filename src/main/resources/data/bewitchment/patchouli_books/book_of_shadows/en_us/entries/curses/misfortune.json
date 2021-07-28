@@ -5,7 +5,7 @@
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "This classic $(l:bewitchment:curses/conducting_curses)Curse$() will occasionally apply nasty effects. These include but are not limited to Poison, Weakness, Blindness and Nausea."
 	},
 	{

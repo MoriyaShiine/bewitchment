@@ -5,11 +5,11 @@
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Allows whoever is affected to climb walls like Spiders would."
 	},
 	{
-	  "type": "spotlight",
+	  "type": "patchouli:spotlight",
 	  "title": "Climbing",
 	  "item": "minecraft:spider_eye",
 	  "text": "This effect is not affected by intensity."

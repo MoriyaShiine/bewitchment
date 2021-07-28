@@ -6,7 +6,7 @@
   "sortnum": 2,
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Beings under the War $(l:bewitchment:contracts/concept_contracts)Contract$() cause aggression among nearby entities, causing them to attack each other first."
 	}
   ]

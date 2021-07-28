@@ -4,11 +4,11 @@
   "icon": "bewitchment:werewolf_spawn_egg",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Werewolves - victims of $(l:bewitchment:curses/lycanthropy)Lycanthropy$() - roam forests, taiga and icy biomes on full moons. They are heavily weak to Smite.$(br2)When the sun rises, they turn back into their human form."
 	},
 	{
-	  "type": "entity",
+	  "type": "patchouli:entity",
 	  "entity": "bewitchment:werewolf",
 	  "offset": 0.1
 	}

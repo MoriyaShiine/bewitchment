@@ -5,11 +5,11 @@
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "This magnificent trinket will bend the shadows around the wearer as long as they're sneaking.$(br2)Doing so will consume $(l:bewitchment:introduction/altars#internalme)ME$() and turn the user completely invisible, with only slight smoke hinting at them."
 	},
 	{
-	  "type": "crafting",
+	  "type": "patchouli:crafting",
 	  "recipe": "bewitchment:specter_bangle"
 	}
   ]

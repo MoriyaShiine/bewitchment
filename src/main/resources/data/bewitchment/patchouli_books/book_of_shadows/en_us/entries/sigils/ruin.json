@@ -6,11 +6,11 @@
   "sortnum": 1,
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "The $(l:bewitchment:sigils/using_sigils)Passive Sigil$() of Ruin prevents any positive potion effect from taking hold around it."
 	},
 	{
-	  "type": "crafting",
+	  "type": "patchouli:crafting",
 	  "recipe": "bewitchment:ruin_sigil"
 	}
   ]

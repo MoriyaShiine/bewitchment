@@ -5,11 +5,11 @@
   "advancement": "bewitchment:hidden_unlocks/taglock",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "The Protection Poppet won't protect you from zombies or skeletons; however, it will ward off environmental damage sources such as fire, drowning, and velocity from anyone bound to it."
 	},
 	{
-	  "type": "crafting",
+	  "type": "patchouli:crafting",
 	  "recipe": "bewitchment:protection_poppet"
 	}
   ]

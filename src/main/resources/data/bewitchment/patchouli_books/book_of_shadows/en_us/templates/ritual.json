@@ -2,7 +2,7 @@
   "processor": "moriyashiine.bewitchment.client.integration.patchouli.RitualProcessor",
   "components": [
 	{
-	  "type": "image",
+	  "type": "patchouli:image",
 	  "image": "bewitchment:textures/gui/patchouli/crafting.png",
 	  "x": 8,
 	  "y": 12,
@@ -15,7 +15,7 @@
 	  "scale": 1
 	},
 	{
-	  "type": "image",
+	  "type": "patchouli:image",
 	  "image": "bewitchment:textures/gui/patchouli/crafting.png",
 	  "x": 88,
 	  "y": 12,
@@ -28,7 +28,7 @@
 	  "scale": 1
 	},
 	{
-	  "type": "custom",
+	  "type": "patchouli:custom",
 	  "class": "moriyashiine.bewitchment.client.integration.patchouli.RitualCircleComponent",
 	  "inner": "#inner",
 	  "outer": "#outer",
@@ -36,55 +36,55 @@
 	  "y": 6
 	},
 	{
-	  "type": "item",
+	  "type": "patchouli:item",
 	  "item": "#ingredient0",
 	  "x": 10,
 	  "y": 14
 	},
 	{
-	  "type": "item",
+	  "type": "patchouli:item",
 	  "item": "#ingredient1",
 	  "x": 10,
 	  "y": 33
 	},
 	{
-	  "type": "item",
+	  "type": "patchouli:item",
 	  "item": "#ingredient2",
 	  "x": 10,
 	  "y": 52
 	},
 	{
-	  "type": "item",
+	  "type": "patchouli:item",
 	  "item": "#ingredient3",
 	  "x": 90,
 	  "y": 14
 	},
 	{
-	  "type": "item",
+	  "type": "patchouli:item",
 	  "item": "#ingredient4",
 	  "x": 90,
 	  "y": 33
 	},
 	{
-	  "type": "item",
+	  "type": "patchouli:item",
 	  "item": "#ingredient5",
 	  "x": 90,
 	  "y": 52
 	},
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "#cost",
 	  "x": 42,
 	  "y": 60
 	},
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "#text",
 	  "x": 0,
 	  "y": 74
 	},
 	{
-	  "type": "header",
+	  "type": "patchouli:header",
 	  "text": "#header",
 	  "x": -1,
 	  "y": 0

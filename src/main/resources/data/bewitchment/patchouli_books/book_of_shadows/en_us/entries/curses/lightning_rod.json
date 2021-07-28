@@ -5,7 +5,7 @@
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Makes the target more susceptible to lightning. Any lightning bolt in the target's vicinity will instead redirect directly to it."
 	},
 	{

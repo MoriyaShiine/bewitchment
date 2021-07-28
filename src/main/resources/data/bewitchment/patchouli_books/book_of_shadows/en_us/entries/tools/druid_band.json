@@ -5,11 +5,11 @@
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "The Druid Band is a powerful trinket of the earth.$(br2)When worn, it will increase your movement speed and regeneration, as long as you walk on natural soil such as grass.$(br2)When active, the Druid Band consumes $(l:bewitchment:introduction/altars#internalme)ME$()."
 	},
 	{
-	  "type": "crafting",
+	  "type": "patchouli:crafting",
 	  "recipe": "bewitchment:druid_band"
 	}
   ]

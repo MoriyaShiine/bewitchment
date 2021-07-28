@@ -5,7 +5,7 @@
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "A $(l:bewitchment:rituals/rituals)Ritual$() that fills the air with water energies, making everything around it wet and extinguishing flames.$(br2)Its range is rather limited, so you usually want to apply it in very special cases where you need something to be wet."
 	},
 	{

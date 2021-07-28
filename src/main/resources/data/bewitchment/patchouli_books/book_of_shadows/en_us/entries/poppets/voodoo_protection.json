@@ -5,11 +5,11 @@
   "advancement": "bewitchment:hidden_unlocks/taglock",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "The Voodoo Protection Poppet is the response-counterpart to the $(l:bewitchment:poppets/voodoo)Voodoo Poppet$().$(br2)By redirecting malicious energy, anyone bound to it is completely immune to the effects of a $(l:bewitchment:poppets/voodoo)Voodoo Poppet$()."
 	},
 	{
-	  "type": "crafting",
+	  "type": "patchouli:crafting",
 	  "recipe": "bewitchment:voodoo_protection_poppet"
 	}
   ]

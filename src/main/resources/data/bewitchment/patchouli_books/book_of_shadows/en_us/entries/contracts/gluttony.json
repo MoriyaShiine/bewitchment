@@ -6,7 +6,7 @@
   "sortnum": 1,
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Gluttony doubles the nourishing effect of food... Tasty."
 	}
   ]

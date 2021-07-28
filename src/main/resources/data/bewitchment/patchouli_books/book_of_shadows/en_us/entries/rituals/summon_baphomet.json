@@ -5,7 +5,7 @@
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Via devilish courier, this $(l:bewitchment:rituals/rituals)Ritual$() summons $(l:bewitchment:creatures/baphomet)Baphomet$(); you'll want to keep them away from other beings.$(br2)Prepare $(l:bewitchment:tools/grotesque_stew)Grotesque Stew$(), should you want to $(l:bewitchment:tools/grotesque_stew)Pledge$() to them.$(br2)The $(l:bewitchment:rituals/rituals)Ritual$() is started by sacrificing a Sheep with an $(l:bewitchment:tools/athame)Athame$()."
 	},
 	{

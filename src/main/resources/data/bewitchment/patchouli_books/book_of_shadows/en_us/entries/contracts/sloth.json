@@ -6,7 +6,7 @@
   "sortnum": 1,
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Sloth lets you regenerate much faster when standing still."
 	}
   ]

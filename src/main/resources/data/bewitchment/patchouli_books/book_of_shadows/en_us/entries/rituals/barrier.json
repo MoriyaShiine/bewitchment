@@ -5,7 +5,7 @@
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "This lesser $(l:bewitchment:rituals/rituals)Ritual$() utilizes the power of wind and salt to push back hostile entities.$(br2)It will run for around half a day."
 	},
 	{

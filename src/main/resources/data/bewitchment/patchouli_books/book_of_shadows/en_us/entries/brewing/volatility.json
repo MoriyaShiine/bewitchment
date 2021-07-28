@@ -5,11 +5,11 @@
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Makes the target extremely volatile. When hit, they will cause a damaging explosion, instantly removing the effect and harming all entities around."
 	},
 	{
-	  "type": "spotlight",
+	  "type": "patchouli:spotlight",
 	  "title": "Volatility",
 	  "item": "minecraft:fire_charge",
 	  "text": "Explosion damage scales with the intensity of the effect."

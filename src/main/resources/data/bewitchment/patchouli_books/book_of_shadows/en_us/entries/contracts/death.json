@@ -6,7 +6,7 @@
   "sortnum": 2,
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "The Death $(l:bewitchment:contracts/concept_contracts)Contract$() makes you crave the death of other living beings.$(br2)Anything slain by your hand will heal you."
 	}
   ]

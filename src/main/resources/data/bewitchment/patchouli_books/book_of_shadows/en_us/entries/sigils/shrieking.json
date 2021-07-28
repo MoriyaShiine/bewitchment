@@ -5,11 +5,11 @@
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "The Shrieking $(l:bewitchment:sigils/using_sigils)Active Sigil$() will cast a horrible sound when activated."
 	},
 	{
-	  "type": "crafting",
+	  "type": "patchouli:crafting",
 	  "recipe": "bewitchment:shrieking_sigil"
 	}
   ]

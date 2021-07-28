@@ -6,11 +6,11 @@
   "sortnum": 1,
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "The Slippery $(l:bewitchment:sigils/using_sigils)Passive Sigil$() will make it impossible for anyone affected to properly handle fine items such as $(l:bewitchment:tools/taglock)Taglocks$(), making it a viable protective method."
 	},
 	{
-	  "type": "crafting",
+	  "type": "patchouli:crafting",
 	  "recipe": "bewitchment:slippery_sigil"
 	}
   ]

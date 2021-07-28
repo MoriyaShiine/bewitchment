@@ -5,11 +5,11 @@
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Disjuncts the target, attempting to teleport it in a small radius."
 	},
 	{
-	  "type": "spotlight",
+	  "type": "patchouli:spotlight",
 	  "title": "Disjunction",
 	  "item": "minecraft:ender_pearl",
 	  "text": "The teleportation radius is increased with higher intensity."

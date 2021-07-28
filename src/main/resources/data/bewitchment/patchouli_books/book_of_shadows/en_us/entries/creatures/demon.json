@@ -8,11 +8,11 @@
   },
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Grim beings crawling straight from the pits of Hell, Demons are usually $(l:bewitchment:rituals/summon_demon)Summoned$() and will attack any living being around them with fire, and are weak to Smite.$(br2)Demons can be safely approached with $(l:bewitchment:tools/besmirched_armor)Besmirched Armor$(), offering $(l:bewitchment:contracts/concept_contracts)Contracts$().$(br2)Slaying a Demon will yield at least one Demon Heart."
 	},
 	{
-	  "type": "entity",
+	  "type": "patchouli:entity",
 	  "entity": "bewitchment:demon",
 	  "offset": 0.2
 	}

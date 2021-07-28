@@ -5,7 +5,7 @@
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "This $(l:bewitchment:curses/conducting_curses)Curse$() compromises the target's blood. This will cause negative effects to be stronger."
 	},
 	{

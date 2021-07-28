@@ -5,16 +5,16 @@
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "The Brazier is an essential tool for $(l:bewitchment:curses/conducting_curses)Curses$(). other than that, it can be used for $(l:bewitchment:tools/brazier#incense)Incense$().$(br2)A Brazier can take up to four items. To start using it, you need to light it using a Flint and Steel."
 	},
 	{
-	  "type": "crafting",
+	  "type": "patchouli:crafting",
 	  "recipe": "bewitchment:brazier",
 	  "text": "For convenience, Braziers can also be attached to ceilings."
 	},
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "title": "Incenses",
 	  "anchor": "incense",
 	  "text": "Incenses are a simple usage method of the brazier. Incense can apply extended status effects after waking up.$(br2)Simply light a nearby brazier with the needed ingredients and go to sleep."

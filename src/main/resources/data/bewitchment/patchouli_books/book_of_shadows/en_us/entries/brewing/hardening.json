@@ -5,11 +5,11 @@
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "This effect hardens the skin, giving a flat bonus on armor."
 	},
 	{
-	  "type": "spotlight",
+	  "type": "patchouli:spotlight",
 	  "title": "Hardening",
 	  "item": "minecraft:scute",
 	  "text": "The armor bonus is proportional to the effect's strength."

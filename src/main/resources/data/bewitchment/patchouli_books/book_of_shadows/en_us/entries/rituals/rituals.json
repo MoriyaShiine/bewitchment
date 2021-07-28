@@ -6,15 +6,15 @@
   "priority": true,
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Rituals are a powerful magic practice used to have a direct effect on the world. They are cast by drawing circles and throwing in the proper ingredients."
 	},
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Rituals need an $(l:bewitchment:introduction/altars)ME$()-providing $(l:bewitchment:introduction/altars)Altar$() nearby; the amount of $(l:bewitchment:introduction/altars)ME$() needed is always noted in the ritual's entry.$(br2)Every ritual has an inner and an optional outer circle drawn with different chalk, depending on the ritual."
 	},
 	{
-	  "type": "multiblock",
+	  "type": "patchouli:multiblock",
 	  "multiblock": {
 		"mapping": {
 		  "g": "bewitchment:glyph",
@@ -39,13 +39,13 @@
 	  "text": "A Golden Gylph always forms the center of a circle."
 	},
 	{
-	  "type": "crafting",
+	  "type": "patchouli:crafting",
 	  "recipe": "bewitchment:chalk",
 	  "recipe2": "bewitchment:golden_chalk",
 	  "anchor": "chalk"
 	},
 	{
-	  "type": "crafting",
+	  "type": "patchouli:crafting",
 	  "recipe": "bewitchment:fiery_chalk",
 	  "recipe2": "bewitchment:eldritch_chalk"
 	}

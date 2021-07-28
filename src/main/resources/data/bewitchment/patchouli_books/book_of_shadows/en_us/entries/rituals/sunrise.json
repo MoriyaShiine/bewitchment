@@ -5,7 +5,7 @@
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "The $(l:bewitchment:rituals/rituals)Ritual$() of Sunrise, simply put, makes it day."
 	},
 	{

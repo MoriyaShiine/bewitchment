@@ -5,7 +5,7 @@
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Apathy withers the soul, making it unable to attain $(l:bewitchment:introduction/altars)Magical Energy$(). Villagers and $(l:bewitchment:creatures/demon)Demons$() will reject trading, and animals will flee from the victim of this powerful $(l:bewitchment:curses/conducting_curses)Curse$()."
 	},
 	{

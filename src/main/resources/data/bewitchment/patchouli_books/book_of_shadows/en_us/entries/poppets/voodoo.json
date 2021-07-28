@@ -5,11 +5,11 @@
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "The Voodoo Poppet is a classic.$(br2)It can be used to move entities, drown them, set them on fire, and even apply potion effects to them from anywhere!$(br2)Voodoo Poppets do not work in $(l:bewitchment:tools/poppet_shelves)Poppet Shelves$()."
 	},
 	{
-	  "type": "crafting",
+	  "type": "patchouli:crafting",
 	  "recipe": "bewitchment:voodoo_poppet"
 	}
   ]

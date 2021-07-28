@@ -5,11 +5,11 @@
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "This will put the target on fire as long as the effect is active."
 	},
 	{
-	  "type": "spotlight",
+	  "type": "patchouli:spotlight",
 	  "title": "Ignition",
 	  "item": "minecraft:blaze_powder",
 	  "text": "Ignition is not affected by intensity."

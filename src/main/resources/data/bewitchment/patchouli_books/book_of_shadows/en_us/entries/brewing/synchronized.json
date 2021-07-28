@@ -5,11 +5,11 @@
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "The Synchronized effect will apply any effect you have to nearby entities."
 	},
 	{
-	  "type": "spotlight",
+	  "type": "patchouli:spotlight",
 	  "title": "Synchronized",
 	  "item": "minecraft:ghast_tear",
 	  "text": "Synchronized effects are cut in half.$(br2)This effect is not compatible with $(l:bewitchment:brewing/theft)Theft$().$(br2)The higher this effect's intensity, the further it'll reach."

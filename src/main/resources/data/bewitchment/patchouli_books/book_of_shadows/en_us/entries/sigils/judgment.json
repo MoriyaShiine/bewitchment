@@ -5,11 +5,11 @@
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "The $(l:bewitchment:sigils/using_sigils)Active Sigil$() of Judgment damages any unholy being that activates it."
 	},
 	{
-	  "type": "crafting",
+	  "type": "patchouli:crafting",
 	  "recipe": "bewitchment:judgment_sigil"
 	}
   ]

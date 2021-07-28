@@ -5,7 +5,7 @@
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "This $(l:bewitchment:curses/conducting_curses)Curse$() poses an annoyance by calling on the worms. Any crops near the cursed individual will suffer in growth."
 	},
 	{

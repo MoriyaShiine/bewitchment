@@ -5,7 +5,7 @@
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Smite summons a lightning bolt at the effective position of the $(l:bewitchment:rituals/rituals)Ritual$().$(br2)This works really well with $(l:bewitchment:tools/waystone)Waystones$()."
 	},
 	{

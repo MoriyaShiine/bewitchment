@@ -6,7 +6,7 @@
   "sortnum": 2,
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Those marked by Pestilence are able to effectively inflict heavy illness upon their foes."
 	}
   ]

@@ -5,7 +5,7 @@
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Summons the Wither.$(br2)Knowing the destructive tendencies of the Wither, you probably want to do this somewhere far away from your home.$(br2)Unlike most summoning $(l:bewitchment:rituals/rituals)Rituals$(), this does not require a sacrifice."
 	},
 	{

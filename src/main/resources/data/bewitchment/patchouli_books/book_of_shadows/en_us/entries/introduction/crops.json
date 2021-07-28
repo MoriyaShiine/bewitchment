@@ -4,7 +4,7 @@
   "icon": "bewitchment:mandrake_root",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Witchcraft utilizes several natural crops for the art. These crops are used for $(l:bewitchment:rituals/rituals)Rituals$(), $(l:bewitchment:brewing/brewing_basics)Brewing$(), and many other things.$(br2)Seeds for these crops can be found in wild grass, much like other seeds."
 	},
 	{
@@ -17,12 +17,12 @@
 	  "text": "The four regular crops are Aconite, Belladonna, Garlic, and Mandrake.$(br2)Aconite is mostly used as a neurotoxin, whereas Belladonna is known for causing physical harm. Garlic embodies healing, and Mandrake enhances magic."
 	},
 	{
-	  "type": "smelting",
+	  "type": "patchouli:smelting",
 	  "recipe": "bewitchment:grilled_garlic",
 	  "text": "Garlic can also be roasted into delicious Grilled Garlic."
 	},
 	{
-	  "type": "crafting",
+	  "type": "patchouli:crafting",
 	  "recipe": "bewitchment:garlic_bread",
 	  "text": "Grilled Garlic can in turn be crafted into even more delicious Garlic Bread."
 	}

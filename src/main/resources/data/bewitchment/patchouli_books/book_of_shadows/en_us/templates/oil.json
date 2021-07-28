@@ -2,7 +2,7 @@
   "processor": "moriyashiine.bewitchment.client.integration.patchouli.OilCraftingProcessor",
   "components": [
 	{
-	  "type": "image",
+	  "type": "patchouli:image",
 	  "image": "bewitchment:textures/gui/patchouli/crafting.png",
 	  "x": 16,
 	  "y": 16,
@@ -15,43 +15,43 @@
 	  "scale": 1
 	},
 	{
-	  "type": "item",
+	  "type": "patchouli:item",
 	  "item": "#ingredient0",
 	  "x": 18,
 	  "y": 18
 	},
 	{
-	  "type": "item",
+	  "type": "patchouli:item",
 	  "item": "#ingredient1",
 	  "x": 36,
 	  "y": 18
 	},
 	{
-	  "type": "item",
+	  "type": "patchouli:item",
 	  "item": "#ingredient2",
 	  "x": 18,
 	  "y": 37
 	},
 	{
-	  "type": "item",
+	  "type": "patchouli:item",
 	  "item": "#ingredient3",
 	  "x": 36,
 	  "y": 37
 	},
 	{
-	  "type": "item",
+	  "type": "patchouli:item",
 	  "item": "#output",
 	  "x": 77,
 	  "y": 28
 	},
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "#text",
 	  "x": 0,
 	  "y": 58
 	},
 	{
-	  "type": "header",
+	  "type": "patchouli:header",
 	  "text": "#header",
 	  "x": -1,
 	  "y": 0

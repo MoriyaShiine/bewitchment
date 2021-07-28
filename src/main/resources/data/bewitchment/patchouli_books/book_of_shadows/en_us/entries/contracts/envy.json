@@ -6,7 +6,7 @@
   "sortnum": 1,
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "The Envy $(l:bewitchment:contracts/concept_contracts)Contract$() lets you steal a Villager's trades by heartlessly murdering them."
 	}
   ]

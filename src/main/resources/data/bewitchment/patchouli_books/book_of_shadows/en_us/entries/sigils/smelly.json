@@ -6,11 +6,11 @@
   "sortnum": 1,
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "The Smelly $(l:bewitchment:sigils/using_sigils)Passive Sigil$() is stinky, causing nearby hostile entities to move towards it."
 	},
 	{
-	  "type": "crafting",
+	  "type": "patchouli:crafting",
 	  "recipe": "bewitchment:smelly_sigil"
 	}
   ]

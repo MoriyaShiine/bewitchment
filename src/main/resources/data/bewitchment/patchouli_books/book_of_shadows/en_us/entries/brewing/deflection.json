@@ -5,11 +5,11 @@
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Deflects Arrows from the target, making them return faster from where they were shot from."
 	},
 	{
-	  "type": "spotlight",
+	  "type": "patchouli:spotlight",
 	  "title": "Deflection",
 	  "item": "minecraft:phantom_membrane",
 	  "text": "Arrows get faster the stronger the Deflection effect is."

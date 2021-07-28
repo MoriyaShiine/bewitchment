@@ -5,7 +5,7 @@
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "This $(l:bewitchment:rituals/rituals)Ritual$() causes nearby crops, animals, and humans to grow.$(br2)Sometimes it's better to not question magic."
 	},
 	{

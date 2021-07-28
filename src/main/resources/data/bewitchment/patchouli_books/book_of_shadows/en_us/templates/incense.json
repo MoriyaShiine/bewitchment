@@ -2,7 +2,7 @@
   "processor": "moriyashiine.bewitchment.client.integration.patchouli.IncenseProcessor",
   "components": [
 	{
-	  "type": "image",
+	  "type": "patchouli:image",
 	  "image": "bewitchment:textures/gui/patchouli/crafting.png",
 	  "x": 38,
 	  "y": 16,
@@ -15,37 +15,37 @@
 	  "scale": 1
 	},
 	{
-	  "type": "item",
+	  "type": "patchouli:item",
 	  "item": "#ingredient0",
 	  "x": 40,
 	  "y": 18
 	},
 	{
-	  "type": "item",
+	  "type": "patchouli:item",
 	  "item": "#ingredient1",
 	  "x": 59,
 	  "y": 18
 	},
 	{
-	  "type": "item",
+	  "type": "patchouli:item",
 	  "item": "#ingredient2",
 	  "x": 40,
 	  "y": 37
 	},
 	{
-	  "type": "item",
+	  "type": "patchouli:item",
 	  "item": "#ingredient3",
 	  "x": 59,
 	  "y": 37
 	},
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "#text",
 	  "x": 0,
 	  "y": 58
 	},
 	{
-	  "type": "header",
+	  "type": "patchouli:header",
 	  "text": "#header",
 	  "x": -1,
 	  "y": 0

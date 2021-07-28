@@ -5,11 +5,11 @@
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Ethereal entities cannot receive any damage, but can also not deal any."
 	},
 	{
-	  "type": "spotlight",
+	  "type": "patchouli:spotlight",
 	  "title": "Ethereal",
 	  "item": "bewitchment:ectoplasm",
 	  "text": "Intensity does not affect this effect."

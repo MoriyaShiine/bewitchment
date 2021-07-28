@@ -6,7 +6,7 @@
   "priority": true,
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Poppets are handy effigies which can be used for both malicious and protective purposes.$(br2)Poppets are always bound to an entity.$(br2)In order to be active, they need to be in your inventory - that is unless you have a $(l:bewitchment:tools/poppet_shelves)Poppet Shelf$()."
 	},
 	{

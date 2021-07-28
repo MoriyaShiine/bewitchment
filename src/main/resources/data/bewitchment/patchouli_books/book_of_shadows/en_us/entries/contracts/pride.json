@@ -6,7 +6,7 @@
   "sortnum": 1,
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "The Pride $(l:bewitchment:contracts/concept_contracts)Contract$() will double the amount of experience you gain."
 	}
   ]

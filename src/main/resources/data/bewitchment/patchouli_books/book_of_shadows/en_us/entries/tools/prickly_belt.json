@@ -5,11 +5,11 @@
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "The Prickly Belt is a handy trinket, able to store status effects.$(br2)When attacked, the wearer will receive positive effects, and the attacker negative, at the cost of $(l:bewitchment:introduction/altars#internalme)ME$().$(br2)To add a status effect, simply combine the belt with a Potion."
 	},
 	{
-	  "type": "crafting",
+	  "type": "patchouli:crafting",
 	  "recipe": "bewitchment:prickly_belt"
 	}
   ]

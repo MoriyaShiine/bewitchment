@@ -5,11 +5,11 @@
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
-	  "type": "text",
+	  "type": "patchouli:text",
 	  "text": "Reduces all sound to whoever has this effect."
 	},
 	{
-	  "type": "spotlight",
+	  "type": "patchouli:spotlight",
 	  "title": "Deafened",
 	  "item": "minecraft:honeycomb",
 	  "text": "The higher the intensity of the potion, the more sound is reduced."
