@@ -26,8 +26,8 @@ public class SpecterBangleItem extends TrinketItem {
 				player.setInvisible(true);
 			}
 			if (player.getRandom().nextFloat() < 1 / 6f) {
-				SpawnSpecterBangleParticlesPacket.send(player, player);
 				PlayerLookup.tracking(player).forEach(playerEntity -> SpawnSpecterBangleParticlesPacket.send(playerEntity, player));
+				SpawnSpecterBangleParticlesPacket.send(player, player);
 			}
 		}
 	}
