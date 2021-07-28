@@ -19,7 +19,7 @@ public class SpawnExplosionParticlesPacket {
 	
 	public static void send(PlayerEntity player, Entity entity) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-		buf.writeInt(entity.getEntityId());
+		buf.writeInt(entity.getId());
 		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
 	}
 	

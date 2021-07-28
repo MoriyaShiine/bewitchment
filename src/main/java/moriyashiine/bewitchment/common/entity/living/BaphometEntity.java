@@ -14,7 +14,6 @@ import moriyashiine.bewitchment.common.registry.BWPledges;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
-import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -35,9 +34,9 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
@@ -86,7 +85,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 				offers.clear();
 			}
 			LivingEntity target = getTarget();
-			int timer = age + getEntityId();
+			int timer = age + getId();
 			if (timer % 20 == 0) {
 				heal(1);
 			}
@@ -99,7 +98,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 				lookAtEntity(target, 360, 360);
 				if (timer % 60 == 0) {
 					for (int i = -1; i <= 1; i++) {
-						FireballEntity fireball = new FireballEntity(world, this, target.getX() - getX() + (i * 2), target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ() + (i * 2));
+						FireballEntity fireball = new FireballEntity(world, this, target.getX() - getX() + (i * 2), target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ() + (i * 2), 1);
 						fireball.updatePosition(fireball.getX(), getBodyY(0.5), fireball.getZ());
 						fireball.setOwner(this);
 						world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_SHOOT, getSoundCategory(), getSoundVolume(), getSoundPitch());
@@ -208,7 +207,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 	
 	@Override
 	public boolean canHaveStatusEffect(StatusEffectInstance effect) {
-		return ((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.BENEFICIAL;
+		return effect.getEffectType().getType() == StatusEffectType.BENEFICIAL;
 	}
 	
 	@Override
@@ -233,7 +232,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 	}
 	
 	@Override
-	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
+	public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
 		return false;
 	}
 	
@@ -274,34 +273,34 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 	}
 	
 	@Override
-	public void readCustomDataFromTag(CompoundTag tag) {
-		super.readCustomDataFromTag(tag);
+	public void readCustomDataFromNbt(NbtCompound nbt) {
+		super.readCustomDataFromNbt(nbt);
 		if (hasCustomName()) {
 			bossBar.setName(getDisplayName());
 		}
-		fromTagPledgeable(tag);
-		if (tag.contains("Offers")) {
+		fromNbtPledgeable(nbt);
+		if (nbt.contains("Offers")) {
 			offers.clear();
-			ListTag offersTag = tag.getList("Offers", NbtType.COMPOUND);
-			for (Tag offerTag : offersTag) {
-				offers.add(new DemonEntity.DemonTradeOffer((CompoundTag) offerTag));
+			NbtList offersTag = nbt.getList("Offers", NbtType.COMPOUND);
+			for (NbtElement offerTag : offersTag) {
+				offers.add(new DemonEntity.DemonTradeOffer((NbtCompound) offerTag));
 			}
 		}
-		tradeResetTimer = tag.getInt("TradeResetTimer");
+		tradeResetTimer = nbt.getInt("TradeResetTimer");
 	}
 	
 	@Override
-	public void writeCustomDataToTag(CompoundTag tag) {
-		super.writeCustomDataToTag(tag);
-		toTagPledgeable(tag);
+	public void writeCustomDataToNbt(NbtCompound nbt) {
+		super.writeCustomDataToNbt(nbt);
+		toNbtPledgeable(nbt);
 		if (!offers.isEmpty()) {
-			ListTag offersTag = new ListTag();
+			NbtList offersTag = new NbtList();
 			for (DemonEntity.DemonTradeOffer offer : offers) {
 				offersTag.add(offer.toTag());
 			}
-			tag.put("Offers", offersTag);
+			nbt.put("Offers", offersTag);
 		}
-		tag.putInt("TradeResetTimer", tradeResetTimer);
+		nbt.putInt("TradeResetTimer", tradeResetTimer);
 	}
 	
 	@Override

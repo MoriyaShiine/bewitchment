@@ -5,7 +5,8 @@ import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +17,12 @@ public class ElderChestBlockEntity extends BWChestBlockEntity implements BlockEn
 	private UUID owner = null;
 	private boolean modeOnWhitelist = false, locked = false;
 	
-	public ElderChestBlockEntity() {
-		super(BWBlockEntityTypes.ELDER_CHEST, Type.ELDER, false);
+	public ElderChestBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, Type type, boolean trapped) {
+		super(blockEntityType, blockPos, blockState, type, trapped);
 	}
 	
-	public ElderChestBlockEntity(BlockEntityType<?> blockEntityType, boolean trapped) {
-		super(blockEntityType, Type.ELDER, trapped);
+	public ElderChestBlockEntity(BlockPos blockPos, BlockState blockState) {
+		this(BWBlockEntityTypes.ELDER_CHEST, blockPos, blockState, Type.ELDER, false);
 	}
 	
 	@Override
@@ -60,24 +61,24 @@ public class ElderChestBlockEntity extends BWChestBlockEntity implements BlockEn
 	}
 	
 	@Override
-	public void fromClientTag(CompoundTag tag) {
-		fromTagLockable(tag);
+	public void fromClientTag(NbtCompound tag) {
+		fromNbtLockable(tag);
 	}
 	
 	@Override
-	public CompoundTag toClientTag(CompoundTag tag) {
-		toTagLockable(tag);
+	public NbtCompound toClientTag(NbtCompound tag) {
+		toNbtLockable(tag);
 		return tag;
 	}
 	
 	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
-		fromClientTag(tag);
-		super.fromTag(state, tag);
+	public void readNbt(NbtCompound nbt) {
+		fromClientTag(nbt);
+		super.readNbt(nbt);
 	}
 	
 	@Override
-	public CompoundTag toTag(CompoundTag tag) {
-		return super.toTag(toClientTag(tag));
+	public NbtCompound writeNbt(NbtCompound nbt) {
+		return super.writeNbt(toClientTag(nbt));
 	}
 }

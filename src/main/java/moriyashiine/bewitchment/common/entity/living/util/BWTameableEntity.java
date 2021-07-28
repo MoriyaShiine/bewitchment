@@ -12,7 +12,7 @@ import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.LocalDifficulty;
@@ -43,7 +43,7 @@ public abstract class BWTameableEntity extends TameableEntity {
 	}
 	
 	@Override
-	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable CompoundTag entityTag) {
+	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityTag) {
 		int variants = getVariants();
 		if (variants > 1) {
 			if (hasShiny()) {
@@ -68,7 +68,7 @@ public abstract class BWTameableEntity extends TameableEntity {
 		if (isBreedingItem(stack)) {
 			if (getHealth() < getMaxHealth()) {
 				if (!client) {
-					eat(player, stack);
+					eat(player, hand, stack);
 					heal(4);
 				}
 				return ActionResult.success(client);
@@ -78,7 +78,7 @@ public abstract class BWTameableEntity extends TameableEntity {
 			if (!isTamed()) {
 				if (isTamingItem(stack)) {
 					if (!client) {
-						eat(player, stack);
+						eat(player, hand, stack);
 						if (random.nextInt(4) == 0) {
 							setOwner(player);
 							setSitting(true);
@@ -126,18 +126,18 @@ public abstract class BWTameableEntity extends TameableEntity {
 	}
 	
 	@Override
-	public void readCustomDataFromTag(CompoundTag tag) {
-		super.readCustomDataFromTag(tag);
+	public void readCustomDataFromNbt(NbtCompound nbt) {
+		super.readCustomDataFromNbt(nbt);
 		if (getVariants() > 1) {
-			dataTracker.set(VARIANT, tag.getInt("Variant"));
+			dataTracker.set(VARIANT, nbt.getInt("Variant"));
 		}
 	}
 	
 	@Override
-	public void writeCustomDataToTag(CompoundTag tag) {
-		super.writeCustomDataToTag(tag);
+	public void writeCustomDataToNbt(NbtCompound nbt) {
+		super.writeCustomDataToNbt(nbt);
 		if (getVariants() > 1) {
-			tag.putInt("Variant", dataTracker.get(VARIANT));
+			nbt.putInt("Variant", dataTracker.get(VARIANT));
 		}
 	}
 	

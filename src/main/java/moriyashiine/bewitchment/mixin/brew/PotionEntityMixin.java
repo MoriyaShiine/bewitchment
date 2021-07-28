@@ -37,8 +37,7 @@ public abstract class PotionEntityMixin extends ThrownItemEntity {
 			Box box = getBoundingBox().expand(4, 2, 4);
 			List<LivingEntity> list = world.getNonSpectatingEntities(LivingEntity.class, box);
 			for (LivingEntity livingEntity : list) {
-				if (livingEntity instanceof PolymorphAccessor) {
-					PolymorphAccessor polymorphAccessor = (PolymorphAccessor) livingEntity;
+				if (livingEntity instanceof PolymorphAccessor polymorphAccessor) {
 					polymorphAccessor.setPolymorphUUID(uuid);
 					polymorphAccessor.setPolymorphName(name);
 				}

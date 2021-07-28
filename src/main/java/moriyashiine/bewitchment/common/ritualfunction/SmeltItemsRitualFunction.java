@@ -32,7 +32,7 @@ public class SmeltItemsRitualFunction extends RitualFunction {
 				for (ItemEntity itemEntity : world.getEntitiesByType(EntityType.ITEM, new Box(effectivePos).expand(radius, 0, radius), entity -> true)) {
 					if (world.random.nextFloat() < 1 / 4f) {
 						world.getRecipeManager().listAllOfType(RecipeType.SMELTING).forEach(smeltingRecipe -> {
-							for (Ingredient ingredient : smeltingRecipe.getPreviewInputs()) {
+							for (Ingredient ingredient : smeltingRecipe.getIngredients()) {
 								if (ingredient.test(itemEntity.getStack())) {
 									world.playSound(null, itemEntity.getBlockPos(), SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1, 1);
 									ItemScatterer.spawn(world, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), smeltingRecipe.getOutput().copy());

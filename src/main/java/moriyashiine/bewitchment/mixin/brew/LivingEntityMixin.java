@@ -73,7 +73,7 @@ public abstract class LivingEntityMixin extends Entity {
 				amount /= 4;
 				amount += ((LivingEntity) directSource).getStatusEffect(BWStatusEffects.ENCHANTED).getAmplifier();
 			}
-			if (hasStatusEffect(BWStatusEffects.MAGIC_SPONGE) && source.getMagic()) {
+			if (hasStatusEffect(BWStatusEffects.MAGIC_SPONGE) && source.isMagic()) {
 				float magicAmount = (0.3f + (0.1f * getStatusEffect(BWStatusEffects.MAGIC_SPONGE).getAmplifier()));
 				amount *= (1 - magicAmount);
 				if ((Object) this instanceof PlayerEntity) {

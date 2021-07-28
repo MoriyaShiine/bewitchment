@@ -13,7 +13,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -96,18 +96,18 @@ public abstract class PlayerEntityMixin extends LivingEntity implements MagicAcc
 		}
 	}
 	
-	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
-	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		setMagic(tag.getInt("Magic"));
-		setRespawnTimer(tag.getInt("RespawnTimer"));
-		setPressingForward(tag.getBoolean("PressingForward"));
+	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		setMagic(nbt.getInt("Magic"));
+		setRespawnTimer(nbt.getInt("RespawnTimer"));
+		setPressingForward(nbt.getBoolean("PressingForward"));
 	}
 	
-	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
-	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		tag.putInt("Magic", getMagic());
-		tag.putInt("RespawnTimer", getRespawnTimer());
-		tag.putBoolean("PressingForward", getPressingForward());
+	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		nbt.putInt("Magic", getMagic());
+		nbt.putInt("RespawnTimer", getRespawnTimer());
+		nbt.putBoolean("PressingForward", getPressingForward());
 	}
 	
 	@Inject(method = "initDataTracker", at = @At("TAIL"))

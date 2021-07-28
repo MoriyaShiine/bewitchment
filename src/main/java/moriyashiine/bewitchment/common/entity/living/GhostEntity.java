@@ -73,7 +73,7 @@ public class GhostEntity extends BWHostileEntity {
 		}
 		if (!world.isClient && !hasCustomName() && world.isDay() && !world.isRaining() && world.isSkyVisibleAllowingSea(getBlockPos())) {
 			PlayerLookup.tracking(this).forEach(playerEntity -> SpawnSmokeParticlesPacket.send(playerEntity, this));
-			remove();
+			remove(RemovalReason.DISCARDED);
 		}
 	}
 	
@@ -176,12 +176,12 @@ public class GhostEntity extends BWHostileEntity {
 					if (getTarget() == null) {
 						Vec3d velocity = getVelocity();
 						//noinspection SuspiciousNameCombination
-						yaw = -((float) MathHelper.atan2(velocity.x, velocity.z)) * 57;
+						setYaw(-((float) MathHelper.atan2(velocity.x, velocity.z)) * 57);
 					}
 					else {
-						yaw = -((float) MathHelper.atan2(getTarget().getX() - getX(), getTarget().getZ() - getZ())) * 57;
+						setYaw(-((float) MathHelper.atan2(getTarget().getX() - getX(), getTarget().getZ() - getZ())) * 57);
 					}
-					bodyYaw = yaw;
+					bodyYaw = getYaw();
 				}
 			}
 		}
@@ -226,10 +226,10 @@ public class GhostEntity extends BWHostileEntity {
 		
 		private BlockPos findTarget(BlockPos.Mutable target, int tries) {
 			if (tries <= 8) {
-				while (!World.isOutOfBuildLimitVertically(target) && world.getBlockState(target).getMaterial().isSolid()) {
+				while (!World.isValid(target) && world.getBlockState(target).getMaterial().isSolid()) {
 					target.set(target.getX(), target.getY() + 1, target.getZ());
 				}
-				while (!World.isOutOfBuildLimitVertically(target) && !world.getBlockState(target).getMaterial().isSolid()) {
+				while (!World.isValid(target) && !world.getBlockState(target).getMaterial().isSolid()) {
 					target.set(target.getX(), target.getY() - 1, target.getZ());
 				}
 				target.set(target.getX(), target.getY() + random.nextInt(8), target.getZ());
@@ -252,8 +252,7 @@ public class GhostEntity extends BWHostileEntity {
 				int radius = -1;
 				BlockEntity blockEntity = world.getBlockEntity(candelabraPos);
 				BlockState state = world.getBlockState(candelabraPos);
-				if (blockEntity instanceof WitchAltarBlockEntity) {
-					WitchAltarBlockEntity witchAltar = (WitchAltarBlockEntity) blockEntity;
+				if (blockEntity instanceof WitchAltarBlockEntity witchAltar) {
 					for (int i = 0; i < witchAltar.size(); i++) {
 						Block block = Block.getBlockFromItem(witchAltar.getStack(i).getItem());
 						if (block instanceof CandelabraBlock) {

@@ -19,7 +19,7 @@ public class SyncHornedSpearEntity {
 	
 	public static void send(PlayerEntity player, HornedSpearEntity entity) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-		buf.writeInt(entity.getEntityId());
+		buf.writeInt(entity.getId());
 		buf.writeItemStack(entity.spear);
 		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
 	}

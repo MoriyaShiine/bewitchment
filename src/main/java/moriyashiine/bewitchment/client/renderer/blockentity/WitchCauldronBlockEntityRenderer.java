@@ -10,7 +10,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
@@ -22,6 +21,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Matrix4f;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -30,13 +30,9 @@ import java.util.stream.IntStream;
 
 @SuppressWarnings("ConstantConditions")
 @Environment(EnvType.CLIENT)
-public class WitchCauldronBlockEntityRenderer extends BlockEntityRenderer<WitchCauldronBlockEntity> {
+public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<WitchCauldronBlockEntity> {
 	private static final List<RenderLayer> PORTAL_LAYERS = IntStream.range(1, 16).mapToObj((i) -> RenderLayer.getEndPortal(i + 1)).collect(Collectors.toList());
 	private static final float[] HEIGHT = {0, 0.25f, 0.4375f, 0.625f};
-	
-	public WitchCauldronBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
-		super(dispatcher);
-	}
 	
 	@Override
 	public void render(WitchCauldronBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
@@ -57,19 +53,16 @@ public class WitchCauldronBlockEntityRenderer extends BlockEntityRenderer<WitchC
 					float fluidHeight = 0;
 					float width = 0.35f;
 					switch (entity.getCachedState().get(Properties.LEVEL_3)) {
-						case 1:
-							fluidHeight = 0.225f;
-							break;
-						case 2:
+						case 1 -> fluidHeight = 0.225f;
+						case 2 -> {
 							fluidHeight = 0.425f;
 							width = 0.3f;
-							break;
-						case 3:
-							fluidHeight = 0.625f;
+						}
+						case 3 -> fluidHeight = 0.625f;
 					}
 					if (fluidHeight > 0) {
 						if (entity.mode == WitchCauldronBlockEntity.Mode.TELEPORTATION) {
-							world.addParticle(new DustParticleEffect(((entity.color >> 16) & 0xff) / 255f, ((entity.color >> 8) & 0xff) / 255f, (entity.color & 0xff) / 255f, 1), pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + fluidHeight, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), 0, 0, 0);
+							world.addParticle(new DustParticleEffect(new Vec3f(((entity.color >> 16) & 0xff) / 255f, ((entity.color >> 8) & 0xff) / 255f, (entity.color & 0xff) / 255f), 1), pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + fluidHeight, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), 0, 0, 0);
 						}
 						if (entity.mode == WitchCauldronBlockEntity.Mode.OIL_CRAFTING && entity.color != 0xfc00fc) {
 							world.addParticle(ParticleTypes.ENCHANTED_HIT, pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + fluidHeight, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), 0, 0, 0);
@@ -86,16 +79,16 @@ public class WitchCauldronBlockEntityRenderer extends BlockEntityRenderer<WitchC
 	
 	private void renderName(WitchCauldronBlockEntity entity, BlockPos pos, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
 		if (entity.hasCustomName()) {
-			if (pos.getSquaredDistance(dispatcher.camera.getPos(), true) <= 256) {
+			if (pos.getSquaredDistance(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getPos(), true) <= 256) {
 				matrices.push();
 				matrices.translate(0.5, 1, 0.5);
-				matrices.multiply(dispatcher.camera.getRotation());
+				matrices.multiply(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getRotation());
 				matrices.scale(-0.025f, -0.025f, 0.025f);
 				Text name = entity.getCustomName();
 				Matrix4f model = matrices.peek().getModel();
-				int x = -dispatcher.getTextRenderer().getWidth(name) / 2;
-				dispatcher.getTextRenderer().draw(name, x, 0, 0x20ffff, false, model, vertexConsumers, true, (int) (MinecraftClient.getInstance().options.getTextBackgroundOpacity(0.25f) * 255f) << 24, light);
-				dispatcher.getTextRenderer().draw(name, x, 0, -1, false, model, vertexConsumers, false, 0, light);
+				int x = -MinecraftClient.getInstance().textRenderer.getWidth(name) / 2;
+				MinecraftClient.getInstance().textRenderer.draw(name, x, 0, 0x20ffff, false, model, vertexConsumers, true, (int) (MinecraftClient.getInstance().options.getTextBackgroundOpacity(0.25f) * 255f) << 24, light);
+				MinecraftClient.getInstance().textRenderer.draw(name, x, 0, -1, false, model, vertexConsumers, false, 0, light);
 				matrices.pop();
 			}
 		}
@@ -103,7 +96,7 @@ public class WitchCauldronBlockEntityRenderer extends BlockEntityRenderer<WitchC
 	
 	private void renderPortal(WitchCauldronBlockEntity entity, BlockPos pos, MatrixStack matrices, VertexConsumerProvider vertexConsumers) {
 		matrices.push();
-		double distance = pos.getSquaredDistance(dispatcher.camera.getPos(), true);
+		double distance = pos.getSquaredDistance(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getPos(), true);
 		int renderDepth = getDepthFromDistance(distance);
 		Matrix4f matrix4f = matrices.peek().getModel();
 		for (int i = 0; i < renderDepth; ++i) {

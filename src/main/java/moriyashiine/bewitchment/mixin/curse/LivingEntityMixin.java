@@ -5,7 +5,6 @@ import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.common.entity.interfaces.InsanityTargetAccessor;
 import moriyashiine.bewitchment.common.registry.BWCurses;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
-import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -14,8 +13,8 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.item.AxeItem;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -56,9 +55,9 @@ public abstract class LivingEntityMixin extends Entity implements CurseAccessor 
 		}
 	}
 	
-	@ModifyVariable(method = "addStatusEffect", at = @At("HEAD"))
+	@ModifyVariable(method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)Z", at = @At("HEAD"))
 	private StatusEffectInstance modifyStatusEffect(StatusEffectInstance effect) {
-		if (!world.isClient && !effect.isAmbient() && ((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.HARMFUL && hasCurse(BWCurses.COMPROMISED)) {
+		if (!world.isClient && !effect.isAmbient() && effect.getEffectType().getType() == StatusEffectType.HARMFUL && hasCurse(BWCurses.COMPROMISED)) {
 			return new StatusEffectInstance(effect.getEffectType(), effect.getDuration(), effect.getAmplifier() + 1, false, effect.shouldShowParticles(), effect.shouldShowIcon());
 		}
 		return effect;
@@ -71,7 +70,7 @@ public abstract class LivingEntityMixin extends Entity implements CurseAccessor 
 			if (hasCurse(BWCurses.FORESTS_WRATH) && (source.isFire() || ((directSource instanceof LivingEntity && ((LivingEntity) directSource).getMainHandStack().getItem() instanceof AxeItem)))) {
 				amount *= 2;
 			}
-			if (hasCurse(BWCurses.SUSCEPTIBILITY) && source.getMagic()) {
+			if (hasCurse(BWCurses.SUSCEPTIBILITY) && source.isMagic()) {
 				amount *= 2;
 			}
 		}
@@ -87,22 +86,22 @@ public abstract class LivingEntityMixin extends Entity implements CurseAccessor 
 	
 	@Inject(method = "canHaveStatusEffect", at = @At("RETURN"), cancellable = true)
 	private void canHaveStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (callbackInfo.getReturnValue() && !world.isClient && !effect.isAmbient() && ((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.BENEFICIAL && hasCurse(BWCurses.UNLUCKY) && random.nextBoolean()) {
+		if (callbackInfo.getReturnValue() && !world.isClient && !effect.isAmbient() && effect.getEffectType().getType() == StatusEffectType.BENEFICIAL && hasCurse(BWCurses.UNLUCKY) && random.nextBoolean()) {
 			callbackInfo.setReturnValue(false);
 		}
 	}
 	
-	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
-	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		ListTag curses = tag.getList("Curses", NbtType.COMPOUND);
+	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		NbtList curses = nbt.getList("Curses", NbtType.COMPOUND);
 		for (int i = 0; i < curses.size(); i++) {
-			CompoundTag curse = curses.getCompound(i);
+			NbtCompound curse = curses.getCompound(i);
 			addCurse(new Curse.Instance(BWRegistries.CURSES.get(new Identifier(curse.getString("Curse"))), curse.getInt("Duration")));
 		}
 	}
 	
-	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
-	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		tag.put("Curses", toTagCurse());
+	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		nbt.put("Curses", toNbtCurse());
 	}
 }

@@ -6,27 +6,23 @@ import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.Tickable;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class SigilBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Tickable, SigilHolder {
+public class SigilBlockEntity extends BlockEntity implements BlockEntityClientSerializable, SigilHolder {
 	private final List<UUID> entities = new ArrayList<>();
 	private UUID owner = null;
 	private Sigil sigil = null;
 	private int uses = 0;
 	private boolean modeOnWhitelist = false;
 	
-	public SigilBlockEntity(BlockEntityType<?> type) {
-		super(type);
-	}
-	
-	public SigilBlockEntity() {
-		this(BWBlockEntityTypes.SIGIL);
+	public SigilBlockEntity(BlockPos pos, BlockState state) {
+		super(BWBlockEntityTypes.SIGIL, pos, state);
 	}
 	
 	@Override
@@ -75,29 +71,28 @@ public class SigilBlockEntity extends BlockEntity implements BlockEntityClientSe
 	}
 	
 	@Override
-	public void fromClientTag(CompoundTag tag) {
-		fromTagSigil(tag);
+	public void fromClientTag(NbtCompound tag) {
+		fromNbtSigil(tag);
 	}
 	
 	@Override
-	public CompoundTag toClientTag(CompoundTag tag) {
-		toTagSigil(tag);
+	public NbtCompound toClientTag(NbtCompound tag) {
+		toNbtSigil(tag);
 		return tag;
 	}
 	
 	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
-		fromClientTag(tag);
-		super.fromTag(state, tag);
+	public void readNbt(NbtCompound nbt) {
+		fromClientTag(nbt);
+		super.readNbt(nbt);
 	}
 	
 	@Override
-	public CompoundTag toTag(CompoundTag tag) {
-		return super.toTag(toClientTag(tag));
+	public NbtCompound writeNbt(NbtCompound nbt) {
+		return super.writeNbt(toClientTag(nbt));
 	}
 	
-	@Override
-	public void tick() {
-		tick(world, pos, this);
+	public static void tick(World world, BlockPos pos, BlockState state, SigilBlockEntity blockEntity) {
+		blockEntity.tick(world, pos, blockEntity);
 	}
 }

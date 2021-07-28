@@ -14,16 +14,15 @@ import net.minecraft.item.ItemUsage;
 import net.minecraft.item.MiningToolItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.tag.Tag;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
-import java.util.Set;
-
 @SuppressWarnings("ConstantConditions")
 public class CaduceusItem extends MiningToolItem {
-	public CaduceusItem(float attackDamage, float attackSpeed, ToolMaterial material, Set<Block> effectiveBlocks, Settings settings) {
+	public CaduceusItem(float attackDamage, float attackSpeed, ToolMaterial material, Tag<Block> effectiveBlocks, Settings settings) {
 		super(attackDamage, attackSpeed, material, effectiveBlocks, settings);
 	}
 	
@@ -36,7 +35,7 @@ public class CaduceusItem extends MiningToolItem {
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (user instanceof MagicAccessor) {
 			if (!world.isClient && user instanceof PlayerEntity && BewitchmentAPI.drainMagic((PlayerEntity) user, 2, false)) {
-				FireballEntity fireball = new FireballEntity(world, user, user.getRotationVector().x, user.getRotationVector().y, user.getRotationVector().z);
+				FireballEntity fireball = new FireballEntity(world, user, user.getRotationVector().x, user.getRotationVector().y, user.getRotationVector().z, 1);
 				fireball.setOwner(user);
 				fireball.setPos(fireball.getX(), fireball.getY() + 1, fireball.getZ());
 				((CaduceusFireballAccessor) fireball).setFromCaduceus(true);
@@ -59,7 +58,7 @@ public class CaduceusItem extends MiningToolItem {
 	}
 	
 	@Override
-	public boolean isEffectiveOn(BlockState state) {
+	public boolean isSuitableFor(BlockState state) {
 		return true;
 	}
 	

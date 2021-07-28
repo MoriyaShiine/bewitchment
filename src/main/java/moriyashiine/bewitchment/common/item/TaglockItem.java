@@ -26,9 +26,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
@@ -83,8 +83,7 @@ public class TaglockItem extends Item {
 		else {
 			ItemStack stack = context.getStack();
 			BlockEntity blockEntity = world.getBlockEntity(state.getBlock() instanceof DoorBlock && state.get(DoorBlock.HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos);
-			if (blockEntity instanceof TaglockHolder) {
-				TaglockHolder taglockHolder = (TaglockHolder) blockEntity;
+			if (blockEntity instanceof TaglockHolder taglockHolder) {
 				if (player.getUuid().equals(taglockHolder.getOwner())) {
 					int firstEmpty = taglockHolder.getFirstEmptySlot();
 					if (firstEmpty != -1) {
@@ -158,7 +157,7 @@ public class TaglockItem extends Item {
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		if (hasTaglock(stack)) {
 			tooltip.add(new LiteralText(getTaglockName(stack)).formatted(Formatting.GRAY));
-			CompoundTag tag = stack.getTag();
+			NbtCompound tag = stack.getTag();
 			if (tag.contains("UsedForScrying")) {
 				if (tag.contains("Failed")) {
 					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.failed").formatted(Formatting.DARK_GRAY));
@@ -169,7 +168,7 @@ public class TaglockItem extends Item {
 					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.location", pos.getX(), pos.getY(), pos.getZ(), stack.getTag().getString("LocationWorld")).formatted(Formatting.DARK_GRAY));
 					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.level", stack.getTag().getInt("Level")).formatted(Formatting.DARK_GRAY));
 					MutableText curseTooltip = new TranslatableText(Bewitchment.MODID + ".tooltip.curse");
-					ListTag curses = tag.getList("Curses", 10);
+					NbtList curses = tag.getList("Curses", 10);
 					if (curses.isEmpty()) {
 						curseTooltip.append(new TranslatableText(Bewitchment.MODID + ".tooltip.none"));
 					}
@@ -178,15 +177,15 @@ public class TaglockItem extends Item {
 					}
 					tooltip.add(curseTooltip.formatted(Formatting.DARK_GRAY));
 					if (shifting) {
-						for (Tag t : curses) {
-							CompoundTag curseTag = (CompoundTag) t;
+						for (NbtElement element : curses) {
+							NbtCompound curseTag = (NbtCompound) element;
 							MutableText curseText = new TranslatableText("curse." + curseTag.getString("Curse").replace(":", "."));
 							int duration = curseTag.getInt("Duration") / 24000;
 							tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.curse_expanded", curseText, duration).formatted(Formatting.DARK_GRAY));
 						}
 					}
 					MutableText contractTooltip = new TranslatableText(Bewitchment.MODID + ".tooltip.contract");
-					ListTag contracts = tag.getList("Contracts", 10);
+					NbtList contracts = tag.getList("Contracts", 10);
 					if (contracts.isEmpty()) {
 						contractTooltip.append(new TranslatableText(Bewitchment.MODID + ".tooltip.none"));
 					}
@@ -195,8 +194,8 @@ public class TaglockItem extends Item {
 					}
 					tooltip.add(contractTooltip.formatted(Formatting.DARK_GRAY));
 					if (shifting) {
-						for (Tag t : contracts) {
-							CompoundTag contractTag = (CompoundTag) t;
+						for (NbtElement element : contracts) {
+							NbtCompound contractTag = (NbtCompound) element;
 							MutableText curseText = new TranslatableText("contract." + contractTag.getString("Contract").replace(":", "."));
 							int duration = contractTag.getInt("Duration") / 24000;
 							tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.curse_expanded", curseText, duration).formatted(Formatting.DARK_GRAY));

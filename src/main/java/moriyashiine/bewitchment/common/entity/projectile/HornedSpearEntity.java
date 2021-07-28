@@ -14,7 +14,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
@@ -60,8 +60,7 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 			if (entity.getType() == EntityType.ENDERMAN) {
 				return;
 			}
-			if (entity instanceof LivingEntity) {
-				LivingEntity livingEntity = (LivingEntity) entity;
+			if (entity instanceof LivingEntity livingEntity) {
 				if (owner instanceof LivingEntity) {
 					EnchantmentHelper.onUserDamaged(livingEntity, owner);
 					EnchantmentHelper.onTargetDamaged((LivingEntity) owner, livingEntity);
@@ -76,7 +75,7 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 	@Override
 	protected EntityHitResult getEntityCollision(Vec3d currentPosition, Vec3d nextPosition) {
 		if (isOwnerAlive()) {
-			EntityHitResult collision = ProjectileUtil.getEntityCollision(this.world, this, currentPosition, nextPosition, getBoundingBox().stretch(getVelocity()).expand(1), this::method_26958);
+			EntityHitResult collision = ProjectileUtil.getEntityCollision(this.world, this, currentPosition, nextPosition, getBoundingBox().stretch(getVelocity()).expand(1), this::canHit);
 			if (collision != null) {
 				Entity entity = collision.getEntity();
 				if (entity instanceof MasterAccessor && getOwner().getUuid().equals(((MasterAccessor) entity).getMasterUUID())) {
@@ -106,7 +105,7 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 				if (!world.isClient && pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED) {
 					dropStack(asItemStack(), 0.1f);
 				}
-				remove();
+				remove(RemovalReason.DISCARDED);
 			}
 			else {
 				setNoClip(true);
@@ -135,17 +134,17 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 	}
 	
 	@Override
-	public void readCustomDataFromTag(CompoundTag tag) {
-		super.readCustomDataFromTag(tag);
-		spear = ItemStack.fromTag(tag.getCompound("Spear"));
-		dealtDamage = tag.getBoolean("DealtDamage");
+	public void readCustomDataFromNbt(NbtCompound nbt) {
+		super.readCustomDataFromNbt(nbt);
+		spear = ItemStack.fromNbt(nbt.getCompound("Spear"));
+		dealtDamage = nbt.getBoolean("DealtDamage");
 	}
 	
 	@Override
-	public void writeCustomDataToTag(CompoundTag tag) {
-		super.writeCustomDataToTag(tag);
-		tag.put("Spear", spear.toTag(new CompoundTag()));
-		tag.putBoolean("DealtDamage", dealtDamage);
+	public void writeCustomDataToNbt(NbtCompound nbt) {
+		super.writeCustomDataToNbt(nbt);
+		nbt.put("Spear", spear.writeNbt(new NbtCompound()));
+		nbt.putBoolean("DealtDamage", dealtDamage);
 	}
 	
 	private boolean isOwnerAlive() {

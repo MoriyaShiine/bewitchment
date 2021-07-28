@@ -6,8 +6,9 @@ import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.UUID;
 
@@ -15,12 +16,12 @@ public class JuniperChestBlockEntity extends BWChestBlockEntity implements Block
 	private final DefaultedList<ItemStack> taglockInventory = DefaultedList.ofSize(3, ItemStack.EMPTY);
 	private UUID owner = null;
 	
-	public JuniperChestBlockEntity() {
-		super(BWBlockEntityTypes.JUNIPER_CHEST, Type.JUNIPER, false);
+	public JuniperChestBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, Type type, boolean trapped) {
+		super(blockEntityType, blockPos, blockState, type, trapped);
 	}
 	
-	public JuniperChestBlockEntity(BlockEntityType<?> blockEntityType, boolean trapped) {
-		super(blockEntityType, Type.JUNIPER, trapped);
+	public JuniperChestBlockEntity(BlockPos blockPos, BlockState blockState) {
+		this(BWBlockEntityTypes.JUNIPER_CHEST, blockPos, blockState, Type.JUNIPER, false);
 	}
 	
 	@Override
@@ -39,24 +40,24 @@ public class JuniperChestBlockEntity extends BWChestBlockEntity implements Block
 	}
 	
 	@Override
-	public void fromClientTag(CompoundTag tag) {
-		fromTagTaglock(tag);
+	public void fromClientTag(NbtCompound tag) {
+		fromNbtTaglock(tag);
 	}
 	
 	@Override
-	public CompoundTag toClientTag(CompoundTag tag) {
-		toTagTaglock(tag);
+	public NbtCompound toClientTag(NbtCompound tag) {
+		toNbtTaglock(tag);
 		return tag;
 	}
 	
 	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
-		fromClientTag(tag);
-		super.fromTag(state, tag);
+	public void readNbt(NbtCompound nbt) {
+		fromClientTag(nbt);
+		super.readNbt(nbt);
 	}
 	
 	@Override
-	public CompoundTag toTag(CompoundTag tag) {
-		return super.toTag(toClientTag(tag));
+	public NbtCompound writeNbt(NbtCompound nbt) {
+		return super.writeNbt(toClientTag(nbt));
 	}
 }

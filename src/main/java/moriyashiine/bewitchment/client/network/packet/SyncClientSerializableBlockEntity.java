@@ -9,7 +9,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
@@ -23,14 +23,14 @@ public class SyncClientSerializableBlockEntity {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		if (blockEntity instanceof BlockEntity) {
 			buf.writeLong(((BlockEntity) blockEntity).getPos().asLong());
-			buf.writeCompoundTag(blockEntity.toClientTag(new CompoundTag()));
+			buf.writeNbt(blockEntity.toClientTag(new NbtCompound()));
 			ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
 		}
 	}
 	
 	public static void handle(MinecraftClient client, ClientPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
 		BlockPos pos = BlockPos.fromLong(buf.readLong());
-		CompoundTag tag = buf.readCompoundTag();
+		NbtCompound tag = buf.readNbt();
 		client.execute(() -> {
 			BlockEntity blockEntity = client.world.getBlockEntity(pos);
 			if (blockEntity instanceof BlockEntityClientSerializable) {

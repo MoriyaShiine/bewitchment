@@ -21,7 +21,7 @@ import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("ConstantConditions")
 public class WerewolfEntity extends BWHostileEntity {
-	public CompoundTag storedVillager;
+	public NbtCompound storedVillager;
 	
 	public WerewolfEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
@@ -56,7 +56,7 @@ public class WerewolfEntity extends BWHostileEntity {
 				if (entity instanceof VillagerWerewolfAccessor) {
 					PlayerLookup.tracking(this).forEach(player -> SpawnSmokeParticlesPacket.send(player, this));
 					world.playSound(null, getX(), getY(), getZ(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, getSoundCategory(), getSoundVolume(), getSoundPitch());
-					entity.fromTag(storedVillager);
+					entity.readNbt(storedVillager);
 					entity.updatePositionAndAngles(getX(), getY(), getZ(), random.nextFloat() * 360, 0);
 					entity.setHealth(entity.getMaxHealth() * (getHealth() / getMaxHealth()));
 					entity.setFireTicks(getFireTicks());
@@ -64,9 +64,9 @@ public class WerewolfEntity extends BWHostileEntity {
 					getStatusEffects().forEach(entity::addStatusEffect);
 					((CurseAccessor) entity).getCurses().clear();
 					((CurseAccessor) this).getCurses().forEach(((CurseAccessor) entity)::addCurse);
-					((VillagerWerewolfAccessor) entity).setStoredWerewolf(toTag(new CompoundTag()));
+					((VillagerWerewolfAccessor) entity).setStoredWerewolf(writeNbt(new NbtCompound()));
 					world.spawnEntity(entity);
-					remove();
+					remove(RemovalReason.DISCARDED);
 				}
 			}
 		}
@@ -104,43 +104,35 @@ public class WerewolfEntity extends BWHostileEntity {
 	}
 	
 	@Override
-	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable CompoundTag entityTag) {
+	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityTag) {
 		EntityData data = super.initialize(world, difficulty, spawnReason, entityData, entityTag);
 		if (dataTracker.get(VARIANT) != 0) {
 			switch (world.getBiome(getBlockPos()).getCategory()) {
-				case FOREST:
-					dataTracker.set(VARIANT, random.nextBoolean() ? 1 : 2);
-					break;
-				case TAIGA:
-					dataTracker.set(VARIANT, random.nextBoolean() ? 3 : 4);
-					break;
-				case ICY:
-					dataTracker.set(VARIANT, random.nextBoolean() ? 5 : 6);
-					break;
-				default:
-					dataTracker.set(VARIANT, random.nextInt(getVariants() - 1) + 1);
-					break;
+				case FOREST -> dataTracker.set(VARIANT, random.nextBoolean() ? 1 : 2);
+				case TAIGA -> dataTracker.set(VARIANT, random.nextBoolean() ? 3 : 4);
+				case ICY -> dataTracker.set(VARIANT, random.nextBoolean() ? 5 : 6);
+				default -> dataTracker.set(VARIANT, random.nextInt(getVariants() - 1) + 1);
 			}
 		}
 		if (spawnReason == SpawnReason.NATURAL) {
-			storedVillager = EntityType.VILLAGER.create((World) world).toTag(new CompoundTag());
+			storedVillager = EntityType.VILLAGER.create((World) world).writeNbt(new NbtCompound());
 		}
 		return data;
 	}
 	
 	@Override
-	public void readCustomDataFromTag(CompoundTag tag) {
-		super.readCustomDataFromTag(tag);
-		if (tag.contains("StoredVillager")) {
-			storedVillager = tag.getCompound("StoredVillager");
+	public void readCustomDataFromNbt(NbtCompound nbt) {
+		super.readCustomDataFromNbt(nbt);
+		if (nbt.contains("StoredVillager")) {
+			storedVillager = nbt.getCompound("StoredVillager");
 		}
 	}
 	
 	@Override
-	public void writeCustomDataToTag(CompoundTag tag) {
-		super.writeCustomDataToTag(tag);
+	public void writeCustomDataToNbt(NbtCompound nbt) {
+		super.writeCustomDataToNbt(nbt);
 		if (storedVillager != null) {
-			tag.put("StoredVillager", storedVillager);
+			nbt.put("StoredVillager", storedVillager);
 		}
 	}
 	

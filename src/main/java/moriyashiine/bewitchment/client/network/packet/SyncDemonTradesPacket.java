@@ -10,7 +10,6 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
-@SuppressWarnings("ConstantConditions")
 public class SyncDemonTradesPacket {
 	public static final Identifier ID = new Identifier(Bewitchment.MODID, "sync_demon_trades");
 	
@@ -18,10 +17,8 @@ public class SyncDemonTradesPacket {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		buf.writeInt(syncId);
 		DemonEntity.DemonTradeOffer.toPacket(merchant.getOffers(), buf);
-		buf.writeInt(merchant.getDemonTrader().getEntityId());
+		buf.writeInt(merchant.getDemonTrader().getId());
 		buf.writeBoolean(merchant.isDiscount());
 		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
 	}
-	
-	//@Environment notoriously fails on this specific method even when it's empty so here we are
 }

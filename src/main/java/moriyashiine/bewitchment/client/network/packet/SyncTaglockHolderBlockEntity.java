@@ -35,8 +35,7 @@ public class SyncTaglockHolderBlockEntity {
 		ItemStack three = buf.readItemStack();
 		client.execute(() -> {
 			BlockEntity blockEntity = client.world.getBlockEntity(pos);
-			if (blockEntity instanceof TaglockHolder) {
-				TaglockHolder taglockHolder = (TaglockHolder) blockEntity;
+			if (blockEntity instanceof TaglockHolder taglockHolder) {
 				taglockHolder.getTaglockInventory().set(0, one);
 				taglockHolder.getTaglockInventory().set(1, two);
 				taglockHolder.getTaglockInventory().set(2, three);

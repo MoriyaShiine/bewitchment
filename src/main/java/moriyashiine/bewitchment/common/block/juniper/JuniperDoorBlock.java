@@ -16,7 +16,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,8 +27,8 @@ public class JuniperDoorBlock extends TerraformDoorBlock implements BlockEntityP
 	
 	@Nullable
 	@Override
-	public BlockEntity createBlockEntity(BlockView world) {
-		return new TaglockHolderBlockEntity();
+	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+		return new TaglockHolderBlockEntity(pos, state);
 	}
 	
 	@Override

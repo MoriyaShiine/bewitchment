@@ -4,7 +4,7 @@ import moriyashiine.bewitchment.common.Bewitchment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import org.jetbrains.annotations.Nullable;
@@ -23,14 +23,14 @@ public abstract class ItemStackMixin {
 	
 	@Shadow
 	@Nullable
-	public abstract CompoundTag getTag();
+	public abstract NbtCompound getTag();
 	
 	@Shadow
 	public abstract Item getItem();
 	
 	@Inject(method = "getName", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 0, target = "Lnet/minecraft/item/ItemStack;getItem()Lnet/minecraft/item/Item;"), cancellable = true)
 	private void getName(CallbackInfoReturnable<Text> callbackInfo) {
-		CompoundTag tag = getTag();
+		NbtCompound tag = getTag();
 		if (tag != null && tag.getBoolean("BewitchmentBrew")) {
 			if (getItem() == Items.POTION) {
 				callbackInfo.setReturnValue(POTION);

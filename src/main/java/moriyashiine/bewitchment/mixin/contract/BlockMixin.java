@@ -37,7 +37,7 @@ public abstract class BlockMixin {
 						if (BWTags.ORES.contains(state.getBlock().asItem())) {
 							for (Recipe<?> smeltingRecipe : world.getRecipeManager().listAllOfType(RecipeType.SMELTING)) {
 								if (BWTags.ORES.contains(drops.get(i).getItem())) {
-									for (Ingredient ingredient : smeltingRecipe.getPreviewInputs()) {
+									for (Ingredient ingredient : smeltingRecipe.getIngredients()) {
 										if (ingredient.test(drops.get(i))) {
 											drops.set(i, new ItemStack(smeltingRecipe.getOutput().getItem(), smeltingRecipe.getOutput().getCount() * drops.get(i).getCount()));
 										}

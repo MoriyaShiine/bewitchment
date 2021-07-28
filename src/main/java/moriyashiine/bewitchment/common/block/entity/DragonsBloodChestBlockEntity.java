@@ -6,7 +6,10 @@ import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.block.entity.ChestBlockEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +22,12 @@ public class DragonsBloodChestBlockEntity extends BWChestBlockEntity implements 
 	private int uses = 0;
 	private boolean modeOnWhitelist = false;
 	
-	public DragonsBloodChestBlockEntity() {
-		super(BWBlockEntityTypes.DRAGONS_BLOOD_CHEST, Type.DRAGONS_BLOOD, false);
+	public DragonsBloodChestBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, Type type, boolean trapped) {
+		super(blockEntityType, blockPos, blockState, type, trapped);
 	}
 	
-	public DragonsBloodChestBlockEntity(BlockEntityType<?> blockEntityType, boolean trapped) {
-		super(blockEntityType, Type.DRAGONS_BLOOD, trapped);
+	public DragonsBloodChestBlockEntity(BlockPos blockPos, BlockState blockState) {
+		this(BWBlockEntityTypes.DRAGONS_BLOOD_CHEST, blockPos, blockState, Type.DRAGONS_BLOOD, false);
 	}
 	
 	@Override
@@ -73,30 +76,31 @@ public class DragonsBloodChestBlockEntity extends BWChestBlockEntity implements 
 	}
 	
 	@Override
-	public void fromClientTag(CompoundTag tag) {
-		fromTagSigil(tag);
+	public void fromClientTag(NbtCompound tag) {
+		fromNbtSigil(tag);
 	}
 	
 	@Override
-	public CompoundTag toClientTag(CompoundTag tag) {
-		toTagSigil(tag);
+	public NbtCompound toClientTag(NbtCompound tag) {
+		toNbtSigil(tag);
 		return tag;
 	}
 	
 	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
-		fromClientTag(tag);
-		super.fromTag(state, tag);
+	public void readNbt(NbtCompound nbt) {
+		fromClientTag(nbt);
+		super.readNbt(nbt);
 	}
 	
 	@Override
-	public CompoundTag toTag(CompoundTag tag) {
-		return super.toTag(toClientTag(tag));
+	public NbtCompound writeNbt(NbtCompound nbt) {
+		return super.writeNbt(toClientTag(nbt));
 	}
 	
-	@Override
-	public void tick() {
-		super.tick();
-		tick(world, pos, this);
+	public static void tick(World world, BlockPos pos, BlockState state, DragonsBloodChestBlockEntity blockEntity) {
+		if (world.isClient) {
+			ChestBlockEntity.clientTick(world, pos, state, blockEntity);
+		}
+		blockEntity.tick(world, pos, blockEntity);
 	}
 }

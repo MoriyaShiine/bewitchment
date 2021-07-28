@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.common.block.elder;
 
 import moriyashiine.bewitchment.common.block.BWChestBlock;
+import moriyashiine.bewitchment.common.block.entity.BWChestBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.ElderChestBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.Lockable;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
@@ -15,7 +16,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,8 +29,8 @@ public class ElderChestBlock extends BWChestBlock {
 	
 	@Nullable
 	@Override
-	public BlockEntity createBlockEntity(BlockView world) {
-		return new ElderChestBlockEntity(BWBlockEntityTypes.ELDER_CHEST, trapped);
+	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+		return new ElderChestBlockEntity(BWBlockEntityTypes.ELDER_CHEST, pos, state, BWChestBlockEntity.Type.ELDER, trapped);
 	}
 	
 	@Override

@@ -26,8 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DemonScreenHandler extends ScreenHandler {
-	public DemonMerchant demonMerchant;
-	public Inventory demonInventory = new SimpleInventory(getOfferCount());
+	public final DemonMerchant demonMerchant;
+	public final Inventory demonInventory = new SimpleInventory(getOfferCount());
 	
 	public DemonScreenHandler(int syncId) {
 		this(syncId, new DemonMerchantImpl());
@@ -115,8 +115,8 @@ public class DemonScreenHandler extends ScreenHandler {
 		}
 		
 		@Override
-		public boolean doDrawHoveringEffect() {
-			return getOffer() != null && super.doDrawHoveringEffect();
+		public boolean isEnabled() {
+			return getOffer() != null && super.isEnabled();
 		}
 		
 		@Override

@@ -12,7 +12,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.util.ActionResult;
@@ -46,15 +46,15 @@ public class BroomEntity extends Entity {
 	}
 	
 	@Override
-	protected void readCustomDataFromTag(CompoundTag tag) {
-		stack = ItemStack.fromTag(tag.getCompound("Stack"));
-		damage = tag.getFloat("Damage");
+	protected void readCustomDataFromNbt(NbtCompound nbt) {
+		stack = ItemStack.fromNbt(nbt.getCompound("Stack"));
+		damage = nbt.getFloat("Damage");
 	}
 	
 	@Override
-	protected void writeCustomDataToTag(CompoundTag tag) {
-		tag.put("Stack", stack.toTag(new CompoundTag()));
-		tag.putFloat("Damage", damage);
+	protected void writeCustomDataToNbt(NbtCompound nbt) {
+		nbt.put("Stack", stack.writeNbt(new NbtCompound()));
+		nbt.putFloat("Damage", damage);
 	}
 	
 	@Override
@@ -71,14 +71,14 @@ public class BroomEntity extends Entity {
 		}
 		if (lerpSteps > 0) {
 			updatePosition(getX() + (lerpX - getX()) / lerpSteps, getY() + (lerpY - getY()) / lerpSteps, getZ() + (lerpZ - getZ()) / lerpSteps);
-			setRotation((float) (yaw + MathHelper.wrapDegrees(lerpYaw - yaw) / lerpSteps), (float) (pitch + (lerpPitch - pitch) / lerpSteps));
+			setRotation((float) (getYaw() + MathHelper.wrapDegrees(lerpYaw - getYaw()) / lerpSteps), (float) (getPitch() + (lerpPitch - getPitch()) / lerpSteps));
 			--lerpSteps;
 		}
 		if (isLogicalSideForUpdatingMovement()) {
 			updateTrackedPosition(getX(), getY(), getZ());
 			Entity passenger = getPrimaryPassenger();
 			if (passenger instanceof BroomUserAccessor) {
-				setRotation(passenger.yaw, passenger.pitch);
+				setRotation(passenger.getYaw(), passenger.getPitch());
 				if (((BroomUserAccessor) passenger).getPressingForward()) {
 					addVelocity(passenger.getRotationVector().x / 8 * getSpeed(), passenger.getRotationVector().y / 8 * getSpeed(), passenger.getRotationVector().z / 8 * getSpeed());
 					setVelocity(MathHelper.clamp(getVelocity().x, -getSpeed(), getSpeed()), MathHelper.clamp(getVelocity().y, -getSpeed(), getSpeed()), MathHelper.clamp(getVelocity().z, -getSpeed(), getSpeed()));
@@ -112,11 +112,11 @@ public class BroomEntity extends Entity {
 		if (isInvulnerableTo(source)) {
 			return false;
 		}
-		if (!world.isClient && !removed) {
+		if (!world.isClient && !isRemoved()) {
 			damage += amount;
 			if (damage > 4) {
 				dropStack(getDroppedStack());
-				remove();
+				remove(RemovalReason.DISCARDED);
 			}
 		}
 		return true;
@@ -135,12 +135,12 @@ public class BroomEntity extends Entity {
 	
 	@Override
 	public boolean collidesWith(Entity other) {
-		return BoatEntity.method_30959(this, other);
+		return BoatEntity.canCollide(this, other);
 	}
 	
 	@Override
 	public boolean collides() {
-		return !removed;
+		return !isRemoved();
 	}
 	
 	@Override
@@ -149,12 +149,7 @@ public class BroomEntity extends Entity {
 	}
 	
 	@Override
-	protected boolean canClimb() {
-		return false;
-	}
-	
-	@Override
-	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
+	public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
 		return false;
 	}
 	

@@ -7,7 +7,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -21,7 +21,7 @@ public abstract class BWHostileEntity extends HostileEntity {
 	}
 	
 	@Override
-	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable CompoundTag entityTag) {
+	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityTag) {
 		int variants = getVariants();
 		if (variants > 1) {
 			if (hasShiny()) {
@@ -48,18 +48,18 @@ public abstract class BWHostileEntity extends HostileEntity {
 	}
 	
 	@Override
-	public void readCustomDataFromTag(CompoundTag tag) {
-		super.readCustomDataFromTag(tag);
+	public void readCustomDataFromNbt(NbtCompound nbt) {
+		super.readCustomDataFromNbt(nbt);
 		if (getVariants() > 1) {
-			dataTracker.set(VARIANT, tag.getInt("Variant"));
+			dataTracker.set(VARIANT, nbt.getInt("Variant"));
 		}
 	}
 	
 	@Override
-	public void writeCustomDataToTag(CompoundTag tag) {
-		super.writeCustomDataToTag(tag);
+	public void writeCustomDataToNbt(NbtCompound nbt) {
+		super.writeCustomDataToNbt(nbt);
 		if (getVariants() > 1) {
-			tag.putInt("Variant", dataTracker.get(VARIANT));
+			nbt.putInt("Variant", dataTracker.get(VARIANT));
 		}
 	}
 	

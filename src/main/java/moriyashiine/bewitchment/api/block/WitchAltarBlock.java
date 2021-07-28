@@ -13,6 +13,8 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -53,8 +55,14 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 	
 	@Nullable
 	@Override
-	public BlockEntity createBlockEntity(BlockView world) {
-		return formed ? new WitchAltarBlockEntity() : null;
+	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+		return formed ? new WitchAltarBlockEntity(pos, state) : null;
+	}
+	
+	@Nullable
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world0, BlockState state0, BlockEntityType<T> type) {
+		return (world, pos, state, blockEntity) -> WitchAltarBlockEntity.tick(world, pos, state, (WitchAltarBlockEntity) blockEntity);
 	}
 	
 	@Override

@@ -9,7 +9,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ItemScatterer;
@@ -56,8 +56,8 @@ public class UnbindFamiliarRitualFunction extends RitualFunction {
 			if (livingEntity != null) {
 				PlayerEntity closestPlayer = world.getClosestPlayer(effectivePos.getX() + 0.5, effectivePos.getY() + 0.5, effectivePos.getZ() + 0.5, 8, false);
 				if (closestPlayer != null && BewitchmentAPI.getFamiliar(closestPlayer) != null) {
-					CompoundTag entityTag = new CompoundTag();
-					livingEntity.saveSelfToTag(entityTag);
+					NbtCompound entityTag = new NbtCompound();
+					livingEntity.saveSelfNbt(entityTag);
 					if (entityTag.contains("Owner") && closestPlayer.getUuid().equals(entityTag.getUuid("Owner"))) {
 						((FamiliarAccessor) livingEntity).setFamiliar(false);
 						BWUniversalWorldState worldState = BWUniversalWorldState.get(world);

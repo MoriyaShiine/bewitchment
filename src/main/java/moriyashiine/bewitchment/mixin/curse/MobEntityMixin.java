@@ -14,7 +14,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.CaveSpiderEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.SpiderEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -66,7 +66,7 @@ public abstract class MobEntityMixin extends LivingEntity implements InsanityTar
 					setTarget(entity);
 				}
 				if (age % 20 == 0 && (random.nextFloat() < 1 / 100f || (entity instanceof CurseAccessor && !((CurseAccessor) entity).hasCurse(BWCurses.INSANITY)))) {
-					remove();
+					remove(RemovalReason.DISCARDED);
 				}
 			});
 		}
@@ -108,20 +108,20 @@ public abstract class MobEntityMixin extends LivingEntity implements InsanityTar
 		}
 	}
 	
-	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
-	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
+	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
 		if ((Object) this instanceof CaveSpiderEntity) {
-			spawnedByArachnophobia = tag.getBoolean("SpawnedByArachnophobia");
+			spawnedByArachnophobia = nbt.getBoolean("SpawnedByArachnophobia");
 		}
-		setInsanityTargetUUID(tag.getString("InsanityTargetUUID").isEmpty() ? Optional.empty() : Optional.of(UUID.fromString(tag.getString("InsanityTargetUUID"))));
+		setInsanityTargetUUID(nbt.getString("InsanityTargetUUID").isEmpty() ? Optional.empty() : Optional.of(UUID.fromString(nbt.getString("InsanityTargetUUID"))));
 	}
 	
-	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
-	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
+	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
 		if ((Object) this instanceof CaveSpiderEntity) {
-			tag.putBoolean("SpawnedByArachnophobia", spawnedByArachnophobia);
+			nbt.putBoolean("SpawnedByArachnophobia", spawnedByArachnophobia);
 		}
-		tag.putString("InsanityTargetUUID", getInsanityTargetUUID().isPresent() ? getInsanityTargetUUID().get().toString() : "");
+		nbt.putString("InsanityTargetUUID", getInsanityTargetUUID().isPresent() ? getInsanityTargetUUID().get().toString() : "");
 	}
 	
 	@Inject(method = "initDataTracker", at = @At("TAIL"))

@@ -28,11 +28,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.network.ServerPlayerInteractionManager;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -70,8 +68,8 @@ public class BewitchmentAPI {
 		if (!world.isClient) {
 			Map<ItemStack, PoppetShelfBlockEntity> toSearch = new HashMap<>();
 			if (specificInventory != null) {
-				for (int i = 0; i < specificInventory.inventory.size(); i++) {
-					toSearch.put(specificInventory.inventory.getStack(i), null);
+				for (int i = 0; i < specificInventory.getInventory().size(); i++) {
+					toSearch.put(specificInventory.getInventory().getStack(i), null);
 				}
 			}
 			else {
@@ -85,8 +83,8 @@ public class BewitchmentAPI {
 					}
 				}
 				for (PlayerEntity player : ((ServerWorld) world).getPlayers()) {
-					for (int i = 0; i < player.inventory.size(); i++) {
-						toSearch.put(player.inventory.getStack(i), null);
+					for (int i = 0; i < player.getInventory().size(); i++) {
+						toSearch.put(player.getInventory().getStack(i), null);
 					}
 				}
 			}
@@ -119,11 +117,7 @@ public class BewitchmentAPI {
 	public static ServerPlayerEntity getFakePlayer(World world) {
 		if (!world.isClient) {
 			if (fakePlayer == null || fakePlayer.getMainHandStack().getItem() != Items.WOODEN_AXE) {
-				fakePlayer = new ServerPlayerEntity(world.getServer(), (ServerWorld) world, new GameProfile(UUID.randomUUID(), "FAKE_PLAYER"), new ServerPlayerInteractionManager((ServerWorld) world)) {
-					@Override
-					public void sendMessage(Text message, boolean actionBar) {
-					}
-				};
+				fakePlayer = new ServerPlayerEntity(world.getServer(), (ServerWorld) world, new GameProfile(UUID.randomUUID(), "FAKE_PLAYER"));
 				fakePlayer.setStackInHand(Hand.MAIN_HAND, new ItemStack(Items.WOODEN_AXE));
 			}
 			return fakePlayer;
@@ -148,7 +142,7 @@ public class BewitchmentAPI {
 	public static EntityType<?> getFamiliar(PlayerEntity player) {
 		World world = player.world;
 		if (!world.isClient) {
-			for (Pair<UUID, CompoundTag> pair : BWUniversalWorldState.get(world).familiars) {
+			for (Pair<UUID, NbtCompound> pair : BWUniversalWorldState.get(world).familiars) {
 				if (player.getUuid().equals(pair.getLeft())) {
 					return Registry.ENTITY_TYPE.get(new Identifier(pair.getRight().getString("id")));
 				}
@@ -229,56 +223,24 @@ public class BewitchmentAPI {
 	
 	public static void registerAltarMapEntries(Block[]... altarArray) {
 		for (int i = 0; i < DyeColor.values().length; i++) {
-			Item carpet = null;
-			switch (DyeColor.byId(i)) {
-				case WHITE:
-					carpet = Items.WHITE_CARPET;
-					break;
-				case ORANGE:
-					carpet = Items.ORANGE_CARPET;
-					break;
-				case MAGENTA:
-					carpet = Items.MAGENTA_CARPET;
-					break;
-				case LIGHT_BLUE:
-					carpet = Items.LIGHT_BLUE_CARPET;
-					break;
-				case YELLOW:
-					carpet = Items.YELLOW_CARPET;
-					break;
-				case LIME:
-					carpet = Items.LIME_CARPET;
-					break;
-				case PINK:
-					carpet = Items.PINK_CARPET;
-					break;
-				case GRAY:
-					carpet = Items.GRAY_CARPET;
-					break;
-				case LIGHT_GRAY:
-					carpet = Items.LIGHT_GRAY_CARPET;
-					break;
-				case CYAN:
-					carpet = Items.CYAN_CARPET;
-					break;
-				case PURPLE:
-					carpet = Items.PURPLE_CARPET;
-					break;
-				case BLUE:
-					carpet = Items.BLUE_CARPET;
-					break;
-				case BROWN:
-					carpet = Items.BROWN_CARPET;
-					break;
-				case GREEN:
-					carpet = Items.GREEN_CARPET;
-					break;
-				case RED:
-					carpet = Items.RED_CARPET;
-					break;
-				case BLACK:
-					carpet = Items.BLACK_CARPET;
-			}
+			Item carpet = switch (DyeColor.byId(i)) {
+				case WHITE -> Items.WHITE_CARPET;
+				case ORANGE -> Items.ORANGE_CARPET;
+				case MAGENTA -> Items.MAGENTA_CARPET;
+				case LIGHT_BLUE -> Items.LIGHT_BLUE_CARPET;
+				case YELLOW -> Items.YELLOW_CARPET;
+				case LIME -> Items.LIME_CARPET;
+				case PINK -> Items.PINK_CARPET;
+				case GRAY -> Items.GRAY_CARPET;
+				case LIGHT_GRAY -> Items.LIGHT_GRAY_CARPET;
+				case CYAN -> Items.CYAN_CARPET;
+				case PURPLE -> Items.PURPLE_CARPET;
+				case BLUE -> Items.BLUE_CARPET;
+				case BROWN -> Items.BROWN_CARPET;
+				case GREEN -> Items.GREEN_CARPET;
+				case RED -> Items.RED_CARPET;
+				case BLACK -> Items.BLACK_CARPET;
+			};
 			for (Block[] altars : altarArray) {
 				ALTAR_MAP_ENTRIES.add(new AltarMapEntry(altars[0], altars[i + 1], carpet));
 			}

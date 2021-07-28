@@ -3,9 +3,10 @@ package moriyashiine.bewitchment.mixin.brew;
 import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import net.minecraft.entity.AreaEffectCloudEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -39,29 +40,28 @@ public class AreaEffectCloudEntityMixin implements PolymorphAccessor {
 		this.polymorphName = name;
 	}
 	
-	@Redirect(method = "tick", at = @At(value = "INVOKE", target = "net/minecraft/entity/LivingEntity.addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;)Z"))
-	private boolean addStatusEffect(LivingEntity entity, StatusEffectInstance effect) {
-		if (entity instanceof PolymorphAccessor && effect.getEffectType() == BWStatusEffects.POLYMORPH && getPolymorphUUID() != null) {
-			PolymorphAccessor polymorphAccessor = (PolymorphAccessor) entity;
+	@Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)Z"))
+	private boolean addStatusEffect(LivingEntity entity, StatusEffectInstance effect, Entity source) {
+		if (entity instanceof PolymorphAccessor polymorphAccessor && effect.getEffectType() == BWStatusEffects.POLYMORPH && getPolymorphUUID() != null) {
 			polymorphAccessor.setPolymorphUUID(polymorphUUID);
 			polymorphAccessor.setPolymorphName(polymorphName);
 		}
 		return entity.addStatusEffect(effect);
 	}
 	
-	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
-	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo ci) {
-		if (getPolymorphUUID() != null) {
-			tag.putUuid("PolymorphUUID", polymorphUUID);
-			tag.putString("PolymorphName", polymorphName);
+	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo ci) {
+		if (nbt.contains("PolymorphUUID")) {
+			polymorphUUID = nbt.getUuid("PolymorphUUID");
+			polymorphName = nbt.getString("PolymorphName");
 		}
 	}
 	
-	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
-	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo ci) {
-		if (tag.contains("PolymorphUUID")) {
-			polymorphUUID = tag.getUuid("PolymorphUUID");
-			polymorphName = tag.getString("PolymorphName");
+	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
+		if (getPolymorphUUID() != null) {
+			nbt.putUuid("PolymorphUUID", polymorphUUID);
+			nbt.putString("PolymorphName", polymorphName);
 		}
 	}
 }

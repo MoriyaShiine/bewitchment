@@ -1,9 +1,19 @@
 package moriyashiine.bewitchment.client;
 
+import com.terraformersmc.terraform.boat.api.client.TerraformBoatClientHelper;
 import com.terraformersmc.terraform.sign.SpriteIdentifierRegistry;
+import dev.emi.trinkets.api.SlotReference;
+import dev.emi.trinkets.api.client.TrinketRenderer;
+import dev.emi.trinkets.api.client.TrinketRendererRegistry;
+import moriyashiine.bewitchment.api.client.model.BroomEntityModel;
 import moriyashiine.bewitchment.api.entity.BroomEntity;
 import moriyashiine.bewitchment.client.misc.SpriteIdentifiers;
-import moriyashiine.bewitchment.client.model.equipment.armor.WitchArmorModel;
+import moriyashiine.bewitchment.client.model.ContributorHornsModel;
+import moriyashiine.bewitchment.client.model.entity.living.*;
+import moriyashiine.bewitchment.client.model.equipment.trinket.DruidBandModel;
+import moriyashiine.bewitchment.client.model.equipment.trinket.PricklyBeltModel;
+import moriyashiine.bewitchment.client.model.equipment.trinket.SpecterBangleModel;
+import moriyashiine.bewitchment.client.model.equipment.trinket.ZephyrHarnessModel;
 import moriyashiine.bewitchment.client.network.packet.*;
 import moriyashiine.bewitchment.client.particle.CauldronBubbleParticle;
 import moriyashiine.bewitchment.client.particle.IncenseSmokeParticle;
@@ -32,8 +42,8 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
@@ -41,25 +51,51 @@ import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredica
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.model.Model;
+import net.minecraft.client.network.AbstractClientPlayerEntity;
+import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.TexturedRenderLayers;
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.ChestBlockEntityRenderer;
-import net.minecraft.client.render.entity.BoatEntityRenderer;
+import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.client.render.entity.model.EntityModelLayer;
+import net.minecraft.client.render.entity.model.PlayerEntityModel;
+import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3f;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
 
+@SuppressWarnings({"UnstableApiUsage", "unchecked", "ConstantConditions"})
 @Environment(EnvType.CLIENT)
 public class BewitchmentClient implements ClientModInitializer {
 	public static final KeyBinding TRANSFORMATION_ABILITY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key." + Bewitchment.MODID + ".transformation_ability", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "itemGroup." + Bewitchment.MODID + "." + Bewitchment.MODID));
+	
+	public static final EntityModelLayer CONTRIBUTOR_HORNS_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "contributor_horns"), "main");
+	public static final EntityModelLayer BROOM_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "broom"), "main");
+	public static final EntityModelLayer OWL_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "owl"), "main");
+	public static final EntityModelLayer RAVEN_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "raven"), "main");
+	public static final EntityModelLayer SNAKE_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "snake"), "main");
+	public static final EntityModelLayer TOAD_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "toad"), "main");
+	public static final EntityModelLayer GHOST_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "ghost"), "main");
+	public static final EntityModelLayer VAMPIRE_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "vampire"), "main");
+	public static final EntityModelLayer WEREWOLF_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "werewolf"), "main");
+	public static final EntityModelLayer HELLHOUND_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "hellhound"), "main");
+	public static final EntityModelLayer DEMON_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "demon"), "main");
+	public static final EntityModelLayer LEONARD_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "leonard"), "main");
+	public static final EntityModelLayer BAPHOMET_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "baphomet"), "main");
+	public static final EntityModelLayer LILITH_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "lilith"), "main");
+	public static final EntityModelLayer HERNE_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "herne"), "main");
 	
 	@Override
 	public void onInitializeClient() {
@@ -99,51 +135,66 @@ public class BewitchmentClient implements ClientModInitializer {
 		ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> tintIndex == 1 ? ((BedBlock) state.getBlock()).getColor().getFireworkColor() : 0xffffff, BWObjects.WHITE_COFFIN, BWObjects.ORANGE_COFFIN, BWObjects.MAGENTA_COFFIN, BWObjects.LIGHT_BLUE_COFFIN, BWObjects.YELLOW_COFFIN, BWObjects.LIME_COFFIN, BWObjects.PINK_COFFIN, BWObjects.GRAY_COFFIN, BWObjects.LIGHT_GRAY_COFFIN, BWObjects.CYAN_COFFIN, BWObjects.PURPLE_COFFIN, BWObjects.BLUE_COFFIN, BWObjects.BROWN_COFFIN, BWObjects.GREEN_COFFIN, BWObjects.RED_COFFIN, BWObjects.BLACK_COFFIN);
 		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex == 1 ? ((BedBlock) Block.getBlockFromItem(stack.getItem())).getColor().getFireworkColor() : 0xffffff, BWObjects.WHITE_COFFIN, BWObjects.ORANGE_COFFIN, BWObjects.MAGENTA_COFFIN, BWObjects.LIGHT_BLUE_COFFIN, BWObjects.YELLOW_COFFIN, BWObjects.LIME_COFFIN, BWObjects.PINK_COFFIN, BWObjects.GRAY_COFFIN, BWObjects.LIGHT_GRAY_COFFIN, BWObjects.CYAN_COFFIN, BWObjects.PURPLE_COFFIN, BWObjects.BLUE_COFFIN, BWObjects.BROWN_COFFIN, BWObjects.GREEN_COFFIN, BWObjects.RED_COFFIN, BWObjects.BLACK_COFFIN);
 		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex == 0 ? 0x7f0000 : 0xffffff, BWObjects.BOTTLE_OF_BLOOD);
-		FabricModelPredicateProviderRegistry.register(BWObjects.HEDGEWITCH_HAT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.getName().asString().toLowerCase().contains("faith") ? 1 : 0);
-		FabricModelPredicateProviderRegistry.register(BWObjects.ALCHEMIST_HAT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.getName().asString().toLowerCase().contains("faith") ? 1 : 0);
-		FabricModelPredicateProviderRegistry.register(BWObjects.BESMIRCHED_HAT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.getName().asString().toLowerCase().contains("faith") ? 1 : 0);
-		FabricModelPredicateProviderRegistry.register(BWObjects.NAZAR, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.hasTag() && stack.getTag().getBoolean("Worn") ? 1 : 0);
-		FabricModelPredicateProviderRegistry.register(BWObjects.PRICKLY_BELT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.hasTag() && stack.getTag().getInt("PotionUses") > 0 ? 1 : 0);
-		FabricModelPredicateProviderRegistry.register(BWObjects.HORNED_SPEAR, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1 : 0);
-		FabricModelPredicateProviderRegistry.register(BWObjects.TAGLOCK, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> TaglockItem.hasTaglock(stack) ? 1 : 0);
-		FabricModelPredicateProviderRegistry.register(BWObjects.WAYSTONE, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity) -> stack.hasTag() && stack.getOrCreateTag().contains("LocationPos") ? 1 : 0);
-		ArmorRenderingRegistry.registerModel((livingEntity, itemStack, equipmentSlot, bipedEntityModel) -> new WitchArmorModel<>(equipmentSlot, itemStack.getItem() == BWObjects.HEDGEWITCH_HOOD || itemStack.getItem() == BWObjects.ALCHEMIST_HOOD || itemStack.getItem() == BWObjects.BESMIRCHED_HOOD, !livingEntity.getEquippedStack(EquipmentSlot.FEET).isEmpty()), BWObjects.HEDGEWITCH_HOOD, BWObjects.HEDGEWITCH_HAT, BWObjects.HEDGEWITCH_ROBES, BWObjects.HEDGEWITCH_PANTS, BWObjects.ALCHEMIST_HOOD, BWObjects.ALCHEMIST_HAT, BWObjects.ALCHEMIST_ROBES, BWObjects.ALCHEMIST_PANTS, BWObjects.BESMIRCHED_HOOD, BWObjects.BESMIRCHED_HAT, BWObjects.BESMIRCHED_ROBES, BWObjects.BESMIRCHED_PANTS, BWObjects.HARBINGER);
-		Identifier WITCH_HAT_VARIANT = new Identifier(Bewitchment.MODID, "textures/entity/armor/witch_hat_variant.png");
-		ArmorRenderingRegistry.registerTexture((livingEntity, itemStack, equipmentSlot, b, s, identifier) -> itemStack.getItem() == BWObjects.HEDGEWITCH_HAT && itemStack.getName().asString().toLowerCase().contains("faith") ? WITCH_HAT_VARIANT : new Identifier(Bewitchment.MODID, "textures/entity/armor/hedgewitch.png"), BWObjects.HEDGEWITCH_HOOD, BWObjects.HEDGEWITCH_HAT, BWObjects.HEDGEWITCH_ROBES, BWObjects.HEDGEWITCH_PANTS);
-		ArmorRenderingRegistry.registerTexture((livingEntity, itemStack, equipmentSlot, b, s, identifier) -> itemStack.getItem() == BWObjects.ALCHEMIST_HAT && itemStack.getName().asString().toLowerCase().contains("faith") ? WITCH_HAT_VARIANT : new Identifier(Bewitchment.MODID, "textures/entity/armor/alchemist.png"), BWObjects.ALCHEMIST_HOOD, BWObjects.ALCHEMIST_HAT, BWObjects.ALCHEMIST_ROBES, BWObjects.ALCHEMIST_PANTS);
-		ArmorRenderingRegistry.registerTexture((livingEntity, itemStack, equipmentSlot, b, s, identifier) -> itemStack.getItem() == BWObjects.BESMIRCHED_HAT && itemStack.getName().asString().toLowerCase().contains("faith") ? WITCH_HAT_VARIANT : new Identifier(Bewitchment.MODID, "textures/entity/armor/besmirched.png"), BWObjects.BESMIRCHED_HOOD, BWObjects.BESMIRCHED_HAT, BWObjects.BESMIRCHED_ROBES, BWObjects.BESMIRCHED_PANTS);
-		ArmorRenderingRegistry.registerTexture((livingEntity, itemStack, equipmentSlot, b, s, identifier) -> new Identifier(Bewitchment.MODID, "textures/entity/armor/harbinger.png"), BWObjects.HARBINGER);
+		FabricModelPredicateProviderRegistry.register(BWObjects.HEDGEWITCH_HAT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity, seed) -> stack.getName().asString().toLowerCase().contains("faith") ? 1 : 0);
+		FabricModelPredicateProviderRegistry.register(BWObjects.ALCHEMIST_HAT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity, seed) -> stack.getName().asString().toLowerCase().contains("faith") ? 1 : 0);
+		FabricModelPredicateProviderRegistry.register(BWObjects.BESMIRCHED_HAT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity, seed) -> stack.getName().asString().toLowerCase().contains("faith") ? 1 : 0);
+		FabricModelPredicateProviderRegistry.register(BWObjects.NAZAR, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity, seed) -> stack.hasTag() && stack.getTag().getBoolean("Worn") ? 1 : 0);
+		FabricModelPredicateProviderRegistry.register(BWObjects.PRICKLY_BELT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity, seed) -> stack.hasTag() && stack.getTag().getInt("PotionUses") > 0 ? 1 : 0);
+		FabricModelPredicateProviderRegistry.register(BWObjects.HORNED_SPEAR, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1 : 0);
+		FabricModelPredicateProviderRegistry.register(BWObjects.TAGLOCK, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity, seed) -> TaglockItem.hasTaglock(stack) ? 1 : 0);
+		FabricModelPredicateProviderRegistry.register(BWObjects.WAYSTONE, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity, seed) -> stack.hasTag() && stack.getOrCreateTag().contains("LocationPos") ? 1 : 0);
+		//		ArmorRenderingRegistry.registerModel((livingEntity, itemStack, equipmentSlot, bipedEntityModel) -> new WitchArmorModel<>(equipmentSlot, itemStack.getItem() == BWObjects.HEDGEWITCH_HOOD || itemStack.getItem() == BWObjects.ALCHEMIST_HOOD || itemStack.getItem() == BWObjects.BESMIRCHED_HOOD, !livingEntity.getEquippedStack(EquipmentSlot.FEET).isEmpty()), BWObjects.HEDGEWITCH_HOOD, BWObjects.HEDGEWITCH_HAT, BWObjects.HEDGEWITCH_ROBES, BWObjects.HEDGEWITCH_PANTS, BWObjects.ALCHEMIST_HOOD, BWObjects.ALCHEMIST_HAT, BWObjects.ALCHEMIST_ROBES, BWObjects.ALCHEMIST_PANTS, BWObjects.BESMIRCHED_HOOD, BWObjects.BESMIRCHED_HAT, BWObjects.BESMIRCHED_ROBES, BWObjects.BESMIRCHED_PANTS, BWObjects.HARBINGER);
+		//		Identifier WITCH_HAT_VARIANT = new Identifier(Bewitchment.MODID, "textures/entity/armor/witch_hat_variant.png");
+		//		ArmorRenderingRegistry.registerTexture((livingEntity, itemStack, equipmentSlot, b, s, identifier) -> itemStack.getItem() == BWObjects.HEDGEWITCH_HAT && itemStack.getName().asString().toLowerCase().contains("faith") ? WITCH_HAT_VARIANT : new Identifier(Bewitchment.MODID, "textures/entity/armor/hedgewitch.png"), BWObjects.HEDGEWITCH_HOOD, BWObjects.HEDGEWITCH_HAT, BWObjects.HEDGEWITCH_ROBES, BWObjects.HEDGEWITCH_PANTS);
+		//		ArmorRenderingRegistry.registerTexture((livingEntity, itemStack, equipmentSlot, b, s, identifier) -> itemStack.getItem() == BWObjects.ALCHEMIST_HAT && itemStack.getName().asString().toLowerCase().contains("faith") ? WITCH_HAT_VARIANT : new Identifier(Bewitchment.MODID, "textures/entity/armor/alchemist.png"), BWObjects.ALCHEMIST_HOOD, BWObjects.ALCHEMIST_HAT, BWObjects.ALCHEMIST_ROBES, BWObjects.ALCHEMIST_PANTS);
+		//		ArmorRenderingRegistry.registerTexture((livingEntity, itemStack, equipmentSlot, b, s, identifier) -> itemStack.getItem() == BWObjects.BESMIRCHED_HAT && itemStack.getName().asString().toLowerCase().contains("faith") ? WITCH_HAT_VARIANT : new Identifier(Bewitchment.MODID, "textures/entity/armor/besmirched.png"), BWObjects.BESMIRCHED_HOOD, BWObjects.BESMIRCHED_HAT, BWObjects.BESMIRCHED_ROBES, BWObjects.BESMIRCHED_PANTS);
+		//		ArmorRenderingRegistry.registerTexture((livingEntity, itemStack, equipmentSlot, b, s, identifier) -> new Identifier(Bewitchment.MODID, "textures/entity/armor/harbinger.png"), BWObjects.HARBINGER);
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.BW_CHEST, ChestBlockEntityRenderer::new);
-		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.WITCH_ALTAR, WitchAltarBlockEntityRenderer::new);
-		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.WITCH_CAULDRON, WitchCauldronBlockEntityRenderer::new);
-		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.BRAZIER, BrazierBlockEntityRenderer::new);
-		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.POPPET_SHELF, PoppetShelfBlockEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.WITCH_ALTAR, ctx -> new WitchAltarBlockEntityRenderer());
+		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.WITCH_CAULDRON, ctx -> new WitchCauldronBlockEntityRenderer());
+		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.BRAZIER, ctx -> new BrazierBlockEntityRenderer());
+		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.POPPET_SHELF, ctx -> new PoppetShelfBlockEntityRenderer());
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.JUNIPER_CHEST, ChestBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.ELDER_CHEST, ChestBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(BWBlockEntityTypes.DRAGONS_BLOOD_CHEST, ChestBlockEntityRenderer::new);
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.JUNIPER_BOAT, (dispatcher, context) -> new BoatEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.CYPRESS_BOAT, (dispatcher, context) -> new BoatEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.ELDER_BOAT, (dispatcher, context) -> new BoatEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.DRAGONS_BLOOD_BOAT, (dispatcher, context) -> new BoatEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.JUNIPER_BROOM, (dispatcher, context) -> new JuniperBroomEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.CYPRESS_BROOM, (dispatcher, context) -> new CypressBroomEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.ELDER_BROOM, (dispatcher, context) -> new ElderBroomEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.DRAGONS_BLOOD_BROOM, (dispatcher, context) -> new DragonsBloodBroomEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.SILVER_ARROW, (dispatcher, context) -> new SilverArrowEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.HORNED_SPEAR, (dispatcher, context) -> new HornedSpearEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.OWL, (dispatcher, context) -> new OwlEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.RAVEN, (dispatcher, context) -> new RavenEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.SNAKE, (dispatcher, context) -> new SnakeEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.TOAD, (dispatcher, context) -> new ToadEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.GHOST, (dispatcher, context) -> new GhostEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.VAMPIRE, (dispatcher, context) -> new VampireEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.WEREWOLF, (dispatcher, context) -> new WerewolfEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.HELLHOUND, (dispatcher, context) -> new HellhoundEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.DEMON, (dispatcher, context) -> new DemonEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.LEONARD, (dispatcher, context) -> new LeonardEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.BAPHOMET, (dispatcher, context) -> new BaphometEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.LILITH, (dispatcher, context) -> new LilithEntityRenderer(dispatcher));
-		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.HERNE, (dispatcher, context) -> new HerneEntityRenderer(dispatcher));
+		TerraformBoatClientHelper.registerModelLayer(new Identifier(Bewitchment.MODID, "juniper"));
+		TerraformBoatClientHelper.registerModelLayer(new Identifier(Bewitchment.MODID, "cypress"));
+		TerraformBoatClientHelper.registerModelLayer(new Identifier(Bewitchment.MODID, "elder"));
+		TerraformBoatClientHelper.registerModelLayer(new Identifier(Bewitchment.MODID, "dragons_blood"));
+		EntityModelLayerRegistry.registerModelLayer(CONTRIBUTOR_HORNS_MODEL_LAYER, ContributorHornsModel::getTexturedModelData);
+		EntityModelLayerRegistry.registerModelLayer(BROOM_MODEL_LAYER, BroomEntityModel::getTexturedModelData);
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.JUNIPER_BROOM, JuniperBroomEntityRenderer::new);
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.CYPRESS_BROOM, CypressBroomEntityRenderer::new);
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.ELDER_BROOM, ElderBroomEntityRenderer::new);
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.DRAGONS_BLOOD_BROOM, DragonsBloodBroomEntityRenderer::new);
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.SILVER_ARROW, SilverArrowEntityRenderer::new);
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.HORNED_SPEAR, HornedSpearEntityRenderer::new);
+		EntityModelLayerRegistry.registerModelLayer(OWL_MODEL_LAYER, OwlEntityModel::getTexturedModelData);
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.OWL, OwlEntityRenderer::new);
+		EntityModelLayerRegistry.registerModelLayer(RAVEN_MODEL_LAYER, RavenEntityModel::getTexturedModelData);
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.RAVEN, RavenEntityRenderer::new);
+		EntityModelLayerRegistry.registerModelLayer(SNAKE_MODEL_LAYER, SnakeEntityModel::getTexturedModelData);
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.SNAKE, SnakeEntityRenderer::new);
+		EntityModelLayerRegistry.registerModelLayer(TOAD_MODEL_LAYER, ToadEntityModel::getTexturedModelData);
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.TOAD, ToadEntityRenderer::new);
+		EntityModelLayerRegistry.registerModelLayer(GHOST_MODEL_LAYER, GhostEntityModel::getTexturedModelData);
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.GHOST, GhostEntityRenderer::new);
+		EntityModelLayerRegistry.registerModelLayer(VAMPIRE_MODEL_LAYER, VampireEntityModel::getTexturedModelData);
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.VAMPIRE, VampireEntityRenderer::new);
+		EntityModelLayerRegistry.registerModelLayer(WEREWOLF_MODEL_LAYER, WerewolfEntityModel::getTexturedModelData);
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.WEREWOLF, WerewolfEntityRenderer::new);
+		EntityModelLayerRegistry.registerModelLayer(HELLHOUND_MODEL_LAYER, HellhoundEntityModel::getTexturedModelData);
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.HELLHOUND, HellhoundEntityRenderer::new);
+		EntityModelLayerRegistry.registerModelLayer(DEMON_MODEL_LAYER, DemonEntityModel::getTexturedModelData);
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.DEMON, DemonEntityRenderer::new);
+		EntityModelLayerRegistry.registerModelLayer(LEONARD_MODEL_LAYER, LeonardEntityModel::getTexturedModelData);
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.LEONARD, LeonardEntityRenderer::new);
+		EntityModelLayerRegistry.registerModelLayer(BAPHOMET_MODEL_LAYER, BaphometEntityModel::getTexturedModelData);
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.BAPHOMET, BaphometEntityRenderer::new);
+		EntityModelLayerRegistry.registerModelLayer(LILITH_MODEL_LAYER, LilithEntityModel::getTexturedModelData);
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.LILITH, LilithEntityRenderer::new);
+		EntityModelLayerRegistry.registerModelLayer(HERNE_MODEL_LAYER, HerneEntityModel::getTexturedModelData);
+		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.HERNE, HerneEntityRenderer::new);
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), BWObjects.SALT_LINE, BWObjects.TEMPORARY_COBWEB, BWObjects.GLYPH, BWObjects.GOLDEN_GLYPH, BWObjects.FIERY_GLYPH, BWObjects.ELDRITCH_GLYPH, BWObjects.SIGIL);
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), BWObjects.ACONITE_CROP, BWObjects.BELLADONNA_CROP, BWObjects.GARLIC_CROP, BWObjects.MANDRAKE_CROP);
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), BWObjects.JUNIPER_SAPLING, BWObjects.POTTED_JUNIPER_SAPLING, BWObjects.JUNIPER_DOOR, BWObjects.JUNIPER_TRAPDOOR);
@@ -192,14 +243,70 @@ public class BewitchmentClient implements ClientModInitializer {
 		SpriteIdentifierRegistry.INSTANCE.addIdentifier(new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, BWObjects.CYPRESS_SIGN.getTexture()));
 		SpriteIdentifierRegistry.INSTANCE.addIdentifier(new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, BWObjects.ELDER_SIGN.getTexture()));
 		SpriteIdentifierRegistry.INSTANCE.addIdentifier(new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, BWObjects.DRAGONS_BLOOD_SIGN.getTexture()));
-		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.JUNIPER_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> BlockEntityRenderDispatcher.INSTANCE.renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BWChestBlockEntity.Type.JUNIPER, false), matrices, vertexConsumers, light, overlay));
-		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.TRAPPED_JUNIPER_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> BlockEntityRenderDispatcher.INSTANCE.renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BWChestBlockEntity.Type.JUNIPER, true), matrices, vertexConsumers, light, overlay));
-		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.CYPRESS_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> BlockEntityRenderDispatcher.INSTANCE.renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BWChestBlockEntity.Type.CYPRESS, false), matrices, vertexConsumers, light, overlay));
-		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.TRAPPED_CYPRESS_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> BlockEntityRenderDispatcher.INSTANCE.renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BWChestBlockEntity.Type.CYPRESS, true), matrices, vertexConsumers, light, overlay));
-		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.ELDER_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> BlockEntityRenderDispatcher.INSTANCE.renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BWChestBlockEntity.Type.ELDER, false), matrices, vertexConsumers, light, overlay));
-		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.TRAPPED_ELDER_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> BlockEntityRenderDispatcher.INSTANCE.renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BWChestBlockEntity.Type.ELDER, true), matrices, vertexConsumers, light, overlay));
-		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.DRAGONS_BLOOD_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> BlockEntityRenderDispatcher.INSTANCE.renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BWChestBlockEntity.Type.DRAGONS_BLOOD, false), matrices, vertexConsumers, light, overlay));
-		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.TRAPPED_DRAGONS_BLOOD_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> BlockEntityRenderDispatcher.INSTANCE.renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BWChestBlockEntity.Type.DRAGONS_BLOOD, true), matrices, vertexConsumers, light, overlay));
+		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.JUNIPER_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BlockPos.ORIGIN, BWObjects.JUNIPER_CHEST.getDefaultState(), BWChestBlockEntity.Type.JUNIPER, false), matrices, vertexConsumers, light, overlay));
+		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.TRAPPED_JUNIPER_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BlockPos.ORIGIN, BWObjects.TRAPPED_JUNIPER_CHEST.getDefaultState(), BWChestBlockEntity.Type.JUNIPER, true), matrices, vertexConsumers, light, overlay));
+		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.CYPRESS_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BlockPos.ORIGIN, BWObjects.CYPRESS_CHEST.getDefaultState(), BWChestBlockEntity.Type.CYPRESS, false), matrices, vertexConsumers, light, overlay));
+		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.TRAPPED_CYPRESS_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BlockPos.ORIGIN, BWObjects.TRAPPED_CYPRESS_CHEST.getDefaultState(), BWChestBlockEntity.Type.CYPRESS, true), matrices, vertexConsumers, light, overlay));
+		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.ELDER_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BlockPos.ORIGIN, BWObjects.ELDER_CHEST.getDefaultState(), BWChestBlockEntity.Type.ELDER, false), matrices, vertexConsumers, light, overlay));
+		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.TRAPPED_ELDER_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BlockPos.ORIGIN, BWObjects.TRAPPED_ELDER_CHEST.getDefaultState(), BWChestBlockEntity.Type.ELDER, true), matrices, vertexConsumers, light, overlay));
+		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.DRAGONS_BLOOD_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BlockPos.ORIGIN, BWObjects.DRAGONS_BLOOD_CHEST.getDefaultState(), BWChestBlockEntity.Type.DRAGONS_BLOOD, false), matrices, vertexConsumers, light, overlay));
+		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.TRAPPED_DRAGONS_BLOOD_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BlockPos.ORIGIN, BWObjects.TRAPPED_DRAGONS_BLOOD_CHEST.getDefaultState(), BWChestBlockEntity.Type.DRAGONS_BLOOD, true), matrices, vertexConsumers, light, overlay));
+		TrinketRendererRegistry.registerRenderer(BWObjects.NAZAR, (stack, slotReference, contextModel, matrices, vertexConsumers, light, entity, limbAngle, limbDistance, tickDelta, animationProgress, headYaw, headPitch) -> {
+			ItemStack copy = stack.copy();
+			copy.getOrCreateTag().putBoolean("Worn", true);
+			TrinketRenderer.translateToChest(matrices, (PlayerEntityModel<AbstractClientPlayerEntity>) contextModel, (AbstractClientPlayerEntity) entity);
+			matrices.translate(0, -1 / 4.25f, 1 / 48f);
+			matrices.scale(1 / 3f, 1 / 3f, 1 / 3f);
+			matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180));
+			MinecraftClient.getInstance().getItemRenderer().renderItem(copy, ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
+		});
+		TrinketRendererRegistry.registerRenderer(BWObjects.SPECTER_BANGLE, new TrinketRenderer() {
+			private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/trinket/specter_bangle.png");
+			private static final Model MODEL = new SpecterBangleModel();
+			
+			@Override
+			public void render(ItemStack stack, SlotReference slotReference, EntityModel<? extends LivingEntity> contextModel, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, LivingEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
+				TrinketRenderer.translateToRightLeg(matrices, (PlayerEntityModel<AbstractClientPlayerEntity>) contextModel, (AbstractClientPlayerEntity) entity);
+				MODEL.render(matrices, vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(TEXTURE)), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
+			}
+		});
+		TrinketRendererRegistry.registerRenderer(BWObjects.PRICKLY_BELT, new TrinketRenderer() {
+			private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/trinket/prickly_belt.png");
+			private static final Model MODEL = new PricklyBeltModel();
+			
+			@Override
+			public void render(ItemStack stack, SlotReference slotReference, EntityModel<? extends LivingEntity> contextModel, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, LivingEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
+				TrinketRenderer.translateToChest(matrices, (PlayerEntityModel<AbstractClientPlayerEntity>) contextModel, (AbstractClientPlayerEntity) entity);
+				MODEL.render(matrices, vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(TEXTURE)), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
+			}
+		});
+		TrinketRendererRegistry.registerRenderer(BWObjects.HELLISH_BAUBLE, (stack, slotReference, contextModel, matrices, vertexConsumers, light, entity, limbAngle, limbDistance, tickDelta, animationProgress, headYaw, headPitch) -> {
+			TrinketRenderer.translateToChest(matrices, (PlayerEntityModel<AbstractClientPlayerEntity>) contextModel, (AbstractClientPlayerEntity) entity);
+			matrices.translate(0, -1 / 4.25f, 1 / 48f);
+			matrices.scale(1 / 3f, 1 / 3f, 1 / 3f);
+			matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180));
+			MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
+		});
+		TrinketRendererRegistry.registerRenderer(BWObjects.DRUID_BAND, new TrinketRenderer() {
+			private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/trinket/druid_band.png");
+			private static final Model MODEL = new DruidBandModel();
+			
+			@Override
+			public void render(ItemStack stack, SlotReference slotReference, EntityModel<? extends LivingEntity> contextModel, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, LivingEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
+				TrinketRenderer.translateToLeftLeg(matrices, (PlayerEntityModel<AbstractClientPlayerEntity>) contextModel, (AbstractClientPlayerEntity) entity);
+				MODEL.render(matrices, vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(TEXTURE)), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
+			}
+		});
+		TrinketRendererRegistry.registerRenderer(BWObjects.ZEPHYR_HARNESS, new TrinketRenderer() {
+			private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/trinket/zephyr_harness.png");
+			private static final Model MODEL = new ZephyrHarnessModel();
+			
+			@Override
+			public void render(ItemStack stack, SlotReference slotReference, EntityModel<? extends LivingEntity> contextModel, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, LivingEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
+				TrinketRenderer.translateToChest(matrices, (PlayerEntityModel<AbstractClientPlayerEntity>) contextModel, (AbstractClientPlayerEntity) entity);
+				MODEL.render(matrices, vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(TEXTURE)), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
+			}
+		});
 		ClientTickEvents.END_CLIENT_TICK.register(new ClientTickEvents.EndTick() {
 			private int transformationAbilityCooldown = 0;
 			

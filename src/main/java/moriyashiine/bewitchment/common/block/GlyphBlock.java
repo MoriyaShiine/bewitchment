@@ -8,6 +8,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -44,8 +46,14 @@ public class GlyphBlock extends HorizontalFacingBlock implements BlockEntityProv
 	
 	@Nullable
 	@Override
-	public BlockEntity createBlockEntity(BlockView world) {
-		return this == BWObjects.GOLDEN_GLYPH ? new GlyphBlockEntity() : null;
+	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+		return state.getBlock() == BWObjects.GOLDEN_GLYPH ? new GlyphBlockEntity(pos, state) : null;
+	}
+	
+	@Nullable
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world0, BlockState state0, BlockEntityType<T> type) {
+		return state0.getBlock() == BWObjects.GOLDEN_GLYPH ? (world, pos, state, blockEntity) -> GlyphBlockEntity.tick(world, pos, state, (GlyphBlockEntity) blockEntity) : null;
 	}
 	
 	@Override

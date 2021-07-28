@@ -83,8 +83,7 @@ public class BrambleBlock extends SugarCaneBlock {
 	
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (!world.isClient && entity instanceof LivingEntity) {
-			LivingEntity livingEntity = (LivingEntity) entity;
+		if (!world.isClient && entity instanceof LivingEntity livingEntity) {
 			if (this == BWObjects.ENDER_BRAMBLE && !livingEntity.hasVehicle()) {
 				BWUtil.attemptTeleport(livingEntity, entity.getBlockPos(), 64, true);
 			}
@@ -136,9 +135,9 @@ public class BrambleBlock extends SugarCaneBlock {
 			if (state.get(BWProperties.HAS_FRUIT)) {
 				if (!client) {
 					world.setBlockState(pos, state.with(Properties.LEVEL_15, 0).with(BWProperties.HAS_FRUIT, false));
-					world.playSound(null, pos, SoundEvents.ITEM_SWEET_BERRIES_PICK_FROM_BUSH, SoundCategory.BLOCKS, 1, 1);
+					world.playSound(null, pos, SoundEvents.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS, 1, 1);
 					ItemStack stack = new ItemStack(BWObjects.WITCHBERRY);
-					if (!player.inventory.insertStack(stack)) {
+					if (!player.getInventory().insertStack(stack)) {
 						player.dropStack(stack);
 					}
 				}

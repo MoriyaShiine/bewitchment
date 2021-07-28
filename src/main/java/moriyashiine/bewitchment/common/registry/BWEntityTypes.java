@@ -1,7 +1,5 @@
 package moriyashiine.bewitchment.common.registry;
 
-import com.terraformersmc.terraform.boat.TerraformBoat;
-import com.terraformersmc.terraform.boat.TerraformBoatEntity;
 import moriyashiine.bewitchment.api.entity.BroomEntity;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.DragonsBloodBroomEntity;
@@ -22,11 +20,6 @@ import java.util.Map;
 
 public class BWEntityTypes {
 	private static final Map<EntityType<?>, Identifier> ENTITY_TYPES = new LinkedHashMap<>();
-	
-	public static final EntityType<TerraformBoatEntity> JUNIPER_BOAT = create("juniper_boat", FabricEntityTypeBuilder.<TerraformBoatEntity>create(SpawnGroup.MISC, (type, world) -> new TerraformBoatEntity(type, world, new TerraformBoat(BWObjects.JUNIPER_BOAT, BWObjects.JUNIPER_PLANKS.asItem(), new Identifier(Bewitchment.MODID, "textures/entity/boat/juniper.png")))).dimensions(EntityType.BOAT.getDimensions()).build());
-	public static final EntityType<TerraformBoatEntity> CYPRESS_BOAT = create("cypress_boat", FabricEntityTypeBuilder.<TerraformBoatEntity>create(SpawnGroup.MISC, (type, world) -> new TerraformBoatEntity(type, world, new TerraformBoat(BWObjects.CYPRESS_BOAT, BWObjects.CYPRESS_PLANKS.asItem(), new Identifier(Bewitchment.MODID, "textures/entity/boat/cypress.png")))).dimensions(EntityType.BOAT.getDimensions()).build());
-	public static final EntityType<TerraformBoatEntity> ELDER_BOAT = create("elder_boat", FabricEntityTypeBuilder.<TerraformBoatEntity>create(SpawnGroup.MISC, (type, world) -> new TerraformBoatEntity(type, world, new TerraformBoat(BWObjects.ELDER_BOAT, BWObjects.ELDER_PLANKS.asItem(), new Identifier(Bewitchment.MODID, "textures/entity/boat/elder.png")))).dimensions(EntityType.BOAT.getDimensions()).build());
-	public static final EntityType<TerraformBoatEntity> DRAGONS_BLOOD_BOAT = create("dragons_blood_boat", FabricEntityTypeBuilder.<TerraformBoatEntity>create(SpawnGroup.MISC, (type, world) -> new TerraformBoatEntity(type, world, new TerraformBoat(BWObjects.DRAGONS_BLOOD_BOAT, BWObjects.DRAGONS_BLOOD_PLANKS.asItem(), new Identifier(Bewitchment.MODID, "textures/entity/boat/dragons_blood.png")))).dimensions(EntityType.BOAT.getDimensions()).build());
 	
 	public static final EntityType<JuniperBroomEntity> JUNIPER_BROOM = create("juniper_broom", FabricEntityTypeBuilder.create(SpawnGroup.MISC, JuniperBroomEntity::new).dimensions(EntityType.ARROW.getDimensions()).build());
 	public static final EntityType<BroomEntity> CYPRESS_BROOM = create("cypress_broom", FabricEntityTypeBuilder.create(SpawnGroup.MISC, BroomEntity::new).dimensions(JUNIPER_BROOM.getDimensions()).build());

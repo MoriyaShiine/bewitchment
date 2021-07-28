@@ -4,7 +4,6 @@ import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWSigils;
 import moriyashiine.bewitchment.common.world.BWWorldState;
-import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -47,7 +46,7 @@ public abstract class LivingEntityMixin extends Entity {
 	
 	@Inject(method = "canHaveStatusEffect", at = @At("RETURN"), cancellable = true)
 	private void canHaveStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (callbackInfo.getReturnValue() && !world.isClient && !effect.isAmbient() && ((StatusEffectAccessor) effect.getEffectType()).bw_getType() != StatusEffectType.HARMFUL) {
+		if (callbackInfo.getReturnValue() && !world.isClient && !effect.isAmbient() && effect.getEffectType().getType() != StatusEffectType.HARMFUL) {
 			BWWorldState worldState = BWWorldState.get(world);
 			BlockPos sigilPos = BWUtil.getClosestBlockPos(getBlockPos(), 16, currentPos -> worldState.potentialSigils.contains(currentPos.asLong()) && world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.RUIN);
 			if (sigilPos != null) {

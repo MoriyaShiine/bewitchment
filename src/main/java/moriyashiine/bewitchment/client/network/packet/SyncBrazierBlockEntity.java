@@ -37,8 +37,7 @@ public class SyncBrazierBlockEntity {
 		ItemStack four = buf.readItemStack();
 		client.execute(() -> {
 			BlockEntity blockEntity = client.world.getBlockEntity(pos);
-			if (blockEntity instanceof BrazierBlockEntity) {
-				BrazierBlockEntity brazier = (BrazierBlockEntity) blockEntity;
+			if (blockEntity instanceof BrazierBlockEntity brazier) {
 				brazier.setStack(0, one);
 				brazier.setStack(1, two);
 				brazier.setStack(2, three);

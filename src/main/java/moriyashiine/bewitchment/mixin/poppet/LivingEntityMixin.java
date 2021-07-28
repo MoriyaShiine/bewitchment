@@ -23,7 +23,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -51,7 +51,7 @@ public abstract class LivingEntityMixin extends Entity implements SubmergedInWat
 	protected abstract float getSoundVolume();
 	
 	@Shadow
-	protected abstract float getSoundPitch();
+	public abstract float getSoundPitch();
 	
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
@@ -168,14 +168,14 @@ public abstract class LivingEntityMixin extends Entity implements SubmergedInWat
 		}
 	}
 	
-	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
-	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		setSubmergedInWater(tag.getBoolean("SubmergedInWater"));
+	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		setSubmergedInWater(nbt.getBoolean("SubmergedInWater"));
 	}
 	
-	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
-	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		tag.putBoolean("SubmergedInWater", getSubmergedInWater());
+	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		nbt.putBoolean("SubmergedInWater", getSubmergedInWater());
 	}
 	
 	@Inject(method = "initDataTracker", at = @At("TAIL"))

@@ -42,11 +42,8 @@ public class CauldronTeleportPacket {
 			for (Long longPos : worldState.witchCauldrons) {
 				BlockPos pos = BlockPos.fromLong(longPos);
 				BlockEntity blockEntity = world.getBlockEntity(pos);
-				if (blockEntity instanceof WitchCauldronBlockEntity) {
-					WitchCauldronBlockEntity cauldron = (WitchCauldronBlockEntity) blockEntity;
-					if (cauldron.hasCustomName() && cauldron.getCustomName().getString().equals(message) && (closest == null || pos.getSquaredDistance(player.getPos(), true) < closest.getSquaredDistance(player.getPos(), true))) {
-						closest = pos;
-					}
+				if (blockEntity instanceof WitchCauldronBlockEntity cauldron && cauldron.hasCustomName() && cauldron.getCustomName().getString().equals(message) && (closest == null || pos.getSquaredDistance(player.getPos(), true) < closest.getSquaredDistance(player.getPos(), true))) {
+					closest = pos;
 				}
 			}
 			if (closest != null) {
@@ -55,11 +52,8 @@ public class CauldronTeleportPacket {
 					BlockPos altarPos = ((UsesAltarPower) world.getBlockEntity(cauldronPos)).getAltarPos();
 					if (altarPos != null) {
 						BlockEntity altarBE = world.getBlockEntity(altarPos);
-						if (altarBE instanceof WitchAltarBlockEntity) {
-							WitchAltarBlockEntity altar = (WitchAltarBlockEntity) altarBE;
-							if (altar.drain((int) Math.sqrt(closest.getSquaredDistance(player.getPos(), true)) / 2, false)) {
-								hasPower = true;
-							}
+						if (altarBE instanceof WitchAltarBlockEntity altar && altar.drain((int) Math.sqrt(closest.getSquaredDistance(player.getPos(), true)) / 2, false)) {
+							hasPower = true;
 						}
 					}
 				}

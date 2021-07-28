@@ -4,6 +4,7 @@ import moriyashiine.bewitchment.client.network.packet.SpawnExplosionParticlesPac
 import moriyashiine.bewitchment.common.entity.living.ToadEntity;
 import moriyashiine.bewitchment.common.registry.BWDamageSources;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
@@ -21,7 +22,7 @@ public class WednesdayStatusEffect extends StatusEffect {
 	public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
 		super.onRemoved(entity, attributes, amplifier);
 		if (entity instanceof ToadEntity && ((ToadEntity) entity).isFromWednesdayRitual) {
-			entity.remove();
+			entity.remove(Entity.RemovalReason.DISCARDED);
 		}
 		else {
 			entity.damage(BWDamageSources.WEDNESDAY, Float.MAX_VALUE);

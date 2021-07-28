@@ -4,7 +4,7 @@ import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -50,8 +50,7 @@ public class ArrowEntityMixin implements PolymorphAccessor {
 	
 	@Inject(method = "onHit", at = @At("HEAD"))
 	private void onHit(LivingEntity target, CallbackInfo callbackInfo) {
-		if (getPolymorphUUID() != null && target instanceof PolymorphAccessor) {
-			PolymorphAccessor polymorphAccessor = (PolymorphAccessor) target;
+		if (getPolymorphUUID() != null && target instanceof PolymorphAccessor polymorphAccessor) {
 			polymorphAccessor.setPolymorphUUID(getPolymorphUUID());
 			polymorphAccessor.setPolymorphName(getPolymorphName());
 		}
@@ -65,19 +64,19 @@ public class ArrowEntityMixin implements PolymorphAccessor {
 		}
 	}
 	
-	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
-	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		if (polymorphUUID != null) {
-			tag.putUuid("PolymorphUUID", polymorphUUID);
-			tag.putString("PolymorphName", polymorphName);
+	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		if (nbt.contains("PolymorphUUID")) {
+			polymorphUUID = nbt.getUuid("PolymorphUUID");
+			polymorphName = nbt.getString("PolymorphName");
 		}
 	}
 	
-	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
-	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		if (tag.contains("PolymorphUUID")) {
-			polymorphUUID = tag.getUuid("PolymorphUUID");
-			polymorphName = tag.getString("PolymorphName");
+	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		if (polymorphUUID != null) {
+			nbt.putUuid("PolymorphUUID", polymorphUUID);
+			nbt.putString("PolymorphName", polymorphName);
 		}
 	}
 }

@@ -6,7 +6,7 @@ import moriyashiine.bewitchment.common.registry.BWRegistries;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
@@ -54,18 +54,18 @@ public abstract class PlayerEntityMixin extends LivingEntity implements FortuneA
 		}
 	}
 	
-	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
-	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		if (tag.contains("Fortune")) {
-			setFortune(new Fortune.Instance(BWRegistries.FORTUNES.get(new Identifier(tag.getString("Fortune"))), tag.getInt("FortuneDuration")));
+	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		if (nbt.contains("Fortune")) {
+			setFortune(new Fortune.Instance(BWRegistries.FORTUNES.get(new Identifier(nbt.getString("Fortune"))), nbt.getInt("FortuneDuration")));
 		}
 	}
 	
-	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
-	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
+	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
 		if (getFortune() != null) {
-			tag.putString("Fortune", BWRegistries.FORTUNES.getId(getFortune().fortune).toString());
-			tag.putInt("FortuneDuration", getFortune().duration);
+			nbt.putString("Fortune", BWRegistries.FORTUNES.getId(getFortune().fortune).toString());
+			nbt.putInt("FortuneDuration", getFortune().duration);
 		}
 	}
 }

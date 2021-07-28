@@ -15,9 +15,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.NbtString;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
@@ -91,23 +91,23 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 	}
 	
 	@Override
-	protected void readCustomDataFromTag(CompoundTag tag) {
-		super.readCustomDataFromTag(tag);
-		readFromTag(tag);
+	protected void readCustomDataFromNbt(NbtCompound nbt) {
+		super.readCustomDataFromNbt(nbt);
+		readFromNbt(nbt);
 	}
 	
 	@Override
-	protected void writeCustomDataToTag(CompoundTag tag) {
-		super.writeCustomDataToTag(tag);
+	protected void writeCustomDataToNbt(NbtCompound nbt) {
+		super.writeCustomDataToNbt(nbt);
 		if (sigil != null) {
-			writeToTag(tag);
+			writeToNbt(nbt);
 		}
 	}
 	
 	@Override
 	public void init(ItemStack stack) {
 		if (stack.hasTag()) {
-			readFromTag(stack.getTag());
+			readFromNbt(stack.getTag());
 		}
 	}
 	
@@ -115,7 +115,7 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 	protected ItemStack getDroppedStack() {
 		ItemStack stack = super.getDroppedStack();
 		if (sigil != null) {
-			writeToTag(stack.getOrCreateTag());
+			writeToNbt(stack.getOrCreateTag());
 		}
 		else if (stack.hasTag()) {
 			stack.getTag().remove("Entities");
@@ -126,28 +126,28 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 		return stack;
 	}
 	
-	private void readFromTag(CompoundTag tag) {
-		if (tag.contains("Sigil")) {
-			ListTag entities = tag.getList("Entities", NbtType.STRING);
+	private void readFromNbt(NbtCompound nbt) {
+		if (nbt.contains("Sigil")) {
+			NbtList entities = nbt.getList("Entities", NbtType.STRING);
 			for (int i = 0; i < entities.size(); i++) {
 				this.entities.add(UUID.fromString(entities.getString(i)));
 			}
-			sigil = BWRegistries.SIGILS.get(new Identifier(tag.getString("Sigil")));
-			uses = tag.getInt("Uses");
-			modeOnWhitelist = tag.getBoolean("ModeOnWhitelist");
+			sigil = BWRegistries.SIGILS.get(new Identifier(nbt.getString("Sigil")));
+			uses = nbt.getInt("Uses");
+			modeOnWhitelist = nbt.getBoolean("ModeOnWhitelist");
 		}
 	}
 	
-	private void writeToTag(CompoundTag tag) {
+	private void writeToNbt(NbtCompound nbt) {
 		if (sigil != null) {
-			ListTag entities = new ListTag();
+			NbtList entities = new NbtList();
 			for (UUID entity : this.entities) {
-				entities.add(StringTag.of(entity.toString()));
+				entities.add(NbtString.of(entity.toString()));
 			}
-			tag.put("Entities", entities);
-			tag.putString("Sigil", BWRegistries.SIGILS.getId(sigil).toString());
-			tag.putInt("Uses", uses);
-			tag.putBoolean("ModeOnWhitelist", modeOnWhitelist);
+			nbt.put("Entities", entities);
+			nbt.putString("Sigil", BWRegistries.SIGILS.getId(sigil).toString());
+			nbt.putInt("Uses", uses);
+			nbt.putBoolean("ModeOnWhitelist", modeOnWhitelist);
 		}
 	}
 	

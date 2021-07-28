@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.client.model.equipment.trinket;
 
-import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
@@ -9,20 +9,16 @@ import net.minecraft.entity.Entity;
 public class SpecterBangleModel extends EntityModel<Entity> {
 	private final ModelPart spectreBangle;
 	
-	public SpecterBangleModel() {
-		textureWidth = 16;
-		textureHeight = 16;
-		spectreBangle = new ModelPart(this);
-		spectreBangle.setPivot(0, -3, 0);
-		spectreBangle.setTextureOffset(0, 0).addCuboid(-2.0F, -1.0F, -2.0F, 4.0F, 2.0F, 4.0F, 0.1F, false);
-		
-		ModelPart eye = new ModelPart(this);
-		eye.setPivot(-0.5F, -0.5F, -1.5F);
-		spectreBangle.addChild(eye);
-		eye.setTextureOffset(0, 7).addCuboid(-0.5F, -0.5F, -1.0F, 2.0F, 2.0F, 1.0F, -0.1F, false);
-		eye.setTextureOffset(0, 11).addCuboid(1.0F, -0.5F, -1.0F, 1.0F, 2.0F, 1.0F, -0.2F, false);
-		eye.setTextureOffset(0, 11).addCuboid(-1.0F, -0.5F, -1.0F, 1.0F, 2.0F, 1.0F, -0.2F, false);
-		eye.setTextureOffset(5, 11).addCuboid(0.0F, 0.0F, -1.1F, 1.0F, 1.0F, 1.0F, -0.1F, false);
+	public SpecterBangleModel(ModelPart root) {
+		spectreBangle = root.getChild("spectreBangle");
+	}
+	
+	public static TexturedModelData getTexturedModelData() {
+		ModelData data = new ModelData();
+		ModelPartData root = data.getRoot();
+		ModelPartData spectreBangle = root.addChild("spectreBangle", ModelPartBuilder.create().cuboid(-2.0F, -1.0F, -2.0F, 4.0F, 2.0F, 4.0F, new Dilation(0.1F, 0.1F, 0.1F)), ModelTransform.of(0.0F, -3.0F, 0.0F, 0.0F, 0.0F, 0.0F));
+		spectreBangle.addChild("eye", ModelPartBuilder.create().uv(0, 7).cuboid(-0.5F, -0.5F, -1.0F, 2.0F, 2.0F, 1.0F, new Dilation(-0.1F, -0.1F, -0.1F)).uv(0, 11).cuboid(1.0F, -0.5F, -1.0F, 1.0F, 2.0F, 1.0F, new Dilation(-0.2F, -0.2F, -0.2F)).cuboid(-1.0F, -0.5F, -1.0F, 1.0F, 2.0F, 1.0F, new Dilation(-0.2F, -0.2F, -0.2F)).uv(5, 11).cuboid(0.0F, 0.0F, -1.1F, 1.0F, 1.0F, 1.0F, new Dilation(-0.1F, -0.1F, -0.1F)), ModelTransform.of(-0.5F, -0.5F, -1.5F, 0.0F, 0.0F, 0.0F));
+		return TexturedModelData.of(data, 16, 16);
 	}
 	
 	@Override

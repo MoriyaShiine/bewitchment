@@ -4,7 +4,7 @@ import moriyashiine.bewitchment.common.entity.living.LeonardEntity;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
@@ -27,234 +27,63 @@ public class LeonardEntityModel<T extends LeonardEntity> extends BipedEntityMode
 	
 	private boolean realArm = false;
 	
-	public LeonardEntityModel() {
-		super(1, 0, 64, 64);
-		body = new ModelPart(this);
-		body.setPivot(0.0F, -9.4F, 0.0F);
-		body.setTextureOffset(20, 16).addCuboid(-4.5F, 0.0F, -2.5F, 9.0F, 7.0F, 5.0F, 0.0F, false);
-		
-		ModelPart lPec = new ModelPart(this);
-		lPec.setPivot(2.2F, 3.1F, -0.1F);
-		body.addChild(lPec);
-		setRotation(lPec, 0.0F, -0.0873F, 0.0873F);
-		lPec.setTextureOffset(14, 42).addCuboid(-2.5F, -2.5F, -3.0F, 5.0F, 5.0F, 3.0F, 0.0F, false);
-		
-		ModelPart rPec = new ModelPart(this);
-		rPec.setPivot(-2.2F, 3.1F, -0.1F);
-		body.addChild(rPec);
-		setRotation(rPec, 0.0F, 0.0873F, -0.0873F);
-		rPec.setTextureOffset(14, 42).addCuboid(-2.5F, -2.5F, -3.0F, 5.0F, 5.0F, 3.0F, 0.0F, true);
-		
-		ModelPart stomach = new ModelPart(this);
-		stomach.setPivot(0.0F, 6.7F, 0.0F);
-		body.addChild(stomach);
-		stomach.setTextureOffset(17, 29).addCuboid(-4.0F, 0.0F, -2.0F, 8.0F, 8.0F, 4.0F, 0.0F, false);
-		
-		frontLoincloth00 = new ModelPart(this);
-		frontLoincloth00.setPivot(0.0F, 6.5F, -2.0F);
-		stomach.addChild(frontLoincloth00);
-		frontLoincloth00.setTextureOffset(16, 54).addCuboid(-4.5F, 0.0F, -0.5F, 9.0F, 8.0F, 2.0F, 0.0F, false);
-		
-		backLoincloth00 = new ModelPart(this);
-		backLoincloth00.setPivot(0.0F, 6.5F, 1.1F);
-		stomach.addChild(backLoincloth00);
-		backLoincloth00.setTextureOffset(39, 51).addCuboid(-4.5F, 0.0F, -1.4F, 9.0F, 8.0F, 3.0F, 0.0F, false);
-		
-		head = new ModelPart(this);
-		head.setPivot(0.0F, -9.4F, -0.2F);
-		head.setTextureOffset(1, 2).addCuboid(-3.5F, -7.0F, -3.5F, 7.0F, 7.0F, 7.0F, 0.0F, false);
-		
-		ModelPart snout = new ModelPart(this);
-		snout.setPivot(0.0F, -4.6F, -2.5F);
-		head.addChild(snout);
-		setRotation(snout, 0.5236F, 0.0F, 0.0F);
-		snout.setTextureOffset(29, 2).addCuboid(-2.0F, -1.9F, -5.1F, 4.0F, 3.0F, 5.0F, 0.0F, false);
-		
-		ModelPart jawUpper00 = new ModelPart(this);
-		jawUpper00.setPivot(0.0F, -2.5F, -2.2F);
-		head.addChild(jawUpper00);
-		setRotation(jawUpper00, 0.0698F, 0.0F, 0.0F);
-		jawUpper00.setTextureOffset(43, 0).addCuboid(-2.5F, -1.0F, -5.0F, 5.0F, 2.0F, 5.0F, 0.0F, false);
-		
-		ModelPart jawLower = new ModelPart(this);
-		jawLower.setPivot(0.0F, -1.0F, -3.0F);
-		head.addChild(jawLower);
-		setRotation(jawLower, -0.0349F, 0.0F, 0.0F);
-		jawLower.setTextureOffset(30, 10).addCuboid(-2.0F, -0.5F, -4.0F, 4.0F, 1.0F, 4.0F, 0.0F, false);
-		
-		ModelPart beard = new ModelPart(this);
-		beard.setPivot(0.0F, 0.3F, -2.4F);
-		jawLower.addChild(beard);
-		setRotation(beard, -0.0349F, 0.0F, 0.0F);
-		beard.setTextureOffset(0, 53).addCuboid(-1.5F, 0.0F, -1.0F, 3.0F, 4.0F, 4.0F, 0.0F, false);
-		
-		ModelPart lEar = new ModelPart(this);
-		lEar.setPivot(2.6F, -5.0F, 0.8F);
-		head.addChild(lEar);
-		setRotation(lEar, -0.5236F, 0.0F, -0.5236F);
-		lEar.setTextureOffset(37, 29).addCuboid(0.0F, -0.5F, -1.0F, 4.0F, 1.0F, 2.0F, 0.0F, true);
-		
-		ModelPart rEar = new ModelPart(this);
-		rEar.setPivot(-2.6F, -5.0F, 0.8F);
-		head.addChild(rEar);
-		setRotation(rEar, -0.5236F, 0.0F, 0.5236F);
-		rEar.setTextureOffset(37, 29).addCuboid(-4.0F, -0.5F, -1.0F, 4.0F, 1.0F, 2.0F, 0.0F, true);
-		
-		ModelPart lHorn01 = new ModelPart(this);
-		lHorn01.setPivot(2.0F, -6.0F, -0.2F);
-		head.addChild(lHorn01);
-		setRotation(lHorn01, -0.6109F, 0.0F, 0.5236F);
-		lHorn01.setTextureOffset(25, 0).addCuboid(-1.0F, -3.0F, -1.0F, 2.0F, 3.0F, 2.0F, 0.0F, true);
-		
-		ModelPart lHorn02 = new ModelPart(this);
-		lHorn02.setPivot(0.0F, -2.7F, 0.0F);
-		lHorn01.addChild(lHorn02);
-		setRotation(lHorn02, -0.3142F, 0.0F, 0.2094F);
-		lHorn02.setTextureOffset(25, 1).addCuboid(-1.0F, -2.9F, -1.0F, 2.0F, 3.0F, 2.0F, 0.0F, true);
-		
-		ModelPart lHorn03 = new ModelPart(this);
-		lHorn03.setPivot(0.0F, -2.6F, 0.0F);
-		lHorn02.addChild(lHorn03);
-		setRotation(lHorn03, -0.3142F, 0.0F, 0.0F);
-		lHorn03.setTextureOffset(0, 1).addCuboid(-0.5F, -2.8F, -0.6F, 1.0F, 3.0F, 1.0F, 0.2F, true);
-		
-		ModelPart lHorn04 = new ModelPart(this);
-		lHorn04.setPivot(0.0F, -2.7F, 0.0F);
-		lHorn03.addChild(lHorn04);
-		setRotation(lHorn04, 0.4014F, 0.0F, 0.0F);
-		lHorn04.setTextureOffset(0, 0).addCuboid(-0.5F, -3.0F, -0.5F, 1.0F, 3.0F, 1.0F, 0.0F, true);
-		
-		ModelPart rHorn01 = new ModelPart(this);
-		rHorn01.setPivot(-2.0F, -6.0F, -0.2F);
-		head.addChild(rHorn01);
-		setRotation(rHorn01, -0.6109F, 0.0F, -0.5236F);
-		rHorn01.setTextureOffset(25, 0).addCuboid(-1.0F, -3.0F, -1.0F, 2.0F, 3.0F, 2.0F, 0.0F, true);
-		
-		ModelPart rHorn02 = new ModelPart(this);
-		rHorn02.setPivot(0.0F, -2.7F, 0.0F);
-		rHorn01.addChild(rHorn02);
-		setRotation(rHorn02, -0.3142F, 0.0F, -0.2094F);
-		rHorn02.setTextureOffset(25, 1).addCuboid(-1.0F, -2.9F, -1.0F, 2.0F, 3.0F, 2.0F, 0.0F, true);
-		
-		ModelPart rHorn03 = new ModelPart(this);
-		rHorn03.setPivot(0.0F, -2.6F, 0.0F);
-		rHorn02.addChild(rHorn03);
-		setRotation(rHorn03, -0.3142F, 0.0F, 0.0F);
-		rHorn03.setTextureOffset(0, 1).addCuboid(-0.5F, -2.8F, -0.6F, 1.0F, 3.0F, 1.0F, 0.2F, true);
-		
-		ModelPart rHorn04 = new ModelPart(this);
-		rHorn04.setPivot(0.0F, -2.7F, 0.0F);
-		rHorn03.addChild(rHorn04);
-		setRotation(rHorn04, 0.4014F, 0.0F, 0.0F);
-		rHorn04.setTextureOffset(0, 0).addCuboid(-0.5F, -3.0F, -0.5F, 1.0F, 3.0F, 1.0F, 0.0F, true);
-		
-		ModelPart mHorn01 = new ModelPart(this);
-		mHorn01.setPivot(0.0F, -6.0F, 0.4F);
-		head.addChild(mHorn01);
-		setRotation(mHorn01, -0.8727F, 0.0F, 0.0F);
-		mHorn01.setTextureOffset(25, 1).addCuboid(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
-		
-		ModelPart mHorn02 = new ModelPart(this);
-		mHorn02.setPivot(0.0F, -3.7F, 0.0F);
-		mHorn01.addChild(mHorn02);
-		setRotation(mHorn02, -0.4538F, 0.0F, 0.0F);
-		mHorn02.setTextureOffset(25, 0).addCuboid(-1.0F, -2.9F, -1.0F, 2.0F, 3.0F, 2.0F, 0.0F, false);
-		
-		ModelPart mHorn03 = new ModelPart(this);
-		mHorn03.setPivot(0.0F, -3.8F, 0.0F);
-		mHorn02.addChild(mHorn03);
-		setRotation(mHorn03, -0.3142F, 0.0F, 0.0F);
-		mHorn03.setTextureOffset(0, 1).addCuboid(-0.5F, -2.8F, -0.2F, 1.0F, 4.0F, 1.0F, 0.2F, false);
-		
-		ModelPart mHorn04 = new ModelPart(this);
-		mHorn04.setPivot(0.0F, -2.7F, 0.0F);
-		mHorn03.addChild(mHorn04);
-		setRotation(mHorn04, 0.2618F, 0.0F, 0.0F);
-		mHorn04.setTextureOffset(0, 0).addCuboid(-0.5F, -3.0F, -0.5F, 1.0F, 3.0F, 1.0F, 0.0F, false);
-		
-		BipedLeftArm = new ModelPart(this);
-		BipedLeftArm.setPivot(5.5F, -7.6F, 0.0F);
-		BipedLeftArm.setTextureOffset(49, 19).addCuboid(-1.0F, -2.0F, -2.0F, 3.0F, 16.0F, 4.0F, 0.0F, false);
-		
-		ModelPart lClaws = new ModelPart(this);
-		lClaws.setPivot(1.4F, 12.9F, -0.1F);
-		BipedLeftArm.addChild(lClaws);
-		setRotation(lClaws, 0.0F, 0.0F, 0.2793F);
-		lClaws.setTextureOffset(0, 45).addCuboid(-1.1F, 0.0F, -2.1F, 2.0F, 3.0F, 4.0F, 0.0F, false);
-		
-		ModelPart lShoulderPoof = new ModelPart(this);
-		lShoulderPoof.setPivot(0.4F, 0.0F, -0.1F);
-		BipedLeftArm.addChild(lShoulderPoof);
-		lShoulderPoof.setTextureOffset(46, 40).addCuboid(-2.0F, -2.5F, -2.5F, 4.0F, 5.0F, 5.0F, 0.0F, false);
-		
-		ModelPart lSleeve = new ModelPart(this);
-		lSleeve.setPivot(0.5F, 9.5F, 2.0F);
-		BipedLeftArm.addChild(lSleeve);
-		lSleeve.setTextureOffset(46, 9).addCuboid(-1.52F, -2.5F, -2.0F, 3.0F, 5.0F, 5.0F, 0.0F, false);
-		
-		BipedRightArm = new ModelPart(this);
-		BipedRightArm.setPivot(-5.5F, -7.6F, 0.0F);
-		BipedRightArm.setTextureOffset(49, 19).addCuboid(-2.0F, -2.0F, -2.0F, 3.0F, 16.0F, 4.0F, 0.0F, true);
-		
-		ModelPart rClaws = new ModelPart(this);
-		rClaws.setPivot(-1.4F, 12.9F, -0.1F);
-		BipedRightArm.addChild(rClaws);
-		setRotation(rClaws, 0.0F, 0.0F, -0.2793F);
-		rClaws.setTextureOffset(0, 45).addCuboid(-1.1F, 0.0F, -2.1F, 2.0F, 3.0F, 4.0F, 0.0F, true);
-		
-		ModelPart rShoulderPoof = new ModelPart(this);
-		rShoulderPoof.setPivot(-0.4F, 0.0F, -0.1F);
-		BipedRightArm.addChild(rShoulderPoof);
-		rShoulderPoof.setTextureOffset(46, 40).addCuboid(-2.0F, -2.5F, -2.5F, 4.0F, 5.0F, 5.0F, 0.0F, true);
-		
-		ModelPart rSleeve = new ModelPart(this);
-		rSleeve.setPivot(-0.5F, 9.5F, 2.0F);
-		BipedRightArm.addChild(rSleeve);
-		rSleeve.setTextureOffset(46, 9).addCuboid(-1.48F, -2.5F, -2.0F, 3.0F, 5.0F, 5.0F, 0.0F, true);
-		
-		BipedLeftLeg = new ModelPart(this);
-		BipedLeftLeg.setPivot(2.1F, 4.5F, 0.1F);
-		setRotation(BipedLeftLeg, -0.0698F, 0.0F, -0.0349F);
-		BipedLeftLeg.setTextureOffset(0, 16).addCuboid(-1.9F, 0.0F, -2.5F, 4.0F, 10.0F, 5.0F, 0.0F, false);
-		
-		ModelPart lLeg02 = new ModelPart(this);
-		lLeg02.setPivot(0.0F, 9.7F, 0.0F);
-		BipedLeftLeg.addChild(lLeg02);
-		lLeg02.setTextureOffset(0, 31).addCuboid(-2.0F, -0.1F, -2.0F, 4.0F, 10.0F, 4.0F, 0.0F, false);
-		
-		ModelPart lFlipper01 = new ModelPart(this);
-		lFlipper01.setPivot(0.3F, 8.8F, -1.7F);
-		lLeg02.addChild(lFlipper01);
-		setRotation(lFlipper01, 0.0F, -0.1745F, 0.0349F);
-		lFlipper01.setTextureOffset(30, 42).addCuboid(-1.0F, 0.0F, -3.0F, 3.0F, 1.0F, 5.0F, 0.0F, false);
-		
-		ModelPart lFlipper02 = new ModelPart(this);
-		lFlipper02.setPivot(-0.9F, 8.8F, -1.7F);
-		lLeg02.addChild(lFlipper02);
-		setRotation(lFlipper02, 0.0F, 0.1396F, -0.0349F);
-		lFlipper02.setTextureOffset(28, 48).addCuboid(-1.1F, 0.0F, -3.0F, 2.0F, 1.0F, 5.0F, 0.0F, false);
-		
-		BipedRightLeg = new ModelPart(this);
-		BipedRightLeg.setPivot(-2.1F, 4.5F, 0.1F);
-		BipedRightLeg.setTextureOffset(0, 16).addCuboid(-2.1F, 0.0F, -2.5F, 4.0F, 10.0F, 5.0F, 0.0F, true);
-		
-		ModelPart rLeg02 = new ModelPart(this);
-		rLeg02.setPivot(0.0F, 9.7F, 0.0F);
-		BipedRightLeg.addChild(rLeg02);
-		setRotation(rLeg02, 0.0698F, 0.0F, -0.0349F);
-		rLeg02.setTextureOffset(0, 31).addCuboid(-2.0F, -0.1F, -2.0F, 4.0F, 10.0F, 4.0F, 0.0F, true);
-		
-		ModelPart rFlipper01 = new ModelPart(this);
-		rFlipper01.setPivot(-0.3F, 8.8F, -1.7F);
-		rLeg02.addChild(rFlipper01);
-		setRotation(rFlipper01, 0.0F, 0.1745F, -0.0349F);
-		rFlipper01.setTextureOffset(30, 42).addCuboid(-2.0F, 0.0F, -3.0F, 3.0F, 1.0F, 5.0F, 0.0F, true);
-		
-		ModelPart rFlipper02 = new ModelPart(this);
-		rFlipper02.setPivot(0.9F, 8.8F, -1.7F);
-		rLeg02.addChild(rFlipper02);
-		setRotation(rFlipper02, 0.0F, -0.1396F, 0.0349F);
-		rFlipper02.setTextureOffset(28, 48).addCuboid(-0.9F, 0.0F, -3.0F, 2.0F, 1.0F, 5.0F, 0.0F, true);
+	public LeonardEntityModel(ModelPart root) {
+		super(root);
+		body = root.getChild("body");
+		frontLoincloth00 = body.getChild("stomach").getChild("frontLoincloth00");
+		backLoincloth00 = body.getChild("stomach").getChild("backLoincloth00");
+		head = root.getChild("head");
+		BipedLeftArm = root.getChild("BipedLeftArm");
+		BipedRightArm = root.getChild("BipedRightArm");
+		BipedLeftLeg = root.getChild("BipedLeftLeg");
+		BipedRightLeg = root.getChild("BipedRightLeg");
+	}
+	
+	public static TexturedModelData getTexturedModelData() {
+		ModelData data = new ModelData();
+		ModelPartData root = data.getRoot();
+		ModelPartData body = root.addChild("body", ModelPartBuilder.create().uv(20, 16).cuboid(-4.5F, 0.0F, -2.5F, 9.0F, 7.0F, 5.0F), ModelTransform.of(0.0F, -9.4F, 0.0F, 0.0F, 0.0F, 0.0F));
+		body.addChild("lPec", ModelPartBuilder.create().uv(14, 42).cuboid(-2.5F, -2.5F, -3.0F, 5.0F, 5.0F, 3.0F), ModelTransform.of(2.2F, 3.1F, -0.1F, 0.0F, 0.0F, 0.0F));
+		body.addChild("rPec", ModelPartBuilder.create().uv(14, 42).cuboid(-2.5F, -2.5F, -3.0F, 5.0F, 5.0F, 3.0F), ModelTransform.of(-2.2F, 3.1F, -0.1F, 0.0F, 0.0F, 0.0F));
+		ModelPartData stomach = body.addChild("stomach", ModelPartBuilder.create().uv(17, 29).cuboid(-4.0F, 0.0F, -2.0F, 8.0F, 8.0F, 4.0F), ModelTransform.of(0.0F, 6.7F, 0.0F, 0.0F, 0.0F, 0.0F));
+		stomach.addChild("frontLoincloth00", ModelPartBuilder.create().uv(16, 54).cuboid(-4.5F, 0.0F, -0.5F, 9.0F, 8.0F, 2.0F), ModelTransform.of(0.0F, 6.5F, -2.0F, 0.0F, 0.0F, 0.0F));
+		stomach.addChild("backLoincloth00", ModelPartBuilder.create().uv(39, 51).cuboid(-4.5F, 0.0F, -1.4F, 9.0F, 8.0F, 3.0F), ModelTransform.of(0.0F, 6.5F, 1.1F, 0.0F, 0.0F, 0.0F));
+		ModelPartData head = root.addChild("head", ModelPartBuilder.create().uv(1, 2).cuboid(-3.5F, -7.0F, -3.5F, 7.0F, 7.0F, 7.0F), ModelTransform.of(0.0F, -9.4F, -0.2F, 0.0F, 0.0F, 0.0F));
+		head.addChild("snout", ModelPartBuilder.create().uv(29, 2).cuboid(-2.0F, -1.9F, -5.1F, 4.0F, 3.0F, 5.0F), ModelTransform.of(0.0F, -4.6F, -2.5F, 0.0F, 0.0F, 0.0F));
+		head.addChild("jawUpper00", ModelPartBuilder.create().uv(43, 0).cuboid(-2.5F, -1.0F, -5.0F, 5.0F, 2.0F, 5.0F), ModelTransform.of(0.0F, -2.5F, -2.2F, 0.0F, 0.0F, 0.0F));
+		ModelPartData jawLower = head.addChild("jawLower", ModelPartBuilder.create().uv(30, 10).cuboid(-2.0F, -0.5F, -4.0F, 4.0F, 1.0F, 4.0F), ModelTransform.of(0.0F, -1.0F, -3.0F, 0.0F, 0.0F, 0.0F));
+		jawLower.addChild("beard", ModelPartBuilder.create().uv(0, 53).cuboid(-1.5F, 0.0F, -1.0F, 3.0F, 4.0F, 4.0F), ModelTransform.of(0.0F, 0.3F, -2.4F, 0.0F, 0.0F, 0.0F));
+		head.addChild("lEar", ModelPartBuilder.create().uv(37, 29).cuboid(0.0F, -0.5F, -1.0F, 4.0F, 1.0F, 2.0F), ModelTransform.of(2.6F, -5.0F, 0.8F, 0.0F, 0.0F, 0.0F));
+		head.addChild("rEar", ModelPartBuilder.create().uv(37, 29).cuboid(-4.0F, -0.5F, -1.0F, 4.0F, 1.0F, 2.0F), ModelTransform.of(-2.6F, -5.0F, 0.8F, 0.0F, 0.0F, 0.0F));
+		ModelPartData lHorn01 = head.addChild("lHorn01", ModelPartBuilder.create().uv(25, 0).cuboid(-1.0F, -3.0F, -1.0F, 2.0F, 3.0F, 2.0F), ModelTransform.of(2.0F, -6.0F, -0.2F, 0.0F, 0.0F, 0.0F));
+		ModelPartData lHorn02 = lHorn01.addChild("lHorn02", ModelPartBuilder.create().uv(25, 1).cuboid(-1.0F, -2.9F, -1.0F, 2.0F, 3.0F, 2.0F), ModelTransform.of(0.0F, -2.7F, 0.0F, 0.0F, 0.0F, 0.0F));
+		ModelPartData lHorn03 = lHorn02.addChild("lHorn03", ModelPartBuilder.create().uv(0, 1).cuboid(-0.5F, -2.8F, -0.6F, 1.0F, 3.0F, 1.0F, new Dilation(0.2F, 0.2F, 0.2F)), ModelTransform.of(0.0F, -2.6F, 0.0F, 0.0F, 0.0F, 0.0F));
+		lHorn03.addChild("lHorn04", ModelPartBuilder.create().cuboid(-0.5F, -3.0F, -0.5F, 1.0F, 3.0F, 1.0F), ModelTransform.of(0.0F, -2.7F, 0.0F, 0.0F, 0.0F, 0.0F));
+		ModelPartData rHorn01 = head.addChild("rHorn01", ModelPartBuilder.create().uv(25, 0).cuboid(-1.0F, -3.0F, -1.0F, 2.0F, 3.0F, 2.0F), ModelTransform.of(-2.0F, -6.0F, -0.2F, 0.0F, 0.0F, 0.0F));
+		ModelPartData rHorn02 = rHorn01.addChild("rHorn02", ModelPartBuilder.create().uv(25, 1).cuboid(-1.0F, -2.9F, -1.0F, 2.0F, 3.0F, 2.0F), ModelTransform.of(0.0F, -2.7F, 0.0F, 0.0F, 0.0F, 0.0F));
+		ModelPartData rHorn03 = rHorn02.addChild("rHorn03", ModelPartBuilder.create().uv(0, 1).cuboid(-0.5F, -2.8F, -0.6F, 1.0F, 3.0F, 1.0F, new Dilation(0.2F, 0.2F, 0.2F)), ModelTransform.of(0.0F, -2.6F, 0.0F, 0.0F, 0.0F, 0.0F));
+		rHorn03.addChild("rHorn04", ModelPartBuilder.create().cuboid(-0.5F, -3.0F, -0.5F, 1.0F, 3.0F, 1.0F), ModelTransform.of(0.0F, -2.7F, 0.0F, 0.0F, 0.0F, 0.0F));
+		ModelPartData mHorn01 = head.addChild("mHorn01", ModelPartBuilder.create().uv(25, 1).cuboid(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F), ModelTransform.of(0.0F, -6.0F, 0.4F, 0.0F, 0.0F, 0.0F));
+		ModelPartData mHorn02 = mHorn01.addChild("mHorn02", ModelPartBuilder.create().uv(25, 0).cuboid(-1.0F, -2.9F, -1.0F, 2.0F, 3.0F, 2.0F), ModelTransform.of(0.0F, -3.7F, 0.0F, 0.0F, 0.0F, 0.0F));
+		ModelPartData mHorn03 = mHorn02.addChild("mHorn03", ModelPartBuilder.create().uv(0, 1).cuboid(-0.5F, -2.8F, -0.2F, 1.0F, 4.0F, 1.0F, new Dilation(0.2F, 0.2F, 0.2F)), ModelTransform.of(0.0F, -3.8F, 0.0F, 0.0F, 0.0F, 0.0F));
+		mHorn03.addChild("mHorn04", ModelPartBuilder.create().cuboid(-0.5F, -3.0F, -0.5F, 1.0F, 3.0F, 1.0F), ModelTransform.of(0.0F, -2.7F, 0.0F, 0.0F, 0.0F, 0.0F));
+		ModelPartData BipedRightLeg = root.addChild("BipedRightLeg", ModelPartBuilder.create().uv(0, 16).cuboid(-2.1F, 0.0F, -2.5F, 4.0F, 10.0F, 5.0F), ModelTransform.of(-2.1F, 4.5F, 0.1F, 0.0F, 0.0F, 0.0F));
+		ModelPartData rLeg02 = BipedRightLeg.addChild("rLeg02", ModelPartBuilder.create().uv(0, 31).cuboid(-2.0F, -0.1F, -2.0F, 4.0F, 10.0F, 4.0F), ModelTransform.of(0.0F, 9.7F, 0.0F, 0.0F, 0.0F, 0.0F));
+		rLeg02.addChild("rFlipper01", ModelPartBuilder.create().uv(30, 42).cuboid(-2.0F, 0.0F, -3.0F, 3.0F, 1.0F, 5.0F), ModelTransform.of(-0.3F, 8.8F, -1.7F, 0.0F, 0.0F, 0.0F));
+		rLeg02.addChild("rFlipper02", ModelPartBuilder.create().uv(28, 48).cuboid(-0.9F, 0.0F, -3.0F, 2.0F, 1.0F, 5.0F), ModelTransform.of(0.9F, 8.8F, -1.7F, 0.0F, 0.0F, 0.0F));
+		ModelPartData BipedLeftArm = root.addChild("BipedLeftArm", ModelPartBuilder.create().uv(49, 19).cuboid(-1.0F, -2.0F, -2.0F, 3.0F, 16.0F, 4.0F), ModelTransform.of(5.5F, -7.6F, 0.0F, 0.0F, 0.0F, 0.0F));
+		BipedLeftArm.addChild("lClaws", ModelPartBuilder.create().uv(0, 45).cuboid(-1.1F, 0.0F, -2.1F, 2.0F, 3.0F, 4.0F), ModelTransform.of(1.4F, 12.9F, -0.1F, 0.0F, 0.0F, 0.0F));
+		BipedLeftArm.addChild("lShoulderPoof", ModelPartBuilder.create().uv(46, 40).cuboid(-2.0F, -2.5F, -2.5F, 4.0F, 5.0F, 5.0F), ModelTransform.of(0.4F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0F));
+		BipedLeftArm.addChild("lSleeve", ModelPartBuilder.create().uv(46, 9).cuboid(-1.52F, -2.5F, -2.0F, 3.0F, 5.0F, 5.0F), ModelTransform.of(0.5F, 9.5F, 2.0F, 0.0F, 0.0F, 0.0F));
+		ModelPartData BipedRightArm = root.addChild("BipedRightArm", ModelPartBuilder.create().uv(49, 19).cuboid(-2.0F, -2.0F, -2.0F, 3.0F, 16.0F, 4.0F), ModelTransform.of(-5.5F, -7.6F, 0.0F, 0.0F, 0.0F, 0.0F));
+		BipedRightArm.addChild("rClaws", ModelPartBuilder.create().uv(0, 45).cuboid(-1.1F, 0.0F, -2.1F, 2.0F, 3.0F, 4.0F), ModelTransform.of(-1.4F, 12.9F, -0.1F, 0.0F, 0.0F, 0.0F));
+		BipedRightArm.addChild("rShoulderPoof", ModelPartBuilder.create().uv(46, 40).cuboid(-2.0F, -2.5F, -2.5F, 4.0F, 5.0F, 5.0F), ModelTransform.of(-0.4F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0F));
+		BipedRightArm.addChild("rSleeve", ModelPartBuilder.create().uv(46, 9).cuboid(-1.48F, -2.5F, -2.0F, 3.0F, 5.0F, 5.0F), ModelTransform.of(-0.5F, 9.5F, 2.0F, 0.0F, 0.0F, 0.0F));
+		ModelPartData BipedLeftLeg = root.addChild("BipedLeftLeg", ModelPartBuilder.create().uv(0, 16).cuboid(-1.9F, 0.0F, -2.5F, 4.0F, 10.0F, 5.0F), ModelTransform.of(2.1F, 4.5F, 0.1F, 0.0F, 0.0F, 0.0F));
+		ModelPartData lLeg02 = BipedLeftLeg.addChild("lLeg02", ModelPartBuilder.create().uv(0, 31).cuboid(-2.0F, -0.1F, -2.0F, 4.0F, 10.0F, 4.0F), ModelTransform.of(0.0F, 9.7F, 0.0F, 0.0F, 0.0F, 0.0F));
+		lLeg02.addChild("lFlipper01", ModelPartBuilder.create().uv(30, 42).cuboid(-1.0F, 0.0F, -3.0F, 3.0F, 1.0F, 5.0F), ModelTransform.of(0.3F, 8.8F, -1.7F, 0.0F, 0.0F, 0.0F));
+		lLeg02.addChild("lFlipper02", ModelPartBuilder.create().uv(28, 48).cuboid(-1.1F, 0.0F, -3.0F, 2.0F, 1.0F, 5.0F), ModelTransform.of(-0.9F, 8.8F, -1.7F, 0.0F, 0.0F, 0.0F));
+		return TexturedModelData.of(data, 64, 64);
 	}
 	
 	@Override
@@ -264,7 +93,7 @@ public class LeonardEntityModel<T extends LeonardEntity> extends BipedEntityMode
 		super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
 		realArm = true;
 		copyRotation(head, super.head);
-		copyRotation(body, super.torso);
+		copyRotation(body, super.body);
 		copyRotation(BipedLeftArm, super.leftArm);
 		BipedLeftArm.roll -= 0.1f;
 		copyRotation(BipedRightArm, super.rightArm);
@@ -294,12 +123,6 @@ public class LeonardEntityModel<T extends LeonardEntity> extends BipedEntityMode
 	@Override
 	protected ModelPart getArm(Arm arm) {
 		return realArm ? (arm == Arm.LEFT ? BipedLeftArm : BipedRightArm) : super.getArm(arm);
-	}
-	
-	private void setRotation(ModelPart bone, float x, float y, float z) {
-		bone.pitch = x;
-		bone.yaw = y;
-		bone.roll = z;
 	}
 	
 	private void copyRotation(ModelPart to, ModelPart from) {

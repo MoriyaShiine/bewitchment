@@ -35,8 +35,7 @@ public class SyncWitchAltarBlockEntity {
 		ItemStack wand = buf.readItemStack();
 		client.execute(() -> {
 			BlockEntity blockEntity = client.world.getBlockEntity(pos);
-			if (blockEntity instanceof WitchAltarBlockEntity) {
-				WitchAltarBlockEntity altar = (WitchAltarBlockEntity) blockEntity;
+			if (blockEntity instanceof WitchAltarBlockEntity altar) {
 				altar.setStack(0, sword);
 				altar.setStack(1, pentacle);
 				altar.setStack(2, wand);

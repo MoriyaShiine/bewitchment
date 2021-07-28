@@ -6,6 +6,7 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 import vazkii.patchouli.api.IComponentRenderContext;
 import vazkii.patchouli.api.ICustomComponent;
 import vazkii.patchouli.api.IVariable;
@@ -25,7 +26,7 @@ public class RitualCircleComponent implements ICustomComponent {
 	}
 	
 	@Override
-	public void render(MatrixStack ms, IComponentRenderContext context, float pticks, int mouseX, int mouseY) {
+	public void render(MatrixStack ms, @NotNull IComponentRenderContext context, float pticks, int mouseX, int mouseY) {
 		TextureManager textureManager = MinecraftClient.getInstance().getTextureManager();
 		ms.push();
 		ms.translate(x, y, -1);

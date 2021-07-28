@@ -66,7 +66,7 @@ public class AthameDropRecipe implements Recipe<Inventory> {
 	public static class Serializer implements RecipeSerializer<AthameDropRecipe> {
 		@Override
 		public AthameDropRecipe read(Identifier id, JsonObject json) {
-			return new AthameDropRecipe(id, Registry.ENTITY_TYPE.get(new Identifier(JsonHelper.getString(json, "entity_type"))), ShapedRecipe.getItemStack(JsonHelper.getObject(json, "result")), JsonHelper.getFloat(json, "chance"));
+			return new AthameDropRecipe(id, Registry.ENTITY_TYPE.get(new Identifier(JsonHelper.getString(json, "entity_type"))), ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result")), JsonHelper.getFloat(json, "chance"));
 		}
 		
 		@Override

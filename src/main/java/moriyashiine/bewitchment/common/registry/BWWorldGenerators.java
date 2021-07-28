@@ -17,15 +17,18 @@ import net.minecraft.loot.LootTables;
 import net.minecraft.loot.entry.LootTableEntry;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.UniformIntDistribution;
 import net.minecraft.world.gen.decorator.ChanceDecoratorConfig;
 import net.minecraft.world.gen.decorator.Decorator;
-import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.FeatureConfig;
+import net.minecraft.world.gen.feature.TreeFeatureConfig;
 import net.minecraft.world.gen.feature.size.FeatureSize;
 import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize;
 import net.minecraft.world.gen.foliage.AcaciaFoliagePlacer;
@@ -43,13 +46,13 @@ public class BWWorldGenerators {
 	
 	private static final FeatureSize EMPTY_SIZE = new TwoLayersFeatureSize(0, 0, 0);
 	
-	public static final ConfiguredFeature<TreeFeatureConfig, ?> JUNIPER_TREE = create("juniper_tree", Feature.TREE.configure(new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(BWObjects.JUNIPER_LOG.getDefaultState()), new SimpleBlockStateProvider(BWObjects.JUNIPER_LEAVES.getDefaultState()), new AcaciaFoliagePlacer(UniformIntDistribution.of(2), UniformIntDistribution.of(0)), new ForkingTrunkPlacer(5, 0, 0), EMPTY_SIZE).ignoreVines().build()));
-	public static final ConfiguredFeature<TreeFeatureConfig, ?> CYPRESS_TREE = create("cypress_tree", Feature.TREE.configure(new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(BWObjects.CYPRESS_LOG.getDefaultState()), new SimpleBlockStateProvider(BWObjects.CYPRESS_LEAVES.getDefaultState()), new LargeOakFoliagePlacer(UniformIntDistribution.of(2), UniformIntDistribution.of(0), 4), new StraightTrunkPlacer(6, 1, 1), EMPTY_SIZE).ignoreVines().build()));
-	public static final ConfiguredFeature<TreeFeatureConfig, ?> ELDER_TREE = create("elder_tree", Feature.TREE.configure(new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(BWObjects.ELDER_LOG.getDefaultState()), new SimpleBlockStateProvider(BWObjects.ELDER_LEAVES.getDefaultState()), new LargeOakFoliagePlacer(UniformIntDistribution.of(2), UniformIntDistribution.of(0), 4), new StraightTrunkPlacer(4, 0, 1), EMPTY_SIZE).ignoreVines().build()));
-	public static final ConfiguredFeature<TreeFeatureConfig, ?> DRAGONS_BLOOD_TREE = create("dragons_blood_tree", Feature.TREE.configure(new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(BWObjects.DRAGONS_BLOOD_LOG.getDefaultState().with(BWProperties.NATURAL, true)), new SimpleBlockStateProvider(BWObjects.DRAGONS_BLOOD_LEAVES.getDefaultState()), new MegaPineFoliagePlacer(UniformIntDistribution.of(1), UniformIntDistribution.of(0), UniformIntDistribution.of(3)), new StraightTrunkPlacer(5, 1, 1), EMPTY_SIZE).ignoreVines().build()));
+	public static final ConfiguredFeature<TreeFeatureConfig, ?> JUNIPER_TREE = create("juniper_tree", Feature.TREE.configure(new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(BWObjects.JUNIPER_LOG.getDefaultState()), new ForkingTrunkPlacer(5, 0, 0), new SimpleBlockStateProvider(BWObjects.JUNIPER_LEAVES.getDefaultState()), new SimpleBlockStateProvider(BWObjects.JUNIPER_SAPLING.getDefaultState()), new AcaciaFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0)), EMPTY_SIZE).ignoreVines().build()));
+	public static final ConfiguredFeature<TreeFeatureConfig, ?> CYPRESS_TREE = create("cypress_tree", Feature.TREE.configure(new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(BWObjects.CYPRESS_LOG.getDefaultState()), new StraightTrunkPlacer(6, 1, 1), new SimpleBlockStateProvider(BWObjects.CYPRESS_LEAVES.getDefaultState()), new SimpleBlockStateProvider(BWObjects.CYPRESS_SAPLING.getDefaultState()), new LargeOakFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 4), EMPTY_SIZE).ignoreVines().build()));
+	public static final ConfiguredFeature<TreeFeatureConfig, ?> ELDER_TREE = create("elder_tree", Feature.TREE.configure(new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(BWObjects.ELDER_LOG.getDefaultState()), new StraightTrunkPlacer(4, 0, 1), new SimpleBlockStateProvider(BWObjects.ELDER_LEAVES.getDefaultState()), new SimpleBlockStateProvider(BWObjects.ELDER_SAPLING.getDefaultState()), new LargeOakFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 4), EMPTY_SIZE).ignoreVines().build()));
+	public static final ConfiguredFeature<TreeFeatureConfig, ?> DRAGONS_BLOOD_TREE = create("dragons_blood_tree", Feature.TREE.configure(new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(BWObjects.DRAGONS_BLOOD_LOG.getDefaultState().with(BWProperties.NATURAL, true)), new StraightTrunkPlacer(5, 1, 1), new SimpleBlockStateProvider(BWObjects.DRAGONS_BLOOD_LEAVES.getDefaultState()), new SimpleBlockStateProvider(BWObjects.DRAGONS_BLOOD_SAPLING.getDefaultState()), new MegaPineFoliagePlacer(ConstantIntProvider.create(1), ConstantIntProvider.create(0), ConstantIntProvider.create(3)), EMPTY_SIZE).ignoreVines().build()));
 	
-	public static final ConfiguredFeature<?, ?> SILVER_ORE = create("silver_ore", Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, BWObjects.SILVER_ORE.getDefaultState(), Bewitchment.config.silverSize)).rangeOf(Bewitchment.config.silverMaxHeight).spreadHorizontally().repeat(Bewitchment.config.silverCount));
-	public static final ConfiguredFeature<?, ?> SALT_ORE = create("salt_ore", Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, BWObjects.SALT_ORE.getDefaultState(), Bewitchment.config.saltSize)).rangeOf(Bewitchment.config.saltMaxHeight).spreadHorizontally().repeat(Bewitchment.config.saltCount));
+	//	public static final ConfiguredFeature<?, ?> SILVER_ORE = create("silver_ore", Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, BWObjects.SILVER_ORE.getDefaultState(), Bewitchment.config.silverSize)).rangeOf(Bewitchment.config.silverMaxHeight).spreadHorizontally().repeat(Bewitchment.config.silverCount));
+	//	public static final ConfiguredFeature<?, ?> SALT_ORE = create("salt_ore", Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, BWObjects.SALT_ORE.getDefaultState(), Bewitchment.config.saltSize)).rangeOf(Bewitchment.config.saltMaxHeight).spreadHorizontally().repeat(Bewitchment.config.saltCount));
 	
 	private static <T extends FeatureConfig> ConfiguredFeature<T, ?> create(String name, ConfiguredFeature<T, ?> configuredFeature) {
 		CONFIGURED_FEATURES.put(configuredFeature, new Identifier(Bewitchment.MODID, name));
@@ -65,12 +68,12 @@ public class BWWorldGenerators {
 		BiomeModificationImpl.INSTANCE.addModifier(CONFIGURED_FEATURES.get(JUNIPER_TREE), ModificationPhase.ADDITIONS, BiomeSelectors.foundInOverworld().and(context -> context.getBiome().getCategory() == Biome.Category.SAVANNA), context -> context.getGenerationSettings().addBuiltInFeature(GenerationStep.Feature.VEGETAL_DECORATION, JUNIPER_TREE_WITH_CHANCE));
 		BiomeModificationImpl.INSTANCE.addModifier(CONFIGURED_FEATURES.get(CYPRESS_TREE), ModificationPhase.ADDITIONS, BiomeSelectors.foundInOverworld().and(context -> context.getBiome().getCategory() == Biome.Category.TAIGA || context.getBiome().getCategory() == Biome.Category.SWAMP), context -> context.getGenerationSettings().addBuiltInFeature(GenerationStep.Feature.VEGETAL_DECORATION, CYPRESS_TREE_WITH_CHANCE));
 		BiomeModificationImpl.INSTANCE.addModifier(CONFIGURED_FEATURES.get(ELDER_TREE), ModificationPhase.ADDITIONS, BiomeSelectors.foundInOverworld().and(context -> context.getBiome().getCategory() == Biome.Category.FOREST), context -> context.getGenerationSettings().addBuiltInFeature(GenerationStep.Feature.VEGETAL_DECORATION, ELDER_TREE_WITH_CHANCE));
-		if (Bewitchment.config.silverCount > 0) {
-			BiomeModificationImpl.INSTANCE.addModifier(CONFIGURED_FEATURES.get(SILVER_ORE), ModificationPhase.ADDITIONS, BiomeSelectors.foundInOverworld(), context -> context.getGenerationSettings().addBuiltInFeature(GenerationStep.Feature.UNDERGROUND_ORES, SILVER_ORE));
-		}
-		if (Bewitchment.config.saltCount > 0) {
-			BiomeModificationImpl.INSTANCE.addModifier(CONFIGURED_FEATURES.get(SALT_ORE), ModificationPhase.ADDITIONS, BiomeSelectors.foundInOverworld(), context -> context.getGenerationSettings().addBuiltInFeature(GenerationStep.Feature.UNDERGROUND_ORES, SALT_ORE));
-		}
+		//		if (Bewitchment.config.silverCount > 0) {
+		//			BiomeModificationImpl.INSTANCE.addModifier(CONFIGURED_FEATURES.get(SILVER_ORE), ModificationPhase.ADDITIONS, BiomeSelectors.foundInOverworld(), context -> context.getGenerationSettings().addBuiltInFeature(GenerationStep.Feature.UNDERGROUND_ORES, SILVER_ORE));
+		//		}
+		//		if (Bewitchment.config.saltCount > 0) {
+		//			BiomeModificationImpl.INSTANCE.addModifier(CONFIGURED_FEATURES.get(SALT_ORE), ModificationPhase.ADDITIONS, BiomeSelectors.foundInOverworld(), context -> context.getGenerationSettings().addBuiltInFeature(GenerationStep.Feature.UNDERGROUND_ORES, SALT_ORE));
+		//		}
 		if (Bewitchment.config.owlWeight > 0) {
 			BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> Bewitchment.config.owlBiomeCategories.contains(context.getBiome().getCategory().getName())), BWEntityTypes.OWL.getSpawnGroup(), BWEntityTypes.OWL, Bewitchment.config.owlWeight, Bewitchment.config.owlMinGroupCount, Bewitchment.config.owlMaxGroupCount);
 			SpawnRestrictionAccessor.callRegister(BWEntityTypes.OWL, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MobEntity::canMobSpawn);
@@ -88,15 +91,15 @@ public class BWWorldGenerators {
 			SpawnRestrictionAccessor.callRegister(BWEntityTypes.TOAD, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MobEntity::canMobSpawn);
 		}
 		if (Bewitchment.config.ghostWeight > 0) {
-			BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> !context.getBiome().getSpawnSettings().getSpawnEntry(BWEntityTypes.GHOST.getSpawnGroup()).isEmpty()), BWEntityTypes.GHOST.getSpawnGroup(), BWEntityTypes.GHOST, Bewitchment.config.ghostWeight, Bewitchment.config.ghostMinGroupCount, Bewitchment.config.ghostMaxGroupCount);
+			BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> !context.getBiome().getSpawnSettings().getSpawnEntries(BWEntityTypes.GHOST.getSpawnGroup()).isEmpty()), BWEntityTypes.GHOST.getSpawnGroup(), BWEntityTypes.GHOST, Bewitchment.config.ghostWeight, Bewitchment.config.ghostMinGroupCount, Bewitchment.config.ghostMaxGroupCount);
 			SpawnRestrictionAccessor.callRegister(BWEntityTypes.GHOST, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, GhostEntity::canSpawn);
 		}
 		if (Bewitchment.config.vampireWeight > 0) {
-			BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> !context.getBiome().getSpawnSettings().getSpawnEntry(BWEntityTypes.VAMPIRE.getSpawnGroup()).isEmpty()).and(context -> context.getBiome().getCategory() == Biome.Category.PLAINS || context.getBiome().getCategory() == Biome.Category.TAIGA), BWEntityTypes.VAMPIRE.getSpawnGroup(), BWEntityTypes.VAMPIRE, Bewitchment.config.vampireWeight, Bewitchment.config.vampireMinGroupCount, Bewitchment.config.vampireMaxGroupCount);
+			BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> !context.getBiome().getSpawnSettings().getSpawnEntries(BWEntityTypes.VAMPIRE.getSpawnGroup()).isEmpty()).and(context -> context.getBiome().getCategory() == Biome.Category.PLAINS || context.getBiome().getCategory() == Biome.Category.TAIGA), BWEntityTypes.VAMPIRE.getSpawnGroup(), BWEntityTypes.VAMPIRE, Bewitchment.config.vampireWeight, Bewitchment.config.vampireMinGroupCount, Bewitchment.config.vampireMaxGroupCount);
 			SpawnRestrictionAccessor.callRegister(BWEntityTypes.VAMPIRE, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, serverWorldAccess, spawnReason, pos, random) -> MobEntity.canMobSpawn(type, serverWorldAccess, spawnReason, pos, random) && BewitchmentAPI.getMoonPhase(serverWorldAccess) == 4);
 		}
 		if (Bewitchment.config.werewolfWeight > 0) {
-			BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> !context.getBiome().getSpawnSettings().getSpawnEntry(BWEntityTypes.WEREWOLF.getSpawnGroup()).isEmpty()).and(context -> context.getBiome().getCategory() == Biome.Category.FOREST || context.getBiome().getCategory() == Biome.Category.TAIGA || context.getBiome().getCategory() == Biome.Category.ICY), BWEntityTypes.WEREWOLF.getSpawnGroup(), BWEntityTypes.WEREWOLF, Bewitchment.config.werewolfWeight, Bewitchment.config.werewolfMinGroupCount, Bewitchment.config.werewolfMaxGroupCount);
+			BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(context -> !context.getBiome().getSpawnSettings().getSpawnEntries(BWEntityTypes.WEREWOLF.getSpawnGroup()).isEmpty()).and(context -> context.getBiome().getCategory() == Biome.Category.FOREST || context.getBiome().getCategory() == Biome.Category.TAIGA || context.getBiome().getCategory() == Biome.Category.ICY), BWEntityTypes.WEREWOLF.getSpawnGroup(), BWEntityTypes.WEREWOLF, Bewitchment.config.werewolfWeight, Bewitchment.config.werewolfMinGroupCount, Bewitchment.config.werewolfMaxGroupCount);
 			SpawnRestrictionAccessor.callRegister(BWEntityTypes.WEREWOLF, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (type, serverWorldAccess, spawnReason, pos, random) -> MobEntity.canMobSpawn(type, serverWorldAccess, spawnReason, pos, random) && BewitchmentAPI.getMoonPhase(serverWorldAccess) == 0);
 		}
 		if (Bewitchment.config.hellhoundWeight > 0) {

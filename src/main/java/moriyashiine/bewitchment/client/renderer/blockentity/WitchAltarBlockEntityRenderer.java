@@ -8,23 +8,18 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayers;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.World;
 
 @Environment(EnvType.CLIENT)
-public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAltarBlockEntity> {
-	public WitchAltarBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
-		super(dispatcher);
-	}
-	
+public class WitchAltarBlockEntityRenderer implements BlockEntityRenderer<WitchAltarBlockEntity> {
 	@Override
 	public void render(WitchAltarBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 		World world = entity.getWorld();
@@ -37,26 +32,26 @@ public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAlta
 				if (BWTags.SKULLS.contains(sword.getItem())) {
 					matrices.translate(direction == Direction.NORTH || direction == Direction.EAST ? 0.25 : 0.75, 1.125, direction == Direction.NORTH || direction == Direction.WEST ? 0.75 : 0.25);
 					if (direction == Direction.NORTH) {
-						matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(180));
+						matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180));
 					}
 					if (direction == Direction.EAST) {
-						matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
-						matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90));
+						matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
+						matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90));
 					}
 					if (direction == Direction.WEST) {
-						matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
-						matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270));
+						matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
+						matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(270));
 					}
-					matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vector3f.POSITIVE_Z : Vector3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
+					matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vec3f.POSITIVE_Z : Vec3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
 					matrices.scale(0.5f, 0.5f, 0.5f);
-					MinecraftClient.getInstance().getItemRenderer().renderItem(sword, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers);
+					MinecraftClient.getInstance().getItemRenderer().renderItem(sword, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers, 0);
 				}
 				else if (!(sword.getItem() instanceof BlockItem)) {
 					matrices.translate(direction == Direction.NORTH || direction == Direction.EAST ? 0.25 : 0.75, 1.01, direction == Direction.NORTH || direction == Direction.WEST ? 0.75 : 0.25);
-					matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
-					matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vector3f.POSITIVE_Z : Vector3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
+					matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
+					matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vec3f.POSITIVE_Z : Vec3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
 					matrices.scale(1 / 3f, 1 / 3f, 1 / 3f);
-					MinecraftClient.getInstance().getItemRenderer().renderItem(sword, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers);
+					MinecraftClient.getInstance().getItemRenderer().renderItem(sword, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers, 0);
 				}
 				else {
 					matrices.translate(direction == Direction.SOUTH || direction == Direction.WEST ? 0.5f : 0, 1, direction == Direction.NORTH || direction == Direction.WEST ? 0.5f : 0);
@@ -80,26 +75,26 @@ public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAlta
 				if (BWTags.SKULLS.contains(pentacle.getItem())) {
 					matrices.translate(x, 1.125, z);
 					if (direction == Direction.NORTH) {
-						matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(180));
+						matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180));
 					}
 					if (direction == Direction.EAST) {
-						matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
-						matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90));
+						matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
+						matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90));
 					}
 					if (direction == Direction.WEST) {
-						matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
-						matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270));
+						matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
+						matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(270));
 					}
-					matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vector3f.POSITIVE_Z : Vector3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
+					matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vec3f.POSITIVE_Z : Vec3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
 					matrices.scale(0.5f, 0.5f, 0.5f);
-					MinecraftClient.getInstance().getItemRenderer().renderItem(pentacle, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers);
+					MinecraftClient.getInstance().getItemRenderer().renderItem(pentacle, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers, 0);
 				}
 				else if (!(pentacle.getItem() instanceof BlockItem)) {
 					matrices.translate(x, 1.01, z);
-					matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
-					matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vector3f.POSITIVE_Z : Vector3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
+					matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
+					matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vec3f.POSITIVE_Z : Vec3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
 					matrices.scale(1 / 3f, 1 / 3f, 1 / 3f);
-					MinecraftClient.getInstance().getItemRenderer().renderItem(pentacle, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers);
+					MinecraftClient.getInstance().getItemRenderer().renderItem(pentacle, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers, 0);
 				}
 				else {
 					matrices.translate(direction == Direction.NORTH || direction == Direction.SOUTH ? 0.25f : direction == Direction.EAST ? 0.35f : 0.15f, 1, direction == Direction.EAST || direction == Direction.WEST ? 0.25f : direction == Direction.NORTH ? 0.15f : 0.35f);
@@ -121,26 +116,26 @@ public class WitchAltarBlockEntityRenderer extends BlockEntityRenderer<WitchAlta
 				if (BWTags.SKULLS.contains(wand.getItem())) {
 					matrices.translate(direction == Direction.NORTH || direction == Direction.WEST ? 0.75f : 0.25f, 1.125f, direction == Direction.NORTH || direction == Direction.EAST ? 0.75f : 0.25f);
 					if (direction == Direction.NORTH) {
-						matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(180));
+						matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180));
 					}
 					if (direction == Direction.EAST) {
-						matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
-						matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90));
+						matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
+						matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90));
 					}
 					if (direction == Direction.WEST) {
-						matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
-						matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270));
+						matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
+						matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(270));
 					}
-					matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vector3f.POSITIVE_Z : Vector3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
+					matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vec3f.POSITIVE_Z : Vec3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
 					matrices.scale(0.5f, 0.5f, 0.5f);
-					MinecraftClient.getInstance().getItemRenderer().renderItem(wand, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers);
+					MinecraftClient.getInstance().getItemRenderer().renderItem(wand, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers, 0);
 				}
 				else if (!(wand.getItem() instanceof BlockItem)) {
 					matrices.translate(direction == Direction.NORTH || direction == Direction.WEST ? 0.75 : 0.25, 1.01, direction == Direction.NORTH || direction == Direction.EAST ? 0.75 : 0.25);
-					matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
-					matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vector3f.POSITIVE_Z : Vector3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
+					matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
+					matrices.multiply((direction == Direction.NORTH || direction == Direction.SOUTH ? Vec3f.POSITIVE_Z : Vec3f.NEGATIVE_Z).getDegreesQuaternion(rotation));
 					matrices.scale(1 / 3f, 1 / 3f, 1 / 3f);
-					MinecraftClient.getInstance().getItemRenderer().renderItem(wand, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers);
+					MinecraftClient.getInstance().getItemRenderer().renderItem(wand, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers, 0);
 				}
 				else {
 					matrices.translate(direction == Direction.NORTH || direction == Direction.WEST ? 0.5f : 0, 1, direction == Direction.NORTH || direction == Direction.EAST ? 0.5f : 0);

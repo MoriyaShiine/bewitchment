@@ -34,27 +34,17 @@ public abstract class BlockMixin {
 	private static void getDroppedStacks(BlockState state, ServerWorld world, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity entity, ItemStack stack, CallbackInfoReturnable<List<ItemStack>> callbackInfo) {
 		if (entity instanceof LivingEntity) {
 			List<ItemStack> drops = callbackInfo.getReturnValue();
-			if (!drops.isEmpty() && !EnchantmentHelper.get(stack).containsKey(Enchantments.SILK_TOUCH) && entity instanceof FortuneAccessor) {
-				FortuneAccessor fortuneAccessor = (FortuneAccessor) entity;
+			if (!drops.isEmpty() && !EnchantmentHelper.get(stack).containsKey(Enchantments.SILK_TOUCH) && entity instanceof FortuneAccessor fortuneAccessor) {
 				if (fortuneAccessor.getFortune() != null) {
 					if (fortuneAccessor.getFortune().fortune == BWFortunes.TREASURE && world.random.nextFloat() < 1 / 25f) {
 						Set<ItemStack> treasure = new HashSet<>();
 						for (int i = 0; i < world.random.nextInt(1) + 1; i++) {
 							switch (world.random.nextInt(4)) {
-								case 0:
-									treasure.add(new ItemStack(Items.DIAMOND, MathHelper.nextInt(world.random, 1, 3)));
-									break;
-								case 1:
-									treasure.add(new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(world.random, 1, 5)));
-									break;
-								case 2:
-									treasure.add(new ItemStack(Items.IRON_INGOT, MathHelper.nextInt(world.random, 2, 10)));
-									break;
-								case 3:
-									treasure.add(new ItemStack(BWObjects.SILVER_INGOT, MathHelper.nextInt(world.random, 1, 5)));
-									break;
-								default:
-									treasure.add(ItemStack.EMPTY);
+								case 0 -> treasure.add(new ItemStack(Items.DIAMOND, MathHelper.nextInt(world.random, 1, 3)));
+								case 1 -> treasure.add(new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(world.random, 1, 5)));
+								case 2 -> treasure.add(new ItemStack(Items.IRON_INGOT, MathHelper.nextInt(world.random, 2, 10)));
+								case 3 -> treasure.add(new ItemStack(BWObjects.SILVER_INGOT, MathHelper.nextInt(world.random, 1, 5)));
+								default -> treasure.add(ItemStack.EMPTY);
 							}
 						}
 						drops.addAll(treasure);

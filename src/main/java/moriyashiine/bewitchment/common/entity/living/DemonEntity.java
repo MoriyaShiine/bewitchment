@@ -13,24 +13,24 @@ import moriyashiine.bewitchment.common.registry.BWMaterials;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.fabric.api.util.NbtType;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityGroup;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.item.ArmorItem;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.sound.SoundEvent;
@@ -38,8 +38,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -49,8 +47,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DemonEntity extends BWHostileEntity implements DemonMerchant {
-	public static final TrackedData<Boolean> MALE = DataTracker.registerData(DemonEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-	
 	private final List<DemonEntity.DemonTradeOffer> offers = new ArrayList<>();
 	private PlayerEntity customer = null;
 	private int tradeResetTimer = 0;
@@ -78,7 +74,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 			LivingEntity target = getTarget();
 			if (target != null) {
 				lookAtEntity(target, 360, 360);
-				if ((age + getEntityId()) % 40 == 0) {
+				if ((age + getId()) % 40 == 0) {
 					SmallFireballEntity fireball = new SmallFireballEntity(world, this, target.getX() - getX(), target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ());
 					fireball.updatePosition(fireball.getX(), getBodyY(0.5), fireball.getZ());
 					world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_SHOOT, getSoundCategory(), getSoundVolume(), getSoundPitch());
@@ -162,43 +158,29 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 	}
 	
 	@Override
-	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable CompoundTag entityTag) {
-		dataTracker.set(MALE, random.nextBoolean());
-		return super.initialize(world, difficulty, spawnReason, entityData, entityTag);
-	}
-	
-	@Override
-	public void readCustomDataFromTag(CompoundTag tag) {
-		super.readCustomDataFromTag(tag);
-		dataTracker.set(MALE, tag.getBoolean("Male"));
-		if (tag.contains("Offers")) {
+	public void readCustomDataFromNbt(NbtCompound nbt) {
+		super.readCustomDataFromNbt(nbt);
+		if (nbt.contains("Offers")) {
 			offers.clear();
-			ListTag offersTag = tag.getList("Offers", NbtType.COMPOUND);
-			for (Tag offerTag : offersTag) {
-				offers.add(new DemonTradeOffer((CompoundTag) offerTag));
+			NbtList offersTag = nbt.getList("Offers", NbtType.COMPOUND);
+			for (NbtElement offerTag : offersTag) {
+				offers.add(new DemonTradeOffer((NbtCompound) offerTag));
 			}
 		}
-		tradeResetTimer = tag.getInt("TradeResetTimer");
+		tradeResetTimer = nbt.getInt("TradeResetTimer");
 	}
 	
 	@Override
-	public void writeCustomDataToTag(CompoundTag tag) {
-		super.writeCustomDataToTag(tag);
-		tag.putBoolean("Male", dataTracker.get(MALE));
+	public void writeCustomDataToNbt(NbtCompound nbt) {
+		super.writeCustomDataToNbt(nbt);
 		if (!offers.isEmpty()) {
-			ListTag offersTag = new ListTag();
+			NbtList offersTag = new NbtList();
 			for (DemonTradeOffer offer : offers) {
 				offersTag.add(offer.toTag());
 			}
-			tag.put("Offers", offersTag);
+			nbt.put("Offers", offersTag);
 		}
-		tag.putInt("TradeResetTimer", tradeResetTimer);
-	}
-	
-	@Override
-	protected void initDataTracker() {
-		super.initDataTracker();
-		dataTracker.startTracking(MALE, true);
+		nbt.putInt("TradeResetTimer", tradeResetTimer);
 	}
 	
 	@Override
@@ -268,7 +250,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 		private final Contract contract;
 		private final int duration, cost;
 		
-		public DemonTradeOffer(CompoundTag tag) {
+		public DemonTradeOffer(NbtCompound tag) {
 			this(BWRegistries.CONTRACTS.get(new Identifier(tag.getString("Contract"))), tag.getInt("Duration"), tag.getInt("Cost"));
 		}
 		
@@ -278,8 +260,8 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 			this.cost = cost;
 		}
 		
-		public CompoundTag toTag() {
-			CompoundTag tag = new CompoundTag();
+		public NbtCompound toTag() {
+			NbtCompound tag = new NbtCompound();
 			tag.putString("Contract", BWRegistries.CONTRACTS.getId(contract).toString());
 			tag.putInt("Duration", duration);
 			tag.putInt("Cost", cost);

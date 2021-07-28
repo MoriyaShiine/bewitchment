@@ -1,6 +1,5 @@
 package moriyashiine.bewitchment.common.statuseffect;
 
-import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -22,7 +21,7 @@ public class PurityStatusEffect extends StatusEffect {
 	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
 		if (!entity.world.isClient && entity.age % 20 == 0) {
 			Registry.STATUS_EFFECT.stream().forEach(effect -> {
-				if (((StatusEffectAccessor) effect).bw_getType() == StatusEffectType.HARMFUL && entity.hasStatusEffect(effect)) {
+				if (effect.getType() == StatusEffectType.HARMFUL && entity.hasStatusEffect(effect)) {
 					StatusEffectInstance currentPurity = entity.getStatusEffect(this);
 					if (currentPurity != null) {
 						entity.removeStatusEffect(this);

@@ -8,7 +8,6 @@ import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWPledges;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
-import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
@@ -30,7 +29,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.thrown.PotionEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
@@ -73,7 +72,7 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 		if (!world.isClient) {
 			bossBar.setPercent(getHealth() / getMaxHealth());
 			LivingEntity target = getTarget();
-			int timer = age + getEntityId();
+			int timer = age + getId();
 			if (timer % 300 == 0 && getHealth() < getMaxHealth() && (target == null || distanceTo(target) < 4)) {
 				spawnPotion(getBlockPos(), Potions.AWKWARD);
 				addStatusEffect(new StatusEffectInstance(StatusEffects.INSTANT_HEALTH, 1, 1));
@@ -169,7 +168,7 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 	
 	@Override
 	public boolean canHaveStatusEffect(StatusEffectInstance effect) {
-		return ((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.BENEFICIAL;
+		return effect.getEffectType().getType() == StatusEffectType.BENEFICIAL;
 	}
 	
 	@Override
@@ -194,7 +193,7 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 	}
 	
 	@Override
-	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
+	public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
 		return false;
 	}
 	
@@ -221,18 +220,18 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 	}
 	
 	@Override
-	public void readCustomDataFromTag(CompoundTag tag) {
-		super.readCustomDataFromTag(tag);
+	public void readCustomDataFromNbt(NbtCompound nbt) {
+		super.readCustomDataFromNbt(nbt);
 		if (hasCustomName()) {
 			bossBar.setName(getDisplayName());
 		}
-		fromTagPledgeable(tag);
+		fromNbtPledgeable(nbt);
 	}
 	
 	@Override
-	public void writeCustomDataToTag(CompoundTag tag) {
-		super.writeCustomDataToTag(tag);
-		toTagPledgeable(tag);
+	public void writeCustomDataToNbt(NbtCompound nbt) {
+		super.writeCustomDataToNbt(nbt);
+		toNbtPledgeable(nbt);
 	}
 	
 	@Override
@@ -253,7 +252,7 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 		double targetX = target.getX() - getX();
 		double targetY = target.getY() - 1 - getY();
 		double targetZ = target.getZ() - getZ();
-		potion.setVelocity(targetX, targetY + (MathHelper.sqrt(targetX * targetX + targetZ * targetZ) * 0.4), targetZ, 1, 0);
+		potion.setVelocity(targetX, targetY + (MathHelper.sqrt((float) (targetX * targetX + targetZ * targetZ)) * 0.4), targetZ, 1, 0);
 		world.playSound(null, getBlockPos(), SoundEvents.ENTITY_SPLASH_POTION_THROW, getSoundCategory(), getSoundVolume(), getSoundPitch());
 		world.spawnEntity(potion);
 		swingHand(Hand.MAIN_HAND);

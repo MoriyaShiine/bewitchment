@@ -2,7 +2,7 @@ package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.common.entity.interfaces.CaduceusFireballAccessor;
 import net.minecraft.entity.projectile.FireballEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -22,13 +22,13 @@ public class FireballEntityMixin implements CaduceusFireballAccessor {
 		this.fromCaduceus = fromCaduceus;
 	}
 	
-	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
-	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		setFromCaduceus(tag.getBoolean("FromCaduceus"));
+	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		setFromCaduceus(nbt.getBoolean("FromCaduceus"));
 	}
 	
-	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
-	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		tag.putBoolean("FromCaduceus", getFromCaduceus());
+	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		nbt.putBoolean("FromCaduceus", getFromCaduceus());
 	}
 }

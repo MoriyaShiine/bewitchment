@@ -27,7 +27,7 @@ public class BroomItem extends Item {
 			if (!client) {
 				Entity entity = broom.create(world);
 				if (entity instanceof BroomEntity) {
-					entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, context.getPlayerYaw(), context.getPlayer() == null ? 0 : context.getPlayer().pitch);
+					entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, context.getPlayerYaw(), context.getPlayer() == null ? 0 : context.getPlayer().getPitch());
 					if (context.getPlayer() != null) {
 						context.getStack().getOrCreateTag().putUuid("OwnerUUID", context.getPlayer().getUuid());
 					}

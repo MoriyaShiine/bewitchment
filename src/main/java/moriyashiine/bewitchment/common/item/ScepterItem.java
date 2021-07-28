@@ -14,7 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -61,7 +61,7 @@ public class ScepterItem extends Item {
 					potionStack.getOrCreateTag().putString("PolymorphName", stack.getOrCreateTag().getString("PolymorphName"));
 				}
 				potion.setItem(potionStack);
-				potion.setProperties(user, user.pitch, user.yaw, -20, 0.5f, 1);
+				potion.setProperties(user, user.getPitch(), user.getYaw(), -20, 0.5f, 1);
 				world.spawnEntity(potion);
 				world.playSound(null, user.getBlockPos(), SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 1, 1);
 				if (!((PlayerEntity) user).isCreative()) {
@@ -71,7 +71,7 @@ public class ScepterItem extends Item {
 							potionStack.getOrCreateTag().remove("PolymorphUUID");
 							potionStack.getOrCreateTag().remove("PolymorphName");
 						}
-						stack.getOrCreateTag().put("CustomPotionEffects", new ListTag());
+						stack.getOrCreateTag().put("CustomPotionEffects", new NbtList());
 					}
 					
 					stack.damage(1, user, stackUser -> stackUser.sendToolBreakStatus(user.getActiveHand()));

@@ -108,9 +108,8 @@ public class OwlEntity extends BWTameableEntity {
 	}
 	
 	@Override
-	protected float playFlySound(float distance) {
+	protected void addFlapEffects() {
 		playSound(BWSoundEvents.ENTITY_OWL_FLY, 0.15f, 1);
-		return distance;
 	}
 	
 	@Override
@@ -119,7 +118,7 @@ public class OwlEntity extends BWTameableEntity {
 	}
 	
 	@Override
-	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
+	public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
 		return false;
 	}
 	

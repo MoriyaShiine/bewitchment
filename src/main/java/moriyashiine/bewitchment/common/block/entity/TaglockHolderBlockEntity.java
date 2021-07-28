@@ -5,10 +5,10 @@ import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.UUID;
 
@@ -16,12 +16,8 @@ public class TaglockHolderBlockEntity extends BlockEntity implements BlockEntity
 	private final DefaultedList<ItemStack> taglockInventory = DefaultedList.ofSize(3, ItemStack.EMPTY);
 	private UUID owner = null;
 	
-	public TaglockHolderBlockEntity(BlockEntityType<?> type) {
-		super(type);
-	}
-	
-	public TaglockHolderBlockEntity() {
-		this(BWBlockEntityTypes.TAGLOCK_HOLDER);
+	public TaglockHolderBlockEntity(BlockPos pos, BlockState state) {
+		super(BWBlockEntityTypes.TAGLOCK_HOLDER, pos, state);
 	}
 	
 	@Override
@@ -40,24 +36,24 @@ public class TaglockHolderBlockEntity extends BlockEntity implements BlockEntity
 	}
 	
 	@Override
-	public void fromClientTag(CompoundTag tag) {
-		fromTagTaglock(tag);
+	public void fromClientTag(NbtCompound tag) {
+		fromNbtTaglock(tag);
 	}
 	
 	@Override
-	public CompoundTag toClientTag(CompoundTag tag) {
-		toTagTaglock(tag);
+	public NbtCompound toClientTag(NbtCompound tag) {
+		toNbtTaglock(tag);
 		return tag;
 	}
 	
 	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
-		fromClientTag(tag);
-		super.fromTag(state, tag);
+	public void readNbt(NbtCompound nbt) {
+		fromClientTag(nbt);
+		super.readNbt(nbt);
 	}
 	
 	@Override
-	public CompoundTag toTag(CompoundTag tag) {
-		return super.toTag(toClientTag(tag));
+	public NbtCompound writeNbt(NbtCompound nbt) {
+		return super.writeNbt(toClientTag(nbt));
 	}
 }

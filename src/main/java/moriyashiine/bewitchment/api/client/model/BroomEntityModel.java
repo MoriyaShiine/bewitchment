@@ -3,7 +3,7 @@ package moriyashiine.bewitchment.api.client.model;
 import moriyashiine.bewitchment.api.entity.BroomEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
@@ -13,15 +13,15 @@ import net.minecraft.util.math.MathHelper;
 public class BroomEntityModel extends EntityModel<BroomEntity> {
 	private final ModelPart broom;
 	
-	public BroomEntityModel() {
-		textureWidth = 64;
-		textureHeight = 64;
-		broom = new ModelPart(this);
-		broom.setPivot(0, 24, 0);
-		broom.setTextureOffset(0, 0).addCuboid(-0.5f, -1, -8, 1, 1, 16, 0, false);
-		broom.setTextureOffset(0, 7).addCuboid(-1.5f, -2, 8, 3, 3, 1, 0, false);
-		broom.setTextureOffset(0, 17).addCuboid(-2.5f, -3, 9, 5, 5, 6, 0, false);
-		broom.setTextureOffset(0, 0).addCuboid(-1.5f, -2, 13, 3, 3, 4, 0, false);
+	public BroomEntityModel(ModelPart root) {
+		broom = root.getChild("broom");
+	}
+	
+	public static TexturedModelData getTexturedModelData() {
+		ModelData data = new ModelData();
+		ModelPartData root = data.getRoot();
+		root.addChild("broom", ModelPartBuilder.create().cuboid(-0.5F, -1.0F, -8.0F, 1.0F, 1.0F, 16.0F).uv(0, 7).cuboid(-1.5F, -2.0F, 8.0F, 3.0F, 3.0F, 1.0F).uv(0, 17).cuboid(-2.5F, -3.0F, 9.0F, 5.0F, 5.0F, 6.0F).uv(0, 0).cuboid(-1.5F, -2.0F, 13.0F, 3.0F, 3.0F, 4.0F), ModelTransform.of(0.0F, 24.0F, 0.0F, 0.0F, 0.0F, 0.0F));
+		return TexturedModelData.of(data, 64, 64);
 	}
 	
 	@Override

@@ -1,8 +1,5 @@
 package moriyashiine.bewitchment.common;
 
-import dev.emi.trinkets.api.SlotGroups;
-import dev.emi.trinkets.api.Slots;
-import dev.emi.trinkets.api.TrinketSlots;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
@@ -14,7 +11,6 @@ import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.entity.interfaces.*;
-import moriyashiine.bewitchment.common.integration.requiem.BWRequiemCompat;
 import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.network.packet.CauldronTeleportPacket;
@@ -32,7 +28,6 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.util.TriState;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityGroup;
@@ -68,16 +63,11 @@ public class Bewitchment implements ModInitializer {
 	
 	public static final ItemGroup BEWITCHMENT_GROUP = FabricItemGroupBuilder.build(new Identifier(MODID, MODID), () -> new ItemStack(BWObjects.ATHAME));
 	
-	public static boolean isNourishLoaded, isRequiemLoaded;
-	
 	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void onInitialize() {
 		AutoConfig.register(BWConfig.class, GsonConfigSerializer::new);
 		config = AutoConfig.getConfigHolder(BWConfig.class).getConfig();
-		TrinketSlots.addSlot(SlotGroups.CHEST, Slots.NECKLACE, new Identifier("trinkets", "textures/item/empty_trinket_slot_necklace.png"));
-		TrinketSlots.addSlot(SlotGroups.LEGS, Slots.BELT, new Identifier("trinkets", "textures/item/empty_trinket_slot_belt.png"));
-		TrinketSlots.addSlot(SlotGroups.FEET, Slots.AGLET, new Identifier("trinkets", "textures/item/empty_trinket_slot_aglet.png"));
 		ServerPlayNetworking.registerGlobalReceiver(CauldronTeleportPacket.ID, CauldronTeleportPacket::handle);
 		ServerPlayNetworking.registerGlobalReceiver(TransformationAbilityPacket.ID, TransformationAbilityPacket::handle);
 		ServerPlayNetworking.registerGlobalReceiver(TogglePressingForwardPacket.ID, TogglePressingForwardPacket::handle);
@@ -104,8 +94,7 @@ public class Bewitchment implements ModInitializer {
 			((CurseAccessor) newPlayer).getCurses().addAll(((CurseAccessor) oldPlayer).getCurses());
 		});
 		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killedEntity) -> {
-			if (entity instanceof LivingEntity) {
-				LivingEntity livingEntity = (LivingEntity) entity;
+			if (entity instanceof LivingEntity livingEntity) {
 				if (livingEntity instanceof PlayerEntity && killedEntity.getGroup() == EntityGroup.ARTHROPOD && BewitchmentAPI.getFamiliar((PlayerEntity) livingEntity) == BWEntityTypes.TOAD) {
 					livingEntity.heal(livingEntity.getMaxHealth() * 1 / 4f);
 				}
@@ -242,10 +231,5 @@ public class Bewitchment implements ModInitializer {
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.END_STONE_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.OBSIDIAN_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.PURPUR_WITCH_ALTAR);
-		isNourishLoaded = FabricLoader.getInstance().isModLoaded("nourish");
-		isRequiemLoaded = FabricLoader.getInstance().isModLoaded("requiem");
-		if (isRequiemLoaded) {
-			BWRequiemCompat.init();
-		}
 	}
 }

@@ -11,8 +11,8 @@ import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
@@ -23,20 +23,20 @@ public class SyncContractsPacket {
 	
 	public static void send(PlayerEntity player) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-		CompoundTag contracts = new CompoundTag();
-		contracts.put("Contracts", ((ContractAccessor) player).toTagContract());
-		buf.writeCompoundTag(contracts);
+		NbtCompound contracts = new NbtCompound();
+		contracts.put("Contracts", ((ContractAccessor) player).toNbtContract());
+		buf.writeNbt(contracts);
 		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
 	}
 	
 	public static void handle(MinecraftClient client, ClientPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
-		CompoundTag contractsTag = buf.readCompoundTag();
+		NbtCompound conctractsCompound = buf.readNbt();
 		client.execute(() -> {
 			if (client.player != null) {
 				((ContractAccessor) client.player).getContracts().clear();
-				ListTag contracts = contractsTag.getList("Contracts", NbtType.COMPOUND);
+				NbtList contracts = conctractsCompound.getList("Contracts", NbtType.COMPOUND);
 				for (int i = 0; i < contracts.size(); i++) {
-					CompoundTag contract = contracts.getCompound(i);
+					NbtCompound contract = contracts.getCompound(i);
 					((ContractAccessor) client.player).addContract(new Contract.Instance(BWRegistries.CONTRACTS.get(new Identifier(contract.getString("Contract"))), contract.getInt("Duration"), contract.getInt("Cost")));
 				}
 			}

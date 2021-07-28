@@ -13,7 +13,6 @@ import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
@@ -26,7 +25,7 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.server.world.ServerWorld;
@@ -36,19 +35,19 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Nameable;
-import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
-public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Tickable, Inventory, Nameable, UsesAltarPower {
+public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Inventory, Nameable, UsesAltarPower {
 	private static final TranslatableText DEFAULT_NAME = new TranslatableText(BWObjects.WITCH_CAULDRON.getTranslationKey());
 	
 	private Box box;
@@ -67,20 +66,16 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	
 	private boolean loaded = false;
 	
-	public WitchCauldronBlockEntity(BlockEntityType<?> type) {
-		super(type);
-	}
-	
-	public WitchCauldronBlockEntity() {
-		this(BWBlockEntityTypes.WITCH_CAULDRON);
+	public WitchCauldronBlockEntity(BlockPos pos, BlockState state) {
+		super(BWBlockEntityTypes.WITCH_CAULDRON, pos, state);
 	}
 	
 	@Override
-	public void fromClientTag(CompoundTag tag) {
+	public void fromClientTag(NbtCompound tag) {
 		if (tag.contains("AltarPos")) {
 			setAltarPos(BlockPos.fromLong(tag.getLong("AltarPos")));
 		}
-		Inventories.fromTag(tag, inventory);
+		Inventories.readNbt(tag, inventory);
 		mode = Mode.valueOf(tag.getString("Mode"));
 		if (tag.contains("CustomName", NbtType.STRING)) {
 			customName = Text.Serializer.fromJson(tag.getString("CustomName"));
@@ -92,11 +87,11 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	}
 	
 	@Override
-	public CompoundTag toClientTag(CompoundTag tag) {
+	public NbtCompound toClientTag(NbtCompound tag) {
 		if (getAltarPos() != null) {
 			tag.putLong("AltarPos", getAltarPos().asLong());
 		}
-		Inventories.toTag(tag, inventory);
+		Inventories.writeNbt(tag, inventory);
 		tag.putString("Mode", mode.name);
 		if (customName != null) {
 			tag.putString("CustomName", Text.Serializer.toJson(customName));
@@ -107,14 +102,14 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	}
 	
 	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
-		fromClientTag(tag);
-		super.fromTag(state, tag);
+	public void readNbt(NbtCompound nbt) {
+		fromClientTag(nbt);
+		super.readNbt(nbt);
 	}
 	
 	@Override
-	public CompoundTag toTag(CompoundTag tag) {
-		return super.toTag(toClientTag(tag));
+	public NbtCompound writeNbt(NbtCompound nbt) {
+		return super.writeNbt(toClientTag(nbt));
 	}
 	
 	@Override
@@ -138,24 +133,23 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 		altarPos = pos;
 	}
 	
-	@Override
-	public void tick() {
+	public static void tick(World world, BlockPos pos, BlockState state, WitchCauldronBlockEntity blockEntity) {
 		if (world != null) {
-			if (!loaded) {
-				markDirty();
-				box = new Box(pos).contract(0.75);
-				oilRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.OIL_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
-				loaded = true;
+			if (!blockEntity.loaded) {
+				blockEntity.markDirty();
+				blockEntity.box = new Box(pos).contract(0.75);
+				blockEntity.oilRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.OIL_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(blockEntity, world)).findFirst().orElse(null);
+				blockEntity.loaded = true;
 			}
-			heatTimer = MathHelper.clamp(heatTimer + (getCachedState().get(Properties.LIT) && getCachedState().get(Properties.LEVEL_3) > 0 ? 1 : -1), 0, 160);
+			blockEntity.heatTimer = MathHelper.clamp(blockEntity.heatTimer + (state.get(Properties.LIT) && state.get(Properties.LEVEL_3) > 0 ? 1 : -1), 0, 160);
 			if (!world.isClient) {
-				if (heatTimer >= 60 && getCachedState().get(Properties.LEVEL_3) > 0) {
+				if (blockEntity.heatTimer >= 60 && state.get(Properties.LEVEL_3) > 0) {
 					if (world.random.nextFloat() <= 0.075f) {
-						world.playSound(null, pos, SoundEvents.BLOCK_BUBBLE_COLUMN_UPWARDS_AMBIENT, SoundCategory.BLOCKS, 1 / 3f, mode == Mode.FAILED ? 0.5f : 1);
+						world.playSound(null, pos, SoundEvents.BLOCK_BUBBLE_COLUMN_UPWARDS_AMBIENT, SoundCategory.BLOCKS, 1 / 3f, blockEntity.mode == Mode.FAILED ? 0.5f : 1);
 					}
 					if (world.getTime() % 5 == 0) {
-						world.getEntitiesByType(EntityType.ITEM, box, entity -> true).forEach(itemEntity -> {
-							if (itemEntity.getStack().getItem() == BWObjects.WOOD_ASH || getCachedState().get(Properties.LEVEL_3) == 3) {
+						world.getEntitiesByType(EntityType.ITEM, blockEntity.box, entity -> true).forEach(itemEntity -> {
+							if (itemEntity.getStack().getItem() == BWObjects.WOOD_ASH || state.get(Properties.LEVEL_3) == 3) {
 								world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_SPLASH, SoundCategory.BLOCKS, 1 / 3f, 1);
 								ItemStack stack = itemEntity.getStack();
 								if (stack.getItem().hasRecipeRemainder()) {
@@ -164,8 +158,8 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 									remainder.setNoGravity(true);
 									world.spawnEntity(remainder);
 								}
-								mode = insertStack(stack.split(1));
-								syncCauldron();
+								blockEntity.mode = blockEntity.insertStack(stack.split(1));
+								blockEntity.syncCauldron();
 							}
 						});
 					}

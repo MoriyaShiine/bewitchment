@@ -29,7 +29,7 @@ import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -312,22 +312,22 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Transfor
 		}
 	}
 	
-	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
-	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		if (tag.contains("Transformation")) {
-			setTransformation(BWRegistries.TRANSFORMATIONS.get(new Identifier(tag.getString("Transformation"))));
+	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		if (nbt.contains("Transformation")) {
+			setTransformation(BWRegistries.TRANSFORMATIONS.get(new Identifier(nbt.getString("Transformation"))));
 		}
-		setAlternateForm(tag.getBoolean("AlternateForm"));
-		setForcedTransformation(tag.getBoolean("ForcedTransformation"));
-		setWerewolfVariant(tag.getInt("WerewolfVariant"));
+		setAlternateForm(nbt.getBoolean("AlternateForm"));
+		setForcedTransformation(nbt.getBoolean("ForcedTransformation"));
+		setWerewolfVariant(nbt.getInt("WerewolfVariant"));
 	}
 	
-	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
-	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		tag.putString("Transformation", BWRegistries.TRANSFORMATIONS.getId(getTransformation()).toString());
-		tag.putBoolean("AlternateForm", getAlternateForm());
-		tag.putBoolean("ForcedTransformation", getForcedTransformation());
-		tag.putInt("WerewolfVariant", getWerewolfVariant());
+	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		nbt.putString("Transformation", BWRegistries.TRANSFORMATIONS.getId(getTransformation()).toString());
+		nbt.putBoolean("AlternateForm", getAlternateForm());
+		nbt.putBoolean("ForcedTransformation", getForcedTransformation());
+		nbt.putInt("WerewolfVariant", getWerewolfVariant());
 	}
 	
 	@Inject(method = "initDataTracker", at = @At("TAIL"))

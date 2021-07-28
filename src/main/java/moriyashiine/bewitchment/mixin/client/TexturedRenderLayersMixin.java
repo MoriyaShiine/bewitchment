@@ -19,55 +19,58 @@ import static moriyashiine.bewitchment.client.misc.SpriteIdentifiers.*;
 public class TexturedRenderLayersMixin {
 	@Inject(method = "getChestTexture(Lnet/minecraft/block/entity/BlockEntity;Lnet/minecraft/block/enums/ChestType;Z)Lnet/minecraft/client/util/SpriteIdentifier;", at = @At("HEAD"), cancellable = true)
 	private static void getChestTexture(BlockEntity blockEntity, ChestType type, boolean christmas, CallbackInfoReturnable<SpriteIdentifier> callbackInfo) {
-		if (blockEntity instanceof BWChestBlockEntity) {
-			BWChestBlockEntity bwChest = (BWChestBlockEntity) blockEntity;
+		if (blockEntity instanceof BWChestBlockEntity bwChest) {
 			switch (bwChest.type) {
 				case JUNIPER:
 					switch (type) {
-						case SINGLE:
+						case SINGLE -> {
 							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_JUNIPER : JUNIPER);
 							return;
-						case LEFT:
+						}
+						case LEFT -> {
 							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_JUNIPER_LEFT : JUNIPER_LEFT);
 							return;
-						case RIGHT:
+						}
+						case RIGHT -> {
 							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_JUNIPER_RIGHT : JUNIPER_RIGHT);
 							return;
+						}
 					}
 				case CYPRESS:
 					switch (type) {
-						case SINGLE:
+						case SINGLE -> {
 							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_CYPRESS : CYPRESS);
 							return;
-						case LEFT:
+						}
+						case LEFT -> {
 							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_CYPRESS_LEFT : CYPRESS_LEFT);
 							return;
-						case RIGHT:
+						}
+						case RIGHT -> {
 							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_CYPRESS_RIGHT : CYPRESS_RIGHT);
 							return;
+						}
 					}
 				case ELDER:
 					switch (type) {
-						case SINGLE:
+						case SINGLE -> {
 							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_ELDER : ELDER);
 							return;
-						case LEFT:
+						}
+						case LEFT -> {
 							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_ELDER_LEFT : ELDER_LEFT);
 							return;
-						case RIGHT:
+						}
+						case RIGHT -> {
 							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_ELDER_RIGHT : ELDER_RIGHT);
 							return;
+						}
 					}
 				case DRAGONS_BLOOD:
 					switch (type) {
-						case SINGLE:
-							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_DRAGONS_BLOOD : DRAGONS_BLOOD);
-							return;
-						case LEFT:
-							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_DRAGONS_BLOOD_LEFT : DRAGONS_BLOOD_LEFT);
-							return;
-						case RIGHT:
-							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_DRAGONS_BLOOD_RIGHT : DRAGONS_BLOOD_RIGHT);
+						case SINGLE -> callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_DRAGONS_BLOOD : DRAGONS_BLOOD);
+						case LEFT -> callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_DRAGONS_BLOOD_LEFT : DRAGONS_BLOOD_LEFT);
+						case RIGHT -> callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_DRAGONS_BLOOD_RIGHT : DRAGONS_BLOOD_RIGHT);
 					}
 			}
 		}

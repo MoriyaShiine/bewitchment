@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import moriyashiine.bewitchment.common.entity.living.OwlEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.AnimalModel;
 import net.minecraft.util.math.MathHelper;
 
@@ -24,177 +24,55 @@ public class OwlEntityModel<T extends OwlEntity> extends AnimalModel<T> {
 	private final ModelPart tail01;
 	private final ModelPart head;
 	
-	public OwlEntityModel() {
-		textureWidth = 64;
-		textureHeight = 32;
-		body = new ModelPart(this);
-		body.setPivot(0.0F, 13.5F, 0.0F);
-		body.setTextureOffset(0, 14).addCuboid(-4.0F, 0.0F, -3.5F, 8.0F, 9.0F, 7.0F, 0.0F, false);
-		
-		lFoot = new ModelPart(this);
-		lFoot.setPivot(-1.8F, 8.9F, -0.4F);
-		body.addChild(lFoot);
-		setRotation(lFoot, 0.0873F, 0.0873F, 0.0F);
-		lFoot.setTextureOffset(32, 22).addCuboid(-1.0F, 0.0F, -3.4F, 2.0F, 2.0F, 4.0F, 0.0F, false);
-		
-		ModelPart lBackTalon01 = new ModelPart(this);
-		lBackTalon01.setPivot(-0.5F, 1.2F, 0.2F);
-		lFoot.addChild(lBackTalon01);
-		setRotation(lBackTalon01, -0.1745F, -0.0698F, 0.0F);
-		lBackTalon01.setTextureOffset(39, 28).addCuboid(-0.5F, -1.0F, 0.0F, 1.0F, 2.0F, 2.0F, 0.0F, false);
-		
-		ModelPart lBackTalon02 = new ModelPart(this);
-		lBackTalon02.setPivot(0.5F, 1.2F, 0.2F);
-		lFoot.addChild(lBackTalon02);
-		setRotation(lBackTalon02, -0.1745F, 0.0698F, 0.0F);
-		lBackTalon02.setTextureOffset(39, 28).addCuboid(-0.5F, -1.0F, 0.0F, 1.0F, 2.0F, 2.0F, 0.0F, false);
-		
-		ModelPart lFrontTalon02 = new ModelPart(this);
-		lFrontTalon02.setPivot(0.6F, 1.0F, -2.5F);
-		lFoot.addChild(lFrontTalon02);
-		setRotation(lFrontTalon02, 0.0F, -0.0873F, 0.0F);
-		lFrontTalon02.setTextureOffset(32, 28).addCuboid(-0.5F, -1.01F, -2.5F, 1.0F, 2.0F, 2.0F, 0.0F, false);
-		
-		ModelPart lFrontTalon01 = new ModelPart(this);
-		lFrontTalon01.setPivot(-0.6F, 1.0F, -2.5F);
-		lFoot.addChild(lFrontTalon01);
-		setRotation(lFrontTalon01, 0.0F, 0.0873F, 0.0F);
-		lFrontTalon01.setTextureOffset(32, 28).addCuboid(-0.5F, -1.01F, -2.5F, 1.0F, 2.0F, 2.0F, 0.0F, false);
-		
-		rFoot = new ModelPart(this);
-		rFoot.setPivot(1.8F, 8.9F, -0.4F);
-		body.addChild(rFoot);
-		setRotation(rFoot, 0.0873F, -0.0873F, 0.0F);
-		rFoot.setTextureOffset(32, 22).addCuboid(-1.0F, 0.0F, -3.4F, 2.0F, 2.0F, 4.0F, 0.0F, false);
-		
-		ModelPart rBackTalon01 = new ModelPart(this);
-		rBackTalon01.setPivot(0.5F, 1.2F, 0.2F);
-		rFoot.addChild(rBackTalon01);
-		setRotation(rBackTalon01, -0.1745F, 0.0698F, 0.0F);
-		rBackTalon01.setTextureOffset(39, 28).addCuboid(-0.5F, -1.0F, 0.0F, 1.0F, 2.0F, 2.0F, 0.0F, false);
-		
-		ModelPart rBackTalon02 = new ModelPart(this);
-		rBackTalon02.setPivot(-0.5F, 1.2F, 0.2F);
-		rFoot.addChild(rBackTalon02);
-		setRotation(rBackTalon02, -0.1745F, -0.0698F, 0.0F);
-		rBackTalon02.setTextureOffset(39, 28).addCuboid(-0.5F, -1.0F, 0.0F, 1.0F, 2.0F, 2.0F, 0.0F, false);
-		
-		ModelPart rFrontTalon02 = new ModelPart(this);
-		rFrontTalon02.setPivot(-0.6F, 1.0F, -2.5F);
-		rFoot.addChild(rFrontTalon02);
-		setRotation(rFrontTalon02, 0.0F, 0.0873F, 0.0F);
-		rFrontTalon02.setTextureOffset(32, 28).addCuboid(-0.5F, -1.01F, -2.5F, 1.0F, 2.0F, 2.0F, 0.0F, false);
-		
-		ModelPart rFrontTalon01 = new ModelPart(this);
-		rFrontTalon01.setPivot(0.6F, 1.0F, -2.5F);
-		rFoot.addChild(rFrontTalon01);
-		setRotation(rFrontTalon01, 0.0F, -0.0873F, 0.0F);
-		rFrontTalon01.setTextureOffset(32, 28).addCuboid(-0.5F, -1.01F, -2.5F, 1.0F, 2.0F, 2.0F, 0.0F, false);
-		
-		lWing01 = new ModelPart(this);
-		lWing01.setPivot(-3.9F, 1.0F, -0.2F);
-		body.addChild(lWing01);
-		setRotation(lWing01, 0.0F, 0.9599F, -0.8727F);
-		lWing01.setTextureOffset(34, 0).addCuboid(-5.0F, -0.7F, -0.5F, 5.0F, 8.0F, 1.0F, 0.0F, true);
-		
-		lWing02 = new ModelPart(this);
-		lWing02.setPivot(-4.5F, 0.0F, 0.1F);
-		lWing01.addChild(lWing02);
-		setRotation(lWing02, 0.0F, 0.0F, -0.6981F);
-		lWing02.setTextureOffset(47, 0).addCuboid(-6.0F, -0.7F, -0.5F, 6.0F, 9.0F, 1.0F, 0.0F, true);
-		
-		lWing03 = new ModelPart(this);
-		lWing03.setPivot(-4.2F, -0.1F, 0.1F);
-		lWing02.addChild(lWing03);
-		setRotation(lWing03, 0.0F, 0.0F, -0.6109F);
-		lWing03.setTextureOffset(32, 10).addCuboid(-6.0F, -0.6F, -0.5F, 6.0F, 10.0F, 1.0F, 0.0F, true);
-		
-		lWing04 = new ModelPart(this);
-		lWing04.setPivot(-2.8F, 0.0F, 0.0F);
-		lWing03.addChild(lWing04);
-		lWing04.setTextureOffset(47, 26).addCuboid(-8.0F, -0.6F, 0.0F, 8.0F, 6.0F, 0.0F, 0.0F, true);
-		
-		rWing01 = new ModelPart(this);
-		rWing01.setPivot(3.9F, 1.0F, -0.2F);
-		body.addChild(rWing01);
-		setRotation(rWing01, 0.0F, -0.9599F, 0.8727F);
-		rWing01.setTextureOffset(34, 0).addCuboid(0.0F, -0.7F, -0.5F, 5.0F, 8.0F, 1.0F, 0.0F, false);
-		
-		rWing02 = new ModelPart(this);
-		rWing02.setPivot(4.5F, 0.0F, 0.1F);
-		rWing01.addChild(rWing02);
-		setRotation(rWing02, 0.0F, 0.0F, 1F);
-		rWing02.setTextureOffset(47, 0).addCuboid(0.0F, -0.7F, -0.5F, 6.0F, 9.0F, 1.0F, 0.0F, false);
-		
-		rWing03 = new ModelPart(this);
-		rWing03.setPivot(4.2F, -0.1F, 0.1F);
-		rWing02.addChild(rWing03);
-		setRotation(rWing03, 0.0F, 0.0F, 0.6109F);
-		rWing03.setTextureOffset(32, 10).addCuboid(0.0F, -0.6F, -0.5F, 6.0F, 10.0F, 1.0F, 0.0F, false);
-		
-		rWing04 = new ModelPart(this);
-		rWing04.setPivot(2.8F, 0.0F, 0.0F);
-		rWing03.addChild(rWing04);
-		rWing04.setTextureOffset(47, 26).addCuboid(1.0F, -0.6F, 0.0F, 8.0F, 6.0F, 0.0F, 0.0F, false);
-		
-		tail01 = new ModelPart(this);
-		tail01.setPivot(0.0F, 8.1F, 2.9F);
-		body.addChild(tail01);
-		setRotation(tail01, -0.5236F, 0.0F, 0.0F);
-		tail01.setTextureOffset(49, 10).addCuboid(-1.5F, -1.0F, 0.0F, 3.0F, 1.0F, 3.0F, 0.0F, false);
-		
-		ModelPart mTailPlume = new ModelPart(this);
-		mTailPlume.setPivot(0.0F, -0.5F, 1.9F);
-		tail01.addChild(mTailPlume);
-		mTailPlume.setTextureOffset(44, 14).addCuboid(-2.5F, -0.4F, -0.9F, 5.0F, 0.0F, 6.0F, 0.0F, false);
-		
-		ModelPart lTailPlume = new ModelPart(this);
-		lTailPlume.setPivot(0.9F, -0.3F, 1.2F);
-		tail01.addChild(lTailPlume);
-		setRotation(lTailPlume, 0.0F, -0.3142F, -0.1745F);
-		lTailPlume.setTextureOffset(44, 20).addCuboid(-4.0F, -0.7F, -0.2F, 4.0F, 0.0F, 6.0F, 0.0F, false);
-		
-		ModelPart rTailPlume = new ModelPart(this);
-		rTailPlume.setPivot(-0.9F, -0.3F, 1.2F);
-		tail01.addChild(rTailPlume);
-		setRotation(rTailPlume, 0.0F, 0.3142F, 0.1745F);
-		rTailPlume.setTextureOffset(44, 20).addCuboid(0.0F, -0.7F, -0.2F, 4.0F, 0.0F, 6.0F, 0.0F, false);
-		
-		head = new ModelPart(this);
-		head.setPivot(0.0F, -0.3F, 0.0F);
-		body.addChild(head);
-		setRotation(head, -0.0698F, 0.0F, 0.0F);
-		head.setTextureOffset(0, 0).addCuboid(-3.5F, -5.5F, -3.7F, 7.0F, 6.0F, 7.0F, 0.0F, false);
-		
-		ModelPart lEar = new ModelPart(this);
-		lEar.setPivot(-2.3F, -4.1F, 0.0F);
-		head.addChild(lEar);
-		setRotation(lEar, -0.2618F, 0.0F, -0.4014F);
-		lEar.setTextureOffset(25, 1).addCuboid(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, true);
-		
-		ModelPart rEar = new ModelPart(this);
-		rEar.setPivot(2.3F, -4.1F, 0.0F);
-		head.addChild(rEar);
-		setRotation(rEar, -0.2618F, 0.0F, 0.4014F);
-		rEar.setTextureOffset(25, 1).addCuboid(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
-		
-		ModelPart beak = new ModelPart(this);
-		beak.setPivot(0.0F, -2.0F, -3.3F);
-		head.addChild(beak);
-		setRotation(beak, -0.0873F, 0.0F, 0.0F);
-		beak.setTextureOffset(0, 0).addCuboid(-0.5F, -0.5F, -0.7F, 1.0F, 3.0F, 1.0F, 0.0F, false);
-		
-		ModelPart lBeak = new ModelPart(this);
-		lBeak.setPivot(-0.6F, 0.1F, 0.0F);
-		beak.addChild(lBeak);
-		setRotation(lBeak, 0.0F, 0.0F, -0.3491F);
-		lBeak.setTextureOffset(0, 0).addCuboid(-0.5F, -0.5F, -0.55F, 1.0F, 2.0F, 1.0F, 0.0F, false);
-		
-		ModelPart rBeak = new ModelPart(this);
-		rBeak.setPivot(0.6F, 0.1F, 0.0F);
-		beak.addChild(rBeak);
-		setRotation(rBeak, 0.0F, 0.0F, 0.3491F);
-		rBeak.setTextureOffset(0, 0).addCuboid(-0.5F, -0.5F, -0.55F, 1.0F, 2.0F, 1.0F, 0.0F, false);
+	public OwlEntityModel(ModelPart root) {
+		body = root.getChild("body");
+		rFoot = body.getChild("rFoot");
+		lFoot = body.getChild("lFoot");
+		rWing01 = body.getChild("rWing01");
+		rWing02 = rWing01.getChild("rWing02");
+		rWing03 = rWing02.getChild("rWing03");
+		rWing04 = rWing03.getChild("rWing04");
+		lWing01 = body.getChild("lWing01");
+		lWing02 = lWing01.getChild("lWing02");
+		lWing03 = lWing02.getChild("lWing03");
+		lWing04 = lWing03.getChild("lWing04");
+		tail01 = body.getChild("tail01");
+		head = body.getChild("head");
+	}
+	
+	public static TexturedModelData getTexturedModelData() {
+		ModelData data = new ModelData();
+		ModelPartData root = data.getRoot();
+		ModelPartData body = root.addChild("body", ModelPartBuilder.create().uv(0, 14).cuboid(-4.0F, 0.0F, -3.5F, 8.0F, 9.0F, 7.0F), ModelTransform.of(0.0F, 13.5F, 0.0F, 0.0F, 0.0F, 0.0F));
+		ModelPartData lFoot = body.addChild("lFoot", ModelPartBuilder.create().uv(32, 22).cuboid(-1.0F, 0.0F, -3.4F, 2.0F, 2.0F, 4.0F), ModelTransform.of(-1.8F, 8.9F, -0.4F, 0.0F, 0.0F, 0.0F));
+		lFoot.addChild("lBackTalon01", ModelPartBuilder.create().uv(39, 28).cuboid(-0.5F, -1.0F, 0.0F, 1.0F, 2.0F, 2.0F), ModelTransform.of(-0.5F, 1.2F, 0.2F, 0.0F, 0.0F, 0.0F));
+		lFoot.addChild("lBackTalon02", ModelPartBuilder.create().uv(39, 28).cuboid(-0.5F, -1.0F, 0.0F, 1.0F, 2.0F, 2.0F), ModelTransform.of(0.5F, 1.2F, 0.2F, 0.0F, 0.0F, 0.0F));
+		lFoot.addChild("lFrontTalon02", ModelPartBuilder.create().uv(32, 28).cuboid(-0.5F, -1.01F, -2.5F, 1.0F, 2.0F, 2.0F), ModelTransform.of(0.6F, 1.0F, -2.5F, 0.0F, 0.0F, 0.0F));
+		lFoot.addChild("lFrontTalon01", ModelPartBuilder.create().uv(32, 28).cuboid(-0.5F, -1.01F, -2.5F, 1.0F, 2.0F, 2.0F), ModelTransform.of(-0.6F, 1.0F, -2.5F, 0.0F, 0.0F, 0.0F));
+		ModelPartData rFoot = body.addChild("rFoot", ModelPartBuilder.create().uv(32, 22).cuboid(-1.0F, 0.0F, -3.4F, 2.0F, 2.0F, 4.0F), ModelTransform.of(1.8F, 8.9F, -0.4F, 0.0F, 0.0F, 0.0F));
+		rFoot.addChild("rBackTalon01", ModelPartBuilder.create().uv(39, 28).cuboid(-0.5F, -1.0F, 0.0F, 1.0F, 2.0F, 2.0F), ModelTransform.of(0.5F, 1.2F, 0.2F, 0.0F, 0.0F, 0.0F));
+		rFoot.addChild("rBackTalon02", ModelPartBuilder.create().uv(39, 28).cuboid(-0.5F, -1.0F, 0.0F, 1.0F, 2.0F, 2.0F), ModelTransform.of(-0.5F, 1.2F, 0.2F, 0.0F, 0.0F, 0.0F));
+		rFoot.addChild("rFrontTalon02", ModelPartBuilder.create().uv(32, 28).cuboid(-0.5F, -1.01F, -2.5F, 1.0F, 2.0F, 2.0F), ModelTransform.of(-0.6F, 1.0F, -2.5F, 0.0F, 0.0F, 0.0F));
+		rFoot.addChild("rFrontTalon01", ModelPartBuilder.create().uv(32, 28).cuboid(-0.5F, -1.01F, -2.5F, 1.0F, 2.0F, 2.0F), ModelTransform.of(0.6F, 1.0F, -2.5F, 0.0F, 0.0F, 0.0F));
+		ModelPartData lWing01 = body.addChild("lWing01", ModelPartBuilder.create().uv(34, 0).cuboid(-5.0F, -0.7F, -0.5F, 5.0F, 8.0F, 1.0F), ModelTransform.of(-3.9F, 1.0F, -0.2F, 0.0F, 0.0F, 0.0F));
+		ModelPartData lWing02 = lWing01.addChild("lWing02", ModelPartBuilder.create().uv(47, 0).cuboid(-6.0F, -0.7F, -0.5F, 6.0F, 9.0F, 1.0F), ModelTransform.of(-4.5F, 0.0F, 0.1F, 0.0F, 0.0F, 0.0F));
+		ModelPartData lWing03 = lWing02.addChild("lWing03", ModelPartBuilder.create().uv(32, 10).cuboid(-6.0F, -0.6F, -0.5F, 6.0F, 10.0F, 1.0F), ModelTransform.of(-4.2F, -0.1F, 0.1F, 0.0F, 0.0F, 0.0F));
+		lWing03.addChild("lWing04", ModelPartBuilder.create().uv(47, 26).cuboid(-8.0F, -0.6F, 0.0F, 8.0F, 6.0F, 0.0F), ModelTransform.of(-2.8F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F));
+		ModelPartData rWing01 = body.addChild("rWing01", ModelPartBuilder.create().uv(34, 0).cuboid(0.0F, -0.7F, -0.5F, 5.0F, 8.0F, 1.0F), ModelTransform.of(3.9F, 1.0F, -0.2F, 0.0F, 0.0F, 0.0F));
+		ModelPartData rWing02 = rWing01.addChild("rWing02", ModelPartBuilder.create().uv(47, 0).cuboid(0.0F, -0.7F, -0.5F, 6.0F, 9.0F, 1.0F), ModelTransform.of(4.5F, 0.0F, 0.1F, 0.0F, 0.0F, 0.0F));
+		ModelPartData rWing03 = rWing02.addChild("rWing03", ModelPartBuilder.create().uv(32, 10).cuboid(0.0F, -0.6F, -0.5F, 6.0F, 10.0F, 1.0F), ModelTransform.of(4.2F, -0.1F, 0.1F, 0.0F, 0.0F, 0.0F));
+		rWing03.addChild("rWing04", ModelPartBuilder.create().uv(47, 26).cuboid(1.0F, -0.6F, 0.0F, 8.0F, 6.0F, 0.0F), ModelTransform.of(2.8F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F));
+		ModelPartData tail01 = body.addChild("tail01", ModelPartBuilder.create().uv(49, 10).cuboid(-1.5F, -1.0F, 0.0F, 3.0F, 1.0F, 3.0F), ModelTransform.of(0.0F, 8.1F, 2.9F, 0.0F, 0.0F, 0.0F));
+		tail01.addChild("mTailPlume", ModelPartBuilder.create().uv(44, 14).cuboid(-2.5F, -0.4F, -0.9F, 5.0F, 0.0F, 6.0F), ModelTransform.of(0.0F, -0.5F, 1.9F, 0.0F, 0.0F, 0.0F));
+		tail01.addChild("lTailPlume", ModelPartBuilder.create().uv(44, 20).cuboid(-4.0F, -0.7F, -0.2F, 4.0F, 0.0F, 6.0F), ModelTransform.of(0.9F, -0.3F, 1.2F, 0.0F, 0.0F, 0.0F));
+		tail01.addChild("rTailPlume", ModelPartBuilder.create().uv(44, 20).cuboid(0.0F, -0.7F, -0.2F, 4.0F, 0.0F, 6.0F), ModelTransform.of(-0.9F, -0.3F, 1.2F, 0.0F, 0.0F, 0.0F));
+		ModelPartData head = body.addChild("head", ModelPartBuilder.create().cuboid(-3.5F, -5.5F, -3.7F, 7.0F, 6.0F, 7.0F), ModelTransform.of(0.0F, -0.3F, 0.0F, 0.0F, 0.0F, 0.0F));
+		head.addChild("lEar", ModelPartBuilder.create().uv(25, 1).cuboid(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F), ModelTransform.of(-2.3F, -4.1F, 0.0F, 0.0F, 0.0F, 0.0F));
+		head.addChild("rEar", ModelPartBuilder.create().uv(25, 1).cuboid(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F), ModelTransform.of(2.3F, -4.1F, 0.0F, 0.0F, 0.0F, 0.0F));
+		ModelPartData beak = head.addChild("beak", ModelPartBuilder.create().cuboid(-0.5F, -0.5F, -0.7F, 1.0F, 3.0F, 1.0F), ModelTransform.of(0.0F, -2.0F, -3.3F, 0.0F, 0.0F, 0.0F));
+		beak.addChild("lBeak", ModelPartBuilder.create().cuboid(-0.5F, -0.5F, -0.55F, 1.0F, 2.0F, 1.0F), ModelTransform.of(-0.6F, 0.1F, 0.0F, 0.0F, 0.0F, 0.0F));
+		beak.addChild("rBeak", ModelPartBuilder.create().cuboid(-0.5F, -0.5F, -0.55F, 1.0F, 2.0F, 1.0F), ModelTransform.of(0.6F, 0.1F, 0.0F, 0.0F, 0.0F, 0.0F));
+		return TexturedModelData.of(data, 64, 32);
 	}
 	
 	@Override
@@ -263,11 +141,5 @@ public class OwlEntityModel<T extends OwlEntity> extends AnimalModel<T> {
 	@Override
 	protected Iterable<ModelPart> getBodyParts() {
 		return ImmutableList.of(body);
-	}
-	
-	private void setRotation(ModelPart bone, float x, float y, float z) {
-		bone.pitch = x;
-		bone.yaw = y;
-		bone.roll = z;
 	}
 }

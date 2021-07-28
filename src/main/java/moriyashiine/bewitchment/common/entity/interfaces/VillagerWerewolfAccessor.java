@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.entity.interfaces;
 
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 
 public interface VillagerWerewolfAccessor {
-	void setStoredWerewolf(CompoundTag storedWerewolf);
+	void setStoredWerewolf(NbtCompound storedWerewolf);
 }

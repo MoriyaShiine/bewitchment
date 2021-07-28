@@ -17,7 +17,7 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -40,7 +40,7 @@ public class VampireEntity extends BWHostileEntity {
 		super.tick();
 		if (!world.isClient) {
 			BloodAccessor bloodAccessor = (BloodAccessor) this;
-			if (getHealth() < getMaxHealth() && (age + getEntityId()) % 40 == 0 && bloodAccessor.getBlood() > 0) {
+			if (getHealth() < getMaxHealth() && (age + getId()) % 40 == 0 && bloodAccessor.getBlood() > 0) {
 				heal(1);
 				if (random.nextFloat() < 1 / 4f) {
 					bloodAccessor.drainBlood(1, false);
@@ -96,15 +96,15 @@ public class VampireEntity extends BWHostileEntity {
 	}
 	
 	@Override
-	public void readCustomDataFromTag(CompoundTag tag) {
-		super.readCustomDataFromTag(tag);
-		onFireFromSun = tag.getBoolean("OnFireFromSun");
+	public void readCustomDataFromNbt(NbtCompound nbt) {
+		super.readCustomDataFromNbt(nbt);
+		onFireFromSun = nbt.getBoolean("OnFireFromSun");
 	}
 	
 	@Override
-	public void writeCustomDataToTag(CompoundTag tag) {
-		super.writeCustomDataToTag(tag);
-		tag.putBoolean("OnFireFromSun", onFireFromSun);
+	public void writeCustomDataToNbt(NbtCompound nbt) {
+		super.writeCustomDataToNbt(nbt);
+		nbt.putBoolean("OnFireFromSun", onFireFromSun);
 	}
 	
 	@Override

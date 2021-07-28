@@ -65,7 +65,7 @@ public abstract class LivingEntityMixin extends Entity {
 	}
 	
 	@Inject(method = "handleFallDamage", at = @At("HEAD"), cancellable = true)
-	private void handleFallDamage(float fallDistance, float damageMultiplier, CallbackInfoReturnable<Boolean> callbackInfo) {
+	private void handleFallDamage(float fallDistance, float damageMultiplier, DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (BewitchmentAPI.isWerewolf(this, false) && fallDistance <= 6) {
 			callbackInfo.setReturnValue(false);
 		}

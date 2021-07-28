@@ -4,6 +4,8 @@ import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -37,22 +39,24 @@ public class PoppetShelfBlock extends HorizontalFacingBlock implements BlockEnti
 	
 	@Nullable
 	@Override
-	public BlockEntity createBlockEntity(BlockView world) {
-		return new PoppetShelfBlockEntity();
+	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+		return new PoppetShelfBlockEntity(pos, state);
+	}
+	
+	@Nullable
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world0, BlockState state0, BlockEntityType<T> type) {
+		return (world, pos, state, blockEntity) -> PoppetShelfBlockEntity.tick(world, pos, state, (PoppetShelfBlockEntity) blockEntity);
 	}
 	
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-		switch (state.get(FACING)) {
-			case NORTH:
-				return NORTH_SHAPE;
-			case SOUTH:
-				return SOUTH_SHAPE;
-			case EAST:
-				return EAST_SHAPE;
-			default:
-				return WEST_SHAPE;
-		}
+		return switch (state.get(FACING)) {
+			case NORTH -> NORTH_SHAPE;
+			case SOUTH -> SOUTH_SHAPE;
+			case EAST -> EAST_SHAPE;
+			default -> WEST_SHAPE;
+		};
 	}
 	
 	@Override

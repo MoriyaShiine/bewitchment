@@ -5,8 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -58,14 +57,14 @@ public abstract class EntityMixin implements WetAccessor {
 		}
 	}
 	
-	@Inject(method = "fromTag", at = @At("TAIL"))
-	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		setWetTimer(tag.getInt("WetTimer"));
+	@Inject(method = "readNbt", at = @At("TAIL"))
+	private void readNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		setWetTimer(nbt.getInt("WetTimer"));
 	}
 	
-	@Inject(method = "toTag", at = @At("TAIL"))
-	private void writeCustomDataToTag(CompoundTag tag, CallbackInfoReturnable<Tag> callbackInfo) {
-		tag.putInt("WetTimer", getWetTimer());
+	@Inject(method = "writeNbt", at = @At("TAIL"))
+	private void writeNbt(NbtCompound nbt, CallbackInfoReturnable<NbtCompound> callbackInfo) {
+		nbt.putInt("WetTimer", getWetTimer());
 	}
 	
 	@Inject(method = "<init>", at = @At("RETURN"))

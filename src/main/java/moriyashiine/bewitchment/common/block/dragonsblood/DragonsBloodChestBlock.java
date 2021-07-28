@@ -1,11 +1,13 @@
 package moriyashiine.bewitchment.common.block.dragonsblood;
 
 import moriyashiine.bewitchment.common.block.BWChestBlock;
+import moriyashiine.bewitchment.common.block.entity.BWChestBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.DragonsBloodChestBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.ChestBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,7 +15,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,8 +27,14 @@ public class DragonsBloodChestBlock extends BWChestBlock {
 	
 	@Nullable
 	@Override
-	public BlockEntity createBlockEntity(BlockView world) {
-		return new DragonsBloodChestBlockEntity(BWBlockEntityTypes.DRAGONS_BLOOD_CHEST, trapped);
+	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+		return new DragonsBloodChestBlockEntity(BWBlockEntityTypes.DRAGONS_BLOOD_CHEST, pos, state, BWChestBlockEntity.Type.DRAGONS_BLOOD, trapped);
+	}
+	
+	@Nullable
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world0, BlockState state0, BlockEntityType<T> type) {
+		return (world, pos, state, blockEntity) -> DragonsBloodChestBlockEntity.tick(world, pos, state, (DragonsBloodChestBlockEntity) blockEntity);
 	}
 	
 	@Override

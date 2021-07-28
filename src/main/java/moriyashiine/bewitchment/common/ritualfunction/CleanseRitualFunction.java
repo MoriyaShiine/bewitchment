@@ -51,8 +51,7 @@ public class CleanseRitualFunction extends RitualFunction {
 		}
 		if (taglock != null) {
 			LivingEntity livingEntity = BewitchmentAPI.getTaglockOwner(world, taglock);
-			if (livingEntity instanceof CurseAccessor) {
-				CurseAccessor curseAccessor = (CurseAccessor) livingEntity;
+			if (livingEntity instanceof CurseAccessor curseAccessor) {
 				for (Curse.Instance instance : curseAccessor.getCurses()) {
 					if (catFamiliar || (world.random.nextFloat() < (instance.curse.type == Curse.Type.LESSER ? 7.5f / 10f : 5 / 10f))) {
 						curseAccessor.removeCurse(instance.curse);

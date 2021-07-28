@@ -3,7 +3,7 @@ package moriyashiine.bewitchment.client.model.entity.living;
 import moriyashiine.bewitchment.common.entity.living.GhostEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.CrossbowPosing;
@@ -21,59 +21,29 @@ public class GhostEntityModel<T extends GhostEntity> extends BipedEntityModel<T>
 	
 	private boolean realArm = false;
 	
-	public GhostEntityModel() {
-		super(1, 0, 64, 64);
-		body = new ModelPart(this);
-		body.setPivot(0.0F, 0.0F, 0.0F);
-		setRotation(body, 0.2094F, 0.0F, 0.0F);
-		body.setTextureOffset(14, 16).addCuboid(-4.0F, 0.0F, -2.0F, 8.0F, 8.0F, 4.0F, 0.0F, false);
-		
-		bodyTrail00 = new ModelPart(this);
-		bodyTrail00.setPivot(0.0F, 7.7F, 0.0F);
-		body.addChild(bodyTrail00);
-		setRotation(bodyTrail00, 0.1047F, 0.0F, 0.0F);
-		bodyTrail00.setTextureOffset(33, 51).addCuboid(-4.5F, 0.0F, -2.5F, 9.0F, 6.0F, 5.0F, 0.0F, false);
-		
-		ModelPart bodyTrail01 = new ModelPart(this);
-		bodyTrail01.setPivot(0.0F, 5.8F, 0.1F);
-		bodyTrail00.addChild(bodyTrail01);
-		setRotation(bodyTrail01, 0.1047F, 0.0F, 0.0F);
-		bodyTrail01.setTextureOffset(0, 39).addCuboid(-5.0F, 0.0F, -3.0F, 10.0F, 9.0F, 6.0F, 0.0F, false);
-		
-		BipedLeftArm = new ModelPart(this);
-		BipedLeftArm.setPivot(5.0F, 2.0F, 0.0F);
-		setRotation(BipedLeftArm, -1.3963F, 0.0F, -0.1F);
-		BipedLeftArm.setTextureOffset(40, 16).addCuboid(-1.0F, -2.0F, -2.0F, 4.0F, 13.0F, 4.0F, 0.0F, true);
-		
-		ModelPart lArmWisp = new ModelPart(this);
-		lArmWisp.setPivot(1.0F, 2.7F, 1.7F);
-		BipedLeftArm.addChild(lArmWisp);
-		lArmWisp.setTextureOffset(40, 34).addCuboid(-1.5F, -4.5F, 0.1F, 3.0F, 11.0F, 4.0F, 0.0F, true);
-		
-		BipedRightArm = new ModelPart(this);
-		BipedRightArm.setPivot(-5.0F, 2.0F, 0.0F);
-		setRotation(BipedRightArm, -1.3963F, 0.0F, 0.1F);
-		BipedRightArm.setTextureOffset(40, 16).addCuboid(-3.0F, -2.0F, -2.0F, 4.0F, 13.0F, 4.0F, 0.0F, true);
-		
-		ModelPart rArmWisp = new ModelPart(this);
-		rArmWisp.setPivot(-1.0F, 2.7F, 1.7F);
-		BipedRightArm.addChild(rArmWisp);
-		rArmWisp.setTextureOffset(40, 34).addCuboid(-1.5F, -4.5F, 0.1F, 3.0F, 11.0F, 4.0F, 0.0F, true);
-		
-		head = new ModelPart(this);
-		head.setPivot(0.0F, 0.0F, 0.0F);
-		head.setTextureOffset(0, 0).addCuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, 0.0F, false);
-		
-		ModelPart skull = new ModelPart(this);
-		skull.setPivot(0.0F, 0.0F, 0.0F);
-		head.addChild(skull);
-		skull.setTextureOffset(34, 0).addCuboid(-3.5F, -7.5F, -3.0F, 7.0F, 5.0F, 6.0F, 0.0F, false);
-		
-		ModelPart skullJaw = new ModelPart(this);
-		skullJaw.setPivot(0.0F, -1.9F, 0.9F);
-		skull.addChild(skullJaw);
-		setRotation(skullJaw, 0.1745F, 0.0F, 0.0F);
-		skullJaw.setTextureOffset(19, 30).addCuboid(-2.5F, -1.0F, -3.5F, 5.0F, 2.0F, 5.0F, 0.0F, false);
+	public GhostEntityModel(ModelPart root) {
+		super(root);
+		body = root.getChild("body");
+		bodyTrail00 = body.getChild("bodyTrail00");
+		BipedLeftArm = root.getChild("BipedLeftArm");
+		BipedRightArm = root.getChild("BipedRightArm");
+		head = root.getChild("head");
+	}
+	
+	public static TexturedModelData getTexturedModelData() {
+		ModelData data = new ModelData();
+		ModelPartData root = data.getRoot();
+		ModelPartData BipedRightArm = root.addChild("BipedRightArm", ModelPartBuilder.create().uv(40, 16).cuboid(-3.0F, -2.0F, -2.0F, 4.0F, 13.0F, 4.0F), ModelTransform.of(-5.0F, 2.0F, 0.0F, 0.0F, 0.0F, 0.0F));
+		BipedRightArm.addChild("rArmWisp", ModelPartBuilder.create().uv(40, 34).cuboid(-1.5F, -4.5F, 0.1F, 3.0F, 11.0F, 4.0F), ModelTransform.of(-1.0F, 2.7F, 1.7F, 0.0F, 0.0F, 0.0F));
+		ModelPartData head = root.addChild("head", ModelPartBuilder.create().cuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F));
+		ModelPartData skull = head.addChild("skull", ModelPartBuilder.create().uv(34, 0).cuboid(-3.5F, -7.5F, -3.0F, 7.0F, 5.0F, 6.0F), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F));
+		skull.addChild("skullJaw", ModelPartBuilder.create().uv(19, 30).cuboid(-2.5F, -1.0F, -3.5F, 5.0F, 2.0F, 5.0F), ModelTransform.of(0.0F, -1.9F, 0.9F, 0.0F, 0.0F, 0.0F));
+		ModelPartData BipedLeftArm = root.addChild("BipedLeftArm", ModelPartBuilder.create().uv(40, 16).cuboid(-1.0F, -2.0F, -2.0F, 4.0F, 13.0F, 4.0F), ModelTransform.of(5.0F, 2.0F, 0.0F, 0.0F, 0.0F, 0.0F));
+		BipedLeftArm.addChild("lArmWisp", ModelPartBuilder.create().uv(40, 34).cuboid(-1.5F, -4.5F, 0.1F, 3.0F, 11.0F, 4.0F), ModelTransform.of(1.0F, 2.7F, 1.7F, 0.0F, 0.0F, 0.0F));
+		ModelPartData body = root.addChild("body", ModelPartBuilder.create().uv(14, 16).cuboid(-4.0F, 0.0F, -2.0F, 8.0F, 8.0F, 4.0F), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F));
+		ModelPartData bodyTrail00 = body.addChild("bodyTrail00", ModelPartBuilder.create().uv(33, 51).cuboid(-4.5F, 0.0F, -2.5F, 9.0F, 6.0F, 5.0F), ModelTransform.of(0.0F, 7.7F, 0.0F, 0.0F, 0.0F, 0.0F));
+		bodyTrail00.addChild("bodyTrail01", ModelPartBuilder.create().uv(0, 39).cuboid(-5.0F, 0.0F, -3.0F, 10.0F, 9.0F, 6.0F), ModelTransform.of(0.0F, 5.8F, 0.1F, 0.0F, 0.0F, 0.0F));
+		return TexturedModelData.of(data, 64, 64);
 	}
 	
 	@Override
@@ -83,7 +53,7 @@ public class GhostEntityModel<T extends GhostEntity> extends BipedEntityModel<T>
 		realArm = true;
 		copyRotation(head, super.head);
 		bodyTrail00.pitch = MathHelper.sin(animationProgress / 12) / 6;
-		CrossbowPosing.method_29352(leftArm, rightArm, false, entity.handSwingProgress, animationProgress);
+		CrossbowPosing.meleeAttack(leftArm, rightArm, false, entity.handSwingProgress, animationProgress);
 		if (entity.getDataTracker().get(GhostEntity.HAS_TARGET)) {
 			rightArm.pitch += 4.5;
 			rightArm.roll = MathHelper.sin(animationProgress) / 2;
@@ -102,12 +72,6 @@ public class GhostEntityModel<T extends GhostEntity> extends BipedEntityModel<T>
 		body.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		leftArm.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		rightArm.render(matrices, vertices, light, overlay, red, green, blue, alpha);
-	}
-	
-	private void setRotation(ModelPart bone, float x, float y, float z) {
-		bone.pitch = x;
-		bone.yaw = y;
-		bone.roll = z;
 	}
 	
 	@Override

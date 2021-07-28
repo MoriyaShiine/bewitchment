@@ -7,7 +7,7 @@ import moriyashiine.bewitchment.common.registry.BWProperties;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.MaterialColor;
+import net.minecraft.block.MapColor;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
@@ -26,7 +26,7 @@ import java.util.Random;
 import java.util.function.Supplier;
 
 public class DragonsBloodLogBlock extends StrippableLogBlock {
-	public DragonsBloodLogBlock(Supplier<Block> stripped, MaterialColor top, Settings settings) {
+	public DragonsBloodLogBlock(Supplier<Block> stripped, MapColor top, Settings settings) {
 		super(stripped, top, settings);
 		setDefaultState(getDefaultState().with(BWProperties.NATURAL, false).with(BWProperties.CUT, false));
 	}

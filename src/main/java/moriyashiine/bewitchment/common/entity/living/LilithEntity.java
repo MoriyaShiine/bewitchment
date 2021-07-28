@@ -9,7 +9,6 @@ import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
 import moriyashiine.bewitchment.common.registry.*;
-import moriyashiine.bewitchment.mixin.StatusEffectAccessor;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -31,7 +30,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.WitherSkullEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -71,7 +70,7 @@ public class LilithEntity extends BWHostileEntity implements Pledgeable {
 		if (!world.isClient) {
 			bossBar.setPercent(getHealth() / getMaxHealth());
 			LivingEntity target = getTarget();
-			int timer = age + getEntityId();
+			int timer = age + getId();
 			if (timer % 10 == 0) {
 				heal(1);
 			}
@@ -199,7 +198,7 @@ public class LilithEntity extends BWHostileEntity implements Pledgeable {
 	
 	@Override
 	public boolean canHaveStatusEffect(StatusEffectInstance effect) {
-		return ((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.BENEFICIAL;
+		return effect.getEffectType().getType() == StatusEffectType.BENEFICIAL;
 	}
 	
 	@Override
@@ -225,7 +224,7 @@ public class LilithEntity extends BWHostileEntity implements Pledgeable {
 	}
 	
 	@Override
-	public boolean handleFallDamage(float fallDistance, float damageMultiplier) {
+	public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
 		return false;
 	}
 	
@@ -260,18 +259,18 @@ public class LilithEntity extends BWHostileEntity implements Pledgeable {
 	}
 	
 	@Override
-	public void readCustomDataFromTag(CompoundTag tag) {
-		super.readCustomDataFromTag(tag);
+	public void readCustomDataFromNbt(NbtCompound nbt) {
+		super.readCustomDataFromNbt(nbt);
 		if (hasCustomName()) {
 			bossBar.setName(getDisplayName());
 		}
-		fromTagPledgeable(tag);
+		fromNbtPledgeable(nbt);
 	}
 	
 	@Override
-	public void writeCustomDataToTag(CompoundTag tag) {
-		super.writeCustomDataToTag(tag);
-		toTagPledgeable(tag);
+	public void writeCustomDataToNbt(NbtCompound nbt) {
+		super.writeCustomDataToNbt(nbt);
+		toNbtPledgeable(nbt);
 	}
 	
 	@Override

@@ -1,5 +1,6 @@
 package moriyashiine.bewitchment.client.renderer;
 
+import moriyashiine.bewitchment.client.BewitchmentClient;
 import moriyashiine.bewitchment.client.model.ContributorHornsModel;
 import moriyashiine.bewitchment.common.Bewitchment;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -9,6 +10,7 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.PlayerModelPart;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
+import net.minecraft.client.render.entity.model.EntityModelLoader;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
@@ -24,14 +26,15 @@ import java.util.UUID;
 
 public final class ContributorHornsFeatureRenderer extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
 	private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/armor/contributor_horns.png");
-	private static final ContributorHornsModel MODEL = new ContributorHornsModel();
 	private static final Set<UUID> CONTRIBUTORS = new HashSet<>();
 	private static final String CONTRIBUTORS_URL = "https://raw.githubusercontent.com/MoriyaShiine/bewitchment/master/contributors.properties";
+	private static ContributorHornsModel MODEL;
 	
 	private static boolean init = false;
 	
-	public ContributorHornsFeatureRenderer(FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> context) {
+	public ContributorHornsFeatureRenderer(FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> context, EntityModelLoader loader) {
 		super(context);
+		MODEL = new ContributorHornsModel(loader.getModelPart(BewitchmentClient.CONTRIBUTOR_HORNS_MODEL_LAYER));
 	}
 	
 	@Override

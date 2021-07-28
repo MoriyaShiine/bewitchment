@@ -47,8 +47,7 @@ public class SyncPoppetShelfBlockEntity {
 		ItemStack nine = buf.readItemStack();
 		client.execute(() -> {
 			BlockEntity blockEntity = client.world.getBlockEntity(pos);
-			if (blockEntity instanceof PoppetShelfBlockEntity) {
-				PoppetShelfBlockEntity poppetShelf = (PoppetShelfBlockEntity) blockEntity;
+			if (blockEntity instanceof PoppetShelfBlockEntity poppetShelf) {
 				poppetShelf.setStack(0, one);
 				poppetShelf.setStack(1, two);
 				poppetShelf.setStack(2, three);

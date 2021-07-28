@@ -21,8 +21,7 @@ public abstract class MobEntityMixin extends LivingEntity {
 	@ModifyVariable(method = "setTarget", at = @At("HEAD"))
 	private LivingEntity modifyTarget(LivingEntity target) {
 		if (!world.isClient && target != null) {
-			if (this instanceof Pledgeable) {
-				Pledgeable pledgeable = (Pledgeable) this;
+			if (this instanceof Pledgeable pledgeable) {
 				if (target instanceof PlayerEntity && BewitchmentAPI.isPledged((PlayerEntity) target, pledgeable.getPledgeID())) {
 					BewitchmentAPI.unpledge((PlayerEntity) target);
 				}

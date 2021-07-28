@@ -1,10 +1,10 @@
 plugins {
-    id 'fabric-loom' version '0.6-SNAPSHOT'
+    id 'fabric-loom' version '0.8-SNAPSHOT'
     id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_16
+targetCompatibility = JavaVersion.VERSION_16
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
@@ -27,10 +27,10 @@ repositories {
         }
     }
     maven {
-        name "player ability lib, impersonate, trinkets, requiem"
+        name "player ability lib, impersonate, trinkets"
         url "https://ladysnake.jfrog.io/artifactory/mods"
         content {
-            includeGroup "io.github.ladysnake"
+            includeGroup 'io.github.ladysnake'
             includeGroupByRegex 'io\\.github\\.onyxstudios.*'
         }
     }
@@ -43,7 +43,7 @@ repositories {
         url "https://maven.theillusivec4.top"
     }
     maven {
-        name "impersonate, requiem"
+        name "impersonate"
         url "https://oss.sonatype.org/content/repositories/snapshots"
     }
     maven {
@@ -51,8 +51,15 @@ repositories {
         url "https://maven.blamejared.com"
     }
     maven {
+        name "mod menu"
+        url "https://api.modrinth.com/maven"
+    }
+    maven {
         name "fall flying lib"
         url "https://maven.cafeteria.dev"
+        content {
+            includeGroup 'net.adriantodt.fabricmc'
+        }
     }
     maven {
         name "jitpack"
@@ -81,59 +88,34 @@ dependencies {
     modImplementation("com.github.virtuoel:pehkui:${pehkui_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-    modImplementation "io.github.ladysnake:Impersonate:${impersonate_version}"
+    modImplementation "io.github.ladysnake:impersonate:${impersonate_version}"
     modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}"
     modImplementation "dev.emi:trinkets:${trinkets_version}"
 
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${rei_version}"
-    modRuntime "me.shedaniel:RoughlyEnoughItems:${rei_version}"
-    modImplementation "io.github.ladysnake:requiem-api:${requiem_version}"
-    modRuntime "io.github.ladysnake:requiem:${requiem_version}"
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
+    modRuntime "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
     modImplementation "com.github.apace100:origins-fabric:${project.origins_version}"
 }
 
 processResources {
     inputs.property "version", project.version
 
-    from(sourceSets.main.resources.srcDirs) {
-        include "fabric.mod.json"
+    filesMatching("fabric.mod.json") {
         expand "version": project.version
     }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude "fabric.mod.json"
-    }
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = "UTF-8"
+    it.options.release = 16
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = "sources"
-    from sourceSets.main.allSource
+java {
+    withSourcesJar()
 }
 
 jar {
-    from "LICENSE"
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            // add all the jars that should be included when publishing to maven
-            artifact(remapJar) {
-                builtBy remapJar
-            }
-            artifact(sourcesJar) {
-                builtBy remapSourcesJar
-            }
-        }
-    }
-
-    repositories {
-        // select the repositories you want to publish to
-        // uncomment to publish to the local maven
-        // mavenLocal()
+    from("LICENSE") {
+        rename { "${it}_${project.archivesBaseName}" }
     }
 }

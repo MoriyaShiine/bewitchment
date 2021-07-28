@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LandPathNodeMaker.class)
 public abstract class LandPathNodeMakerMixin extends PathNodeMaker {
-	@Inject(method = "method_27138", at = @At("RETURN"), cancellable = true)
-	private static void method_27138(BlockState blockState, CallbackInfoReturnable<Boolean> callbackInfo) {
+	@Inject(method = "inflictsFireDamage", at = @At("RETURN"), cancellable = true)
+	private static void inflictsFireDamage(BlockState blockState, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!callbackInfo.getReturnValue() && blockState.getBlock() instanceof WitchCauldronBlock) {
 			callbackInfo.setReturnValue(true);
 		}

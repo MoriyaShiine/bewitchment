@@ -13,7 +13,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -64,7 +64,7 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 			}
 			else {
 				PlayerLookup.tracking(this).forEach(playerEntity -> SpawnSmokeParticlesPacket.send(playerEntity, this));
-				remove();
+				remove(RemovalReason.DISCARDED);
 			}
 		}
 	}
@@ -85,24 +85,24 @@ public abstract class MobEntityMixin extends LivingEntity implements MasterAcces
 		return target;
 	}
 	
-	@Inject(method = "method_29506", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;"), cancellable = true, locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+	@Inject(method = "interactWithItem", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;"), cancellable = true, locals = LocalCapture.CAPTURE_FAILEXCEPTION)
 	private void method_29506(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> callbackInfoReturnable, ItemStack heldStack) {
 		if (heldStack.getItem() instanceof TaglockItem) {
 			callbackInfoReturnable.setReturnValue(TaglockItem.useTaglock(player, this, hand, true, false));
 		}
 	}
 	
-	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
-	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		if (tag.contains("MasterUUID")) {
-			setMasterUUID(tag.getUuid("MasterUUID"));
+	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		if (nbt.contains("MasterUUID")) {
+			setMasterUUID(nbt.getUuid("MasterUUID"));
 		}
 	}
 	
-	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
-	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
+	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
 		if (getMasterUUID() != null) {
-			tag.putUuid("MasterUUID", getMasterUUID());
+			nbt.putUuid("MasterUUID", getMasterUUID());
 		}
 	}
 }

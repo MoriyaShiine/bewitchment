@@ -108,7 +108,7 @@ public class BWUtil {
 			shouldAdd = true;
 		}
 		if (shouldAdd) {
-			if (!player.inventory.insertStack(toAdd)) {
+			if (!player.getInventory().insertStack(toAdd)) {
 				player.dropItem(toAdd, false, true);
 			}
 		}

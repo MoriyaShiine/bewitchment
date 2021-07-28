@@ -20,8 +20,8 @@ public abstract class ExplosiveProjectileEntityMixin extends Entity {
 		super(type, world);
 	}
 	
-	@Inject(method = "method_26958", at = @At("RETURN"), cancellable = true)
-	private void method_26958(Entity entity, CallbackInfoReturnable<Boolean> callbackInfo) {
+	@Inject(method = "canHit", at = @At("RETURN"), cancellable = true)
+	private void canHit(Entity entity, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (callbackInfo.getReturnValue() && !world.isClient) {
 			Entity owner = ((ProjectileEntity) (Object) this).getOwner();
 			if (owner instanceof BaphometEntity && entity instanceof FireballEntity) {

@@ -1,11 +1,12 @@
 package moriyashiine.bewitchment.client.renderer.entity.living;
 
+import moriyashiine.bewitchment.client.BewitchmentClient;
 import moriyashiine.bewitchment.client.model.entity.living.LeonardEntityModel;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.LeonardEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
 import net.minecraft.util.Identifier;
@@ -14,8 +15,8 @@ import net.minecraft.util.Identifier;
 public class LeonardEntityRenderer extends MobEntityRenderer<LeonardEntity, LeonardEntityModel<LeonardEntity>> {
 	private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/living/leonard.png");
 	
-	public LeonardEntityRenderer(EntityRenderDispatcher entityRenderDispatcher) {
-		super(entityRenderDispatcher, new LeonardEntityModel<>(), 0.5f);
+	public LeonardEntityRenderer(EntityRendererFactory.Context context) {
+		super(context, new LeonardEntityModel<>(context.getPart(BewitchmentClient.LEONARD_MODEL_LAYER)), 0.5f);
 		addFeature(new HeldItemFeatureRenderer<>(this));
 	}
 	

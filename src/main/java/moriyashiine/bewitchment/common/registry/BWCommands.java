@@ -132,8 +132,7 @@ public class BWCommands {
 		}))));
 		dispatcher.register(CommandManager.literal("curse").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.literal("get").then(CommandManager.argument("entity", EntityArgumentType.entity()).executes(context -> {
 			Entity entity = EntityArgumentType.getEntity(context, "entity");
-			if (entity instanceof CurseAccessor) {
-				CurseAccessor curseAccessor = (CurseAccessor) entity;
+			if (entity instanceof CurseAccessor curseAccessor) {
 				if (!curseAccessor.getCurses().isEmpty()) {
 					StringBuilder curses = new StringBuilder();
 					for (Curse.Instance instance : curseAccessor.getCurses()) {
@@ -147,8 +146,7 @@ public class BWCommands {
 			return 0;
 		}).then(CommandManager.argument("curse", CurseArgumentType.curse()).executes(context -> {
 			Entity entity = EntityArgumentType.getEntity(context, "entity");
-			if (entity instanceof CurseAccessor) {
-				CurseAccessor curseAccessor = (CurseAccessor) entity;
+			if (entity instanceof CurseAccessor curseAccessor) {
 				Curse curse = CurseArgumentType.getCurse(context, "curse");
 				if (curseAccessor.hasCurse(curse)) {
 					int days = Math.round(curseAccessor.getCurses().stream().filter(instance -> instance.curse == curse).findFirst().orElse(null).duration / 24000f);
@@ -179,8 +177,7 @@ public class BWCommands {
 			return 0;
 		}))))).then(CommandManager.literal("remove").then(CommandManager.argument("entity", EntityArgumentType.entity()).then(CommandManager.argument("curse", CurseArgumentType.curse()).executes(context -> {
 			Entity entity = EntityArgumentType.getEntity(context, "entity");
-			if (entity instanceof CurseAccessor) {
-				CurseAccessor curseAccessor = (CurseAccessor) entity;
+			if (entity instanceof CurseAccessor curseAccessor) {
 				Curse curse = CurseArgumentType.getCurse(context, "curse");
 				if (curseAccessor.hasCurse(curse)) {
 					curseAccessor.removeCurse(curse);
@@ -192,8 +189,7 @@ public class BWCommands {
 			return 0;
 		})))).then(CommandManager.literal("clear").then(CommandManager.argument("entity", EntityArgumentType.entity()).executes(context -> {
 			Entity entity = EntityArgumentType.getEntity(context, "entity");
-			if (entity instanceof CurseAccessor) {
-				CurseAccessor curseAccessor = (CurseAccessor) entity;
+			if (entity instanceof CurseAccessor curseAccessor) {
 				if (!curseAccessor.getCurses().isEmpty()) {
 					curseAccessor.getCurses().clear();
 					context.getSource().sendFeedback(new TranslatableText("commands.curse.clear", entity.getEntityName()), true);

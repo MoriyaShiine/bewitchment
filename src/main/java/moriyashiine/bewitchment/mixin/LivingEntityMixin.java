@@ -30,7 +30,7 @@ import net.minecraft.entity.projectile.WitherSkullEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -98,9 +98,9 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor 
 		}
 	}
 	
-	@ModifyVariable(method = "addStatusEffect", at = @At("HEAD"))
+	@ModifyVariable(method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)Z", at = @At("HEAD"))
 	private StatusEffectInstance modifyStatusEffect(StatusEffectInstance effect) {
-		if (!world.isClient && !effect.isAmbient() && !effect.getEffectType().isInstant() && ((StatusEffectAccessor) effect.getEffectType()).bw_getType() == StatusEffectType.HARMFUL) {
+		if (!world.isClient && !effect.isAmbient() && !effect.getEffectType().isInstant() && effect.getEffectType().getType() == StatusEffectType.HARMFUL) {
 			float durationMultiplier = 1;
 			for (ItemStack stack : getArmorItems()) {
 				durationMultiplier -= EnchantmentHelper.getLevel(BWEnchantments.MAGIC_PROTECTION, stack) / 32f;
@@ -136,7 +136,7 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor 
 			if (directSource instanceof WitherSkullEntity && trueSource instanceof LilithEntity) {
 				amount *= 3;
 			}
-			if (source.getMagic() && (Object) this instanceof LivingEntity) {
+			if (source.isMagic() && (Object) this instanceof LivingEntity) {
 				int armorPieces = BWUtil.getArmorPieces((LivingEntity) (Object) this, stack -> {
 					if (stack.getItem() instanceof ArmorItem) {
 						ArmorMaterial material = ((ArmorItem) stack.getItem()).getMaterial();
@@ -191,16 +191,16 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor 
 		}
 	}
 	
-	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
-	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		if (tag.contains("Blood")) {
-			setBlood(tag.getInt("Blood"));
+	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		if (nbt.contains("Blood")) {
+			setBlood(nbt.getInt("Blood"));
 		}
 	}
 	
-	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
-	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		tag.putInt("Blood", getBlood());
+	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		nbt.putInt("Blood", getBlood());
 	}
 	
 	@Inject(method = "initDataTracker", at = @At("TAIL"))

@@ -60,7 +60,7 @@ public abstract class ItemEntityMixin extends Entity {
 				LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, getStack());
 				if (owner != null) {
 					if (source.isFire() || source == DamageSource.LIGHTNING_BOLT) {
-						remove();
+						remove(RemovalReason.DISCARDED);
 						ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
 						if (!potentialPoppet.isEmpty()) {
 							if (potentialPoppet.damage(getStack().getMaxDamage() / 2, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {

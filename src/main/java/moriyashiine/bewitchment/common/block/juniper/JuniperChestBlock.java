@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.common.block.juniper;
 
 import moriyashiine.bewitchment.common.block.BWChestBlock;
+import moriyashiine.bewitchment.common.block.entity.BWChestBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.JuniperChestBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
@@ -16,7 +17,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,8 +30,8 @@ public class JuniperChestBlock extends BWChestBlock {
 	
 	@Nullable
 	@Override
-	public BlockEntity createBlockEntity(BlockView world) {
-		return new JuniperChestBlockEntity(BWBlockEntityTypes.JUNIPER_CHEST, trapped);
+	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+		return new JuniperChestBlockEntity(BWBlockEntityTypes.JUNIPER_CHEST, pos, state, BWChestBlockEntity.Type.JUNIPER, trapped);
 	}
 	
 	@Override

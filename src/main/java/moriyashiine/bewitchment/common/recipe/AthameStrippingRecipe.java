@@ -65,7 +65,7 @@ public class AthameStrippingRecipe implements Recipe<Inventory> {
 	public static class Serializer implements RecipeSerializer<AthameStrippingRecipe> {
 		@Override
 		public AthameStrippingRecipe read(Identifier id, JsonObject json) {
-			return new AthameStrippingRecipe(id, Registry.BLOCK.get(new Identifier(JsonHelper.getString(json, "log"))), Registry.BLOCK.get(new Identifier(JsonHelper.getString(json, "stripped_log"))), ShapedRecipe.getItemStack(JsonHelper.getObject(json, "result")));
+			return new AthameStrippingRecipe(id, Registry.BLOCK.get(new Identifier(JsonHelper.getString(json, "log"))), Registry.BLOCK.get(new Identifier(JsonHelper.getString(json, "stripped_log"))), ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result")));
 		}
 		
 		@Override

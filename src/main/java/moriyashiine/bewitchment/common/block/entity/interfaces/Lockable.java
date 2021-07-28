@@ -10,9 +10,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.NbtString;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -37,29 +37,29 @@ public interface Lockable {
 	
 	void setLocked(boolean locked);
 	
-	default void fromTagLockable(CompoundTag tag) {
-		ListTag entities = tag.getList("Entities", NbtType.STRING);
+	default void fromNbtLockable(NbtCompound nbt) {
+		NbtList entities = nbt.getList("Entities", NbtType.STRING);
 		for (int i = 0; i < entities.size(); i++) {
 			getEntities().add(UUID.fromString(entities.getString(i)));
 		}
-		if (tag.contains("Owner")) {
-			setOwner(tag.getUuid("Owner"));
+		if (nbt.contains("Owner")) {
+			setOwner(nbt.getUuid("Owner"));
 		}
-		setModeOnWhitelist(tag.getBoolean("ModeOnWhitelist"));
-		setLocked(tag.getBoolean("Locked"));
+		setModeOnWhitelist(nbt.getBoolean("ModeOnWhitelist"));
+		setLocked(nbt.getBoolean("Locked"));
 	}
 	
-	default void toTagLockable(CompoundTag tag) {
-		ListTag entities = new ListTag();
+	default void toNbtLockable(NbtCompound nbt) {
+		NbtList entities = new NbtList();
 		for (int i = 0; i < getEntities().size(); i++) {
-			entities.add(StringTag.of(getEntities().get(i).toString()));
+			entities.add(NbtString.of(getEntities().get(i).toString()));
 		}
-		tag.put("Entities", entities);
+		nbt.put("Entities", entities);
 		if (getOwner() != null) {
-			tag.putUuid("Owner", getOwner());
+			nbt.putUuid("Owner", getOwner());
 		}
-		tag.putBoolean("ModeOnWhitelist", getModeOnWhitelist());
-		tag.putBoolean("Locked", getLocked());
+		nbt.putBoolean("ModeOnWhitelist", getModeOnWhitelist());
+		nbt.putBoolean("Locked", getLocked());
 	}
 	
 	default ActionResult use(World world, BlockPos pos, LivingEntity user, Hand hand) {

@@ -9,7 +9,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -69,19 +69,19 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Polymorp
 		}
 	}
 	
-	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
-	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		if (tag.contains("PolymorphUUID")) {
-			setPolymorphUUID(tag.getUuid("PolymorphUUID"));
-			setPolymorphName(tag.getString("PolymorphName"));
+	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		if (nbt.contains("PolymorphUUID")) {
+			setPolymorphUUID(nbt.getUuid("PolymorphUUID"));
+			setPolymorphName(nbt.getString("PolymorphName"));
 		}
 	}
 	
-	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
-	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
+	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
 		if (getPolymorphUUID() != null) {
-			tag.putUuid("PolymorphUUID", getPolymorphUUID());
-			tag.putString("PolymorphName", getPolymorphName());
+			nbt.putUuid("PolymorphUUID", getPolymorphUUID());
+			nbt.putString("PolymorphName", getPolymorphName());
 		}
 	}
 }

@@ -5,7 +5,7 @@ import moriyashiine.bewitchment.common.misc.BWUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -19,15 +19,21 @@ public class ElderBroomEntity extends BroomEntity {
 	}
 	
 	@Override
-	protected void readCustomDataFromTag(CompoundTag tag) {
-		super.readCustomDataFromTag(tag);
-		readFromTag(tag);
+	protected void readCustomDataFromNbt(NbtCompound nbt) {
+		super.readCustomDataFromNbt(nbt);
+		if (nbt.contains("OriginalPos")) {
+			originalPos = BlockPos.fromLong(nbt.getLong("OriginalPos"));
+			originalWorld = nbt.getString("OriginalWorld");
+		}
 	}
 	
 	@Override
-	protected void writeCustomDataToTag(CompoundTag tag) {
-		super.writeCustomDataToTag(tag);
-		writeToTag(stack.getOrCreateTag());
+	protected void writeCustomDataToNbt(NbtCompound nbt) {
+		super.writeCustomDataToNbt(nbt);
+		if (originalPos != null) {
+			nbt.putLong("OriginalPos", originalPos.asLong());
+			nbt.putString("OriginalWorld", originalWorld);
+		}
 	}
 	
 	@Override
@@ -50,19 +56,5 @@ public class ElderBroomEntity extends BroomEntity {
 			originalWorld = null;
 		}
 		return value;
-	}
-	
-	private void readFromTag(CompoundTag tag) {
-		if (tag.contains("OriginalPos")) {
-			originalPos = BlockPos.fromLong(tag.getLong("OriginalPos"));
-			originalWorld = tag.getString("OriginalWorld");
-		}
-	}
-	
-	private void writeToTag(CompoundTag tag) {
-		if (originalPos != null) {
-			tag.putLong("OriginalPos", originalPos.asLong());
-			tag.putString("OriginalWorld", originalWorld);
-		}
 	}
 }

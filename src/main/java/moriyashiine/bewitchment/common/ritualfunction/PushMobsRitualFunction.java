@@ -26,7 +26,7 @@ public class PushMobsRitualFunction extends RitualFunction {
 					double distanceZ = effectivePos.getZ() - hostileEntity.getZ();
 					double max = MathHelper.absMax(distanceX, distanceZ);
 					if (max >= 0) {
-						max = MathHelper.sqrt(max);
+						max = MathHelper.sqrt((float) max);
 						distanceX /= max;
 						distanceZ /= max;
 						distanceX *= Math.min(1, 1 / max);

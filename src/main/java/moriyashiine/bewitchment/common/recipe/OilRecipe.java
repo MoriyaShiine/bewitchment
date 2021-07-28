@@ -70,7 +70,7 @@ public class OilRecipe implements Recipe<Inventory> {
 			else if (ingredients.size() > 4) {
 				throw new JsonParseException("Too many ingredients for oil recipe");
 			}
-			return new OilRecipe(id, ingredients, ShapedRecipe.getItemStack(JsonHelper.getObject(json, "result")), JsonHelper.getInt(json, "color"));
+			return new OilRecipe(id, ingredients, ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result")), JsonHelper.getInt(json, "color"));
 		}
 		
 		@Override

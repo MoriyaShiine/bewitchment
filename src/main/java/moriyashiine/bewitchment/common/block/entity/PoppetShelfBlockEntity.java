@@ -8,59 +8,52 @@ import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class PoppetShelfBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Tickable, Inventory {
+public class PoppetShelfBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Inventory {
 	public final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(9, ItemStack.EMPTY);
 	
 	public boolean markedForSync = false;
 	
-	public PoppetShelfBlockEntity(BlockEntityType<?> type) {
-		super(type);
-	}
-	
-	public PoppetShelfBlockEntity() {
-		this(BWBlockEntityTypes.POPPET_SHELF);
+	public PoppetShelfBlockEntity(BlockPos pos, BlockState state) {
+		super(BWBlockEntityTypes.POPPET_SHELF, pos, state);
 	}
 	
 	@Override
-	public void fromClientTag(CompoundTag tag) {
-		Inventories.fromTag(tag, inventory);
+	public void fromClientTag(NbtCompound tag) {
+		Inventories.readNbt(tag, inventory);
 	}
 	
 	@Override
-	public CompoundTag toClientTag(CompoundTag tag) {
-		Inventories.toTag(tag, inventory);
+	public NbtCompound toClientTag(NbtCompound tag) {
+		Inventories.writeNbt(tag, inventory);
 		return tag;
 	}
 	
 	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
-		fromClientTag(tag);
-		super.fromTag(state, tag);
+	public void readNbt(NbtCompound nbt) {
+		fromClientTag(nbt);
+		super.readNbt(nbt);
 	}
 	
 	@Override
-	public CompoundTag toTag(CompoundTag tag) {
-		return super.toTag(toClientTag(tag));
+	public NbtCompound writeNbt(NbtCompound nbt) {
+		return super.writeNbt(toClientTag(nbt));
 	}
 	
-	@Override
-	public void tick() {
-		if (world != null && !world.isClient && markedForSync) {
-			syncPoppetShelf();
+	public static void tick(World world, BlockPos pos, BlockState state, PoppetShelfBlockEntity blockEntity) {
+		if (world != null && !world.isClient && blockEntity.markedForSync) {
+			blockEntity.syncPoppetShelf();
 		}
 	}
 	

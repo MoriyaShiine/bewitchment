@@ -10,29 +10,28 @@ import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Tickable, Inventory {
+public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Inventory {
 	private int loadingTimer = 20;
 	
 	private final Map<Block, Integer> checked = new HashMap<>();
@@ -45,25 +44,21 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 	
 	private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(3, ItemStack.EMPTY);
 	
-	public WitchAltarBlockEntity(BlockEntityType<?> type) {
-		super(type);
-	}
-	
-	public WitchAltarBlockEntity() {
-		this(BWBlockEntityTypes.WITCH_ALTAR);
+	public WitchAltarBlockEntity(BlockPos pos, BlockState state) {
+		super(BWBlockEntityTypes.WITCH_ALTAR, pos, state);
 	}
 	
 	@Override
-	public void fromClientTag(CompoundTag tag) {
-		Inventories.fromTag(tag, inventory);
+	public void fromClientTag(NbtCompound tag) {
+		Inventories.readNbt(tag, inventory);
 		power = tag.getInt("Power");
 		maxPower = tag.getInt("MaxPower");
 		gain = tag.getInt("Gain");
 	}
 	
 	@Override
-	public CompoundTag toClientTag(CompoundTag tag) {
-		Inventories.toTag(tag, inventory);
+	public NbtCompound toClientTag(NbtCompound tag) {
+		Inventories.writeNbt(tag, inventory);
 		tag.putInt("Power", power);
 		tag.putInt("MaxPower", maxPower);
 		tag.putInt("Gain", gain);
@@ -71,45 +66,44 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 	}
 	
 	@Override
-	public void fromTag(BlockState state, CompoundTag tag) {
-		fromClientTag(tag);
-		super.fromTag(state, tag);
+	public void readNbt(NbtCompound nbt) {
+		fromClientTag(nbt);
+		super.readNbt(nbt);
 	}
 	
 	@Override
-	public CompoundTag toTag(CompoundTag tag) {
-		return super.toTag(toClientTag(tag));
+	public NbtCompound writeNbt(NbtCompound nbt) {
+		return super.writeNbt(toClientTag(nbt));
 	}
 	
-	@Override
-	public void tick() {
+	public static void tick(World world, BlockPos pos, BlockState state, WitchAltarBlockEntity blockEntity) {
 		if (world != null && !world.isClient) {
-			if (loadingTimer > 0) {
-				loadingTimer--;
-				if (loadingTimer == 0) {
-					markDirty();
-					markedForScan = true;
+			if (blockEntity.loadingTimer > 0) {
+				blockEntity.loadingTimer--;
+				if (blockEntity.loadingTimer == 0) {
+					blockEntity.markDirty();
+					blockEntity.markedForScan = true;
 				}
 			}
 			else {
-				if (markedForScan) {
-					counter = 0;
-					checked.clear();
-					scan(Short.MAX_VALUE);
-					markedForScan = false;
+				if (blockEntity.markedForScan) {
+					blockEntity.counter = 0;
+					blockEntity.checked.clear();
+					blockEntity.scan(Short.MAX_VALUE);
+					blockEntity.markedForScan = false;
 				}
-				scan(80);
+				blockEntity.scan(80);
 				if (world.getTime() % 20 == 0) {
 					if (world.getBlockState(pos.up()).getBlock() == BWObjects.BLESSED_STONE) {
-						power = Integer.MAX_VALUE;
+						blockEntity.power = Integer.MAX_VALUE;
 					}
 					else {
-						power = Math.min(power + gain, maxPower);
+						blockEntity.power = Math.min(blockEntity.power + blockEntity.gain, blockEntity.maxPower);
 					}
 					PlayerLookup.around((ServerWorld) world, Vec3d.of(pos), 24).forEach(playerEntity -> {
-						if (!((CurseAccessor) playerEntity).hasCurse(BWCurses.APATHY) && BewitchmentAPI.fillMagic(playerEntity, 5, true) && drain(10, true)) {
+						if (!((CurseAccessor) playerEntity).hasCurse(BWCurses.APATHY) && BewitchmentAPI.fillMagic(playerEntity, 5, true) && blockEntity.drain(10, true)) {
 							BewitchmentAPI.fillMagic(playerEntity, 5, false);
-							drain(10, false);
+							blockEntity.drain(10, false);
 						}
 					});
 				}

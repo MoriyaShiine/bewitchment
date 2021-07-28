@@ -85,7 +85,7 @@ public class AthameItem extends SwordItem {
 					context.getStack().damage(1, player, (user) -> user.sendToolBreakStatus(context.getHand()));
 					if (world.random.nextFloat() < 2 / 3f) {
 						ItemStack bark = entry.getOutput().copy();
-						if (!player.inventory.insertStack(bark)) {
+						if (!player.getInventory().insertStack(bark)) {
 							player.dropStack(bark);
 						}
 					}
@@ -94,8 +94,7 @@ public class AthameItem extends SwordItem {
 			return ActionResult.success(client);
 		}
 		BlockEntity blockEntity = world.getBlockEntity(state.getBlock() instanceof DoorBlock && state.get(DoorBlock.HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos);
-		if (blockEntity instanceof SigilHolder) {
-			SigilHolder sigil = (SigilHolder) blockEntity;
+		if (blockEntity instanceof SigilHolder sigil) {
 			if (player != null && player.getUuid().equals(sigil.getOwner())) {
 				if (!client && !sigil.getEntities().isEmpty()) {
 					boolean whitelist = sigil.getModeOnWhitelist();
@@ -107,8 +106,7 @@ public class AthameItem extends SwordItem {
 				return ActionResult.success(client);
 			}
 		}
-		else if (blockEntity instanceof TaglockHolder) {
-			TaglockHolder taglockHolder = (TaglockHolder) blockEntity;
+		else if (blockEntity instanceof TaglockHolder taglockHolder) {
 			if (player != null && player.getUuid().equals(taglockHolder.getOwner()) && taglockHolder.getFirstEmptySlot() != 0) {
 				if (!client) {
 					ItemScatterer.spawn(world, pos, taglockHolder.getTaglockInventory());
@@ -118,8 +116,7 @@ public class AthameItem extends SwordItem {
 				return ActionResult.success(client);
 			}
 		}
-		else if (blockEntity instanceof Lockable) {
-			Lockable lockable = (Lockable) blockEntity;
+		else if (blockEntity instanceof Lockable lockable) {
 			if (player != null && player.getUuid().equals(lockable.getOwner()) && !lockable.getEntities().isEmpty()) {
 				if (!client) {
 					boolean whitelist = lockable.getModeOnWhitelist();

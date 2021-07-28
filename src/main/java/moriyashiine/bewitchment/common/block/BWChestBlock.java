@@ -28,8 +28,8 @@ public class BWChestBlock extends ChestBlock {
 	}
 	
 	@Override
-	public BlockEntity createBlockEntity(BlockView world) {
-		return new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, getType(this), trapped);
+	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+		return new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, pos, state, getType(this), trapped);
 	}
 	
 	@Override

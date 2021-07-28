@@ -1,12 +1,13 @@
 package moriyashiine.bewitchment.client.renderer.entity.living;
 
+import moriyashiine.bewitchment.client.BewitchmentClient;
 import moriyashiine.bewitchment.client.model.entity.living.HellhoundEntityModel;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.HellhoundEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.util.Identifier;
 
@@ -14,8 +15,8 @@ import net.minecraft.util.Identifier;
 public class HellhoundEntityRenderer extends MobEntityRenderer<HellhoundEntity, HellhoundEntityModel<HellhoundEntity>> {
 	private static Identifier[] TEXTURES;
 	
-	public HellhoundEntityRenderer(EntityRenderDispatcher entityRenderDispatcher) {
-		super(entityRenderDispatcher, new HellhoundEntityModel<>(), 0.3f);
+	public HellhoundEntityRenderer(EntityRendererFactory.Context context) {
+		super(context, new HellhoundEntityModel<>(context.getPart(BewitchmentClient.HELLHOUND_MODEL_LAYER)), 0.3f);
 	}
 	
 	@Override
