@@ -45,21 +45,66 @@ public class SnakeEntityModel<T extends SnakeEntity> extends AnimalModel<T> {
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = new ModelData();
 		ModelPartData root = data.getRoot();
-		ModelPartData bodyBase = root.addChild("bodyBase", ModelPartBuilder.create().uv(0, 14).cuboid(-1.0F, -1.0F, 0.0F, 2.0F, 2.0F, 3.0F), ModelTransform.of(0.0F, 23.0F, -1.0F, 0.0F, 0.0F, 0.0F));
-		ModelPartData tail01 = bodyBase.addChild("tail01", ModelPartBuilder.create().uv(0, 21).cuboid(-0.99F, -0.99F, 0.0F, 2.0F, 2.0F, 3.0F), ModelTransform.of(0.0F, 0.0F, 2.5F, 0.0F, 0.0F, 0.0F));
-		ModelPartData tail02 = tail01.addChild("tail02", ModelPartBuilder.create().uv(0, 27).cuboid(-1.0F, -1.0F, 0.0F, 2.0F, 2.0F, 3.0F), ModelTransform.of(0.0F, 0.0F, 2.5F, 0.0F, 0.0F, 0.0F));
-		ModelPartData tail03 = tail02.addChild("tail03", ModelPartBuilder.create().uv(13, 21).cuboid(-0.99F, -0.99F, 0.0F, 2.0F, 2.0F, 3.0F), ModelTransform.of(0.0F, 0.0F, 2.5F, 0.0F, 0.0F, 0.0F));
-		ModelPartData tail04 = tail03.addChild("tail04", ModelPartBuilder.create().uv(24, 20).cuboid(-0.5F, -1.0F, 0.0F, 1.0F, 2.0F, 4.0F), ModelTransform.of(0.0F, 0.0F, 2.5F, 0.0F, 0.0F, 0.0F));
-		ModelPartData tail05 = tail04.addChild("tail05", ModelPartBuilder.create().uv(35, 20).cuboid(-0.49F, -0.99F, 0.0F, 1.0F, 2.0F, 4.0F), ModelTransform.of(0.0F, 0.0F, 3.3F, 0.0F, 0.0F, 0.0F));
-		tail05.addChild("tail06", ModelPartBuilder.create().uv(46, 21).cuboid(-0.5F, -0.5F, 0.0F, 1.0F, 1.0F, 4.0F), ModelTransform.of(0.0F, 0.4F, 3.8F, 0.0F, 0.0F, 0.0F));
-		ModelPartData neck00 = bodyBase.addChild("neck00", ModelPartBuilder.create().uv(0, 7).cuboid(-0.99F, -0.99F, -3.0F, 2.0F, 2.0F, 3.0F), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F));
-		ModelPartData neck01 = neck00.addChild("neck01", ModelPartBuilder.create().cuboid(-1.0F, -1.0F, -3.0F, 2.0F, 2.0F, 3.0F), ModelTransform.of(0.0F, 0.0F, -2.5F, 0.0F, 0.0F, 0.0F));
-		ModelPartData head = neck01.addChild("head", ModelPartBuilder.create().uv(20, 0).cuboid(-1.5F, -1.52F, -2.1F, 3.0F, 2.0F, 2.0F), ModelTransform.of(0.0F, 0.0F, -2.6F, 0.0F, 0.0F, 0.0F));
-		head.addChild("lowerJaw", ModelPartBuilder.create().uv(19, 13).cuboid(-1.09F, -0.5F, -3.8F, 2.0F, 1.0F, 4.0F), ModelTransform.of(0.0F, 0.9F, -0.4F, 0.0F, 0.0F, 0.0F));
-		ModelPartData snout = head.addChild("snout", ModelPartBuilder.create().uv(20, 7).cuboid(-1.0F, -1.0F, -2.9F, 2.0F, 2.0F, 3.0F, new Dilation(0.1F, 0.1F, 0.1F)), ModelTransform.of(0.0F, -0.6F, -2.0F, 0.0F, 0.0F, 0.0F));
-		snout.addChild("lFang", ModelPartBuilder.create().uv(16, 0).cuboid(-0.3F, 0.0F, -0.5F, 0.0F, 2.0F, 1.0F), ModelTransform.of(-0.7F, 0.1F, -2.1F, 0.0F, 0.0F, 0.0F));
-		snout.addChild("rFang", ModelPartBuilder.create().uv(16, 0).cuboid(0.1F, 0.0F, -0.5F, 0.0F, 2.0F, 1.0F), ModelTransform.of(0.7F, 0.1F, -2.1F, 0.0F, 0.0F, 0.0F));
-		head.addChild("tongue", ModelPartBuilder.create().uv(31, 0).cuboid(-0.5F, 0.0F, -2.7F, 1.0F, 0.0F, 4.0F), ModelTransform.of(0.0F, 0.9F, -4.7F, 0.0F, 0.0F, 0.0F));
+		ModelPartData bodyBase = root.addChild("bodyBase",
+				ModelPartBuilder.create()
+						.uv(0, 14).cuboid(-1.0F, -1.0F, 0.0F, 2.0F, 2.0F, 3.0F),
+				ModelTransform.of(0.0F, 23.0F, -1.0F, 0.0F, 0.0F, 0.0F));
+		ModelPartData tail01 = bodyBase.addChild("tail01",
+				ModelPartBuilder.create()
+						.uv(0, 21).cuboid(-0.99F, -0.99F, 0.0F, 2.0F, 2.0F, 3.0F),
+				ModelTransform.of(0.0F, 0.0F, 2.5F, 0.0F, 0.0F, 0.0F));
+		ModelPartData tail02 = tail01.addChild("tail02",
+				ModelPartBuilder.create()
+						.uv(0, 27).cuboid(-1.0F, -1.0F, 0.0F, 2.0F, 2.0F, 3.0F),
+				ModelTransform.of(0.0F, 0.0F, 2.5F, 0.0F, 0.0F, 0.0F));
+		ModelPartData tail03 = tail02.addChild("tail03",
+				ModelPartBuilder.create()
+						.uv(13, 21).cuboid(-0.99F, -0.99F, 0.0F, 2.0F, 2.0F, 3.0F),
+				ModelTransform.of(0.0F, 0.0F, 2.5F, 0.0F, 0.0F, 0.0F));
+		ModelPartData tail04 = tail03.addChild("tail04",
+				ModelPartBuilder.create()
+						.uv(24, 20).cuboid(-0.5F, -1.0F, 0.0F, 1.0F, 2.0F, 4.0F),
+				ModelTransform.of(0.0F, 0.0F, 2.5F, 0.0F, 0.0F, 0.0F));
+		ModelPartData tail05 = tail04.addChild("tail05",
+				ModelPartBuilder.create()
+						.uv(35, 20).cuboid(-0.49F, -0.99F, 0.0F, 1.0F, 2.0F, 4.0F),
+				ModelTransform.of(0.0F, 0.0F, 3.3F, 0.0F, 0.0F, 0.0F));
+		tail05.addChild("tail06",
+				ModelPartBuilder.create()
+						.uv(46, 21).cuboid(-0.5F, -0.5F, 0.0F, 1.0F, 1.0F, 4.0F),
+				ModelTransform.of(0.0F, 0.4F, 3.8F, 0.0F, 0.0F, 0.0F));
+		ModelPartData neck00 = bodyBase.addChild("neck00",
+				ModelPartBuilder.create()
+						.uv(0, 7).cuboid(-0.99F, -0.99F, -3.0F, 2.0F, 2.0F, 3.0F),
+				ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F));
+		ModelPartData neck01 = neck00.addChild("neck01",
+				ModelPartBuilder.create()
+						.cuboid(-1.0F, -1.0F, -3.0F, 2.0F, 2.0F, 3.0F),
+				ModelTransform.of(0.0F, 0.0F, -2.5F, 0.0F, 0.0F, 0.0F));
+		ModelPartData head = neck01.addChild("head",
+				ModelPartBuilder.create()
+						.uv(20, 0).cuboid(-1.5F, -1.52F, -2.1F, 3.0F, 2.0F, 2.0F),
+				ModelTransform.of(0.0F, 0.0F, -2.6F, 0.0F, 0.0F, 0.0F));
+		head.addChild("lowerJaw",
+				ModelPartBuilder.create()
+						.uv(19, 13).cuboid(-1.09F, -0.5F, -3.8F, 2.0F, 1.0F, 4.0F),
+				ModelTransform.of(0.0F, 0.9F, -0.4F, 0.0F, 0.0F, 0.0F));
+		ModelPartData snout = head.addChild("snout",
+				ModelPartBuilder.create()
+						.uv(20, 7).cuboid(-1.0F, -1.0F, -2.9F, 2.0F, 2.0F, 3.0F, new Dilation(0.1F, 0.1F, 0.1F)),
+				ModelTransform.of(0.0F, -0.6F, -2.0F, 0.2618F, 0.0F, 0.0F));
+		snout.addChild("lFang",
+				ModelPartBuilder.create()
+						.uv(16, 0).cuboid(-0.3F, 0.0F, -0.5F, 0.0F, 2.0F, 1.0F),
+				ModelTransform.of(-0.7F, 0.1F, -2.1F, -0.2618F, 0.0F, 0.0F));
+		snout.addChild("rFang",
+				ModelPartBuilder.create()
+						.uv(16, 0).cuboid(0.1F, 0.0F, -0.5F, 0.0F, 2.0F, 1.0F),
+				ModelTransform.of(0.7F, 0.1F, -2.1F, -0.2618F, 0.0F, 0.0F));
+		head.addChild("tongue",
+				ModelPartBuilder.create()
+						.uv(31, 0).cuboid(-0.5F, 0.0F, -2.7F, 1.0F, 0.0F, 4.0F),
+				ModelTransform.of(0.0F, 0.9F, -4.7F, 0.0F, 0.0F, 0.0F));
 		return TexturedModelData.of(data, 64, 32);
 	}
 	

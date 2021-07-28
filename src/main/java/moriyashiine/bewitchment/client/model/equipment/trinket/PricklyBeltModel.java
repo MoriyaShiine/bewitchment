@@ -16,8 +16,17 @@ public class PricklyBeltModel extends EntityModel<Entity> {
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = new ModelData();
 		ModelPartData root = data.getRoot();
-		ModelPartData armorBody = root.addChild("armorBody", ModelPartBuilder.create().cuboid(-4.5F, 22.0F, -2.5F, 9.0F, 3.0F, 5.0F, new Dilation(-0.2F, -0.2F, -0.2F)), ModelTransform.of(0.0F, -20.0F, 2.5F, 0.0F, 0.0F, 0.0F));
-		armorBody.addChild("buckle", ModelPartBuilder.create().uv(0, 9).cuboid(-1.5F, -2.5F, -0.5F, 3.0F, 1.0F, 1.0F, new Dilation(-0.1F, -0.1F, -0.1F)).uv(0, 12).cuboid(-1.5F, -0.5F, -0.5F, 3.0F, 1.0F, 1.0F, new Dilation(-0.1F, -0.1F, -0.1F)).uv(10, 10).cuboid(0.5F, -2.0F, -0.55F, 1.0F, 2.0F, 1.0F, new Dilation(-0.1F, -0.1F, -0.1F)).cuboid(-1.5F, -2.0F, -0.55F, 1.0F, 2.0F, 1.0F, new Dilation(-0.1F, -0.1F, -0.1F)), ModelTransform.of(0.0F, 24.5F, -2.0F, 0.0F, 0.0F, 0.0F));
+		ModelPartData armorBody = root.addChild("armorBody",
+				ModelPartBuilder.create()
+						.cuboid(-4.5F, 22.0F, -2.5F, 9.0F, 3.0F, 5.0F, new Dilation(-0.2F, -0.2F, -0.2F)),
+				ModelTransform.of(0.0F, -20.0F, 2.5F, 0.0F, 0.0F, 0.0F));
+		armorBody.addChild("buckle",
+				ModelPartBuilder.create()
+						.uv(0, 9).cuboid(-1.5F, -2.5F, -0.5F, 3.0F, 1.0F, 1.0F, new Dilation(-0.1F, -0.1F, -0.1F))
+						.uv(0, 12).cuboid(-1.5F, -0.5F, -0.5F, 3.0F, 1.0F, 1.0F, new Dilation(-0.1F, -0.1F, -0.1F))
+						.uv(10, 10).cuboid(0.5F, -2.0F, -0.55F, 1.0F, 2.0F, 1.0F, new Dilation(-0.1F, -0.1F, -0.1F))
+						.cuboid(-1.5F, -2.0F, -0.55F, 1.0F, 2.0F, 1.0F, new Dilation(-0.1F, -0.1F, -0.1F)),
+				ModelTransform.of(0.0F, 24.5F, -2.0F, 0.0F, 0.0F, 0.0F));
 		return TexturedModelData.of(data, 32, 32);
 	}
 	
