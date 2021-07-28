@@ -1,0 +1,28 @@
+{
+  "replace": false,
+  "values": [
+	"bewitchment:raw_silver_block",
+	"bewitchment:silver_block",
+	"bewitchment:salt_block",
+	"bewitchment:silver_ore",
+	"bewitchment:deepslate_silver_ore",
+	"bewitchment:salt_ore",
+	"bewitchment:deepslate_salt_ore",
+	"bewitchment:iron_candelabra",
+	"bewitchment:golden_candelabra",
+	"bewitchment:silver_candelabra",
+	"bewitchment:netherite_candelabra",
+	"bewitchment:stone_witch_altar",
+	"bewitchment:mossy_cobblestone_witch_altar",
+	"bewitchment:prismarine_witch_altar",
+	"bewitchment:nether_brick_witch_altar",
+	"bewitchment:blackstone_witch_altar",
+	"bewitchment:golden_witch_altar",
+	"bewitchment:end_stone_witch_altar",
+	"bewitchment:obsidian_witch_altar",
+	"bewitchment:purpur_witch_altar",
+	"bewitchment:witch_cauldron",
+	"bewitchment:crystal_ball",
+	"bewitchment:brazier"
+  ]
+}

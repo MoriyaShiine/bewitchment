@@ -1,27 +1,27 @@
 {
-  "parent": "recipes/root",
+  "parent": "minecraft:recipes/root",
   "rewards": {
 	"recipes": [
-	  "bewitchment:silver_ingot_from_silver_block"
+	  "bewitchment:raw_silver"
 	]
   },
   "criteria": {
 	"has_item": {
-	  "trigger": "inventory_changed",
+	  "trigger": "minecraft:inventory_changed",
 	  "conditions": {
 		"items": [
 		  {
 			"items": [
-			  "bewitchment:silver_block"
+			  "bewitchment:raw_silver_block"
 			]
 		  }
 		]
 	  }
 	},
 	"has_the_recipe": {
-	  "trigger": "recipe_unlocked",
+	  "trigger": "minecraft:recipe_unlocked",
 	  "conditions": {
-		"recipe": "bewitchment:silver_ingot_from_silver_block"
+		"recipe": "bewitchment:raw_silver"
 	  }
 	}
   },

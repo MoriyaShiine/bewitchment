@@ -1,0 +1,10 @@
+{
+  "type": "blasting",
+  "group": "silver_ingot",
+  "ingredient": {
+	"item": "bewitchment:deepslate_silver_ore"
+  },
+  "result": "bewitchment:silver_ingot",
+  "experience": 0.7,
+  "cookingtime": 100
+}

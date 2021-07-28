@@ -2,7 +2,7 @@
   "parent": "recipes/root",
   "rewards": {
 	"recipes": [
-	  "bewitchment:silver_ingot_from_blasting"
+	  "bewitchment:silver_ingot_from_blasting_deepslate_silver_ore"
 	]
   },
   "criteria": {
@@ -11,7 +11,9 @@
 	  "conditions": {
 		"items": [
 		  {
-			"item": "bewitchment:silver_ore"
+			"items": [
+			  "bewitchment:deepslate_silver_ore"
+			]
 		  }
 		]
 	  }
@@ -19,7 +21,7 @@
 	"has_the_recipe": {
 	  "trigger": "recipe_unlocked",
 	  "conditions": {
-		"recipe": "bewitchment:silver_ingot_from_blasting"
+		"recipe": "bewitchment:silver_ingot_from_blasting_deepslate_silver_ore"
 	  }
 	}
   },

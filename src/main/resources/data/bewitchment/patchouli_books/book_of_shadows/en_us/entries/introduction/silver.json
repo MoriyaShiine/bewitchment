@@ -16,13 +16,17 @@
 	},
 	{
 	  "type": "patchouli:smelting",
-	  "recipe": "bewitchment:silver_ingot",
-	  "text": "Silver Ore can be processed in Furnaces and Blast Furnaces."
+	  "recipe": "bewitchment:silver_ingot_from_smelting_raw_silver",
+	  "text": "Raw Silver can be processed in Furnaces and Blast Furnaces."
 	},
 	{
 	  "type": "patchouli:crafting",
-	  "recipe": "bewitchment:silver_block",
-	  "recipe2": "bewitchment:silver_nugget"
+	  "recipe": "bewitchment:raw_silver_block",
+	  "recipe2": "bewitchment:silver_block"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:silver_nugget"
 	},
 	{
 	  "type": "patchouli:crafting",

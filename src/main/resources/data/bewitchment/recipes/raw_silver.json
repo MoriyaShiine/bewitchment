@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
 	{
-	  "item": "bewitchment:salt_block"
+	  "item": "bewitchment:raw_silver_block"
 	}
   ],
   "result": {
-	"item": "bewitchment:salt",
+	"item": "bewitchment:raw_silver",
 	"count": 9
   }
 }

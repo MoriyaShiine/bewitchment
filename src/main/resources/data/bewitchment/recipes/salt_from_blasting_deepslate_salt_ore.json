@@ -1,7 +1,8 @@
 {
-  "type": "blasting",
+  "type": "minecraft:blasting",
+  "group": "salt",
   "ingredient": {
-	"item": "bewitchment:salt_ore"
+	"item": "bewitchment:deepslate_salt_ore"
   },
   "result": "bewitchment:salt",
   "experience": 0.1,

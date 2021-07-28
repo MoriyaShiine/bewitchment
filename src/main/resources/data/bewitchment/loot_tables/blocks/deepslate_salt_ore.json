@@ -2,8 +2,7 @@
   "type": "block",
   "pools": [
 	{
-	  "rolls": 1.0,
-	  "bonus_rolls": 0.0,
+	  "rolls": 1,
 	  "entries": [
 		{
 		  "type": "alternatives",
@@ -25,21 +24,32 @@
 				  }
 				}
 			  ],
-			  "name": "bewitchment:silver_ore"
+			  "name": "bewitchment:salt_ore"
 			},
 			{
 			  "type": "item",
 			  "functions": [
 				{
+				  "function": "set_count",
+				  "count": {
+					"min": 1.0,
+					"max": 2.0,
+					"type": "uniform"
+				  }
+				},
+				{
 				  "function": "apply_bonus",
 				  "enchantment": "fortune",
-				  "formula": "ore_drops"
+				  "formula": "uniform_bonus_count",
+				  "parameters": {
+					"bonusMultiplier": 1
+				  }
 				},
 				{
 				  "function": "explosion_decay"
 				}
 			  ],
-			  "name": "bewitchment:raw_silver"
+			  "name": "bewitchment:salt"
 			}
 		  ]
 		}

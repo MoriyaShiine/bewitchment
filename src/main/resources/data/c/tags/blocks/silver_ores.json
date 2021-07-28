@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-	"bewitchment:silver_ore"
+	"bewitchment:silver_ore",
+	"bewitchment:deepslate_silver_ore"
   ]
 }

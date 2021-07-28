@@ -1,6 +1,5 @@
 {
   "type": "crafting_shaped",
-  "group": "silver_ingot",
   "pattern": [
 	"###",
 	"###",
@@ -8,10 +7,10 @@
   ],
   "key": {
 	"#": {
-	  "item": "bewitchment:silver_nugget"
+	  "item": "bewitchment:raw_silver"
 	}
   },
   "result": {
-	"item": "bewitchment:silver_ingot"
+	"item": "bewitchment:raw_silver_block"
   }
 }

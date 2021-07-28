@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+	"bewitchment:raw_silver_block",
+	"bewitchment:silver_block",
+	"bewitchment:silver_ore",
+	"bewitchment:deepslate_silver_ore",
+	"bewitchment:golden_candelabra",
+	"bewitchment:silver_candelabra",
+	"bewitchment:golden_witch_altar",
+	"bewitchment:witch_cauldron",
+	"bewitchment:crystal_ball",
+	"bewitchment:brazier"
+  ]
+}

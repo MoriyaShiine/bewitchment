@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+	"bewitchment:golden_glyph",
+	"bewitchment:glyph",
+	"bewitchment:fiery_glyph",
+	"bewitchment:eldritch_glyph",
+	"bewitchment:dragons_blood_resin_block"
+  ]
+}

@@ -2,7 +2,7 @@
   "parent": "recipes/root",
   "rewards": {
 	"recipes": [
-	  "bewitchment:silver_ingot_from_silver_block"
+	  "bewitchment:salt_from_smelting_salt_ore"
 	]
   },
   "criteria": {
@@ -12,7 +12,7 @@
 		"items": [
 		  {
 			"items": [
-			  "bewitchment:silver_block"
+			  "bewitchment:salt_ore"
 			]
 		  }
 		]
@@ -21,7 +21,7 @@
 	"has_the_recipe": {
 	  "trigger": "recipe_unlocked",
 	  "conditions": {
-		"recipe": "bewitchment:silver_ingot_from_silver_block"
+		"recipe": "bewitchment:salt_from_smelting_salt_ore"
 	  }
 	}
   },

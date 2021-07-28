@@ -32,7 +32,6 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
-import net.fabricmc.fabric.api.tag.FabricItemTags;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
@@ -70,7 +69,7 @@ public class BWObjects {
 			world.setBlockState(pos, Blocks.AIR.getDefaultState());
 		}
 	}, false);
-	public static final Block GOLDEN_GLYPH = create("golden_glyph", new GlyphBlock(FabricBlockSettings.of(Material.DECORATION).sounds(new BlockSoundGroup(1, 1, SoundEvents.BLOCK_STONE_BREAK, SoundEvents.BLOCK_STONE_STEP, BWSoundEvents.BLOCK_GLPYH_PLACE, SoundEvents.BLOCK_STONE_HIT, SoundEvents.BLOCK_STONE_FALL)).noCollision().dropsNothing().breakByTool(FabricItemTags.HOES).strength(1, 0)), false);
+	public static final Block GOLDEN_GLYPH = create("golden_glyph", new GlyphBlock(FabricBlockSettings.of(Material.DECORATION).sounds(new BlockSoundGroup(1, 1, SoundEvents.BLOCK_STONE_BREAK, SoundEvents.BLOCK_STONE_STEP, BWSoundEvents.BLOCK_GLPYH_PLACE, SoundEvents.BLOCK_STONE_HIT, SoundEvents.BLOCK_STONE_FALL)).noCollision().dropsNothing().strength(1, 0)), false);
 	public static final Block GLYPH = create("glyph", new GlyphBlock(copyOf(GOLDEN_GLYPH)), false);
 	public static final Block FIERY_GLYPH = create("fiery_glyph", new GlyphBlock(copyOf(GOLDEN_GLYPH).luminance(4)), false);
 	public static final Block ELDRITCH_GLYPH = create("eldritch_glyph", new GlyphBlock(copyOf(GOLDEN_GLYPH).luminance(2)), false);
@@ -204,7 +203,7 @@ public class BWObjects {
 	public static final Block THICK_BRAMBLE = create("thick_bramble", new BrambleBlock(copyOf(ENDER_BRAMBLE)), true);
 	public static final Block FLEETING_BRAMBLE = create("fleeting_bramble", new BrambleBlock(copyOf(ENDER_BRAMBLE)), true);
 	//material_block
-	public static final Block SILVER_BLOCK = create("silver_block", new Block(copyOf(Blocks.GOLD_BLOCK)) {
+	public static final Block RAW_SILVER_BLOCK = create("raw_silver_block", new Block(copyOf(Blocks.RAW_GOLD_BLOCK)) {
 		@Override
 		public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
 			if (!world.isClient && entity instanceof LivingEntity && BewitchmentAPI.isWeakToSilver((LivingEntity) entity)) {
@@ -213,10 +212,18 @@ public class BWObjects {
 			super.onSteppedOn(world, pos, state, entity);
 		}
 	}, true);
+	public static final Block SILVER_BLOCK = create("silver_block", new Block(copyOf(Blocks.GOLD_BLOCK)) {
+		@Override
+		public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
+			RAW_SILVER_BLOCK.onSteppedOn(world, pos, state, entity);
+		}
+	}, true);
 	public static final Block SALT_BLOCK = create("salt_block", new Block(copyOf(Blocks.COAL_BLOCK)), true);
 	public static final Block DRAGONS_BLOOD_RESIN_BLOCK = create("dragons_blood_resin_block", new Block(copyOf(Blocks.NETHER_WART_BLOCK)), true);
 	public static final Block SILVER_ORE = create("silver_ore", new Block(copyOf(Blocks.GOLD_ORE)), true);
+	public static final Block DEEPSLATE_SILVER_ORE = create("deepslate_silver_ore", new Block(copyOf(Blocks.DEEPSLATE_GOLD_ORE)), true);
 	public static final Block SALT_ORE = create("salt_ore", new OreBlock(copyOf(Blocks.COAL_ORE), UniformIntProvider.create(0, 2)), true);
+	public static final Block DEEPSLATE_SALT_ORE = create("deepslate_salt_ore", new OreBlock(copyOf(Blocks.DEEPSLATE_COAL_ORE), UniformIntProvider.create(0, 2)), true);
 	//misc_block
 	public static final Block HEDGEWITCH_WOOL = create("hedgewitch_wool", new Block(copyOf(Blocks.WHITE_WOOL)), true);
 	public static final Block ALCHEMIST_WOOL = create("alchemist_wool", new Block(copyOf(HEDGEWITCH_WOOL)), true);
@@ -337,6 +344,7 @@ public class BWObjects {
 	public static final Item FIERY_SERUM = create("fiery_serum", new Item(gen().recipeRemainder(Items.GLASS_BOTTLE)));
 	public static final Item EARTH_ICHOR = create("earth_ichor", new Item(gen().recipeRemainder(Items.GLASS_BOTTLE)));
 	public static final Item HEAVEN_EXTRACT = create("heaven_extract", new Item(gen().recipeRemainder(Items.GLASS_BOTTLE)));
+	public static final Item RAW_SILVER = create("raw_silver", new Item(gen()));
 	public static final Item SILVER_INGOT = create("silver_ingot", new Item(gen()));
 	public static final Item SILVER_NUGGET = create("silver_nugget", new Item(gen()));
 	public static final Item SALT = create("salt", new AliasedBlockItem(SALT_LINE, gen()));

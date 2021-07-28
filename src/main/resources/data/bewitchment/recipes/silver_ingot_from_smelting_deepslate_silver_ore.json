@@ -1,9 +1,10 @@
 {
   "type": "smelting",
+  "group": "silver_ingot",
   "ingredient": {
-	"item": "bewitchment:silver_ore"
+	"item": "bewitchment:deepslate_silver_ore"
   },
   "result": "bewitchment:silver_ingot",
-  "experience": 1.0,
+  "experience": 0.7,
   "cookingtime": 200
 }
