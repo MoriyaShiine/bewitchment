@@ -8,10 +8,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
+@SuppressWarnings("unchecked")
 public class JuniperSaplingGenerator extends SaplingGenerator {
 	@Nullable
 	@Override
 	protected ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeature(Random random, boolean bees) {
-		return BWWorldGenerators.JUNIPER_TREE;
+		return (ConfiguredFeature<TreeFeatureConfig, ?>) BWWorldGenerators.JUNIPER_TREE;
 	}
 }
