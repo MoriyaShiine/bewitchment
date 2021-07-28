@@ -17,20 +17,20 @@ public class TippedArrowRecipeMixin {
 	@Inject(method = "craft", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
 	private void craft(CraftingInventory inventory, CallbackInfoReturnable<ItemStack> callbackInfo) {
 		ItemStack stack = inventory.getStack(1 + inventory.getWidth());
-		if (stack.hasTag() && stack.getTag().contains("BewitchmentBrew")) {
+		if (stack.hasNbt() && stack.getNbt().contains("BewitchmentBrew")) {
 			int color = PotionUtil.getColor(stack);
 			UUID uuid = null;
 			String name = null;
-			if (stack.getTag().contains("PolymorphUUID")) {
-				uuid = stack.getTag().getUuid("PolymorphUUID");
-				name = stack.getTag().getString("PolymorphName");
+			if (stack.getNbt().contains("PolymorphUUID")) {
+				uuid = stack.getNbt().getUuid("PolymorphUUID");
+				name = stack.getNbt().getString("PolymorphName");
 			}
 			stack = callbackInfo.getReturnValue();
-			stack.getOrCreateTag().putBoolean("BewitchmentBrew", true);
-			stack.getOrCreateTag().putInt("CustomPotionColor", color);
+			stack.getOrCreateNbt().putBoolean("BewitchmentBrew", true);
+			stack.getOrCreateNbt().putInt("CustomPotionColor", color);
 			if (uuid != null) {
-				stack.getOrCreateTag().putUuid("PolymorphUUID", uuid);
-				stack.getOrCreateTag().putString("PolymorphName", name);
+				stack.getOrCreateNbt().putUuid("PolymorphUUID", uuid);
+				stack.getOrCreateNbt().putString("PolymorphName", name);
 			}
 			callbackInfo.setReturnValue(stack);
 		}

@@ -51,7 +51,7 @@ public abstract class LivingEntityMixin extends Entity {
 					List<Pair<SlotReference, ItemStack>> component = TrinketsApi.getTrinketComponent(player).get().getEquipped(BWObjects.PRICKLY_BELT);
 					if (!component.isEmpty()) {
 						ItemStack belt = component.get(0).getRight();
-						if (belt.hasTag() && belt.getTag().getInt("PotionUses") > 0) {
+						if (belt.hasNbt() && belt.getNbt().getInt("PotionUses") > 0) {
 							boolean used = false;
 							List<StatusEffectInstance> effects = PotionUtil.getPotionEffects(belt);
 							for (StatusEffectInstance effect : effects) {
@@ -61,20 +61,20 @@ public abstract class LivingEntityMixin extends Entity {
 									}
 								}
 								else if (!hasStatusEffect(effect.getEffectType()) && BewitchmentAPI.drainMagic(player, 2, true) && addStatusEffect(effect)) {
-									if (belt.getTag().contains("PolymorphUUID") && this instanceof PolymorphAccessor polymorphAccessor) {
-										polymorphAccessor.setPolymorphUUID(belt.getTag().getUuid("PolymorphUUID"));
-										polymorphAccessor.setPolymorphName(belt.getTag().getString("PolymorphName"));
+									if (belt.getNbt().contains("PolymorphUUID") && this instanceof PolymorphAccessor polymorphAccessor) {
+										polymorphAccessor.setPolymorphUUID(belt.getNbt().getUuid("PolymorphUUID"));
+										polymorphAccessor.setPolymorphName(belt.getNbt().getString("PolymorphName"));
 									}
 									used = true;
 								}
 							}
 							if (used) {
-								belt.getTag().putInt("PotionUses", belt.getTag().getInt("PotionUses") - 1);
-								if (belt.getTag().getInt("PotionUses") <= 0) {
-									belt.getOrCreateTag().put("CustomPotionEffects", new NbtList());
-									if (belt.getTag().contains("PolymorphUUID")) {
-										belt.getTag().remove("PolymorphUUID");
-										belt.getTag().remove("PolymorphName");
+								belt.getNbt().putInt("PotionUses", belt.getNbt().getInt("PotionUses") - 1);
+								if (belt.getNbt().getInt("PotionUses") <= 0) {
+									belt.getOrCreateNbt().put("CustomPotionEffects", new NbtList());
+									if (belt.getNbt().contains("PolymorphUUID")) {
+										belt.getNbt().remove("PolymorphUUID");
+										belt.getNbt().remove("PolymorphName");
 									}
 								}
 							}

@@ -52,7 +52,7 @@ public class AthameItem extends SwordItem {
 		@Override
 		protected ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
 			World world = pointer.getWorld();
-			BlockPos pos = pointer.getBlockPos().offset(pointer.getBlockState().get(Properties.FACING));
+			BlockPos pos = pointer.getPos().offset(pointer.getBlockState().get(Properties.FACING));
 			if (cutLog(world, pos, stack)) {
 				setSuccess(true);
 			}

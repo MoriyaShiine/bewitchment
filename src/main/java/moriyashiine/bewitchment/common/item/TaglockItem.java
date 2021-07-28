@@ -157,18 +157,18 @@ public class TaglockItem extends Item {
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		if (hasTaglock(stack)) {
 			tooltip.add(new LiteralText(getTaglockName(stack)).formatted(Formatting.GRAY));
-			NbtCompound tag = stack.getTag();
-			if (tag.contains("UsedForScrying")) {
-				if (tag.contains("Failed")) {
+			NbtCompound nbt = stack.getNbt();
+			if (nbt.contains("UsedForScrying")) {
+				if (nbt.contains("Failed")) {
 					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.failed").formatted(Formatting.DARK_GRAY));
 				}
 				else {
 					boolean shifting = Screen.hasShiftDown();
-					BlockPos pos = BlockPos.fromLong(stack.getTag().getLong("LocationPos"));
-					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.location", pos.getX(), pos.getY(), pos.getZ(), stack.getTag().getString("LocationWorld")).formatted(Formatting.DARK_GRAY));
-					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.level", stack.getTag().getInt("Level")).formatted(Formatting.DARK_GRAY));
+					BlockPos pos = BlockPos.fromLong(stack.getNbt().getLong("LocationPos"));
+					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.location", pos.getX(), pos.getY(), pos.getZ(), stack.getNbt().getString("LocationWorld")).formatted(Formatting.DARK_GRAY));
+					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.level", stack.getNbt().getInt("Level")).formatted(Formatting.DARK_GRAY));
 					MutableText curseTooltip = new TranslatableText(Bewitchment.MODID + ".tooltip.curse");
-					NbtList curses = tag.getList("Curses", 10);
+					NbtList curses = nbt.getList("Curses", 10);
 					if (curses.isEmpty()) {
 						curseTooltip.append(new TranslatableText(Bewitchment.MODID + ".tooltip.none"));
 					}
@@ -178,14 +178,14 @@ public class TaglockItem extends Item {
 					tooltip.add(curseTooltip.formatted(Formatting.DARK_GRAY));
 					if (shifting) {
 						for (NbtElement element : curses) {
-							NbtCompound curseTag = (NbtCompound) element;
-							MutableText curseText = new TranslatableText("curse." + curseTag.getString("Curse").replace(":", "."));
-							int duration = curseTag.getInt("Duration") / 24000;
+							NbtCompound curseNbt = (NbtCompound) element;
+							MutableText curseText = new TranslatableText("curse." + curseNbt.getString("Curse").replace(":", "."));
+							int duration = curseNbt.getInt("Duration") / 24000;
 							tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.curse_expanded", curseText, duration).formatted(Formatting.DARK_GRAY));
 						}
 					}
 					MutableText contractTooltip = new TranslatableText(Bewitchment.MODID + ".tooltip.contract");
-					NbtList contracts = tag.getList("Contracts", 10);
+					NbtList contracts = nbt.getList("Contracts", 10);
 					if (contracts.isEmpty()) {
 						contractTooltip.append(new TranslatableText(Bewitchment.MODID + ".tooltip.none"));
 					}
@@ -195,15 +195,15 @@ public class TaglockItem extends Item {
 					tooltip.add(contractTooltip.formatted(Formatting.DARK_GRAY));
 					if (shifting) {
 						for (NbtElement element : contracts) {
-							NbtCompound contractTag = (NbtCompound) element;
-							MutableText curseText = new TranslatableText("contract." + contractTag.getString("Contract").replace(":", "."));
-							int duration = contractTag.getInt("Duration") / 24000;
+							NbtCompound contractNbt = (NbtCompound) element;
+							MutableText curseText = new TranslatableText("contract." + contractNbt.getString("Contract").replace(":", "."));
+							int duration = contractNbt.getInt("Duration") / 24000;
 							tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.curse_expanded", curseText, duration).formatted(Formatting.DARK_GRAY));
 						}
 					}
-					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.transformation", new TranslatableText(stack.getTag().getString("Transformation"))).formatted(Formatting.DARK_GRAY));
-					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.familiar", new TranslatableText("entity." + tag.getString("Familiar").replace(":", "."))).formatted(Formatting.DARK_GRAY));
-					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.pledge", new TranslatableText(stack.getTag().getString("Pledge"))).formatted(Formatting.DARK_GRAY));
+					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.transformation", new TranslatableText(stack.getNbt().getString("Transformation"))).formatted(Formatting.DARK_GRAY));
+					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.familiar", new TranslatableText("entity." + nbt.getString("Familiar").replace(":", "."))).formatted(Formatting.DARK_GRAY));
+					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.pledge", new TranslatableText(stack.getNbt().getString("Pledge"))).formatted(Formatting.DARK_GRAY));
 				}
 			}
 		}
@@ -262,48 +262,48 @@ public class TaglockItem extends Item {
 	}
 	
 	public static ItemStack putTaglock(ItemStack stack, Entity entity) {
-		stack.getOrCreateTag().putUuid("OwnerUUID", entity.getUuid());
-		stack.getOrCreateTag().putString("OwnerName", entity.getDisplayName().getString());
-		stack.getOrCreateTag().putBoolean("FromPlayer", entity instanceof PlayerEntity);
+		stack.getOrCreateNbt().putUuid("OwnerUUID", entity.getUuid());
+		stack.getOrCreateNbt().putString("OwnerName", entity.getDisplayName().getString());
+		stack.getOrCreateNbt().putBoolean("FromPlayer", entity instanceof PlayerEntity);
 		return stack;
 	}
 	
 	public static ItemStack copyTo(ItemStack from, ItemStack to) {
 		if (hasTaglock(from)) {
-			to.getOrCreateTag().putUuid("OwnerUUID", from.getOrCreateTag().getUuid("OwnerUUID"));
-			to.getOrCreateTag().putString("OwnerName", from.getOrCreateTag().getString("OwnerName"));
-			to.getOrCreateTag().putBoolean("FromPlayer", from.getOrCreateTag().getBoolean("FromPlayer"));
+			to.getOrCreateNbt().putUuid("OwnerUUID", from.getOrCreateNbt().getUuid("OwnerUUID"));
+			to.getOrCreateNbt().putString("OwnerName", from.getOrCreateNbt().getString("OwnerName"));
+			to.getOrCreateNbt().putBoolean("FromPlayer", from.getOrCreateNbt().getBoolean("FromPlayer"));
 		}
 		return to;
 	}
 	
 	public static boolean hasTaglock(ItemStack stack) {
-		return stack.hasTag() && stack.getOrCreateTag().contains("OwnerUUID");
+		return stack.hasNbt() && stack.getOrCreateNbt().contains("OwnerUUID");
 	}
 	
 	public static void removeTaglock(ItemStack stack) {
-		if (stack.hasTag()) {
-			stack.getOrCreateTag().remove("OwnerUUID");
-			stack.getOrCreateTag().remove("OwnerName");
-			stack.getOrCreateTag().remove("FromPlayer");
+		if (stack.hasNbt()) {
+			stack.getOrCreateNbt().remove("OwnerUUID");
+			stack.getOrCreateNbt().remove("OwnerName");
+			stack.getOrCreateNbt().remove("FromPlayer");
 		}
 	}
 	
 	public static UUID getTaglockUUID(ItemStack stack) {
 		if (hasTaglock(stack)) {
-			return stack.getOrCreateTag().getUuid("OwnerUUID");
+			return stack.getOrCreateNbt().getUuid("OwnerUUID");
 		}
 		return null;
 	}
 	
 	public static String getTaglockName(ItemStack stack) {
 		if (hasTaglock(stack)) {
-			return stack.getOrCreateTag().getString("OwnerName");
+			return stack.getOrCreateNbt().getString("OwnerName");
 		}
 		return "";
 	}
 	
 	public static boolean isTaglockFromPlayer(ItemStack stack) {
-		return hasTaglock(stack) && stack.getOrCreateTag().getBoolean("FromPlayer");
+		return hasTaglock(stack) && stack.getOrCreateNbt().getBoolean("FromPlayer");
 	}
 }

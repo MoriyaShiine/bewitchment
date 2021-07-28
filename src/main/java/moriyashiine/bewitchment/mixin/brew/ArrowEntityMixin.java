@@ -43,8 +43,8 @@ public class ArrowEntityMixin implements PolymorphAccessor {
 	@Inject(method = "asItemStack", at = @At(value = "RETURN", ordinal = 1), locals = LocalCapture.CAPTURE_FAILSOFT)
 	private void asItemStack(CallbackInfoReturnable<ItemStack> callbackInfo, ItemStack stack) {
 		if (getPolymorphUUID() != null) {
-			stack.getOrCreateTag().putUuid("PolymorphUUID", getPolymorphUUID());
-			stack.getOrCreateTag().putString("PolymorphName", getPolymorphName());
+			stack.getOrCreateNbt().putUuid("PolymorphUUID", getPolymorphUUID());
+			stack.getOrCreateNbt().putString("PolymorphName", getPolymorphName());
 		}
 	}
 	
@@ -58,9 +58,9 @@ public class ArrowEntityMixin implements PolymorphAccessor {
 	
 	@Inject(method = "initFromStack", at = @At("TAIL"))
 	private void initFromStack(ItemStack stack, CallbackInfo callbackInfo) {
-		if (stack.hasTag() && stack.getTag().contains("PolymorphUUID")) {
-			setPolymorphUUID(stack.getTag().getUuid("PolymorphUUID"));
-			setPolymorphName(stack.getTag().getString("PolymorphName"));
+		if (stack.hasNbt() && stack.getNbt().contains("PolymorphUUID")) {
+			setPolymorphUUID(stack.getNbt().getUuid("PolymorphUUID"));
+			setPolymorphName(stack.getNbt().getString("PolymorphName"));
 		}
 	}
 	

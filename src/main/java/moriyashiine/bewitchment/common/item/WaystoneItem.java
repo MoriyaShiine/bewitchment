@@ -28,8 +28,8 @@ public class WaystoneItem extends Item {
 		World world = context.getWorld();
 		boolean client = world.isClient;
 		if (!client) {
-			context.getStack().getOrCreateTag().putLong("LocationPos", context.getBlockPos().offset(context.getSide()).asLong());
-			context.getStack().getOrCreateTag().putString("LocationWorld", world.getRegistryKey().getValue().toString());
+			context.getStack().getOrCreateNbt().putLong("LocationPos", context.getBlockPos().offset(context.getSide()).asLong());
+			context.getStack().getOrCreateNbt().putString("LocationWorld", world.getRegistryKey().getValue().toString());
 		}
 		return ActionResult.success(client);
 	}
@@ -42,9 +42,9 @@ public class WaystoneItem extends Item {
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		if (stack.hasTag() && stack.getTag().contains("LocationPos")) {
-			BlockPos pos = BlockPos.fromLong(stack.getTag().getLong("LocationPos"));
-			tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.location", pos.getX(), pos.getY(), pos.getZ(), stack.getTag().getString("LocationWorld")).formatted(Formatting.GRAY));
+		if (stack.hasNbt() && stack.getNbt().contains("LocationPos")) {
+			BlockPos pos = BlockPos.fromLong(stack.getNbt().getLong("LocationPos"));
+			tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.location", pos.getX(), pos.getY(), pos.getZ(), stack.getNbt().getString("LocationWorld")).formatted(Formatting.GRAY));
 		}
 	}
 }

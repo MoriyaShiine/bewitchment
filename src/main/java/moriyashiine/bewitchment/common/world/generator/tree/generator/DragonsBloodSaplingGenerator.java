@@ -9,8 +9,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Random;
 
 public class DragonsBloodSaplingGenerator extends SaplingGenerator {
+	@Nullable
 	@Override
-	protected @Nullable ConfiguredFeature<TreeFeatureConfig, ?> createTreeFeature(Random random, boolean bl) {
+	protected ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeature(Random random, boolean bees) {
 		return BWWorldGenerators.DRAGONS_BLOOD_TREE;
 	}
 }

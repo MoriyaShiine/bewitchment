@@ -90,7 +90,7 @@ dependencies {
     }
     modImplementation "io.github.ladysnake:impersonate:${impersonate_version}"
     modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}"
-    modImplementation "dev.emi:trinkets:${trinkets_version}"
+    modImplementation "com.github.emilyalexandra:trinkets:${trinkets_version}"
 
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
     modRuntime "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"

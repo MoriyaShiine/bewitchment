@@ -207,8 +207,8 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 	
 	public void onUse(World world, BlockPos pos, LivingEntity user, Hand hand, LivingEntity sacrifice) {
 		ItemStack stack = user.getStackInHand(hand);
-		if (ritualFunction != null && pos.equals(effectivePos) && stack.getItem() instanceof WaystoneItem && stack.hasTag() && stack.getOrCreateTag().contains("LocationPos")) {
-			effectivePos = BlockPos.fromLong(stack.getOrCreateTag().getLong("LocationPos"));
+		if (ritualFunction != null && pos.equals(effectivePos) && stack.getItem() instanceof WaystoneItem && stack.hasNbt() && stack.getOrCreateNbt().contains("LocationPos")) {
+			effectivePos = BlockPos.fromLong(stack.getOrCreateNbt().getLong("LocationPos"));
 			stack.damage(1, user, stackUser -> stackUser.sendToolBreakStatus(hand));
 			syncGlyph();
 		}

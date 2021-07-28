@@ -73,7 +73,7 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 			if (nearestAltarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(nearestAltarPos)).drain(500, false)) {
 				ItemStack stack = player.getStackInHand(hand);
 				if (stack.getItem() instanceof TaglockItem && TaglockItem.isTaglockFromPlayer(stack)) {
-					if (!stack.getTag().contains("UsedForScrying")) {
+					if (!stack.getNbt().contains("UsedForScrying")) {
 						LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, stack);
 						if (owner instanceof PlayerEntity) {
 							boolean failed = false;
@@ -91,7 +91,7 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 								}
 							}
 							ItemStack newTaglock = new ItemStack(BWObjects.TAGLOCK);
-							NbtCompound compound = newTaglock.getOrCreateTag().copyFrom(stack.getTag());
+							NbtCompound compound = newTaglock.getOrCreateNbt().copyFrom(stack.getNbt());
 							compound.putBoolean("UsedForScrying", true);
 							if (!failed) {
 								compound.putLong("LocationPos", owner.getBlockPos().asLong());

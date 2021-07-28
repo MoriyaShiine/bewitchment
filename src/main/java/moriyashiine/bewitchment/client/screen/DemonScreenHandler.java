@@ -61,38 +61,32 @@ public class DemonScreenHandler extends ScreenHandler {
 	}
 	
 	@Override
-	public ItemStack onSlotClick(int i, int j, SlotActionType actionType, PlayerEntity playerEntity) {
-		if (i == -999) {
-			return super.onSlotClick(i, j, actionType, playerEntity);
+	public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
+		if (button == -999) {
+			super.onSlotClick(slotIndex, button, actionType, player);
 		}
-		Slot slot = slots.get(i);
+		Slot slot = slots.get(button);
 		if (slot instanceof DemonTradeSlot) {
 			DemonEntity.DemonTradeOffer offer = ((DemonTradeSlot) slot).getOffer();
-			if (!((ContractAccessor) playerEntity).hasContract(offer.getContract())) {
+			if (!((ContractAccessor) player).hasContract(offer.getContract())) {
 				demonMerchant.onSell(offer);
 				demonMerchant.trade(offer);
 				if (!demonMerchant.getDemonTrader().world.isClient) {
-					SyncContractsPacket.send(playerEntity);
-					SyncDemonTradesPacket.send(playerEntity, demonMerchant, syncId);
+					SyncContractsPacket.send(player);
+					SyncDemonTradesPacket.send(player, demonMerchant, syncId);
 					int cost = offer.getCost(demonMerchant);
-					if (playerEntity.getMaxHealth() - cost <= 0) {
-						((ContractAccessor) playerEntity).getContracts().clear();
-						playerEntity.damage(BWDamageSources.DEATH, Float.MAX_VALUE);
+					if (player.getMaxHealth() - cost <= 0) {
+						((ContractAccessor) player).getContracts().clear();
+						player.damage(BWDamageSources.DEATH, Float.MAX_VALUE);
 					}
-					else if (playerEntity.getHealth() > playerEntity.getMaxHealth() - cost) {
-						playerEntity.setHealth(playerEntity.getMaxHealth() - cost);
+					else if (player.getHealth() > player.getMaxHealth() - cost) {
+						player.setHealth(player.getMaxHealth() - cost);
 					}
 				}
 			}
-			return ItemStack.EMPTY;
+			return;
 		}
-		return super.onSlotClick(i, j, actionType, playerEntity);
-	}
-	
-	@Override
-	@Environment(EnvType.CLIENT)
-	public void updateSlotStacks(List<ItemStack> stacks) {
-		super.updateSlotStacks(stacks);
+		super.onSlotClick(slotIndex, button, actionType, player);
 	}
 	
 	@Override
@@ -124,8 +118,8 @@ public class DemonScreenHandler extends ScreenHandler {
 			DemonEntity.DemonTradeOffer offer = getOffer();
 			if (offer != null) {
 				ItemStack contract = new ItemStack(BWObjects.DEMONIC_CONTRACT);
-				contract.getOrCreateTag().putString("Contract", BWRegistries.CONTRACTS.getId(getOffer().getContract()).toString());
-				contract.getOrCreateTag().putInt("Duration", getOffer().getDuration());
+				contract.getOrCreateNbt().putString("Contract", BWRegistries.CONTRACTS.getId(getOffer().getContract()).toString());
+				contract.getOrCreateNbt().putInt("Duration", getOffer().getDuration());
 				return contract;
 			}
 			return ItemStack.EMPTY;

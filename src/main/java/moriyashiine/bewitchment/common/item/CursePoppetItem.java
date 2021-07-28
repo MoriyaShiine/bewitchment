@@ -35,24 +35,24 @@ public class CursePoppetItem extends PoppetItem {
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		ItemStack stack = user.getStackInHand(hand);
-		return stack.hasTag() && stack.getOrCreateTag().getBoolean("Cursed") && stack.getOrCreateTag().contains("OwnerUUID") ? ItemUsage.consumeHeldItem(world, user, hand) : super.use(world, user, hand);
+		return stack.hasNbt() && stack.getOrCreateNbt().getBoolean("Cursed") && stack.getOrCreateNbt().contains("OwnerUUID") ? ItemUsage.consumeHeldItem(world, user, hand) : super.use(world, user, hand);
 	}
 	
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		if (!world.isClient && stack.hasTag()) {
+		if (!world.isClient && stack.hasNbt()) {
 			MinecraftServer server = world.getServer();
-			if (server != null && stack.getOrCreateTag().contains("Cursed")) {
+			if (server != null && stack.getOrCreateNbt().contains("Cursed")) {
 				UUID uuid = TaglockItem.getTaglockUUID(stack);
 				for (ServerWorld serverWorld : server.getWorlds()) {
 					Entity entity = serverWorld.getEntity(uuid);
 					if (entity instanceof CurseAccessor) {
 						boolean failed = false;
-						Curse curse = BWRegistries.CURSES.get(new Identifier(stack.getOrCreateTag().getString("Curse")));
+						Curse curse = BWRegistries.CURSES.get(new Identifier(stack.getOrCreateNbt().getString("Curse")));
 						ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, entity, null);
-						if (!poppet.isEmpty() && poppet.hasTag() && !poppet.getTag().getBoolean("Cursed")) {
-							poppet.getTag().putString("Curse", BWRegistries.CURSES.getId(curse).toString());
-							poppet.getTag().putBoolean("Cursed", true);
+						if (!poppet.isEmpty() && poppet.hasNbt() && !poppet.getNbt().getBoolean("Cursed")) {
+							poppet.getNbt().putString("Curse", BWRegistries.CURSES.getId(curse).toString());
+							poppet.getNbt().putBoolean("Cursed", true);
 							TaglockItem.removeTaglock(poppet);
 							failed = true;
 						}
@@ -69,7 +69,7 @@ public class CursePoppetItem extends PoppetItem {
 					}
 				}
 				if (user instanceof PlayerEntity) {
-					((PlayerEntity) user).sendMessage(new TranslatableText(Bewitchment.MODID + ".message.invalid_entity", stack.getOrCreateTag().getString("OwnerName")), true);
+					((PlayerEntity) user).sendMessage(new TranslatableText(Bewitchment.MODID + ".message.invalid_entity", stack.getOrCreateNbt().getString("OwnerName")), true);
 				}
 			}
 		}
@@ -78,7 +78,7 @@ public class CursePoppetItem extends PoppetItem {
 	
 	@Override
 	public UseAction getUseAction(ItemStack stack) {
-		return stack.hasTag() && stack.getOrCreateTag().getBoolean("Cursed") && stack.getOrCreateTag().contains("OwnerUUID") ? UseAction.BOW : super.getUseAction(stack);
+		return stack.hasNbt() && stack.getOrCreateNbt().getBoolean("Cursed") && stack.getOrCreateNbt().contains("OwnerUUID") ? UseAction.BOW : super.getUseAction(stack);
 	}
 	
 	@Override
@@ -89,8 +89,8 @@ public class CursePoppetItem extends PoppetItem {
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		super.appendTooltip(stack, world, tooltip, context);
-		if (stack.hasTag() && stack.getOrCreateTag().contains("Curse")) {
-			tooltip.add(new TranslatableText("curse." + stack.getOrCreateTag().getString("Curse").replace(":", ".")).formatted(Formatting.DARK_RED));
+		if (stack.hasNbt() && stack.getOrCreateNbt().contains("Curse")) {
+			tooltip.add(new TranslatableText("curse." + stack.getOrCreateNbt().getString("Curse").replace(":", ".")).formatted(Formatting.DARK_RED));
 		}
 	}
 }

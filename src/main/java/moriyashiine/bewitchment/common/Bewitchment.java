@@ -126,7 +126,7 @@ public class Bewitchment implements ModInitializer {
 						if (recipe.entity_type.equals(killedEntity.getType()) && world.random.nextFloat() < recipe.chance * (EnchantmentHelper.getLooting(livingEntity) + 1)) {
 							ItemStack drop = recipe.getOutput().copy();
 							if (recipe.entity_type == EntityType.PLAYER) {
-								drop.getOrCreateTag().putString("SkullOwner", killedEntity.getName().getString());
+								drop.getOrCreateNbt().putString("SkullOwner", killedEntity.getName().getString());
 							}
 							ItemScatterer.spawn(world, killedEntity.getX() + 0.5, killedEntity.getY() + 0.5, killedEntity.getZ() + 0.5, drop);
 						}

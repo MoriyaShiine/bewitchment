@@ -106,8 +106,8 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 	
 	@Override
 	public void init(ItemStack stack) {
-		if (stack.hasTag()) {
-			readFromNbt(stack.getTag());
+		if (stack.hasNbt()) {
+			readFromNbt(stack.getNbt());
 		}
 	}
 	
@@ -115,13 +115,13 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 	protected ItemStack getDroppedStack() {
 		ItemStack stack = super.getDroppedStack();
 		if (sigil != null) {
-			writeToNbt(stack.getOrCreateTag());
+			writeToNbt(stack.getOrCreateNbt());
 		}
-		else if (stack.hasTag()) {
-			stack.getTag().remove("Entities");
-			stack.getTag().remove("Sigil");
-			stack.getTag().remove("Uses");
-			stack.getTag().remove("ModeOnWhitelist");
+		else if (stack.hasNbt()) {
+			stack.getNbt().remove("Entities");
+			stack.getNbt().remove("Sigil");
+			stack.getNbt().remove("Uses");
+			stack.getNbt().remove("ModeOnWhitelist");
 		}
 		return stack;
 	}

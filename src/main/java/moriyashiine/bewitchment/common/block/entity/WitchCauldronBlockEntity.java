@@ -304,8 +304,8 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 			for (int i = 0; i < size(); i++) {
 				ItemStack stackInSlot = getStack(i);
 				if (stackInSlot.getItem() instanceof TaglockItem && TaglockItem.isTaglockFromPlayer(stackInSlot)) {
-					stack.getOrCreateTag().putUuid("PolymorphUUID", TaglockItem.getTaglockUUID(stackInSlot));
-					stack.getOrCreateTag().putString("PolymorphName", TaglockItem.getTaglockName(stackInSlot));
+					stack.getOrCreateNbt().putUuid("PolymorphUUID", TaglockItem.getTaglockUUID(stackInSlot));
+					stack.getOrCreateNbt().putString("PolymorphName", TaglockItem.getTaglockName(stackInSlot));
 				}
 				CauldronBrewingRecipe cauldronBrewingRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CAULDRON_BREWING_RECIPE_TYPE).stream().filter(recipe -> recipe.input.test(stackInSlot)).findFirst().orElse(null);
 				if (cauldronBrewingRecipe != null && effects.stream().noneMatch(effect -> effect.getEffectType() == cauldronBrewingRecipe.output)) {
@@ -345,8 +345,8 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 			}
 			finalEffects.addAll(effects);
 			PotionUtil.setCustomPotionEffects(stack, finalEffects);
-			stack.getOrCreateTag().putInt("CustomPotionColor", PotionUtil.getColor(finalEffects));
-			stack.getOrCreateTag().putBoolean("BewitchmentBrew", true);
+			stack.getOrCreateNbt().putInt("CustomPotionColor", PotionUtil.getColor(finalEffects));
+			stack.getOrCreateNbt().putBoolean("BewitchmentBrew", true);
 		}
 		return stack;
 	}

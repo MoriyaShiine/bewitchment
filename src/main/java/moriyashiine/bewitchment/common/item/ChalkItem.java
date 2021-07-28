@@ -76,14 +76,14 @@ public class ChalkItem extends Item {
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		//why
-		if (stack.hasTag() && stack.getOrCreateTag().contains("InnerCircle")) {
-			tooltip.add(new TranslatableText("bewitchment.tooltip.inner_circle", new TranslatableText(stack.getOrCreateTag().getString("InnerCircle"))).formatted(Formatting.GRAY));
-			if (stack.getOrCreateTag().contains("OuterCircle")) {
-				tooltip.add(new TranslatableText("bewitchment.tooltip.outer_circle", new TranslatableText(stack.getOrCreateTag().getString("OuterCircle"))).formatted(Formatting.GRAY));
+		if (stack.hasNbt() && stack.getOrCreateNbt().contains("InnerCircle")) {
+			tooltip.add(new TranslatableText("bewitchment.tooltip.inner_circle", new TranslatableText(stack.getOrCreateNbt().getString("InnerCircle"))).formatted(Formatting.GRAY));
+			if (stack.getOrCreateNbt().contains("OuterCircle")) {
+				tooltip.add(new TranslatableText("bewitchment.tooltip.outer_circle", new TranslatableText(stack.getOrCreateNbt().getString("OuterCircle"))).formatted(Formatting.GRAY));
 			}
-			tooltip.add(new TranslatableText("bewitchment.tooltip.cost", stack.getOrCreateTag().getInt("Cost")).formatted(Formatting.GRAY));
-			if (stack.getOrCreateTag().contains("RunningTime")) {
-				tooltip.add(new TranslatableText("bewitchment.tooltip.running_time", stack.getOrCreateTag().getInt("RunningTime") / 20f).formatted(Formatting.GRAY));
+			tooltip.add(new TranslatableText("bewitchment.tooltip.cost", stack.getOrCreateNbt().getInt("Cost")).formatted(Formatting.GRAY));
+			if (stack.getOrCreateNbt().contains("RunningTime")) {
+				tooltip.add(new TranslatableText("bewitchment.tooltip.running_time", stack.getOrCreateNbt().getInt("RunningTime") / 20f).formatted(Formatting.GRAY));
 			}
 		}
 	}

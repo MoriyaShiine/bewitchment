@@ -25,8 +25,8 @@ public class PricklyBeltItem extends TrinketItem {
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		int uses = 0;
-		if (stack.hasTag()) {
-			uses = stack.getTag().getInt("PotionUses");
+		if (stack.hasNbt()) {
+			uses = stack.getNbt().getInt("PotionUses");
 		}
 		tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.uses_left", uses).formatted(Formatting.GRAY));
 		Items.POTION.appendTooltip(stack, world, tooltip, context);

@@ -123,8 +123,8 @@ public class BrazierBlock extends LanternBlock implements BlockEntityProvider {
 		if (!PotionUtil.getCustomPotionEffects(stack).isEmpty()) {
 			PotionUtil.buildTooltip(stack, tooltip, 1);
 		}
-		if (stack.hasTag() && stack.getTag().contains("Cost")) {
-			tooltip.add(new LiteralText("Cost: " + stack.getOrCreateTag().getInt("Cost")).formatted(Formatting.GRAY));
+		if (stack.hasNbt() && stack.getNbt().contains("Cost")) {
+			tooltip.add(new LiteralText("Cost: " + stack.getOrCreateNbt().getInt("Cost")).formatted(Formatting.GRAY));
 		}
 	}
 	

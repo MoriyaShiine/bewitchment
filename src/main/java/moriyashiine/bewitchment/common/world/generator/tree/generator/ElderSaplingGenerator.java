@@ -9,8 +9,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Random;
 
 public class ElderSaplingGenerator extends SaplingGenerator {
+	@Nullable
 	@Override
-	protected @Nullable ConfiguredFeature<TreeFeatureConfig, ?> createTreeFeature(Random random, boolean bl) {
+	protected ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeature(Random random, boolean bees) {
 		return BWWorldGenerators.ELDER_TREE;
 	}
 }

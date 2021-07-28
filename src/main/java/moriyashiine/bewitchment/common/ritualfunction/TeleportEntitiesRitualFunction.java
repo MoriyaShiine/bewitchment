@@ -34,8 +34,8 @@ public class TeleportEntitiesRitualFunction extends RitualFunction {
 					break;
 				}
 			}
-			else if (stack.getItem() instanceof WaystoneItem && stack.hasTag() && stack.getOrCreateTag().contains("LocationPos") && world.getRegistryKey().getValue().toString().equals(stack.getOrCreateTag().getString("LocationWorld"))) {
-				location = BlockPos.fromLong(stack.getOrCreateTag().getLong("LocationPos"));
+			else if (stack.getItem() instanceof WaystoneItem && stack.hasNbt() && stack.getOrCreateNbt().contains("LocationPos") && world.getRegistryKey().getValue().toString().equals(stack.getOrCreateNbt().getString("LocationWorld"))) {
+				location = BlockPos.fromLong(stack.getOrCreateNbt().getLong("LocationPos"));
 				break;
 			}
 		}

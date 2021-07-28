@@ -24,9 +24,9 @@ public class DragonsBloodBroomItem extends BroomItem {
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		if (stack.hasTag() && stack.getTag().contains("Sigil")) {
-			tooltip.add(new TranslatableText("sigil." + stack.getTag().getString("Sigil").replace(":", ".")).formatted(Formatting.GRAY));
-			tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.uses_left", stack.getTag().getInt("Uses")).formatted(Formatting.GRAY));
+		if (stack.hasNbt() && stack.getNbt().contains("Sigil")) {
+			tooltip.add(new TranslatableText("sigil." + stack.getNbt().getString("Sigil").replace(":", ".")).formatted(Formatting.GRAY));
+			tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.uses_left", stack.getNbt().getInt("Uses")).formatted(Formatting.GRAY));
 		}
 	}
 }

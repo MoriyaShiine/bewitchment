@@ -31,7 +31,7 @@ public class OilCraftingProcessor implements IComponentProcessor {
 		}
 		for (int i = 0; i < recipe.input.size(); i++) {
 			if (key.equals("ingredient" + i)) {
-				ItemStack[] stack = recipe.input.get(i).getMatchingStacksClient();
+				ItemStack[] stack = recipe.input.get(i).getMatchingStacks();
 				return stack.length > 0 ? IVariable.from(stack[0]) : null;
 			}
 			

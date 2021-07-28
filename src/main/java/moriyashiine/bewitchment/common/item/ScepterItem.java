@@ -55,23 +55,23 @@ public class ScepterItem extends Item {
 				PotionEntity potion = new PotionEntity(world, user);
 				List<StatusEffectInstance> effects = PotionUtil.getCustomPotionEffects(stack);
 				ItemStack potionStack = PotionUtil.setCustomPotionEffects(new ItemStack(Items.SPLASH_POTION), effects);
-				potionStack.getOrCreateTag().putInt("CustomPotionColor", PotionUtil.getColor(effects));
-				if (stack.getOrCreateTag().contains("PolymorphUUID")) {
-					potionStack.getOrCreateTag().putUuid("PolymorphUUID", stack.getOrCreateTag().getUuid("PolymorphUUID"));
-					potionStack.getOrCreateTag().putString("PolymorphName", stack.getOrCreateTag().getString("PolymorphName"));
+				potionStack.getOrCreateNbt().putInt("CustomPotionColor", PotionUtil.getColor(effects));
+				if (stack.getOrCreateNbt().contains("PolymorphUUID")) {
+					potionStack.getOrCreateNbt().putUuid("PolymorphUUID", stack.getOrCreateNbt().getUuid("PolymorphUUID"));
+					potionStack.getOrCreateNbt().putString("PolymorphName", stack.getOrCreateNbt().getString("PolymorphName"));
 				}
 				potion.setItem(potionStack);
 				potion.setProperties(user, user.getPitch(), user.getYaw(), -20, 0.5f, 1);
 				world.spawnEntity(potion);
 				world.playSound(null, user.getBlockPos(), SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 1, 1);
 				if (!((PlayerEntity) user).isCreative()) {
-					stack.getOrCreateTag().putInt("PotionUses", stack.getOrCreateTag().getInt("PotionUses") - 1);
-					if (stack.getOrCreateTag().getInt("PotionUses") <= 0) {
-						if (stack.getOrCreateTag().contains("PolymorphUUID")) {
-							potionStack.getOrCreateTag().remove("PolymorphUUID");
-							potionStack.getOrCreateTag().remove("PolymorphName");
+					stack.getOrCreateNbt().putInt("PotionUses", stack.getOrCreateNbt().getInt("PotionUses") - 1);
+					if (stack.getOrCreateNbt().getInt("PotionUses") <= 0) {
+						if (stack.getOrCreateNbt().contains("PolymorphUUID")) {
+							potionStack.getOrCreateNbt().remove("PolymorphUUID");
+							potionStack.getOrCreateNbt().remove("PolymorphName");
 						}
-						stack.getOrCreateTag().put("CustomPotionEffects", new NbtList());
+						stack.getOrCreateNbt().put("CustomPotionEffects", new NbtList());
 					}
 					
 					stack.damage(1, user, stackUser -> stackUser.sendToolBreakStatus(user.getActiveHand()));
@@ -95,8 +95,8 @@ public class ScepterItem extends Item {
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		int uses = 0;
-		if (stack.hasTag()) {
-			uses = stack.getTag().getInt("PotionUses");
+		if (stack.hasNbt()) {
+			uses = stack.getNbt().getInt("PotionUses");
 		}
 		tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.uses_left", uses).formatted(Formatting.GRAY));
 		Items.POTION.appendTooltip(stack, world, tooltip, context);

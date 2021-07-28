@@ -16,12 +16,12 @@ public abstract class PotionItemMixin {
 	@Inject(method = "finishUsing", at = @At("HEAD"))
 	private void finishUsing(ItemStack stack, World world, LivingEntity user, CallbackInfoReturnable<ItemStack> callbackInfo) {
 		if (!world.isClient && user instanceof PolymorphAccessor) {
-			NbtCompound tag = stack.getTag();
-			if (tag != null) {
-				String name = tag.getString("PolymorphName");
+			NbtCompound nbt = stack.getNbt();
+			if (nbt != null) {
+				String name = nbt.getString("PolymorphName");
 				if (!name.isEmpty()) {
 					PolymorphAccessor polymorphAccessor = (PolymorphAccessor) user;
-					polymorphAccessor.setPolymorphUUID(tag.getUuid("PolymorphUUID"));
+					polymorphAccessor.setPolymorphUUID(nbt.getUuid("PolymorphUUID"));
 					polymorphAccessor.setPolymorphName(name);
 				}
 			}

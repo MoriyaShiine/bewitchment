@@ -128,9 +128,9 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 								}
 								if (target instanceof CurseAccessor) {
 									ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, target, null);
-									if (!poppet.isEmpty() && poppet.hasTag() && !poppet.getTag().getBoolean("Cursed")) {
-										poppet.getTag().putString("Curse", BWRegistries.CURSES.getId(blockEntity.curseRecipe.curse).toString());
-										poppet.getTag().putBoolean("Cursed", true);
+									if (!poppet.isEmpty() && poppet.hasNbt() && !poppet.getNbt().getBoolean("Cursed")) {
+										poppet.getNbt().putString("Curse", BWRegistries.CURSES.getId(blockEntity.curseRecipe.curse).toString());
+										poppet.getNbt().putBoolean("Cursed", true);
 										TaglockItem.removeTaglock(poppet);
 									}
 									else {

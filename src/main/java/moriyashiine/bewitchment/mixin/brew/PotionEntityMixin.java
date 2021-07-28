@@ -31,9 +31,9 @@ public abstract class PotionEntityMixin extends ThrownItemEntity {
 	
 	@Inject(method = "applySplashPotion", at = @At("HEAD"))
 	private void applySplashPotion(List<StatusEffectInstance> statusEffects, @Nullable Entity entity, CallbackInfo callbackInfo) {
-		if (getItem().hasTag() && getItem().getTag().contains("PolymorphUUID")) {
-			UUID uuid = getItem().getTag().getUuid("PolymorphUUID");
-			String name = getItem().getTag().getString("PolymorphName");
+		if (getItem().hasNbt() && getItem().getNbt().contains("PolymorphUUID")) {
+			UUID uuid = getItem().getNbt().getUuid("PolymorphUUID");
+			String name = getItem().getNbt().getString("PolymorphName");
 			Box box = getBoundingBox().expand(4, 2, 4);
 			List<LivingEntity> list = world.getNonSpectatingEntities(LivingEntity.class, box);
 			for (LivingEntity livingEntity : list) {
@@ -47,9 +47,9 @@ public abstract class PotionEntityMixin extends ThrownItemEntity {
 	
 	@Inject(method = "applyLingeringPotion", at = @At(value = "INVOKE", target = "net/minecraft/entity/AreaEffectCloudEntity.setPotion(Lnet/minecraft/potion/Potion;)V"), locals = LocalCapture.CAPTURE_FAILSOFT)
 	private void applyLingeringPotion(ItemStack stack, Potion potion, CallbackInfo callbackInfo, AreaEffectCloudEntity cloud) {
-		if (stack.hasTag() && stack.getTag().contains("PolymorphUUID")) {
-			((PolymorphAccessor) cloud).setPolymorphUUID(stack.getTag().getUuid("PolymorphUUID"));
-			((PolymorphAccessor) cloud).setPolymorphName(stack.getTag().getString("PolymorphName"));
+		if (stack.hasNbt() && stack.getNbt().contains("PolymorphUUID")) {
+			((PolymorphAccessor) cloud).setPolymorphUUID(stack.getNbt().getUuid("PolymorphUUID"));
+			((PolymorphAccessor) cloud).setPolymorphName(stack.getNbt().getString("PolymorphName"));
 		}
 	}
 }
