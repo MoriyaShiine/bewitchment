@@ -33,46 +33,16 @@ public class GhostEntityModel<T extends GhostEntity> extends BipedEntityModel<T>
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0);
 		ModelPartData root = data.getRoot();
-		ModelPartData BipedRightArm = root.addChild("BipedRightArm",
-				ModelPartBuilder.create()
-						.uv(40, 16).cuboid(-3.0F, -2.0F, -2.0F, 4.0F, 13.0F, 4.0F),
-				ModelTransform.of(-5.0F, 2.0F, 0.0F, -1.3963F, 0.0F, 0.1F));
-		BipedRightArm.addChild("rArmWisp",
-				ModelPartBuilder.create()
-						.uv(40, 34).cuboid(-1.5F, -4.5F, 0.1F, 3.0F, 11.0F, 4.0F),
-				ModelTransform.of(-1.0F, 2.7F, 1.7F, 0.0F, 0.0F, 0.0F));
-		ModelPartData realHead = root.addChild("realHead",
-				ModelPartBuilder.create()
-						.cuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F),
-				ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F));
-		ModelPartData skull = realHead.addChild("skull",
-				ModelPartBuilder.create()
-						.uv(34, 0).cuboid(-3.5F, -7.5F, -3.0F, 7.0F, 5.0F, 6.0F),
-				ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F));
-		skull.addChild("skullJaw",
-				ModelPartBuilder.create()
-						.uv(19, 30).cuboid(-2.5F, -1.0F, -3.5F, 5.0F, 2.0F, 5.0F),
-				ModelTransform.of(0.0F, -1.9F, 0.9F, 0.1745F, 0.0F, 0.0F));
-		ModelPartData BipedLeftArm = root.addChild("BipedLeftArm",
-				ModelPartBuilder.create()
-						.uv(40, 16).cuboid(-1.0F, -2.0F, -2.0F, 4.0F, 13.0F, 4.0F),
-				ModelTransform.of(5.0F, 2.0F, 0.0F, -1.3963F, 0.0F, -0.1F));
-		BipedLeftArm.addChild("lArmWisp",
-				ModelPartBuilder.create()
-						.uv(40, 34).cuboid(-1.5F, -4.5F, 0.1F, 3.0F, 11.0F, 4.0F),
-				ModelTransform.of(1.0F, 2.7F, 1.7F, 0.0F, 0.0F, 0.0F));
-		ModelPartData realBody = root.addChild("realBody",
-				ModelPartBuilder.create()
-						.uv(14, 16).cuboid(-4.0F, 0.0F, -2.0F, 8.0F, 8.0F, 4.0F),
-				ModelTransform.of(0.0F, 0.0F, 0.0F, 0.2094F, 0.0F, 0.0F));
-		ModelPartData realBodyTrail00 = realBody.addChild("realBodyTrail00",
-				ModelPartBuilder.create()
-						.uv(33, 51).cuboid(-4.5F, 0.0F, -2.5F, 9.0F, 6.0F, 5.0F),
-				ModelTransform.of(0.0F, 7.7F, 0.0F, 0.1047F, 0.0F, 0.0F));
-		realBodyTrail00.addChild("realBodyTrail01",
-				ModelPartBuilder.create()
-						.uv(0, 39).cuboid(-5.0F, 0.0F, -3.0F, 10.0F, 9.0F, 6.0F),
-				ModelTransform.of(0.0F, 5.8F, 0.1F, 0.1047F, 0.0F, 0.0F));
+		ModelPartData BipedRightArm = root.addChild("BipedRightArm", ModelPartBuilder.create().uv(40, 16).cuboid(-3.0F, -2.0F, -2.0F, 4.0F, 13.0F, 4.0F), ModelTransform.of(-5.0F, 2.0F, 0.0F, -1.3963F, 0.0F, 0.1F));
+		BipedRightArm.addChild("rArmWisp", ModelPartBuilder.create().uv(40, 34).cuboid(-1.5F, -4.5F, 0.1F, 3.0F, 11.0F, 4.0F), ModelTransform.of(-1.0F, 2.7F, 1.7F, 0.0F, 0.0F, 0.0F));
+		ModelPartData realHead = root.addChild("realHead", ModelPartBuilder.create().cuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F));
+		ModelPartData skull = realHead.addChild("skull", ModelPartBuilder.create().uv(34, 0).cuboid(-3.5F, -7.5F, -3.0F, 7.0F, 5.0F, 6.0F), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F));
+		skull.addChild("skullJaw", ModelPartBuilder.create().uv(19, 30).cuboid(-2.5F, -1.0F, -3.5F, 5.0F, 2.0F, 5.0F), ModelTransform.of(0.0F, -1.9F, 0.9F, 0.1745F, 0.0F, 0.0F));
+		ModelPartData BipedLeftArm = root.addChild("BipedLeftArm", ModelPartBuilder.create().uv(40, 16).cuboid(-1.0F, -2.0F, -2.0F, 4.0F, 13.0F, 4.0F), ModelTransform.of(5.0F, 2.0F, 0.0F, -1.3963F, 0.0F, -0.1F));
+		BipedLeftArm.addChild("lArmWisp", ModelPartBuilder.create().uv(40, 34).cuboid(-1.5F, -4.5F, 0.1F, 3.0F, 11.0F, 4.0F), ModelTransform.of(1.0F, 2.7F, 1.7F, 0.0F, 0.0F, 0.0F));
+		ModelPartData realBody = root.addChild("realBody", ModelPartBuilder.create().uv(14, 16).cuboid(-4.0F, 0.0F, -2.0F, 8.0F, 8.0F, 4.0F), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.2094F, 0.0F, 0.0F));
+		ModelPartData realBodyTrail00 = realBody.addChild("realBodyTrail00", ModelPartBuilder.create().uv(33, 51).cuboid(-4.5F, 0.0F, -2.5F, 9.0F, 6.0F, 5.0F), ModelTransform.of(0.0F, 7.7F, 0.0F, 0.1047F, 0.0F, 0.0F));
+		realBodyTrail00.addChild("realBodyTrail01", ModelPartBuilder.create().uv(0, 39).cuboid(-5.0F, 0.0F, -3.0F, 10.0F, 9.0F, 6.0F), ModelTransform.of(0.0F, 5.8F, 0.1F, 0.1047F, 0.0F, 0.0F));
 		return TexturedModelData.of(data, 64, 64);
 	}
 	

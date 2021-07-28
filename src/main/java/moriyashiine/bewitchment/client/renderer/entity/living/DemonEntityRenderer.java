@@ -7,29 +7,44 @@ import moriyashiine.bewitchment.common.entity.living.DemonEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class DemonEntityRenderer extends MobEntityRenderer<DemonEntity, DemonEntityModel<DemonEntity>> {
-	private static Identifier[] TEXTURES;
+	private static Identifier[] MALE_TEXTURES, FEMALE_TEXTURES;
+	
+	private final DemonEntityModel<DemonEntity> MALE_MODEL, FEMALE_MODEL;
 	
 	public DemonEntityRenderer(EntityRendererFactory.Context context) {
-		super(context, new DemonEntityModel<>(context.getPart(BewitchmentClient.DEMON_MODEL_LAYER)), 0.5f);
+		super(context, new DemonEntityModel<>(context.getPart(BewitchmentClient.MALE_DEMON_MODEL_LAYER), true), 0.5f);
 		addFeature(new HeldItemFeatureRenderer<>(this));
+		MALE_MODEL = model;
+		FEMALE_MODEL = new DemonEntityModel<>(context.getPart(BewitchmentClient.FEMALE_DEMON_MODEL_LAYER), false);
 	}
 	
 	@Override
 	public Identifier getTexture(DemonEntity entity) {
-		if (TEXTURES == null) {
+		if (MALE_TEXTURES == null) {
 			int variants = entity.getVariants();
-			TEXTURES = new Identifier[variants];
+			MALE_TEXTURES = new Identifier[variants];
+			FEMALE_TEXTURES = new Identifier[variants];
 			for (int i = 0; i < variants; i++) {
-				TEXTURES[i] = new Identifier(Bewitchment.MODID, "textures/entity/living/demon/" + i + ".png");
+				MALE_TEXTURES[i] = new Identifier(Bewitchment.MODID, "textures/entity/living/demon/male_" + i + ".png");
+				FEMALE_TEXTURES[i] = new Identifier(Bewitchment.MODID, "textures/entity/living/demon/female_" + i + ".png");
 			}
 		}
-		return TEXTURES[entity.getDataTracker().get(BWHostileEntity.VARIANT)];
+		int variant = entity.getDataTracker().get(BWHostileEntity.VARIANT);
+		return entity.getDataTracker().get(DemonEntity.MALE) ? MALE_TEXTURES[variant] : FEMALE_TEXTURES[variant];
+	}
+	
+	@Override
+	public void render(DemonEntity mobEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
+		model = mobEntity.getDataTracker().get(DemonEntity.MALE) ? MALE_MODEL : FEMALE_MODEL;
+		super.render(mobEntity, f, g, matrixStack, vertexConsumerProvider, i);
 	}
 }

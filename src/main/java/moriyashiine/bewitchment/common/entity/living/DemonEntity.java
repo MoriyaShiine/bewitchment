@@ -13,15 +13,15 @@ import moriyashiine.bewitchment.common.registry.BWMaterials;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.fabric.api.util.NbtType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityGroup;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
@@ -38,6 +38,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,6 +49,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DemonEntity extends BWHostileEntity implements DemonMerchant {
+	public static final TrackedData<Boolean> MALE = DataTracker.registerData(DemonEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+	
 	private final List<DemonEntity.DemonTradeOffer> offers = new ArrayList<>();
 	private PlayerEntity customer = null;
 	private int tradeResetTimer = 0;
@@ -158,8 +162,15 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 	}
 	
 	@Override
+	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityTag) {
+		dataTracker.set(MALE, random.nextBoolean());
+		return super.initialize(world, difficulty, spawnReason, entityData, entityTag);
+	}
+	
+	@Override
 	public void readCustomDataFromNbt(NbtCompound nbt) {
 		super.readCustomDataFromNbt(nbt);
+		dataTracker.set(MALE, nbt.getBoolean("Male"));
 		if (nbt.contains("Offers")) {
 			offers.clear();
 			NbtList offersTag = nbt.getList("Offers", NbtType.COMPOUND);
@@ -173,6 +184,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 	@Override
 	public void writeCustomDataToNbt(NbtCompound nbt) {
 		super.writeCustomDataToNbt(nbt);
+		nbt.putBoolean("Male", dataTracker.get(MALE));
 		if (!offers.isEmpty()) {
 			NbtList offersTag = new NbtList();
 			for (DemonTradeOffer offer : offers) {
@@ -181,6 +193,12 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 			nbt.put("Offers", offersTag);
 		}
 		nbt.putInt("TradeResetTimer", tradeResetTimer);
+	}
+	
+	@Override
+	protected void initDataTracker() {
+		super.initDataTracker();
+		dataTracker.startTracking(MALE, false);
 	}
 	
 	@Override

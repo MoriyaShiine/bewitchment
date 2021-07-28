@@ -97,7 +97,8 @@ public class BewitchmentClient implements ClientModInitializer {
 	public static final EntityModelLayer VAMPIRE_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "vampire"), "main");
 	public static final EntityModelLayer WEREWOLF_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "werewolf"), "main");
 	public static final EntityModelLayer HELLHOUND_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "hellhound"), "main");
-	public static final EntityModelLayer DEMON_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "demon"), "main");
+	public static final EntityModelLayer MALE_DEMON_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "male_demon"), "main");
+	public static final EntityModelLayer FEMALE_DEMON_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "female_demon"), "main");
 	public static final EntityModelLayer LEONARD_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "leonard"), "main");
 	public static final EntityModelLayer BAPHOMET_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "baphomet"), "main");
 	public static final EntityModelLayer LILITH_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "lilith"), "main");
@@ -191,7 +192,8 @@ public class BewitchmentClient implements ClientModInitializer {
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.WEREWOLF, WerewolfEntityRenderer::new);
 		EntityModelLayerRegistry.registerModelLayer(HELLHOUND_MODEL_LAYER, HellhoundEntityModel::getTexturedModelData);
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.HELLHOUND, HellhoundEntityRenderer::new);
-		EntityModelLayerRegistry.registerModelLayer(DEMON_MODEL_LAYER, DemonEntityModel::getTexturedModelDataMale);
+		EntityModelLayerRegistry.registerModelLayer(MALE_DEMON_MODEL_LAYER, DemonEntityModel::getTexturedModelDataMale);
+		EntityModelLayerRegistry.registerModelLayer(FEMALE_DEMON_MODEL_LAYER, DemonEntityModel::getTexturedModelDataFemale);
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.DEMON, DemonEntityRenderer::new);
 		EntityModelLayerRegistry.registerModelLayer(LEONARD_MODEL_LAYER, LeonardEntityModel::getTexturedModelData);
 		EntityRendererRegistry.INSTANCE.register(BWEntityTypes.LEONARD, LeonardEntityRenderer::new);
