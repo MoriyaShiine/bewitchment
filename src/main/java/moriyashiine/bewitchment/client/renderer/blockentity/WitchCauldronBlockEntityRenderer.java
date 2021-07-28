@@ -1,7 +1,6 @@
 package moriyashiine.bewitchment.client.renderer.blockentity;
 
 import moriyashiine.bewitchment.client.misc.SpriteIdentifiers;
-import moriyashiine.bewitchment.common.block.WitchCauldronBlock;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWParticleTypes;
 import net.fabricmc.api.EnvType;
@@ -24,14 +23,9 @@ import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.World;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 @SuppressWarnings("ConstantConditions")
 @Environment(EnvType.CLIENT)
 public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<WitchCauldronBlockEntity> {
-	private static final List<RenderLayer> PORTAL_LAYERS = IntStream.range(1, 16).mapToObj((i) -> RenderLayer.getEndPortal(i + 1)).collect(Collectors.toList());
 	private static final float[] HEIGHT = {0, 0.25f, 0.4375f, 0.625f};
 	
 	@Override
@@ -40,7 +34,7 @@ public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<Wit
 		if (world != null) {
 			BlockPos pos = entity.getPos();
 			renderName(entity, pos, matrices, vertexConsumers, light);
-			int level = entity.getCachedState().get(WitchCauldronBlock.LEVEL);
+			int level = entity.getCachedState().get(Properties.LEVEL_3);
 			if (level > 0) {
 				matrices.push();
 				matrices.translate(0, HEIGHT[level], 0);
@@ -96,20 +90,12 @@ public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<Wit
 	
 	private void renderPortal(WitchCauldronBlockEntity entity, BlockPos pos, MatrixStack matrices, VertexConsumerProvider vertexConsumers) {
 		matrices.push();
-		double distance = pos.getSquaredDistance(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getPos(), true);
-		int renderDepth = getDepthFromDistance(distance);
 		Matrix4f matrix4f = matrices.peek().getModel();
-		for (int i = 0; i < renderDepth; ++i) {
-			float colorFactor = 2f / (18 - i);
-			float r = (entity.getWorld().random.nextFloat() * 0.5f + 0.1f) * colorFactor;
-			float g = (entity.getWorld().random.nextFloat() * 0.5f + 0.4f) * colorFactor;
-			float b = (entity.getWorld().random.nextFloat() * 0.5f + 0.5f) * colorFactor;
-			VertexConsumer vertexConsumer = vertexConsumers.getBuffer(PORTAL_LAYERS.get(i));
-			vertexConsumer.vertex(matrix4f, 0.125f, 0, 0.875f).color(r, g, b, 1).next();
-			vertexConsumer.vertex(matrix4f, 0.875f, 0, 0.875f).color(r, g, b, 1).next();
-			vertexConsumer.vertex(matrix4f, 0.875f, 0, 0.125f).color(r, g, b, 1).next();
-			vertexConsumer.vertex(matrix4f, 0.125f, 0, 0.125f).color(r, g, b, 1).next();
-		}
+		VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEndPortal()); //todo maybe look at coloring this again
+		vertexConsumer.vertex(matrix4f, 0.125f, 0, 0.875f).next();
+		vertexConsumer.vertex(matrix4f, 0.875f, 0, 0.875f).next();
+		vertexConsumer.vertex(matrix4f, 0.875f, 0, 0.125f).next();
+		vertexConsumer.vertex(matrix4f, 0.125f, 0, 0.125f).next();
 		matrices.pop();
 	}
 	
@@ -127,32 +113,5 @@ public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<Wit
 		buffer.vertex(mat, 1 - sizeFactor, 0, sizeFactor).color(red, green, blue, 255).texture(sprite.getMaxU(), sprite.getMinV() + minV).light(light).overlay(overlay).normal(1, 1, 1).next();
 		buffer.vertex(mat, sizeFactor, 0, sizeFactor).color(red, green, blue, 255).texture(sprite.getMinU(), sprite.getMinV() + minV).light(light).overlay(overlay).normal(1, 1, 1).next();
 		matrices.pop();
-	}
-	
-	private int getDepthFromDistance(double distance) {
-		if (distance > 36864) {
-			return 1;
-		}
-		else if (distance > 25600) {
-			return 3;
-		}
-		else if (distance > 16384) {
-			return 5;
-		}
-		else if (distance > 9216) {
-			return 7;
-		}
-		else if (distance > 4096) {
-			return 9;
-		}
-		else if (distance > 1024) {
-			return 11;
-		}
-		else if (distance > 576) {
-			return 13;
-		}
-		else {
-			return distance > 256 ? 14 : 15;
-		}
 	}
 }
