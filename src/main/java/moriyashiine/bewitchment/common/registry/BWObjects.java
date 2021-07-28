@@ -53,6 +53,7 @@ import net.minecraft.world.World;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.function.Supplier;
 
 import static net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings.copyOf;
 import static net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings.of;
@@ -103,11 +104,14 @@ public class BWObjects {
 	public static final TerraformSignBlock JUNIPER_SIGN = create("juniper_sign", new TerraformSignBlock(JUNIPER_SIGN_TEXTURE, copyOf(Blocks.OAK_SIGN)), false);
 	public static final Block JUNIPER_WALL_SIGN = create("juniper_wall_sign", new TerraformWallSignBlock(JUNIPER_SIGN_TEXTURE, copyOf(Blocks.OAK_WALL_SIGN)), false);
 	public static final Item JUNIPER_SIGN_ITEM = create("juniper_sign", new SignItem(gen().maxCount(16), JUNIPER_SIGN, JUNIPER_WALL_SIGN));
-	public static final Item JUNIPER_BOAT = TerraformBoatItemHelper.registerBoatItem(new Identifier(Bewitchment.MODID, "juniper_boat"), () -> {
+	public static final Item JUNIPER_BOAT = TerraformBoatItemHelper.registerBoatItem(new Identifier(Bewitchment.MODID, "juniper_boat"), BWObjects.registerJuniperBoatType(), Bewitchment.BEWITCHMENT_GROUP);
+	
+	private static Supplier<TerraformBoatType> registerJuniperBoatType() {
 		TerraformBoatType type = new TerraformBoatType.Builder().item(BWObjects.JUNIPER_BOAT).build();
 		Registry.register(TerraformBoatTypeRegistry.INSTANCE, new Identifier(Bewitchment.MODID, "juniper"), type);
-		return type;
-	}, Bewitchment.BEWITCHMENT_GROUP);
+		return () -> type;
+	}
+	
 	//cypress
 	public static final Block STRIPPED_CYPRESS_LOG = create("stripped_cypress_log", new PillarBlock(copyOf(JUNIPER_LOG)), true);
 	public static final Block STRIPPED_CYPRESS_WOOD = create("stripped_cypress_wood", new PillarBlock(copyOf(STRIPPED_CYPRESS_LOG)), true);
@@ -132,11 +136,14 @@ public class BWObjects {
 	public static final TerraformSignBlock CYPRESS_SIGN = create("cypress_sign", new TerraformSignBlock(CYPRESS_SIGN_TEXTURE, copyOf(JUNIPER_SIGN)), false);
 	public static final Block CYPRESS_WALL_SIGN = create("cypress_wall_sign", new TerraformWallSignBlock(CYPRESS_SIGN_TEXTURE, copyOf(JUNIPER_WALL_SIGN)), false);
 	public static final Item CYPRESS_SIGN_ITEM = create("cypress_sign", new SignItem(gen().maxCount(16), CYPRESS_SIGN, CYPRESS_WALL_SIGN));
-	public static final Item CYPRESS_BOAT = TerraformBoatItemHelper.registerBoatItem(new Identifier(Bewitchment.MODID, "cypress_boat"), () -> {
+	public static final Item CYPRESS_BOAT = TerraformBoatItemHelper.registerBoatItem(new Identifier(Bewitchment.MODID, "cypress_boat"), BWObjects.registerCypressBoatType(), Bewitchment.BEWITCHMENT_GROUP);
+	
+	private static Supplier<TerraformBoatType> registerCypressBoatType() {
 		TerraformBoatType type = new TerraformBoatType.Builder().item(BWObjects.CYPRESS_BOAT).build();
 		Registry.register(TerraformBoatTypeRegistry.INSTANCE, new Identifier(Bewitchment.MODID, "cypress"), type);
-		return type;
-	}, Bewitchment.BEWITCHMENT_GROUP);
+		return () -> type;
+	}
+	
 	//elder
 	public static final Block STRIPPED_ELDER_LOG = create("stripped_elder_log", new PillarBlock(copyOf(JUNIPER_LOG)), true);
 	public static final Block STRIPPED_ELDER_WOOD = create("stripped_elder_wood", new PillarBlock(copyOf(STRIPPED_ELDER_LOG)), true);
@@ -161,11 +168,14 @@ public class BWObjects {
 	public static final TerraformSignBlock ELDER_SIGN = create("elder_sign", new TerraformSignBlock(ELDER_SIGN_TEXTURE, copyOf(JUNIPER_SIGN)), false);
 	public static final Block ELDER_WALL_SIGN = create("elder_wall_sign", new TerraformWallSignBlock(ELDER_SIGN_TEXTURE, copyOf(JUNIPER_WALL_SIGN)), false);
 	public static final Item ELDER_SIGN_ITEM = create("elder_sign", new SignItem(gen().maxCount(16), ELDER_SIGN, ELDER_WALL_SIGN));
-	public static final Item ELDER_BOAT = TerraformBoatItemHelper.registerBoatItem(new Identifier(Bewitchment.MODID, "elder_boat"), () -> {
+	public static final Item ELDER_BOAT = TerraformBoatItemHelper.registerBoatItem(new Identifier(Bewitchment.MODID, "elder_boat"), BWObjects.registerElderBoatType(), Bewitchment.BEWITCHMENT_GROUP);
+	
+	private static Supplier<TerraformBoatType> registerElderBoatType() {
 		TerraformBoatType type = new TerraformBoatType.Builder().item(BWObjects.ELDER_BOAT).build();
 		Registry.register(TerraformBoatTypeRegistry.INSTANCE, new Identifier(Bewitchment.MODID, "elder"), type);
-		return type;
-	}, Bewitchment.BEWITCHMENT_GROUP);
+		return () -> type;
+	}
+	
 	//dragons_blood
 	public static final Block STRIPPED_DRAGONS_BLOOD_LOG = create("stripped_dragons_blood_log", new PillarBlock(copyOf(JUNIPER_LOG)), true);
 	public static final Block STRIPPED_DRAGONS_BLOOD_WOOD = create("stripped_dragons_blood_wood", new PillarBlock(copyOf(STRIPPED_DRAGONS_BLOOD_LOG)), true);
@@ -190,11 +200,14 @@ public class BWObjects {
 	public static final Block DRAGONS_BLOOD_WALL_SIGN = create("dragons_blood_wall_sign", new TerraformWallSignBlock(DRAGONS_BLOOD_SIGN_TEXTURE, copyOf(JUNIPER_WALL_SIGN)), false);
 	public static final Item DRAGONS_BLOOD_DOOR_ITEM = create("dragons_blood_door", new TallBlockItem(DRAGONS_BLOOD_DOOR, gen()));
 	public static final Item DRAGONS_BLOOD_SIGN_ITEM = create("dragons_blood_sign", new SignItem(gen().maxCount(16), DRAGONS_BLOOD_SIGN, DRAGONS_BLOOD_WALL_SIGN));
-	public static final Item DRAGONS_BLOOD_BOAT = TerraformBoatItemHelper.registerBoatItem(new Identifier(Bewitchment.MODID, "dragons_blood_boat"), () -> {
+	public static final Item DRAGONS_BLOOD_BOAT = TerraformBoatItemHelper.registerBoatItem(new Identifier(Bewitchment.MODID, "dragons_blood_boat"), BWObjects.registerDragonsBloodBoatType(), Bewitchment.BEWITCHMENT_GROUP);
+	
+	private static Supplier<TerraformBoatType> registerDragonsBloodBoatType() {
 		TerraformBoatType type = new TerraformBoatType.Builder().item(BWObjects.DRAGONS_BLOOD_BOAT).build();
 		Registry.register(TerraformBoatTypeRegistry.INSTANCE, new Identifier(Bewitchment.MODID, "dragons_blood"), type);
-		return type;
-	}, Bewitchment.BEWITCHMENT_GROUP);
+		return () -> type;
+	}
+	
 	//other_plants
 	public static final Block GLOWING_BRAMBLE = create("glowing_bramble", new BrambleBlock(of(Material.PLANT).sounds(BlockSoundGroup.GRASS).strength(2, 3).noCollision().ticksRandomly().luminance(15)), true);
 	public static final Block ENDER_BRAMBLE = create("ender_bramble", new BrambleBlock(of(Material.PLANT).sounds(BlockSoundGroup.GRASS).strength(2, 3).noCollision().ticksRandomly()), true);
