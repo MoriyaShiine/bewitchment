@@ -62,10 +62,7 @@ public class DemonScreenHandler extends ScreenHandler {
 	
 	@Override
 	public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
-		if (button == -999) {
-			super.onSlotClick(slotIndex, button, actionType, player);
-		}
-		Slot slot = slots.get(button);
+		Slot slot = slots.get(slotIndex);
 		if (slot instanceof DemonTradeSlot) {
 			DemonEntity.DemonTradeOffer offer = ((DemonTradeSlot) slot).getOffer();
 			if (!((ContractAccessor) player).hasContract(offer.getContract())) {
@@ -74,13 +71,9 @@ public class DemonScreenHandler extends ScreenHandler {
 				if (!demonMerchant.getDemonTrader().world.isClient) {
 					SyncContractsPacket.send(player);
 					SyncDemonTradesPacket.send(player, demonMerchant, syncId);
-					int cost = offer.getCost(demonMerchant);
-					if (player.getMaxHealth() - cost <= 0) {
+					if (player.getMaxHealth() - offer.getCost(demonMerchant) <= 0) {
 						((ContractAccessor) player).getContracts().clear();
 						player.damage(BWDamageSources.DEATH, Float.MAX_VALUE);
-					}
-					else if (player.getHealth() > player.getMaxHealth() - cost) {
-						player.setHealth(player.getMaxHealth() - cost);
 					}
 				}
 			}

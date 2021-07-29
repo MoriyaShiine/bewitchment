@@ -63,6 +63,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Contract
 			}
 			if (level > 0) {
 				addStatusEffect(new StatusEffectInstance(BWStatusEffects.PACT, 10, level - 1, true, false));
+				if (getHealth() > getMaxHealth()) {
+					setHealth(getMaxHealth());
+				}
 			}
 		}
 	}

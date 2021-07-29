@@ -38,7 +38,7 @@ public class DemonScreen extends HandledScreen<DemonScreenHandler> {
 	}
 	
 	private void drawPortrait(MatrixStack matrices, int mouseX, int mouseY) {
-		client.getTextureManager().bindTexture(getBackground());
+		RenderSystem.setShaderTexture(0, getBackground());
 		int x = (width - backgroundWidth) / 2 + 56;
 		int y = (height - backgroundHeight) / 2 + 16;
 		Window window = client.getWindow();
@@ -59,7 +59,7 @@ public class DemonScreen extends HandledScreen<DemonScreenHandler> {
 	
 	protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
 		RenderSystem.setShaderColor(1, 1, 1, 1);
-		client.getTextureManager().bindTexture(getBackground());
+		RenderSystem.setShaderTexture(0, getBackground());
 		int x = (width - backgroundWidth) / 2;
 		int y = (height - backgroundHeight) / 2;
 		drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
@@ -73,7 +73,7 @@ public class DemonScreen extends HandledScreen<DemonScreenHandler> {
 	private void drawHearts(MatrixStack matrices, int x, int y, DemonEntity.DemonTradeOffer offer) {
 		int cost = offer.getCost(handler.demonMerchant);
 		int fullGroups = cost / 2;
-		client.getTextureManager().bindTexture(HEARTS);
+		RenderSystem.setShaderTexture(0, HEARTS);
 		int heartX = (this.x + x - 6 - ((cost - 1) / 2 * 4));
 		int heartY = this.y + y + 18;
 		matrices.push();
