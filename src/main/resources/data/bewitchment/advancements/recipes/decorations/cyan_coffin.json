@@ -11,7 +11,9 @@
 	  "conditions": {
 		"items": [
 		  {
-			"item": "cyan_bed"
+			"items": [
+			  "cyan_bed"
+			]
 		  }
 		]
 	  }

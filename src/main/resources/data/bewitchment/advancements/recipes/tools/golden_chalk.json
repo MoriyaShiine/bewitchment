@@ -11,7 +11,9 @@
 	  "conditions": {
 		"items": [
 		  {
-			"item": "bewitchment:chalk"
+			"items": [
+			  "bewitchment:chalk"
+			]
 		  }
 		]
 	  }

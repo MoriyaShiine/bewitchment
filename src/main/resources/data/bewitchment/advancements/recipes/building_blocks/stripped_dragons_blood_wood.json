@@ -11,7 +11,9 @@
 	  "conditions": {
 		"items": [
 		  {
-			"item": "bewitchment:stripped_dragons_blood_log"
+			"items": [
+			  "bewitchment:stripped_dragons_blood_log"
+			]
 		  }
 		]
 	  }

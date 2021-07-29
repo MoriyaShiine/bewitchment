@@ -11,7 +11,9 @@
 	  "conditions": {
 		"items": [
 		  {
-			"item": "bewitchment:stripped_elder_log"
+			"items": [
+			  "bewitchment:stripped_elder_log"
+			]
 		  }
 		]
 	  }

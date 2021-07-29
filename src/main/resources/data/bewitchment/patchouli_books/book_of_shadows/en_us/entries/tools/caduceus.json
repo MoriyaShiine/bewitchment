@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "The Caduceus is the $(l:bewitchment:creatures/baphomet)Baphomet's$() tool of choice.$(br2)It has multiple-tool functionality comparable to Netherite. It can also be used to throw powerful fireballs at the cost of some $(l:bewitchment:introduction/altars#internalme)ME$().$(br2)The Caduceus can be repaired with Netherite Ingots."
+	  "text": "The Caduceus is $(l:bewitchment:creatures/baphomet)Baphomet's$() tool of choice.$(br2)It has multiple-tool functionality comparable to Netherite. It can also be used to throw powerful fireballs at the cost of some $(l:bewitchment:introduction/altars#internalme)ME$().$(br2)The Caduceus can be repaired with Netherite Ingots."
 	},
 	{
 	  "type": "patchouli:spotlight",

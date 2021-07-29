@@ -11,7 +11,9 @@
 	  "conditions": {
 		"items": [
 		  {
-			"item": "bewitchment:elder_log"
+			"items": [
+			  "bewitchment:elder_log"
+			]
 		  }
 		]
 	  }

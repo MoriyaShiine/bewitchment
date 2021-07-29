@@ -11,7 +11,9 @@
 	  "conditions": {
 		"items": [
 		  {
-			"item": "purpur_block"
+			"items": [
+			  "purpur_block"
+			]
 		  }
 		]
 	  }

@@ -11,7 +11,9 @@
 	  "conditions": {
 		"items": [
 		  {
-			"item": "bewitchment:juniper_log"
+			"items": [
+			  "bewitchment:juniper_log"
+			]
 		  }
 		]
 	  }

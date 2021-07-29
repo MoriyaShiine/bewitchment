@@ -11,7 +11,9 @@
 	  "conditions": {
 		"items": [
 		  {
-			"item": "bewitchment:cypress_log"
+			"items": [
+			  "bewitchment:cypress_log"
+			]
 		  }
 		]
 	  }

@@ -11,7 +11,9 @@
 	  "conditions": {
 		"items": [
 		  {
-			"item": "glass_bottle"
+			"items": [
+			  "glass_bottle"
+			]
 		  }
 		]
 	  }

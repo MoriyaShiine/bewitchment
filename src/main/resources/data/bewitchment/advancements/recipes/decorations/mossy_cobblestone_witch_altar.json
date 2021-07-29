@@ -11,7 +11,9 @@
 	  "conditions": {
 		"items": [
 		  {
-			"item": "mossy_cobblestone"
+			"items": [
+			  "mossy_cobblestone"
+			]
 		  }
 		]
 	  }

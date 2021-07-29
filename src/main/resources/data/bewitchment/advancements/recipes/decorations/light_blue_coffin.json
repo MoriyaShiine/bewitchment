@@ -11,7 +11,9 @@
 	  "conditions": {
 		"items": [
 		  {
-			"item": "light_blue_bed"
+			"items": [
+			  "light_blue_bed"
+			]
 		  }
 		]
 	  }

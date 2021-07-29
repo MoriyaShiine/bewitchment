@@ -6,7 +6,9 @@
 	  "conditions": {
 		"items": [
 		  {
-			"item": "bewitchment:scepter"
+			"items": [
+			  "bewitchment:scepter"
+			]
 		  }
 		]
 	  }

@@ -6,7 +6,9 @@
 	  "conditions": {
 		"items": [
 		  {
-			"item": "bewitchment:horned_spear"
+			"items": [
+			  "bewitchment:horned_spear"
+			]
 		  }
 		]
 	  }

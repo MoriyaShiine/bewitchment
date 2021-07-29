@@ -11,7 +11,9 @@
 	  "conditions": {
 		"items": [
 		  {
-			"item": "bewitchment:elder_planks"
+			"items": [
+			  "bewitchment:elder_planks"
+			]
 		  }
 		]
 	  }

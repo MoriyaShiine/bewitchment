@@ -11,7 +11,9 @@
 	  "conditions": {
 		"items": [
 		  {
-			"item": "bewitchment:salt_block"
+			"items": [
+			  "bewitchment:salt_block"
+			]
 		  }
 		]
 	  }

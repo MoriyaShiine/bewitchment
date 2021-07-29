@@ -2,7 +2,7 @@
   "parent": "recipes/root",
   "rewards": {
 	"recipes": [
-	  "bewitchment:nazar"
+	  "bewitchment:specter_bangle"
 	]
   },
   "criteria": {
@@ -11,7 +11,9 @@
 	  "conditions": {
 		"items": [
 		  {
-			"item": "bewitchment:grim_elixir"
+			"items": [
+			  "bewitchment:grim_elixir"
+			]
 		  }
 		]
 	  }
@@ -19,7 +21,7 @@
 	"has_the_recipe": {
 	  "trigger": "recipe_unlocked",
 	  "conditions": {
-		"recipe": "bewitchment:nazar"
+		"recipe": "bewitchment:specter_bangle"
 	  }
 	}
   },
