@@ -1,9 +1,8 @@
 package moriyashiine.bewitchment.client.integration.patchouli;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import moriyashiine.bewitchment.common.Bewitchment;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.texture.TextureManager;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
@@ -27,25 +26,24 @@ public class RitualCircleComponent implements ICustomComponent {
 	
 	@Override
 	public void render(MatrixStack ms, @NotNull IComponentRenderContext context, float pticks, int mouseX, int mouseY) {
-		TextureManager textureManager = MinecraftClient.getInstance().getTextureManager();
 		ms.push();
 		ms.translate(x, y, -1);
 		ms.scale(4, 4, 1);
 		if (circles[1] != null) {
-			textureManager.bindTexture(circles[1]);
+			RenderSystem.setShaderTexture(0, circles[1]);
 			DrawableHelper.drawTexture(ms, 0, 0, 0, 0, 16, 16, 16, 16);
 		}
 		ms.translate(4, 4, 1);
-		textureManager.bindTexture(circles[0]);
+		RenderSystem.setShaderTexture(0, circles[0]);
 		DrawableHelper.drawTexture(ms, 0, 0, 4, 4, 7, 7, 16, 16);
 		ms.pop();
 	}
 	
 	@Override
 	public void onVariablesAvailable(UnaryOperator<IVariable> lookup) {
-		circles[0] = new Identifier(Bewitchment.MODID, "textures/gui/chalk/" + lookup.apply(inner).asString() + ".png");
+		circles[0] = new Identifier(Bewitchment.MODID, "textures/gui/patchouli/chalk/" + lookup.apply(inner).asString() + ".png");
 		if (!lookup.apply(outer).asString().isEmpty()) {
-			circles[1] = new Identifier(Bewitchment.MODID, "textures/gui/chalk/" + lookup.apply(outer).asString() + ".png");
+			circles[1] = new Identifier(Bewitchment.MODID, "textures/gui/patchouli/chalk/" + lookup.apply(outer).asString() + ".png");
 		}
 	}
 }
