@@ -23,6 +23,8 @@ import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.YOffset;
+import net.minecraft.world.gen.decorator.Decorator;
+import net.minecraft.world.gen.decorator.HeightmapDecoratorConfig;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
@@ -42,11 +44,11 @@ public class BWWorldGenerators {
 	private static final FeatureSize EMPTY_SIZE = new TwoLayersFeatureSize(0, 0, 0);
 	
 	public static final ConfiguredFeature<TreeFeatureConfig, ?> JUNIPER_TREE = Feature.TREE.configure(new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(BWObjects.JUNIPER_LOG.getDefaultState()), new ForkingTrunkPlacer(5, 0, 0), new SimpleBlockStateProvider(BWObjects.JUNIPER_LEAVES.getDefaultState()), new SimpleBlockStateProvider(BWObjects.JUNIPER_SAPLING.getDefaultState()), new AcaciaFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0)), EMPTY_SIZE).ignoreVines().build());
-	public static final ConfiguredFeature<?, ?> JUNIPER_TREE_WITH_CHANCE = JUNIPER_TREE.applyChance(5);
+	public static final ConfiguredFeature<?, ?> JUNIPER_TREE_WITH_CHANCE = JUNIPER_TREE.applyChance(5).decorate(Decorator.HEIGHTMAP.configure(new HeightmapDecoratorConfig(Heightmap.Type.MOTION_BLOCKING)));
 	public static final ConfiguredFeature<TreeFeatureConfig, ?> CYPRESS_TREE = Feature.TREE.configure(new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(BWObjects.CYPRESS_LOG.getDefaultState()), new StraightTrunkPlacer(6, 1, 1), new SimpleBlockStateProvider(BWObjects.CYPRESS_LEAVES.getDefaultState()), new SimpleBlockStateProvider(BWObjects.CYPRESS_SAPLING.getDefaultState()), new LargeOakFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 4), EMPTY_SIZE).ignoreVines().build());
-	public static final ConfiguredFeature<?, ?> CYPRESS_TREE_WITH_CHANCE = CYPRESS_TREE.applyChance(5);
+	public static final ConfiguredFeature<?, ?> CYPRESS_TREE_WITH_CHANCE = CYPRESS_TREE.applyChance(5).decorate(Decorator.HEIGHTMAP.configure(new HeightmapDecoratorConfig(Heightmap.Type.MOTION_BLOCKING)));
 	public static final ConfiguredFeature<TreeFeatureConfig, ?> ELDER_TREE = Feature.TREE.configure(new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(BWObjects.ELDER_LOG.getDefaultState()), new StraightTrunkPlacer(4, 0, 1), new SimpleBlockStateProvider(BWObjects.ELDER_LEAVES.getDefaultState()), new SimpleBlockStateProvider(BWObjects.ELDER_SAPLING.getDefaultState()), new LargeOakFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 4), EMPTY_SIZE).ignoreVines().build());
-	public static final ConfiguredFeature<?, ?> ELDER_TREE_WITH_CHANCE = ELDER_TREE.applyChance(5);
+	public static final ConfiguredFeature<?, ?> ELDER_TREE_WITH_CHANCE = ELDER_TREE.applyChance(5).decorate(Decorator.HEIGHTMAP.configure(new HeightmapDecoratorConfig(Heightmap.Type.MOTION_BLOCKING)));
 	public static final ConfiguredFeature<TreeFeatureConfig, ?> DRAGONS_BLOOD_TREE = Feature.TREE.configure(new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(BWObjects.DRAGONS_BLOOD_LOG.getDefaultState().with(BWProperties.NATURAL, true)), new StraightTrunkPlacer(5, 1, 1), new SimpleBlockStateProvider(BWObjects.DRAGONS_BLOOD_LEAVES.getDefaultState()), new SimpleBlockStateProvider(BWObjects.DRAGONS_BLOOD_SAPLING.getDefaultState()), new MegaPineFoliagePlacer(ConstantIntProvider.create(1), ConstantIntProvider.create(0), ConstantIntProvider.create(3)), EMPTY_SIZE).ignoreVines().build());
 	
 	public static final ConfiguredFeature<?, ?> SILVER_ORE = Feature.ORE.configure(new OreFeatureConfig(ImmutableList.of(OreFeatureConfig.createTarget(OreFeatureConfig.Rules.STONE_ORE_REPLACEABLES, BWObjects.SILVER_ORE.getDefaultState()), OreFeatureConfig.createTarget(OreFeatureConfig.Rules.DEEPSLATE_ORE_REPLACEABLES, BWObjects.DEEPSLATE_SILVER_ORE.getDefaultState())), Bewitchment.config.silverSize)).uniformRange(YOffset.getBottom(), YOffset.fixed(Bewitchment.config.silverMaxHeight)).spreadHorizontally().repeat(Bewitchment.config.silverCount);
