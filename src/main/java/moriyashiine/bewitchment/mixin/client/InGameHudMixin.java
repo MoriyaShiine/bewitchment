@@ -47,21 +47,21 @@ public abstract class InGameHudMixin extends DrawableHelper {
 		PlayerEntity player = getCameraPlayer();
 		MagicAccessor magicAccessor = (MagicAccessor) player;
 		if (magicAccessor.getMagicTimer() > 0) {
-			client.getTextureManager().bindTexture(BEWITCHMENT_GUI_ICONS_TEXTURE);
+			RenderSystem.setShaderTexture(0, BEWITCHMENT_GUI_ICONS_TEXTURE);
 			RenderSystem.setShaderColor(1, 1, 1, magicAccessor.getMagicTimer() / 10f);
 			drawTexture(matrices, 13, (scaledHeight - 74) / 2, 25, 0, 7, 74);
 			drawTexture(matrices, 13, (scaledHeight - 74) / 2, 32, 0, 7, (int) (74 - (magicAccessor.getMagic() * 74f / MagicAccessor.MAX_MAGIC)));
 			drawTexture(matrices, 4, (scaledHeight - 102) / 2, 0, 0, 25, 102);
 			RenderSystem.setShaderColor(1, 1, 1, 1);
-			client.getTextureManager().bindTexture(GUI_ICONS_TEXTURE);
+			RenderSystem.setShaderTexture(0, GUI_ICONS_TEXTURE);
 		}
 		if (BewitchmentAPI.isVampire(player, true)) {
-			client.getTextureManager().bindTexture(BEWITCHMENT_GUI_ICONS_TEXTURE);
+			RenderSystem.setShaderTexture(0, BEWITCHMENT_GUI_ICONS_TEXTURE);
 			drawBlood(matrices, player, scaledWidth / 2 + 82, scaledHeight - 39, 10);
 			if (player.isInSneakingPose() && client.targetedEntity instanceof BloodAccessor && BWTags.HAS_BLOOD.contains(client.targetedEntity.getType())) {
 				drawBlood(matrices, (LivingEntity) client.targetedEntity, scaledWidth / 2 + 13, scaledHeight / 2 + 9, 5);
 			}
-			client.getTextureManager().bindTexture(EMPTY_TEXTURE);
+			RenderSystem.setShaderTexture(0, EMPTY_TEXTURE);
 		}
 	}
 	
@@ -69,7 +69,7 @@ public abstract class InGameHudMixin extends DrawableHelper {
 	private void renderPost(MatrixStack matrices, CallbackInfo callbackInfo) {
 		PlayerEntity player = getCameraPlayer();
 		if (BewitchmentAPI.isVampire(player, true)) {
-			client.getTextureManager().bindTexture(GUI_ICONS_TEXTURE);
+			RenderSystem.setShaderTexture(0, GUI_ICONS_TEXTURE);
 		}
 	}
 	
