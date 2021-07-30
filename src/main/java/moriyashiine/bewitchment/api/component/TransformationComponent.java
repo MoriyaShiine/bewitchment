@@ -72,74 +72,9 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 		tag.putBoolean("AlternateForm", isAlternateForm());
 	}
 	
-	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void serverTick() {
 		boolean vampire = BewitchmentAPI.isVampire(obj, true);
-		boolean werewolfBeast = BewitchmentAPI.isWerewolf(obj, false);
-		EntityAttributeInstance attackDamageAttribute = obj.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
-		EntityAttributeInstance attackSpeedAttribute = obj.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_SPEED);
-		EntityAttributeInstance armorAttribute = obj.getAttributeInstance(EntityAttributes.GENERIC_ARMOR);
-		EntityAttributeInstance armorToughnessAttribute = obj.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS);
-		EntityAttributeInstance movementSpeedAttribute = obj.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
-		EntityAttributeInstance attackRange = obj.getAttributeInstance(ReachEntityAttributes.ATTACK_RANGE);
-		EntityAttributeInstance reach = obj.getAttributeInstance(ReachEntityAttributes.REACH);
-		EntityAttributeInstance stepHeight = obj.getAttributeInstance(StepHeightEntityAttributeMain.STEP_HEIGHT);
-		boolean shouldHave = vampire && !BewitchmentAPI.isPledged(obj, BWPledges.LILITH);
-		if (shouldHave && !attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0)) {
-			attackDamageAttribute.addPersistentModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0);
-			movementSpeedAttribute.addPersistentModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_0);
-		}
-		else if (!shouldHave && attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0)) {
-			attackDamageAttribute.removeModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0);
-			movementSpeedAttribute.removeModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_0);
-		}
-		shouldHave = vampire && BewitchmentAPI.isPledged(obj, BWPledges.LILITH);
-		if (shouldHave && !attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_1)) {
-			attackDamageAttribute.addPersistentModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_1);
-			movementSpeedAttribute.addPersistentModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_1);
-		}
-		else if (!shouldHave && attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_1)) {
-			attackDamageAttribute.removeModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_1);
-			movementSpeedAttribute.removeModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_1);
-		}
-		shouldHave = werewolfBeast;
-		if (shouldHave && !attackSpeedAttribute.hasModifier(WEREWOLF_ATTACK_SPEED_MODIFIER)) {
-			attackSpeedAttribute.addPersistentModifier(WEREWOLF_ATTACK_SPEED_MODIFIER);
-			armorAttribute.addPersistentModifier(WEREWOLF_ARMOR_MODIFIER);
-			attackRange.addPersistentModifier(WEREWOLF_ATTACK_RANGE_MODIFIER);
-			reach.addPersistentModifier(WEREWOLF_REACH_MODIFIER);
-			stepHeight.addPersistentModifier(WEREWOLF_STEP_HEIGHT_MODIFIER);
-		}
-		else if (!shouldHave && attackSpeedAttribute.hasModifier(WEREWOLF_ATTACK_SPEED_MODIFIER)) {
-			attackSpeedAttribute.removeModifier(WEREWOLF_ATTACK_SPEED_MODIFIER);
-			armorAttribute.removeModifier(WEREWOLF_ARMOR_MODIFIER);
-			attackRange.removeModifier(WEREWOLF_ATTACK_RANGE_MODIFIER);
-			reach.removeModifier(WEREWOLF_REACH_MODIFIER);
-			stepHeight.removeModifier(WEREWOLF_STEP_HEIGHT_MODIFIER);
-		}
-		shouldHave = werewolfBeast && !BewitchmentAPI.isPledged(obj, BWPledges.HERNE);
-		if (shouldHave && !attackDamageAttribute.hasModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_0)) {
-			attackDamageAttribute.addPersistentModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_0);
-			armorToughnessAttribute.addPersistentModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_0);
-			movementSpeedAttribute.addPersistentModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_0);
-		}
-		else if (!shouldHave && attackDamageAttribute.hasModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_0)) {
-			attackDamageAttribute.removeModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_0);
-			armorToughnessAttribute.removeModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_0);
-			movementSpeedAttribute.removeModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_0);
-		}
-		shouldHave = werewolfBeast && BewitchmentAPI.isPledged(obj, BWPledges.HERNE);
-		if (shouldHave && !attackDamageAttribute.hasModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_1)) {
-			attackDamageAttribute.addPersistentModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_1);
-			armorToughnessAttribute.addPersistentModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_1);
-			movementSpeedAttribute.addPersistentModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_1);
-		}
-		else if (!shouldHave && attackDamageAttribute.hasModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_1)) {
-			attackDamageAttribute.removeModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_1);
-			armorToughnessAttribute.removeModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_1);
-			movementSpeedAttribute.removeModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_1);
-		}
 		if (vampire) {
 			boolean pledgedToLilith = BewitchmentAPI.isPledged(obj, BWPledges.LILITH);
 			obj.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
@@ -208,6 +143,7 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 		OnTransformationSet.EVENT.invoker().onTransformationSet(obj, transformation);
 		this.transformation = transformation;
 		BWComponents.TRANSFORMATION_COMPONENT.sync(obj);
+		updateAttributes();
 	}
 	
 	public boolean isAlternateForm() {
@@ -217,6 +153,76 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 	public void setAlternateForm(boolean alternateForm) {
 		this.alternateForm = alternateForm;
 		BWComponents.TRANSFORMATION_COMPONENT.sync(obj);
+		updateAttributes();
+	}
+	
+	@SuppressWarnings("ConstantConditions")
+	public void updateAttributes() {
+		boolean vampire = BewitchmentAPI.isVampire(obj, true);
+		boolean werewolfBeast = BewitchmentAPI.isWerewolf(obj, false);
+		EntityAttributeInstance attackDamageAttribute = obj.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+		EntityAttributeInstance attackSpeedAttribute = obj.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_SPEED);
+		EntityAttributeInstance armorAttribute = obj.getAttributeInstance(EntityAttributes.GENERIC_ARMOR);
+		EntityAttributeInstance armorToughnessAttribute = obj.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS);
+		EntityAttributeInstance movementSpeedAttribute = obj.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+		EntityAttributeInstance attackRange = obj.getAttributeInstance(ReachEntityAttributes.ATTACK_RANGE);
+		EntityAttributeInstance reach = obj.getAttributeInstance(ReachEntityAttributes.REACH);
+		EntityAttributeInstance stepHeight = obj.getAttributeInstance(StepHeightEntityAttributeMain.STEP_HEIGHT);
+		boolean shouldHave = vampire && !BewitchmentAPI.isPledged(obj, BWPledges.LILITH);
+		if (shouldHave && !attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0)) {
+			attackDamageAttribute.addPersistentModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0);
+			movementSpeedAttribute.addPersistentModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_0);
+		}
+		else if (!shouldHave && attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0)) {
+			attackDamageAttribute.removeModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0);
+			movementSpeedAttribute.removeModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_0);
+		}
+		shouldHave = vampire && BewitchmentAPI.isPledged(obj, BWPledges.LILITH);
+		if (shouldHave && !attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_1)) {
+			attackDamageAttribute.addPersistentModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_1);
+			movementSpeedAttribute.addPersistentModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_1);
+		}
+		else if (!shouldHave && attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_1)) {
+			attackDamageAttribute.removeModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_1);
+			movementSpeedAttribute.removeModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_1);
+		}
+		shouldHave = werewolfBeast;
+		if (shouldHave && !attackSpeedAttribute.hasModifier(WEREWOLF_ATTACK_SPEED_MODIFIER)) {
+			attackSpeedAttribute.addPersistentModifier(WEREWOLF_ATTACK_SPEED_MODIFIER);
+			armorAttribute.addPersistentModifier(WEREWOLF_ARMOR_MODIFIER);
+			attackRange.addPersistentModifier(WEREWOLF_ATTACK_RANGE_MODIFIER);
+			reach.addPersistentModifier(WEREWOLF_REACH_MODIFIER);
+			stepHeight.addPersistentModifier(WEREWOLF_STEP_HEIGHT_MODIFIER);
+		}
+		else if (!shouldHave && attackSpeedAttribute.hasModifier(WEREWOLF_ATTACK_SPEED_MODIFIER)) {
+			attackSpeedAttribute.removeModifier(WEREWOLF_ATTACK_SPEED_MODIFIER);
+			armorAttribute.removeModifier(WEREWOLF_ARMOR_MODIFIER);
+			attackRange.removeModifier(WEREWOLF_ATTACK_RANGE_MODIFIER);
+			reach.removeModifier(WEREWOLF_REACH_MODIFIER);
+			stepHeight.removeModifier(WEREWOLF_STEP_HEIGHT_MODIFIER);
+		}
+		shouldHave = werewolfBeast && !BewitchmentAPI.isPledged(obj, BWPledges.HERNE);
+		if (shouldHave && !attackDamageAttribute.hasModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_0)) {
+			attackDamageAttribute.addPersistentModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_0);
+			armorToughnessAttribute.addPersistentModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_0);
+			movementSpeedAttribute.addPersistentModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_0);
+		}
+		else if (!shouldHave && attackDamageAttribute.hasModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_0)) {
+			attackDamageAttribute.removeModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_0);
+			armorToughnessAttribute.removeModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_0);
+			movementSpeedAttribute.removeModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_0);
+		}
+		shouldHave = werewolfBeast && BewitchmentAPI.isPledged(obj, BWPledges.HERNE);
+		if (shouldHave && !attackDamageAttribute.hasModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_1)) {
+			attackDamageAttribute.addPersistentModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_1);
+			armorToughnessAttribute.addPersistentModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_1);
+			movementSpeedAttribute.addPersistentModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_1);
+		}
+		else if (!shouldHave && attackDamageAttribute.hasModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_1)) {
+			attackDamageAttribute.removeModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_1);
+			armorToughnessAttribute.removeModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_1);
+			movementSpeedAttribute.removeModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_1);
+		}
 	}
 	
 	public static TransformationComponent get(PlayerEntity obj) {

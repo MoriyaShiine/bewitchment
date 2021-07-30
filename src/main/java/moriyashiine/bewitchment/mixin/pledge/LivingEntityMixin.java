@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.mixin.pledge;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.common.entity.component.PledgeComponent;
+import moriyashiine.bewitchment.api.component.PledgeComponent;
 import moriyashiine.bewitchment.common.registry.BWPledges;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;

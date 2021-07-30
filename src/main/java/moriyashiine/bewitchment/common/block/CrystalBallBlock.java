@@ -2,15 +2,11 @@ package moriyashiine.bewitchment.common.block;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.block.WitchAltarBlock;
-import moriyashiine.bewitchment.api.component.ContractsComponent;
-import moriyashiine.bewitchment.api.component.CursesComponent;
-import moriyashiine.bewitchment.api.component.FortuneComponent;
-import moriyashiine.bewitchment.api.component.TransformationComponent;
+import moriyashiine.bewitchment.api.component.*;
 import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
-import moriyashiine.bewitchment.common.entity.component.PledgeComponent;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.*;

@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.item;
 
+import moriyashiine.bewitchment.api.component.PledgeComponent;
 import moriyashiine.bewitchment.api.entity.Pledgeable;
-import moriyashiine.bewitchment.common.entity.component.PledgeComponent;
 import moriyashiine.bewitchment.common.registry.BWPledges;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.minecraft.entity.LivingEntity;

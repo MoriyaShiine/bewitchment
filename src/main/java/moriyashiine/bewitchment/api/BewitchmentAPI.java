@@ -2,12 +2,12 @@ package moriyashiine.bewitchment.api;
 
 import com.mojang.authlib.GameProfile;
 import moriyashiine.bewitchment.api.component.MagicComponent;
+import moriyashiine.bewitchment.api.component.PledgeComponent;
 import moriyashiine.bewitchment.api.component.TransformationComponent;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
 import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
 import moriyashiine.bewitchment.common.entity.component.AdditionalWerewolfDataComponent;
-import moriyashiine.bewitchment.common.entity.component.PledgeComponent;
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
@@ -211,7 +211,7 @@ public class BewitchmentAPI {
 			BWUniversalWorldState worldState = BWUniversalWorldState.get(player.world);
 			for (int i = worldState.pledgesToRemove.size() - 1; i >= 0; i--) {
 				if (worldState.pledgesToRemove.get(i).equals(player.getUuid())) {
-					pledgeComponent.setPledge(BWPledges.NONE);
+					pledgeComponent.setPledgeNextTick(BWPledges.NONE);
 					worldState.pledgesToRemove.remove(i);
 					return false;
 				}

@@ -63,15 +63,15 @@ public class TransformationAbilityPacket {
 	public static void useAbility(PlayerEntity player, boolean forced) {
 		TransformationComponent.maybeGet(player).ifPresent(transformationComponent -> {
 			World world = player.world;
-			boolean isInAlternateForm = transformationComponent.isAlternateForm();
+			boolean isAlternateForm = transformationComponent.isAlternateForm();
 			ScaleData width = BWScaleTypes.MODIFY_WIDTH_TYPE.getScaleData(player);
 			ScaleData height = BWScaleTypes.MODIFY_HEIGHT_TYPE.getScaleData(player);
 			if (transformationComponent.getTransformation() == BWTransformations.VAMPIRE && (forced || (BewitchmentAPI.isPledged(player, BWPledges.LILITH) && BloodComponent.get(player).getBlood() > 0))) {
 				PlayerLookup.tracking(player).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, player));
 				SpawnSmokeParticlesPacket.send(player, player);
 				world.playSound(null, player.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, player.getSoundCategory(), 1, 1);
-				transformationComponent.setAlternateForm(!isInAlternateForm);
-				if (isInAlternateForm) {
+				transformationComponent.setAlternateForm(!isAlternateForm);
+				if (isAlternateForm) {
 					width.setScale(width.getBaseScale() / VAMPIRE_WIDTH);
 					height.setScale(height.getBaseScale() / VAMPIRE_HEIGHT);
 					VAMPIRE_FLIGHT_SOURCE.revokeFrom(player, VanillaAbilities.ALLOW_FLYING);
@@ -88,8 +88,8 @@ public class TransformationAbilityPacket {
 				PlayerLookup.tracking(player).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, player));
 				SpawnSmokeParticlesPacket.send(player, player);
 				world.playSound(null, player.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, player.getSoundCategory(), 1, 1);
-				transformationComponent.setAlternateForm(!isInAlternateForm);
-				if (isInAlternateForm) {
+				transformationComponent.setAlternateForm(!isAlternateForm);
+				if (isAlternateForm) {
 					width.setScale(width.getBaseScale() / WEREWOLF_WIDTH);
 					height.setScale(height.getBaseScale() / WEREWOLF_HEIGHT);
 					if (player.hasStatusEffect(StatusEffects.NIGHT_VISION) && player.getStatusEffect(StatusEffects.NIGHT_VISION).isAmbient()) {
