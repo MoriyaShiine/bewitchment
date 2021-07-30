@@ -423,15 +423,16 @@ public class BWObjects {
 	
 	private static Block[] createAltar(String name, FabricBlockSettings settings) {
 		settings = settings.luminance(blockState -> blockState.get(Properties.LEVEL_15));
-		Block[] altars = new Block[20];
+		Block[] altars = new Block[21];
 		WitchAltarBlock unformed = create(name, new WitchAltarBlock(settings, null, false), true);
 		altars[0] = unformed;
+		altars[1] = create("moss_" + name, new WitchAltarBlock(settings, unformed, true), false);
 		for (int i = 0; i < DyeColor.values().length; i++) {
-			altars[i + 1] = create(DyeColor.byId(i).getName() + "_" + name, new WitchAltarBlock(settings, unformed, true), false);
+			altars[i + 2] = create(DyeColor.byId(i).getName() + "_" + name, new WitchAltarBlock(settings, unformed, true), false);
 		}
-		altars[17] = create("hedgewitch_" + name, new WitchAltarBlock(settings, unformed, true), false);
-		altars[18] = create("alchemist_" + name, new WitchAltarBlock(settings, unformed, true), false);
-		altars[19] = create("besmirched_" + name, new WitchAltarBlock(settings, unformed, true), false);
+		altars[18] = create("hedgewitch_" + name, new WitchAltarBlock(settings, unformed, true), false);
+		altars[19] = create("alchemist_" + name, new WitchAltarBlock(settings, unformed, true), false);
+		altars[20] = create("besmirched_" + name, new WitchAltarBlock(settings, unformed, true), false);
 		return altars;
 	}
 	

@@ -2,6 +2,26 @@
   "replace": false,
   "values": [
 	"bewitchment:netherite_candelabra",
-	"bewitchment:obsidian_witch_altar"
+	"bewitchment:obsidian_witch_altar",
+	"bewitchment:moss_obsidian_witch_altar",
+	"bewitchment:white_obsidian_witch_altar",
+	"bewitchment:orange_obsidian_witch_altar",
+	"bewitchment:magenta_obsidian_witch_altar",
+	"bewitchment:light_blue_obsidian_witch_altar",
+	"bewitchment:yellow_obsidian_witch_altar",
+	"bewitchment:lime_obsidian_witch_altar",
+	"bewitchment:pink_obsidian_witch_altar",
+	"bewitchment:gray_obsidian_witch_altar",
+	"bewitchment:light_gray_obsidian_witch_altar",
+	"bewitchment:cyan_obsidian_witch_altar",
+	"bewitchment:purple_obsidian_witch_altar",
+	"bewitchment:blue_obsidian_witch_altar",
+	"bewitchment:brown_obsidian_witch_altar",
+	"bewitchment:green_obsidian_witch_altar",
+	"bewitchment:red_obsidian_witch_altar",
+	"bewitchment:black_obsidian_witch_altar",
+	"bewitchment:hedgewitch_obsidian_witch_altar",
+	"bewitchment:alchemist_obsidian_witch_altar",
+	"bewitchment:besmirched_obsidian_witch_altar"
   ]
 }

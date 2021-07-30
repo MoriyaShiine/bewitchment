@@ -1,0 +1,7 @@
+{
+  "parent": "bewitchment:block/white_stone_witch_altar",
+  "textures": {
+	"cloth_side": "bewitchment:block/moss_altar_cloth",
+	"cloth_top": "bewitchment:block/moss_altar_cloth_top"
+  }
+}

@@ -18,6 +18,7 @@ import moriyashiine.bewitchment.common.registry.*;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
@@ -229,6 +230,9 @@ public class BewitchmentAPI {
 	}
 	
 	public static void registerAltarMapEntries(Block[]... altarArray) {
+		for (Block[] altars : altarArray) {
+			ALTAR_MAP_ENTRIES.add(new AltarMapEntry(altars[0], altars[1], Blocks.MOSS_CARPET.asItem()));
+		}
 		for (int i = 0; i < DyeColor.values().length; i++) {
 			Item carpet = switch (DyeColor.byId(i)) {
 				case WHITE -> Items.WHITE_CARPET;
@@ -249,13 +253,13 @@ public class BewitchmentAPI {
 				case BLACK -> Items.BLACK_CARPET;
 			};
 			for (Block[] altars : altarArray) {
-				ALTAR_MAP_ENTRIES.add(new AltarMapEntry(altars[0], altars[i + 1], carpet));
+				ALTAR_MAP_ENTRIES.add(new AltarMapEntry(altars[0], altars[i + 2], carpet));
 			}
 		}
 		for (Block[] altars : altarArray) {
-			ALTAR_MAP_ENTRIES.add(new AltarMapEntry(altars[0], altars[17], BWObjects.HEDGEWITCH_CARPET.asItem()));
-			ALTAR_MAP_ENTRIES.add(new AltarMapEntry(altars[0], altars[18], BWObjects.ALCHEMIST_CARPET.asItem()));
-			ALTAR_MAP_ENTRIES.add(new AltarMapEntry(altars[0], altars[19], BWObjects.BESMIRCHED_CARPET.asItem()));
+			ALTAR_MAP_ENTRIES.add(new AltarMapEntry(altars[0], altars[18], BWObjects.HEDGEWITCH_CARPET.asItem()));
+			ALTAR_MAP_ENTRIES.add(new AltarMapEntry(altars[0], altars[19], BWObjects.ALCHEMIST_CARPET.asItem()));
+			ALTAR_MAP_ENTRIES.add(new AltarMapEntry(altars[0], altars[20], BWObjects.BESMIRCHED_CARPET.asItem()));
 		}
 	}
 }
