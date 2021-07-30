@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.mixin.poppet;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.common.entity.interfaces.SubmergedInWaterAccessor;
+import moriyashiine.bewitchment.common.entity.component.AdditionalWaterDataComponent;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -47,7 +47,7 @@ public abstract class ItemEntityMixin extends Entity {
 					owner.velocityModified = true;
 				}
 				if (isSubmergedInWater()) {
-					((SubmergedInWaterAccessor) owner).setSubmergedInWater(true);
+					AdditionalWaterDataComponent.get(owner).setSubmerged(true);
 				}
 			}
 		}

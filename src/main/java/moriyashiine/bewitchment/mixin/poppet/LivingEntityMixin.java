@@ -5,8 +5,8 @@ import moriyashiine.bewitchment.api.component.CursesComponent;
 import moriyashiine.bewitchment.api.component.TransformationComponent;
 import moriyashiine.bewitchment.api.event.ReviveEvents;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
-import moriyashiine.bewitchment.common.entity.interfaces.SubmergedInWaterAccessor;
-import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
+import moriyashiine.bewitchment.common.entity.component.AdditionalWaterDataComponent;
+import moriyashiine.bewitchment.common.entity.component.AdditionalWerewolfDataComponent;
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
@@ -16,14 +16,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -35,9 +31,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity implements SubmergedInWaterAccessor {
-	private static final TrackedData<Boolean> SUBMERGED_IN_WATER = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-	
+public abstract class LivingEntityMixin extends Entity {
 	@Shadow
 	public abstract boolean addStatusEffect(StatusEffectInstance effect);
 	
@@ -57,20 +51,14 @@ public abstract class LivingEntityMixin extends Entity implements SubmergedInWat
 		super(type, world);
 	}
 	
-	@Override
-	public boolean getSubmergedInWater() {
-		return dataTracker.get(SUBMERGED_IN_WATER);
-	}
-	
-	@Override
-	public void setSubmergedInWater(boolean submergedInWater) {
-		dataTracker.set(SUBMERGED_IN_WATER, submergedInWater);
-	}
-	
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo callbackInfo) {
-		if (!world.isClient && getSubmergedInWater()) {
-			setSubmergedInWater(false);
+		if (!world.isClient) {
+			AdditionalWaterDataComponent.maybeGet((LivingEntity) (Object) this).ifPresent(additionalWaterDataComponent -> {
+				if (additionalWaterDataComponent.isSubmerged()) {
+					additionalWaterDataComponent.setSubmerged(false);
+				}
+			});
 		}
 	}
 	
@@ -156,11 +144,11 @@ public abstract class LivingEntityMixin extends Entity implements SubmergedInWat
 							if (source.getSource() instanceof WerewolfEntity) {
 								variant = source.getSource().getDataTracker().get(BWHostileEntity.VARIANT);
 							}
-							else if (source.getSource() instanceof WerewolfAccessor) {
-								variant = ((WerewolfAccessor) source.getSource()).getWerewolfVariant();
+							else if (source.getSource() instanceof PlayerEntity playerSource) {
+								variant = AdditionalWerewolfDataComponent.get(playerSource).getVariant();
 							}
 							if (variant > -1) {
-								((WerewolfAccessor) this).setWerewolfVariant(variant);
+								AdditionalWerewolfDataComponent.get(player).setVariant(variant);
 							}
 							PlayerLookup.tracking(this).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, this));
 							SpawnSmokeParticlesPacket.send((PlayerEntity) (Object) this, this);
@@ -170,20 +158,5 @@ public abstract class LivingEntityMixin extends Entity implements SubmergedInWat
 				});
 			}
 		}
-	}
-	
-	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
-	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
-		setSubmergedInWater(nbt.getBoolean("SubmergedInWater"));
-	}
-	
-	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
-	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
-		nbt.putBoolean("SubmergedInWater", getSubmergedInWater());
-	}
-	
-	@Inject(method = "initDataTracker", at = @At("TAIL"))
-	private void initDataTracker(CallbackInfo callbackInfo) {
-		dataTracker.startTracking(SUBMERGED_IN_WATER, false);
 	}
 }

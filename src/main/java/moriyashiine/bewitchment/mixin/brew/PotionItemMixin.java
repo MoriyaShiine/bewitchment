@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.brew;
 
-import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
+import moriyashiine.bewitchment.common.entity.component.PolymorphComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PotionItem;
@@ -15,16 +15,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class PotionItemMixin {
 	@Inject(method = "finishUsing", at = @At("HEAD"))
 	private void finishUsing(ItemStack stack, World world, LivingEntity user, CallbackInfoReturnable<ItemStack> callbackInfo) {
-		if (!world.isClient && user instanceof PolymorphAccessor) {
-			NbtCompound nbt = stack.getNbt();
-			if (nbt != null) {
-				String name = nbt.getString("PolymorphName");
-				if (!name.isEmpty()) {
-					PolymorphAccessor polymorphAccessor = (PolymorphAccessor) user;
-					polymorphAccessor.setPolymorphUUID(nbt.getUuid("PolymorphUUID"));
-					polymorphAccessor.setPolymorphName(name);
+		if (!world.isClient) {
+			PolymorphComponent.maybeGet(user).ifPresent(polymorphComponent -> {
+				NbtCompound nbt = stack.getNbt();
+				if (nbt != null) {
+					String name = nbt.getString("PolymorphName");
+					if (!name.isEmpty()) {
+						polymorphComponent.setUuid(nbt.getUuid("PolymorphUUID"));
+						polymorphComponent.setName(name);
+					}
 				}
-			}
+			});
 		}
 	}
 }

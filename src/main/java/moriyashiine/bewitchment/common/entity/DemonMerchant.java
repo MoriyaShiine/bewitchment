@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.entity.interfaces;
+package moriyashiine.bewitchment.common.entity;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.entity.living.BaphometEntity;

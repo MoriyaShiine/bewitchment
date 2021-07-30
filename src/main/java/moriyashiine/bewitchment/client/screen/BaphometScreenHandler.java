@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.client.screen;
 
-import moriyashiine.bewitchment.common.entity.interfaces.DemonMerchant;
+import moriyashiine.bewitchment.common.entity.DemonMerchant;
 import moriyashiine.bewitchment.common.registry.BWScreenHandlers;
 
 public class BaphometScreenHandler extends DemonScreenHandler {

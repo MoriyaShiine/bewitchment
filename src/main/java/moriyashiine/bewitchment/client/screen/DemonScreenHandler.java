@@ -3,7 +3,7 @@ package moriyashiine.bewitchment.client.screen;
 import moriyashiine.bewitchment.api.component.ContractsComponent;
 import moriyashiine.bewitchment.client.network.packet.SyncContractsPacket;
 import moriyashiine.bewitchment.client.network.packet.SyncDemonTradesPacket;
-import moriyashiine.bewitchment.common.entity.interfaces.DemonMerchant;
+import moriyashiine.bewitchment.common.entity.DemonMerchant;
 import moriyashiine.bewitchment.common.entity.living.DemonEntity;
 import moriyashiine.bewitchment.common.registry.BWDamageSources;
 import moriyashiine.bewitchment.common.registry.BWObjects;

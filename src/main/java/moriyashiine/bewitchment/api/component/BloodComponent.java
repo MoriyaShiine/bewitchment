@@ -14,43 +14,11 @@ import java.util.Optional;
 public class BloodComponent implements AutoSyncedComponent, ServerTickingComponent {
 	public static int MAX_BLOOD = 100;
 	
-	private final LivingEntity entity;
+	private final LivingEntity obj;
 	private int blood = MAX_BLOOD;
 	
-	public BloodComponent(LivingEntity entity) {
-		this.entity = entity;
-	}
-	
-	public int getBlood() {
-		return blood;
-	}
-	
-	public void setBlood(int blood) {
-		BloodSetEvents.ON_BLOOD_SET.invoker().onSetBlood(entity, blood);
-		this.blood = blood;
-		BWComponents.BLOOD_COMPONENT.sync(entity);
-	}
-	
-	public boolean fillBlood(int amount, boolean simulate) {
-		BloodSetEvents.ON_BLOOD_FILL.invoker().onFillBlood(entity, amount, simulate);
-		if (getBlood() < MAX_BLOOD) {
-			if (!simulate) {
-				setBlood(Math.min(MAX_BLOOD, getBlood() + amount));
-			}
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean drainBlood(int amount, boolean simulate) {
-		BloodSetEvents.ON_BLOOD_DRAIN.invoker().onDrainBlood(entity, amount, simulate);
-		if (getBlood() - amount >= 0) {
-			if (!simulate) {
-				setBlood(getBlood() - amount);
-			}
-			return true;
-		}
-		return false;
+	public BloodComponent(LivingEntity obj) {
+		this.obj = obj;
 	}
 	
 	@Override
@@ -67,16 +35,48 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 	
 	@Override
 	public void serverTick() {
-		if (BWTags.HAS_BLOOD.contains(entity.getType()) && !BewitchmentAPI.isVampire(entity, true) && entity.getRandom().nextFloat() < (entity.isSleeping() ? 1 / 50f : 1 / 500f)) {
+		if (BWTags.HAS_BLOOD.contains(obj.getType()) && !BewitchmentAPI.isVampire(obj, true) && obj.getRandom().nextFloat() < (obj.isSleeping() ? 1 / 50f : 1 / 500f)) {
 			fillBlood(1, false);
 		}
 	}
 	
-	public static BloodComponent get(LivingEntity entity) {
-		return BWComponents.BLOOD_COMPONENT.get(entity);
+	public int getBlood() {
+		return blood;
 	}
 	
-	public static Optional<BloodComponent> maybeGet(LivingEntity entity) {
-		return BWComponents.BLOOD_COMPONENT.maybeGet(entity);
+	public void setBlood(int blood) {
+		BloodSetEvents.ON_BLOOD_SET.invoker().onSetBlood(obj, blood);
+		this.blood = blood;
+		BWComponents.BLOOD_COMPONENT.sync(obj);
+	}
+	
+	public boolean fillBlood(int amount, boolean simulate) {
+		BloodSetEvents.ON_BLOOD_FILL.invoker().onFillBlood(obj, amount, simulate);
+		if (getBlood() < MAX_BLOOD) {
+			if (!simulate) {
+				setBlood(Math.min(MAX_BLOOD, getBlood() + amount));
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean drainBlood(int amount, boolean simulate) {
+		BloodSetEvents.ON_BLOOD_DRAIN.invoker().onDrainBlood(obj, amount, simulate);
+		if (getBlood() - amount >= 0) {
+			if (!simulate) {
+				setBlood(getBlood() - amount);
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	public static BloodComponent get(LivingEntity obj) {
+		return BWComponents.BLOOD_COMPONENT.get(obj);
+	}
+	
+	public static Optional<BloodComponent> maybeGet(LivingEntity obj) {
+		return BWComponents.BLOOD_COMPONENT.maybeGet(obj);
 	}
 }

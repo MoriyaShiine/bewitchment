@@ -2,7 +2,7 @@ package moriyashiine.bewitchment.client.network.packet;
 
 import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.common.Bewitchment;
-import moriyashiine.bewitchment.common.entity.interfaces.DemonMerchant;
+import moriyashiine.bewitchment.common.entity.DemonMerchant;
 import moriyashiine.bewitchment.common.entity.living.DemonEntity;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;

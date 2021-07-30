@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.client;
 
-import moriyashiine.bewitchment.common.entity.interfaces.InsanityTargetAccessor;
+import moriyashiine.bewitchment.common.entity.component.FakeMobComponent;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -13,8 +13,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.UUID;
-
 @SuppressWarnings("ConstantConditions")
 @Environment(EnvType.CLIENT)
 @Mixin(MobEntityRenderer.class)
@@ -22,10 +20,11 @@ public abstract class MobEntityRendererMixin<T extends MobEntity, M extends Enti
 	@Inject(method = "shouldRender", at = @At("RETURN"), cancellable = true)
 	private void shouldRender(T mobEntity, Frustum frustum, double d, double e, double f, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (callbackInfo.getReturnValue()) {
-			UUID targetUUID = ((InsanityTargetAccessor) mobEntity).getInsanityTargetUUID().orElse(null);
-			if (targetUUID != null && !MinecraftClient.getInstance().player.getUuid().equals(targetUUID)) {
-				callbackInfo.setReturnValue(false);
-			}
+			FakeMobComponent.maybeGet(mobEntity).ifPresent(fakeMobComponent -> {
+				if (fakeMobComponent.getTarget() != null && !MinecraftClient.getInstance().player.getUuid().equals(fakeMobComponent.getTarget())) {
+					callbackInfo.setReturnValue(false);
+				}
+			});
 		}
 	}
 }

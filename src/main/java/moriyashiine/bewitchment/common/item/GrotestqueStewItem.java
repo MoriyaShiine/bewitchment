@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.api.entity.Pledgeable;
-import moriyashiine.bewitchment.common.entity.interfaces.PledgeAccessor;
+import moriyashiine.bewitchment.common.entity.component.PledgeComponent;
 import moriyashiine.bewitchment.common.registry.BWPledges;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.minecraft.entity.LivingEntity;
@@ -20,8 +20,9 @@ public class GrotestqueStewItem extends Item {
 	
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		if (!world.isClient && user instanceof PlayerEntity) {
-			if (((PledgeAccessor) user).getPledge().equals(BWPledges.NONE)) {
+		if (!world.isClient && user instanceof PlayerEntity player) {
+			PledgeComponent pledgeComponent = PledgeComponent.get(player);
+			if (pledgeComponent.getPledge().equals(BWPledges.NONE)) {
 				LivingEntity closest = null;
 				for (LivingEntity livingEntity : world.getEntitiesByClass(LivingEntity.class, new Box(user.getBlockPos()).expand(8), entity -> entity.isAlive() && entity instanceof Pledgeable)) {
 					if (closest == null || user.distanceTo(livingEntity) < user.distanceTo(closest)) {
@@ -29,7 +30,7 @@ public class GrotestqueStewItem extends Item {
 					}
 				}
 				if (closest instanceof Pledgeable) {
-					((PledgeAccessor) user).setPledge(((Pledgeable) closest).getPledgeID());
+					pledgeComponent.setPledge(((Pledgeable) closest).getPledgeID());
 					((Pledgeable) closest).getPledgedPlayerUUIDs().add(user.getUuid());
 					world.playSound(null, user.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_PLEDGE, SoundCategory.PLAYERS, 1, 1);
 				}

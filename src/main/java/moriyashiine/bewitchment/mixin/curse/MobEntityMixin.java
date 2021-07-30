@@ -1,21 +1,17 @@
 package moriyashiine.bewitchment.mixin.curse;
 
 import moriyashiine.bewitchment.api.component.CursesComponent;
-import moriyashiine.bewitchment.common.entity.interfaces.InsanityTargetAccessor;
+import moriyashiine.bewitchment.common.entity.component.FakeMobComponent;
 import moriyashiine.bewitchment.common.registry.BWCurses;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.CaveSpiderEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.SpiderEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -26,19 +22,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @SuppressWarnings("ConstantConditions")
 @Mixin(MobEntity.class)
-public abstract class MobEntityMixin extends LivingEntity implements InsanityTargetAccessor {
-	private static final TrackedData<Optional<UUID>> INSANITY_TARGET_UUID = DataTracker.registerData(MobEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
-	
+public abstract class MobEntityMixin extends LivingEntity {
 	private boolean spawnedByArachnophobia = false;
-	
-	@Shadow
-	@Nullable
-	public abstract LivingEntity getTarget();
 	
 	@Shadow
 	public abstract void setTarget(@Nullable LivingEntity target);
@@ -47,35 +36,10 @@ public abstract class MobEntityMixin extends LivingEntity implements InsanityTar
 		super(entityType, world);
 	}
 	
-	@Override
-	public Optional<UUID> getInsanityTargetUUID() {
-		return dataTracker.get(INSANITY_TARGET_UUID);
-	}
-	
-	@Override
-	public void setInsanityTargetUUID(Optional<UUID> insanityTargetUUID) {
-		dataTracker.set(INSANITY_TARGET_UUID, insanityTargetUUID);
-	}
-	
-	@Inject(method = "tick", at = @At("TAIL"))
-	private void tick(CallbackInfo callbackInfo) {
-		if (!world.isClient) {
-			getInsanityTargetUUID().ifPresent(uuid -> {
-				LivingEntity entity = (LivingEntity) ((ServerWorld) world).getEntity(uuid);
-				if (getTarget() == null || !getTarget().getUuid().equals(uuid)) {
-					setTarget(entity);
-				}
-				if (age % 20 == 0 && (random.nextFloat() < 1 / 100f || (!CursesComponent.get(entity).hasCurse(BWCurses.INSANITY)))) {
-					remove(RemovalReason.DISCARDED);
-				}
-			});
-		}
-	}
-	
 	@ModifyVariable(method = "setTarget", at = @At("HEAD"))
 	private LivingEntity modifyTarget(LivingEntity target) {
 		if (!world.isClient && target != null) {
-			UUID insanityTargetUUID = getInsanityTargetUUID().orElse(null);
+			UUID insanityTargetUUID = FakeMobComponent.get((MobEntity) (Object) this).getTarget();
 			if (insanityTargetUUID != null && !target.getUuid().equals(insanityTargetUUID)) {
 				return null;
 			}
@@ -113,7 +77,6 @@ public abstract class MobEntityMixin extends LivingEntity implements InsanityTar
 		if ((Object) this instanceof CaveSpiderEntity) {
 			spawnedByArachnophobia = nbt.getBoolean("SpawnedByArachnophobia");
 		}
-		setInsanityTargetUUID(nbt.getString("InsanityTargetUUID").isEmpty() ? Optional.empty() : Optional.of(UUID.fromString(nbt.getString("InsanityTargetUUID"))));
 	}
 	
 	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
@@ -121,11 +84,5 @@ public abstract class MobEntityMixin extends LivingEntity implements InsanityTar
 		if ((Object) this instanceof CaveSpiderEntity) {
 			nbt.putBoolean("SpawnedByArachnophobia", spawnedByArachnophobia);
 		}
-		nbt.putString("InsanityTargetUUID", getInsanityTargetUUID().isPresent() ? getInsanityTargetUUID().get().toString() : "");
-	}
-	
-	@Inject(method = "initDataTracker", at = @At("TAIL"))
-	private void initDataTracker(CallbackInfo callbackInfo) {
-		dataTracker.startTracking(INSANITY_TARGET_UUID, Optional.empty());
 	}
 }

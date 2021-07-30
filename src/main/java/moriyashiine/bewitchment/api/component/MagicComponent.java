@@ -11,11 +11,30 @@ import java.util.Optional;
 public class MagicComponent implements AutoSyncedComponent, ServerTickingComponent {
 	public static int MAX_MAGIC = 100;
 	
-	private final PlayerEntity player;
+	private final PlayerEntity obj;
 	private int magic = 0, magicTimer = 60;
 	
-	public MagicComponent(PlayerEntity player) {
-		this.player = player;
+	public MagicComponent(PlayerEntity obj) {
+		this.obj = obj;
+	}
+	
+	@Override
+	public void readFromNbt(NbtCompound tag) {
+		setMagic(tag.getInt("Magic"));
+		setMagicTimer(tag.getInt("MagicTimer"));
+	}
+	
+	@Override
+	public void writeToNbt(NbtCompound tag) {
+		tag.putInt("Magic", getMagic());
+		tag.putInt("MagicTimer", getMagicTimer());
+	}
+	
+	@Override
+	public void serverTick() {
+		if (getMagicTimer() > 0) {
+			setMagicTimer(getMagicTimer() - 1);
+		}
 	}
 	
 	public int getMagic() {
@@ -24,7 +43,7 @@ public class MagicComponent implements AutoSyncedComponent, ServerTickingCompone
 	
 	public void setMagic(int magic) {
 		this.magic = magic;
-		BWComponents.MAGIC_COMPONENT.sync(player);
+		BWComponents.MAGIC_COMPONENT.sync(obj);
 	}
 	
 	public int getMagicTimer() {
@@ -33,7 +52,7 @@ public class MagicComponent implements AutoSyncedComponent, ServerTickingCompone
 	
 	public void setMagicTimer(int magicTimer) {
 		this.magicTimer = magicTimer;
-		BWComponents.MAGIC_COMPONENT.sync(player);
+		BWComponents.MAGIC_COMPONENT.sync(obj);
 	}
 	
 	public boolean fillMagic(int amount, boolean simulate) {
@@ -58,28 +77,11 @@ public class MagicComponent implements AutoSyncedComponent, ServerTickingCompone
 		return false;
 	}
 	
-	@Override
-	public void readFromNbt(NbtCompound tag) {
-		setMagic(tag.getInt("Magic"));
+	public static MagicComponent get(PlayerEntity obj) {
+		return BWComponents.MAGIC_COMPONENT.get(obj);
 	}
 	
-	@Override
-	public void writeToNbt(NbtCompound tag) {
-		tag.putInt("Magic", getMagic());
-	}
-	
-	@Override
-	public void serverTick() {
-		if (getMagicTimer() > 0) {
-			setMagicTimer(getMagicTimer() - 1);
-		}
-	}
-	
-	public static MagicComponent get(PlayerEntity player) {
-		return BWComponents.MAGIC_COMPONENT.get(player);
-	}
-	
-	public static Optional<MagicComponent> maybeGet(PlayerEntity player) {
-		return BWComponents.MAGIC_COMPONENT.maybeGet(player);
+	public static Optional<MagicComponent> maybeGet(PlayerEntity obj) {
+		return BWComponents.MAGIC_COMPONENT.maybeGet(obj);
 	}
 }

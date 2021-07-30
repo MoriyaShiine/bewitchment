@@ -10,7 +10,7 @@ import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
-import moriyashiine.bewitchment.common.entity.interfaces.PledgeAccessor;
+import moriyashiine.bewitchment.common.entity.component.PledgeComponent;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.*;
@@ -109,7 +109,7 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 									}
 								}
 								compound.putString("Familiar", familiar);
-								compound.putString("Pledge", ((PledgeAccessor) owner).getPledge());
+								compound.putString("Pledge", PledgeComponent.get(playerOwner).getPledge());
 								sound = BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE;
 							}
 							else {

@@ -2,7 +2,7 @@ package moriyashiine.bewitchment.common.ritualfunction;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
-import moriyashiine.bewitchment.common.entity.interfaces.FamiliarAccessor;
+import moriyashiine.bewitchment.common.entity.component.FamiliarComponent;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.minecraft.entity.LivingEntity;
@@ -59,7 +59,7 @@ public class UnbindFamiliarRitualFunction extends RitualFunction {
 					NbtCompound entityTag = new NbtCompound();
 					livingEntity.saveSelfNbt(entityTag);
 					if (entityTag.contains("Owner") && closestPlayer.getUuid().equals(entityTag.getUuid("Owner"))) {
-						((FamiliarAccessor) livingEntity).setFamiliar(false);
+						FamiliarComponent.get(livingEntity).setFamiliar(false);
 						BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
 						for (int i = worldState.familiars.size() - 1; i >= 0; i--) {
 							if (livingEntity.getUuid().equals(worldState.familiars.get(i).getRight().getUuid("UUID"))) {

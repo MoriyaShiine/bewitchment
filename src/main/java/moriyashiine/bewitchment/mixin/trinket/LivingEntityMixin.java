@@ -3,7 +3,7 @@ package moriyashiine.bewitchment.mixin.trinket;
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketsApi;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
+import moriyashiine.bewitchment.common.entity.component.PolymorphComponent;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -61,9 +61,11 @@ public abstract class LivingEntityMixin extends Entity {
 									}
 								}
 								else if (!hasStatusEffect(effect.getEffectType()) && BewitchmentAPI.drainMagic(player, 2, true) && addStatusEffect(effect)) {
-									if (belt.getNbt().contains("PolymorphUUID") && this instanceof PolymorphAccessor polymorphAccessor) {
-										polymorphAccessor.setPolymorphUUID(belt.getNbt().getUuid("PolymorphUUID"));
-										polymorphAccessor.setPolymorphName(belt.getNbt().getString("PolymorphName"));
+									if (belt.getNbt().contains("PolymorphUUID")) {
+										PolymorphComponent.maybeGet(this).ifPresent(polymorphComponent -> {
+											polymorphComponent.setUuid(belt.getNbt().getUuid("PolymorphUUID"));
+											polymorphComponent.setName(belt.getNbt().getString("PolymorphName"));
+										});
 									}
 									used = true;
 								}

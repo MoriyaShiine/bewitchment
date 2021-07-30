@@ -18,11 +18,45 @@ import java.util.List;
 import java.util.Optional;
 
 public class ContractsComponent implements ComponentV3, ServerTickingComponent {
-	private final PlayerEntity player;
+	private final PlayerEntity obj;
 	private final List<Contract.Instance> contracts = new ArrayList<>();
 	
-	public ContractsComponent(PlayerEntity player) {
-		this.player = player;
+	public ContractsComponent(PlayerEntity obj) {
+		this.obj = obj;
+	}
+	
+	@Override
+	public void readFromNbt(NbtCompound tag) {
+		NbtList contracts = tag.getList("Contracts", NbtType.COMPOUND);
+		for (int i = 0; i < contracts.size(); i++) {
+			NbtCompound contract = contracts.getCompound(i);
+			addContract(new Contract.Instance(BWRegistries.CONTRACTS.get(new Identifier(contract.getString("Contract"))), contract.getInt("Duration"), contract.getInt("Cost")));
+		}
+	}
+	
+	@Override
+	public void writeToNbt(NbtCompound tag) {
+		tag.put("Contracts", toNbtContract());
+	}
+	
+	@Override
+	public void serverTick() {
+		int level = 0;
+		for (int i = contracts.size() - 1; i >= 0; i--) {
+			Contract.Instance instance = contracts.get(i);
+			level += instance.cost;
+			instance.contract.tick(obj);
+			instance.duration--;
+			if (instance.duration <= 0) {
+				contracts.remove(i);
+			}
+		}
+		if (level > 0) {
+			obj.addStatusEffect(new StatusEffectInstance(BWStatusEffects.PACT, 10, level - 1, true, false));
+			if (obj.getHealth() > obj.getMaxHealth()) {
+				obj.setHealth(obj.getMaxHealth());
+			}
+		}
 	}
 	
 	public List<Contract.Instance> getContracts() {
@@ -68,45 +102,11 @@ public class ContractsComponent implements ComponentV3, ServerTickingComponent {
 		return contractList;
 	}
 	
-	@Override
-	public void readFromNbt(NbtCompound tag) {
-		NbtList contracts = tag.getList("Contracts", NbtType.COMPOUND);
-		for (int i = 0; i < contracts.size(); i++) {
-			NbtCompound contract = contracts.getCompound(i);
-			addContract(new Contract.Instance(BWRegistries.CONTRACTS.get(new Identifier(contract.getString("Contract"))), contract.getInt("Duration"), contract.getInt("Cost")));
-		}
+	public static ContractsComponent get(PlayerEntity obj) {
+		return BWComponents.CONTRACTS_COMPONENT.get(obj);
 	}
 	
-	@Override
-	public void writeToNbt(NbtCompound tag) {
-		tag.put("Contracts", toNbtContract());
-	}
-	
-	@Override
-	public void serverTick() {
-		int level = 0;
-		for (int i = contracts.size() - 1; i >= 0; i--) {
-			Contract.Instance instance = contracts.get(i);
-			level += instance.cost;
-			instance.contract.tick(player);
-			instance.duration--;
-			if (instance.duration <= 0) {
-				contracts.remove(i);
-			}
-		}
-		if (level > 0) {
-			player.addStatusEffect(new StatusEffectInstance(BWStatusEffects.PACT, 10, level - 1, true, false));
-			if (player.getHealth() > player.getMaxHealth()) {
-				player.setHealth(player.getMaxHealth());
-			}
-		}
-	}
-	
-	public static ContractsComponent get(PlayerEntity player) {
-		return BWComponents.CONTRACTS_COMPONENT.get(player);
-	}
-	
-	public static Optional<ContractsComponent> maybeGet(PlayerEntity player) {
-		return BWComponents.CONTRACTS_COMPONENT.maybeGet(player);
+	public static Optional<ContractsComponent> maybeGet(PlayerEntity obj) {
+		return BWComponents.CONTRACTS_COMPONENT.maybeGet(obj);
 	}
 }

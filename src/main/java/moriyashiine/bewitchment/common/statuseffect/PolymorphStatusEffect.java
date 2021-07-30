@@ -3,12 +3,11 @@ package moriyashiine.bewitchment.common.statuseffect;
 import com.mojang.authlib.GameProfile;
 import io.github.ladysnake.impersonate.Impersonator;
 import moriyashiine.bewitchment.common.Bewitchment;
-import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
+import moriyashiine.bewitchment.common.entity.component.PolymorphComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectType;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
@@ -21,8 +20,12 @@ public class PolymorphStatusEffect extends StatusEffect {
 	
 	@Override
 	public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-		if (entity instanceof ServerPlayerEntity && ((PolymorphAccessor) entity).getPolymorphUUID() != null) {
-			Impersonator.get((PlayerEntity) entity).impersonate(IMPERSONATE_IDENTIFIER, new GameProfile((((PolymorphAccessor) entity).getPolymorphUUID()), ((PolymorphAccessor) entity).getPolymorphName()));
+		if (entity instanceof ServerPlayerEntity player) {
+			PolymorphComponent.maybeGet(player).ifPresent(polymorphComponent -> {
+				if (polymorphComponent.getUuid() != null) {
+					Impersonator.get(player).impersonate(IMPERSONATE_IDENTIFIER, new GameProfile(polymorphComponent.getUuid(), polymorphComponent.getName()));
+				}
+			});
 		}
 	}
 }

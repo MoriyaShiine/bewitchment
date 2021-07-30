@@ -9,7 +9,7 @@ import moriyashiine.bewitchment.api.component.BloodComponent;
 import moriyashiine.bewitchment.api.component.TransformationComponent;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.Bewitchment;
-import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
+import moriyashiine.bewitchment.common.entity.component.AdditionalWerewolfDataComponent;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
@@ -55,7 +55,7 @@ public class TransformationAbilityPacket {
 			return true;
 		}
 		if (transformationComponent.getTransformation() == BWTransformations.WEREWOLF) {
-			return !((WerewolfAccessor) player).getForcedTransformation();
+			return !AdditionalWerewolfDataComponent.get(player).isForcedTransformation();
 		}
 		return false;
 	}

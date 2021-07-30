@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.api.entity;
 
-import moriyashiine.bewitchment.common.entity.interfaces.BroomUserAccessor;
+import moriyashiine.bewitchment.common.entity.component.BroomUserComponent;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -77,9 +77,9 @@ public class BroomEntity extends Entity {
 		if (isLogicalSideForUpdatingMovement()) {
 			updateTrackedPosition(getX(), getY(), getZ());
 			Entity passenger = getPrimaryPassenger();
-			if (passenger instanceof BroomUserAccessor) {
+			if (passenger instanceof PlayerEntity player) {
 				setRotation(passenger.getYaw(), passenger.getPitch());
-				if (((BroomUserAccessor) passenger).getPressingForward()) {
+				if (BroomUserComponent.get(player).isPressingForward()) {
 					addVelocity(passenger.getRotationVector().x / 8 * getSpeed(), passenger.getRotationVector().y / 8 * getSpeed(), passenger.getRotationVector().z / 8 * getSpeed());
 					setVelocity(MathHelper.clamp(getVelocity().x, -getSpeed(), getSpeed()), MathHelper.clamp(getVelocity().y, -getSpeed(), getSpeed()), MathHelper.clamp(getVelocity().z, -getSpeed(), getSpeed()));
 				}

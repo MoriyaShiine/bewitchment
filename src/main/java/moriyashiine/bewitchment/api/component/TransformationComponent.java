@@ -9,8 +9,8 @@ import moriyashiine.bewitchment.api.event.AllowVampireBurn;
 import moriyashiine.bewitchment.api.event.AllowVampireHeal;
 import moriyashiine.bewitchment.api.event.OnTransformationSet;
 import moriyashiine.bewitchment.api.registry.Transformation;
-import moriyashiine.bewitchment.common.entity.interfaces.RespawnTimerAccessor;
-import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
+import moriyashiine.bewitchment.common.entity.component.AdditionalWerewolfDataComponent;
+import moriyashiine.bewitchment.common.entity.component.RespawnTimerComponent;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
 import moriyashiine.bewitchment.common.registry.BWComponents;
@@ -49,31 +49,12 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 	private static final EntityAttributeModifier WEREWOLF_MOVEMENT_SPEED_MODIFIER_0 = new EntityAttributeModifier(UUID.fromString("e26a276a-86cd-44db-9091-acd42fc00d95"), "Transformation modifier", 0.08, EntityAttributeModifier.Operation.ADDITION);
 	private static final EntityAttributeModifier WEREWOLF_MOVEMENT_SPEED_MODIFIER_1 = new EntityAttributeModifier(UUID.fromString("718104a6-aa19-4b53-bad9-1f9edd46d38a"), "Transformation modifier", 0.16, EntityAttributeModifier.Operation.ADDITION);
 	
-	private final PlayerEntity player;
+	private final PlayerEntity obj;
 	private Transformation transformation = BWTransformations.HUMAN;
 	private boolean alternateForm = false;
 	
-	public TransformationComponent(PlayerEntity player) {
-		this.player = player;
-	}
-	
-	public Transformation getTransformation() {
-		return transformation;
-	}
-	
-	public void setTransformation(Transformation transformation) {
-		OnTransformationSet.EVENT.invoker().onTransformationSet(player, transformation);
-		this.transformation = transformation;
-		BWComponents.TRANSFORMATION_COMPONENT.sync(player);
-	}
-	
-	public boolean isAlternateForm() {
-		return alternateForm;
-	}
-	
-	public void setAlternateForm(boolean alternateForm) {
-		this.alternateForm = alternateForm;
-		BWComponents.TRANSFORMATION_COMPONENT.sync(player);
+	public TransformationComponent(PlayerEntity obj) {
+		this.obj = obj;
 	}
 	
 	@Override
@@ -94,17 +75,17 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void serverTick() {
-		boolean vampire = BewitchmentAPI.isVampire(player, true);
-		boolean werewolfBeast = BewitchmentAPI.isWerewolf(player, false);
-		EntityAttributeInstance attackDamageAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
-		EntityAttributeInstance attackSpeedAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_SPEED);
-		EntityAttributeInstance armorAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR);
-		EntityAttributeInstance armorToughnessAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS);
-		EntityAttributeInstance movementSpeedAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
-		EntityAttributeInstance attackRange = player.getAttributeInstance(ReachEntityAttributes.ATTACK_RANGE);
-		EntityAttributeInstance reach = player.getAttributeInstance(ReachEntityAttributes.REACH);
-		EntityAttributeInstance stepHeight = player.getAttributeInstance(StepHeightEntityAttributeMain.STEP_HEIGHT);
-		boolean shouldHave = vampire && !BewitchmentAPI.isPledged(player, BWPledges.LILITH);
+		boolean vampire = BewitchmentAPI.isVampire(obj, true);
+		boolean werewolfBeast = BewitchmentAPI.isWerewolf(obj, false);
+		EntityAttributeInstance attackDamageAttribute = obj.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+		EntityAttributeInstance attackSpeedAttribute = obj.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_SPEED);
+		EntityAttributeInstance armorAttribute = obj.getAttributeInstance(EntityAttributes.GENERIC_ARMOR);
+		EntityAttributeInstance armorToughnessAttribute = obj.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS);
+		EntityAttributeInstance movementSpeedAttribute = obj.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+		EntityAttributeInstance attackRange = obj.getAttributeInstance(ReachEntityAttributes.ATTACK_RANGE);
+		EntityAttributeInstance reach = obj.getAttributeInstance(ReachEntityAttributes.REACH);
+		EntityAttributeInstance stepHeight = obj.getAttributeInstance(StepHeightEntityAttributeMain.STEP_HEIGHT);
+		boolean shouldHave = vampire && !BewitchmentAPI.isPledged(obj, BWPledges.LILITH);
 		if (shouldHave && !attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0)) {
 			attackDamageAttribute.addPersistentModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0);
 			movementSpeedAttribute.addPersistentModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_0);
@@ -113,7 +94,7 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 			attackDamageAttribute.removeModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_0);
 			movementSpeedAttribute.removeModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_0);
 		}
-		shouldHave = vampire && BewitchmentAPI.isPledged(player, BWPledges.LILITH);
+		shouldHave = vampire && BewitchmentAPI.isPledged(obj, BWPledges.LILITH);
 		if (shouldHave && !attackDamageAttribute.hasModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_1)) {
 			attackDamageAttribute.addPersistentModifier(VAMPIRE_ATTACK_DAMAGE_MODIFIER_1);
 			movementSpeedAttribute.addPersistentModifier(VAMPIRE_MOVEMENT_SPEED_MODIFIER_1);
@@ -137,7 +118,7 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 			reach.removeModifier(WEREWOLF_REACH_MODIFIER);
 			stepHeight.removeModifier(WEREWOLF_STEP_HEIGHT_MODIFIER);
 		}
-		shouldHave = werewolfBeast && !BewitchmentAPI.isPledged(player, BWPledges.HERNE);
+		shouldHave = werewolfBeast && !BewitchmentAPI.isPledged(obj, BWPledges.HERNE);
 		if (shouldHave && !attackDamageAttribute.hasModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_0)) {
 			attackDamageAttribute.addPersistentModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_0);
 			armorToughnessAttribute.addPersistentModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_0);
@@ -148,7 +129,7 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 			armorToughnessAttribute.removeModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_0);
 			movementSpeedAttribute.removeModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_0);
 		}
-		shouldHave = werewolfBeast && BewitchmentAPI.isPledged(player, BWPledges.HERNE);
+		shouldHave = werewolfBeast && BewitchmentAPI.isPledged(obj, BWPledges.HERNE);
 		if (shouldHave && !attackDamageAttribute.hasModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_1)) {
 			attackDamageAttribute.addPersistentModifier(WEREWOLF_ATTACK_DAMAGE_MODIFIER_1);
 			armorToughnessAttribute.addPersistentModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_1);
@@ -160,20 +141,20 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 			movementSpeedAttribute.removeModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_1);
 		}
 		if (vampire) {
-			boolean pledgedToLilith = BewitchmentAPI.isPledged(player, BWPledges.LILITH);
-			player.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
-			if (((RespawnTimerAccessor) player).getRespawnTimer() <= 0 && player.world.isDay() && !player.world.isRaining() && player.world.isSkyVisible(player.getBlockPos()) && AllowVampireBurn.EVENT.invoker().allowBurn(player)) {
-				player.setOnFireFor(8);
+			boolean pledgedToLilith = BewitchmentAPI.isPledged(obj, BWPledges.LILITH);
+			obj.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
+			if (RespawnTimerComponent.get(obj).getRespawnTimer() <= 0 && obj.world.isDay() && !obj.world.isRaining() && obj.world.isSkyVisible(obj.getBlockPos()) && AllowVampireBurn.EVENT.invoker().allowBurn(obj)) {
+				obj.setOnFireFor(8);
 			}
-			HungerManager hungerManager = player.getHungerManager();
-			if (BloodComponent.get(player).getBlood() > 0) {
-				if (AllowVampireHeal.EVENT.invoker().allowHeal(player, pledgedToLilith)) {
-					if (player.age % (pledgedToLilith ? 30 : 40) == 0) {
-						if (player.getHealth() < player.getMaxHealth()) {
-							player.heal(1);
+			HungerManager hungerManager = obj.getHungerManager();
+			if (BloodComponent.get(obj).getBlood() > 0) {
+				if (AllowVampireHeal.EVENT.invoker().allowHeal(obj, pledgedToLilith)) {
+					if (obj.age % (pledgedToLilith ? 30 : 40) == 0) {
+						if (obj.getHealth() < obj.getMaxHealth()) {
+							obj.heal(1);
 							hungerManager.addExhaustion(3);
 						}
-						if ((hungerManager.isNotFull() || hungerManager.getSaturationLevel() < 10) && BloodComponent.get(player).drainBlood(1, false)) {
+						if ((hungerManager.isNotFull() || hungerManager.getSaturationLevel() < 10) && BloodComponent.get(obj).drainBlood(1, false)) {
 							hungerManager.add(1, 20);
 						}
 					}
@@ -181,48 +162,68 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 			}
 			else {
 				if (isAlternateForm()) {
-					TransformationAbilityPacket.useAbility(player, true);
+					TransformationAbilityPacket.useAbility(obj, true);
 				}
 				hungerManager.addExhaustion(Float.MAX_VALUE);
 			}
 			if (isAlternateForm()) {
 				hungerManager.addExhaustion(0.5f);
 				if (!pledgedToLilith) {
-					TransformationAbilityPacket.useAbility(player, true);
+					TransformationAbilityPacket.useAbility(obj, true);
 				}
 			}
 		}
-		if (BewitchmentAPI.isWerewolf(player, true)) {
-			boolean forced = ((WerewolfAccessor) player).getForcedTransformation();
-			if (!isAlternateForm() && player.world.isNight() && BewitchmentAPI.getMoonPhase(player.world) == 0 && player.world.isSkyVisible(player.getBlockPos())) {
-				TransformationAbilityPacket.useAbility(player, true);
-				((WerewolfAccessor) player).setForcedTransformation(true);
+		if (BewitchmentAPI.isWerewolf(obj, true)) {
+			AdditionalWerewolfDataComponent additionalWerewolfDataComponent = AdditionalWerewolfDataComponent.get(obj);
+			boolean forced = additionalWerewolfDataComponent.isForcedTransformation();
+			if (!isAlternateForm() && obj.world.isNight() && BewitchmentAPI.getMoonPhase(obj.world) == 0 && obj.world.isSkyVisible(obj.getBlockPos())) {
+				TransformationAbilityPacket.useAbility(obj, true);
+				additionalWerewolfDataComponent.setForcedTransformation(true);
 			}
-			else if (isAlternateForm() && forced && (player.world.isDay() || BewitchmentAPI.getMoonPhase(player.world) != 0)) {
-				TransformationAbilityPacket.useAbility(player, true);
-				((WerewolfAccessor) player).setForcedTransformation(false);
+			else if (isAlternateForm() && forced && (obj.world.isDay() || BewitchmentAPI.getMoonPhase(obj.world) != 0)) {
+				TransformationAbilityPacket.useAbility(obj, true);
+				additionalWerewolfDataComponent.setForcedTransformation(false);
 			}
 			if (isAlternateForm()) {
-				player.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
-				player.getArmorItems().forEach(stack -> player.dropStack(stack.split(1)));
-				if (BWUtil.isTool(player.getMainHandStack())) {
-					player.dropStack(player.getMainHandStack().split(1));
+				obj.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
+				obj.getArmorItems().forEach(stack -> obj.dropStack(stack.split(1)));
+				if (BWUtil.isTool(obj.getMainHandStack())) {
+					obj.dropStack(obj.getMainHandStack().split(1));
 				}
-				if (BWUtil.isTool(player.getOffHandStack())) {
-					player.dropStack(player.getOffHandStack().split(1));
+				if (BWUtil.isTool(obj.getOffHandStack())) {
+					obj.dropStack(obj.getOffHandStack().split(1));
 				}
-				if (!forced && !BewitchmentAPI.isPledged(player, BWPledges.HERNE)) {
-					TransformationAbilityPacket.useAbility(player, true);
+				if (!forced && !BewitchmentAPI.isPledged(obj, BWPledges.HERNE)) {
+					TransformationAbilityPacket.useAbility(obj, true);
 				}
 			}
 		}
 	}
 	
-	public static TransformationComponent get(PlayerEntity player) {
-		return BWComponents.TRANSFORMATION_COMPONENT.get(player);
+	public Transformation getTransformation() {
+		return transformation;
 	}
 	
-	public static Optional<TransformationComponent> maybeGet(PlayerEntity player) {
-		return BWComponents.TRANSFORMATION_COMPONENT.maybeGet(player);
+	public void setTransformation(Transformation transformation) {
+		OnTransformationSet.EVENT.invoker().onTransformationSet(obj, transformation);
+		this.transformation = transformation;
+		BWComponents.TRANSFORMATION_COMPONENT.sync(obj);
+	}
+	
+	public boolean isAlternateForm() {
+		return alternateForm;
+	}
+	
+	public void setAlternateForm(boolean alternateForm) {
+		this.alternateForm = alternateForm;
+		BWComponents.TRANSFORMATION_COMPONENT.sync(obj);
+	}
+	
+	public static TransformationComponent get(PlayerEntity obj) {
+		return BWComponents.TRANSFORMATION_COMPONENT.get(obj);
+	}
+	
+	public static Optional<TransformationComponent> maybeGet(PlayerEntity obj) {
+		return BWComponents.TRANSFORMATION_COMPONENT.maybeGet(obj);
 	}
 }

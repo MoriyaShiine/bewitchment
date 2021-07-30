@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.mixin.curse;
 
 import moriyashiine.bewitchment.api.component.CursesComponent;
-import moriyashiine.bewitchment.common.entity.interfaces.InsanityTargetAccessor;
+import moriyashiine.bewitchment.common.entity.component.FakeMobComponent;
 import moriyashiine.bewitchment.common.registry.BWCurses;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -9,6 +9,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectType;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+@SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
 	public LivingEntityMixin(EntityType<?> type, World world) {
@@ -48,8 +50,8 @@ public abstract class LivingEntityMixin extends Entity {
 	
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!world.isClient && this instanceof InsanityTargetAccessor && ((InsanityTargetAccessor) this).getInsanityTargetUUID().isPresent()) {
-			callbackInfo.setReturnValue(false);
+		if (!world.isClient && (Object) this instanceof MobEntity mob && FakeMobComponent.get(mob).getTarget() != null) {
+			callbackInfo.cancel();
 		}
 	}
 	

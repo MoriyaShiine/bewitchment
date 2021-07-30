@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.entity.projectile;
 
-import moriyashiine.bewitchment.common.entity.interfaces.MasterAccessor;
+import moriyashiine.bewitchment.common.entity.component.MinionComponent;
 import moriyashiine.bewitchment.common.entity.living.HerneEntity;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import net.fabricmc.api.EnvType;
@@ -10,6 +10,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
@@ -78,7 +79,7 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 			EntityHitResult collision = ProjectileUtil.getEntityCollision(this.world, this, currentPosition, nextPosition, getBoundingBox().stretch(getVelocity()).expand(1), this::canHit);
 			if (collision != null) {
 				Entity entity = collision.getEntity();
-				if (entity instanceof MasterAccessor && getOwner().getUuid().equals(((MasterAccessor) entity).getMasterUUID())) {
+				if (entity instanceof MobEntity mob && getOwner().getUuid().equals(MinionComponent.get(mob).getMaster())) {
 					return null;
 				}
 			}

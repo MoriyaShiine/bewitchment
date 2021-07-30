@@ -1,21 +1,16 @@
 package moriyashiine.bewitchment.mixin.transformation;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
 import moriyashiine.bewitchment.common.registry.BWDamageSources;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -25,47 +20,15 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity implements WerewolfAccessor {
-	private static final TrackedData<Integer> WEREWOLF_VARIANT = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
-	
-	private boolean forcedTransformation = false;
-	
+public abstract class PlayerEntityMixin extends LivingEntity {
 	@Shadow
 	public abstract SoundCategory getSoundCategory();
 	
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
-	}
-	
-	@Override
-	public boolean getForcedTransformation() {
-		return forcedTransformation;
-	}
-	
-	@Override
-	public void setForcedTransformation(boolean forcedTransformation) {
-		this.forcedTransformation = forcedTransformation;
-	}
-	
-	@Override
-	public int getWerewolfVariant() {
-		return dataTracker.get(WEREWOLF_VARIANT);
-	}
-	
-	@Override
-	public void setWerewolfVariant(int variant) {
-		dataTracker.set(WEREWOLF_VARIANT, variant);
-	}
-	
-	@Inject(method = "tick", at = @At("HEAD"))
-	private void tickHead(CallbackInfo callbackInfo) {
-		if (BewitchmentAPI.isWerewolf(this, false)) {
-			flyingSpeed *= 1.5f;
-		}
 	}
 	
 	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 0, target = "Lnet/minecraft/entity/player/PlayerEntity;getHealth()F"))
@@ -120,22 +83,5 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Werewolf
 				}
 			}
 		}
-	}
-	
-	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
-	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
-		setForcedTransformation(nbt.getBoolean("ForcedTransformation"));
-		setWerewolfVariant(nbt.getInt("WerewolfVariant"));
-	}
-	
-	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
-	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
-		nbt.putBoolean("ForcedTransformation", getForcedTransformation());
-		nbt.putInt("WerewolfVariant", getWerewolfVariant());
-	}
-	
-	@Inject(method = "initDataTracker", at = @At("TAIL"))
-	private void initDataTracker(CallbackInfo callbackInfo) {
-		dataTracker.startTracking(WEREWOLF_VARIANT, 0);
 	}
 }

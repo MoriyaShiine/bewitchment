@@ -13,19 +13,11 @@ import net.minecraft.util.Identifier;
 import java.util.Optional;
 
 public class FortuneComponent implements ComponentV3, ServerTickingComponent {
-	private final PlayerEntity player;
+	private final PlayerEntity obj;
 	private Fortune.Instance fortune = null;
 	
-	public FortuneComponent(PlayerEntity player) {
-		this.player = player;
-	}
-	
-	public Fortune.Instance getFortune() {
-		return fortune;
-	}
-	
-	public void setFortune(Fortune.Instance fortune) {
-		this.fortune = fortune;
+	public FortuneComponent(PlayerEntity obj) {
+		this.obj = obj;
 	}
 	
 	@Override
@@ -47,28 +39,36 @@ public class FortuneComponent implements ComponentV3, ServerTickingComponent {
 	@Override
 	public void serverTick() {
 		if (getFortune() != null) {
-			if (getFortune().fortune.tick((ServerWorld) player.world, player)) {
+			if (getFortune().fortune.tick((ServerWorld) obj.world, obj)) {
 				getFortune().duration = 0;
 			}
 			else {
 				getFortune().duration--;
 			}
 			if (getFortune().duration <= 0) {
-				if (getFortune().fortune.finish((ServerWorld) player.world, player)) {
+				if (getFortune().fortune.finish((ServerWorld) obj.world, obj)) {
 					setFortune(null);
 				}
 				else {
-					getFortune().duration = player.getRandom().nextInt(120000);
+					getFortune().duration = obj.getRandom().nextInt(120000);
 				}
 			}
 		}
 	}
 	
-	public static FortuneComponent get(PlayerEntity player) {
-		return BWComponents.FORTUNE_COMPONENT.get(player);
+	public Fortune.Instance getFortune() {
+		return fortune;
 	}
 	
-	public static Optional<FortuneComponent> maybeGet(PlayerEntity player) {
-		return BWComponents.FORTUNE_COMPONENT.maybeGet(player);
+	public void setFortune(Fortune.Instance fortune) {
+		this.fortune = fortune;
+	}
+	
+	public static FortuneComponent get(PlayerEntity obj) {
+		return BWComponents.FORTUNE_COMPONENT.get(obj);
+	}
+	
+	public static Optional<FortuneComponent> maybeGet(PlayerEntity obj) {
+		return BWComponents.FORTUNE_COMPONENT.maybeGet(obj);
 	}
 }

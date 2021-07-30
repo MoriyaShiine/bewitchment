@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.common.entity.interfaces.CaduceusFireballAccessor;
+import moriyashiine.bewitchment.common.entity.component.CaduceusFireballComponent;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -19,7 +19,6 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
-@SuppressWarnings("ConstantConditions")
 public class CaduceusItem extends MiningToolItem {
 	public CaduceusItem(float attackDamage, float attackSpeed, ToolMaterial material, Tag<Block> effectiveBlocks, Settings settings) {
 		super(attackDamage, attackSpeed, material, effectiveBlocks, settings);
@@ -37,7 +36,7 @@ public class CaduceusItem extends MiningToolItem {
 				FireballEntity fireball = new FireballEntity(world, user, user.getRotationVector().x, user.getRotationVector().y, user.getRotationVector().z, 1);
 				fireball.setOwner(user);
 				fireball.setPos(fireball.getX(), fireball.getY() + 1, fireball.getZ());
-				((CaduceusFireballAccessor) fireball).setFromCaduceus(true);
+				CaduceusFireballComponent.get(fireball).setFromCaduceus(true);
 				world.playSound(null, user.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_SHOOT, SoundCategory.HOSTILE, 1, 1);
 				world.spawnEntity(fireball);
 				stack.damage(1, user, stackUser -> stackUser.sendToolBreakStatus(user.getActiveHand()));

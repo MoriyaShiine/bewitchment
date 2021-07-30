@@ -7,7 +7,7 @@ import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.client.network.packet.SyncContractsPacket;
 import moriyashiine.bewitchment.client.network.packet.SyncDemonTradesPacket;
 import moriyashiine.bewitchment.client.screen.BaphometScreenHandler;
-import moriyashiine.bewitchment.common.entity.interfaces.DemonMerchant;
+import moriyashiine.bewitchment.common.entity.DemonMerchant;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWPledges;

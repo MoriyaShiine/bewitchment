@@ -16,11 +16,37 @@ import java.util.List;
 import java.util.Optional;
 
 public class CursesComponent implements ComponentV3, ServerTickingComponent {
-	private final LivingEntity entity;
+	private final LivingEntity obj;
 	private final List<Curse.Instance> curses = new ArrayList<>();
 	
-	public CursesComponent(LivingEntity player) {
-		this.entity = player;
+	public CursesComponent(LivingEntity obj) {
+		this.obj = obj;
+	}
+	
+	@Override
+	public void readFromNbt(NbtCompound tag) {
+		NbtList curses = tag.getList("Curses", NbtType.COMPOUND);
+		for (int i = 0; i < curses.size(); i++) {
+			NbtCompound curse = curses.getCompound(i);
+			addCurse(new Curse.Instance(BWRegistries.CURSES.get(new Identifier(curse.getString("Curse"))), curse.getInt("Duration")));
+		}
+	}
+	
+	@Override
+	public void writeToNbt(NbtCompound tag) {
+		tag.put("Curses", toNbtCurse());
+	}
+	
+	@Override
+	public void serverTick() {
+		for (int i = curses.size() - 1; i >= 0; i--) {
+			Curse.Instance instance = curses.get(i);
+			instance.curse.tick(obj);
+			instance.duration--;
+			if (instance.duration <= 0) {
+				curses.remove(i);
+			}
+		}
 	}
 	
 	public List<Curse.Instance> getCurses() {
@@ -65,37 +91,11 @@ public class CursesComponent implements ComponentV3, ServerTickingComponent {
 		return curseList;
 	}
 	
-	@Override
-	public void readFromNbt(NbtCompound tag) {
-		NbtList curses = tag.getList("Curses", NbtType.COMPOUND);
-		for (int i = 0; i < curses.size(); i++) {
-			NbtCompound curse = curses.getCompound(i);
-			addCurse(new Curse.Instance(BWRegistries.CURSES.get(new Identifier(curse.getString("Curse"))), curse.getInt("Duration")));
-		}
+	public static CursesComponent get(LivingEntity obj) {
+		return BWComponents.CURSES_COMPONENT.get(obj);
 	}
 	
-	@Override
-	public void writeToNbt(NbtCompound tag) {
-		tag.put("Curses", toNbtCurse());
-	}
-	
-	@Override
-	public void serverTick() {
-		for (int i = curses.size() - 1; i >= 0; i--) {
-			Curse.Instance instance = curses.get(i);
-			instance.curse.tick(entity);
-			instance.duration--;
-			if (instance.duration <= 0) {
-				curses.remove(i);
-			}
-		}
-	}
-	
-	public static CursesComponent get(LivingEntity entity) {
-		return BWComponents.CURSES_COMPONENT.get(entity);
-	}
-	
-	public static Optional<CursesComponent> maybeGet(LivingEntity entity) {
-		return BWComponents.CURSES_COMPONENT.maybeGet(entity);
+	public static Optional<CursesComponent> maybeGet(LivingEntity obj) {
+		return BWComponents.CURSES_COMPONENT.maybeGet(obj);
 	}
 }

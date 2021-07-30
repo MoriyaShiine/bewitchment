@@ -12,7 +12,7 @@ import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
-import moriyashiine.bewitchment.common.entity.interfaces.*;
+import moriyashiine.bewitchment.common.entity.component.AdditionalWerewolfDataComponent;
 import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.network.packet.CauldronTeleportPacket;
@@ -76,19 +76,10 @@ public class Bewitchment implements ModInitializer {
 		CommandRegistrationCallback.EVENT.register(BWCommands::init);
 		BWCommands.registerArgumentTypes();
 		ServerLifecycleEvents.SERVER_STOPPED.register(server -> BewitchmentAPI.fakePlayer = null);
-		ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
-			if (alive) {
-				((RespawnTimerAccessor) newPlayer).setRespawnTimer(((RespawnTimerAccessor) oldPlayer).getRespawnTimer());
-				((TrueInvisibleAccessor) newPlayer).setTrueInvisible(((TrueInvisibleAccessor) oldPlayer).getTrueInvisible());
-				((SubmergedInWaterAccessor) newPlayer).setSubmergedInWater(((SubmergedInWaterAccessor) oldPlayer).getSubmergedInWater());
-				((WerewolfAccessor) newPlayer).setForcedTransformation(((WerewolfAccessor) oldPlayer).getForcedTransformation());
-			}
-			((PolymorphAccessor) newPlayer).setPolymorphUUID(((PolymorphAccessor) oldPlayer).getPolymorphUUID());
-			((PolymorphAccessor) newPlayer).setPolymorphName(((PolymorphAccessor) oldPlayer).getPolymorphName());
-			((PledgeAccessor) newPlayer).setPledge(((PledgeAccessor) oldPlayer).getPledge());
-			((WerewolfAccessor) newPlayer).setWerewolfVariant(((WerewolfAccessor) oldPlayer).getWerewolfVariant());
+		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
+			TransformationComponent.get(newPlayer).setAlternateForm(false);
+			AdditionalWerewolfDataComponent.get(newPlayer).setForcedTransformation(false);
 		});
-		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> TransformationComponent.get(newPlayer).setAlternateForm(false));
 		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killedEntity) -> {
 			if (entity instanceof LivingEntity livingEntity) {
 				if (livingEntity instanceof PlayerEntity && killedEntity.getGroup() == EntityGroup.ARTHROPOD && BewitchmentAPI.getFamiliar((PlayerEntity) livingEntity) == BWEntityTypes.TOAD) {

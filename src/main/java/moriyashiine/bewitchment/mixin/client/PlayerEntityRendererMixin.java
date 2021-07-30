@@ -4,7 +4,7 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.entity.BroomEntity;
 import moriyashiine.bewitchment.client.renderer.ContributorHornsFeatureRenderer;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
-import moriyashiine.bewitchment.common.entity.interfaces.TrueInvisibleAccessor;
+import moriyashiine.bewitchment.common.entity.component.FullInvisibilityComponent;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -46,7 +46,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 			callbackInfo.cancel();
 			return;
 		}
-		if (((TrueInvisibleAccessor) player).getTrueInvisible()) {
+		if (FullInvisibilityComponent.get(player).isFullInvisible()) {
 			callbackInfo.cancel();
 			return;
 		}

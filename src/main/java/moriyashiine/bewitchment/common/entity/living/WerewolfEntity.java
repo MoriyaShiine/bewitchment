@@ -5,7 +5,7 @@ import dev.emi.stepheightentityattribute.StepHeightEntityAttributeMain;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.component.CursesComponent;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
-import moriyashiine.bewitchment.common.entity.interfaces.VillagerWerewolfAccessor;
+import moriyashiine.bewitchment.common.entity.component.WerewolfVillagerComponent;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
@@ -53,7 +53,7 @@ public class WerewolfEntity extends BWHostileEntity {
 			}
 			if (storedVillager != null && age % 20 == 0 && (world.isDay() || BewitchmentAPI.getMoonPhase(world) != 0)) {
 				VillagerEntity entity = EntityType.VILLAGER.create(world);
-				if (entity instanceof VillagerWerewolfAccessor) {
+				if (entity != null) {
 					PlayerLookup.tracking(this).forEach(player -> SpawnSmokeParticlesPacket.send(player, this));
 					world.playSound(null, getX(), getY(), getZ(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, getSoundCategory(), getSoundVolume(), getSoundPitch());
 					entity.readNbt(storedVillager);
@@ -66,7 +66,7 @@ public class WerewolfEntity extends BWHostileEntity {
 						entityCursesComponent.getCurses().clear();
 						thisCursesComponent.getCurses().forEach(entityCursesComponent::addCurse);
 					}));
-					((VillagerWerewolfAccessor) entity).setStoredWerewolf(writeNbt(new NbtCompound()));
+					WerewolfVillagerComponent.get(entity).setStoredWerewolf(writeNbt(new NbtCompound()));
 					world.spawnEntity(entity);
 					remove(RemovalReason.DISCARDED);
 				}

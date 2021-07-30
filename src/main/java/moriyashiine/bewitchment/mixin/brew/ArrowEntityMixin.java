@@ -1,10 +1,12 @@
 package moriyashiine.bewitchment.mixin.brew;
 
-import moriyashiine.bewitchment.common.entity.interfaces.PolymorphAccessor;
+import moriyashiine.bewitchment.common.entity.component.PolymorphComponent;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,71 +14,42 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import java.util.UUID;
-
-@SuppressWarnings("ConstantConditions")
 @Mixin(ArrowEntity.class)
-public class ArrowEntityMixin implements PolymorphAccessor {
-	private UUID polymorphUUID;
-	private String polymorphName;
-	
-	@Override
-	public UUID getPolymorphUUID() {
-		return polymorphUUID;
-	}
-	
-	@Override
-	public void setPolymorphUUID(UUID uuid) {
-		this.polymorphUUID = uuid;
-	}
-	
-	@Override
-	public String getPolymorphName() {
-		return polymorphName;
-	}
-	
-	@Override
-	public void setPolymorphName(String name) {
-		this.polymorphName = name;
+public abstract class ArrowEntityMixin extends Entity {
+	public ArrowEntityMixin(EntityType<?> type, World world) {
+		super(type, world);
 	}
 	
 	@Inject(method = "asItemStack", at = @At(value = "RETURN", ordinal = 1), locals = LocalCapture.CAPTURE_FAILSOFT)
 	private void asItemStack(CallbackInfoReturnable<ItemStack> callbackInfo, ItemStack stack) {
-		if (getPolymorphUUID() != null) {
-			stack.getOrCreateNbt().putUuid("PolymorphUUID", getPolymorphUUID());
-			stack.getOrCreateNbt().putString("PolymorphName", getPolymorphName());
-		}
+		PolymorphComponent.maybeGet(this).ifPresent(polymorphComponent -> {
+			if (polymorphComponent.getUuid() != null) {
+				stack.getOrCreateNbt().putUuid("PolymorphUUID", polymorphComponent.getUuid());
+				stack.getOrCreateNbt().putString("PolymorphName", polymorphComponent.getName());
+			}
+		});
 	}
 	
 	@Inject(method = "onHit", at = @At("HEAD"))
 	private void onHit(LivingEntity target, CallbackInfo callbackInfo) {
-		if (getPolymorphUUID() != null && target instanceof PolymorphAccessor polymorphAccessor) {
-			polymorphAccessor.setPolymorphUUID(getPolymorphUUID());
-			polymorphAccessor.setPolymorphName(getPolymorphName());
-		}
+		PolymorphComponent.maybeGet(this).ifPresent(thisPolymorphComponent -> {
+			if (thisPolymorphComponent.getUuid() != null) {
+				PolymorphComponent.maybeGet(target).ifPresent(targetPolymorphComponent -> {
+					targetPolymorphComponent.setUuid(thisPolymorphComponent.getUuid());
+					targetPolymorphComponent.setName(thisPolymorphComponent.getName());
+				});
+			}
+		});
 	}
 	
+	@SuppressWarnings("ConstantConditions")
 	@Inject(method = "initFromStack", at = @At("TAIL"))
 	private void initFromStack(ItemStack stack, CallbackInfo callbackInfo) {
-		if (stack.hasNbt() && stack.getNbt().contains("PolymorphUUID")) {
-			setPolymorphUUID(stack.getNbt().getUuid("PolymorphUUID"));
-			setPolymorphName(stack.getNbt().getString("PolymorphName"));
-		}
-	}
-	
-	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
-	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
-		if (nbt.contains("PolymorphUUID")) {
-			polymorphUUID = nbt.getUuid("PolymorphUUID");
-			polymorphName = nbt.getString("PolymorphName");
-		}
-	}
-	
-	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
-	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
-		if (polymorphUUID != null) {
-			nbt.putUuid("PolymorphUUID", polymorphUUID);
-			nbt.putString("PolymorphName", polymorphName);
-		}
+		PolymorphComponent.maybeGet(this).ifPresent(polymorphComponent -> {
+			if (stack.hasNbt() && stack.getNbt().contains("PolymorphUUID")) {
+				polymorphComponent.setUuid(stack.getNbt().getUuid("PolymorphUUID"));
+				polymorphComponent.setName(stack.getNbt().getString("PolymorphName"));
+			}
+		});
 	}
 }

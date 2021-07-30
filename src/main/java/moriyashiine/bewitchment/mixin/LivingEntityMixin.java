@@ -2,8 +2,8 @@ package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.entity.Pledgeable;
-import moriyashiine.bewitchment.common.entity.interfaces.CaduceusFireballAccessor;
-import moriyashiine.bewitchment.common.entity.interfaces.MasterAccessor;
+import moriyashiine.bewitchment.common.entity.component.CaduceusFireballComponent;
+import moriyashiine.bewitchment.common.entity.component.MinionComponent;
 import moriyashiine.bewitchment.common.entity.living.BaphometEntity;
 import moriyashiine.bewitchment.common.entity.living.HerneEntity;
 import moriyashiine.bewitchment.common.entity.living.LeonardEntity;
@@ -19,6 +19,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.entity.projectile.WitherSkullEntity;
@@ -100,8 +101,8 @@ public abstract class LivingEntityMixin extends Entity {
 		if (!world.isClient) {
 			Entity trueSource = source.getAttacker();
 			Entity directSource = source.getSource();
-			if (directSource instanceof FireballEntity) {
-				if (trueSource instanceof PlayerEntity && ((CaduceusFireballAccessor) directSource).getFromCaduceus()) {
+			if (directSource instanceof FireballEntity fireball) {
+				if (trueSource instanceof PlayerEntity && CaduceusFireballComponent.get(fireball).isFromCaduceus()) {
 					amount *= 1.5f;
 				}
 				if (trueSource instanceof BaphometEntity) {
@@ -154,14 +155,14 @@ public abstract class LivingEntityMixin extends Entity {
 	
 	@Inject(method = "dropLoot", at = @At("HEAD"), cancellable = true)
 	private void dropLoot(DamageSource source, boolean causedByPlayer, CallbackInfo callbackInfo) {
-		if (this instanceof MasterAccessor && ((MasterAccessor) this).getMasterUUID() != null) {
+		if ((Object) this instanceof MobEntity mob && MinionComponent.get(mob).getMaster() != null) {
 			callbackInfo.cancel();
 		}
 	}
 	
 	@Inject(method = "isAffectedBySplashPotions", at = @At("RETURN"), cancellable = true)
 	private void isAffectedBySplashPotions(CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (callbackInfo.getReturnValue() && this instanceof MasterAccessor && ((MasterAccessor) this).getMasterUUID() != null) {
+		if (callbackInfo.getReturnValue() && (Object) this instanceof MobEntity mob && MinionComponent.get(mob).getMaster() != null) {
 			callbackInfo.setReturnValue(false);
 		}
 	}

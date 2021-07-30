@@ -27,7 +27,7 @@ import moriyashiine.bewitchment.client.screen.DemonScreen;
 import moriyashiine.bewitchment.client.screen.DemonScreenHandler;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.BWChestBlockEntity;
-import moriyashiine.bewitchment.common.entity.interfaces.BroomUserAccessor;
+import moriyashiine.bewitchment.common.entity.component.BroomUserComponent;
 import moriyashiine.bewitchment.common.entity.living.DemonEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.network.packet.TogglePressingForwardPacket;
@@ -326,7 +326,6 @@ public class BewitchmentClient implements ClientModInitializer {
 			public void render(ItemStack stack, SlotReference slotReference, EntityModel<? extends LivingEntity> contextModel, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, LivingEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
 				if (MODEL == null) {
 					MODEL = new ZephyrHarnessModel(getPart(ZEPHYR_HARNESS_MODEL_LAYER));
-					;
 				}
 				TrinketRenderer.translateToChest(matrices, (PlayerEntityModel<AbstractClientPlayerEntity>) contextModel, (AbstractClientPlayerEntity) entity);
 				MODEL.render(matrices, vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(TEXTURE)), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
@@ -345,7 +344,7 @@ public class BewitchmentClient implements ClientModInitializer {
 						transformationAbilityCooldown = 20;
 						TransformationAbilityPacket.send();
 					}
-					if (((BroomUserAccessor) minecraftClient.player).getPressingForward()) {
+					if (BroomUserComponent.get(minecraftClient.player).isPressingForward()) {
 						TogglePressingForwardPacket.send(false);
 					}
 					if (MinecraftClient.getInstance().options.keyForward.isPressed() && minecraftClient.player.getVehicle() instanceof BroomEntity) {

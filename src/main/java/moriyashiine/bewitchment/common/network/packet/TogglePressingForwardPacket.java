@@ -3,7 +3,7 @@ package moriyashiine.bewitchment.common.network.packet;
 import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.Bewitchment;
-import moriyashiine.bewitchment.common.entity.interfaces.BroomUserAccessor;
+import moriyashiine.bewitchment.common.entity.component.BroomUserComponent;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
@@ -33,7 +33,7 @@ public class TogglePressingForwardPacket {
 					BewitchmentAPI.drainMagic(player, 1, false);
 				}
 			}
-			((BroomUserAccessor) player).setPressingForward(pressingForward);
+			BroomUserComponent.get(player).setPressingForward(pressingForward);
 		});
 	}
 }

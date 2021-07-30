@@ -12,7 +12,6 @@
 	"DamageEnchantmentMixin",
 	"EntityMixin",
 	"ExplosiveProjectileEntityMixin",
-	"FireballEntityMixin",
 	"FollowTargetGoalMixin",
 	"HopperBlockEntityMixin",
 	"ItemStackArgumentMixin",
@@ -61,7 +60,6 @@
 	"pledge.EntityMixin",
 	"pledge.LivingEntityMixin",
 	"pledge.MobEntityMixin",
-	"pledge.PlayerEntityMixin",
 	"poppet.EntityMixin",
 	"poppet.ItemEntityMixin",
 	"poppet.ItemStackMixin",
@@ -78,8 +76,7 @@
 	"transformation.ProtectionEnchantmentMixin",
 	"transformation.VampireHackMixin",
 	"transformation.VillagerEntityMixin",
-	"trinket.LivingEntityMixin",
-	"trinket.PlayerEntityMixin"
+	"trinket.LivingEntityMixin"
   ],
   "client": [
 	"client.ClientPlayerEntityMixin",

@@ -40,10 +40,22 @@
 	"cardinal-components": [
 	  "bewitchment:magic",
 	  "bewitchment:fortune",
+	  "bewitchment:pledge",
 	  "bewitchment:transformation",
 	  "bewitchment:contracts",
 	  "bewitchment:curses",
-	  "bewitchment:blood"
+	  "bewitchment:blood",
+	  "bewitchment:additional_werewolf_data",
+	  "bewitchment:respawn_timer",
+	  "bewitchment:full_invisibility",
+	  "bewitchment:broom_user",
+	  "bewitchment:polymorph",
+	  "bewitchment:additional_water_data",
+	  "bewitchment:familiar",
+	  "bewitchment:minion",
+	  "bewitchment:fake_mob",
+	  "bewitchment:werewolf_villager",
+	  "bewitchment:caduceus_fireball"
 	]
   },
   "mixins": [

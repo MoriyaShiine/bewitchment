@@ -6,8 +6,8 @@ import moriyashiine.bewitchment.api.component.TransformationComponent;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
 import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
-import moriyashiine.bewitchment.common.entity.interfaces.PledgeAccessor;
-import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
+import moriyashiine.bewitchment.common.entity.component.AdditionalWerewolfDataComponent;
+import moriyashiine.bewitchment.common.entity.component.PledgeComponent;
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
@@ -133,7 +133,7 @@ public class BewitchmentAPI {
 		}
 		else if (BewitchmentAPI.isWerewolf(player, false)) {
 			WerewolfEntity entity = BWEntityTypes.WEREWOLF.create(player.world);
-			entity.getDataTracker().set(BWHostileEntity.VARIANT, ((WerewolfAccessor) player).getWerewolfVariant());
+			entity.getDataTracker().set(BWHostileEntity.VARIANT, AdditionalWerewolfDataComponent.get(player).getVariant());
 			return entity;
 		}
 		return null;
@@ -206,21 +206,22 @@ public class BewitchmentAPI {
 	}
 	
 	public static boolean isPledged(PlayerEntity player, String pledge) {
+		PledgeComponent pledgeComponent = PledgeComponent.get(player);
 		if (!player.world.isClient) {
 			BWUniversalWorldState worldState = BWUniversalWorldState.get(player.world);
 			for (int i = worldState.pledgesToRemove.size() - 1; i >= 0; i--) {
 				if (worldState.pledgesToRemove.get(i).equals(player.getUuid())) {
-					((PledgeAccessor) player).setPledge(BWPledges.NONE);
+					pledgeComponent.setPledge(BWPledges.NONE);
 					worldState.pledgesToRemove.remove(i);
 					return false;
 				}
 			}
 		}
-		return ((PledgeAccessor) player).getPledge().equals(pledge);
+		return pledgeComponent.getPledge().equals(pledge);
 	}
 	
 	public static void unpledge(PlayerEntity player) {
-		((PledgeAccessor) player).setPledge(BWPledges.NONE);
+		PledgeComponent.get(player).setPledge(BWPledges.NONE);
 	}
 	
 	public static int getMoonPhase(WorldAccess world) {
