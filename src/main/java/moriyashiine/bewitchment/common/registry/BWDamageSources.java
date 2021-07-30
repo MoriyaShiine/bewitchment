@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.registry;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
+import moriyashiine.bewitchment.api.component.BloodComponent;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
@@ -50,10 +50,10 @@ public class BWDamageSources {
 	private static float handleVampireDamage(LivingEntity entity, DamageSource source, float amount) {
 		if (!isEffective(source, true)) {
 			if (entity.getHealth() - amount < 1) {
-				BloodAccessor bloodAccessor = (BloodAccessor) entity;
-				while (entity.getHealth() - amount <= 0 && bloodAccessor.getBlood() > 0) {
+				BloodComponent bloodComponent = BloodComponent.get(entity);
+				while (entity.getHealth() - amount <= 0 && bloodComponent.getBlood() > 0) {
 					amount--;
-					bloodAccessor.drainBlood(1, false);
+					bloodComponent.drainBlood(1, false);
 				}
 			}
 		}

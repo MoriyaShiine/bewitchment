@@ -1,11 +1,8 @@
 package moriyashiine.bewitchment.mixin.curse;
 
-import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
-import moriyashiine.bewitchment.api.registry.Curse;
+import moriyashiine.bewitchment.api.component.CursesComponent;
 import moriyashiine.bewitchment.common.entity.interfaces.InsanityTargetAccessor;
 import moriyashiine.bewitchment.common.registry.BWCurses;
-import moriyashiine.bewitchment.common.registry.BWRegistries;
-import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -13,51 +10,22 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.item.AxeItem;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity implements CurseAccessor {
-	private final List<Curse.Instance> curses = new ArrayList<>();
-	
+public abstract class LivingEntityMixin extends Entity {
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
 	
-	@Override
-	public List<Curse.Instance> getCurses() {
-		return curses;
-	}
-	
-	@Inject(method = "tick", at = @At("TAIL"))
-	private void tick(CallbackInfo callbackInfo) {
-		if (!world.isClient) {
-			for (int i = curses.size() - 1; i >= 0; i--) {
-				Curse.Instance instance = curses.get(i);
-				instance.curse.tick((LivingEntity) (Object) this);
-				instance.duration--;
-				if (instance.duration <= 0) {
-					curses.remove(i);
-				}
-			}
-		}
-	}
-	
 	@ModifyVariable(method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)Z", at = @At("HEAD"))
 	private StatusEffectInstance modifyStatusEffect(StatusEffectInstance effect) {
-		if (!world.isClient && !effect.isAmbient() && effect.getEffectType().getType() == StatusEffectType.HARMFUL && hasCurse(BWCurses.COMPROMISED)) {
+		if (!world.isClient && !effect.isAmbient() && effect.getEffectType().getType() == StatusEffectType.HARMFUL && CursesComponent.get((LivingEntity) (Object) this).hasCurse(BWCurses.COMPROMISED)) {
 			return new StatusEffectInstance(effect.getEffectType(), effect.getDuration(), effect.getAmplifier() + 1, false, effect.shouldShowParticles(), effect.shouldShowIcon());
 		}
 		return effect;
@@ -67,10 +35,11 @@ public abstract class LivingEntityMixin extends Entity implements CurseAccessor 
 	private float modifyDamage(float amount, DamageSource source) {
 		if (!world.isClient) {
 			Entity directSource = source.getSource();
-			if (hasCurse(BWCurses.FORESTS_WRATH) && (source.isFire() || ((directSource instanceof LivingEntity && ((LivingEntity) directSource).getMainHandStack().getItem() instanceof AxeItem)))) {
+			CursesComponent cursesComponent = CursesComponent.get((LivingEntity) (Object) this);
+			if (cursesComponent.hasCurse(BWCurses.FORESTS_WRATH) && (source.isFire() || ((directSource instanceof LivingEntity && ((LivingEntity) directSource).getMainHandStack().getItem() instanceof AxeItem)))) {
 				amount *= 2;
 			}
-			if (hasCurse(BWCurses.SUSCEPTIBILITY) && source.isMagic()) {
+			if (cursesComponent.hasCurse(BWCurses.SUSCEPTIBILITY) && source.isMagic()) {
 				amount *= 2;
 			}
 		}
@@ -86,22 +55,8 @@ public abstract class LivingEntityMixin extends Entity implements CurseAccessor 
 	
 	@Inject(method = "canHaveStatusEffect", at = @At("RETURN"), cancellable = true)
 	private void canHaveStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (callbackInfo.getReturnValue() && !world.isClient && !effect.isAmbient() && effect.getEffectType().getType() == StatusEffectType.BENEFICIAL && hasCurse(BWCurses.UNLUCKY) && random.nextBoolean()) {
+		if (callbackInfo.getReturnValue() && !world.isClient && !effect.isAmbient() && effect.getEffectType().getType() == StatusEffectType.BENEFICIAL && CursesComponent.get((LivingEntity) (Object) this).hasCurse(BWCurses.UNLUCKY) && random.nextBoolean()) {
 			callbackInfo.setReturnValue(false);
 		}
-	}
-	
-	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
-	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
-		NbtList curses = nbt.getList("Curses", NbtType.COMPOUND);
-		for (int i = 0; i < curses.size(); i++) {
-			NbtCompound curse = curses.getCompound(i);
-			addCurse(new Curse.Instance(BWRegistries.CURSES.get(new Identifier(curse.getString("Curse"))), curse.getInt("Duration")));
-		}
-	}
-	
-	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
-	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
-		nbt.put("Curses", toNbtCurse());
 	}
 }

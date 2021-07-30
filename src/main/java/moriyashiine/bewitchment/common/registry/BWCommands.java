@@ -10,10 +10,10 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
-import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
-import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
-import moriyashiine.bewitchment.api.interfaces.entity.FortuneAccessor;
-import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
+import moriyashiine.bewitchment.api.component.ContractsComponent;
+import moriyashiine.bewitchment.api.component.CursesComponent;
+import moriyashiine.bewitchment.api.component.FortuneComponent;
+import moriyashiine.bewitchment.api.component.TransformationComponent;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.api.registry.Fortune;
@@ -24,6 +24,7 @@ import net.minecraft.command.argument.ArgumentTypes;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -37,7 +38,7 @@ public class BWCommands {
 	public static void init(CommandDispatcher<ServerCommandSource> dispatcher, boolean dedicated) {
 		dispatcher.register(CommandManager.literal("fortune").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.literal("get").then(CommandManager.argument("player", EntityArgumentType.player()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
-			Fortune.Instance fortune = ((FortuneAccessor) player).getFortune();
+			Fortune.Instance fortune = FortuneComponent.get(player).getFortune();
 			if (fortune != null) {
 				context.getSource().sendFeedback(new TranslatableText("commands.fortune.get", player.getEntityName(), BWRegistries.FORTUNES.getId(fortune.fortune)), false);
 				return Command.SINGLE_SUCCESS;
@@ -46,13 +47,13 @@ public class BWCommands {
 		}))).then(CommandManager.literal("set").then(CommandManager.argument("player", EntityArgumentType.player()).then(CommandManager.argument("fortune", FortuneArgumentType.fortune()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
 			Fortune fortune = FortuneArgumentType.getFortune(context, "fortune");
-			((FortuneAccessor) player).setFortune(new Fortune.Instance(fortune, player.getRandom().nextInt(120000)));
+			FortuneComponent.get(player).setFortune(new Fortune.Instance(fortune, player.getRandom().nextInt(120000)));
 			context.getSource().sendFeedback(new TranslatableText("commands.fortune.set", player.getEntityName(), BWRegistries.FORTUNES.getId(fortune)), true);
 			return Command.SINGLE_SUCCESS;
 		})))).then(CommandManager.literal("remove").then(CommandManager.argument("player", EntityArgumentType.player()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
-			if (((FortuneAccessor) player).getFortune() != null) {
-				((FortuneAccessor) player).setFortune(null);
+			if (FortuneComponent.get(player).getFortune() != null) {
+				FortuneComponent.get(player).setFortune(null);
 				context.getSource().sendFeedback(new TranslatableText("commands.fortune.remove", player.getEntityName()), true);
 				return Command.SINGLE_SUCCESS;
 			}
@@ -60,27 +61,28 @@ public class BWCommands {
 		}))));
 		dispatcher.register(CommandManager.literal("transformation").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.literal("get").then(CommandManager.argument("player", EntityArgumentType.player()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
-			context.getSource().sendFeedback(new TranslatableText("commands.transformation.get", player.getEntityName(), BWRegistries.TRANSFORMATIONS.getId(((TransformationAccessor) player).getTransformation())), false);
+			context.getSource().sendFeedback(new TranslatableText("commands.transformation.get", player.getEntityName(), BWRegistries.TRANSFORMATIONS.getId(TransformationComponent.get(player).getTransformation())), false);
 			return Command.SINGLE_SUCCESS;
 		}))).then(CommandManager.literal("set").then(CommandManager.argument("player", EntityArgumentType.player()).then(CommandManager.argument("transformation", TransformationArgumentType.transformation()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
-			TransformationAccessor transformationAccessor = (TransformationAccessor) player;
-			Transformation transformation = TransformationArgumentType.getTransformation(context, "transformation");
-			if (transformationAccessor.getAlternateForm()) {
-				TransformationAbilityPacket.useAbility(player, true);
-			}
-			transformationAccessor.getTransformation().onRemoved(player);
-			transformationAccessor.setTransformation(transformation);
-			transformationAccessor.getTransformation().onAdded(player);
-			context.getSource().sendFeedback(new TranslatableText("commands.transformation.set", player.getEntityName(), BWRegistries.TRANSFORMATIONS.getId(transformation)), true);
+			TransformationComponent.maybeGet(player).ifPresent(transformationComponent -> {
+				Transformation transformation = TransformationArgumentType.getTransformation(context, "transformation");
+				if (transformationComponent.isAlternateForm()) {
+					TransformationAbilityPacket.useAbility(player, true);
+				}
+				transformationComponent.getTransformation().onRemoved(player);
+				transformationComponent.setTransformation(transformation);
+				transformationComponent.getTransformation().onAdded(player);
+				context.getSource().sendFeedback(new TranslatableText("commands.transformation.set", player.getEntityName(), BWRegistries.TRANSFORMATIONS.getId(transformation)), true);
+			});
 			return Command.SINGLE_SUCCESS;
 		})))));
 		dispatcher.register(CommandManager.literal("contract").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.literal("get").then(CommandManager.argument("player", EntityArgumentType.player()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
-			ContractAccessor contractAccessor = (ContractAccessor) player;
-			if (!contractAccessor.getContracts().isEmpty()) {
+			ContractsComponent contractsComponent = ContractsComponent.get(player);
+			if (!contractsComponent.getContracts().isEmpty()) {
 				StringBuilder contracts = new StringBuilder();
-				for (Contract.Instance instance : contractAccessor.getContracts()) {
+				for (Contract.Instance instance : contractsComponent.getContracts()) {
 					contracts.append(BWRegistries.CONTRACTS.getId(instance.contract).toString()).append(", ");
 				}
 				context.getSource().sendFeedback(new TranslatableText("commands.contract.get.multiple", player.getEntityName(), contracts.delete(contracts.lastIndexOf(","), contracts.capacity())), false);
@@ -89,10 +91,10 @@ public class BWCommands {
 			throw ContractArgumentType.GET_NO_CONTRACTS_EXCEPTION.create(player.getEntityName());
 		}).then(CommandManager.argument("contract", ContractArgumentType.contract()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
-			ContractAccessor contractAccessor = (ContractAccessor) player;
+			ContractsComponent contractsComponent = ContractsComponent.get(player);
 			Contract contract = ContractArgumentType.getContract(context, "contract");
-			if (contractAccessor.hasContract(contract)) {
-				int days = Math.round(contractAccessor.getContracts().stream().filter(instance -> instance.contract == contract).findFirst().orElse(null).duration / 24000f);
+			if (contractsComponent.hasContract(contract)) {
+				int days = Math.round(contractsComponent.getContracts().stream().filter(instance -> instance.contract == contract).findFirst().orElse(null).duration / 24000f);
 				context.getSource().sendFeedback(new TranslatableText("commands.contract.get.single", player.getEntityName(), days, BWRegistries.CONTRACTS.getId(contract)), false);
 				return Command.SINGLE_SUCCESS;
 			}
@@ -100,31 +102,31 @@ public class BWCommands {
 		})))).then(CommandManager.literal("add").then(CommandManager.argument("player", EntityArgumentType.player()).then(CommandManager.argument("contract", ContractArgumentType.contract()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
 			Contract contract = ContractArgumentType.getContract(context, "contract");
-			((ContractAccessor) player).addContract(new Contract.Instance(contract, 168000, 0));
+			ContractsComponent.get(player).addContract(new Contract.Instance(contract, 168000, 0));
 			context.getSource().sendFeedback(new TranslatableText("commands.contract.add", player.getEntityName(), 7, BWRegistries.CONTRACTS.getId(contract)), true);
 			return Command.SINGLE_SUCCESS;
 		}).then(CommandManager.argument("days", IntegerArgumentType.integer(1, 365)).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
 			Contract contract = ContractArgumentType.getContract(context, "contract");
 			int days = IntegerArgumentType.getInteger(context, "days");
-			((ContractAccessor) player).addContract(new Contract.Instance(contract, days * 24000, 0));
+			ContractsComponent.get(player).addContract(new Contract.Instance(contract, days * 24000, 0));
 			context.getSource().sendFeedback(new TranslatableText("commands.contract.add", player.getEntityName(), days, BWRegistries.CONTRACTS.getId(contract)), true);
 			return Command.SINGLE_SUCCESS;
 		}))))).then(CommandManager.literal("remove").then(CommandManager.argument("player", EntityArgumentType.player()).then(CommandManager.argument("contract", ContractArgumentType.contract()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
-			ContractAccessor contractAccessor = (ContractAccessor) player;
+			ContractsComponent contractsComponent = ContractsComponent.get(player);
 			Contract contract = ContractArgumentType.getContract(context, "contract");
-			if (contractAccessor.hasContract(contract)) {
-				contractAccessor.removeContract(contract);
+			if (contractsComponent.hasContract(contract)) {
+				contractsComponent.removeContract(contract);
 				context.getSource().sendFeedback(new TranslatableText("commands.contract.remove", player.getEntityName(), BWRegistries.CONTRACTS.getId(contract)), true);
 				return Command.SINGLE_SUCCESS;
 			}
 			throw ContractArgumentType.REMOVE_NO_CONTRACT_EXCEPTION.create(player.getEntityName());
 		})))).then(CommandManager.literal("clear").then(CommandManager.argument("player", EntityArgumentType.player()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
-			ContractAccessor contractAccessor = (ContractAccessor) player;
-			if (!contractAccessor.getContracts().isEmpty()) {
-				contractAccessor.getContracts().clear();
+			ContractsComponent contractsComponent = ContractsComponent.get(player);
+			if (!contractsComponent.getContracts().isEmpty()) {
+				contractsComponent.getContracts().clear();
 				context.getSource().sendFeedback(new TranslatableText("commands.contract.clear", player.getEntityName()), true);
 				return Command.SINGLE_SUCCESS;
 			}
@@ -132,10 +134,11 @@ public class BWCommands {
 		}))));
 		dispatcher.register(CommandManager.literal("curse").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.literal("get").then(CommandManager.argument("entity", EntityArgumentType.entity()).executes(context -> {
 			Entity entity = EntityArgumentType.getEntity(context, "entity");
-			if (entity instanceof CurseAccessor curseAccessor) {
-				if (!curseAccessor.getCurses().isEmpty()) {
+			if (entity instanceof LivingEntity livingEntity) {
+				CursesComponent cursesComponent = CursesComponent.get(livingEntity);
+				if (!cursesComponent.getCurses().isEmpty()) {
 					StringBuilder curses = new StringBuilder();
-					for (Curse.Instance instance : curseAccessor.getCurses()) {
+					for (Curse.Instance instance : cursesComponent.getCurses()) {
 						curses.append(BWRegistries.CURSES.getId(instance.curse).toString()).append(", ");
 					}
 					context.getSource().sendFeedback(new TranslatableText("commands.curse.get.multiple", entity.getEntityName(), curses.delete(curses.lastIndexOf(","), curses.capacity())), false);
@@ -146,10 +149,11 @@ public class BWCommands {
 			return 0;
 		}).then(CommandManager.argument("curse", CurseArgumentType.curse()).executes(context -> {
 			Entity entity = EntityArgumentType.getEntity(context, "entity");
-			if (entity instanceof CurseAccessor curseAccessor) {
+			if (entity instanceof LivingEntity livingEntity) {
+				CursesComponent cursesComponent = CursesComponent.get(livingEntity);
 				Curse curse = CurseArgumentType.getCurse(context, "curse");
-				if (curseAccessor.hasCurse(curse)) {
-					int days = Math.round(curseAccessor.getCurses().stream().filter(instance -> instance.curse == curse).findFirst().orElse(null).duration / 24000f);
+				if (cursesComponent.hasCurse(curse)) {
+					int days = Math.round(cursesComponent.getCurses().stream().filter(instance -> instance.curse == curse).findFirst().orElse(null).duration / 24000f);
 					context.getSource().sendFeedback(new TranslatableText("commands.curse.get.single", entity.getEntityName(), days, BWRegistries.CURSES.getId(curse)), false);
 					return Command.SINGLE_SUCCESS;
 				}
@@ -158,29 +162,30 @@ public class BWCommands {
 			return 0;
 		})))).then(CommandManager.literal("add").then(CommandManager.argument("entity", EntityArgumentType.entity()).then(CommandManager.argument("curse", CurseArgumentType.curse()).executes(context -> {
 			Entity entity = EntityArgumentType.getEntity(context, "entity");
-			if (entity instanceof CurseAccessor) {
+			if (entity instanceof LivingEntity livingEntity) {
 				Curse curse = CurseArgumentType.getCurse(context, "curse");
-				((CurseAccessor) entity).addCurse(new Curse.Instance(curse, 168000));
+				CursesComponent.get(livingEntity).addCurse(new Curse.Instance(curse, 168000));
 				context.getSource().sendFeedback(new TranslatableText("commands.curse.add", entity.getEntityName(), 7, BWRegistries.CURSES.getId(curse)), true);
 				return Command.SINGLE_SUCCESS;
 			}
 			return 0;
 		}).then(CommandManager.argument("days", IntegerArgumentType.integer(1, 365)).executes(context -> {
 			Entity entity = EntityArgumentType.getEntity(context, "entity");
-			if (entity instanceof CurseAccessor) {
+			if (entity instanceof LivingEntity livingEntity) {
 				Curse curse = CurseArgumentType.getCurse(context, "curse");
 				int days = IntegerArgumentType.getInteger(context, "days");
-				((CurseAccessor) entity).addCurse(new Curse.Instance(curse, days * 24000));
+				CursesComponent.get(livingEntity).addCurse(new Curse.Instance(curse, days * 24000));
 				context.getSource().sendFeedback(new TranslatableText("commands.curse.add", entity.getEntityName(), days, BWRegistries.CURSES.getId(curse)), true);
 				return Command.SINGLE_SUCCESS;
 			}
 			return 0;
 		}))))).then(CommandManager.literal("remove").then(CommandManager.argument("entity", EntityArgumentType.entity()).then(CommandManager.argument("curse", CurseArgumentType.curse()).executes(context -> {
 			Entity entity = EntityArgumentType.getEntity(context, "entity");
-			if (entity instanceof CurseAccessor curseAccessor) {
+			if (entity instanceof LivingEntity livingEntity) {
+				CursesComponent cursesComponent = CursesComponent.get(livingEntity);
 				Curse curse = CurseArgumentType.getCurse(context, "curse");
-				if (curseAccessor.hasCurse(curse)) {
-					curseAccessor.removeCurse(curse);
+				if (cursesComponent.hasCurse(curse)) {
+					cursesComponent.removeCurse(curse);
 					context.getSource().sendFeedback(new TranslatableText("commands.curse.remove", entity.getEntityName(), BWRegistries.CURSES.getId(curse)), true);
 					return Command.SINGLE_SUCCESS;
 				}
@@ -189,9 +194,10 @@ public class BWCommands {
 			return 0;
 		})))).then(CommandManager.literal("clear").then(CommandManager.argument("entity", EntityArgumentType.entity()).executes(context -> {
 			Entity entity = EntityArgumentType.getEntity(context, "entity");
-			if (entity instanceof CurseAccessor curseAccessor) {
-				if (!curseAccessor.getCurses().isEmpty()) {
-					curseAccessor.getCurses().clear();
+			if (entity instanceof LivingEntity livingEntity) {
+				CursesComponent cursesComponent = CursesComponent.get(livingEntity);
+				if (!cursesComponent.getCurses().isEmpty()) {
+					cursesComponent.getCurses().clear();
 					context.getSource().sendFeedback(new TranslatableText("commands.curse.clear", entity.getEntityName()), true);
 					return Command.SINGLE_SUCCESS;
 				}

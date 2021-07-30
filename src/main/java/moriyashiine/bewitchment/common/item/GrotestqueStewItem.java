@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.item;
 
-import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
+import moriyashiine.bewitchment.api.entity.Pledgeable;
 import moriyashiine.bewitchment.common.entity.interfaces.PledgeAccessor;
 import moriyashiine.bewitchment.common.registry.BWPledges;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;

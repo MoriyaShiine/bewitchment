@@ -2,8 +2,8 @@ package moriyashiine.bewitchment.common.block.entity;
 
 import dev.emi.trinkets.api.TrinketsApi;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.block.entity.UsesAltarPower;
-import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
+import moriyashiine.bewitchment.api.block.entity.UsesAltarPower;
+import moriyashiine.bewitchment.api.component.CursesComponent;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.client.network.packet.SyncBrazierBlockEntity;
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
@@ -126,7 +126,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 								if (target instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) target) == BWEntityTypes.RAVEN && world.random.nextBoolean()) {
 									target = closestPlayer;
 								}
-								if (target instanceof CurseAccessor) {
+								if (target instanceof LivingEntity livingEntity) {
 									ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, target, null);
 									if (!poppet.isEmpty() && poppet.hasNbt() && !poppet.getNbt().getBoolean("Cursed")) {
 										poppet.getNbt().putString("Curse", BWRegistries.CURSES.getId(blockEntity.curseRecipe.curse).toString());
@@ -141,7 +141,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 										if (target instanceof PlayerEntity && TrinketsApi.getTrinketComponent((LivingEntity) target).get().isEquipped(BWObjects.NAZAR) && BewitchmentAPI.drainMagic((PlayerEntity) target, 50, false)) {
 											duration /= 2;
 										}
-										((CurseAccessor) target).addCurse(new Curse.Instance(blockEntity.curseRecipe.curse, duration));
+										CursesComponent.get(livingEntity).addCurse(new Curse.Instance(blockEntity.curseRecipe.curse, duration));
 									}
 									world.playSound(null, pos, BWSoundEvents.ENTITY_GENERIC_CURSE, SoundCategory.BLOCKS, 1, 1);
 									clear = true;

@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.mixin.transformation;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
+import moriyashiine.bewitchment.api.component.CursesComponent;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.interfaces.VillagerWerewolfAccessor;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
@@ -56,8 +56,10 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Vill
 					entity.setFireTicks(getFireTicks());
 					entity.clearStatusEffects();
 					getStatusEffects().forEach(entity::addStatusEffect);
-					((CurseAccessor) entity).getCurses().clear();
-					((CurseAccessor) this).getCurses().forEach(((CurseAccessor) entity)::addCurse);
+					CursesComponent.maybeGet(entity).ifPresent(entityCursesComponent -> CursesComponent.maybeGet(this).ifPresent(thisCursesComponent -> {
+						entityCursesComponent.getCurses().clear();
+						thisCursesComponent.getCurses().forEach(entityCursesComponent::addCurse);
+					}));
 					if (despawnTimer >= 0) {
 						despawnTimer = 2400;
 					}

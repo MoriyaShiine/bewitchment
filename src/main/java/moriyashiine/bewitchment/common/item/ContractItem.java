@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.item;
 
-import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
+import moriyashiine.bewitchment.api.component.ContractsComponent;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
@@ -37,12 +37,12 @@ public class ContractItem extends Item {
 	
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		if (!world.isClient && stack.hasNbt() && user instanceof PlayerEntity) {
+		if (!world.isClient && stack.hasNbt() && user instanceof PlayerEntity player) {
 			Contract contract = BWRegistries.CONTRACTS.get(new Identifier(stack.getOrCreateNbt().getString("Contract")));
 			if (contract != null) {
-				((ContractAccessor) user).addContract(new Contract.Instance(contract, stack.getNbt().getInt("Duration"), 0));
-				world.playSound(null, user.getBlockPos(), BWSoundEvents.ITEM_CONTRACT_USE, SoundCategory.PLAYERS, 1, 1);
-				if (!((PlayerEntity) user).isCreative()) {
+				ContractsComponent.get(player).addContract(new Contract.Instance(contract, stack.getNbt().getInt("Duration"), 0));
+				world.playSound(null, player.getBlockPos(), BWSoundEvents.ITEM_CONTRACT_USE, SoundCategory.PLAYERS, 1, 1);
+				if (!player.isCreative()) {
 					stack.decrement(1);
 				}
 				return stack;

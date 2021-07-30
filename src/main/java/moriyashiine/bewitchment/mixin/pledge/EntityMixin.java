@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.pledge;
 
-import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
+import moriyashiine.bewitchment.api.entity.Pledgeable;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;

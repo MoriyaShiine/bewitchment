@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.curse;
 
-import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
+import moriyashiine.bewitchment.api.component.CursesComponent;
 import moriyashiine.bewitchment.common.registry.BWCurses;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.EscapeDangerGoal;
@@ -22,7 +22,7 @@ public abstract class EscapeDangerGoalMixin extends Goal {
 	
 	@Inject(method = "canStart", at = @At("RETURN"), cancellable = true)
 	private void canStart(CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!callbackInfo.getReturnValue() && !mob.world.isClient && mob.age % 20 == 0 && !mob.world.getEntitiesByClass(LivingEntity.class, new Box(mob.getBlockPos()).expand(8), entity -> mob.canSee(entity) && entity.isAlive() && ((CurseAccessor) entity).hasCurse(BWCurses.APATHY)).isEmpty()) {
+		if (!callbackInfo.getReturnValue() && !mob.world.isClient && mob.age % 20 == 0 && !mob.world.getEntitiesByClass(LivingEntity.class, new Box(mob.getBlockPos()).expand(8), entity -> mob.canSee(entity) && entity.isAlive() && CursesComponent.get(entity).hasCurse(BWCurses.APATHY)).isEmpty()) {
 			callbackInfo.setReturnValue(true);
 		}
 	}

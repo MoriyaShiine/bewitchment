@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.block;
 
 import moriyashiine.bewitchment.api.block.WitchAltarBlock;
-import moriyashiine.bewitchment.api.interfaces.block.entity.UsesAltarPower;
+import moriyashiine.bewitchment.api.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

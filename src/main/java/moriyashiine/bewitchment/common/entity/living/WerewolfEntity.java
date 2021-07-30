@@ -3,7 +3,7 @@ package moriyashiine.bewitchment.common.entity.living;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import dev.emi.stepheightentityattribute.StepHeightEntityAttributeMain;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
+import moriyashiine.bewitchment.api.component.CursesComponent;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.interfaces.VillagerWerewolfAccessor;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
@@ -62,8 +62,10 @@ public class WerewolfEntity extends BWHostileEntity {
 					entity.setFireTicks(getFireTicks());
 					entity.clearStatusEffects();
 					getStatusEffects().forEach(entity::addStatusEffect);
-					((CurseAccessor) entity).getCurses().clear();
-					((CurseAccessor) this).getCurses().forEach(((CurseAccessor) entity)::addCurse);
+					CursesComponent.maybeGet(entity).ifPresent(entityCursesComponent -> CursesComponent.maybeGet(this).ifPresent(thisCursesComponent -> {
+						entityCursesComponent.getCurses().clear();
+						thisCursesComponent.getCurses().forEach(entityCursesComponent::addCurse);
+					}));
 					((VillagerWerewolfAccessor) entity).setStoredWerewolf(writeNbt(new NbtCompound()));
 					world.spawnEntity(entity);
 					remove(RemovalReason.DISCARDED);

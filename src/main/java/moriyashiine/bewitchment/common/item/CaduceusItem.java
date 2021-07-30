@@ -1,7 +1,6 @@
 package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.CaduceusFireballAccessor;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.minecraft.block.Block;
@@ -33,8 +32,8 @@ public class CaduceusItem extends MiningToolItem {
 	
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		if (user instanceof MagicAccessor) {
-			if (!world.isClient && user instanceof PlayerEntity && BewitchmentAPI.drainMagic((PlayerEntity) user, 2, false)) {
+		if (user instanceof PlayerEntity) {
+			if (!world.isClient && BewitchmentAPI.drainMagic((PlayerEntity) user, 2, false)) {
 				FireballEntity fireball = new FireballEntity(world, user, user.getRotationVector().x, user.getRotationVector().y, user.getRotationVector().z, 1);
 				fireball.setOwner(user);
 				fireball.setPos(fireball.getX(), fireball.getY() + 1, fireball.getZ());

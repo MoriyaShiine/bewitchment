@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.contract;
 
-import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
+import moriyashiine.bewitchment.api.component.ContractsComponent;
 import moriyashiine.bewitchment.common.registry.BWContracts;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -21,9 +21,8 @@ public abstract class MobEntityMixin extends LivingEntity {
 	
 	@ModifyVariable(method = "setTarget", at = @At("HEAD"))
 	private LivingEntity modifyTarget(LivingEntity target) {
-		if (!world.isClient && target instanceof PlayerEntity) {
-			ContractAccessor contractAccessor = (ContractAccessor) target;
-			if (contractAccessor.hasContract(BWContracts.WAR)) {
+		if (!world.isClient && target instanceof PlayerEntity player) {
+			if (ContractsComponent.get(player).hasContract(BWContracts.WAR)) {
 				Entity nearest = null;
 				for (Entity entity : world.getEntitiesByType(getType(), new Box(getBlockPos()).expand(16), entity -> entity != this)) {
 					if (nearest == null || entity.distanceTo(this) < nearest.distanceTo(this)) {

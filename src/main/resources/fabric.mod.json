@@ -26,11 +26,24 @@
 	"client": [
 	  "moriyashiine.bewitchment.client.BewitchmentClient"
 	],
+	"cardinal-components-entity": [
+	  "moriyashiine.bewitchment.common.registry.BWComponents"
+	],
 	"rei_plugins": [
 	  "moriyashiine.bewitchment.client.integration.rei.BWREIPlugin"
 	],
 	"appleskin": [
 	  "moriyashiine.bewitchment.client.integration.appleskin.BWAppleskinIntegration"
+	]
+  },
+  "custom": {
+	"cardinal-components": [
+	  "bewitchment:magic",
+	  "bewitchment:fortune",
+	  "bewitchment:transformation",
+	  "bewitchment:contracts",
+	  "bewitchment:curses",
+	  "bewitchment:blood"
 	]
   },
   "mixins": [

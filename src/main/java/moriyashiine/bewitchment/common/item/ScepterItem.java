@@ -1,7 +1,6 @@
 package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
 import moriyashiine.bewitchment.common.Bewitchment;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -50,8 +49,8 @@ public class ScepterItem extends Item {
 	
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		if (user instanceof MagicAccessor) {
-			if (!world.isClient && user instanceof PlayerEntity && BewitchmentAPI.drainMagic((PlayerEntity) user, 2, false)) {
+		if (user instanceof PlayerEntity) {
+			if (!world.isClient && BewitchmentAPI.drainMagic((PlayerEntity) user, 2, false)) {
 				PotionEntity potion = new PotionEntity(world, user);
 				List<StatusEffectInstance> effects = PotionUtil.getCustomPotionEffects(stack);
 				ItemStack potionStack = PotionUtil.setCustomPotionEffects(new ItemStack(Items.SPLASH_POTION), effects);

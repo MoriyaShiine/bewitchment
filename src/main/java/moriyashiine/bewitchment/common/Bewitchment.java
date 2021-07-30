@@ -3,8 +3,10 @@ package moriyashiine.bewitchment.common;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.component.BloodComponent;
+import moriyashiine.bewitchment.api.component.ContractsComponent;
+import moriyashiine.bewitchment.api.component.TransformationComponent;
 import moriyashiine.bewitchment.api.event.BloodSuckEvents;
-import moriyashiine.bewitchment.api.interfaces.entity.*;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
@@ -76,23 +78,17 @@ public class Bewitchment implements ModInitializer {
 		ServerLifecycleEvents.SERVER_STOPPED.register(server -> BewitchmentAPI.fakePlayer = null);
 		ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
 			if (alive) {
-				((MagicAccessor) newPlayer).setMagic(((MagicAccessor) oldPlayer).getMagic());
-				((BloodAccessor) newPlayer).setBlood(((BloodAccessor) oldPlayer).getBlood());
 				((RespawnTimerAccessor) newPlayer).setRespawnTimer(((RespawnTimerAccessor) oldPlayer).getRespawnTimer());
 				((TrueInvisibleAccessor) newPlayer).setTrueInvisible(((TrueInvisibleAccessor) oldPlayer).getTrueInvisible());
 				((SubmergedInWaterAccessor) newPlayer).setSubmergedInWater(((SubmergedInWaterAccessor) oldPlayer).getSubmergedInWater());
-				((TransformationAccessor) newPlayer).setAlternateForm(((TransformationAccessor) oldPlayer).getAlternateForm());
 				((WerewolfAccessor) newPlayer).setForcedTransformation(((WerewolfAccessor) oldPlayer).getForcedTransformation());
 			}
 			((PolymorphAccessor) newPlayer).setPolymorphUUID(((PolymorphAccessor) oldPlayer).getPolymorphUUID());
 			((PolymorphAccessor) newPlayer).setPolymorphName(((PolymorphAccessor) oldPlayer).getPolymorphName());
-			((FortuneAccessor) newPlayer).setFortune(((FortuneAccessor) oldPlayer).getFortune());
 			((PledgeAccessor) newPlayer).setPledge(((PledgeAccessor) oldPlayer).getPledge());
-			((TransformationAccessor) newPlayer).setTransformation(((TransformationAccessor) oldPlayer).getTransformation());
 			((WerewolfAccessor) newPlayer).setWerewolfVariant(((WerewolfAccessor) oldPlayer).getWerewolfVariant());
-			((ContractAccessor) newPlayer).getContracts().addAll(((ContractAccessor) oldPlayer).getContracts());
-			((CurseAccessor) newPlayer).getCurses().addAll(((CurseAccessor) oldPlayer).getCurses());
 		});
+		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> TransformationComponent.get(newPlayer).setAlternateForm(false));
 		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killedEntity) -> {
 			if (entity instanceof LivingEntity livingEntity) {
 				if (livingEntity instanceof PlayerEntity && killedEntity.getGroup() == EntityGroup.ARTHROPOD && BewitchmentAPI.getFamiliar((PlayerEntity) livingEntity) == BWEntityTypes.TOAD) {
@@ -131,32 +127,32 @@ public class Bewitchment implements ModInitializer {
 							ItemScatterer.spawn(world, killedEntity.getX() + 0.5, killedEntity.getY() + 0.5, killedEntity.getZ() + 0.5, drop);
 						}
 					}
-					if (livingEntity instanceof PlayerEntity && livingEntity.getOffHandStack().getItem() == Items.GLASS_BOTTLE && ((BloodAccessor) killedEntity).getBlood() > 20 && BWTags.HAS_BLOOD.contains(killedEntity.getType())) {
+					if (livingEntity instanceof PlayerEntity && livingEntity.getOffHandStack().getItem() == Items.GLASS_BOTTLE && BloodComponent.get(killedEntity).getBlood() > 20 && BWTags.HAS_BLOOD.contains(killedEntity.getType())) {
 						world.playSound(null, livingEntity.getBlockPos(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1, 0.5f);
 						BWUtil.addItemToInventoryAndConsume((PlayerEntity) livingEntity, Hand.OFF_HAND, new ItemStack(BWObjects.BOTTLE_OF_BLOOD));
 					}
 				}
-				if (livingEntity instanceof ContractAccessor && ((ContractAccessor) livingEntity).hasContract(BWContracts.DEATH)) {
+				if (livingEntity instanceof PlayerEntity player && ContractsComponent.get(player).hasContract(BWContracts.DEATH)) {
 					livingEntity.heal(livingEntity.getMaxHealth() / 4f);
 				}
 			}
 		});
 		UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
-			if (entity instanceof LivingEntity && hand == Hand.MAIN_HAND && player.isSneaking() && entity.isAlive() && BewitchmentAPI.isVampire(player, true) && player.getStackInHand(hand).isEmpty()) {
+			if (entity instanceof LivingEntity livingEntity && hand == Hand.MAIN_HAND && player.isSneaking() && entity.isAlive() && BewitchmentAPI.isVampire(player, true) && player.getStackInHand(hand).isEmpty()) {
 				int toGive = BWTags.HAS_BLOOD.contains(entity.getType()) ? 5 : entity instanceof AnimalEntity ? 1 : 0;
 				toGive = BloodSuckEvents.BLOOD_AMOUNT.invoker().onBloodSuck(player, (LivingEntity) entity, toGive);
 				if (toGive > 0) {
-					BloodAccessor playerBlood = (BloodAccessor) player;
-					BloodAccessor entityBlood = (BloodAccessor) entity;
-					if (playerBlood.fillBlood(toGive, true) && entityBlood.drainBlood(10, true)) {
+					BloodComponent playerBloodComponent = BloodComponent.get(player);
+					BloodComponent entityBloodComponent = BloodComponent.get(livingEntity);
+					if (playerBloodComponent.fillBlood(toGive, true) && entityBloodComponent.drainBlood(10, true)) {
 						if (!world.isClient && ((LivingEntity) entity).hurtTime == 0) {
 							BloodSuckEvents.ON_BLOOD_SUCK.invoker().onBloodSuck(player, (LivingEntity) entity, toGive);
 							world.playSound(null, player.getBlockPos(), SoundEvents.ITEM_HONEY_BOTTLE_DRINK, player.getSoundCategory(), 1, 0.5f);
-							if (!((LivingEntity) entity).isSleeping() || entityBlood.getBlood() < entityBlood.MAX_BLOOD / 2) {
+							if (!((LivingEntity) entity).isSleeping() || entityBloodComponent.getBlood() < BloodComponent.MAX_BLOOD / 2) {
 								entity.damage(BWDamageSources.VAMPIRE, 2);
 							}
-							playerBlood.fillBlood(toGive, false);
-							entityBlood.drainBlood(10, false);
+							playerBloodComponent.fillBlood(toGive, false);
+							entityBloodComponent.drainBlood(10, false);
 						}
 						return ActionResult.success(world.isClient);
 					}

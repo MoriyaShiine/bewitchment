@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.api.interfaces.block.entity;
+package moriyashiine.bewitchment.api.block.entity;
 
 import net.minecraft.util.math.BlockPos;
 

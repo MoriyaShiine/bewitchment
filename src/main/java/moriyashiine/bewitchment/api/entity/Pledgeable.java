@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.api.interfaces.entity;
+package moriyashiine.bewitchment.api.entity;
 
 import moriyashiine.bewitchment.common.entity.interfaces.MasterAccessor;
 import moriyashiine.bewitchment.common.misc.BWUtil;

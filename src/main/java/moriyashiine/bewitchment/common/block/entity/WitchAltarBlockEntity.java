@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.block.entity;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
+import moriyashiine.bewitchment.api.component.CursesComponent;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWCurses;
 import moriyashiine.bewitchment.common.registry.BWObjects;
@@ -101,7 +101,7 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 						blockEntity.power = Math.min(blockEntity.power + blockEntity.gain, blockEntity.maxPower);
 					}
 					PlayerLookup.around((ServerWorld) world, Vec3d.of(pos), 24).forEach(playerEntity -> {
-						if (!((CurseAccessor) playerEntity).hasCurse(BWCurses.APATHY) && BewitchmentAPI.fillMagic(playerEntity, 5, true) && blockEntity.drain(10, true)) {
+						if (!CursesComponent.get(playerEntity).hasCurse(BWCurses.APATHY) && BewitchmentAPI.fillMagic(playerEntity, 5, true) && blockEntity.drain(10, true)) {
 							BewitchmentAPI.fillMagic(playerEntity, 5, false);
 							blockEntity.drain(10, false);
 						}

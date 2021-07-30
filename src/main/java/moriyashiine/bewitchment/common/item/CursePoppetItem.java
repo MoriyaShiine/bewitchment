@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
+import moriyashiine.bewitchment.api.component.CursesComponent;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.common.Bewitchment;
@@ -46,7 +46,7 @@ public class CursePoppetItem extends PoppetItem {
 				UUID uuid = TaglockItem.getTaglockUUID(stack);
 				for (ServerWorld serverWorld : server.getWorlds()) {
 					Entity entity = serverWorld.getEntity(uuid);
-					if (entity instanceof CurseAccessor) {
+					if (entity instanceof LivingEntity livingEntity) {
 						boolean failed = false;
 						Curse curse = BWRegistries.CURSES.get(new Identifier(stack.getOrCreateNbt().getString("Curse")));
 						ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, entity, null);
@@ -58,7 +58,7 @@ public class CursePoppetItem extends PoppetItem {
 						}
 						if (curse != null) {
 							if (!failed) {
-								((CurseAccessor) entity).addCurse(new Curse.Instance(curse, 168000));
+								CursesComponent.get(livingEntity).addCurse(new Curse.Instance(curse, 168000));
 							}
 							world.playSound(null, user.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, SoundCategory.PLAYERS, 1, 1);
 							if (!(user instanceof PlayerEntity && ((PlayerEntity) user).isCreative())) {

@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.api;
 
 import com.mojang.authlib.GameProfile;
-import moriyashiine.bewitchment.api.interfaces.entity.MagicAccessor;
-import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
+import moriyashiine.bewitchment.api.component.MagicComponent;
+import moriyashiine.bewitchment.api.component.TransformationComponent;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
 import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
@@ -155,7 +155,7 @@ public class BewitchmentAPI {
 		if (player.world.isClient) {
 			return false;
 		}
-		return ((MagicAccessor) player).fillMagic(amount, simulate);
+		return MagicComponent.get(player).fillMagic(amount, simulate);
 	}
 	
 	public static boolean drainMagic(PlayerEntity player, int amount, boolean simulate) {
@@ -168,19 +168,25 @@ public class BewitchmentAPI {
 		if (player.hasStatusEffect(BWStatusEffects.INHIBITED)) {
 			return false;
 		}
-		return ((MagicAccessor) player).drainMagic(amount, simulate);
+		return MagicComponent.get(player).drainMagic(amount, simulate);
 	}
 	
 	public static boolean isVampire(Entity entity, boolean includeHumanForm) {
-		if (entity instanceof TransformationAccessor && ((TransformationAccessor) entity).getTransformation() == BWTransformations.VAMPIRE) {
-			return includeHumanForm || ((TransformationAccessor) entity).getAlternateForm();
+		if (entity instanceof PlayerEntity player) {
+			TransformationComponent transformationComponent = TransformationComponent.get(player);
+			if (transformationComponent.getTransformation() == BWTransformations.VAMPIRE) {
+				return includeHumanForm || transformationComponent.isAlternateForm();
+			}
 		}
 		return entity instanceof VampireEntity;
 	}
 	
 	public static boolean isWerewolf(Entity entity, boolean includeHumanForm) {
-		if (entity instanceof TransformationAccessor && ((TransformationAccessor) entity).getTransformation() == BWTransformations.WEREWOLF) {
-			return includeHumanForm || ((TransformationAccessor) entity).getAlternateForm();
+		if (entity instanceof PlayerEntity player) {
+			TransformationComponent transformationComponent = TransformationComponent.get(player);
+			if (transformationComponent.getTransformation() == BWTransformations.WEREWOLF) {
+				return includeHumanForm || transformationComponent.isAlternateForm();
+			}
 		}
 		return entity instanceof WerewolfEntity;
 	}

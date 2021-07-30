@@ -2,10 +2,10 @@ package moriyashiine.bewitchment.common.block;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.block.WitchAltarBlock;
-import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
-import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
-import moriyashiine.bewitchment.api.interfaces.entity.FortuneAccessor;
-import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
+import moriyashiine.bewitchment.api.component.ContractsComponent;
+import moriyashiine.bewitchment.api.component.CursesComponent;
+import moriyashiine.bewitchment.api.component.FortuneComponent;
+import moriyashiine.bewitchment.api.component.TransformationComponent;
 import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
@@ -75,7 +75,7 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 				if (stack.getItem() instanceof TaglockItem && TaglockItem.isTaglockFromPlayer(stack)) {
 					if (!stack.getNbt().contains("UsedForScrying")) {
 						LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, stack);
-						if (owner instanceof PlayerEntity) {
+						if (owner instanceof PlayerEntity playerOwner) {
 							boolean failed = false;
 							BlockPos sigilPos = BWUtil.getClosestBlockPos(owner.getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.SHADOWS);
 							if (sigilPos == null) {
@@ -96,10 +96,10 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 							if (!failed) {
 								compound.putLong("LocationPos", owner.getBlockPos().asLong());
 								compound.putString("LocationWorld", world.getRegistryKey().getValue().toString());
-								compound.putInt("Level", ((PlayerEntity) owner).experienceLevel);
-								compound.put("Curses", ((CurseAccessor) owner).toNbtCurse());
-								compound.put("Contracts", ((ContractAccessor) owner).toNbtContract());
-								compound.putString("Transformation", "transformation." + BWRegistries.TRANSFORMATIONS.getId(((TransformationAccessor) owner).getTransformation()).toString().replace(":", "."));
+								compound.putInt("Level", playerOwner.experienceLevel);
+								compound.put("Curses", CursesComponent.get(owner).toNbtCurse());
+								compound.put("Contracts", ContractsComponent.get(playerOwner).toNbtContract());
+								compound.putString("Transformation", "transformation." + BWRegistries.TRANSFORMATIONS.getId(TransformationComponent.get(playerOwner).getTransformation()).toString().replace(":", "."));
 								BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
 								String familiar = "none";
 								for (int i = 0; i < worldState.familiars.size(); i++) {
@@ -124,16 +124,16 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 					}
 				}
 				else {
-					FortuneAccessor fortuneAccessor = (FortuneAccessor) player;
-					if (fortuneAccessor.getFortune() == null) {
+					FortuneComponent fortuneComponent = FortuneComponent.get(player);
+					if (fortuneComponent.getFortune() == null) {
 						sound = BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE;
 						Fortune fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
-						if (((CurseAccessor) player).hasCurse(BWCurses.UNLUCKY)) {
+						if (CursesComponent.get(player).hasCurse(BWCurses.UNLUCKY)) {
 							while (fortune.positive) {
 								fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
 							}
 						}
-						fortuneAccessor.setFortune(new Fortune.Instance(fortune, world.random.nextInt(120000)));
+						fortuneComponent.setFortune(new Fortune.Instance(fortune, world.random.nextInt(120000)));
 						player.sendMessage(new TranslatableText("fortune." + BWRegistries.FORTUNES.getId(fortune).toString().replace(":", ".")), true);
 						
 					}

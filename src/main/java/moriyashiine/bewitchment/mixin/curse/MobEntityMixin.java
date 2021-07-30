@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.curse;
 
-import moriyashiine.bewitchment.api.interfaces.entity.CurseAccessor;
+import moriyashiine.bewitchment.api.component.CursesComponent;
 import moriyashiine.bewitchment.common.entity.interfaces.InsanityTargetAccessor;
 import moriyashiine.bewitchment.common.registry.BWCurses;
 import net.minecraft.entity.Entity;
@@ -65,7 +65,7 @@ public abstract class MobEntityMixin extends LivingEntity implements InsanityTar
 				if (getTarget() == null || !getTarget().getUuid().equals(uuid)) {
 					setTarget(entity);
 				}
-				if (age % 20 == 0 && (random.nextFloat() < 1 / 100f || (entity instanceof CurseAccessor && !((CurseAccessor) entity).hasCurse(BWCurses.INSANITY)))) {
+				if (age % 20 == 0 && (random.nextFloat() < 1 / 100f || (!CursesComponent.get(entity).hasCurse(BWCurses.INSANITY)))) {
 					remove(RemovalReason.DISCARDED);
 				}
 			});
@@ -87,7 +87,7 @@ public abstract class MobEntityMixin extends LivingEntity implements InsanityTar
 	private void dropLoot(DamageSource source, boolean causedByPlayer, CallbackInfo callbackInfo) {
 		if (!world.isClient && (Object) this instanceof SpiderEntity && !spawnedByArachnophobia) {
 			Entity attacker = source.getAttacker();
-			if (attacker instanceof CurseAccessor && ((CurseAccessor) attacker).hasCurse(BWCurses.ARACHNOPHOBIA)) {
+			if (attacker instanceof LivingEntity livingEntity && CursesComponent.get(livingEntity).hasCurse(BWCurses.ARACHNOPHOBIA)) {
 				for (int i = 0; i < random.nextInt(3) + 3; i++) {
 					SpiderEntity spider;
 					if (random.nextFloat() < 1 / 8192f) {

@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.client.screen;
 
-import moriyashiine.bewitchment.api.interfaces.entity.ContractAccessor;
+import moriyashiine.bewitchment.api.component.ContractsComponent;
 import moriyashiine.bewitchment.client.network.packet.SyncContractsPacket;
 import moriyashiine.bewitchment.client.network.packet.SyncDemonTradesPacket;
 import moriyashiine.bewitchment.common.entity.interfaces.DemonMerchant;
@@ -65,18 +65,20 @@ public class DemonScreenHandler extends ScreenHandler {
 		Slot slot = slots.get(slotIndex);
 		if (slot instanceof DemonTradeSlot) {
 			DemonEntity.DemonTradeOffer offer = ((DemonTradeSlot) slot).getOffer();
-			if (!((ContractAccessor) player).hasContract(offer.getContract())) {
-				demonMerchant.onSell(offer);
-				demonMerchant.trade(offer);
-				if (!demonMerchant.getDemonTrader().world.isClient) {
-					SyncContractsPacket.send(player);
-					SyncDemonTradesPacket.send(player, demonMerchant, syncId);
-					if (player.getMaxHealth() - offer.getCost(demonMerchant) <= 0) {
-						((ContractAccessor) player).getContracts().clear();
-						player.damage(BWDamageSources.DEATH, Float.MAX_VALUE);
+			ContractsComponent.maybeGet(player).ifPresent(contractsComponent -> {
+				if (!contractsComponent.hasContract(offer.getContract())) {
+					demonMerchant.onSell(offer);
+					demonMerchant.trade(offer);
+					if (!demonMerchant.getDemonTrader().world.isClient) {
+						SyncContractsPacket.send(player);
+						SyncDemonTradesPacket.send(player, demonMerchant, syncId);
+						if (player.getMaxHealth() - offer.getCost(demonMerchant) <= 0) {
+							contractsComponent.getContracts().clear();
+							player.damage(BWDamageSources.DEATH, Float.MAX_VALUE);
+						}
 					}
 				}
-			}
+			});
 			return;
 		}
 		super.onSlotClick(slotIndex, button, actionType, player);

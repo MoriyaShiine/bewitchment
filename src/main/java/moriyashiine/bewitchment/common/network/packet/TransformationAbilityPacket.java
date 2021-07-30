@@ -5,8 +5,8 @@ import io.github.ladysnake.pal.Pal;
 import io.github.ladysnake.pal.VanillaAbilities;
 import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
-import moriyashiine.bewitchment.api.interfaces.entity.TransformationAccessor;
+import moriyashiine.bewitchment.api.component.BloodComponent;
+import moriyashiine.bewitchment.api.component.TransformationComponent;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.interfaces.WerewolfAccessor;
@@ -50,54 +50,57 @@ public class TransformationAbilityPacket {
 	}
 	
 	private static boolean canUseAbility(PlayerEntity player) {
-		if (((TransformationAccessor) player).getTransformation() == BWTransformations.VAMPIRE) {
+		TransformationComponent transformationComponent = TransformationComponent.get(player);
+		if (transformationComponent.getTransformation() == BWTransformations.VAMPIRE) {
 			return true;
 		}
-		if (((TransformationAccessor) player).getTransformation() == BWTransformations.WEREWOLF) {
+		if (transformationComponent.getTransformation() == BWTransformations.WEREWOLF) {
 			return !((WerewolfAccessor) player).getForcedTransformation();
 		}
 		return false;
 	}
 	
 	public static void useAbility(PlayerEntity player, boolean forced) {
-		World world = player.world;
-		boolean isInAlternateForm = ((TransformationAccessor) player).getAlternateForm();
-		ScaleData width = BWScaleTypes.MODIFY_WIDTH_TYPE.getScaleData(player);
-		ScaleData height = BWScaleTypes.MODIFY_HEIGHT_TYPE.getScaleData(player);
-		if (((TransformationAccessor) player).getTransformation() == BWTransformations.VAMPIRE && (forced || (BewitchmentAPI.isPledged(player, BWPledges.LILITH) && ((BloodAccessor) player).getBlood() > 0))) {
-			PlayerLookup.tracking(player).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, player));
-			SpawnSmokeParticlesPacket.send(player, player);
-			world.playSound(null, player.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, player.getSoundCategory(), 1, 1);
-			((TransformationAccessor) player).setAlternateForm(!isInAlternateForm);
-			if (isInAlternateForm) {
-				width.setScale(width.getBaseScale() / VAMPIRE_WIDTH);
-				height.setScale(height.getBaseScale() / VAMPIRE_HEIGHT);
-				VAMPIRE_FLIGHT_SOURCE.revokeFrom(player, VanillaAbilities.ALLOW_FLYING);
-				VAMPIRE_FLIGHT_SOURCE.revokeFrom(player, VanillaAbilities.FLYING);
-			}
-			else {
-				width.setScale(width.getBaseScale() * VAMPIRE_WIDTH);
-				height.setScale(height.getBaseScale() * VAMPIRE_HEIGHT);
-				VAMPIRE_FLIGHT_SOURCE.grantTo(player, VanillaAbilities.ALLOW_FLYING);
-				VAMPIRE_FLIGHT_SOURCE.grantTo(player, VanillaAbilities.FLYING);
-			}
-		}
-		else if (((TransformationAccessor) player).getTransformation() == BWTransformations.WEREWOLF && (forced || BewitchmentAPI.isPledged(player, BWPledges.HERNE))) {
-			PlayerLookup.tracking(player).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, player));
-			SpawnSmokeParticlesPacket.send(player, player);
-			world.playSound(null, player.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, player.getSoundCategory(), 1, 1);
-			((TransformationAccessor) player).setAlternateForm(!isInAlternateForm);
-			if (isInAlternateForm) {
-				width.setScale(width.getBaseScale() / WEREWOLF_WIDTH);
-				height.setScale(height.getBaseScale() / WEREWOLF_HEIGHT);
-				if (player.hasStatusEffect(StatusEffects.NIGHT_VISION) && player.getStatusEffect(StatusEffects.NIGHT_VISION).isAmbient()) {
-					player.removeStatusEffect(StatusEffects.NIGHT_VISION);
+		TransformationComponent.maybeGet(player).ifPresent(transformationComponent -> {
+			World world = player.world;
+			boolean isInAlternateForm = transformationComponent.isAlternateForm();
+			ScaleData width = BWScaleTypes.MODIFY_WIDTH_TYPE.getScaleData(player);
+			ScaleData height = BWScaleTypes.MODIFY_HEIGHT_TYPE.getScaleData(player);
+			if (transformationComponent.getTransformation() == BWTransformations.VAMPIRE && (forced || (BewitchmentAPI.isPledged(player, BWPledges.LILITH) && BloodComponent.get(player).getBlood() > 0))) {
+				PlayerLookup.tracking(player).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, player));
+				SpawnSmokeParticlesPacket.send(player, player);
+				world.playSound(null, player.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, player.getSoundCategory(), 1, 1);
+				transformationComponent.setAlternateForm(!isInAlternateForm);
+				if (isInAlternateForm) {
+					width.setScale(width.getBaseScale() / VAMPIRE_WIDTH);
+					height.setScale(height.getBaseScale() / VAMPIRE_HEIGHT);
+					VAMPIRE_FLIGHT_SOURCE.revokeFrom(player, VanillaAbilities.ALLOW_FLYING);
+					VAMPIRE_FLIGHT_SOURCE.revokeFrom(player, VanillaAbilities.FLYING);
+				}
+				else {
+					width.setScale(width.getBaseScale() * VAMPIRE_WIDTH);
+					height.setScale(height.getBaseScale() * VAMPIRE_HEIGHT);
+					VAMPIRE_FLIGHT_SOURCE.grantTo(player, VanillaAbilities.ALLOW_FLYING);
+					VAMPIRE_FLIGHT_SOURCE.grantTo(player, VanillaAbilities.FLYING);
 				}
 			}
-			else {
-				width.setScale(width.getBaseScale() * WEREWOLF_WIDTH);
-				height.setScale(height.getBaseScale() * WEREWOLF_HEIGHT);
+			else if (transformationComponent.getTransformation() == BWTransformations.WEREWOLF && (forced || BewitchmentAPI.isPledged(player, BWPledges.HERNE))) {
+				PlayerLookup.tracking(player).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, player));
+				SpawnSmokeParticlesPacket.send(player, player);
+				world.playSound(null, player.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, player.getSoundCategory(), 1, 1);
+				transformationComponent.setAlternateForm(!isInAlternateForm);
+				if (isInAlternateForm) {
+					width.setScale(width.getBaseScale() / WEREWOLF_WIDTH);
+					height.setScale(height.getBaseScale() / WEREWOLF_HEIGHT);
+					if (player.hasStatusEffect(StatusEffects.NIGHT_VISION) && player.getStatusEffect(StatusEffects.NIGHT_VISION).isAmbient()) {
+						player.removeStatusEffect(StatusEffects.NIGHT_VISION);
+					}
+				}
+				else {
+					width.setScale(width.getBaseScale() * WEREWOLF_WIDTH);
+					height.setScale(height.getBaseScale() * WEREWOLF_HEIGHT);
+				}
 			}
-		}
+		});
 	}
 }

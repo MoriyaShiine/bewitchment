@@ -1,9 +1,7 @@
 package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.event.BloodSetEvents;
-import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
-import moriyashiine.bewitchment.api.interfaces.entity.Pledgeable;
+import moriyashiine.bewitchment.api.entity.Pledgeable;
 import moriyashiine.bewitchment.common.entity.interfaces.CaduceusFireballAccessor;
 import moriyashiine.bewitchment.common.entity.interfaces.MasterAccessor;
 import moriyashiine.bewitchment.common.entity.living.BaphometEntity;
@@ -17,9 +15,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectType;
@@ -30,7 +25,6 @@ import net.minecraft.entity.projectile.WitherSkullEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -42,14 +36,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity implements BloodAccessor {
-	private static final TrackedData<Integer> BLOOD = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
-	
+public abstract class LivingEntityMixin extends Entity {
 	@Shadow
 	public abstract boolean removeStatusEffect(StatusEffect type);
-	
-	@Shadow
-	public abstract boolean isSleeping();
 	
 	@Shadow
 	public abstract Iterable<ItemStack> getArmorItems();
@@ -59,17 +48,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor 
 	
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
-	}
-	
-	@Override
-	public int getBlood() {
-		return dataTracker.get(BLOOD);
-	}
-	
-	@Override
-	public void setBlood(int blood) {
-		BloodSetEvents.ON_BLOOD_SET.invoker().onSetBlood(this, blood);
-		dataTracker.set(BLOOD, blood);
 	}
 	
 	@Inject(method = "tick", at = @At("TAIL"))
@@ -91,9 +69,6 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor 
 			}
 			if (damage > 0) {
 				damage(BWDamageSources.MAGIC_COPY, damage);
-			}
-			if (BWTags.HAS_BLOOD.contains(getType()) && !BewitchmentAPI.isVampire(this, true) && random.nextFloat() < (isSleeping() ? 1 / 50f : 1 / 500f)) {
-				fillBlood(1, false);
 			}
 		}
 	}
@@ -189,22 +164,5 @@ public abstract class LivingEntityMixin extends Entity implements BloodAccessor 
 		if (callbackInfo.getReturnValue() && this instanceof MasterAccessor && ((MasterAccessor) this).getMasterUUID() != null) {
 			callbackInfo.setReturnValue(false);
 		}
-	}
-	
-	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
-	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
-		if (nbt.contains("Blood")) {
-			setBlood(nbt.getInt("Blood"));
-		}
-	}
-	
-	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
-	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
-		nbt.putInt("Blood", getBlood());
-	}
-	
-	@Inject(method = "initDataTracker", at = @At("TAIL"))
-	private void initDataTracker(CallbackInfo callbackInfo) {
-		dataTracker.startTracking(BLOOD, MAX_BLOOD);
 	}
 }

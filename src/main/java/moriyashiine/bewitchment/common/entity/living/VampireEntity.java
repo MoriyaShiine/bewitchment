@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.common.entity.living;
 
-import moriyashiine.bewitchment.api.interfaces.entity.BloodAccessor;
+import moriyashiine.bewitchment.api.component.BloodComponent;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.minecraft.entity.EntityGroup;
@@ -39,13 +39,14 @@ public class VampireEntity extends BWHostileEntity {
 	public void tick() {
 		super.tick();
 		if (!world.isClient) {
-			BloodAccessor bloodAccessor = (BloodAccessor) this;
-			if (getHealth() < getMaxHealth() && (age + getId()) % 40 == 0 && bloodAccessor.getBlood() > 0) {
-				heal(1);
-				if (random.nextFloat() < 1 / 4f) {
-					bloodAccessor.drainBlood(1, false);
+			BloodComponent.maybeGet(this).ifPresent(bloodComponent -> {
+				if (getHealth() < getMaxHealth() && (age + getId()) % 40 == 0 && bloodComponent.getBlood() > 0) {
+					heal(1);
+					if (random.nextFloat() < 1 / 4f) {
+						bloodComponent.drainBlood(1, false);
+					}
 				}
-			}
+			});
 			if (!hasCustomName() && world.isDay() && !world.isRaining() && world.isSkyVisible(getBlockPos())) {
 				setOnFireFor(8);
 				onFireFromSun = true;
