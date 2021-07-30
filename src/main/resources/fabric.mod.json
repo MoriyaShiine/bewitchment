@@ -28,6 +28,9 @@
 	],
 	"rei_plugins": [
 	  "moriyashiine.bewitchment.client.integration.rei.BWREIPlugin"
+	],
+	"appleskin": [
+	  "moriyashiine.bewitchment.client.integration.appleskin.BWAppleskinIntegration"
 	]
   },
   "mixins": [

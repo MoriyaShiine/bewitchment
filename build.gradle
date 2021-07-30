@@ -62,6 +62,10 @@ repositories {
         }
     }
     maven {
+        name "appleskin"
+        url "https://maven.ryanliptak.com/"
+    }
+    maven {
         name "jitpack"
         url "https://jitpack.io"
     }
@@ -94,7 +98,13 @@ dependencies {
 
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
     modRuntime "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
-    modImplementation "com.github.apace100:origins-fabric:${project.origins_version}"
+    modImplementation "com.github.apace100:origins-fabric:${origins_version}"
+    modRuntime("squeek.appleskin:appleskin-fabric:${appleskin_version}") {
+        exclude module: 'modmenu'
+    }
+    modCompileOnly("squeek.appleskin:appleskin-fabric:${appleskin_version}:api") {
+        transitive = false
+    }
 }
 
 processResources {
