@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Entity.class)
 public abstract class EntityMixin {
 	@ModifyVariable(method = "setPose", at = @At("HEAD"))
-	private EntityPose setPose(EntityPose pose) {
+	private EntityPose modifySetPose(EntityPose pose) {
 		if (((Object) this) instanceof PlayerEntity) {
 			if (BewitchmentAPI.isVampire((Entity) (Object) this, false) || BewitchmentAPI.isWerewolf((Entity) (Object) this, false)) {
 				if (pose == EntityPose.FALL_FLYING || pose == EntityPose.SWIMMING) {

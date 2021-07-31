@@ -7,7 +7,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionUtil;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,13 +28,13 @@ public abstract class ArrowEntityMixin extends Entity {
 	}
 	
 	@ModifyVariable(method = "initFromStack", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/potion/PotionUtil;getCustomPotionEffects(Lnet/minecraft/item/ItemStack;)Ljava/util/List;"))
-	private Collection<StatusEffectInstance> initFromStack(Collection<StatusEffectInstance> collection, ItemStack stack) {
+	private Collection<StatusEffectInstance> modifyGetCustomPotionEffects(Collection<StatusEffectInstance> collection, ItemStack stack) {
 		if (stack.getNbt().getBoolean("BewitchmentBrew")) {
-			List<StatusEffectInstance> newCollection = PotionUtil.getCustomPotionEffects(stack);
+			List<StatusEffectInstance> statusEffects = new ArrayList<>(collection);
 			for (int i = collection.size() - 1; i >= 0; i--) {
-				newCollection.set(i, new StatusEffectInstance(newCollection.get(i).getEffectType(), newCollection.get(i).getDuration() / 8, newCollection.get(i).getAmplifier(), newCollection.get(i).isAmbient(), newCollection.get(i).shouldShowParticles(), newCollection.get(i).shouldShowIcon()));
+				statusEffects.set(i, new StatusEffectInstance(statusEffects.get(i).getEffectType(), statusEffects.get(i).getDuration() / 8, statusEffects.get(i).getAmplifier(), statusEffects.get(i).isAmbient(), statusEffects.get(i).shouldShowParticles(), statusEffects.get(i).shouldShowIcon()));
 			}
-			return newCollection;
+			return statusEffects;
 		}
 		return collection;
 	}
