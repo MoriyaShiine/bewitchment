@@ -58,7 +58,7 @@ public class SnakeEntityModel<T extends SnakeEntity> extends AnimalModel<T> {
 		head.addChild("lowerJaw", ModelPartBuilder.create().uv(19, 13).cuboid(-1.09F, -0.5F, -3.8F, 2.0F, 1.0F, 4.0F), ModelTransform.of(0.0F, 0.9F, -0.4F, 0.0F, 0.0F, 0.0F));
 		ModelPartData snout = head.addChild("snout", ModelPartBuilder.create().uv(20, 7).cuboid(-1.0F, -1.0F, -2.9F, 2.0F, 2.0F, 3.0F, new Dilation(0.1F, 0.1F, 0.1F)), ModelTransform.of(0.0F, -0.6F, -2.0F, 0.2618F, 0.0F, 0.0F));
 		snout.addChild("lFang", ModelPartBuilder.create().uv(16, 0).cuboid(-0.3F, 0.0F, -0.5F, 0.0F, 2.0F, 1.0F), ModelTransform.of(-0.7F, 0.1F, -2.1F, -0.2618F, 0.0F, 0.0F));
-		snout.addChild("rFang", ModelPartBuilder.create().uv(16, 0).cuboid(0.1F, 0.0F, -0.5F, 0.0F, 2.0F, 1.0F), ModelTransform.of(0.7F, 0.1F, -2.1F, -0.2618F, 0.0F, 0.0F));
+		snout.addChild("rFang", ModelPartBuilder.create().uv(16, 0).mirrored(true).cuboid(0.1F, 0.0F, -0.5F, 0.0F, 2.0F, 1.0F), ModelTransform.of(0.7F, 0.1F, -2.1F, -0.2618F, 0.0F, 0.0F));
 		head.addChild("tongue", ModelPartBuilder.create().uv(31, 0).cuboid(-0.5F, 0.0F, -2.7F, 1.0F, 0.0F, 4.0F), ModelTransform.of(0.0F, 0.9F, -4.7F, 0.0F, 0.0F, 0.0F));
 		return TexturedModelData.of(data, 64, 32);
 	}
