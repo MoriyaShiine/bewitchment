@@ -1,13 +1,18 @@
 package moriyashiine.bewitchment.common;
 
+import io.github.flemmli97.flan.api.permission.ObjectToPermissionMap;
+import io.github.flemmli97.flan.api.permission.PermissionRegistry;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.block.CandelabraBlock;
+import moriyashiine.bewitchment.api.block.PoppetShelfBlock;
+import moriyashiine.bewitchment.api.block.WitchAltarBlock;
 import moriyashiine.bewitchment.api.component.BloodComponent;
 import moriyashiine.bewitchment.api.component.ContractsComponent;
 import moriyashiine.bewitchment.api.component.TransformationComponent;
 import moriyashiine.bewitchment.api.event.BloodSuckEvents;
-import moriyashiine.bewitchment.common.block.CoffinBlock;
+import moriyashiine.bewitchment.common.block.*;
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
@@ -30,6 +35,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.util.TriState;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityGroup;
@@ -218,5 +224,8 @@ public class Bewitchment implements ModInitializer {
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.END_STONE_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.OBSIDIAN_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.PURPUR_WITCH_ALTAR);
+		if (FabricLoader.getInstance().isModLoaded("flan")) {
+			ObjectToPermissionMap.registerBlockPredicateMap(block -> block instanceof WitchAltarBlock || block instanceof GlyphBlock || block instanceof WitchCauldronBlock || block instanceof BrazierBlock || block instanceof CrystalBallBlock || block instanceof PoppetShelfBlock || block instanceof CandelabraBlock, () -> PermissionRegistry.INTERACTBLOCK);
+		}
 	}
 }

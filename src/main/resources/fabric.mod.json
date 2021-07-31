@@ -36,6 +36,24 @@
 	  "moriyashiine.bewitchment.client.integration.appleskin.BWAppleskinIntegration"
 	]
   },
+  "mixins": [
+	"bewitchment.mixins.json"
+  ],
+  "accessWidener": "bewitchment.accesswidener",
+  "depends": {
+	"fabricloader": "*",
+	"fabric": "*",
+	"minecraft": "1.17.*",
+	"cloth-config2": "*",
+	"somnus": "*",
+	"pehkui": "*",
+	"impersonate": "*",
+	"patchouli": "*",
+	"trinkets": "*"
+  },
+  "conflicts": {
+	"optifabric": "*"
+  },
   "custom": {
 	"cardinal-components": [
 	  "bewitchment:magic",
@@ -57,23 +75,5 @@
 	  "bewitchment:werewolf_villager",
 	  "bewitchment:caduceus_fireball"
 	]
-  },
-  "mixins": [
-	"bewitchment.mixins.json"
-  ],
-  "accessWidener": "bewitchment.accesswidener",
-  "depends": {
-	"fabricloader": "*",
-	"fabric": "*",
-	"minecraft": "1.17.*",
-	"cloth-config2": "*",
-	"somnus": "*",
-	"pehkui": "*",
-	"impersonate": "*",
-	"patchouli": "*",
-	"trinkets": "*"
-  },
-  "conflicts": {
-	"optifabric": "*"
   }
 }

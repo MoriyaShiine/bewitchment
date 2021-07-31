@@ -66,6 +66,10 @@ repositories {
         url "https://maven.ryanliptak.com/"
     }
     maven {
+        name "flan"
+        url "https://gitlab.com/api/v4/projects/21830712/packages/maven"
+    }
+    maven {
         name "jitpack"
         url "https://jitpack.io"
     }
@@ -107,6 +111,15 @@ dependencies {
         exclude module: 'modmenu'
     }
     modCompileOnly("squeek.appleskin:appleskin-fabric:${appleskin_version}:api") {
+        transitive = false
+    }
+    modImplementation("io.github.flemmli97:flan:${minecraft_version}-${flan_version}") {
+        transitive = false
+    }
+    modCompileOnly("io.github.flemmli97:flan:${minecraft_version}-${flan_version}:api") {
+        transitive = false
+    }
+    modRuntime("io.github.flemmli97:flan:${minecraft_version}-${flan_version}") {
         transitive = false
     }
 }
