@@ -23,7 +23,7 @@ public abstract class AreaEffectCloudEntityMixin extends Entity {
 		if (effect.getEffectType() == BWStatusEffects.POLYMORPH) {
 			PolymorphComponent.maybeGet(this).ifPresent(thisPolymorphComponent -> {
 				if (thisPolymorphComponent.getUuid() != null) {
-					PolymorphComponent.maybeGet(this).ifPresent(entityPolymorphComponent -> {
+					PolymorphComponent.maybeGet(entity).ifPresent(entityPolymorphComponent -> {
 						entityPolymorphComponent.setUuid(thisPolymorphComponent.getUuid());
 						entityPolymorphComponent.setName(thisPolymorphComponent.getName());
 					});
