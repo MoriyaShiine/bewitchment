@@ -21,8 +21,6 @@
 	"OpenDoorsTaskMixin",
 	"PlayerEntityMixin",
 	"SpawnHelperMixin",
-	"TerraformBoatItemMixin",
-	"TerraformBoatTypeImplMixin",
 	"VillagerEntityMixin",
 	"brew.AreaEffectCloudEntityMixin",
 	"brew.ArrowEntityMixin",
