@@ -98,7 +98,7 @@ public abstract class LivingEntityMixin extends Entity {
 				if (!hasStatusEffect(StatusEffects.STRENGTH) && !hasStatusEffect(StatusEffects.REGENERATION) && !hasStatusEffect(StatusEffects.RESISTANCE) && directSource instanceof LivingEntity && ((LivingEntity) directSource).hasStatusEffect(BWStatusEffects.LEECHING)) {
 					((LivingEntity) directSource).heal(amount * (((LivingEntity) directSource).getStatusEffect(BWStatusEffects.LEECHING).getAmplifier() + 1) / 8);
 				}
-				if (hasStatusEffect(BWStatusEffects.THORNS) && !(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns())) {
+				if (directSource != null && hasStatusEffect(BWStatusEffects.THORNS) && !(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns())) {
 					directSource.damage(DamageSource.thorns(directSource), 2 * (getStatusEffect(BWStatusEffects.THORNS).getAmplifier() + 1));
 				}
 				if (hasStatusEffect(BWStatusEffects.VOLATILITY) && !source.isExplosive()) {
