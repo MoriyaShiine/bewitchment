@@ -3,7 +3,7 @@
   "id": "bewitchment",
   "version": "${version}",
   "name": "Bewitchment",
-  "description": "generic witchery clone lol",
+  "description": "A mod that aims to add witchcraft",
   "authors": [
 	"MoriyaShiine",
 	"cybercat5555"
@@ -29,11 +29,11 @@
 	"cardinal-components-entity": [
 	  "moriyashiine.bewitchment.common.registry.BWComponents"
 	],
-	"rei_plugins": [
-	  "moriyashiine.bewitchment.client.integration.rei.BWREIPlugin"
-	],
 	"appleskin": [
 	  "moriyashiine.bewitchment.client.integration.appleskin.BWAppleskinIntegration"
+	],
+	"rei_plugins": [
+	  "moriyashiine.bewitchment.client.integration.rei.BWREIPlugin"
 	]
   },
   "mixins": [
@@ -44,11 +44,13 @@
 	"fabricloader": "*",
 	"fabric": "*",
 	"minecraft": "1.17.*",
+	"cardinal-components-entity": "*",
 	"cloth-config2": "*",
-	"somnus": "*",
-	"pehkui": "*",
 	"impersonate": "*",
 	"patchouli": "*",
+	"pehkui": "*",
+	"playerabilitylib": "*",
+	"somnus": "*",
 	"trinkets": "*"
   },
   "conflicts": {
