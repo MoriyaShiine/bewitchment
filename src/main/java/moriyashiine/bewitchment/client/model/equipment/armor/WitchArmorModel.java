@@ -2,29 +2,19 @@ package moriyashiine.bewitchment.client.model.equipment.armor;
 
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 
 public class WitchArmorModel<T extends LivingEntity> extends BipedEntityModel<T> {
-	private final EquipmentSlot slot;
-	private final boolean hood;
-	private final boolean wearingBoots;
+	public final ModelPart hat1;
+	public final ModelPart hood01;
+	public final ModelPart lowerLeftSkirt;
+	public final ModelPart armorLeftBoot;
+	public final ModelPart lowerRightSkirt;
+	public final ModelPart armorRightBoot;
 	
-	private final ModelPart hat1;
-	private final ModelPart hood01;
-	private final ModelPart lowerLeftSkirt;
-	private final ModelPart armorLeftBoot;
-	private final ModelPart lowerRightSkirt;
-	private final ModelPart armorRightBoot;
-	
-	public WitchArmorModel(ModelPart root, EquipmentSlot slot, boolean hood, boolean wearingBoots) {
+	public WitchArmorModel(ModelPart root) {
 		super(root, RenderLayer::getArmorCutoutNoCull);
-		this.slot = slot;
-		this.hood = hood;
-		this.wearingBoots = wearingBoots;
 		hat1 = root.getChild("armorHead").getChild("hat1");
 		hood01 = root.getChild("armorHead").getChild("hood01");
 		lowerLeftSkirt = root.getChild("armorLeftLeg").getChild("lowerLeftSkirt");
@@ -33,8 +23,8 @@ public class WitchArmorModel<T extends LivingEntity> extends BipedEntityModel<T>
 		armorRightBoot = root.getChild("armorRightBoot");
 	}
 	
-	public static TexturedModelData getTexuredModelData() {
-		ModelData data = new ModelData();
+	public static TexturedModelData getTexturedModelData() {
+		ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0);
 		ModelPartData root = data.getRoot();
 		ModelPartData armorRightLeg = root.addChild("armorRightLeg", ModelPartBuilder.create(), ModelTransform.of(3.9F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F));
 		armorRightLeg.addChild("tunicRightFront", ModelPartBuilder.create().uv(53, 65).cuboid(-4.0F, 0.0F, 0.0F, 4.0F, 7.0F, 1.0F), ModelTransform.of(-2.01F, 0.0F, -2.1F, -0.1222F, 0.0F, 0.0F));
@@ -94,21 +84,5 @@ public class WitchArmorModel<T extends LivingEntity> extends BipedEntityModel<T>
 		armorLeftArm.addChild("lShoulder_r1", ModelPartBuilder.create().uv(0, 68).cuboid(0.25F, -2.0F, -3.0F, 5.0F, 5.0F, 6.0F), ModelTransform.of(0.0F, -1.0F, 0.0F, 0.0F, 0.0F, -0.0873F));
 		armorLeftArm.addChild("lArmSleeve02_r2", ModelPartBuilder.create().uv(50, 100).cuboid(-1.7F, -2.2F, -0.5F, 4.0F, 4.0F, 2.0F), ModelTransform.of(2.0F, 7.0F, 2.0F, 0.5236F, 0.0F, 0.0F));
 		return TexturedModelData.of(data, 128, 128);
-	}
-	
-	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
-		hood01.visible = hood;
-		hat1.visible = !hood;
-		head.visible = slot == EquipmentSlot.HEAD;
-		hat.visible = slot == EquipmentSlot.HEAD;
-		body.visible = slot == EquipmentSlot.CHEST;
-		leftArm.visible = slot == EquipmentSlot.CHEST;
-		rightArm.visible = slot == EquipmentSlot.CHEST;
-		armorLeftBoot.visible = slot == EquipmentSlot.FEET;
-		armorRightBoot.visible = slot == EquipmentSlot.FEET;
-		lowerLeftSkirt.visible = !wearingBoots;
-		lowerRightSkirt.visible = !wearingBoots;
-		super.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 	}
 }
