@@ -226,10 +226,10 @@ public class GhostEntity extends BWHostileEntity {
 		
 		private BlockPos findTarget(BlockPos.Mutable target, int tries) {
 			if (tries <= 8) {
-				while (!World.isValid(target) && world.getBlockState(target).getMaterial().isSolid()) {
+				while (isInsideBuildLimit(world, target) && world.getBlockState(target).getMaterial().isSolid()) {
 					target.set(target.getX(), target.getY() + 1, target.getZ());
 				}
-				while (!World.isValid(target) && !world.getBlockState(target).getMaterial().isSolid()) {
+				while (isInsideBuildLimit(world, target) && !world.getBlockState(target).getMaterial().isSolid()) {
 					target.set(target.getX(), target.getY() - 1, target.getZ());
 				}
 				target.set(target.getX(), target.getY() + random.nextInt(8), target.getZ());
@@ -241,6 +241,10 @@ public class GhostEntity extends BWHostileEntity {
 				return target.toImmutable();
 			}
 			return null;
+		}
+		
+		private static boolean isInsideBuildLimit(World world, BlockPos pos) {
+			return pos.getY() >= world.getBottomY() && pos.getY() <= world.getTopY();
 		}
 	}
 	
