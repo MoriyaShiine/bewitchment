@@ -18,6 +18,7 @@ import moriyashiine.bewitchment.client.model.equipment.trinket.ZephyrHarnessMode
 import moriyashiine.bewitchment.client.network.packet.*;
 import moriyashiine.bewitchment.client.particle.CauldronBubbleParticle;
 import moriyashiine.bewitchment.client.particle.IncenseSmokeParticle;
+import moriyashiine.bewitchment.client.renderer.WitchArmorRenderer;
 import moriyashiine.bewitchment.client.renderer.blockentity.BrazierBlockEntityRenderer;
 import moriyashiine.bewitchment.client.renderer.blockentity.PoppetShelfBlockEntityRenderer;
 import moriyashiine.bewitchment.client.renderer.blockentity.WitchAltarBlockEntityRenderer;
@@ -264,47 +265,14 @@ public class BewitchmentClient implements ClientModInitializer {
 		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.TRAPPED_ELDER_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BlockPos.ORIGIN, BWObjects.TRAPPED_ELDER_CHEST.getDefaultState(), BWChestBlockEntity.Type.ELDER, true), matrices, vertexConsumers, light, overlay));
 		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.DRAGONS_BLOOD_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BlockPos.ORIGIN, BWObjects.DRAGONS_BLOOD_CHEST.getDefaultState(), BWChestBlockEntity.Type.DRAGONS_BLOOD, false), matrices, vertexConsumers, light, overlay));
 		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.TRAPPED_DRAGONS_BLOOD_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BlockPos.ORIGIN, BWObjects.TRAPPED_DRAGONS_BLOOD_CHEST.getDefaultState(), BWChestBlockEntity.Type.DRAGONS_BLOOD, true), matrices, vertexConsumers, light, overlay));
-		ArmorRenderer.register(new ArmorRenderer() {
-			private static final Identifier WITCH_HAT_VARIANT_TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/armor/witch_hat_variant.png");
-			private static final Identifier HEDGEWITCH_TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/armor/hedgewitch.png");
-			private static final Identifier ALCHEMIST_TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/armor/alchemist.png");
-			private static final Identifier BESMIRCHED_TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/armor/besmirched.png");
-			private static final Identifier HARBINGER_TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/armor/harbinger.png");
-			private static WitchArmorModel<LivingEntity> model;
-			
-			@Override
-			public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, ItemStack stack, LivingEntity entity, EquipmentSlot slot, int light, BipedEntityModel<LivingEntity> contextModel) {
-				if (model == null) {
-					model = new WitchArmorModel<>(getPart(WITCH_ARMOR_MODEL_LAYER));
-				}
-				boolean hat = stack.getItem() == BWObjects.HEDGEWITCH_HAT || stack.getItem() == BWObjects.ALCHEMIST_HAT || stack.getItem() == BWObjects.BESMIRCHED_HAT;
-				model.hood01.visible = !hat;
-				model.hat1.visible = hat;
-				model.head.visible = slot == EquipmentSlot.HEAD;
-				model.hat.visible = slot == EquipmentSlot.HEAD;
-				model.body.visible = slot == EquipmentSlot.CHEST;
-				model.leftArm.visible = slot == EquipmentSlot.CHEST;
-				model.rightArm.visible = slot == EquipmentSlot.CHEST;
-				model.armorLeftBoot.visible = slot == EquipmentSlot.FEET;
-				model.armorRightBoot.visible = slot == EquipmentSlot.FEET;
-				model.lowerLeftSkirt.visible = !entity.getEquippedStack(EquipmentSlot.FEET).isEmpty();
-				model.lowerRightSkirt.visible = model.lowerLeftSkirt.visible;
-				ArmorRenderer.renderPart(matrices, vertexConsumers, light, stack, model, hat && stack.getName().asString().toLowerCase().contains("faith") ? WITCH_HAT_VARIANT_TEXTURE : getTexture(stack.getItem()));
-			}
-			
-			private Identifier getTexture(Item item) {
-				if (item == BWObjects.HEDGEWITCH_HOOD || item == BWObjects.HEDGEWITCH_HAT || item == BWObjects.HEDGEWITCH_ROBES || item == BWObjects.HEDGEWITCH_PANTS) {
-					return HEDGEWITCH_TEXTURE;
-				}
-				else if (item == BWObjects.ALCHEMIST_HOOD || item == BWObjects.ALCHEMIST_HAT || item == BWObjects.ALCHEMIST_ROBES || item == BWObjects.ALCHEMIST_PANTS) {
-					return ALCHEMIST_TEXTURE;
-				}
-				else if (item == BWObjects.BESMIRCHED_HOOD || item == BWObjects.BESMIRCHED_HAT || item == BWObjects.BESMIRCHED_ROBES || item == BWObjects.BESMIRCHED_PANTS) {
-					return BESMIRCHED_TEXTURE;
-				}
-				return HARBINGER_TEXTURE;
-			}
-		}, BWObjects.HEDGEWITCH_HOOD, BWObjects.HEDGEWITCH_HAT, BWObjects.HEDGEWITCH_ROBES, BWObjects.HEDGEWITCH_PANTS, BWObjects.ALCHEMIST_HOOD, BWObjects.ALCHEMIST_HAT, BWObjects.ALCHEMIST_ROBES, BWObjects.ALCHEMIST_PANTS, BWObjects.BESMIRCHED_HOOD, BWObjects.BESMIRCHED_HAT, BWObjects.BESMIRCHED_ROBES, BWObjects.BESMIRCHED_PANTS, BWObjects.HARBINGER);
+		ArmorRenderer.register(new WitchArmorRenderer(new Identifier(Bewitchment.MODID, "textures/entity/armor/hedgewitch.png"), BWObjects.HEDGEWITCH_HAT),
+				BWObjects.HEDGEWITCH_HOOD, BWObjects.HEDGEWITCH_HAT, BWObjects.HEDGEWITCH_ROBES, BWObjects.HEDGEWITCH_PANTS);
+		ArmorRenderer.register(new WitchArmorRenderer(new Identifier(Bewitchment.MODID, "textures/entity/armor/alchemist.png"), BWObjects.ALCHEMIST_HAT),
+				BWObjects.ALCHEMIST_HOOD, BWObjects.ALCHEMIST_HAT, BWObjects.ALCHEMIST_ROBES, BWObjects.ALCHEMIST_PANTS);
+		ArmorRenderer.register(new WitchArmorRenderer(new Identifier(Bewitchment.MODID, "textures/entity/armor/besmirched.png"), BWObjects.BESMIRCHED_HAT),
+				BWObjects.BESMIRCHED_HOOD, BWObjects.BESMIRCHED_HAT, BWObjects.BESMIRCHED_ROBES, BWObjects.BESMIRCHED_PANTS);
+		ArmorRenderer.register(new WitchArmorRenderer(new Identifier(Bewitchment.MODID, "textures/entity/armor/harbinger.png"), null),
+				BWObjects.HARBINGER);
 		TrinketRendererRegistry.registerRenderer(BWObjects.NAZAR, (stack, slotReference, contextModel, matrices, vertexConsumers, light, entity, limbAngle, limbDistance, tickDelta, animationProgress, headYaw, headPitch) -> {
 			ItemStack copy = stack.copy();
 			copy.getOrCreateNbt().putBoolean("Worn", true);
