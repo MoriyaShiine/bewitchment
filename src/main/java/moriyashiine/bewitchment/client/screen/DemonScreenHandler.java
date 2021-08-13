@@ -62,6 +62,9 @@ public class DemonScreenHandler extends ScreenHandler {
 	
 	@Override
 	public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
+		if (slotIndex == -999) {
+			return;
+		}
 		Slot slot = slots.get(slotIndex);
 		if (slot instanceof DemonTradeSlot) {
 			DemonEntity.DemonTradeOffer offer = ((DemonTradeSlot) slot).getOffer();

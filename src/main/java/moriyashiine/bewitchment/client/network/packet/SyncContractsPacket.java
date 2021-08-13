@@ -17,7 +17,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
-@SuppressWarnings("ConstantConditions")
+@SuppressWarnings({"ConstantConditions", "Convert2Lambda"})
 public class SyncContractsPacket {
 	public static final Identifier ID = new Identifier(Bewitchment.MODID, "sync_contracts");
 	
@@ -30,17 +30,20 @@ public class SyncContractsPacket {
 	}
 	
 	public static void handle(MinecraftClient client, ClientPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
-		NbtCompound conctractsCompound = buf.readNbt();
-		client.execute(() -> {
-			if (client.player != null) {
-				ContractsComponent.maybeGet(client.player).ifPresent(contractsComponent -> {
-					contractsComponent.getContracts().clear();
-					NbtList contracts = conctractsCompound.getList("Contracts", NbtType.COMPOUND);
-					for (int i = 0; i < contracts.size(); i++) {
-						NbtCompound contract = contracts.getCompound(i);
-						contractsComponent.addContract(new Contract.Instance(BWRegistries.CONTRACTS.get(new Identifier(contract.getString("Contract"))), contract.getInt("Duration"), contract.getInt("Cost")));
-					}
-				});
+		NbtCompound contractsCompound = buf.readNbt();
+		client.execute(new Runnable() {
+			@Override
+			public void run() {
+				if (client.player != null) {
+					ContractsComponent.maybeGet(client.player).ifPresent(contractsComponent -> {
+						contractsComponent.getContracts().clear();
+						NbtList contracts = contractsCompound.getList("Contracts", NbtType.COMPOUND);
+						for (int i = 0; i < contracts.size(); i++) {
+							NbtCompound contract = contracts.getCompound(i);
+							contractsComponent.addContract(new Contract.Instance(BWRegistries.CONTRACTS.get(new Identifier(contract.getString("Contract"))), contract.getInt("Duration"), contract.getInt("Cost")));
+						}
+					});
+				}
 			}
 		});
 	}

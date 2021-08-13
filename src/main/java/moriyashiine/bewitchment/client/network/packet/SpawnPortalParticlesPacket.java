@@ -26,7 +26,7 @@ public class SpawnPortalParticlesPacket {
 	public static void handle(MinecraftClient client, ClientPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
 		int id = buf.readInt();
 		client.execute(() -> {
-			ClientWorld world = MinecraftClient.getInstance().world;
+			ClientWorld world = client.world;
 			if (world != null) {
 				Entity entity = world.getEntityById(id);
 				if (entity != null) {
