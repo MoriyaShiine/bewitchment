@@ -13,8 +13,9 @@
 	"Samaritans"
   ],
   "contact": {
-	"website": "https://www.curseforge.com/minecraft/mc-mods/bewitchment",
-	"repo": "https://github.com/MoriyaShiine/bewitchment"
+	"homepage": "https://www.curseforge.com/minecraft/mc-mods/bewitchment",
+	"sources": "https://github.com/MoriyaShiine/bewitchment",
+	"issues": "https://github.com/MoriyaShiine/bewitchment/issues"
   },
   "license": "CC BY-NC-ND 4.0",
   "icon": "assets/bewitchment/icon.png",
