@@ -36,11 +36,11 @@ public class FakeMobComponent implements AutoSyncedComponent, ServerTickingCompo
 	public void serverTick() {
 		if (getTarget() != null) {
 			LivingEntity entity = (LivingEntity) ((ServerWorld) obj.world).getEntity(getTarget());
-			if (obj.getTarget() == null || !obj.getTarget().getUuid().equals(getTarget())) {
-				obj.setTarget(entity);
-			}
-			if (obj.age % 20 == 0 && (obj.getRandom().nextFloat() < 1 / 100f || (!CursesComponent.get(entity).hasCurse(BWCurses.INSANITY)))) {
+			if (entity == null || (obj.age % 20 == 0 && (obj.getRandom().nextFloat() < 1 / 100f || !CursesComponent.get(entity).hasCurse(BWCurses.INSANITY)))) {
 				obj.remove(Entity.RemovalReason.DISCARDED);
+			}
+			else if (obj.getTarget() == null || !obj.getTarget().getUuid().equals(getTarget())) {
+				obj.setTarget(entity);
 			}
 		}
 	}
