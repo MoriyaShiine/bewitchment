@@ -7,6 +7,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.potion.PotionUtil;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
@@ -29,6 +30,6 @@ public class PricklyBeltItem extends TrinketItem {
 			uses = stack.getNbt().getInt("PotionUses");
 		}
 		tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.uses_left", uses).formatted(Formatting.GRAY));
-		Items.POTION.appendTooltip(stack, world, tooltip, context);
+		PotionUtil.buildTooltip(stack, tooltip, 1);
 	}
 }

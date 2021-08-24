@@ -98,6 +98,6 @@ public class ScepterItem extends Item {
 			uses = stack.getNbt().getInt("PotionUses");
 		}
 		tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.uses_left", uses).formatted(Formatting.GRAY));
-		Items.POTION.appendTooltip(stack, world, tooltip, context);
+		PotionUtil.buildTooltip(stack, tooltip, 1);
 	}
 }
