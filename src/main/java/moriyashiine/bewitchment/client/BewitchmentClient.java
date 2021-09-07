@@ -70,7 +70,9 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.Identifier;
@@ -334,12 +336,13 @@ public class BewitchmentClient implements ClientModInitializer {
 				model.render(matrices, vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(TEXTURE)), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
 			}
 		});
-		ClientTickEvents.END_CLIENT_TICK.register(new ClientTickEvents.EndTick() {
+		ClientTickEvents.END_WORLD_TICK.register(new ClientTickEvents.EndWorldTick() {
 			private int transformationAbilityCooldown = 0;
 			
 			@Override
-			public void onEndTick(MinecraftClient minecraftClient) {
-				if (minecraftClient.player != null) {
+			public void onEndTick(ClientWorld world) {
+				PlayerEntity player = MinecraftClient.getInstance().player;
+				if (player != null) {
 					if (transformationAbilityCooldown > 0) {
 						transformationAbilityCooldown--;
 					}
@@ -347,10 +350,10 @@ public class BewitchmentClient implements ClientModInitializer {
 						transformationAbilityCooldown = 20;
 						TransformationAbilityPacket.send();
 					}
-					if (BroomUserComponent.get(minecraftClient.player).isPressingForward()) {
+					if (BroomUserComponent.get(player).isPressingForward()) {
 						TogglePressingForwardPacket.send(false);
 					}
-					if (MinecraftClient.getInstance().options.keyForward.isPressed() && minecraftClient.player.getVehicle() instanceof BroomEntity) {
+					if (MinecraftClient.getInstance().options.keyForward.isPressed() && player.getVehicle() instanceof BroomEntity) {
 						TogglePressingForwardPacket.send(true);
 					}
 				}
