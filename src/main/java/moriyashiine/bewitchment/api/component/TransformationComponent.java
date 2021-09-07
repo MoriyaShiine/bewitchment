@@ -111,7 +111,7 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 		if (BewitchmentAPI.isWerewolf(obj, true)) {
 			AdditionalWerewolfDataComponent additionalWerewolfDataComponent = AdditionalWerewolfDataComponent.get(obj);
 			boolean forced = additionalWerewolfDataComponent.isForcedTransformation();
-			if (!isAlternateForm() && obj.world.isNight() && BewitchmentAPI.getMoonPhase(obj.world) == 0 && obj.world.isSkyVisible(obj.getBlockPos())) {
+			if (!obj.isCreative() && !obj.isSpectator() && !isAlternateForm() && obj.world.isNight() && BewitchmentAPI.getMoonPhase(obj.world) == 0 && obj.world.isSkyVisible(obj.getBlockPos())) {
 				TransformationAbilityPacket.useAbility(obj, true);
 				additionalWerewolfDataComponent.setForcedTransformation(true);
 			}
