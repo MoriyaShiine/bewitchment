@@ -6,7 +6,7 @@
   "mixins": [
 	"AbstractBlockMixin",
 	"AbstractBlockStateMixin",
-	"BlockEntityMixin",
+	"BlockEntityTypeMixin",
 	"BlockMixin",
 	"BlocksAccessor",
 	"DamageEnchantmentMixin",
