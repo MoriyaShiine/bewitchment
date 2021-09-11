@@ -7,6 +7,7 @@ import moriyashiine.bewitchment.api.component.TransformationComponent;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.misc.PoppetData;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
+import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
 import moriyashiine.bewitchment.common.entity.component.AdditionalWerewolfDataComponent;
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
@@ -37,21 +38,27 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.ChunkSectionPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 @SuppressWarnings("ConstantConditions")
 public class BewitchmentAPI {
 	public static final Set<AltarMapEntry> ALTAR_MAP_ENTRIES = new HashSet<>();
-	
+
 	@SuppressWarnings("InstantiationOfUtilityClass")
 	public static final EntityGroup DEMON = new EntityGroup();
-	
+
 	public static ServerPlayerEntity fakePlayer = null;
-	
+
 	public static LivingEntity getTaglockOwner(World world, ItemStack taglock) {
 		if (world instanceof ServerWorld && (taglock.getItem() instanceof TaglockItem || taglock.getItem() instanceof PoppetItem) && TaglockItem.hasTaglock(taglock)) {
 			UUID ownerUUID = TaglockItem.getTaglockUUID(taglock);
@@ -64,61 +71,67 @@ public class BewitchmentAPI {
 		}
 		return null;
 	}
-	
-	public static PoppetData getPoppet(World world, PoppetItem item, Entity owner, PlayerEntity specificInventory) {
-		if (!world.isClient) {
-			List<PoppetData> toSearch = new ArrayList<>();
-			if (specificInventory != null) {
-				for (int i = 0; i < specificInventory.getInventory().size(); i++) {
-					ItemStack stack = specificInventory.getInventory().getStack(i);
-					if (stack.getItem() == item) {
-						toSearch.add(new PoppetData(stack, null, null));
+
+	/*
+	*	Search through inventory for Poppet matching input.
+	* 	Will early out if it finds valid poppet.
+	 */
+	public static PoppetData getPoppetFromInventory(World world, PoppetItem item, Entity owner, DefaultedList<ItemStack> inventory)
+	{
+		for(int i = 0; i < inventory.size(); i++)
+		{
+			ItemStack stack = inventory.get(i);
+			if (stack.getItem() == item && TaglockItem.hasTaglock(stack)) {
+				UUID uuid = null;
+				if (owner != null) {
+					uuid = owner.getUuid();
+				} else {
+					LivingEntity taglockOwner = getTaglockOwner(world, stack);
+					if (taglockOwner != null) {
+						uuid = taglockOwner.getUuid();
 					}
 				}
-			}
-			else {
-				for (PlayerEntity player : ((ServerWorld) world).getPlayers()) {
-					for (int i = 0; i < player.getInventory().size(); i++) {
-						ItemStack stack = player.getInventory().getStack(i);
-						if (stack.getItem() == item) {
-							toSearch.add(new PoppetData(stack, null, null));
-						}
-					}
-				}
-				if (item.worksInShelf) {
-					BWWorldState worldState = BWWorldState.get(world);
-					for (long longPos : worldState.poppetShelves.keySet()) {
-						DefaultedList<ItemStack> inventory = worldState.poppetShelves.get(longPos);
-						for (int i = inventory.size() - 1; i >= 0; i--) {
-							ItemStack stack = inventory.get(i);
-							if (stack.getItem() == item) {
-								toSearch.add(new PoppetData(stack, longPos, i));
-							}
-						}
-					}
-				}
-			}
-			for (PoppetData data : toSearch) {
-				if (TaglockItem.hasTaglock(data.stack)) {
-					UUID uuid = null;
-					if (owner != null) {
-						uuid = owner.getUuid();
-					}
-					else {
-						LivingEntity taglockOwner = getTaglockOwner(world, data.stack);
-						if (taglockOwner != null) {
-							uuid = taglockOwner.getUuid();
-						}
-					}
-					if (TaglockItem.getTaglockUUID(data.stack).equals(uuid)) {
-						return data;
-					}
+				if (TaglockItem.getTaglockUUID(stack).equals(uuid)) {
+					return new PoppetData(stack, null, i);
 				}
 			}
 		}
-		return new PoppetData(ItemStack.EMPTY, null, null);
+
+		return PoppetData.EMPTY;
 	}
-	
+
+	public static PoppetData getPoppet(World world, PoppetItem item, Entity owner) {
+		if (world.isClient)
+			return PoppetData.EMPTY;
+
+		if(item.worksInShelf) {
+			for (Map.Entry<Long, DefaultedList<ItemStack>> entry : BWWorldState.get(world).poppetShelves.entrySet()) {
+				PoppetData result = getPoppetFromInventory(world, item, owner, entry.getValue());
+
+				if (result != PoppetData.EMPTY) {
+					BlockPos pos = BlockPos.fromLong(entry.getKey());
+
+					// Only sync block entities from loaded chunks.
+					if(world.isChunkLoaded(ChunkSectionPos.getSectionCoord(pos.getX()), ChunkSectionPos.getSectionCoord(pos.getY()))) {
+						if(world.getBlockEntity(pos) instanceof PoppetShelfBlockEntity poppetShelf) {
+							poppetShelf.sync();
+						}
+					}
+
+					return new PoppetData(result.stack, entry.getKey(), result.index);
+				}
+			}
+		}
+		for (PlayerEntity player : ((ServerWorld) world).getPlayers()) {
+			PoppetData result = getPoppetFromInventory(world, item, owner, player.getInventory().main);
+
+			if (result != PoppetData.EMPTY)
+				return result;
+		}
+
+		return PoppetData.EMPTY;
+	}
+
 	public static ServerPlayerEntity getFakePlayer(World world) {
 		if (!world.isClient) {
 			if (fakePlayer == null || fakePlayer.getMainHandStack().getItem() != Items.WOODEN_AXE) {
@@ -129,7 +142,7 @@ public class BewitchmentAPI {
 		}
 		return null;
 	}
-	
+
 	public static LivingEntity getTransformedPlayerEntity(PlayerEntity player) {
 		if (BewitchmentAPI.isVampire(player, false)) {
 			BatEntity entity = EntityType.BAT.create(player.world);
@@ -143,7 +156,7 @@ public class BewitchmentAPI {
 		}
 		return null;
 	}
-	
+
 	public static EntityType<?> getFamiliar(PlayerEntity player) {
 		World world = player.world;
 		if (!world.isClient) {
@@ -155,14 +168,14 @@ public class BewitchmentAPI {
 		}
 		return null;
 	}
-	
+
 	public static boolean fillMagic(PlayerEntity player, int amount, boolean simulate) {
 		if (player.world.isClient) {
 			return false;
 		}
 		return MagicComponent.get(player).fillMagic(amount, simulate);
 	}
-	
+
 	public static boolean drainMagic(PlayerEntity player, int amount, boolean simulate) {
 		if (player.world.isClient) {
 			return false;
@@ -175,7 +188,7 @@ public class BewitchmentAPI {
 		}
 		return MagicComponent.get(player).drainMagic(amount, simulate);
 	}
-	
+
 	public static boolean isVampire(Entity entity, boolean includeHumanForm) {
 		if (entity instanceof PlayerEntity player) {
 			TransformationComponent transformationComponent = TransformationComponent.get(player);
@@ -185,7 +198,7 @@ public class BewitchmentAPI {
 		}
 		return entity instanceof VampireEntity;
 	}
-	
+
 	public static boolean isWerewolf(Entity entity, boolean includeHumanForm) {
 		if (entity instanceof PlayerEntity player) {
 			TransformationComponent transformationComponent = TransformationComponent.get(player);
@@ -195,21 +208,21 @@ public class BewitchmentAPI {
 		}
 		return entity instanceof WerewolfEntity;
 	}
-	
+
 	public static boolean isSourceFromSilver(DamageSource source) {
 		if (source.getSource() instanceof LivingEntity && ((LivingEntity) source.getSource()).getMainHandStack().getItem() instanceof AthameItem) {
 			return true;
 		}
 		return source.getSource() instanceof SilverArrowEntity;
 	}
-	
+
 	public static boolean isWeakToSilver(LivingEntity livingEntity) {
 		if (BWTags.IMMUNE_TO_SILVER.contains(livingEntity.getType())) {
 			return false;
 		}
 		return livingEntity.isUndead() || livingEntity.getGroup() == DEMON || BWTags.VULNERABLE_TO_SILVER.contains(livingEntity.getType());
 	}
-	
+
 	public static boolean isPledged(PlayerEntity player, String pledge) {
 		PledgeComponent pledgeComponent = PledgeComponent.get(player);
 		if (!player.world.isClient) {
@@ -224,15 +237,15 @@ public class BewitchmentAPI {
 		}
 		return pledgeComponent.getPledge().equals(pledge);
 	}
-	
+
 	public static void unpledge(PlayerEntity player) {
 		PledgeComponent.get(player).setPledge(BWPledges.NONE);
 	}
-	
+
 	public static int getMoonPhase(WorldAccess world) {
 		return world.getDimension().getMoonPhase(world.getLunarTime());
 	}
-	
+
 	public static void registerAltarMapEntries(Block[]... altarArray) {
 		for (Block[] altars : altarArray) {
 			ALTAR_MAP_ENTRIES.add(new AltarMapEntry(altars[0], altars[1], Blocks.MOSS_CARPET.asItem()));

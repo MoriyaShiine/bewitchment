@@ -1,6 +1,5 @@
 package moriyashiine.bewitchment.common.block.entity.interfaces;
 
-import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.client.network.packet.SyncTaglockHolderBlockEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
@@ -80,10 +79,11 @@ public interface TaglockHolder {
 	
 	default void syncTaglockHolder(World world, BlockEntity blockEntity) {
 		if (world instanceof ServerWorld) {
+			if (blockEntity instanceof BlockEntityClientSerializable blockEntityClientSerializable) {
+				blockEntityClientSerializable.sync();
+			}
+
 			PlayerLookup.tracking(blockEntity).forEach(playerEntity -> {
-				if (blockEntity instanceof BlockEntityClientSerializable) {
-					SyncClientSerializableBlockEntity.send(playerEntity, (BlockEntityClientSerializable) blockEntity);
-				}
 				SyncTaglockHolderBlockEntity.send(playerEntity, blockEntity);
 			});
 		}

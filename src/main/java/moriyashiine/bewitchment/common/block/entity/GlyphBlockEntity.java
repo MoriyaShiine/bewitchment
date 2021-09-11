@@ -4,7 +4,6 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
-import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.GlyphBlock;
 import moriyashiine.bewitchment.common.item.WaystoneItem;
@@ -68,6 +67,7 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 		if (tag.contains("EffectivePos")) {
 			effectivePos = BlockPos.fromLong(tag.getLong("EffectivePos"));
 		}
+		inventory.clear();
 		Inventories.readNbt(tag, inventory);
 		ritualFunction = BWRegistries.RITUAL_FUNCTIONS.get(new Identifier(tag.getString("RitualFunction")));
 		timer = tag.getInt("Timer");
@@ -200,9 +200,7 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 	}
 	
 	public void syncGlyph() {
-		if (world instanceof ServerWorld) {
-			PlayerLookup.tracking(this).forEach(playerEntity -> SyncClientSerializableBlockEntity.send(playerEntity, this));
-		}
+		sync();
 	}
 	
 	public void onUse(World world, BlockPos pos, LivingEntity user, Hand hand, LivingEntity sacrifice) {
