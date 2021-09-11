@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.mixin.poppet;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.misc.PoppetData;
 import moriyashiine.bewitchment.common.entity.component.AdditionalWaterDataComponent;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.entity.Entity;
@@ -36,11 +37,14 @@ public abstract class ItemEntityMixin extends Entity {
 					if (getStack().damage(damage, random, null) && getStack().getDamage() >= getStack().getMaxDamage()) {
 						getStack().decrement(1);
 					}
-					ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
-					if (!potentialPoppet.isEmpty()) {
-						if (potentialPoppet.damage(damage, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
-							potentialPoppet.decrement(1);
+					PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
+					if (!poppetData.stack.isEmpty()) {
+						boolean sync = false;
+						if (poppetData.stack.damage(damage, random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
+							poppetData.stack.decrement(1);
+							sync = true;
 						}
+						poppetData.maybeSync(world, sync);
 						return;
 					}
 					owner.addVelocity(getVelocity().x / 2, getVelocity().y / 2, getVelocity().z / 2);
@@ -61,11 +65,14 @@ public abstract class ItemEntityMixin extends Entity {
 				if (owner != null) {
 					if (source.isFire() || source == DamageSource.LIGHTNING_BOLT) {
 						remove(RemovalReason.DISCARDED);
-						ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
-						if (!potentialPoppet.isEmpty()) {
-							if (potentialPoppet.damage(getStack().getMaxDamage() / 2, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
-								potentialPoppet.decrement(1);
+						PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
+						if (!poppetData.stack.isEmpty()) {
+							boolean sync = false;
+							if (poppetData.stack.damage(getStack().getMaxDamage() / 2, random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
+								poppetData.stack.decrement(1);
+								sync = true;
 							}
+							poppetData.maybeSync(world, sync);
 							return;
 						}
 						owner.setFireTicks(Integer.MAX_VALUE);
@@ -74,11 +81,14 @@ public abstract class ItemEntityMixin extends Entity {
 						if (getStack().damage(1, random, null) && getStack().getDamage() >= getStack().getMaxDamage()) {
 							getStack().decrement(1);
 						}
-						ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
-						if (!potentialPoppet.isEmpty()) {
-							if (potentialPoppet.damage(1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
-								potentialPoppet.decrement(1);
+						PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
+						if (!poppetData.stack.isEmpty()) {
+							boolean sync = false;
+							if (poppetData.stack.damage(1, random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
+								poppetData.stack.decrement(1);
+								sync = true;
 							}
+							poppetData.maybeSync(world, sync);
 							return;
 						}
 						owner.damage(DamageSource.CACTUS, 1);

@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.client.network.packet;
 import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
+import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.entity.BlockEntity;
@@ -13,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 
 @SuppressWarnings("ConstantConditions")
@@ -22,15 +24,23 @@ public class SyncPoppetShelfBlockEntity {
 	public static void send(PlayerEntity player, PoppetShelfBlockEntity blockEntity) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		buf.writeLong(blockEntity.getPos().asLong());
-		buf.writeItemStack(blockEntity.getStack(0));
-		buf.writeItemStack(blockEntity.getStack(1));
-		buf.writeItemStack(blockEntity.getStack(2));
-		buf.writeItemStack(blockEntity.getStack(3));
-		buf.writeItemStack(blockEntity.getStack(4));
-		buf.writeItemStack(blockEntity.getStack(5));
-		buf.writeItemStack(blockEntity.getStack(6));
-		buf.writeItemStack(blockEntity.getStack(7));
-		buf.writeItemStack(blockEntity.getStack(8));
+		BWWorldState worldState = BWWorldState.get(blockEntity.getWorld());
+		if (worldState.poppetShelves.get(blockEntity.getPos().asLong()) != null) {
+			buf.writeItemStack(worldState.poppetShelves.get(blockEntity.getPos().asLong()).get(0));
+			buf.writeItemStack(worldState.poppetShelves.get(blockEntity.getPos().asLong()).get(1));
+			buf.writeItemStack(worldState.poppetShelves.get(blockEntity.getPos().asLong()).get(2));
+			buf.writeItemStack(worldState.poppetShelves.get(blockEntity.getPos().asLong()).get(3));
+			buf.writeItemStack(worldState.poppetShelves.get(blockEntity.getPos().asLong()).get(4));
+			buf.writeItemStack(worldState.poppetShelves.get(blockEntity.getPos().asLong()).get(5));
+			buf.writeItemStack(worldState.poppetShelves.get(blockEntity.getPos().asLong()).get(6));
+			buf.writeItemStack(worldState.poppetShelves.get(blockEntity.getPos().asLong()).get(7));
+			buf.writeItemStack(worldState.poppetShelves.get(blockEntity.getPos().asLong()).get(8));
+		}
+		else {
+			for (int i = 0; i < 9; i++) {
+				buf.writeItemStack(ItemStack.EMPTY);
+			}
+		}
 		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
 	}
 	
@@ -48,15 +58,16 @@ public class SyncPoppetShelfBlockEntity {
 		client.execute(() -> {
 			BlockEntity blockEntity = client.world.getBlockEntity(pos);
 			if (blockEntity instanceof PoppetShelfBlockEntity poppetShelf) {
-				poppetShelf.setStack(0, one);
-				poppetShelf.setStack(1, two);
-				poppetShelf.setStack(2, three);
-				poppetShelf.setStack(3, four);
-				poppetShelf.setStack(4, five);
-				poppetShelf.setStack(5, six);
-				poppetShelf.setStack(6, seven);
-				poppetShelf.setStack(7, eight);
-				poppetShelf.setStack(8, nine);
+				poppetShelf.clientInventory = DefaultedList.ofSize(9, ItemStack.EMPTY);
+				poppetShelf.clientInventory.set(0, one);
+				poppetShelf.clientInventory.set(1, two);
+				poppetShelf.clientInventory.set(2, three);
+				poppetShelf.clientInventory.set(3, four);
+				poppetShelf.clientInventory.set(4, five);
+				poppetShelf.clientInventory.set(5, six);
+				poppetShelf.clientInventory.set(6, seven);
+				poppetShelf.clientInventory.set(7, eight);
+				poppetShelf.clientInventory.set(8, nine);
 			}
 		});
 	}

@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.mixin.poppet;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.misc.PoppetData;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -28,11 +29,14 @@ public abstract class ItemStackMixin {
 	@Inject(method = "damage(ILnet/minecraft/entity/LivingEntity;Ljava/util/function/Consumer;)V", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V"), cancellable = true)
 	private <T extends LivingEntity> void damage(int amount, T entity, Consumer<T> breakCallback, CallbackInfo callbackInfo) {
 		if (getDamage() == getMaxDamage()) {
-			ItemStack poppet = BewitchmentAPI.getPoppet(entity.world, BWObjects.MENDING_POPPET, entity, null);
-			if (!poppet.isEmpty()) {
-				if (poppet.damage(entity instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) entity) == EntityType.WOLF && entity.getRandom().nextBoolean() ? 0 : 1, entity.getRandom(), null) && poppet.getDamage() == poppet.getMaxDamage()) {
-					poppet.decrement(1);
+			PoppetData poppetData = BewitchmentAPI.getPoppet(entity.world, BWObjects.MENDING_POPPET, entity, null);
+			if (!poppetData.stack.isEmpty()) {
+				boolean sync = false;
+				if (poppetData.stack.damage(entity instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) entity) == EntityType.WOLF && entity.getRandom().nextBoolean() ? 0 : 1, entity.getRandom(), null) && poppetData.stack.getDamage() == poppetData.stack.getMaxDamage()) {
+					poppetData.stack.decrement(1);
+					sync = true;
 				}
+				poppetData.maybeSync(entity.world, sync);
 				setDamage(0);
 				callbackInfo.cancel();
 			}

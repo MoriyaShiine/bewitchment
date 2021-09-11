@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.client.renderer.blockentity;
 
 import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
+import moriyashiine.bewitchment.common.network.packet.InitializePoppetShelfPacket;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -16,15 +17,26 @@ import net.minecraft.world.World;
 
 @Environment(EnvType.CLIENT)
 public class PoppetShelfBlockEntityRenderer implements BlockEntityRenderer<PoppetShelfBlockEntity> {
+	private boolean sentPacket = false;
+	
 	@Override
 	public void render(PoppetShelfBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 		World world = entity.getWorld();
 		if (world != null) {
 			Direction direction = entity.getCachedState().get(Properties.HORIZONTAL_FACING);
 			float rotation = -direction.asRotation();
-			renderRow(direction, rotation, entity.getStack(0), entity.getStack(1), entity.getStack(2), 0.8f, matrices, vertexConsumers, light, overlay);
-			renderRow(direction, rotation, entity.getStack(3), entity.getStack(4), entity.getStack(5), 0.5f, matrices, vertexConsumers, light, overlay);
-			renderRow(direction, rotation, entity.getStack(6), entity.getStack(7), entity.getStack(8), 0.2f, matrices, vertexConsumers, light, overlay);
+			if (entity.clientInventory == null) {
+				if (!sentPacket) {
+					sentPacket = true;
+					InitializePoppetShelfPacket.send(entity.getPos());
+				}
+			}
+			else {
+				sentPacket = false;
+				renderRow(direction, rotation, entity.clientInventory.get(0), entity.clientInventory.get(1), entity.clientInventory.get(2), 0.8f, matrices, vertexConsumers, light, overlay);
+				renderRow(direction, rotation, entity.clientInventory.get(3), entity.clientInventory.get(4), entity.clientInventory.get(5), 0.5f, matrices, vertexConsumers, light, overlay);
+				renderRow(direction, rotation, entity.clientInventory.get(6), entity.clientInventory.get(7), entity.clientInventory.get(8), 0.2f, matrices, vertexConsumers, light, overlay);
+			}
 		}
 	}
 	

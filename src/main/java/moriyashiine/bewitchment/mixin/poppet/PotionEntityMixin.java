@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.mixin.poppet;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.misc.PoppetData;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -9,7 +10,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.projectile.thrown.PotionEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -38,11 +38,14 @@ public abstract class PotionEntityMixin extends ThrownItemEntity {
 						if (itemEntity.getStack().damage(1, random, null) && itemEntity.getStack().getDamage() >= itemEntity.getStack().getMaxDamage()) {
 							itemEntity.getStack().decrement(1);
 						}
-						ItemStack potentialPoppet = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
-						if (!potentialPoppet.isEmpty()) {
-							if (potentialPoppet.damage(1, random, null) && potentialPoppet.getDamage() >= potentialPoppet.getMaxDamage()) {
-								potentialPoppet.decrement(1);
+						PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
+						if (!poppetData.stack.isEmpty()) {
+							boolean sync = false;
+							if (poppetData.stack.damage(1, random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
+								poppetData.stack.decrement(1);
+								sync = true;
 							}
+							poppetData.maybeSync(world, sync);
 							continue;
 						}
 						owner.addStatusEffect(effect);

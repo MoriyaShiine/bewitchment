@@ -4,6 +4,7 @@ import dev.emi.trinkets.api.TrinketsApi;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.api.component.CursesComponent;
+import moriyashiine.bewitchment.api.misc.PoppetData;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.client.network.packet.SyncBrazierBlockEntity;
 import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
@@ -127,11 +128,12 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 									target = closestPlayer;
 								}
 								if (target instanceof LivingEntity livingEntity) {
-									ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, target, null);
-									if (!poppet.isEmpty() && poppet.hasNbt() && !poppet.getNbt().getBoolean("Cursed")) {
-										poppet.getNbt().putString("Curse", BWRegistries.CURSES.getId(blockEntity.curseRecipe.curse).toString());
-										poppet.getNbt().putBoolean("Cursed", true);
-										TaglockItem.removeTaglock(poppet);
+									PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, target, null);
+									if (!poppetData.stack.isEmpty() && poppetData.stack.hasNbt() && !poppetData.stack.getNbt().getBoolean("Cursed")) {
+										poppetData.stack.getNbt().putString("Curse", BWRegistries.CURSES.getId(blockEntity.curseRecipe.curse).toString());
+										poppetData.stack.getNbt().putBoolean("Cursed", true);
+										TaglockItem.removeTaglock(poppetData.stack);
+										poppetData.maybeSync(world, true);
 									}
 									else {
 										int duration = 168000;

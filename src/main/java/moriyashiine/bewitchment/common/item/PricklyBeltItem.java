@@ -6,7 +6,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;

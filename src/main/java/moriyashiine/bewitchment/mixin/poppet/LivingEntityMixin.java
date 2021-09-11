@@ -4,6 +4,7 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.component.CursesComponent;
 import moriyashiine.bewitchment.api.component.TransformationComponent;
 import moriyashiine.bewitchment.api.event.ReviveEvents;
+import moriyashiine.bewitchment.api.misc.PoppetData;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.component.AdditionalWaterDataComponent;
 import moriyashiine.bewitchment.common.entity.component.AdditionalWerewolfDataComponent;
@@ -19,7 +20,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -68,40 +68,52 @@ public abstract class LivingEntityMixin extends Entity {
 			Entity trueSource = source.getAttacker();
 			Entity directSource = source.getSource();
 			if (amount > 0 && (Object) this instanceof PlayerEntity && !BewitchmentAPI.isVampire(this, true)) {
-				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.VAMPIRIC_POPPET, null, (PlayerEntity) (Object) this);
-				if (!poppet.isEmpty()) {
-					LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppet);
+				PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.VAMPIRIC_POPPET, null, (PlayerEntity) (Object) this);
+				if (!poppetData.stack.isEmpty()) {
+					LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppetData.stack);
 					if (!BewitchmentAPI.isVampire(owner, true) && !getUuid().equals(owner.getUuid()) && owner.damage(BWDamageSources.VAMPIRE, amount)) {
-						if (poppet.damage((int) (amount * (BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0.5f : 1)), random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
-							poppet.decrement(1);
+						boolean sync = false;
+						if (poppetData.stack.damage((int) (amount * (BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0.5f : 1)), random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
+							poppetData.stack.decrement(1);
+							sync = true;
 						}
+						poppetData.maybeSync(world, sync);
 						return 0;
 					}
 				}
 			}
 			if (source.isFire() || source == DamageSource.DROWN || source == DamageSource.FALL || source == DamageSource.FLY_INTO_WALL) {
-				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.PROTECTION_POPPET, this, null);
-				if (!poppet.isEmpty()) {
-					if (poppet.damage((int) (amount * ((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0.5f : 1)), random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
-						poppet.decrement(1);
+				PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.PROTECTION_POPPET, this, null);
+				if (!poppetData.stack.isEmpty()) {
+					boolean sync = false;
+					if (poppetData.stack.damage((int) (amount * ((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0.5f : 1)), random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
+						poppetData.stack.decrement(1);
+						sync = true;
 					}
+					poppetData.maybeSync(world, sync);
 					return 0;
 				}
 			}
 			if (trueSource instanceof LivingEntity && BewitchmentAPI.isWeakToSilver((LivingEntity) trueSource)) {
-				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.JUDGMENT_POPPET, this, null);
-				if (!poppet.isEmpty()) {
-					if (poppet.damage((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
-						poppet.decrement(1);
+				PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.JUDGMENT_POPPET, this, null);
+				if (!poppetData.stack.isEmpty()) {
+					boolean sync = false;
+					if (poppetData.stack.damage((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
+						poppetData.stack.decrement(1);
+						sync = true;
 					}
+					poppetData.maybeSync(world, sync);
 					amount /= 4;
 				}
 			}
 			if (directSource instanceof LivingEntity) {
-				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.FATIGUE_POPPET, this, null);
-				if (!poppet.isEmpty() && ((LivingEntity) directSource).addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 60, 1)) && poppet.damage((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
-					poppet.decrement(1);
+				PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.FATIGUE_POPPET, this, null);
+				boolean sync = false;
+				if (!poppetData.stack.isEmpty() && ((LivingEntity) directSource).addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 60, 1)) && poppetData.stack.damage((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
+					poppetData.stack.decrement(1);
+					sync = true;
 				}
+				poppetData.maybeSync(world, sync);
 			}
 		}
 		return amount;
@@ -111,12 +123,15 @@ public abstract class LivingEntityMixin extends Entity {
 	private void tryUseTotem(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
 			if (!callbackInfo.getReturnValue()) {
-				ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.DEATH_PROTECTION_POPPET, this, null);
-				if (!poppet.isEmpty() && !ReviveEvents.CANCEL_REVIVE.invoker().shouldCancel((PlayerEntity) (Object) this, source, poppet)) {
-					ReviveEvents.ON_REVIVE.invoker().onRevive((PlayerEntity) (Object) this, source, poppet);
-					if (poppet.damage((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppet.getDamage() >= poppet.getMaxDamage()) {
-						poppet.decrement(1);
+				PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.DEATH_PROTECTION_POPPET, this, null);
+				if (!poppetData.stack.isEmpty() && !ReviveEvents.CANCEL_REVIVE.invoker().shouldCancel((PlayerEntity) (Object) this, source, poppetData.stack)) {
+					ReviveEvents.ON_REVIVE.invoker().onRevive((PlayerEntity) (Object) this, source, poppetData.stack);
+					boolean sync = false;
+					if (poppetData.stack.damage((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
+						poppetData.stack.decrement(1);
+						sync = true;
 					}
+					poppetData.maybeSync(world, sync);
 					setHealth(1);
 					clearStatusEffects();
 					addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1));

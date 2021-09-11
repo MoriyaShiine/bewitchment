@@ -5,8 +5,8 @@ import moriyashiine.bewitchment.api.component.MagicComponent;
 import moriyashiine.bewitchment.api.component.PledgeComponent;
 import moriyashiine.bewitchment.api.component.TransformationComponent;
 import moriyashiine.bewitchment.api.item.PoppetItem;
+import moriyashiine.bewitchment.api.misc.PoppetData;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
-import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
 import moriyashiine.bewitchment.common.entity.component.AdditionalWerewolfDataComponent;
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
@@ -36,7 +36,7 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
@@ -65,54 +65,58 @@ public class BewitchmentAPI {
 		return null;
 	}
 	
-	public static ItemStack getPoppet(World world, PoppetItem item, Entity owner, PlayerEntity specificInventory) {
+	public static PoppetData getPoppet(World world, PoppetItem item, Entity owner, PlayerEntity specificInventory) {
 		if (!world.isClient) {
-			Map<ItemStack, PoppetShelfBlockEntity> toSearch = new HashMap<>();
+			List<PoppetData> toSearch = new ArrayList<>();
 			if (specificInventory != null) {
 				for (int i = 0; i < specificInventory.getInventory().size(); i++) {
-					toSearch.put(specificInventory.getInventory().getStack(i), null);
+					ItemStack stack = specificInventory.getInventory().getStack(i);
+					if (stack.getItem() == item) {
+						toSearch.add(new PoppetData(stack, null, null));
+					}
 				}
 			}
 			else {
-				for (long longPos : BWWorldState.get(world).poppetShelves) {
-					BlockPos pos = BlockPos.fromLong(longPos);
-					if (world.getBlockEntity(pos) instanceof PoppetShelfBlockEntity) {
-						PoppetShelfBlockEntity poppetShelf = ((PoppetShelfBlockEntity) world.getBlockEntity(BlockPos.fromLong(longPos)));
-						for (int i = 0; i < poppetShelf.size(); i++) {
-							toSearch.put(poppetShelf.getStack(i), poppetShelf);
+				for (PlayerEntity player : ((ServerWorld) world).getPlayers()) {
+					for (int i = 0; i < player.getInventory().size(); i++) {
+						ItemStack stack = player.getInventory().getStack(i);
+						if (stack.getItem() == item) {
+							toSearch.add(new PoppetData(stack, null, null));
 						}
 					}
 				}
-				for (PlayerEntity player : ((ServerWorld) world).getPlayers()) {
-					for (int i = 0; i < player.getInventory().size(); i++) {
-						toSearch.put(player.getInventory().getStack(i), null);
+				if (item.worksInShelf) {
+					BWWorldState worldState = BWWorldState.get(world);
+					for (long longPos : worldState.poppetShelves.keySet()) {
+						DefaultedList<ItemStack> inventory = worldState.poppetShelves.get(longPos);
+						for (int i = inventory.size() - 1; i >= 0; i--) {
+							ItemStack stack = inventory.get(i);
+							if (stack.getItem() == item) {
+								toSearch.add(new PoppetData(stack, longPos, i));
+							}
+						}
 					}
 				}
 			}
-			for (ItemStack stack : toSearch.keySet()) {
-				if (stack.getItem() == item && TaglockItem.hasTaglock(stack)) {
+			for (PoppetData data : toSearch) {
+				if (TaglockItem.hasTaglock(data.stack)) {
 					UUID uuid = null;
 					if (owner != null) {
 						uuid = owner.getUuid();
 					}
 					else {
-						LivingEntity taglockOwner = getTaglockOwner(world, stack);
+						LivingEntity taglockOwner = getTaglockOwner(world, data.stack);
 						if (taglockOwner != null) {
 							uuid = taglockOwner.getUuid();
 						}
 					}
-					if (TaglockItem.getTaglockUUID(stack).equals(uuid)) {
-						PoppetShelfBlockEntity poppetShelf = toSearch.get(stack);
-						if (poppetShelf != null) {
-							poppetShelf.markedForSync = true;
-							poppetShelf.markDirty();
-						}
-						return stack;
+					if (TaglockItem.getTaglockUUID(data.stack).equals(uuid)) {
+						return data;
 					}
 				}
 			}
 		}
-		return ItemStack.EMPTY;
+		return new PoppetData(ItemStack.EMPTY, null, null);
 	}
 	
 	public static ServerPlayerEntity getFakePlayer(World world) {

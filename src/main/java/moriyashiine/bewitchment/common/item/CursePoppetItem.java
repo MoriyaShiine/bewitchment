@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.common.item;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.component.CursesComponent;
 import moriyashiine.bewitchment.api.item.PoppetItem;
+import moriyashiine.bewitchment.api.misc.PoppetData;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.registry.BWObjects;
@@ -49,11 +50,12 @@ public class CursePoppetItem extends PoppetItem {
 					if (entity instanceof LivingEntity livingEntity) {
 						boolean failed = false;
 						Curse curse = BWRegistries.CURSES.get(new Identifier(stack.getOrCreateNbt().getString("Curse")));
-						ItemStack poppet = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, entity, null);
-						if (!poppet.isEmpty() && poppet.hasNbt() && !poppet.getNbt().getBoolean("Cursed")) {
-							poppet.getNbt().putString("Curse", BWRegistries.CURSES.getId(curse).toString());
-							poppet.getNbt().putBoolean("Cursed", true);
-							TaglockItem.removeTaglock(poppet);
+						PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, entity, null);
+						if (!poppetData.stack.isEmpty() && poppetData.stack.hasNbt() && !poppetData.stack.getNbt().getBoolean("Cursed")) {
+							poppetData.stack.getNbt().putString("Curse", BWRegistries.CURSES.getId(curse).toString());
+							poppetData.stack.getNbt().putBoolean("Cursed", true);
+							TaglockItem.removeTaglock(poppetData.stack);
+							poppetData.maybeSync(world, true);
 							failed = true;
 						}
 						if (curse != null) {

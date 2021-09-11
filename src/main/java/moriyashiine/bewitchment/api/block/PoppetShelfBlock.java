@@ -4,19 +4,18 @@ import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -41,12 +40,6 @@ public class PoppetShelfBlock extends HorizontalFacingBlock implements BlockEnti
 	@Override
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
 		return new PoppetShelfBlockEntity(pos, state);
-	}
-	
-	@Nullable
-	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world0, BlockState state0, BlockEntityType<T> type) {
-		return (world, pos, state, blockEntity) -> PoppetShelfBlockEntity.tick(world, pos, state, (PoppetShelfBlockEntity) blockEntity);
 	}
 	
 	@Override
@@ -93,27 +86,14 @@ public class PoppetShelfBlock extends HorizontalFacingBlock implements BlockEnti
 	}
 	
 	@Override
-	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
-		if (!world.isClient && state.getBlock() != oldState.getBlock()) {
-			BWWorldState worldState = BWWorldState.get(world);
-			worldState.poppetShelves.add(pos.asLong());
-			worldState.markDirty();
-		}
-	}
-	
-	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!world.isClient && state.getBlock() != newState.getBlock()) {
 			BWWorldState worldState = BWWorldState.get(world);
-			for (int i = worldState.poppetShelves.size() - 1; i >= 0; i--) {
-				if (worldState.poppetShelves.get(i) == pos.asLong()) {
-					worldState.poppetShelves.remove(i);
-					worldState.markDirty();
-				}
-			}
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof Inventory) {
-				ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
+			DefaultedList<ItemStack> inventory = worldState.poppetShelves.get(pos.asLong());
+			if (inventory != null) {
+				ItemScatterer.spawn(world, pos, inventory);
+				worldState.poppetShelves.remove(pos.asLong());
+				worldState.markDirty();
 			}
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);
