@@ -23,8 +23,8 @@ public class WitchAltarBlockEntityRenderer implements BlockEntityRenderer<WitchA
     public void render(WitchAltarBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         matrices.translate(0.5, 1, 0.5);
         Direction direction = entity.getCachedState().get(Properties.HORIZONTAL_FACING);
-        float rotation = direction.asRotation();
-        matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(rotation + 180));
+        float rotation = direction.asRotation() + ((direction == Direction.WEST || direction == Direction.EAST) ? 180 : 0); // Offset rotation when facing WEST or EAST
+        matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(rotation));
 
         ItemStack sword = entity.getStack(0);
         ItemStack pentacle = entity.getStack(1);
