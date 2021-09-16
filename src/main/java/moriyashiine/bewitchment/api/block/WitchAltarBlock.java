@@ -3,14 +3,12 @@ package moriyashiine.bewitchment.api.block;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
-import moriyashiine.bewitchment.client.network.packet.SyncWitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -109,17 +107,14 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 						world.updateComparators(pos, this);
 						blockEntity.markedForScan = true;
 						blockEntity.sync();
-						PlayerLookup.tracking(blockEntity).forEach(playerEntity -> SyncWitchAltarBlockEntity.send(playerEntity, blockEntity));
 					}
-				}
-				else {
+				} else {
 					if (player.isSneaking()) {
 						ItemScatterer.spawn(world, pos.add(0, 1, 0), blockEntity);
 						world.setBlockState(pos, state.with(Properties.LEVEL_15, 0), 11);
 						world.updateComparators(pos, this);
 						blockEntity.markedForScan = true;
 						blockEntity.sync();
-						PlayerLookup.tracking(blockEntity).forEach(playerEntity -> SyncWitchAltarBlockEntity.send(playerEntity, blockEntity));
 					}
 					else {
 						player.sendMessage(new LiteralText(blockEntity.power + " / " + blockEntity.maxPower + " (" + blockEntity.gain + "x)"), true);

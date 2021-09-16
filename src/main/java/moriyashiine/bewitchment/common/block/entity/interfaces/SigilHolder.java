@@ -1,11 +1,9 @@
 package moriyashiine.bewitchment.common.block.entity.interfaces;
 
 import moriyashiine.bewitchment.api.registry.Sigil;
-import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -124,11 +122,9 @@ public interface SigilHolder {
 	
 	default void syncSigilHolder(World world, BlockEntity blockEntity) {
 		if (world instanceof ServerWorld) {
-			PlayerLookup.tracking(blockEntity).forEach(playerEntity -> {
-				if (blockEntity instanceof BlockEntityClientSerializable) {
-					SyncClientSerializableBlockEntity.send(playerEntity, (BlockEntityClientSerializable) blockEntity);
-				}
-			});
+			if (blockEntity instanceof BlockEntityClientSerializable blockEntityClientSerializable) {
+				blockEntityClientSerializable.sync();
+			}
 		}
 	}
 	

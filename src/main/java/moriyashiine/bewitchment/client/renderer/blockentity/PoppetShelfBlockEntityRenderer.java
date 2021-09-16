@@ -1,7 +1,6 @@
 package moriyashiine.bewitchment.client.renderer.blockentity;
 
 import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
-import moriyashiine.bewitchment.common.network.packet.InitializePoppetShelfPacket;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -13,63 +12,38 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3f;
-import net.minecraft.world.World;
 
 @Environment(EnvType.CLIENT)
 public class PoppetShelfBlockEntityRenderer implements BlockEntityRenderer<PoppetShelfBlockEntity> {
-	private boolean sentPacket = false;
-	
-	@Override
-	public void render(PoppetShelfBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-		World world = entity.getWorld();
-		if (world != null) {
-			Direction direction = entity.getCachedState().get(Properties.HORIZONTAL_FACING);
-			float rotation = -direction.asRotation();
-			if (entity.clientInventory == null) {
-				if (!sentPacket) {
-					sentPacket = true;
-					InitializePoppetShelfPacket.send(entity.getPos());
-				}
-			}
-			else {
-				sentPacket = false;
-				renderRow(direction, rotation, entity.clientInventory.get(0), entity.clientInventory.get(1), entity.clientInventory.get(2), 0.8f, matrices, vertexConsumers, light, overlay);
-				renderRow(direction, rotation, entity.clientInventory.get(3), entity.clientInventory.get(4), entity.clientInventory.get(5), 0.5f, matrices, vertexConsumers, light, overlay);
-				renderRow(direction, rotation, entity.clientInventory.get(6), entity.clientInventory.get(7), entity.clientInventory.get(8), 0.2f, matrices, vertexConsumers, light, overlay);
-			}
-		}
-	}
-	
-	private static void renderRow(Direction direction, float rotation, ItemStack one, ItemStack two, ItemStack three, float yOffset, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-		if (!one.isEmpty()) {
-			double xOffset = direction == Direction.NORTH ? 3 / 16f : direction == Direction.SOUTH ? 13 / 16f : direction == Direction.EAST ? 0.85 : 0.15;
-			double zOffset = direction == Direction.NORTH ? 0.15 : direction == Direction.SOUTH ? 0.85 : direction == Direction.EAST ? 3 / 16f : 13 / 16f;
-			matrices.push();
-			matrices.translate(xOffset, yOffset, zOffset);
-			matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(rotation));
-			matrices.scale(1 / 5f, 1 / 5f, 1 / 5f);
-			MinecraftClient.getInstance().getItemRenderer().renderItem(one, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers, 0);
-			matrices.pop();
-			if (!two.isEmpty()) {
-				xOffset = direction == Direction.NORTH || direction == Direction.SOUTH ? 8 / 16f : direction == Direction.EAST ? 0.85 : 0.15;
-				zOffset = direction == Direction.NORTH ? 0.15 : direction == Direction.SOUTH ? 0.85 : direction == Direction.EAST ? 8 / 16f : 8 / 16f;
-				matrices.push();
-				matrices.translate(xOffset, yOffset, zOffset);
-				matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(rotation));
-				matrices.scale(1 / 5f, 1 / 5f, 1 / 5f);
-				MinecraftClient.getInstance().getItemRenderer().renderItem(two, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers, 0);
-				matrices.pop();
-				if (!three.isEmpty()) {
-					xOffset = direction == Direction.NORTH ? 13 / 16f : direction == Direction.SOUTH ? 3 / 16f : direction == Direction.EAST ? 0.85 : 0.15;
-					zOffset = direction == Direction.NORTH ? 0.15 : direction == Direction.SOUTH ? 0.85 : direction == Direction.EAST ? 13 / 16f : 3 / 16f;
-					matrices.push();
-					matrices.translate(xOffset, yOffset, zOffset);
-					matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(rotation));
-					matrices.scale(1 / 5f, 1 / 5f, 1 / 5f);
-					MinecraftClient.getInstance().getItemRenderer().renderItem(three, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers, 0);
-					matrices.pop();
-				}
-			}
-		}
-	}
+
+    @Override
+    public void render(PoppetShelfBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+        Direction direction = entity.getCachedState().get(Properties.HORIZONTAL_FACING);
+        float rotation = -direction.asRotation();
+        matrices.translate(0.5f, 0, 0.5f);
+        matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(rotation));
+        matrices.scale(1 / 5f, 1 / 5f, 1 / 5f);
+
+        renderRow(entity.clientInventory.get(0), entity.clientInventory.get(1), entity.clientInventory.get(2), 0.8f, matrices, vertexConsumers, light, overlay);
+        renderRow(entity.clientInventory.get(3), entity.clientInventory.get(4), entity.clientInventory.get(5), 0.5f, matrices, vertexConsumers, light, overlay);
+        renderRow(entity.clientInventory.get(6), entity.clientInventory.get(7), entity.clientInventory.get(8), 0.2f, matrices, vertexConsumers, light, overlay);
+    }
+
+    private static void renderRow(ItemStack one, ItemStack two, ItemStack three, float yOffset, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+        matrices.push();
+        double xOffset = 0.32 * 5; // Multiply by 5 to negate scaling but avoiding rescaling math.
+        double zOffset = 0.45 * 5;
+        yOffset *= 5;
+        matrices.translate(0, yOffset, zOffset);
+
+        // Render mid first to remove one matrix translation.
+        MinecraftClient.getInstance().getItemRenderer().renderItem(two, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers, 0);
+
+        matrices.translate(xOffset, 0, 0);
+        MinecraftClient.getInstance().getItemRenderer().renderItem(one, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers, 0);
+
+        matrices.translate(-xOffset * 2, 0, 0); // Move two steps since we render middle first.
+        MinecraftClient.getInstance().getItemRenderer().renderItem(three, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers, 0);
+        matrices.pop();
+    }
 }

@@ -1,9 +1,7 @@
 package moriyashiine.bewitchment.common.block.entity.interfaces;
 
-import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
@@ -107,11 +105,9 @@ public interface Lockable {
 	
 	default void syncLockable(World world, BlockEntity blockEntity) {
 		if (world instanceof ServerWorld) {
-			PlayerLookup.tracking(blockEntity).forEach(playerEntity -> {
-				if (blockEntity instanceof BlockEntityClientSerializable) {
-					SyncClientSerializableBlockEntity.send(playerEntity, (BlockEntityClientSerializable) blockEntity);
-				}
-			});
+			if (blockEntity instanceof BlockEntityClientSerializable blockEntityClientSerializable) {
+				blockEntityClientSerializable.sync();
+			}
 		}
 	}
 	

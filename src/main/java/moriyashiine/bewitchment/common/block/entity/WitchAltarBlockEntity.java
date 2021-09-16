@@ -50,6 +50,7 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 	
 	@Override
 	public void fromClientTag(NbtCompound tag) {
+		inventory.clear();
 		Inventories.readNbt(tag, inventory);
 		power = tag.getInt("Power");
 		maxPower = tag.getInt("MaxPower");

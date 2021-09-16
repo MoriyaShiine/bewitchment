@@ -131,10 +131,6 @@ public class BewitchmentClient implements ClientModInitializer {
 			});
 		});
 		ClientPlayNetworking.registerGlobalReceiver(SyncHornedSpearEntity.ID, SyncHornedSpearEntity::handle);
-		ClientPlayNetworking.registerGlobalReceiver(SyncClientSerializableBlockEntity.ID, SyncClientSerializableBlockEntity::handle);
-		ClientPlayNetworking.registerGlobalReceiver(SyncWitchAltarBlockEntity.ID, SyncWitchAltarBlockEntity::handle);
-		ClientPlayNetworking.registerGlobalReceiver(SyncBrazierBlockEntity.ID, SyncBrazierBlockEntity::handle);
-		ClientPlayNetworking.registerGlobalReceiver(SyncPoppetShelfBlockEntity.ID, SyncPoppetShelfBlockEntity::handle);
 		ClientPlayNetworking.registerGlobalReceiver(SyncTaglockHolderBlockEntity.ID, SyncTaglockHolderBlockEntity::handle);
 		ClientPlayNetworking.registerGlobalReceiver(SpawnSmokeParticlesPacket.ID, SpawnSmokeParticlesPacket::handle);
 		ClientPlayNetworking.registerGlobalReceiver(SpawnPortalParticlesPacket.ID, SpawnPortalParticlesPacket::handle);

@@ -6,15 +6,12 @@ import moriyashiine.bewitchment.api.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.api.component.CursesComponent;
 import moriyashiine.bewitchment.api.misc.PoppetData;
 import moriyashiine.bewitchment.api.registry.Curse;
-import moriyashiine.bewitchment.client.network.packet.SyncBrazierBlockEntity;
-import moriyashiine.bewitchment.client.network.packet.SyncClientSerializableBlockEntity;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.recipe.CurseRecipe;
 import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
@@ -28,7 +25,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
@@ -61,6 +57,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 		if (tag.contains("AltarPos")) {
 			setAltarPos(BlockPos.fromLong(tag.getLong("AltarPos")));
 		}
+		inventory.clear();
 		Inventories.readNbt(tag, inventory);
 		timer = tag.getInt("Timer");
 		hasIncense = tag.getBoolean("HasIncense");
@@ -128,7 +125,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 									target = closestPlayer;
 								}
 								if (target instanceof LivingEntity livingEntity) {
-									PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, target, null);
+									PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, target);
 									if (!poppetData.stack.isEmpty() && poppetData.stack.hasNbt() && !poppetData.stack.getNbt().getBoolean("Cursed")) {
 										poppetData.stack.getNbt().putString("Curse", BWRegistries.CURSES.getId(blockEntity.curseRecipe.curse).toString());
 										poppetData.stack.getNbt().putBoolean("Cursed", true);
@@ -224,12 +221,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 	}
 	
 	public void syncBrazier() {
-		if (world instanceof ServerWorld) {
-			PlayerLookup.tracking(this).forEach(playerEntity -> {
-				SyncClientSerializableBlockEntity.send(playerEntity, this);
-				SyncBrazierBlockEntity.send(playerEntity, this);
-			});
-		}
+		sync();
 	}
 	
 	private int getFirstEmptySlot() {

@@ -38,7 +38,7 @@ public abstract class PotionEntityMixin extends ThrownItemEntity {
 						if (itemEntity.getStack().damage(1, random, null) && itemEntity.getStack().getDamage() >= itemEntity.getStack().getMaxDamage()) {
 							itemEntity.getStack().decrement(1);
 						}
-						PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner, null);
+						PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner);
 						if (!poppetData.stack.isEmpty()) {
 							boolean sync = false;
 							if (poppetData.stack.damage(1, random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
