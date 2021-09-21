@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Through the power of fire, the Hellish Bauble extinguishes any flames using some $(l:bewitchment:introduction/altars#internalme)ME$().$(br2)Note that this does not enable you to swim in The Nether. The bauble does not protect against direct damage from lava.$(br2)Being made out of Netherite, this item is completely fireproof."
+	  "text": "Through the power of fire, the Hellish Bauble renders the wearer immune to fire once ignited using some $(l:bewitchment:introduction/altars#internalme)ME$().$(br2)Being made out of Netherite, this item is completely fireproof."
 	},
 	{
 	  "type": "patchouli:crafting",
