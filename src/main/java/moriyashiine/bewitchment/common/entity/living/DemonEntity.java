@@ -173,8 +173,8 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 		dataTracker.set(MALE, nbt.getBoolean("Male"));
 		if (nbt.contains("Offers")) {
 			offers.clear();
-			NbtList offersTag = nbt.getList("Offers", NbtType.COMPOUND);
-			for (NbtElement offerTag : offersTag) {
+			NbtList offersList = nbt.getList("Offers", NbtType.COMPOUND);
+			for (NbtElement offerTag : offersList) {
 				offers.add(new DemonTradeOffer((NbtCompound) offerTag));
 			}
 		}
@@ -186,11 +186,11 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 		super.writeCustomDataToNbt(nbt);
 		nbt.putBoolean("Male", dataTracker.get(MALE));
 		if (!offers.isEmpty()) {
-			NbtList offersTag = new NbtList();
+			NbtList offersList = new NbtList();
 			for (DemonTradeOffer offer : offers) {
-				offersTag.add(offer.toTag());
+				offersList.add(offer.toTag());
 			}
-			nbt.put("Offers", offersTag);
+			nbt.put("Offers", offersList);
 		}
 		nbt.putInt("TradeResetTimer", tradeResetTimer);
 	}

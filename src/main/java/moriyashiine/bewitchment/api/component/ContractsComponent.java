@@ -27,10 +27,10 @@ public class ContractsComponent implements ComponentV3, ServerTickingComponent {
 	
 	@Override
 	public void readFromNbt(NbtCompound tag) {
-		NbtList contracts = tag.getList("Contracts", NbtType.COMPOUND);
-		for (int i = 0; i < contracts.size(); i++) {
-			NbtCompound contract = contracts.getCompound(i);
-			addContract(new Contract.Instance(BWRegistries.CONTRACTS.get(new Identifier(contract.getString("Contract"))), contract.getInt("Duration"), contract.getInt("Cost")));
+		NbtList contractsList = tag.getList("Contracts", NbtType.COMPOUND);
+		for (int i = 0; i < contractsList.size(); i++) {
+			NbtCompound contractCompound = contractsList.getCompound(i);
+			addContract(new Contract.Instance(BWRegistries.CONTRACTS.get(new Identifier(contractCompound.getString("Contract"))), contractCompound.getInt("Duration"), contractCompound.getInt("Cost")));
 		}
 	}
 	
@@ -91,15 +91,15 @@ public class ContractsComponent implements ComponentV3, ServerTickingComponent {
 	
 	@SuppressWarnings("ConstantConditions")
 	public NbtList toNbtContract() {
-		NbtList contractList = new NbtList();
+		NbtList contractsTag = new NbtList();
 		for (Contract.Instance instance : getContracts()) {
-			NbtCompound contract = new NbtCompound();
-			contract.putString("Contract", BWRegistries.CONTRACTS.getId(instance.contract).toString());
-			contract.putInt("Duration", instance.duration);
-			contract.putInt("Cost", instance.cost);
-			contractList.add(contract);
+			NbtCompound contractCompound = new NbtCompound();
+			contractCompound.putString("Contract", BWRegistries.CONTRACTS.getId(instance.contract).toString());
+			contractCompound.putInt("Duration", instance.duration);
+			contractCompound.putInt("Cost", instance.cost);
+			contractsTag.add(contractCompound);
 		}
-		return contractList;
+		return contractsTag;
 	}
 	
 	public static ContractsComponent get(PlayerEntity obj) {

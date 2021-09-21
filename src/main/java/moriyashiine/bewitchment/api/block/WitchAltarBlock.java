@@ -108,7 +108,8 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 						blockEntity.markedForScan = true;
 						blockEntity.sync();
 					}
-				} else {
+				}
+				else {
 					if (player.isSneaking()) {
 						ItemScatterer.spawn(world, pos.add(0, 1, 0), blockEntity);
 						world.setBlockState(pos, state.with(Properties.LEVEL_15, 0), 11);
@@ -182,8 +183,8 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 				worldState.potentialCandelabras.add(pos.asLong());
 				worldState.markDirty();
 			}
-			for (BlockPos usesAltarPower : BWUtil.getBlockPoses(pos, 24, currentPos -> world.getBlockEntity(currentPos) instanceof UsesAltarPower)) {
-				BlockEntity blockEntity = world.getBlockEntity(usesAltarPower);
+			for (BlockPos foundPos : BWUtil.getBlockPoses(pos, 24, currentPos -> world.getBlockEntity(currentPos) instanceof UsesAltarPower)) {
+				BlockEntity blockEntity = world.getBlockEntity(foundPos);
 				((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, pos));
 				blockEntity.markDirty();
 			}
@@ -200,16 +201,15 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 					worldState.markDirty();
 				}
 			}
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof Inventory) {
-				ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
+			if (world.getBlockEntity(pos) instanceof Inventory inventory) {
+				ItemScatterer.spawn(world, pos, inventory);
 			}
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);
 		if (!world.isClient && state.getBlock() != newState.getBlock()) {
-			for (BlockPos usesAltarPower : BWUtil.getBlockPoses(pos, 24, currentPos -> world.getBlockEntity(currentPos) instanceof UsesAltarPower)) {
-				BlockEntity blockEntity = world.getBlockEntity(usesAltarPower);
-				((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, usesAltarPower));
+			for (BlockPos foundPos : BWUtil.getBlockPoses(pos, 24, currentPos -> world.getBlockEntity(currentPos) instanceof UsesAltarPower)) {
+				BlockEntity blockEntity = world.getBlockEntity(foundPos);
+				((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, foundPos));
 				blockEntity.markDirty();
 			}
 		}
@@ -230,14 +230,14 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 		Item sword = blockEntity.getStack(0).getItem();
 		Item pentacle = blockEntity.getStack(1).getItem();
 		Item wand = blockEntity.getStack(2).getItem();
-		if (sword instanceof BlockItem) {
-			luminance = Math.max(luminance, ((BlockItem) sword).getBlock().getDefaultState().getLuminance());
+		if (sword instanceof BlockItem blockItem) {
+			luminance = Math.max(luminance, blockItem.getBlock().getDefaultState().getLuminance());
 		}
-		if (pentacle instanceof BlockItem) {
-			luminance = Math.max(luminance, ((BlockItem) pentacle).getBlock().getDefaultState().getLuminance());
+		if (pentacle instanceof BlockItem blockItem) {
+			luminance = Math.max(luminance, blockItem.getBlock().getDefaultState().getLuminance());
 		}
-		if (wand instanceof BlockItem) {
-			luminance = Math.max(luminance, ((BlockItem) wand).getBlock().getDefaultState().getLuminance());
+		if (wand instanceof BlockItem blockItem) {
+			luminance = Math.max(luminance, blockItem.getBlock().getDefaultState().getLuminance());
 		}
 		return luminance;
 	}

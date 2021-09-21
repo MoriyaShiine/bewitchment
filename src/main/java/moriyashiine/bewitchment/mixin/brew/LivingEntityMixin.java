@@ -54,7 +54,7 @@ public abstract class LivingEntityMixin extends Entity {
 	private DamageSource modifyDamage0(DamageSource source) {
 		if (!world.isClient) {
 			Entity attacker = source.getSource();
-			if (attacker instanceof LivingEntity && ((LivingEntity) attacker).hasStatusEffect(BWStatusEffects.ENCHANTED)) {
+			if (attacker instanceof LivingEntity livingAttacker && livingAttacker.hasStatusEffect(BWStatusEffects.ENCHANTED)) {
 				return attacker instanceof PlayerEntity ? new BWDamageSources.MagicPlayer(attacker) : new BWDamageSources.MagicMob(attacker);
 			}
 		}
@@ -64,20 +64,18 @@ public abstract class LivingEntityMixin extends Entity {
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
 	private float modifyDamage1(float amount, DamageSource source) {
 		if (!world.isClient) {
-			Entity trueSource = source.getAttacker();
-			Entity directSource = source.getSource();
-			if (!source.isOutOfWorld() && (hasStatusEffect(BWStatusEffects.ETHEREAL) || (trueSource instanceof LivingEntity && ((LivingEntity) trueSource).hasStatusEffect(BWStatusEffects.ETHEREAL)))) {
+			if (!source.isOutOfWorld() && (hasStatusEffect(BWStatusEffects.ETHEREAL) || (source.getAttacker() instanceof LivingEntity livingAttacker && livingAttacker.hasStatusEffect(BWStatusEffects.ETHEREAL)))) {
 				return 0;
 			}
-			if (directSource instanceof LivingEntity && ((LivingEntity) directSource).hasStatusEffect(BWStatusEffects.ENCHANTED)) {
+			if (source.getSource() instanceof LivingEntity livingSource && livingSource.hasStatusEffect(BWStatusEffects.ENCHANTED)) {
 				amount /= 4;
-				amount += ((LivingEntity) directSource).getStatusEffect(BWStatusEffects.ENCHANTED).getAmplifier();
+				amount += livingSource.getStatusEffect(BWStatusEffects.ENCHANTED).getAmplifier();
 			}
 			if (hasStatusEffect(BWStatusEffects.MAGIC_SPONGE) && source.isMagic()) {
 				float magicAmount = (0.3f + (0.1f * getStatusEffect(BWStatusEffects.MAGIC_SPONGE).getAmplifier()));
 				amount *= (1 - magicAmount);
-				if ((Object) this instanceof PlayerEntity) {
-					BewitchmentAPI.fillMagic((PlayerEntity) (Object) this, (int) (amount * magicAmount), false);
+				if ((Object) this instanceof PlayerEntity player) {
+					BewitchmentAPI.fillMagic(player, (int) (amount * magicAmount), false);
 				}
 			}
 		}
@@ -95,10 +93,10 @@ public abstract class LivingEntityMixin extends Entity {
 				callbackInfo.setReturnValue(false);
 			}
 			else if (amount > 0 && hurtTime == 0) {
-				if (!hasStatusEffect(StatusEffects.STRENGTH) && !hasStatusEffect(StatusEffects.REGENERATION) && !hasStatusEffect(StatusEffects.RESISTANCE) && directSource instanceof LivingEntity && ((LivingEntity) directSource).hasStatusEffect(BWStatusEffects.LEECHING)) {
-					((LivingEntity) directSource).heal(amount * (((LivingEntity) directSource).getStatusEffect(BWStatusEffects.LEECHING).getAmplifier() + 1) / 8);
+				if (!hasStatusEffect(StatusEffects.STRENGTH) && !hasStatusEffect(StatusEffects.REGENERATION) && !hasStatusEffect(StatusEffects.RESISTANCE) && directSource instanceof LivingEntity livingSource && livingSource.hasStatusEffect(BWStatusEffects.LEECHING)) {
+					livingSource.heal(amount * (livingSource.getStatusEffect(BWStatusEffects.LEECHING).getAmplifier() + 1) / 8);
 				}
-				if (directSource != null && hasStatusEffect(BWStatusEffects.THORNS) && !(source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns())) {
+				if (directSource != null && hasStatusEffect(BWStatusEffects.THORNS) && !(source instanceof EntityDamageSource entitySource && entitySource.isThorns())) {
 					directSource.damage(DamageSource.thorns(directSource), 2 * (getStatusEffect(BWStatusEffects.THORNS).getAmplifier() + 1));
 				}
 				if (hasStatusEffect(BWStatusEffects.VOLATILITY) && !source.isExplosive()) {
@@ -106,9 +104,9 @@ public abstract class LivingEntityMixin extends Entity {
 						entity.damage(DamageSource.explosion(((LivingEntity) (Object) this)), 4 * (getStatusEffect(BWStatusEffects.VOLATILITY).getAmplifier() + 1));
 					}
 					world.playSound(null, getBlockPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1, 1);
-					PlayerLookup.tracking(this).forEach(playerEntity -> SpawnExplosionParticlesPacket.send(playerEntity, this));
-					if (((Object) this) instanceof PlayerEntity) {
-						SpawnExplosionParticlesPacket.send((PlayerEntity) (Object) this, this);
+					PlayerLookup.tracking(this).forEach(trackingPlayer -> SpawnExplosionParticlesPacket.send(trackingPlayer, this));
+					if (((Object) this) instanceof PlayerEntity player) {
+						SpawnExplosionParticlesPacket.send(player, this);
 					}
 					removeStatusEffect(BWStatusEffects.VOLATILITY);
 				}

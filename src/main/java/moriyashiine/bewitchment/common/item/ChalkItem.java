@@ -52,8 +52,8 @@ public class ChalkItem extends Item {
 				ItemStack stack = context.getStack();
 				world.playSound(null, pos, state.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS, 1, MathHelper.nextFloat(world.random, 0.8f, 1.2f));
 				world.setBlockState(pos, state);
-				if (player instanceof ServerPlayerEntity) {
-					Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity) player, pos, stack);
+				if (player instanceof ServerPlayerEntity serverPlayer) {
+					Criteria.PLACED_BLOCK.trigger(serverPlayer, pos, stack);
 					stack.damage(1, player, stackUser -> stackUser.sendToolBreakStatus(context.getHand()));
 				}
 			}
@@ -75,7 +75,6 @@ public class ChalkItem extends Item {
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		//why
 		if (stack.hasNbt() && stack.getOrCreateNbt().contains("InnerCircle")) {
 			tooltip.add(new TranslatableText("bewitchment.tooltip.inner_circle", new TranslatableText(stack.getOrCreateNbt().getString("InnerCircle"))).formatted(Formatting.GRAY));
 			if (stack.getOrCreateNbt().contains("OuterCircle")) {

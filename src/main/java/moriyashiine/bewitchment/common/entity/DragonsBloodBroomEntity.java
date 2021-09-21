@@ -59,8 +59,8 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 		if (player.isSneaking()) {
 			if (!client && player.getUuid().equals(getOwner())) {
 				ItemStack stack = player.getStackInHand(hand);
-				if (stack.getItem() instanceof SigilItem && ((SigilItem) stack.getItem()).sigil.active) {
-					sigil = ((SigilItem) stack.getItem()).sigil;
+				if (stack.getItem() instanceof SigilItem sigilItem && sigilItem.sigil.active) {
+					sigil = sigilItem.sigil;
 					uses = sigil.uses * (BewitchmentAPI.getFamiliar(player) == BWEntityTypes.SNAKE ? 2 : 1);
 					modeOnWhitelist = true;
 					stack.decrement(1);
@@ -128,9 +128,9 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 	
 	private void readFromNbt(NbtCompound nbt) {
 		if (nbt.contains("Sigil")) {
-			NbtList entities = nbt.getList("Entities", NbtType.STRING);
-			for (int i = 0; i < entities.size(); i++) {
-				this.entities.add(UUID.fromString(entities.getString(i)));
+			NbtList entitiesList = nbt.getList("Entities", NbtType.STRING);
+			for (int i = 0; i < entitiesList.size(); i++) {
+				this.entities.add(UUID.fromString(entitiesList.getString(i)));
 			}
 			sigil = BWRegistries.SIGILS.get(new Identifier(nbt.getString("Sigil")));
 			uses = nbt.getInt("Uses");
@@ -140,11 +140,11 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 	
 	private void writeToNbt(NbtCompound nbt) {
 		if (sigil != null) {
-			NbtList entities = new NbtList();
+			NbtList entitiesList = new NbtList();
 			for (UUID entity : this.entities) {
-				entities.add(NbtString.of(entity.toString()));
+				entitiesList.add(NbtString.of(entity.toString()));
 			}
-			nbt.put("Entities", entities);
+			nbt.put("Entities", entitiesList);
 			nbt.putString("Sigil", BWRegistries.SIGILS.getId(sigil).toString());
 			nbt.putInt("Uses", uses);
 			nbt.putBoolean("ModeOnWhitelist", modeOnWhitelist);

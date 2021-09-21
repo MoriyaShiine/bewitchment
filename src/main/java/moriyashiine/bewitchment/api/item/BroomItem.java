@@ -26,14 +26,14 @@ public class BroomItem extends Item {
 		if (world.getBlockState(pos).isAir()) {
 			if (!client) {
 				Entity entity = broom.create(world);
-				if (entity instanceof BroomEntity) {
+				if (entity instanceof BroomEntity broomEntity) {
 					entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, context.getPlayerYaw(), context.getPlayer() == null ? 0 : context.getPlayer().getPitch());
 					if (context.getPlayer() != null) {
 						context.getStack().getOrCreateNbt().putUuid("OwnerUUID", context.getPlayer().getUuid());
 					}
 					ItemStack stack = context.getStack().split(1);
-					((BroomEntity) entity).init(stack);
-					((BroomEntity) entity).stack = stack;
+					broomEntity.init(stack);
+					broomEntity.stack = stack;
 					world.spawnEntity(entity);
 				}
 			}

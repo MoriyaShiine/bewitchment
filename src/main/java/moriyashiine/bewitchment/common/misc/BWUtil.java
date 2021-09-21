@@ -61,15 +61,15 @@ public class BWUtil {
 			if (foundEntity instanceof ArmorStandEntity) {
 				return false;
 			}
-			if (foundEntity instanceof PlayerEntity) {
-				if (BewitchmentAPI.isPledged((PlayerEntity) foundEntity, ((Pledgeable) entity).getPledgeID())) {
+			if (foundEntity instanceof PlayerEntity player) {
+				if (BewitchmentAPI.isPledged(player, ((Pledgeable) entity).getPledgeID())) {
 					return false;
 				}
 			}
 			else if (foundEntity.getGroup() == BewitchmentAPI.DEMON) {
 				return false;
 			}
-			return BWUtil.getArmorPieces(foundEntity, stack -> stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3;
+			return BWUtil.getArmorPieces(foundEntity, stack -> stack.getItem() instanceof ArmorItem armorItem && armorItem.getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3;
 		});
 	}
 	
@@ -79,7 +79,7 @@ public class BWUtil {
 	}
 	
 	public static boolean rejectTrades(LivingEntity merchant) {
-		return !merchant.world.getEntitiesByClass(PlayerEntity.class, new Box(merchant.getBlockPos()).expand(8), entity -> merchant.canSee(entity) && entity.isAlive() && CursesComponent.get(entity).hasCurse(BWCurses.APATHY)).isEmpty();
+		return !merchant.world.getEntitiesByClass(PlayerEntity.class, new Box(merchant.getBlockPos()).expand(8), foundEntity -> merchant.canSee(foundEntity) && foundEntity.isAlive() && CursesComponent.get(foundEntity).hasCurse(BWCurses.APATHY)).isEmpty();
 	}
 	
 	public static int getArmorPieces(LivingEntity livingEntity, Predicate<ItemStack> predicate) {
@@ -134,17 +134,17 @@ public class BWUtil {
 			if (!entity.isSilent()) {
 				entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, entity.getSoundCategory(), 1, 1);
 			}
-			PlayerLookup.tracking(entity).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, entity));
-			if (entity instanceof PlayerEntity) {
-				SpawnPortalParticlesPacket.send((PlayerEntity) entity, entity);
+			PlayerLookup.tracking(entity).forEach(trackingPlayer -> SpawnPortalParticlesPacket.send(trackingPlayer, entity));
+			if (entity instanceof PlayerEntity player) {
+				SpawnPortalParticlesPacket.send(player, entity);
 			}
 		}
-		if (entity instanceof LivingEntity) {
-			if (entity instanceof PlayerEntity) {
-				((PlayerEntity) entity).wakeUp(true, false);
+		if (entity instanceof LivingEntity livingEntity) {
+			if (entity instanceof PlayerEntity player) {
+				player.wakeUp(true, false);
 			}
 			else {
-				((LivingEntity) entity).wakeUp();
+				livingEntity.wakeUp();
 			}
 		}
 		entity.teleport(x, y + 0.5, z);
@@ -152,9 +152,9 @@ public class BWUtil {
 			if (!entity.isSilent()) {
 				entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, entity.getSoundCategory(), 1, 1);
 			}
-			PlayerLookup.tracking(entity).forEach(playerEntity -> SpawnPortalParticlesPacket.send(playerEntity, entity));
-			if (entity instanceof PlayerEntity) {
-				SpawnPortalParticlesPacket.send((PlayerEntity) entity, entity);
+			PlayerLookup.tracking(entity).forEach(trackingPlayer -> SpawnPortalParticlesPacket.send(trackingPlayer, entity));
+			if (entity instanceof PlayerEntity player) {
+				SpawnPortalParticlesPacket.send(player, entity);
 			}
 		}
 	}

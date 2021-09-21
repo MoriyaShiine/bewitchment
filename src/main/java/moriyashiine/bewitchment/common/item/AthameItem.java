@@ -82,7 +82,7 @@ public class AthameItem extends SwordItem {
 			if (!client) {
 				world.setBlockState(pos, entry.strippedLog.getDefaultState().with(PillarBlock.AXIS, state.get(PillarBlock.AXIS)), 11);
 				if (player != null) {
-					context.getStack().damage(1, player, (user) -> user.sendToolBreakStatus(context.getHand()));
+					context.getStack().damage(1, player, stackUser -> stackUser.sendToolBreakStatus(context.getHand()));
 					if (world.random.nextFloat() < 2 / 3f) {
 						ItemStack bark = entry.getOutput().copy();
 						if (!player.getInventory().insertStack(bark)) {
@@ -94,13 +94,13 @@ public class AthameItem extends SwordItem {
 			return ActionResult.success(client);
 		}
 		BlockEntity blockEntity = world.getBlockEntity(state.getBlock() instanceof DoorBlock && state.get(DoorBlock.HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos);
-		if (blockEntity instanceof SigilHolder sigil) {
-			if (player != null && player.getUuid().equals(sigil.getOwner())) {
-				if (!client && !sigil.getEntities().isEmpty()) {
-					boolean whitelist = sigil.getModeOnWhitelist();
+		if (blockEntity instanceof SigilHolder sigilHolder) {
+			if (player != null && player.getUuid().equals(sigilHolder.getOwner())) {
+				if (!client && !sigilHolder.getEntities().isEmpty()) {
+					boolean whitelist = sigilHolder.getModeOnWhitelist();
 					world.playSound(null, pos, BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.BLOCKS, 1, whitelist ? 0.5f : 1);
 					player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.toggle_" + (!whitelist ? "whitelist" : "blacklist")), true);
-					sigil.setModeOnWhitelist(!whitelist);
+					sigilHolder.setModeOnWhitelist(!whitelist);
 					blockEntity.markDirty();
 				}
 				return ActionResult.success(client);

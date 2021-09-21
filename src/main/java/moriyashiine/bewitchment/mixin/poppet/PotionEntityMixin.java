@@ -45,7 +45,7 @@ public abstract class PotionEntityMixin extends ThrownItemEntity {
 								poppetData.stack.decrement(1);
 								sync = true;
 							}
-							poppetData.maybeSync(world, sync);
+							poppetData.update(world, sync);
 							continue;
 						}
 						owner.addStatusEffect(effect);

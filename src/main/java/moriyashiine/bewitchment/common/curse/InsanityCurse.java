@@ -33,10 +33,10 @@ public class InsanityCurse extends Curse {
 				}
 				tries++;
 			}
-			if (entity instanceof MobEntity mobEntity) {
+			if (entity instanceof MobEntity mob) {
 				BWUtil.attemptTeleport(entity, target.getBlockPos(), 24, false);
-				((MobEntity) entity).initialize((ServerWorldAccess) target.world, target.world.getLocalDifficulty(target.getBlockPos()), SpawnReason.EVENT, null, null);
-				FakeMobComponent.get(mobEntity).setTarget(target.getUuid());
+				mob.initialize((ServerWorldAccess) target.world, target.world.getLocalDifficulty(target.getBlockPos()), SpawnReason.EVENT, null, null);
+				FakeMobComponent.get(mob).setTarget(target.getUuid());
 				entity.setSilent(true);
 				target.world.spawnEntity(entity);
 			}

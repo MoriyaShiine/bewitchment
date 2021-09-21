@@ -24,14 +24,14 @@ public class GrotestqueStewItem extends Item {
 			PledgeComponent pledgeComponent = PledgeComponent.get(player);
 			if (pledgeComponent.getPledge().equals(BWPledges.NONE)) {
 				LivingEntity closest = null;
-				for (LivingEntity livingEntity : world.getEntitiesByClass(LivingEntity.class, new Box(user.getBlockPos()).expand(8), entity -> entity.isAlive() && entity instanceof Pledgeable)) {
+				for (LivingEntity livingEntity : world.getEntitiesByClass(LivingEntity.class, new Box(user.getBlockPos()).expand(8), foundEntity -> foundEntity.isAlive() && foundEntity instanceof Pledgeable)) {
 					if (closest == null || user.distanceTo(livingEntity) < user.distanceTo(closest)) {
 						closest = livingEntity;
 					}
 				}
-				if (closest instanceof Pledgeable) {
-					pledgeComponent.setPledge(((Pledgeable) closest).getPledgeID());
-					((Pledgeable) closest).getPledgedPlayerUUIDs().add(user.getUuid());
+				if (closest instanceof Pledgeable pledgeable) {
+					pledgeComponent.setPledge(pledgeable.getPledgeID());
+					pledgeable.getPledgedPlayerUUIDs().add(user.getUuid());
 					world.playSound(null, user.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_PLEDGE, SoundCategory.PLAYERS, 1, 1);
 				}
 			}

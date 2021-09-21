@@ -51,7 +51,7 @@ public class SigilItem extends Item {
 		boolean client = world.isClient;
 		BlockState state = world.getBlockState(pos);
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (!sigil.active) {
+		if (blockEntity instanceof SigilHolder sigilHolder && !sigil.active) {
 			ItemPlacementContext placementContext = new ItemPlacementContext(context);
 			if (!state.canReplace(placementContext)) {
 				pos = pos.offset(context.getSide());
@@ -65,13 +65,13 @@ public class SigilItem extends Item {
 					world.playSound(null, pos, sigilState.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS, 1, MathHelper.nextFloat(world.random, 0.8f, 1.2f));
 					world.setBlockState(pos, sigilState);
 					blockEntity = world.getBlockEntity(pos);
-					((SigilHolder) blockEntity).setSigil(sigil);
-					((SigilHolder) blockEntity).setUses(sigil.uses * (BewitchmentAPI.getFamiliar(player) == BWEntityTypes.SNAKE ? 2 : 1));
-					((SigilHolder) blockEntity).setOwner(player.getUuid());
+					sigilHolder.setSigil(sigil);
+					sigilHolder.setUses(sigil.uses * (BewitchmentAPI.getFamiliar(player) == BWEntityTypes.SNAKE ? 2 : 1));
+					sigilHolder.setOwner(player.getUuid());
 					((BlockEntityClientSerializable) blockEntity).sync();
 					blockEntity.markDirty();
-					if (player instanceof ServerPlayerEntity) {
-						Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity) player, pos, stack);
+					if (player instanceof ServerPlayerEntity serverPlayerEntity) {
+						Criteria.PLACED_BLOCK.trigger(serverPlayerEntity, pos, stack);
 						if (!player.isCreative()) {
 							stack.decrement(1);
 						}
@@ -80,15 +80,15 @@ public class SigilItem extends Item {
 				return ActionResult.success(client);
 			}
 		}
-		else if (blockEntity instanceof SigilHolder && state.getBlock() != BWObjects.SIGIL) {
+		else if (blockEntity instanceof SigilHolder sigilHolder && state.getBlock() != BWObjects.SIGIL) {
 			if (state.getBlock() instanceof DoorBlock && state.get(DoorBlock.HALF) == DoubleBlockHalf.UPPER) {
 				blockEntity = world.getBlockEntity(pos.down());
 			}
-			if (((SigilHolder) blockEntity).getSigil() == null) {
+			if (sigilHolder.getSigil() == null) {
 				if (!client) {
-					((SigilHolder) blockEntity).setSigil(sigil);
-					((SigilHolder) blockEntity).setUses(sigil.uses * (BewitchmentAPI.getFamiliar(player) == BWEntityTypes.SNAKE ? 2 : 1));
-					((SigilHolder) blockEntity).setOwner(player.getUuid());
+					sigilHolder.setSigil(sigil);
+					sigilHolder.setUses(sigil.uses * (BewitchmentAPI.getFamiliar(player) == BWEntityTypes.SNAKE ? 2 : 1));
+					sigilHolder.setOwner(player.getUuid());
 					((BlockEntityClientSerializable) blockEntity).sync();
 					blockEntity.markDirty();
 					if (!player.isCreative()) {

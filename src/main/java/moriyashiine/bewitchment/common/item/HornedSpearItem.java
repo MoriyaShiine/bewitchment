@@ -59,8 +59,8 @@ public class HornedSpearItem extends SwordItem {
 			if (!world.isClient) {
 				spawnEntity(world, user, stack);
 			}
-			if (user instanceof PlayerEntity) {
-				((PlayerEntity) user).incrementStat(Stats.USED.getOrCreateStat(this));
+			if (user instanceof PlayerEntity player) {
+				player.incrementStat(Stats.USED.getOrCreateStat(this));
 			}
 		}
 	}
@@ -79,8 +79,8 @@ public class HornedSpearItem extends SwordItem {
 		stack.damage(1, owner, stackUser -> stackUser.sendToolBreakStatus(stackUser.getActiveHand()));
 		HornedSpearEntity spear = new HornedSpearEntity(BWEntityTypes.HORNED_SPEAR, owner, world, stack.copy());
 		spear.setProperties(owner, owner.getPitch(), owner.getYaw(), 0, 3, 1);
-		if (owner instanceof PlayerEntity) {
-			if (((PlayerEntity) owner).isCreative()) {
+		if (owner instanceof PlayerEntity player) {
+			if (player.isCreative()) {
 				spear.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
 			}
 		}
@@ -88,9 +88,9 @@ public class HornedSpearItem extends SwordItem {
 			spear.pickupType = PersistentProjectileEntity.PickupPermission.DISALLOWED;
 		}
 		world.spawnEntity(spear);
-		PlayerLookup.tracking(spear).forEach(serverPlayerEntity -> SyncHornedSpearEntity.send(serverPlayerEntity, spear));
+		PlayerLookup.tracking(spear).forEach(trackingPlayer -> SyncHornedSpearEntity.send(trackingPlayer, spear));
 		world.playSoundFromEntity(null, spear, BWSoundEvents.ITEM_HORNED_SPEAR_USE, SoundCategory.PLAYERS, 1, 1);
-		if (owner instanceof PlayerEntity && !((PlayerEntity) owner).isCreative()) {
+		if (owner instanceof PlayerEntity player && !player.isCreative()) {
 			stack.decrement(1);
 		}
 	}

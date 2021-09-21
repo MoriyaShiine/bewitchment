@@ -30,10 +30,10 @@ public abstract class LivingEntityMixin extends Entity {
 		if (!world.isClient) {
 			Entity directSource = source.getSource();
 			if ((Object) this instanceof PlayerEntity player && ContractsComponent.get(player).hasContract(BWContracts.FAMINE)) {
-				amount *= (1 - (0.035f * (20 - ((PlayerEntity) (Object) this).getHungerManager().getFoodLevel())));
+				amount *= (1 - (0.035f * (20 - player.getHungerManager().getFoodLevel())));
 			}
 			if (directSource instanceof PlayerEntity player && ContractsComponent.get(player).hasContract(BWContracts.WRATH)) {
-				amount *= (1 + (0.035f * (((LivingEntity) directSource).getMaxHealth() - ((LivingEntity) directSource).getHealth())));
+				amount *= (1 + (0.035f * player.getMaxHealth() - player.getHealth()));
 			}
 			if (directSource instanceof PlayerEntity player && ContractsComponent.get(player).hasContract(BWContracts.PESTILENCE)) {
 				addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100));

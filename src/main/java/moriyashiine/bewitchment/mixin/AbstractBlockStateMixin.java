@@ -24,11 +24,8 @@ public abstract class AbstractBlockStateMixin {
 	private void getCollisionShape(BlockView world, BlockPos pos, ShapeContext context, CallbackInfoReturnable<VoxelShape> callbackInfo) {
 		if (getBlock() != BWObjects.SALT_LINE) {
 			BlockState down = world.getBlockState(pos.down());
-			if (down != null && down.isOf(BWObjects.SALT_LINE)) {
-				VoxelShape box = down.getCollisionShape(world, pos, context);
-				if (box == VoxelShapes.fullCube()) {
-					callbackInfo.setReturnValue(VoxelShapes.fullCube());
-				}
+			if (down != null && down.isOf(BWObjects.SALT_LINE) && down.getCollisionShape(world, pos, context) == VoxelShapes.fullCube()) {
+				callbackInfo.setReturnValue(VoxelShapes.fullCube());
 			}
 		}
 	}

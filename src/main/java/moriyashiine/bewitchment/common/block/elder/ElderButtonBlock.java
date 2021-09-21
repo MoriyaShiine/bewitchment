@@ -53,7 +53,7 @@ public class ElderButtonBlock extends TerraformButtonBlock implements BlockEntit
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity instanceof Lockable && ((Lockable) blockEntity).getLocked()) {
+		if (blockEntity instanceof Lockable lockable && lockable.getLocked()) {
 			return;
 		}
 		super.onEntityCollision(state, world, pos, entity);

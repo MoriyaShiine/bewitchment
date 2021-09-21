@@ -5,7 +5,6 @@ import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
 import moriyashiine.bewitchment.common.network.packet.CauldronTeleportPacket;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
@@ -25,9 +24,8 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 	private void sendChatMessage(String message, CallbackInfo callbackInfo) {
 		if (!message.startsWith("/")) {
 			for (int i = 0; i < 1; i++) {
-				BlockEntity blockEntity = world.getBlockEntity(getBlockPos().down(i));
-				if (blockEntity instanceof WitchCauldronBlockEntity && ((WitchCauldronBlockEntity) blockEntity).mode == WitchCauldronBlockEntity.Mode.TELEPORTATION) {
-					CauldronTeleportPacket.send(blockEntity.getPos(), message);
+				if (world.getBlockEntity(getBlockPos().down(i)) instanceof WitchCauldronBlockEntity witchCauldron && witchCauldron.mode == WitchCauldronBlockEntity.Mode.TELEPORTATION) {
+					CauldronTeleportPacket.send(witchCauldron.getPos(), message);
 					callbackInfo.cancel();
 					return;
 				}

@@ -22,8 +22,8 @@ public abstract class MobEntityMixin extends LivingEntity {
 	private LivingEntity modifyTarget(LivingEntity target) {
 		if (!world.isClient && target != null) {
 			if (this instanceof Pledgeable pledgeable) {
-				if (target instanceof PlayerEntity && BewitchmentAPI.isPledged((PlayerEntity) target, pledgeable.getPledgeID())) {
-					BewitchmentAPI.unpledge((PlayerEntity) target);
+				if (target instanceof PlayerEntity player && BewitchmentAPI.isPledged(player, pledgeable.getPledgeID())) {
+					BewitchmentAPI.unpledge(player);
 				}
 				pledgeable.summonMinions((MobEntity) (Object) this);
 			}

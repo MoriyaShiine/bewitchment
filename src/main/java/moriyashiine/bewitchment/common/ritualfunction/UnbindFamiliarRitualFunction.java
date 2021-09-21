@@ -56,15 +56,15 @@ public class UnbindFamiliarRitualFunction extends RitualFunction {
 			if (livingEntity != null) {
 				PlayerEntity closestPlayer = world.getClosestPlayer(effectivePos.getX() + 0.5, effectivePos.getY() + 0.5, effectivePos.getZ() + 0.5, 8, false);
 				if (closestPlayer != null && BewitchmentAPI.getFamiliar(closestPlayer) != null) {
-					NbtCompound entityTag = new NbtCompound();
-					livingEntity.saveSelfNbt(entityTag);
-					if (entityTag.contains("Owner") && closestPlayer.getUuid().equals(entityTag.getUuid("Owner"))) {
+					NbtCompound entityCompound = new NbtCompound();
+					livingEntity.saveSelfNbt(entityCompound);
+					if (entityCompound.contains("Owner") && closestPlayer.getUuid().equals(entityCompound.getUuid("Owner"))) {
 						FamiliarComponent.get(livingEntity).setFamiliar(false);
-						BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-						for (int i = worldState.familiars.size() - 1; i >= 0; i--) {
-							if (livingEntity.getUuid().equals(worldState.familiars.get(i).getRight().getUuid("UUID"))) {
-								worldState.familiars.remove(i);
-								worldState.markDirty();
+						BWUniversalWorldState universalWorldState = BWUniversalWorldState.get(world);
+						for (int i = universalWorldState.familiars.size() - 1; i >= 0; i--) {
+							if (livingEntity.getUuid().equals(universalWorldState.familiars.get(i).getRight().getUuid("UUID"))) {
+								universalWorldState.familiars.remove(i);
+								universalWorldState.markDirty();
 								succeeded = true;
 							}
 						}

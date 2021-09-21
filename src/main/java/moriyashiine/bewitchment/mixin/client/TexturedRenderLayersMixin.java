@@ -24,53 +24,53 @@ public class TexturedRenderLayersMixin {
 				case JUNIPER:
 					switch (type) {
 						case SINGLE -> {
-							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_JUNIPER : JUNIPER);
+							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_JUNIPER_CHEST : JUNIPER_CHEST);
 							return;
 						}
 						case LEFT -> {
-							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_JUNIPER_LEFT : JUNIPER_LEFT);
+							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_JUNIPER_CHEST_LEFT : JUNIPER_CHEST_LEFT);
 							return;
 						}
 						case RIGHT -> {
-							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_JUNIPER_RIGHT : JUNIPER_RIGHT);
+							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_JUNIPER_CHEST_RIGHT : JUNIPER_CHEST_RIGHT);
 							return;
 						}
 					}
 				case CYPRESS:
 					switch (type) {
 						case SINGLE -> {
-							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_CYPRESS : CYPRESS);
+							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_CYPRESS_CHEST : CYPRESS_CHEST);
 							return;
 						}
 						case LEFT -> {
-							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_CYPRESS_LEFT : CYPRESS_LEFT);
+							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_CYPRESS_CHEST_LEFT : CYPRESS_CHEST_LEFT);
 							return;
 						}
 						case RIGHT -> {
-							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_CYPRESS_RIGHT : CYPRESS_RIGHT);
+							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_CYPRESS_CHEST_RIGHT : CYPRESS_CHEST_RIGHT);
 							return;
 						}
 					}
 				case ELDER:
 					switch (type) {
 						case SINGLE -> {
-							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_ELDER : ELDER);
+							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_ELDER_CHEST : ELDER_CHEST);
 							return;
 						}
 						case LEFT -> {
-							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_ELDER_LEFT : ELDER_LEFT);
+							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_ELDER_CHEST_LEFT : ELDER_CHEST_LEFT);
 							return;
 						}
 						case RIGHT -> {
-							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_ELDER_RIGHT : ELDER_RIGHT);
+							callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_ELDER_CHEST_RIGHT : ELDER_CHEST_RIGHT);
 							return;
 						}
 					}
 				case DRAGONS_BLOOD:
 					switch (type) {
-						case SINGLE -> callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_DRAGONS_BLOOD : DRAGONS_BLOOD);
-						case LEFT -> callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_DRAGONS_BLOOD_LEFT : DRAGONS_BLOOD_LEFT);
-						case RIGHT -> callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_DRAGONS_BLOOD_RIGHT : DRAGONS_BLOOD_RIGHT);
+						case SINGLE -> callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_DRAGONS_BLOOD_CHEST : DRAGONS_BLOOD_CHEST);
+						case LEFT -> callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_DRAGONS_BLOOD_CHEST_LEFT : DRAGONS_BLOOD_CHEST_LEFT);
+						case RIGHT -> callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_DRAGONS_BLOOD_CHEST_RIGHT : DRAGONS_BLOOD_CHEST_RIGHT);
 					}
 			}
 		}

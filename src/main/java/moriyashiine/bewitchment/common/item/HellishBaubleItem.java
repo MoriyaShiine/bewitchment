@@ -15,9 +15,9 @@ public class HellishBaubleItem extends TrinketItem {
 	
 	@Override
 	public void tick(ItemStack stack, SlotReference slot, LivingEntity entity) {
-		if (entity instanceof PlayerEntity player && !player.world.isClient && player.age % 20 == 0 && player.isOnFire() && BewitchmentAPI.drainMagic(player, 1, false)) {
-			player.world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, player.getSoundCategory(), 1, 1);
-			player.extinguish();
+		if (entity instanceof PlayerEntity player && !entity.world.isClient && entity.age % 20 == 0 && entity.isOnFire() && BewitchmentAPI.drainMagic(player, 1, false)) {
+			entity.world.playSound(null, entity.getBlockPos(), SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, entity.getSoundCategory(), 1, 1);
+			entity.extinguish();
 		}
 	}
 }

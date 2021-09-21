@@ -14,8 +14,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class StatusEffectMixin {
 	@Inject(method = "applyUpdateEffect", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 0, target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"), cancellable = true)
 	private void applyUpdateEffect(LivingEntity entity, int amplifier, CallbackInfo callbackInfo) {
-		if (entity instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) entity) == BWEntityTypes.SNAKE) {
-			BewitchmentAPI.fillMagic((PlayerEntity) entity, 1, false);
+		if (entity instanceof PlayerEntity player && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.SNAKE) {
+			BewitchmentAPI.fillMagic(player, 1, false);
 			callbackInfo.cancel();
 		}
 	}

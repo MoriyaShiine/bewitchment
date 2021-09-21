@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public class SwoopMovementGoalMixin {
 	@Inject(method = "shouldContinue", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isAlive()Z"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
 	private void shouldContinue(CallbackInfoReturnable<Boolean> callbackInfo, LivingEntity livingEntity) {
-		if (livingEntity instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) livingEntity) == EntityType.CAT) {
+		if (livingEntity instanceof PlayerEntity player && BewitchmentAPI.getFamiliar(player) == EntityType.CAT) {
 			callbackInfo.setReturnValue(false);
 		}
 	}

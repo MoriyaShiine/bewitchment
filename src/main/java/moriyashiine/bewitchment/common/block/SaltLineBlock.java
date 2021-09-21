@@ -65,7 +65,7 @@ public class SaltLineBlock extends Block {
 	public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		if (context instanceof EntityShapeContext entityShapeContext && entityShapeContext.getEntity().isPresent()) {
 			Entity entity = entityShapeContext.getEntity().get();
-			if (entity instanceof LivingEntity && BewitchmentAPI.isWeakToSilver((LivingEntity) entity)) {
+			if (entity instanceof LivingEntity livingEntity && BewitchmentAPI.isWeakToSilver(livingEntity)) {
 				return VoxelShapes.fullCube();
 			}
 		}
@@ -115,8 +115,7 @@ public class SaltLineBlock extends Block {
 	@Override
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
 		BlockPos blockPos = pos.down();
-		BlockState blockState = world.getBlockState(blockPos);
-		return canRunOnTop(world, blockPos, blockState);
+		return canRunOnTop(world, blockPos, world.getBlockState(blockPos));
 	}
 	
 	@Override

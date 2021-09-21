@@ -28,14 +28,14 @@ public class DragonsBloodPressurePlateBlock extends TerraformPressurePlateBlock 
 	
 	@Nullable
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world0, BlockState state0, BlockEntityType<T> type) {
-		return (world, pos, state, blockEntity) -> SigilBlockEntity.tick(world, pos, state, (SigilBlockEntity) blockEntity);
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+		return (tickerWorld, pos, tickerState, blockEntity) -> SigilBlockEntity.tick(tickerWorld, pos, tickerState, (SigilBlockEntity) blockEntity);
 	}
 	
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (entity instanceof LivingEntity) {
-			SigilHolder.onUse(world, pos, (LivingEntity) entity, Hand.MAIN_HAND);
+		if (entity instanceof LivingEntity livingEntity) {
+			SigilHolder.onUse(world, pos, livingEntity, Hand.MAIN_HAND);
 		}
 		super.onEntityCollision(state, world, pos, entity);
 	}

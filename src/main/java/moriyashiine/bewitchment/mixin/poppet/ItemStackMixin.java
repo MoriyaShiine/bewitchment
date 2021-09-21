@@ -32,11 +32,11 @@ public abstract class ItemStackMixin {
 			PoppetData poppetData = BewitchmentAPI.getPoppet(entity.world, BWObjects.MENDING_POPPET, entity);
 			if (!poppetData.stack.isEmpty()) {
 				boolean sync = false;
-				if (poppetData.stack.damage(entity instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) entity) == EntityType.WOLF && entity.getRandom().nextBoolean() ? 0 : 1, entity.getRandom(), null) && poppetData.stack.getDamage() == poppetData.stack.getMaxDamage()) {
+				if (poppetData.stack.damage(entity instanceof PlayerEntity player && BewitchmentAPI.getFamiliar(player) == EntityType.WOLF && entity.getRandom().nextBoolean() ? 0 : 1, entity.getRandom(), null) && poppetData.stack.getDamage() == poppetData.stack.getMaxDamage()) {
 					poppetData.stack.decrement(1);
 					sync = true;
 				}
-				poppetData.maybeSync(entity.world, sync);
+				poppetData.update(entity.world, sync);
 				setDamage(0);
 				callbackInfo.cancel();
 			}

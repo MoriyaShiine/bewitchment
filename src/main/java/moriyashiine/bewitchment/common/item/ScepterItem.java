@@ -49,8 +49,8 @@ public class ScepterItem extends Item {
 	
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		if (user instanceof PlayerEntity) {
-			if (!world.isClient && BewitchmentAPI.drainMagic((PlayerEntity) user, 2, false)) {
+		if (user instanceof PlayerEntity player) {
+			if (!world.isClient && BewitchmentAPI.drainMagic(player, 2, false)) {
 				PotionEntity potion = new PotionEntity(world, user);
 				List<StatusEffectInstance> effects = PotionUtil.getCustomPotionEffects(stack);
 				ItemStack potionStack = PotionUtil.setCustomPotionEffects(new ItemStack(Items.SPLASH_POTION), effects);
@@ -63,7 +63,7 @@ public class ScepterItem extends Item {
 				potion.setProperties(user, user.getPitch(), user.getYaw(), -20, 0.5f, 1);
 				world.spawnEntity(potion);
 				world.playSound(null, user.getBlockPos(), SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 1, 1);
-				if (!((PlayerEntity) user).isCreative()) {
+				if (!player.isCreative()) {
 					stack.getOrCreateNbt().putInt("PotionUses", stack.getOrCreateNbt().getInt("PotionUses") - 1);
 					if (stack.getOrCreateNbt().getInt("PotionUses") <= 0) {
 						if (stack.getOrCreateNbt().contains("PolymorphUUID")) {

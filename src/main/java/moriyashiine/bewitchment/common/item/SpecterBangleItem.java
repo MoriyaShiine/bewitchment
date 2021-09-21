@@ -17,18 +17,18 @@ public class SpecterBangleItem extends TrinketItem {
 	
 	@Override
 	public void tick(ItemStack stack, SlotReference slot, LivingEntity entity) {
-		if (entity instanceof PlayerEntity player && player.isSneaking() && BewitchmentAPI.drainMagic(player, 1, true)) {
-			if (player.getRandom().nextFloat() < 1 / 40f) {
+		if (entity instanceof PlayerEntity player && entity.isSneaking() && BewitchmentAPI.drainMagic(player, 1, true)) {
+			if (entity.getRandom().nextFloat() < 1 / 40f) {
 				BewitchmentAPI.drainMagic(player, 1, false);
 			}
 			FullInvisibilityComponent.maybeGet(player).ifPresent(fullInvisibilityComponent -> {
 				if (!fullInvisibilityComponent.isFullInvisible()) {
 					fullInvisibilityComponent.setFullInvisible(true);
-					player.setInvisible(true);
+					entity.setInvisible(true);
 				}
 			});
-			if (player.getRandom().nextFloat() < 1 / 6f) {
-				PlayerLookup.tracking(player).forEach(playerEntity -> SpawnSpecterBangleParticlesPacket.send(playerEntity, player));
+			if (entity.getRandom().nextFloat() < 1 / 6f) {
+				PlayerLookup.tracking(player).forEach(trackingPlayer -> SpawnSpecterBangleParticlesPacket.send(trackingPlayer, player));
 				SpawnSpecterBangleParticlesPacket.send(player, player);
 			}
 		}

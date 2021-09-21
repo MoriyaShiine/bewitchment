@@ -123,8 +123,8 @@ public class SnakeEntity extends BWTameableEntity {
 		boolean flag = super.tryAttack(target);
 		if (flag) {
 			toggleAttack(false);
-			if (target instanceof LivingEntity) {
-				((LivingEntity) target).addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100));
+			if (target instanceof LivingEntity livingEntity) {
+				livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100));
 			}
 		}
 		return flag;

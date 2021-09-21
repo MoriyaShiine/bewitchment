@@ -30,9 +30,9 @@ import java.util.List;
 public abstract class BlockMixin {
 	@Inject(method = "getDroppedStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/entity/BlockEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/item/ItemStack;)Ljava/util/List;", at = @At("RETURN"), cancellable = true)
 	private static void getDroppedStacks(BlockState state, ServerWorld world, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity entity, ItemStack stack, CallbackInfoReturnable<List<ItemStack>> callbackInfo) {
-		if (entity instanceof LivingEntity) {
+		if (entity instanceof LivingEntity living) {
 			boolean damage = false;
-			if (state.getBlock() instanceof SaltLineBlock && BewitchmentAPI.isWeakToSilver((LivingEntity) entity)) {
+			if (state.getBlock() instanceof SaltLineBlock && BewitchmentAPI.isWeakToSilver(living)) {
 				damage = true;
 			}
 			else if (state.getBlock() == BWObjects.GARLIC_CROP && BewitchmentAPI.isVampire(entity, true)) {
@@ -42,14 +42,12 @@ public abstract class BlockMixin {
 				damage = true;
 			}
 			if (damage) {
-				entity.damage(DamageSource.MAGIC, ((LivingEntity) entity).getMaxHealth() * 1 / 2f);
+				entity.damage(DamageSource.MAGIC, living.getMaxHealth() * 1 / 2f);
 			}
 			List<ItemStack> drops = callbackInfo.getReturnValue();
-			if (!drops.isEmpty() && !EnchantmentHelper.get(stack).containsKey(Enchantments.SILK_TOUCH)) {
-				if (state.getBlock() instanceof CropBlock && state.get(((CropBlock) state.getBlock()).getAgeProperty()) == ((CropBlock) state.getBlock()).getMaxAge() && BWUtil.getArmorPieces((LivingEntity) entity, armorStack -> armorStack.getItem() instanceof ArmorItem && ((ArmorItem) armorStack.getItem()).getMaterial() == BWMaterials.HEDGEWITCH_ARMOR) >= 3) {
-					for (int i = 0; i < drops.size(); i++) {
-						drops.set(i, new ItemStack(drops.get(i).getItem(), drops.get(i).getCount() + 1));
-					}
+			if (!drops.isEmpty() && !EnchantmentHelper.get(stack).containsKey(Enchantments.SILK_TOUCH) && state.getBlock() instanceof CropBlock crop && state.get(crop.getAgeProperty()) == crop.getMaxAge() && BWUtil.getArmorPieces(living, armorStack -> armorStack.getItem() instanceof ArmorItem armorItem && armorItem.getMaterial() == BWMaterials.HEDGEWITCH_ARMOR) >= 3) {
+				for (int i = 0; i < drops.size(); i++) {
+					drops.set(i, new ItemStack(drops.get(i).getItem(), drops.get(i).getCount() + 1));
 				}
 			}
 		}

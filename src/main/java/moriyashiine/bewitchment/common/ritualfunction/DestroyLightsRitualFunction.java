@@ -17,8 +17,8 @@ public class DestroyLightsRitualFunction extends RitualFunction {
 	
 	@Override
 	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
-		for (BlockPos light : BWUtil.getBlockPoses(effectivePos, catFamiliar ? 24 : 8, currentPos -> world.getBlockState(currentPos).getLuminance() > 0 && world.getBlockState(currentPos).getHardness(world, currentPos) == 0)) {
-			world.breakBlock(light, true);
+		for (BlockPos foundPos : BWUtil.getBlockPoses(effectivePos, catFamiliar ? 24 : 8, currentPos -> world.getBlockState(currentPos).getLuminance() > 0 && world.getBlockState(currentPos).getHardness(world, currentPos) == 0)) {
+			world.breakBlock(foundPos, true);
 		}
 		super.start(world, glyphPos, effectivePos, inventory, catFamiliar);
 	}

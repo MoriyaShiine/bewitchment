@@ -3,7 +3,6 @@ package moriyashiine.bewitchment.mixin.curse;
 import moriyashiine.bewitchment.api.component.CursesComponent;
 import moriyashiine.bewitchment.common.entity.component.FakeMobComponent;
 import moriyashiine.bewitchment.common.registry.BWCurses;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
@@ -49,24 +48,21 @@ public abstract class MobEntityMixin extends LivingEntity {
 	
 	@Inject(method = "dropLoot", at = @At("HEAD"))
 	private void dropLoot(DamageSource source, boolean causedByPlayer, CallbackInfo callbackInfo) {
-		if (!world.isClient && (Object) this instanceof SpiderEntity && !spawnedByArachnophobia) {
-			Entity attacker = source.getAttacker();
-			if (attacker instanceof LivingEntity livingEntity && CursesComponent.get(livingEntity).hasCurse(BWCurses.ARACHNOPHOBIA)) {
-				for (int i = 0; i < random.nextInt(3) + 3; i++) {
-					SpiderEntity spider;
-					if (random.nextFloat() < 1 / 8192f) {
-						spider = EntityType.SPIDER.create(world);
-					}
-					else {
-						spider = EntityType.CAVE_SPIDER.create(world);
-						((MobEntityMixin) (Object) spider).spawnedByArachnophobia = true;
-					}
-					if (spider != null) {
-						spider.updatePositionAndAngles(getX(), getY(), getZ(), random.nextFloat() * 360, 0);
-						spider.initialize((ServerWorldAccess) world, world.getLocalDifficulty(getBlockPos()), SpawnReason.EVENT, null, null);
-						spider.setTarget((LivingEntity) attacker);
-						world.spawnEntity(spider);
-					}
+		if (!world.isClient && (Object) this instanceof SpiderEntity && !spawnedByArachnophobia && source.getAttacker() instanceof LivingEntity livingAttacker && CursesComponent.get(livingAttacker).hasCurse(BWCurses.ARACHNOPHOBIA)) {
+			for (int i = 0; i < random.nextInt(3) + 3; i++) {
+				SpiderEntity spider;
+				if (random.nextFloat() < 1 / 8192f) {
+					spider = EntityType.SPIDER.create(world);
+				}
+				else {
+					spider = EntityType.CAVE_SPIDER.create(world);
+					((MobEntityMixin) (Object) spider).spawnedByArachnophobia = true;
+				}
+				if (spider != null) {
+					spider.updatePositionAndAngles(getX(), getY(), getZ(), random.nextFloat() * 360, 0);
+					spider.initialize((ServerWorldAccess) world, world.getLocalDifficulty(getBlockPos()), SpawnReason.EVENT, null, null);
+					spider.setTarget(livingAttacker);
+					world.spawnEntity(spider);
 				}
 			}
 		}

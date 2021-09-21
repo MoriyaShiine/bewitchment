@@ -4,6 +4,7 @@ import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -32,7 +33,7 @@ public abstract class ClientWorldMixin extends World {
 	@ModifyVariable(method = "playSound(DDDLnet/minecraft/sound/SoundEvent;Lnet/minecraft/sound/SoundCategory;FFZ)V", at = @At("HEAD"), ordinal = 0)
 	private float modifySound0(float volume, double x, double y, double z, SoundEvent sound, SoundCategory category) {
 		if (category != SoundCategory.MASTER && category != SoundCategory.VOICE) {
-			PlayerEntity clientPlayer = MinecraftClient.getInstance().player;
+			ClientPlayerEntity clientPlayer = MinecraftClient.getInstance().player;
 			if (clientPlayer != null && clientPlayer.hasStatusEffect(BWStatusEffects.DEAFENED)) {
 				return Math.max(0, volume * (1 - (0.2f * (clientPlayer.getStatusEffect(BWStatusEffects.DEAFENED).getAmplifier() + 1))));
 			}
@@ -43,7 +44,7 @@ public abstract class ClientWorldMixin extends World {
 	@ModifyVariable(method = "playSoundFromEntity", at = @At("HEAD"), ordinal = 0)
 	private float modifySound1(float volume, @Nullable PlayerEntity player, Entity entity, SoundEvent sound, SoundCategory category) {
 		if (category != SoundCategory.MASTER && category != SoundCategory.VOICE) {
-			PlayerEntity clientPlayer = MinecraftClient.getInstance().player;
+			ClientPlayerEntity clientPlayer = MinecraftClient.getInstance().player;
 			if (clientPlayer != null && clientPlayer.hasStatusEffect(BWStatusEffects.DEAFENED)) {
 				return Math.max(0, volume * (1 - (0.2f * (clientPlayer.getStatusEffect(BWStatusEffects.DEAFENED).getAmplifier() + 1))));
 			}

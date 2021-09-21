@@ -26,8 +26,8 @@ public class DemonScreen extends HandledScreen<DemonScreenHandler> {
 		renderBackground(matrices);
 		super.render(matrices, mouseX, mouseY, delta);
 		for (Slot slot : getScreenHandler().slots) {
-			if (slot instanceof DemonScreenHandler.DemonTradeSlot) {
-				DemonEntity.DemonTradeOffer offer = ((DemonScreenHandler.DemonTradeSlot) slot).getOffer();
+			if (slot instanceof DemonScreenHandler.DemonTradeSlot tradeSlot) {
+				DemonEntity.DemonTradeOffer offer = tradeSlot.getOffer();
 				if (offer != null) {
 					drawHearts(matrices, slot.x, slot.y, offer);
 				}

@@ -82,17 +82,13 @@ public interface TaglockHolder {
 			if (blockEntity instanceof BlockEntityClientSerializable blockEntityClientSerializable) {
 				blockEntityClientSerializable.sync();
 			}
-
-			PlayerLookup.tracking(blockEntity).forEach(playerEntity -> {
-				SyncTaglockHolderBlockEntity.send(playerEntity, blockEntity);
-			});
+			PlayerLookup.tracking(blockEntity).forEach(trackingPlayer -> SyncTaglockHolderBlockEntity.send(trackingPlayer, blockEntity));
 		}
 	}
 	
 	static void onUse(World world, BlockPos pos, LivingEntity user) {
-		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity instanceof TaglockHolder) {
-			((TaglockHolder) blockEntity).use(world, pos, user);
+		if (world.getBlockEntity(pos) instanceof TaglockHolder taglockHolder) {
+			taglockHolder.use(world, pos, user);
 		}
 	}
 }

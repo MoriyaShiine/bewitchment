@@ -20,7 +20,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -66,19 +65,17 @@ public abstract class LivingEntityMixin extends Entity {
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
 	private float modifyDamage(float amount, DamageSource source) {
 		if (!world.isClient) {
-			Entity trueSource = source.getAttacker();
-			Entity directSource = source.getSource();
-			if (amount > 0 && (Object) this instanceof PlayerEntity && !BewitchmentAPI.isVampire(this, true)) {
-				PoppetData poppetData = BewitchmentAPI.getPoppetFromInventory(world, BWObjects.VAMPIRIC_POPPET, null, ((ServerPlayerEntity) (Object) this).getInventory().main);
+			if (amount > 0 && (Object) this instanceof PlayerEntity player && !BewitchmentAPI.isVampire(this, true)) {
+				PoppetData poppetData = BewitchmentAPI.getPoppetFromInventory(world, BWObjects.VAMPIRIC_POPPET, null, player.getInventory().main);
 				if (!poppetData.stack.isEmpty()) {
 					LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppetData.stack);
 					if (!BewitchmentAPI.isVampire(owner, true) && !getUuid().equals(owner.getUuid()) && owner.damage(BWDamageSources.VAMPIRE, amount)) {
 						boolean sync = false;
-						if (poppetData.stack.damage((int) (amount * (BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0.5f : 1)), random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
+						if (poppetData.stack.damage((int) (amount * (BewitchmentAPI.getFamiliar(player) == EntityType.WOLF && random.nextBoolean() ? 0.5f : 1)), random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
 							poppetData.stack.decrement(1);
 							sync = true;
 						}
-						poppetData.maybeSync(world, sync);
+						poppetData.update(world, sync);
 						return 0;
 					}
 				}
@@ -87,15 +84,15 @@ public abstract class LivingEntityMixin extends Entity {
 				PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.PROTECTION_POPPET, this);
 				if (!poppetData.stack.isEmpty()) {
 					boolean sync = false;
-					if (poppetData.stack.damage((int) (amount * ((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0.5f : 1)), random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
+					if (poppetData.stack.damage((int) (amount * ((Object) this instanceof PlayerEntity player && BewitchmentAPI.getFamiliar(player) == EntityType.WOLF && random.nextBoolean() ? 0.5f : 1)), random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
 						poppetData.stack.decrement(1);
 						sync = true;
 					}
-					poppetData.maybeSync(world, sync);
+					poppetData.update(world, sync);
 					return 0;
 				}
 			}
-			if (trueSource instanceof LivingEntity && BewitchmentAPI.isWeakToSilver((LivingEntity) trueSource)) {
+			if (source.getAttacker() instanceof LivingEntity livingAttacker && BewitchmentAPI.isWeakToSilver(livingAttacker)) {
 				PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.JUDGMENT_POPPET, this);
 				if (!poppetData.stack.isEmpty()) {
 					boolean sync = false;
@@ -103,18 +100,18 @@ public abstract class LivingEntityMixin extends Entity {
 						poppetData.stack.decrement(1);
 						sync = true;
 					}
-					poppetData.maybeSync(world, sync);
+					poppetData.update(world, sync);
 					amount /= 4;
 				}
 			}
-			if (directSource instanceof LivingEntity) {
+			if (source.getSource() instanceof LivingEntity livingSource) {
 				PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.FATIGUE_POPPET, this);
 				boolean sync = false;
-				if (!poppetData.stack.isEmpty() && ((LivingEntity) directSource).addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 60, 1)) && poppetData.stack.damage((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
+				if (!poppetData.stack.isEmpty() && livingSource.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 60, 1)) && poppetData.stack.damage((Object) this instanceof PlayerEntity player && BewitchmentAPI.getFamiliar(player) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
 					poppetData.stack.decrement(1);
 					sync = true;
 				}
-				poppetData.maybeSync(world, sync);
+				poppetData.update(world, sync);
 			}
 		}
 		return amount;
@@ -124,15 +121,18 @@ public abstract class LivingEntityMixin extends Entity {
 	private void tryUseTotem(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
 			if (!callbackInfo.getReturnValue()) {
+				boolean isPlayer = (Object) this instanceof PlayerEntity;
 				PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.DEATH_PROTECTION_POPPET, this);
-				if (!poppetData.stack.isEmpty() && !ReviveEvents.CANCEL_REVIVE.invoker().shouldCancel((PlayerEntity) (Object) this, source, poppetData.stack)) {
-					ReviveEvents.ON_REVIVE.invoker().onRevive((PlayerEntity) (Object) this, source, poppetData.stack);
+				if (!poppetData.stack.isEmpty() && !(isPlayer && ReviveEvents.CANCEL_REVIVE.invoker().shouldCancel((PlayerEntity) (Object) this, source, poppetData.stack))) {
+					if (isPlayer) {
+						ReviveEvents.ON_REVIVE.invoker().onRevive((PlayerEntity) (Object) this, source, poppetData.stack);
+					}
 					boolean sync = false;
-					if (poppetData.stack.damage((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
+					if (poppetData.stack.damage((Object) this instanceof PlayerEntity player && BewitchmentAPI.getFamiliar(player) == EntityType.WOLF && random.nextBoolean() ? 0 : 1, random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
 						poppetData.stack.decrement(1);
 						sync = true;
 					}
-					poppetData.maybeSync(world, sync);
+					poppetData.update(world, sync);
 					setHealth(1);
 					clearStatusEffects();
 					addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1));
@@ -144,18 +144,18 @@ public abstract class LivingEntityMixin extends Entity {
 			if (callbackInfo.getReturnValue() && (Object) this instanceof PlayerEntity player && CursesComponent.get(player).hasCurse(BWCurses.SUSCEPTIBILITY)) {
 				TransformationComponent.maybeGet(player).ifPresent(transformationComponent -> {
 					if (transformationComponent.getTransformation() == BWTransformations.HUMAN) {
-						if (source.getSource() instanceof VampireEntity || (BewitchmentAPI.isVampire(source.getSource(), true) && BewitchmentAPI.isPledged((PlayerEntity) source.getSource(), BWPledges.LILITH))) {
-							transformationComponent.getTransformation().onRemoved((PlayerEntity) (Object) this);
+						if (source.getSource() instanceof VampireEntity || (source.getSource() instanceof PlayerEntity playerSource && BewitchmentAPI.isVampire(playerSource, true) && BewitchmentAPI.isPledged(playerSource, BWPledges.LILITH))) {
+							transformationComponent.getTransformation().onRemoved(player);
 							transformationComponent.setTransformation(BWTransformations.VAMPIRE);
-							transformationComponent.getTransformation().onAdded((PlayerEntity) (Object) this);
-							PlayerLookup.tracking(this).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, this));
-							SpawnSmokeParticlesPacket.send((PlayerEntity) (Object) this, this);
+							transformationComponent.getTransformation().onAdded(player);
+							PlayerLookup.tracking(this).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, this));
+							SpawnSmokeParticlesPacket.send(player, this);
 							world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, getSoundCategory(), getSoundVolume(), getSoundPitch());
 						}
-						else if (source.getSource() instanceof WerewolfEntity || (BewitchmentAPI.isWerewolf(source.getSource(), false) && BewitchmentAPI.isPledged((PlayerEntity) source.getSource(), BWPledges.HERNE))) {
-							transformationComponent.getTransformation().onRemoved((PlayerEntity) (Object) this);
+						else if (source.getSource() instanceof WerewolfEntity || (source.getSource() instanceof PlayerEntity playerSource && BewitchmentAPI.isWerewolf(playerSource, false) && BewitchmentAPI.isPledged(playerSource, BWPledges.HERNE))) {
+							transformationComponent.getTransformation().onRemoved(player);
 							transformationComponent.setTransformation(BWTransformations.WEREWOLF);
-							transformationComponent.getTransformation().onAdded((PlayerEntity) (Object) this);
+							transformationComponent.getTransformation().onAdded(player);
 							int variant = -1;
 							if (source.getSource() instanceof WerewolfEntity) {
 								variant = source.getSource().getDataTracker().get(BWHostileEntity.VARIANT);
@@ -166,8 +166,8 @@ public abstract class LivingEntityMixin extends Entity {
 							if (variant > -1) {
 								AdditionalWerewolfDataComponent.get(player).setVariant(variant);
 							}
-							PlayerLookup.tracking(this).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, this));
-							SpawnSmokeParticlesPacket.send((PlayerEntity) (Object) this, this);
+							PlayerLookup.tracking(this).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, this));
+							SpawnSmokeParticlesPacket.send(player, this);
 							world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, getSoundCategory(), getSoundVolume(), getSoundPitch());
 						}
 					}

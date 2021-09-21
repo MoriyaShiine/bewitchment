@@ -22,9 +22,9 @@ public class BWBookItem extends Item {
 	
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-		if (user instanceof ServerPlayerEntity) {
+		if (user instanceof ServerPlayerEntity serverPlayer) {
 			Book book = BookRegistry.INSTANCE.books.get(Registry.ITEM.getId(this));
-			PatchouliAPI.get().openBookGUI((ServerPlayerEntity) user, book.id);
+			PatchouliAPI.get().openBookGUI(serverPlayer, book.id);
 			SoundEvent sfx = PatchouliSounds.getSound(book.openSound, PatchouliSounds.book_open);
 			user.playSound(sfx, 1, (float) (0.7 + Math.random() * 0.4));
 		}

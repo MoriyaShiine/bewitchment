@@ -54,18 +54,18 @@ public abstract class LivingEntityMixin extends Entity {
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo callbackInfo) {
 		if (!world.isClient) {
-			LivingEntity livingEntity = (LivingEntity) (Object) this;
+			LivingEntity living = (LivingEntity) (Object) this;
 			int damage = 0;
-			if (livingEntity.getMainHandStack().getItem() == BWObjects.GARLIC && BewitchmentAPI.isVampire(this, true)) {
+			if (living.getMainHandStack().getItem() == BWObjects.GARLIC && BewitchmentAPI.isVampire(this, true)) {
 				damage++;
 			}
-			if (livingEntity.getOffHandStack().getItem() == BWObjects.GARLIC && BewitchmentAPI.isVampire(this, true)) {
+			if (living.getOffHandStack().getItem() == BWObjects.GARLIC && BewitchmentAPI.isVampire(this, true)) {
 				damage++;
 			}
-			if (livingEntity.getMainHandStack().getItem() == BWObjects.ACONITE && BewitchmentAPI.isWerewolf(this, true)) {
+			if (living.getMainHandStack().getItem() == BWObjects.ACONITE && BewitchmentAPI.isWerewolf(this, true)) {
 				damage++;
 			}
-			if (livingEntity.getOffHandStack().getItem() == BWObjects.ACONITE && BewitchmentAPI.isWerewolf(this, true)) {
+			if (living.getOffHandStack().getItem() == BWObjects.ACONITE && BewitchmentAPI.isWerewolf(this, true)) {
 				damage++;
 			}
 			if (damage > 0) {
@@ -99,23 +99,23 @@ public abstract class LivingEntityMixin extends Entity {
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
 	private float modifyDamage1(float amount, DamageSource source) {
 		if (!world.isClient) {
-			Entity trueSource = source.getAttacker();
+			Entity attacker = source.getAttacker();
 			Entity directSource = source.getSource();
 			if (directSource instanceof FireballEntity fireball) {
-				if (trueSource instanceof PlayerEntity && CaduceusFireballComponent.get(fireball).isFromCaduceus()) {
+				if (attacker instanceof PlayerEntity && CaduceusFireballComponent.get(fireball).isFromCaduceus()) {
 					amount *= 1.5f;
 				}
-				if (trueSource instanceof BaphometEntity) {
+				if (attacker instanceof BaphometEntity) {
 					amount *= 3;
 				}
 			}
-			if (directSource instanceof WitherSkullEntity && trueSource instanceof LilithEntity) {
+			if (directSource instanceof WitherSkullEntity && attacker instanceof LilithEntity) {
 				amount *= 3;
 			}
-			if (source.isMagic() && (Object) this instanceof LivingEntity) {
-				int armorPieces = BWUtil.getArmorPieces((LivingEntity) (Object) this, stack -> {
-					if (stack.getItem() instanceof ArmorItem) {
-						ArmorMaterial material = ((ArmorItem) stack.getItem()).getMaterial();
+			if (source.isMagic() && (Object) this instanceof LivingEntity living) {
+				int armorPieces = BWUtil.getArmorPieces(living, stack -> {
+					if (stack.getItem() instanceof ArmorItem armorItem) {
+						ArmorMaterial material = armorItem.getMaterial();
 						return material == BWMaterials.HEDGEWITCH_ARMOR || material == BWMaterials.ALCHEMIST_ARMOR || material == BWMaterials.BESMIRCHED_ARMOR || material == BWMaterials.HARBINGER_ARMOR;
 					}
 					return false;
@@ -134,21 +134,21 @@ public abstract class LivingEntityMixin extends Entity {
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
-			Entity trueSource = source.getAttacker();
-			if (trueSource instanceof LeonardEntity) {
+			Entity attacker = source.getAttacker();
+			if (attacker instanceof LeonardEntity) {
 				removeStatusEffect(BWStatusEffects.MAGIC_SPONGE);
 			}
-			if (trueSource instanceof BaphometEntity) {
+			if (attacker instanceof BaphometEntity) {
 				removeStatusEffect(StatusEffects.FIRE_RESISTANCE);
 			}
-			if (trueSource instanceof LilithEntity) {
+			if (attacker instanceof LilithEntity) {
 				removeStatusEffect(StatusEffects.STRENGTH);
 			}
-			if (trueSource instanceof HerneEntity) {
+			if (attacker instanceof HerneEntity) {
 				removeStatusEffect(StatusEffects.RESISTANCE);
 			}
-			if (trueSource instanceof Pledgeable) {
-				((Pledgeable) trueSource).setTimeSinceLastAttack(0);
+			if (attacker instanceof Pledgeable pledgeable) {
+				pledgeable.setTimeSinceLastAttack(0);
 			}
 		}
 	}

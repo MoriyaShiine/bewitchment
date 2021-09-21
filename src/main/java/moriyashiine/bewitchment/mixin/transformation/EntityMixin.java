@@ -15,12 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class EntityMixin {
 	@ModifyVariable(method = "setPose", at = @At("HEAD"))
 	private EntityPose modifySetPose(EntityPose pose) {
-		if (((Object) this) instanceof PlayerEntity) {
-			if (BewitchmentAPI.isVampire((Entity) (Object) this, false) || BewitchmentAPI.isWerewolf((Entity) (Object) this, false)) {
-				if (pose == EntityPose.FALL_FLYING || pose == EntityPose.SWIMMING) {
-					return EntityPose.STANDING;
-				}
-			}
+		if (((Object) this) instanceof PlayerEntity player && (BewitchmentAPI.isVampire(player, false) || BewitchmentAPI.isWerewolf(player, false)) && (pose == EntityPose.FALL_FLYING || pose == EntityPose.SWIMMING)) {
+			return EntityPose.STANDING;
 		}
 		return pose;
 	}

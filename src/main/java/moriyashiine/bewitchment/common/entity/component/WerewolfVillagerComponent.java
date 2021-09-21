@@ -56,7 +56,7 @@ public class WerewolfVillagerComponent implements ComponentV3, ServerTickingComp
 			if (obj.age % 20 == 0 && obj.world.isNight() && BewitchmentAPI.getMoonPhase(obj.world) == 0 && obj.world.isSkyVisible(obj.getBlockPos())) {
 				WerewolfEntity entity = BWEntityTypes.WEREWOLF.create(obj.world);
 				if (entity != null) {
-					PlayerLookup.tracking(obj).forEach(player -> SpawnSmokeParticlesPacket.send(player, obj));
+					PlayerLookup.tracking(obj).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, obj));
 					obj.world.playSound(null, obj.getX(), obj.getY(), obj.getZ(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, obj.getSoundCategory(), 1, obj.getSoundPitch());
 					entity.readNbt(getStoredWerewolf());
 					entity.updatePositionAndAngles(obj.getX(), obj.getY(), obj.getZ(), obj.getRandom().nextFloat() * 360, 0);

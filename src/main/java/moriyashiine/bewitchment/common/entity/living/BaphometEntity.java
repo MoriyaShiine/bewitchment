@@ -281,8 +281,8 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 		fromNbtPledgeable(nbt);
 		if (nbt.contains("Offers")) {
 			offers.clear();
-			NbtList offersTag = nbt.getList("Offers", NbtType.COMPOUND);
-			for (NbtElement offerTag : offersTag) {
+			NbtList offersList = nbt.getList("Offers", NbtType.COMPOUND);
+			for (NbtElement offerTag : offersList) {
 				offers.add(new DemonEntity.DemonTradeOffer((NbtCompound) offerTag));
 			}
 		}
@@ -294,11 +294,11 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 		super.writeCustomDataToNbt(nbt);
 		toNbtPledgeable(nbt);
 		if (!offers.isEmpty()) {
-			NbtList offersTag = new NbtList();
+			NbtList offersList = new NbtList();
 			for (DemonEntity.DemonTradeOffer offer : offers) {
-				offersTag.add(offer.toTag());
+				offersList.add(offer.toTag());
 			}
-			nbt.put("Offers", offersTag);
+			nbt.put("Offers", offersList);
 		}
 		nbt.putInt("TradeResetTimer", tradeResetTimer);
 	}

@@ -43,8 +43,8 @@ public class BrambleBlock extends SugarCaneBlock {
 	
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-		if (this == BWObjects.THICK_BRAMBLE && context instanceof EntityShapeContextAdditionAccessor) {
-			Entity entity = ((EntityShapeContextAdditionAccessor) context).bw_getEntity();
+		if (this == BWObjects.THICK_BRAMBLE && context instanceof EntityShapeContextAdditionAccessor accessor) {
+			Entity entity = accessor.bw_getEntity();
 			if (entity instanceof LivingEntity && !entity.isSneaking()) {
 				return VoxelShapes.fullCube();
 			}
@@ -83,12 +83,12 @@ public class BrambleBlock extends SugarCaneBlock {
 	
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (!world.isClient && entity instanceof LivingEntity livingEntity) {
-			if (this == BWObjects.ENDER_BRAMBLE && !livingEntity.hasVehicle()) {
-				BWUtil.attemptTeleport(livingEntity, entity.getBlockPos(), 64, true);
+		if (!world.isClient && entity instanceof LivingEntity) {
+			if (this == BWObjects.ENDER_BRAMBLE && !entity.hasVehicle()) {
+				BWUtil.attemptTeleport(entity, entity.getBlockPos(), 64, true);
 			}
 			if (this == BWObjects.SCORCHED_BRAMBLE) {
-				livingEntity.setOnFireFor(10);
+				entity.setOnFireFor(10);
 			}
 		}
 		if (this == BWObjects.THICK_BRAMBLE && !entity.isSneaking()) {

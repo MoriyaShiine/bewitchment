@@ -43,9 +43,9 @@ public interface SigilHolder {
 	void setModeOnWhitelist(boolean modeOnWhitelist);
 	
 	default void fromNbtSigil(NbtCompound nbt) {
-		NbtList entities = nbt.getList("Entities", NbtType.STRING);
-		for (int i = 0; i < entities.size(); i++) {
-			getEntities().add(UUID.fromString(entities.getString(i)));
+		NbtList entitiesList = nbt.getList("Entities", NbtType.STRING);
+		for (int i = 0; i < entitiesList.size(); i++) {
+			getEntities().add(UUID.fromString(entitiesList.getString(i)));
 		}
 		if (nbt.contains("Owner")) {
 			setOwner(nbt.getUuid("Owner"));
@@ -56,11 +56,11 @@ public interface SigilHolder {
 	}
 	
 	default void toNbtSigil(NbtCompound nbt) {
-		NbtList entities = new NbtList();
+		NbtList entitiesList = new NbtList();
 		for (int i = 0; i < getEntities().size(); i++) {
-			entities.add(NbtString.of(getEntities().get(i).toString()));
+			entitiesList.add(NbtString.of(getEntities().get(i).toString()));
 		}
-		nbt.put("Entities", entities);
+		nbt.put("Entities", entitiesList);
 		if (getOwner() != null) {
 			nbt.putUuid("Owner", getOwner());
 		}
@@ -121,19 +121,14 @@ public interface SigilHolder {
 	}
 	
 	default void syncSigilHolder(World world, BlockEntity blockEntity) {
-		if (world instanceof ServerWorld) {
-			if (blockEntity instanceof BlockEntityClientSerializable blockEntityClientSerializable) {
-				blockEntityClientSerializable.sync();
-			}
+		if (world instanceof ServerWorld && blockEntity instanceof BlockEntityClientSerializable blockEntityClientSerializable) {
+			blockEntityClientSerializable.sync();
 		}
 	}
 	
 	static void onUse(World world, BlockPos pos, LivingEntity user, Hand hand) {
-		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity instanceof SigilHolder) {
-			if (((SigilHolder) blockEntity).test(user)) {
-				((SigilHolder) blockEntity).use(world, pos, user, hand);
-			}
+		if (world.getBlockEntity(pos) instanceof SigilHolder sigilHolder && sigilHolder.test(user)) {
+			sigilHolder.use(world, pos, user, hand);
 		}
 	}
 }

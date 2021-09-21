@@ -26,13 +26,11 @@ public abstract class EntityMixin {
 	@Inject(method = "isInvulnerableTo", at = @At("RETURN"), cancellable = true)
 	private void isInvulnerableTo(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!callbackInfo.getReturnValue() && !world.isClient && (Object) this instanceof MobEntity mob) {
-			Entity attacker = source.getAttacker();
-			if (attacker instanceof LivingEntity) {
-				if (attacker.getUuid().equals(MinionComponent.get(mob).getMaster())) {
+			if (source.getAttacker() instanceof LivingEntity living) {
+				if (living.getUuid().equals(MinionComponent.get(mob).getMaster())) {
 					callbackInfo.setReturnValue(true);
-					return;
 				}
-				if (attacker instanceof MobEntity mobAttacker && getUuid().equals(MinionComponent.get(mobAttacker).getMaster())) {
+				else if (living instanceof MobEntity mobAttacker && getUuid().equals(MinionComponent.get(mobAttacker).getMaster())) {
 					callbackInfo.setReturnValue(true);
 				}
 			}

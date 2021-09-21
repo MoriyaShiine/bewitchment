@@ -18,9 +18,9 @@ public abstract class ServerWorldMixin {
 	private void spawnEntity(Entity entity, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (entity instanceof LightningEntity) {
 			LivingEntity closest = null;
-			for (LivingEntity found : entity.world.getEntitiesByClass(LivingEntity.class, new Box(entity.getBlockPos()).expand(256), foundEntity -> foundEntity.isAlive() && CursesComponent.get(foundEntity).hasCurse(BWCurses.LIGHTNING_ROD))) {
-				if (closest == null || found.distanceTo(entity) < closest.distanceTo(entity)) {
-					closest = found;
+			for (LivingEntity foundLiving : entity.world.getEntitiesByClass(LivingEntity.class, new Box(entity.getBlockPos()).expand(256), currentLiving -> currentLiving.isAlive() && CursesComponent.get(currentLiving).hasCurse(BWCurses.LIGHTNING_ROD))) {
+				if (closest == null || foundLiving.distanceTo(entity) < closest.distanceTo(entity)) {
+					closest = foundLiving;
 				}
 			}
 			if (closest != null) {

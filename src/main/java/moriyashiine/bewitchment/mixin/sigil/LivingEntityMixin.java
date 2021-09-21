@@ -30,12 +30,12 @@ public abstract class LivingEntityMixin extends Entity {
 	private float modifyDamage(float amount, DamageSource source) {
 		if (!world.isClient && source == DamageSource.FALL) {
 			BWWorldState worldState = BWWorldState.get(world);
-			BlockPos sigilPos = BWUtil.getClosestBlockPos(getBlockPos(), 16, currentPos -> worldState.potentialSigils.contains(currentPos.asLong()) && world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.HEAVY);
+			BlockPos sigilPos = BWUtil.getClosestBlockPos(getBlockPos(), 16, currentPos -> worldState.potentialSigils.contains(currentPos.asLong()) && world.getBlockEntity(currentPos) instanceof SigilHolder sigilHolder && sigilHolder.getSigil() == BWSigils.HEAVY);
 			if (sigilPos != null) {
 				BlockEntity blockEntity = world.getBlockEntity(sigilPos);
-				SigilHolder sigil = (SigilHolder) blockEntity;
-				if (sigil.test(this)) {
-					sigil.setUses(sigil.getUses() - 1);
+				SigilHolder sigilHolder = (SigilHolder) blockEntity;
+				if (sigilHolder.test(this)) {
+					sigilHolder.setUses(sigilHolder.getUses() - 1);
 					blockEntity.markDirty();
 					amount *= 3;
 				}
@@ -48,12 +48,12 @@ public abstract class LivingEntityMixin extends Entity {
 	private void canHaveStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (callbackInfo.getReturnValue() && !world.isClient && !effect.isAmbient() && effect.getEffectType().getType() != StatusEffectType.HARMFUL) {
 			BWWorldState worldState = BWWorldState.get(world);
-			BlockPos sigilPos = BWUtil.getClosestBlockPos(getBlockPos(), 16, currentPos -> worldState.potentialSigils.contains(currentPos.asLong()) && world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.RUIN);
+			BlockPos sigilPos = BWUtil.getClosestBlockPos(getBlockPos(), 16, currentPos -> worldState.potentialSigils.contains(currentPos.asLong()) && world.getBlockEntity(currentPos) instanceof SigilHolder sigilHolder && sigilHolder.getSigil() == BWSigils.RUIN);
 			if (sigilPos != null) {
 				BlockEntity blockEntity = world.getBlockEntity(sigilPos);
-				SigilHolder sigil = (SigilHolder) blockEntity;
-				if (sigil.test(this)) {
-					sigil.setUses(sigil.getUses() - 1);
+				SigilHolder sigilHolder = (SigilHolder) blockEntity;
+				if (sigilHolder.test(this)) {
+					sigilHolder.setUses(sigilHolder.getUses() - 1);
 					blockEntity.markDirty();
 					callbackInfo.setReturnValue(false);
 				}

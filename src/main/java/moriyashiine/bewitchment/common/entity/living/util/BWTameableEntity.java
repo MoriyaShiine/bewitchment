@@ -111,7 +111,7 @@ public abstract class BWTameableEntity extends TameableEntity {
 		if (target instanceof HorseBaseEntity && ((HorseBaseEntity) target).isTame()) {
 			return false;
 		}
-		if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity) owner).shouldDamagePlayer((PlayerEntity) target)) {
+		if (target instanceof PlayerEntity targetPlayer && owner instanceof PlayerEntity ownerPlayer && !ownerPlayer.shouldDamagePlayer(targetPlayer)) {
 			return false;
 		}
 		return !(target instanceof CreeperEntity) && !(target instanceof GhastEntity);

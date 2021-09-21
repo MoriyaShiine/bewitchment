@@ -25,7 +25,7 @@ public class PoppetShelfBlockEntity extends BlockEntity implements BlockEntityCl
 	public PoppetShelfBlockEntity(BlockPos pos, BlockState state) {
 		super(BWBlockEntityTypes.POPPET_SHELF, pos, state);
 	}
-
+	
 	public void onUse(World world, BlockPos pos, PlayerEntity player, Hand hand) {
 		BWWorldState worldState = BWWorldState.get(world);
 		ItemStack stack = player.getStackInHand(hand);
@@ -48,7 +48,7 @@ public class PoppetShelfBlockEntity extends BlockEntity implements BlockEntityCl
 			}
 		}
 	}
-
+	
 	@Override
 	public void fromClientTag(NbtCompound tag) {
 		clientInventory.clear();
@@ -58,12 +58,12 @@ public class PoppetShelfBlockEntity extends BlockEntity implements BlockEntityCl
 	@Override
 	public NbtCompound toClientTag(NbtCompound tag) {
 		DefaultedList<ItemStack> inventory = BWWorldState.get(world).poppetShelves.get(pos.asLong());
-		if(inventory != null)
+		if (inventory != null) {
 			Inventories.writeNbt(tag, inventory);
-
+		}
 		return tag;
 	}
-
+	
 	private int getFirstEmptySlot() {
 		BWWorldState worldState = BWWorldState.get(world);
 		DefaultedList<ItemStack> inventory = worldState.poppetShelves.get(pos.asLong());

@@ -17,36 +17,36 @@ public class BWUniversalWorldState extends PersistentState {
 	public final List<Pair<UUID, NbtCompound>> familiars = new ArrayList<>();
 	
 	public static BWUniversalWorldState readNbt(NbtCompound nbt) {
-		BWUniversalWorldState worldState = new BWUniversalWorldState();
-		NbtList pledgesToRemove = nbt.getList("PledgesToRemove", NbtType.COMPOUND);
-		for (int i = 0; i < pledgesToRemove.size(); i++) {
-			worldState.pledgesToRemove.add(pledgesToRemove.getCompound(i).getUuid("UUID"));
+		BWUniversalWorldState universalWorldState = new BWUniversalWorldState();
+		NbtList pledgesToRemoveList = nbt.getList("PledgesToRemove", NbtType.COMPOUND);
+		for (int i = 0; i < pledgesToRemoveList.size(); i++) {
+			universalWorldState.pledgesToRemove.add(pledgesToRemoveList.getCompound(i).getUuid("UUID"));
 		}
-		NbtList familiars = nbt.getList("Familiars", NbtType.COMPOUND);
-		for (int i = 0; i < familiars.size(); i++) {
-			NbtCompound familiarTag = familiars.getCompound(i);
-			worldState.familiars.add(new Pair<>(familiarTag.getUuid("Player"), familiarTag.getCompound("Familiar")));
+		NbtList familiarsList = nbt.getList("Familiars", NbtType.COMPOUND);
+		for (int i = 0; i < familiarsList.size(); i++) {
+			NbtCompound familiarCompound = familiarsList.getCompound(i);
+			universalWorldState.familiars.add(new Pair<>(familiarCompound.getUuid("Player"), familiarCompound.getCompound("Familiar")));
 		}
-		return worldState;
+		return universalWorldState;
 	}
 	
 	@Override
 	public NbtCompound writeNbt(NbtCompound nbt) {
-		NbtList pledgesToRemove = new NbtList();
+		NbtList pledgesToRemoveList = new NbtList();
 		for (UUID uuid : this.pledgesToRemove) {
-			NbtCompound toRemove = new NbtCompound();
-			toRemove.putUuid("UUID", uuid);
-			pledgesToRemove.add(toRemove);
+			NbtCompound pledgeCompound = new NbtCompound();
+			pledgeCompound.putUuid("UUID", uuid);
+			pledgesToRemoveList.add(pledgeCompound);
 		}
-		nbt.put("PledgesToRemove", pledgesToRemove);
-		NbtList familiars = new NbtList();
+		nbt.put("PledgesToRemove", pledgesToRemoveList);
+		NbtList familiarsList = new NbtList();
 		for (Pair<UUID, NbtCompound> pair : this.familiars) {
-			NbtCompound familiarTag = new NbtCompound();
-			familiarTag.putUuid("Player", pair.getLeft());
-			familiarTag.put("Familiar", pair.getRight());
-			familiars.add(familiarTag);
+			NbtCompound familiarCompound = new NbtCompound();
+			familiarCompound.putUuid("Player", pair.getLeft());
+			familiarCompound.put("Familiar", pair.getRight());
+			familiarsList.add(familiarCompound);
 		}
-		nbt.put("Familiars", familiars);
+		nbt.put("Familiars", familiarsList);
 		return nbt;
 	}
 	

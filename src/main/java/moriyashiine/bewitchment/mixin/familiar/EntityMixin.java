@@ -22,11 +22,11 @@ public abstract class EntityMixin {
 	@Inject(method = "remove", at = @At("TAIL"))
 	private void remove(CallbackInfo callbackInfo) {
 		if (!world.isClient) {
-			BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-			for (int i = worldState.familiars.size() - 1; i >= 0; i--) {
-				if (getUuid().equals(worldState.familiars.get(i).getRight().getUuid("UUID"))) {
-					worldState.familiars.remove(i);
-					worldState.markDirty();
+			BWUniversalWorldState universalWorldState = BWUniversalWorldState.get(world);
+			for (int i = universalWorldState.familiars.size() - 1; i >= 0; i--) {
+				if (getUuid().equals(universalWorldState.familiars.get(i).getRight().getUuid("UUID"))) {
+					universalWorldState.familiars.remove(i);
+					universalWorldState.markDirty();
 					break;
 				}
 			}

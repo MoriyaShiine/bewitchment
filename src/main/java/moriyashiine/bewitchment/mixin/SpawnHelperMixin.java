@@ -17,7 +17,8 @@ public abstract class SpawnHelperMixin {
 	@Inject(method = "isValidSpawn", at = @At("RETURN"), cancellable = true)
 	private static void isValidSpawn(ServerWorld world, MobEntity entity, double squaredDistance, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (callbackInfo.getReturnValue() && entity instanceof Monster) {
-			for (Long longPos : BWWorldState.get(world).glowingBrambles) {
+			BWWorldState worldState = BWWorldState.get(world);
+			for (Long longPos : worldState.glowingBrambles) {
 				if (new Box(entity.getBlockPos()).expand(16).intersects(new Box(BlockPos.fromLong(longPos)))) {
 					callbackInfo.setReturnValue(false);
 				}

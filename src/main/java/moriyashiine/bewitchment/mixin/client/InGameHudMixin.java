@@ -59,8 +59,8 @@ public abstract class InGameHudMixin extends DrawableHelper {
 		if (BewitchmentAPI.isVampire(player, true)) {
 			RenderSystem.setShaderTexture(0, BEWITCHMENT_GUI_ICONS_TEXTURE);
 			drawBlood(matrices, player, scaledWidth / 2 + 82, scaledHeight - 39, 10);
-			if (player.isInSneakingPose() && client.targetedEntity instanceof LivingEntity && BWTags.HAS_BLOOD.contains(client.targetedEntity.getType())) {
-				drawBlood(matrices, (LivingEntity) client.targetedEntity, scaledWidth / 2 + 13, scaledHeight / 2 + 9, 5);
+			if (player.isInSneakingPose() && client.targetedEntity instanceof LivingEntity livingEntity && BWTags.HAS_BLOOD.contains(client.targetedEntity.getType())) {
+				drawBlood(matrices, livingEntity, scaledWidth / 2 + 13, scaledHeight / 2 + 9, 5);
 			}
 			RenderSystem.setShaderTexture(0, EMPTY_TEXTURE);
 		}

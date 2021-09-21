@@ -11,7 +11,6 @@ import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.potion.PotionUtil;
@@ -57,8 +56,8 @@ public class BrazierBlock extends LanternBlock implements BlockEntityProvider {
 	
 	@Nullable
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world0, BlockState state0, BlockEntityType<T> type) {
-		return (world, pos, state, blockEntity) -> BrazierBlockEntity.tick(world, pos, state, (BrazierBlockEntity) blockEntity);
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+		return (tickerWorld, pos, tickerState, blockEntity) -> BrazierBlockEntity.tick(tickerWorld, pos, tickerState, (BrazierBlockEntity) blockEntity);
 	}
 	
 	@Override
@@ -90,8 +89,8 @@ public class BrazierBlock extends LanternBlock implements BlockEntityProvider {
 	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
 		if (!world.isClient && state.getBlock() != oldState.getBlock()) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof UsesAltarPower) {
-				((UsesAltarPower) blockEntity).setAltarPos(WitchAltarBlock.getClosestAltarPos(world, pos));
+			if (blockEntity instanceof UsesAltarPower usesAltarPower) {
+				usesAltarPower.setAltarPos(WitchAltarBlock.getClosestAltarPos(world, pos));
 				blockEntity.markDirty();
 			}
 		}
@@ -99,11 +98,8 @@ public class BrazierBlock extends LanternBlock implements BlockEntityProvider {
 	
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-		if (!world.isClient && state.getBlock() != newState.getBlock()) {
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof BrazierBlockEntity && ((BrazierBlockEntity) blockEntity).incenseRecipe == null) {
-				ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
-			}
+		if (!world.isClient && state.getBlock() != newState.getBlock() && world.getBlockEntity(pos) instanceof BrazierBlockEntity brazier && brazier.incenseRecipe == null) {
+			ItemScatterer.spawn(world, pos, brazier);
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);
 	}

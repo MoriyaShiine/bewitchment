@@ -59,8 +59,8 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 	
 	@Nullable
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world0, BlockState state0, BlockEntityType<T> type) {
-		return (world, pos, state, blockEntity) -> WitchCauldronBlockEntity.tick(world, pos, state, (WitchCauldronBlockEntity) blockEntity);
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+		return (tickerWorld, pos, tickerState, blockEntity) -> WitchCauldronBlockEntity.tick(tickerWorld, pos, tickerState, (WitchCauldronBlockEntity) blockEntity);
 	}
 	
 	@Override
@@ -99,8 +99,7 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 	
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity instanceof WitchCauldronBlockEntity cauldron) {
+		if (world.getBlockEntity(pos) instanceof WitchCauldronBlockEntity cauldron) {
 			boolean client = world.isClient;
 			ItemStack stack = player.getStackInHand(hand);
 			boolean nameTag = stack.getItem() instanceof NameTagItem, bucket = stack.getItem() == Items.BUCKET, waterBucket = stack.getItem() == Items.WATER_BUCKET, glassBottle = stack.getItem() == Items.GLASS_BOTTLE, waterBottle = stack.getItem() == Items.POTION && PotionUtil.getPotion(stack) == Potions.WATER;

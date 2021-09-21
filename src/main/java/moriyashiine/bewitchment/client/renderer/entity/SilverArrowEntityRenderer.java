@@ -17,7 +17,7 @@ public class SilverArrowEntityRenderer extends ProjectileEntityRenderer<SilverAr
 	}
 	
 	@Override
-	public Identifier getTexture(SilverArrowEntity silverArrowEntity) {
+	public Identifier getTexture(SilverArrowEntity entity) {
 		return TEXTURE;
 	}
 }

@@ -37,8 +37,8 @@ public class CauldronTeleportPacket {
 		String message = buf.readString(Short.MAX_VALUE);
 		server.execute(() -> {
 			World world = player.world;
-			BWWorldState worldState = BWWorldState.get(world);
 			BlockPos closest = null;
+			BWWorldState worldState = BWWorldState.get(world);
 			for (Long longPos : worldState.witchCauldrons) {
 				BlockPos pos = BlockPos.fromLong(longPos);
 				BlockEntity blockEntity = world.getBlockEntity(pos);

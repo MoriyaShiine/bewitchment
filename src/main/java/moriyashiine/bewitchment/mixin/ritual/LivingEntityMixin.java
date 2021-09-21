@@ -12,7 +12,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-@SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
 	public LivingEntityMixin(EntityType<?> type, World world) {
@@ -21,7 +20,7 @@ public abstract class LivingEntityMixin extends Entity {
 	
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
 	private float modifyDamage(float amount, DamageSource source) {
-		if (!world.isClient && !source.isOutOfWorld() && world.getWorldBorder().contains(getBlockPos()) && !BWUtil.getBlockPoses(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity && ((GlyphBlockEntity) world.getBlockEntity(currentPos)).ritualFunction == BWRitualFunctions.PREVENT_DAMAGE).isEmpty()) {
+		if (!world.isClient && !source.isOutOfWorld() && world.getWorldBorder().contains(getBlockPos()) && !BWUtil.getBlockPoses(getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity glyph && glyph.ritualFunction == BWRitualFunctions.PREVENT_DAMAGE).isEmpty()) {
 			return 0;
 		}
 		return amount;

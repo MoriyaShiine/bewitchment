@@ -121,7 +121,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 						if (blockEntity.altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(blockEntity.altarPos)).drain(blockEntity.curseRecipe.cost, false)) {
 							if (closestPlayer != null) {
 								Entity target = blockEntity.getTarget();
-								if (target instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) target) == BWEntityTypes.RAVEN && world.random.nextBoolean()) {
+								if (target instanceof PlayerEntity player && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.RAVEN && world.random.nextBoolean()) {
 									target = closestPlayer;
 								}
 								if (target instanceof LivingEntity livingEntity) {
@@ -130,14 +130,14 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 										poppetData.stack.getNbt().putString("Curse", BWRegistries.CURSES.getId(blockEntity.curseRecipe.curse).toString());
 										poppetData.stack.getNbt().putBoolean("Cursed", true);
 										TaglockItem.removeTaglock(poppetData.stack);
-										poppetData.maybeSync(world, true);
+										poppetData.update(world, true);
 									}
 									else {
 										int duration = 168000;
 										if (BewitchmentAPI.getFamiliar(closestPlayer) == BWEntityTypes.RAVEN) {
 											duration *= 2;
 										}
-										if (target instanceof PlayerEntity && TrinketsApi.getTrinketComponent((LivingEntity) target).get().isEquipped(BWObjects.NAZAR) && BewitchmentAPI.drainMagic((PlayerEntity) target, 50, false)) {
+										if (target instanceof PlayerEntity player && TrinketsApi.getTrinketComponent((LivingEntity) target).get().isEquipped(BWObjects.NAZAR) && BewitchmentAPI.drainMagic(player, 50, false)) {
 											duration /= 2;
 										}
 										CursesComponent.get(livingEntity).addCurse(new Curse.Instance(blockEntity.curseRecipe.curse, duration));
@@ -246,7 +246,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 				if (stack.getItem() instanceof FlintAndSteelItem) {
 					world.setBlockState(pos, getCachedState().with(Properties.LIT, true));
 					world.playSound(null, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1, 1);
-					stack.damage(1, player, user -> user.sendToolBreakStatus(hand));
+					stack.damage(1, player, stackUser -> stackUser.sendToolBreakStatus(hand));
 					IncenseRecipe foundIncenseRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.INCENSE_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
 					if (foundIncenseRecipe != null) {
 						incenseRecipe = foundIncenseRecipe;

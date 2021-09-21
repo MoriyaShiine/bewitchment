@@ -72,7 +72,7 @@ public class GhostEntity extends BWHostileEntity {
 			getTarget().addStatusEffect(getEffect(type, 100));
 		}
 		if (!world.isClient && !hasCustomName() && world.isDay() && !world.isRaining() && world.isSkyVisibleAllowingSea(getBlockPos())) {
-			PlayerLookup.tracking(this).forEach(playerEntity -> SpawnSmokeParticlesPacket.send(playerEntity, this));
+			PlayerLookup.tracking(this).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, this));
 			remove(RemovalReason.DISCARDED);
 		}
 	}
@@ -249,7 +249,8 @@ public class GhostEntity extends BWHostileEntity {
 	}
 	
 	private static Pair<BlockPos, Integer> findPos(ServerWorldAccess world, BlockPos pos) {
-		for (Long longPos : BWWorldState.get(world.toServerWorld()).potentialCandelabras) {
+		BWWorldState worldState = BWWorldState.get(world.toServerWorld());
+		for (Long longPos : worldState.potentialCandelabras) {
 			BlockPos candelabraPos = BlockPos.fromLong(longPos);
 			double distance = Math.sqrt(candelabraPos.getSquaredDistance(pos));
 			if (distance <= Byte.MAX_VALUE) {
@@ -265,8 +266,8 @@ public class GhostEntity extends BWHostileEntity {
 						}
 					}
 				}
-				else if (state.getBlock() instanceof CandelabraBlock && state.get(Properties.LIT)) {
-					radius = ((CandelabraBlock) state.getBlock()).repellentRadius;
+				else if (state.getBlock() instanceof CandelabraBlock candelabra && state.get(Properties.LIT)) {
+					radius = candelabra.repellentRadius;
 				}
 				if (distance <= radius) {
 					return new Pair<>(candelabraPos, radius);

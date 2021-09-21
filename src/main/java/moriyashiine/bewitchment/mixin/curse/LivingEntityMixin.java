@@ -36,9 +36,8 @@ public abstract class LivingEntityMixin extends Entity {
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
 	private float modifyDamage(float amount, DamageSource source) {
 		if (!world.isClient) {
-			Entity directSource = source.getSource();
 			CursesComponent cursesComponent = CursesComponent.get((LivingEntity) (Object) this);
-			if (cursesComponent.hasCurse(BWCurses.FORESTS_WRATH) && (source.isFire() || ((directSource instanceof LivingEntity && ((LivingEntity) directSource).getMainHandStack().getItem() instanceof AxeItem)))) {
+			if (cursesComponent.hasCurse(BWCurses.FORESTS_WRATH) && (source.isFire() || ((source.getSource() instanceof LivingEntity livingSource && livingSource.getMainHandStack().getItem() instanceof AxeItem)))) {
 				amount *= 2;
 			}
 			if (cursesComponent.hasCurse(BWCurses.SUSCEPTIBILITY) && source.isMagic()) {

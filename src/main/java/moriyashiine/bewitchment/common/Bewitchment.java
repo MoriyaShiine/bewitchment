@@ -88,21 +88,18 @@ public class Bewitchment implements ModInitializer {
 		});
 		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killedEntity) -> {
 			if (entity instanceof LivingEntity livingEntity) {
-				if (livingEntity instanceof PlayerEntity && killedEntity.getGroup() == EntityGroup.ARTHROPOD && BewitchmentAPI.getFamiliar((PlayerEntity) livingEntity) == BWEntityTypes.TOAD) {
+				if (livingEntity instanceof PlayerEntity player && killedEntity.getGroup() == EntityGroup.ARTHROPOD && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.TOAD) {
 					livingEntity.heal(livingEntity.getMaxHealth() * 1 / 4f);
 				}
 				if (livingEntity.getMainHandStack().getItem() instanceof AthameItem) {
-					BlockPos glyph = BWUtil.getClosestBlockPos(killedEntity.getBlockPos(), 6, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity);
-					if (glyph != null) {
-						((GlyphBlockEntity) world.getBlockEntity(glyph)).onUse(world, glyph, livingEntity, Hand.MAIN_HAND, killedEntity);
+					BlockPos glyphPos = BWUtil.getClosestBlockPos(killedEntity.getBlockPos(), 6, currentPos -> world.getBlockEntity(currentPos) instanceof GlyphBlockEntity);
+					if (glyphPos != null) {
+						((GlyphBlockEntity) world.getBlockEntity(glyphPos)).onUse(world, glyphPos, livingEntity, Hand.MAIN_HAND, killedEntity);
 					}
 					if (world.isNight()) {
 						boolean chicken = killedEntity instanceof ChickenEntity;
 						if ((chicken && (world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.EXTREME_HILLS || world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.ICY)) || (killedEntity instanceof WolfEntity && (world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.TAIGA || world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.FOREST))) {
-							BlockPos brazierPos = BWUtil.getClosestBlockPos(killedEntity.getBlockPos(), 8, currentPos -> {
-								BlockEntity blockEntity = world.getBlockEntity(currentPos);
-								return blockEntity instanceof BrazierBlockEntity && ((BrazierBlockEntity) blockEntity).incenseRecipe.effect == BWStatusEffects.MORTAL_COIL;
-							});
+							BlockPos brazierPos = BWUtil.getClosestBlockPos(killedEntity.getBlockPos(), 8, currentPos -> world.getBlockEntity(currentPos) instanceof BrazierBlockEntity brazier && brazier.incenseRecipe.effect == BWStatusEffects.MORTAL_COIL);
 							if (brazierPos != null) {
 								world.breakBlock(brazierPos, false);
 								world.createExplosion(null, brazierPos.getX() + 0.5, brazierPos.getY() + 0.5, brazierPos.getZ() + 0.5, 3, Explosion.DestructionType.BREAK);
@@ -124,9 +121,9 @@ public class Bewitchment implements ModInitializer {
 							ItemScatterer.spawn(world, killedEntity.getX() + 0.5, killedEntity.getY() + 0.5, killedEntity.getZ() + 0.5, drop);
 						}
 					}
-					if (livingEntity instanceof PlayerEntity && livingEntity.getOffHandStack().getItem() == Items.GLASS_BOTTLE && BloodComponent.get(killedEntity).getBlood() > 20 && BWTags.HAS_BLOOD.contains(killedEntity.getType())) {
+					if (livingEntity instanceof PlayerEntity player && livingEntity.getOffHandStack().getItem() == Items.GLASS_BOTTLE && BloodComponent.get(killedEntity).getBlood() > 20 && BWTags.HAS_BLOOD.contains(killedEntity.getType())) {
 						world.playSound(null, livingEntity.getBlockPos(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1, 0.5f);
-						BWUtil.addItemToInventoryAndConsume((PlayerEntity) livingEntity, Hand.OFF_HAND, new ItemStack(BWObjects.BOTTLE_OF_BLOOD));
+						BWUtil.addItemToInventoryAndConsume(player, Hand.OFF_HAND, new ItemStack(BWObjects.BOTTLE_OF_BLOOD));
 					}
 				}
 				if (livingEntity instanceof PlayerEntity player && ContractsComponent.get(player).hasContract(BWContracts.DEATH)) {
@@ -137,15 +134,15 @@ public class Bewitchment implements ModInitializer {
 		UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
 			if (entity instanceof LivingEntity livingEntity && hand == Hand.MAIN_HAND && player.isSneaking() && entity.isAlive() && BewitchmentAPI.isVampire(player, true) && player.getStackInHand(hand).isEmpty()) {
 				int toGive = BWTags.HAS_BLOOD.contains(entity.getType()) ? 5 : entity instanceof AnimalEntity ? 1 : 0;
-				toGive = BloodSuckEvents.BLOOD_AMOUNT.invoker().onBloodSuck(player, (LivingEntity) entity, toGive);
+				toGive = BloodSuckEvents.BLOOD_AMOUNT.invoker().onBloodSuck(player, livingEntity, toGive);
 				if (toGive > 0) {
 					BloodComponent playerBloodComponent = BloodComponent.get(player);
 					BloodComponent entityBloodComponent = BloodComponent.get(livingEntity);
 					if (playerBloodComponent.fillBlood(toGive, true) && entityBloodComponent.drainBlood(10, true)) {
-						if (!world.isClient && ((LivingEntity) entity).hurtTime == 0) {
-							BloodSuckEvents.ON_BLOOD_SUCK.invoker().onBloodSuck(player, (LivingEntity) entity, toGive);
+						if (!world.isClient && livingEntity.hurtTime == 0) {
+							BloodSuckEvents.ON_BLOOD_SUCK.invoker().onBloodSuck(player, livingEntity, toGive);
 							world.playSound(null, player.getBlockPos(), SoundEvents.ITEM_HONEY_BOTTLE_DRINK, player.getSoundCategory(), 1, 0.5f);
-							if (!((LivingEntity) entity).isSleeping() || entityBloodComponent.getBlood() < BloodComponent.MAX_BLOOD / 2) {
+							if (!livingEntity.isSleeping() || entityBloodComponent.getBlood() < BloodComponent.MAX_BLOOD / 2) {
 								entity.damage(BWDamageSources.VAMPIRE, 2);
 							}
 							playerBloodComponent.fillBlood(toGive, false);
@@ -182,15 +179,15 @@ public class Bewitchment implements ModInitializer {
 		});
 		PlayerSleepEvents.WAKE_UP.register((player, reset, update) -> {
 			if (!player.world.isClient) {
-				BWUtil.getBlockPoses(player.getBlockPos(), 12, foundPos -> player.world.getBlockEntity(foundPos) instanceof BrazierBlockEntity && ((BrazierBlockEntity) player.world.getBlockEntity(foundPos)).incenseRecipe != null).forEach(foundPos -> {
+				BWUtil.getBlockPoses(player.getBlockPos(), 12, currentPos -> player.world.getBlockEntity(currentPos) instanceof BrazierBlockEntity brazier && brazier.incenseRecipe != null).forEach(foundPos -> {
 					IncenseRecipe recipe = ((BrazierBlockEntity) player.world.getBlockEntity(foundPos)).incenseRecipe;
 					int durationMultiplier = 1;
-					BlockPos nearestSigil = BWUtil.getClosestBlockPos(player.getBlockPos(), 16, foundSigil -> player.world.getBlockEntity(foundSigil) instanceof SigilBlockEntity && ((SigilBlockEntity) player.world.getBlockEntity(foundSigil)).getSigil() == BWSigils.EXTENDING);
+					BlockPos nearestSigil = BWUtil.getClosestBlockPos(player.getBlockPos(), 16, currentPos -> player.world.getBlockEntity(currentPos) instanceof SigilBlockEntity sigil && sigil.getSigil() == BWSigils.EXTENDING);
 					if (nearestSigil != null) {
 						BlockEntity blockEntity = player.world.getBlockEntity(nearestSigil);
-						SigilHolder sigil = ((SigilHolder) blockEntity);
-						if (sigil.test(player)) {
-							sigil.setUses(sigil.getUses() - 1);
+						SigilHolder sigilHolder = ((SigilHolder) blockEntity);
+						if (sigilHolder.test(player)) {
+							sigilHolder.setUses(sigilHolder.getUses() - 1);
 							blockEntity.markDirty();
 							durationMultiplier = 2;
 						}

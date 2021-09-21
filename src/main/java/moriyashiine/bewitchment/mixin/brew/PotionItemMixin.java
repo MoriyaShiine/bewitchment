@@ -17,11 +17,11 @@ public abstract class PotionItemMixin {
 	private void finishUsing(ItemStack stack, World world, LivingEntity user, CallbackInfoReturnable<ItemStack> callbackInfo) {
 		if (!world.isClient) {
 			PolymorphComponent.maybeGet(user).ifPresent(polymorphComponent -> {
-				NbtCompound nbt = stack.getNbt();
-				if (nbt != null) {
-					String name = nbt.getString("PolymorphName");
+				NbtCompound compound = stack.getNbt();
+				if (compound != null) {
+					String name = compound.getString("PolymorphName");
 					if (!name.isEmpty()) {
-						polymorphComponent.setUuid(nbt.getUuid("PolymorphUUID"));
+						polymorphComponent.setUuid(compound.getUuid("PolymorphUUID"));
 						polymorphComponent.setName(name);
 					}
 				}

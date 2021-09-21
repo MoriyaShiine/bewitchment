@@ -39,7 +39,7 @@ public class MinionComponent implements ComponentV3, ServerTickingComponent {
 				obj.setTarget(mob.getTarget());
 			}
 			else {
-				PlayerLookup.tracking(obj).forEach(playerEntity -> SpawnSmokeParticlesPacket.send(playerEntity, obj));
+				PlayerLookup.tracking(obj).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, obj));
 				obj.remove(Entity.RemovalReason.DISCARDED);
 			}
 		}

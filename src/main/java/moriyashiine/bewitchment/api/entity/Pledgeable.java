@@ -31,39 +31,39 @@ public interface Pledgeable {
 	void setTimeSinceLastAttack(int timeSinceLastAttack);
 	
 	default void summonMinions(MobEntity pledgeable) {
-		if (!pledgeable.world.isClient && pledgeable.world.getEntitiesByType(getMinionType(), new Box(pledgeable.getBlockPos()).expand(32), entity -> entity instanceof MobEntity mob && !entity.isRemoved() && pledgeable.getUuid().equals(MinionComponent.get(mob).getMaster())).size() < 3) {
+		if (!pledgeable.world.isClient && pledgeable.world.getEntitiesByType(getMinionType(), new Box(pledgeable.getBlockPos()).expand(32), entity -> entity instanceof MobEntity mobEntity && !entity.isRemoved() && pledgeable.getUuid().equals(MinionComponent.get(mobEntity).getMaster())).size() < 3) {
 			for (int i = 0; i < MathHelper.nextInt(pledgeable.getRandom(), 2, 3); i++) {
 				Entity entity = getMinionType().create(pledgeable.world);
 				if (entity instanceof MobEntity mobEntity) {
-					BWUtil.attemptTeleport(mobEntity, pledgeable.getBlockPos().up(), 3, true);
+					BWUtil.attemptTeleport(entity, pledgeable.getBlockPos().up(), 3, true);
 					mobEntity.initialize((ServerWorldAccess) pledgeable.world, pledgeable.world.getLocalDifficulty(pledgeable.getBlockPos()), SpawnReason.EVENT, null, null);
-					mobEntity.setPitch(pledgeable.getRandom().nextFloat() * 360);
+					entity.setPitch(pledgeable.getRandom().nextFloat() * 360);
 					mobEntity.setTarget(pledgeable.getTarget());
 					MinionComponent.get(mobEntity).setMaster(pledgeable.getUuid());
 					mobEntity.setPersistent();
 					getMinionBuffs().forEach(mobEntity::addStatusEffect);
-					pledgeable.world.spawnEntity(mobEntity);
+					pledgeable.world.spawnEntity(entity);
 				}
 			}
 		}
 	}
 	
 	default void fromNbtPledgeable(NbtCompound tag) {
-		NbtList pledgedPlayerUUIDs = tag.getList("PledgedPlayerUUIDs", NbtType.COMPOUND);
-		for (int i = 0; i < pledgedPlayerUUIDs.size(); i++) {
-			getPledgedPlayerUUIDs().add(pledgedPlayerUUIDs.getCompound(i).getUuid("UUID"));
+		NbtList pledgedPlayerUUIDsList = tag.getList("PledgedPlayerUUIDs", NbtType.COMPOUND);
+		for (int i = 0; i < pledgedPlayerUUIDsList.size(); i++) {
+			getPledgedPlayerUUIDs().add(pledgedPlayerUUIDsList.getCompound(i).getUuid("UUID"));
 		}
 		setTimeSinceLastAttack(tag.getInt("TimeSinceLastAttack"));
 	}
 	
 	default void toNbtPledgeable(NbtCompound tag) {
-		NbtList pledgedPlayerUUIDs = new NbtList();
+		NbtList pledgedPlayerUUIDsList = new NbtList();
 		for (UUID uuid : getPledgedPlayerUUIDs()) {
-			NbtCompound pledgedPlayerUUID = new NbtCompound();
-			pledgedPlayerUUID.putUuid("UUID", uuid);
-			pledgedPlayerUUIDs.add(pledgedPlayerUUID);
+			NbtCompound pledgedPlayerUUIDCompound = new NbtCompound();
+			pledgedPlayerUUIDCompound.putUuid("UUID", uuid);
+			pledgedPlayerUUIDsList.add(pledgedPlayerUUIDCompound);
 		}
-		tag.put("PledgedPlayerUUIDs", pledgedPlayerUUIDs);
+		tag.put("PledgedPlayerUUIDs", pledgedPlayerUUIDsList);
 		tag.putInt("TimeSinceLastAttack", getTimeSinceLastAttack());
 	}
 }

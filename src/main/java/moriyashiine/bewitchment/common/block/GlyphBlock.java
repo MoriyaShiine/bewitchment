@@ -52,8 +52,8 @@ public class GlyphBlock extends HorizontalFacingBlock implements BlockEntityProv
 	
 	@Nullable
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world0, BlockState state0, BlockEntityType<T> type) {
-		return state0.getBlock() == BWObjects.GOLDEN_GLYPH ? (world, pos, state, blockEntity) -> GlyphBlockEntity.tick(world, pos, state, (GlyphBlockEntity) blockEntity) : null;
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+		return state.getBlock() == BWObjects.GOLDEN_GLYPH ? (tickerWorld, pos, tickerState, blockEntity) -> GlyphBlockEntity.tick(tickerWorld, pos, tickerState, (GlyphBlockEntity) blockEntity) : null;
 	}
 	
 	@Override
@@ -109,8 +109,8 @@ public class GlyphBlock extends HorizontalFacingBlock implements BlockEntityProv
 	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
 		if (!world.isClient && state.getBlock() != oldState.getBlock()) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof UsesAltarPower) {
-				((UsesAltarPower) blockEntity).setAltarPos(WitchAltarBlock.getClosestAltarPos(world, pos));
+			if (blockEntity instanceof UsesAltarPower usesAltarPower) {
+				usesAltarPower.setAltarPos(WitchAltarBlock.getClosestAltarPos(world, pos));
 				blockEntity.markDirty();
 			}
 		}
@@ -118,11 +118,8 @@ public class GlyphBlock extends HorizontalFacingBlock implements BlockEntityProv
 	
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-		if (!world.isClient && state.getBlock() != newState.getBlock()) {
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof Inventory) {
-				ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
-			}
+		if (!world.isClient && state.getBlock() != newState.getBlock() && world.getBlockEntity(pos) instanceof Inventory inventory) {
+			ItemScatterer.spawn(world, pos, inventory);
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);
 	}

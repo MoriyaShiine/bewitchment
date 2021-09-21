@@ -8,20 +8,17 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.ItemStack;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.Vec3f;
 
 @Environment(EnvType.CLIENT)
 public class BrazierBlockEntityRenderer implements BlockEntityRenderer<BrazierBlockEntity> {
-    @Override
-    public void render(BrazierBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+	@Override
+	public void render(BrazierBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 		double yOffset = entity.getCachedState().get(Properties.HANGING) ? -0.815 : 0;
-
 		matrices.translate(0.5, 0.925 + yOffset, 0.5);
 		matrices.scale(0.5f, 0.5f, 0.5f);
-
-		for(int i = 0; i < 4; i++) {
+		for (int i = 0; i < 4; i++) {
 			matrices.translate(0, 0.06, 0);
 			matrices.push();
 			matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion((90 + (180 * i)) % 360));
@@ -29,5 +26,5 @@ public class BrazierBlockEntityRenderer implements BlockEntityRenderer<BrazierBl
 			MinecraftClient.getInstance().getItemRenderer().renderItem(entity.getStack(i), ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers, 0);
 			matrices.pop();
 		}
-    }
+	}
 }

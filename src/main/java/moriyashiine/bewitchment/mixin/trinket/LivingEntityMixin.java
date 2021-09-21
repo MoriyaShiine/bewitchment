@@ -45,9 +45,8 @@ public abstract class LivingEntityMixin extends Entity {
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damageHead(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
-			Entity directSource = source.getSource();
 			if (amount > 0 && hurtTime == 0) {
-				if ((Object) this instanceof PlayerEntity player && directSource instanceof LivingEntity) {
+				if ((Object) this instanceof PlayerEntity player && source.getSource() instanceof LivingEntity livingSource) {
 					List<Pair<SlotReference, ItemStack>> component = TrinketsApi.getTrinketComponent(player).get().getEquipped(BWObjects.PRICKLY_BELT);
 					if (!component.isEmpty()) {
 						ItemStack belt = component.get(0).getRight();
@@ -56,7 +55,7 @@ public abstract class LivingEntityMixin extends Entity {
 							List<StatusEffectInstance> effects = PotionUtil.getPotionEffects(belt);
 							for (StatusEffectInstance effect : effects) {
 								if (effect.getEffectType().getType() == StatusEffectType.HARMFUL) {
-									if (!(((LivingEntity) directSource).hasStatusEffect(effect.getEffectType())) && BewitchmentAPI.drainMagic(player, 2, true) && ((LivingEntity) directSource).addStatusEffect(effect)) {
+									if (!livingSource.hasStatusEffect(effect.getEffectType()) && BewitchmentAPI.drainMagic(player, 2, true) && livingSource.addStatusEffect(effect)) {
 										used = true;
 									}
 								}

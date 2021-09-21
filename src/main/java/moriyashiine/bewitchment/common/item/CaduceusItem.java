@@ -31,8 +31,8 @@ public class CaduceusItem extends MiningToolItem {
 	
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		if (user instanceof PlayerEntity) {
-			if (!world.isClient && BewitchmentAPI.drainMagic((PlayerEntity) user, 2, false)) {
+		if (user instanceof PlayerEntity player) {
+			if (!world.isClient && BewitchmentAPI.drainMagic(player, 2, false)) {
 				FireballEntity fireball = new FireballEntity(world, user, user.getRotationVector().x, user.getRotationVector().y, user.getRotationVector().z, 1);
 				fireball.setOwner(user);
 				fireball.setPos(fireball.getX(), fireball.getY() + 1, fireball.getZ());

@@ -175,7 +175,7 @@ public class LilithEntity extends BWHostileEntity implements Pledgeable {
 					if (!player.isCreative()) {
 						stack.decrement(1);
 					}
-					PlayerLookup.tracking(player).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, player));
+					PlayerLookup.tracking(player).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, player));
 					SpawnSmokeParticlesPacket.send(player, player);
 					world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_PLING, player.getSoundCategory(), 1, 1);
 					TransformationComponent.maybeGet(player).ifPresent(transformationComponent -> {

@@ -17,10 +17,10 @@ public abstract class EntityMixin {
 	
 	@Inject(method = "remove", at = @At("TAIL"))
 	private void remove(CallbackInfo callbackInfo) {
-		if (!world.isClient && this instanceof Pledgeable) {
-			BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-			worldState.pledgesToRemove.addAll(((Pledgeable) this).getPledgedPlayerUUIDs());
-			worldState.markDirty();
+		if (!world.isClient && this instanceof Pledgeable pledgeable) {
+			BWUniversalWorldState universalWorldState = BWUniversalWorldState.get(world);
+			universalWorldState.pledgesToRemove.addAll(pledgeable.getPledgedPlayerUUIDs());
+			universalWorldState.markDirty();
 		}
 	}
 }

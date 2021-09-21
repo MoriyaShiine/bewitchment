@@ -29,7 +29,7 @@ public abstract class LivingEntityMixin extends Entity {
 	
 	@ModifyVariable(method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)Z", at = @At("HEAD"))
 	private StatusEffectInstance modifyStatusEffect(StatusEffectInstance effect) {
-		if (!world.isClient && !effect.isAmbient() && effect.getEffectType().getType() == StatusEffectType.BENEFICIAL && (Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == BWEntityTypes.TOAD) {
+		if (!world.isClient && !effect.isAmbient() && effect.getEffectType().getType() == StatusEffectType.BENEFICIAL && (Object) this instanceof PlayerEntity player && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.TOAD) {
 			return new StatusEffectInstance(effect.getEffectType(), (int) (effect.getDuration() * (effect.getEffectType().isInstant() ? 1 : 1.5f)), effect.getAmplifier() + (effect.getEffectType().isInstant() ? 1 : 0), false, effect.shouldShowParticles(), effect.shouldShowIcon());
 		}
 		return effect;
@@ -45,14 +45,14 @@ public abstract class LivingEntityMixin extends Entity {
 	
 	@Inject(method = "handleFallDamage", at = @At("HEAD"), cancellable = true)
 	private void handleFallDamage(float fallDistance, float damageMultiplier, DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if ((Object) this instanceof PlayerEntity && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == BWEntityTypes.OWL) {
+		if ((Object) this instanceof PlayerEntity player && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.OWL) {
 			callbackInfo.setReturnValue(false);
 		}
 	}
 	
 	@Inject(method = "fall", at = @At("HEAD"), cancellable = true)
 	private void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition, CallbackInfo callbackInfo) {
-		if ((Object) this instanceof PlayerEntity && onGround && BewitchmentAPI.getFamiliar((PlayerEntity) (Object) this) == BWEntityTypes.OWL) {
+		if ((Object) this instanceof PlayerEntity player && onGround && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.OWL) {
 			callbackInfo.cancel();
 		}
 	}

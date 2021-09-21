@@ -71,7 +71,7 @@ public class BWCropBlock extends CropBlock {
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		super.onEntityCollision(state, world, pos, entity);
-		if (entity instanceof LivingEntity) {
+		if (entity instanceof LivingEntity livingEntity) {
 			boolean damage = false;
 			if (this == BWObjects.GARLIC_CROP && BewitchmentAPI.isVampire(entity, true)) {
 				damage = true;
@@ -80,7 +80,7 @@ public class BWCropBlock extends CropBlock {
 				damage = true;
 			}
 			if (damage) {
-				entity.damage(BWDamageSources.MAGIC_COPY, ((LivingEntity) entity).getMaxHealth() * 1 / 4f);
+				entity.damage(BWDamageSources.MAGIC_COPY, livingEntity.getMaxHealth() * 1 / 4f);
 			}
 		}
 	}

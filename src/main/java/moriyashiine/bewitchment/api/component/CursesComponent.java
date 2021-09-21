@@ -25,10 +25,10 @@ public class CursesComponent implements ComponentV3, ServerTickingComponent {
 	
 	@Override
 	public void readFromNbt(NbtCompound tag) {
-		NbtList curses = tag.getList("Curses", NbtType.COMPOUND);
-		for (int i = 0; i < curses.size(); i++) {
-			NbtCompound curse = curses.getCompound(i);
-			addCurse(new Curse.Instance(BWRegistries.CURSES.get(new Identifier(curse.getString("Curse"))), curse.getInt("Duration")));
+		NbtList cursesList = tag.getList("Curses", NbtType.COMPOUND);
+		for (int i = 0; i < cursesList.size(); i++) {
+			NbtCompound curseCompound = cursesList.getCompound(i);
+			addCurse(new Curse.Instance(BWRegistries.CURSES.get(new Identifier(curseCompound.getString("Curse"))), curseCompound.getInt("Duration")));
 		}
 	}
 	
@@ -81,14 +81,14 @@ public class CursesComponent implements ComponentV3, ServerTickingComponent {
 	
 	@SuppressWarnings("ConstantConditions")
 	public NbtList toNbtCurse() {
-		NbtList curseList = new NbtList();
+		NbtList cursesList = new NbtList();
 		for (Curse.Instance instance : getCurses()) {
-			NbtCompound curse = new NbtCompound();
-			curse.putString("Curse", BWRegistries.CURSES.getId(instance.curse).toString());
-			curse.putInt("Duration", instance.duration);
-			curseList.add(curse);
+			NbtCompound curseCompound = new NbtCompound();
+			curseCompound.putString("Curse", BWRegistries.CURSES.getId(instance.curse).toString());
+			curseCompound.putInt("Duration", instance.duration);
+			cursesList.add(curseCompound);
 		}
-		return curseList;
+		return cursesList;
 	}
 	
 	public static CursesComponent get(LivingEntity obj) {

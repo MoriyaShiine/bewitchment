@@ -101,9 +101,9 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 					else {
 						blockEntity.power = Math.min(blockEntity.power + blockEntity.gain, blockEntity.maxPower);
 					}
-					PlayerLookup.around((ServerWorld) world, Vec3d.of(pos), 24).forEach(playerEntity -> {
-						if (!CursesComponent.get(playerEntity).hasCurse(BWCurses.APATHY) && BewitchmentAPI.fillMagic(playerEntity, 5, true) && blockEntity.drain(10, true)) {
-							BewitchmentAPI.fillMagic(playerEntity, 5, false);
+					PlayerLookup.around((ServerWorld) world, Vec3d.of(pos), 24).forEach(player -> {
+						if (!CursesComponent.get(player).hasCurse(BWCurses.APATHY) && BewitchmentAPI.fillMagic(player, 5, true) && blockEntity.drain(10, true)) {
+							BewitchmentAPI.fillMagic(player, 5, false);
 							blockEntity.drain(10, false);
 						}
 					});

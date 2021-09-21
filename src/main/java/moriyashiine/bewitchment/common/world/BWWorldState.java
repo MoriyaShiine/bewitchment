@@ -26,79 +26,79 @@ public class BWWorldState extends PersistentState {
 	
 	public static BWWorldState readNbt(NbtCompound nbt) {
 		BWWorldState worldState = new BWWorldState();
-		NbtList poppetShelves = nbt.getList("PoppetShelves", NbtType.COMPOUND);
-		for (int i = 0; i < poppetShelves.size(); i++) {
-			NbtCompound shelfTag = poppetShelves.getCompound(i);
+		NbtList poppetShelvesList = nbt.getList("PoppetShelves", NbtType.COMPOUND);
+		for (int i = 0; i < poppetShelvesList.size(); i++) {
+			NbtCompound poppetShelfCompound = poppetShelvesList.getCompound(i);
 			DefaultedList<ItemStack> inventory = null;
-			if (shelfTag.contains("Inventory")) {
+			if (poppetShelfCompound.contains("Inventory")) {
 				inventory = DefaultedList.ofSize(9, ItemStack.EMPTY);
-				Inventories.readNbt(shelfTag.getCompound("Inventory"), inventory);
+				Inventories.readNbt(poppetShelfCompound.getCompound("Inventory"), inventory);
 			}
-			worldState.poppetShelves.put(shelfTag.getLong("Pos"), inventory);
+			worldState.poppetShelves.put(poppetShelfCompound.getLong("Pos"), inventory);
 		}
-		NbtList potentialCandelabras = nbt.getList("PotentialCandelabras", NbtType.COMPOUND);
-		for (int i = 0; i < potentialCandelabras.size(); i++) {
-			NbtCompound posTag = potentialCandelabras.getCompound(i);
-			worldState.potentialCandelabras.add(posTag.getLong("Pos"));
+		NbtList potentialCandelabrasList = nbt.getList("PotentialCandelabras", NbtType.COMPOUND);
+		for (int i = 0; i < potentialCandelabrasList.size(); i++) {
+			NbtCompound posCompound = potentialCandelabrasList.getCompound(i);
+			worldState.potentialCandelabras.add(posCompound.getLong("Pos"));
 		}
-		NbtList potentialSigils = nbt.getList("PotentialSigils", NbtType.COMPOUND);
-		for (int i = 0; i < potentialSigils.size(); i++) {
-			NbtCompound posTag = potentialSigils.getCompound(i);
-			worldState.potentialSigils.add(posTag.getLong("Pos"));
+		NbtList potentialSigilsList = nbt.getList("PotentialSigils", NbtType.COMPOUND);
+		for (int i = 0; i < potentialSigilsList.size(); i++) {
+			NbtCompound posCompound = potentialSigilsList.getCompound(i);
+			worldState.potentialSigils.add(posCompound.getLong("Pos"));
 		}
-		NbtList witchCauldrons = nbt.getList("WitchCauldrons", NbtType.COMPOUND);
-		for (int i = 0; i < witchCauldrons.size(); i++) {
-			NbtCompound posTag = witchCauldrons.getCompound(i);
-			worldState.witchCauldrons.add(posTag.getLong("Pos"));
+		NbtList witchCauldronsList = nbt.getList("WitchCauldrons", NbtType.COMPOUND);
+		for (int i = 0; i < witchCauldronsList.size(); i++) {
+			NbtCompound posCompound = witchCauldronsList.getCompound(i);
+			worldState.witchCauldrons.add(posCompound.getLong("Pos"));
 		}
-		NbtList glowingBrambles = nbt.getList("GlowingBrambles", NbtType.COMPOUND);
-		for (int i = 0; i < glowingBrambles.size(); i++) {
-			NbtCompound posTag = glowingBrambles.getCompound(i);
-			worldState.glowingBrambles.add(posTag.getLong("Pos"));
+		NbtList glowingBramblesList = nbt.getList("GlowingBrambles", NbtType.COMPOUND);
+		for (int i = 0; i < glowingBramblesList.size(); i++) {
+			NbtCompound posCompound = glowingBramblesList.getCompound(i);
+			worldState.glowingBrambles.add(posCompound.getLong("Pos"));
 		}
 		return worldState;
 	}
 	
 	@Override
 	public NbtCompound writeNbt(NbtCompound nbt) {
-		NbtList poppetShelves = new NbtList();
+		NbtList poppetShelvesList = new NbtList();
 		this.poppetShelves.forEach((pos, inventory) -> {
-			NbtCompound shelfTag = new NbtCompound();
-			shelfTag.putLong("Pos", pos);
+			NbtCompound poppetShelfCompound = new NbtCompound();
+			poppetShelfCompound.putLong("Pos", pos);
 			if (inventory != null) {
-				shelfTag.put("Inventory", Inventories.writeNbt(new NbtCompound(), inventory));
+				poppetShelfCompound.put("Inventory", Inventories.writeNbt(new NbtCompound(), inventory));
 			}
-			poppetShelves.add(shelfTag);
+			poppetShelvesList.add(poppetShelfCompound);
 		});
-		nbt.put("PoppetShelves", poppetShelves);
-		NbtList potentialCandelabras = new NbtList();
+		nbt.put("PoppetShelves", poppetShelvesList);
+		NbtList potentialCandelabrasList = new NbtList();
 		for (long pos : this.potentialCandelabras) {
-			NbtCompound posTag = new NbtCompound();
-			posTag.putLong("Pos", pos);
-			potentialCandelabras.add(posTag);
+			NbtCompound posCompound = new NbtCompound();
+			posCompound.putLong("Pos", pos);
+			potentialCandelabrasList.add(posCompound);
 		}
-		nbt.put("PotentialCandelabras", potentialCandelabras);
-		NbtList potentialSigils = new NbtList();
+		nbt.put("PotentialCandelabras", potentialCandelabrasList);
+		NbtList potentialSigilsList = new NbtList();
 		for (long pos : this.potentialSigils) {
-			NbtCompound posTag = new NbtCompound();
-			posTag.putLong("Pos", pos);
-			potentialSigils.add(posTag);
+			NbtCompound posCompound = new NbtCompound();
+			posCompound.putLong("Pos", pos);
+			potentialSigilsList.add(posCompound);
 		}
-		nbt.put("PotentialSigils", potentialSigils);
-		NbtList witchCauldrons = new NbtList();
+		nbt.put("PotentialSigils", potentialSigilsList);
+		NbtList witchCauldronsList = new NbtList();
 		for (long pos : this.witchCauldrons) {
-			NbtCompound posTag = new NbtCompound();
-			posTag.putLong("Pos", pos);
-			witchCauldrons.add(posTag);
+			NbtCompound posCompound = new NbtCompound();
+			posCompound.putLong("Pos", pos);
+			witchCauldronsList.add(posCompound);
 		}
-		nbt.put("WitchCauldrons", witchCauldrons);
-		NbtList glowingBrambles = new NbtList();
+		nbt.put("WitchCauldrons", witchCauldronsList);
+		NbtList glowingBramblesList = new NbtList();
 		for (long pos : this.glowingBrambles) {
-			NbtCompound posTag = new NbtCompound();
-			posTag.putLong("Pos", pos);
-			glowingBrambles.add(posTag);
+			NbtCompound posCompound = new NbtCompound();
+			posCompound.putLong("Pos", pos);
+			glowingBramblesList.add(posCompound);
 		}
-		nbt.put("GlowingBrambles", glowingBrambles);
+		nbt.put("GlowingBrambles", glowingBramblesList);
 		return nbt;
 	}
 	

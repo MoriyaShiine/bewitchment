@@ -36,9 +36,9 @@ public interface Lockable {
 	void setLocked(boolean locked);
 	
 	default void fromNbtLockable(NbtCompound nbt) {
-		NbtList entities = nbt.getList("Entities", NbtType.STRING);
-		for (int i = 0; i < entities.size(); i++) {
-			getEntities().add(UUID.fromString(entities.getString(i)));
+		NbtList entitiesList = nbt.getList("Entities", NbtType.STRING);
+		for (int i = 0; i < entitiesList.size(); i++) {
+			getEntities().add(UUID.fromString(entitiesList.getString(i)));
 		}
 		if (nbt.contains("Owner")) {
 			setOwner(nbt.getUuid("Owner"));
@@ -48,11 +48,11 @@ public interface Lockable {
 	}
 	
 	default void toNbtLockable(NbtCompound nbt) {
-		NbtList entities = new NbtList();
+		NbtList entitiesList = new NbtList();
 		for (int i = 0; i < getEntities().size(); i++) {
-			entities.add(NbtString.of(getEntities().get(i).toString()));
+			entitiesList.add(NbtString.of(getEntities().get(i).toString()));
 		}
-		nbt.put("Entities", entities);
+		nbt.put("Entities", entitiesList);
 		if (getOwner() != null) {
 			nbt.putUuid("Owner", getOwner());
 		}
@@ -66,13 +66,13 @@ public interface Lockable {
 			if (!getLocked()) {
 				if (BWTags.SILVER_INGOTS.contains(stack.getItem())) {
 					BlockEntity blockEntity = world.getBlockEntity(pos);
-					if (blockEntity instanceof Lockable) {
+					if (blockEntity instanceof Lockable lockable) {
 						if (!world.isClient) {
-							if (!(user instanceof PlayerEntity && ((PlayerEntity) user).isCreative())) {
+							if (!(user instanceof PlayerEntity player && player.isCreative())) {
 								stack.decrement(1);
 							}
-							((Lockable) blockEntity).setModeOnWhitelist(true);
-							((Lockable) blockEntity).setLocked(true);
+							lockable.setModeOnWhitelist(true);
+							lockable.setLocked(true);
 							syncLockable(world, blockEntity);
 							blockEntity.markDirty();
 						}
@@ -104,18 +104,15 @@ public interface Lockable {
 	}
 	
 	default void syncLockable(World world, BlockEntity blockEntity) {
-		if (world instanceof ServerWorld) {
-			if (blockEntity instanceof BlockEntityClientSerializable blockEntityClientSerializable) {
-				blockEntityClientSerializable.sync();
-			}
+		if (world instanceof ServerWorld && blockEntity instanceof BlockEntityClientSerializable blockEntityClientSerializable) {
+			blockEntityClientSerializable.sync();
 		}
 	}
 	
 	static ActionResult onUse(World world, BlockPos pos, LivingEntity user, Hand hand) {
-		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity instanceof Lockable) {
-			if (((Lockable) blockEntity).test(user)) {
-				return ((Lockable) blockEntity).use(world, pos, user, hand);
+		if (world.getBlockEntity(pos) instanceof Lockable lockable) {
+			if (lockable.test(user)) {
+				return lockable.use(world, pos, user, hand);
 			}
 			return ActionResult.FAIL;
 		}

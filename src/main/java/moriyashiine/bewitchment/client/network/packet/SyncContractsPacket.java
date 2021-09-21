@@ -37,10 +37,10 @@ public class SyncContractsPacket {
 				if (client.player != null) {
 					ContractsComponent.maybeGet(client.player).ifPresent(contractsComponent -> {
 						contractsComponent.getContracts().clear();
-						NbtList contracts = contractsCompound.getList("Contracts", NbtType.COMPOUND);
-						for (int i = 0; i < contracts.size(); i++) {
-							NbtCompound contract = contracts.getCompound(i);
-							contractsComponent.addContract(new Contract.Instance(BWRegistries.CONTRACTS.get(new Identifier(contract.getString("Contract"))), contract.getInt("Duration"), contract.getInt("Cost")));
+						NbtList contractsList = contractsCompound.getList("Contracts", NbtType.COMPOUND);
+						for (int i = 0; i < contractsList.size(); i++) {
+							NbtCompound contractCompound = contractsList.getCompound(i);
+							contractsComponent.addContract(new Contract.Instance(BWRegistries.CONTRACTS.get(new Identifier(contractCompound.getString("Contract"))), contractCompound.getInt("Duration"), contractCompound.getInt("Cost")));
 						}
 					});
 				}

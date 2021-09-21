@@ -44,7 +44,7 @@ public abstract class ItemEntityMixin extends Entity {
 							poppetData.stack.decrement(1);
 							sync = true;
 						}
-						poppetData.maybeSync(world, sync);
+						poppetData.update(world, sync);
 						return;
 					}
 					owner.addVelocity(getVelocity().x / 2, getVelocity().y / 2, getVelocity().z / 2);
@@ -72,7 +72,7 @@ public abstract class ItemEntityMixin extends Entity {
 								poppetData.stack.decrement(1);
 								sync = true;
 							}
-							poppetData.maybeSync(world, sync);
+							poppetData.update(world, sync);
 							return;
 						}
 						owner.setFireTicks(Integer.MAX_VALUE);
@@ -88,7 +88,7 @@ public abstract class ItemEntityMixin extends Entity {
 								poppetData.stack.decrement(1);
 								sync = true;
 							}
-							poppetData.maybeSync(world, sync);
+							poppetData.update(world, sync);
 							return;
 						}
 						owner.damage(DamageSource.CACTUS, 1);

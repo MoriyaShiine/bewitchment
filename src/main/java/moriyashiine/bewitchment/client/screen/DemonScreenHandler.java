@@ -33,13 +33,13 @@ public class DemonScreenHandler extends ScreenHandler {
 		this(syncId, new DemonMerchantImpl());
 	}
 	
-	public DemonScreenHandler(int syncId, DemonMerchant demonMerchant) {
-		this(BWScreenHandlers.DEMON_SCREEN_HANDLER, syncId, demonMerchant);
+	public DemonScreenHandler(int syncId, DemonMerchant merchant) {
+		this(BWScreenHandlers.DEMON_SCREEN_HANDLER, syncId, merchant);
 	}
 	
-	protected DemonScreenHandler(ScreenHandlerType<?> type, int syncId, DemonMerchant demonMerchant) {
+	protected DemonScreenHandler(ScreenHandlerType<?> type, int syncId, DemonMerchant merchant) {
 		super(type, syncId);
-		this.demonMerchant = demonMerchant;
+		this.demonMerchant = merchant;
 		addSlot(new DemonTradeSlot(demonInventory, 0, 41, 96));
 		addSlot(new DemonTradeSlot(demonInventory, 1, 80, 104));
 		addSlot(new DemonTradeSlot(demonInventory, 2, 119, 96));
@@ -66,8 +66,8 @@ public class DemonScreenHandler extends ScreenHandler {
 			return;
 		}
 		Slot slot = slots.get(slotIndex);
-		if (slot instanceof DemonTradeSlot) {
-			DemonEntity.DemonTradeOffer offer = ((DemonTradeSlot) slot).getOffer();
+		if (slot instanceof DemonTradeSlot tradeSlot) {
+			DemonEntity.DemonTradeOffer offer = tradeSlot.getOffer();
 			ContractsComponent.maybeGet(player).ifPresent(contractsComponent -> {
 				if (!contractsComponent.hasContract(offer.getContract())) {
 					demonMerchant.onSell(offer);

@@ -57,11 +57,8 @@ public class JuniperDoorBlock extends TerraformDoorBlock implements BlockEntityP
 	
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-		if (!world.isClient && state.getBlock() != newState.getBlock()) {
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof TaglockHolder) {
-				ItemScatterer.spawn(world, pos, ((TaglockHolder) blockEntity).getTaglockInventory());
-			}
+		if (!world.isClient && state.getBlock() != newState.getBlock() && world.getBlockEntity(pos) instanceof TaglockHolder taglockHolder) {
+			ItemScatterer.spawn(world, pos, taglockHolder.getTaglockInventory());
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);
 	}

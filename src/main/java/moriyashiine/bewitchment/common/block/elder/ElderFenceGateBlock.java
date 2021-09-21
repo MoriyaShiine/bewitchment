@@ -53,7 +53,7 @@ public class ElderFenceGateBlock extends FenceGateBlock implements BlockEntityPr
 	@Override
 	public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity instanceof Lockable && ((Lockable) blockEntity).getLocked()) {
+		if (blockEntity instanceof Lockable lockable && lockable.getLocked()) {
 			return;
 		}
 		super.neighborUpdate(state, world, pos, block, fromPos, notify);

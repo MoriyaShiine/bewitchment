@@ -19,12 +19,12 @@ import net.minecraft.util.math.Vec3f;
 
 @Environment(EnvType.CLIENT)
 public class HornedSpearEntityRenderer extends EntityRenderer<HornedSpearEntity> {
-	public HornedSpearEntityRenderer(EntityRendererFactory.Context ctx) {
-		super(ctx);
+	public HornedSpearEntityRenderer(EntityRendererFactory.Context context) {
+		super(context);
 	}
 	
 	@Override
-	public Identifier getTexture(HornedSpearEntity silverArrowEntity) {
+	public Identifier getTexture(HornedSpearEntity entity) {
 		return GhostEntityRenderer.EMPTY;
 	}
 	

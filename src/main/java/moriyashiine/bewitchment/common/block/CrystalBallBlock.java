@@ -16,7 +16,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -68,55 +67,52 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 			BlockPos nearestAltarPos = WitchAltarBlock.getClosestAltarPos(world, pos);
 			if (nearestAltarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(nearestAltarPos)).drain(500, false)) {
 				ItemStack stack = player.getStackInHand(hand);
-				if (stack.getItem() instanceof TaglockItem && TaglockItem.isTaglockFromPlayer(stack)) {
-					if (!stack.getNbt().contains("UsedForScrying")) {
-						LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, stack);
-						if (owner instanceof PlayerEntity playerOwner) {
-							boolean failed = false;
-							BlockPos sigilPos = BWUtil.getClosestBlockPos(owner.getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.SHADOWS);
-							if (sigilPos == null) {
-								sigilPos = BWUtil.getClosestBlockPos(pos, 16, currentPos -> world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) world.getBlockEntity(currentPos)).getSigil() == BWSigils.SHADOWS);
+				if (stack.getItem() instanceof TaglockItem && TaglockItem.isTaglockFromPlayer(stack) && !stack.getNbt().contains("UsedForScrying")) {
+					if (BewitchmentAPI.getTaglockOwner(world, stack) instanceof PlayerEntity owner) {
+						boolean failed = false;
+						BlockPos sigilPos = BWUtil.getClosestBlockPos(owner.getBlockPos(), 16, currentPos -> world.getBlockEntity(currentPos) instanceof SigilHolder sigilHolder && sigilHolder.getSigil() == BWSigils.SHADOWS);
+						if (sigilPos == null) {
+							sigilPos = BWUtil.getClosestBlockPos(pos, 16, currentPos -> world.getBlockEntity(currentPos) instanceof SigilHolder sigilHolder && sigilHolder.getSigil() == BWSigils.SHADOWS);
+						}
+						if (sigilPos != null) {
+							BlockEntity blockEntity = world.getBlockEntity(sigilPos);
+							SigilHolder sigilHolder = (SigilHolder) blockEntity;
+							if (sigilHolder.test(player)) {
+								sigilHolder.setUses(sigilHolder.getUses() - 1);
+								blockEntity.markDirty();
+								failed = true;
 							}
-							if (sigilPos != null) {
-								BlockEntity blockEntity = world.getBlockEntity(sigilPos);
-								SigilHolder sigil = (SigilHolder) blockEntity;
-								if (sigil.test(player)) {
-									sigil.setUses(sigil.getUses() - 1);
-									blockEntity.markDirty();
-									failed = true;
+						}
+						ItemStack newTaglock = new ItemStack(BWObjects.TAGLOCK);
+						NbtCompound taglockCompound = newTaglock.getOrCreateNbt().copyFrom(stack.getNbt());
+						taglockCompound.putBoolean("UsedForScrying", true);
+						if (!failed) {
+							taglockCompound.putLong("LocationPos", owner.getBlockPos().asLong());
+							taglockCompound.putString("LocationWorld", world.getRegistryKey().getValue().toString());
+							taglockCompound.putInt("Level", owner.experienceLevel);
+							taglockCompound.put("Curses", CursesComponent.get(owner).toNbtCurse());
+							taglockCompound.put("Contracts", ContractsComponent.get(owner).toNbtContract());
+							taglockCompound.putString("Transformation", "transformation." + BWRegistries.TRANSFORMATIONS.getId(TransformationComponent.get(owner).getTransformation()).toString().replace(":", "."));
+							BWUniversalWorldState universalWorldState = BWUniversalWorldState.get(world);
+							String familiar = "none";
+							for (int i = 0; i < universalWorldState.familiars.size(); i++) {
+								if (universalWorldState.familiars.get(i).getLeft().equals(owner.getUuid())) {
+									familiar = universalWorldState.familiars.get(i).getRight().getString("id");
+									break;
 								}
 							}
-							ItemStack newTaglock = new ItemStack(BWObjects.TAGLOCK);
-							NbtCompound compound = newTaglock.getOrCreateNbt().copyFrom(stack.getNbt());
-							compound.putBoolean("UsedForScrying", true);
-							if (!failed) {
-								compound.putLong("LocationPos", owner.getBlockPos().asLong());
-								compound.putString("LocationWorld", world.getRegistryKey().getValue().toString());
-								compound.putInt("Level", playerOwner.experienceLevel);
-								compound.put("Curses", CursesComponent.get(owner).toNbtCurse());
-								compound.put("Contracts", ContractsComponent.get(playerOwner).toNbtContract());
-								compound.putString("Transformation", "transformation." + BWRegistries.TRANSFORMATIONS.getId(TransformationComponent.get(playerOwner).getTransformation()).toString().replace(":", "."));
-								BWUniversalWorldState worldState = BWUniversalWorldState.get(world);
-								String familiar = "none";
-								for (int i = 0; i < worldState.familiars.size(); i++) {
-									if (worldState.familiars.get(i).getLeft().equals(owner.getUuid())) {
-										familiar = worldState.familiars.get(i).getRight().getString("id");
-										break;
-									}
-								}
-								compound.putString("Familiar", familiar);
-								compound.putString("Pledge", PledgeComponent.get(playerOwner).getPledge());
-								sound = BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE;
-							}
-							else {
-								compound.putBoolean("Failed", true);
-								player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.blocked_by_shadows"), true);
-							}
-							BWUtil.addItemToInventoryAndConsume(player, hand, newTaglock);
+							taglockCompound.putString("Familiar", familiar);
+							taglockCompound.putString("Pledge", PledgeComponent.get(owner).getPledge());
+							sound = BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE;
 						}
 						else {
-							player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.invalid_entity"), true);
+							taglockCompound.putBoolean("Failed", true);
+							player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.blocked_by_shadows"), true);
 						}
+						BWUtil.addItemToInventoryAndConsume(player, hand, newTaglock);
+					}
+					else {
+						player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.invalid_entity"), true);
 					}
 				}
 				else {

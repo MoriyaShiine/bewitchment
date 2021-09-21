@@ -20,14 +20,11 @@ public abstract class LivingEntityMixin extends Entity {
 	
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
 	private float modifyDamage(float amount, DamageSource source) {
-		if (!world.isClient) {
-			Entity trueSource = source.getAttacker();
-			if (amount > 0 && source.isProjectile() && trueSource instanceof PlayerEntity player) {
-				FortuneComponent fortuneComponent = FortuneComponent.get(player);
-				if (fortuneComponent.getFortune() != null && fortuneComponent.getFortune().fortune == BWFortunes.HAWKEYE) {
-					fortuneComponent.getFortune().duration = 0;
-					amount *= 3;
-				}
+		if (!world.isClient && amount > 0 && source.isProjectile() && source.getAttacker() instanceof PlayerEntity player) {
+			FortuneComponent fortuneComponent = FortuneComponent.get(player);
+			if (fortuneComponent.getFortune() != null && fortuneComponent.getFortune().fortune == BWFortunes.HAWKEYE) {
+				fortuneComponent.getFortune().duration = 0;
+				amount *= 3;
 			}
 		}
 		return amount;

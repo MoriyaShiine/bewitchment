@@ -39,7 +39,7 @@ public class DragonsBloodLogBlock extends StrippableLogBlock {
 			if (!client) {
 				world.setBlockState(pos, state.with(BWProperties.CUT, true));
 				world.playSound(null, pos, BWSoundEvents.ITEM_ATHAME_STRIP, SoundCategory.BLOCKS, 1, 1);
-				stack.damage(1, player, (user) -> user.sendToolBreakStatus(hand));
+				stack.damage(1, player, stackUser -> stackUser.sendToolBreakStatus(hand));
 			}
 			return ActionResult.success(client);
 		}
@@ -67,7 +67,6 @@ public class DragonsBloodLogBlock extends StrippableLogBlock {
 	
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-		super.appendProperties(builder);
-		builder.add(BWProperties.NATURAL, BWProperties.CUT);
+		super.appendProperties(builder.add(BWProperties.NATURAL, BWProperties.CUT));
 	}
 }

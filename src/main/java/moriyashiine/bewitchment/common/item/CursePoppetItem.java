@@ -55,7 +55,7 @@ public class CursePoppetItem extends PoppetItem {
 							poppetData.stack.getNbt().putString("Curse", BWRegistries.CURSES.getId(curse).toString());
 							poppetData.stack.getNbt().putBoolean("Cursed", true);
 							TaglockItem.removeTaglock(poppetData.stack);
-							poppetData.maybeSync(world, true);
+							poppetData.update(world, true);
 							failed = true;
 						}
 						if (curse != null) {
@@ -70,8 +70,8 @@ public class CursePoppetItem extends PoppetItem {
 						}
 					}
 				}
-				if (user instanceof PlayerEntity) {
-					((PlayerEntity) user).sendMessage(new TranslatableText(Bewitchment.MODID + ".message.invalid_entity", stack.getOrCreateNbt().getString("OwnerName")), true);
+				if (user instanceof PlayerEntity player) {
+					player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.invalid_entity", stack.getOrCreateNbt().getString("OwnerName")), true);
 				}
 			}
 		}

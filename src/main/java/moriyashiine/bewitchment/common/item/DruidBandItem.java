@@ -17,14 +17,14 @@ public class DruidBandItem extends TrinketItem {
 	
 	@Override
 	public void tick(ItemStack stack, SlotReference slot, LivingEntity entity) {
-		if (entity instanceof PlayerEntity player && !player.world.isClient && player.age % 10 == 0 && player.world.getBlockState(player.getBlockPos().down()).getBlock() instanceof Fertilizable) {
+		if (entity instanceof PlayerEntity player && !entity.world.isClient && entity.age % 10 == 0 && entity.world.getBlockState(entity.getBlockPos().down()).getBlock() instanceof Fertilizable) {
 			StatusEffectInstance speed = new StatusEffectInstance(StatusEffects.SPEED, 300, 0, true, false);
 			StatusEffectInstance regeneration = new StatusEffectInstance(StatusEffects.REGENERATION, 300, 0, true, false);
-			boolean canApply = player.canHaveStatusEffect(speed) && !player.hasStatusEffect(StatusEffects.SPEED);
-			canApply |= player.canHaveStatusEffect(regeneration) && !player.hasStatusEffect(StatusEffects.REGENERATION);
+			boolean canApply = entity.canHaveStatusEffect(speed) && !entity.hasStatusEffect(StatusEffects.SPEED);
+			canApply |= entity.canHaveStatusEffect(regeneration) && !entity.hasStatusEffect(StatusEffects.REGENERATION);
 			if (canApply && BewitchmentAPI.drainMagic(player, 1, false)) {
-				player.addStatusEffect(speed);
-				player.addStatusEffect(regeneration);
+				entity.addStatusEffect(speed);
+				entity.addStatusEffect(regeneration);
 			}
 		}
 	}

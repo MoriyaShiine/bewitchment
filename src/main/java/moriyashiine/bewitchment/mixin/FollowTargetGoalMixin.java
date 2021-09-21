@@ -26,7 +26,10 @@ public abstract class FollowTargetGoalMixin<T extends LivingEntity> extends Trac
 	
 	@Inject(method = "findClosestTarget", at = @At("TAIL"))
 	private void findClosestTarget(CallbackInfo callbackInfo) {
-		if ((targetEntity instanceof PlayerEntity player && FullInvisibilityComponent.get(player).isFullInvisible()) || (MinionComponent.get(mob).getMaster() == null && mob.isUndead() && targetEntity != null && BWUtil.getArmorPieces(targetEntity, stack -> stack.getItem() == BWObjects.HARBINGER) > 0)) {
+		if (targetEntity instanceof PlayerEntity player && FullInvisibilityComponent.get(player).isFullInvisible()) {
+			targetEntity = null;
+		}
+		else if (MinionComponent.get(mob).getMaster() == null && mob.isUndead() && targetEntity != null && BWUtil.getArmorPieces(targetEntity, stack -> stack.getItem() == BWObjects.HARBINGER) > 0) {
 			targetEntity = null;
 		}
 	}

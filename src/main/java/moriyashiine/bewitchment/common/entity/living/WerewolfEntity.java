@@ -54,7 +54,7 @@ public class WerewolfEntity extends BWHostileEntity {
 			if (storedVillager != null && age % 20 == 0 && (world.isDay() || BewitchmentAPI.getMoonPhase(world) != 0)) {
 				VillagerEntity entity = EntityType.VILLAGER.create(world);
 				if (entity != null) {
-					PlayerLookup.tracking(this).forEach(player -> SpawnSmokeParticlesPacket.send(player, this));
+					PlayerLookup.tracking(this).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, this));
 					world.playSound(null, getX(), getY(), getZ(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, getSoundCategory(), getSoundVolume(), getSoundPitch());
 					entity.readNbt(storedVillager);
 					entity.updatePositionAndAngles(getX(), getY(), getZ(), random.nextFloat() * 360, 0);

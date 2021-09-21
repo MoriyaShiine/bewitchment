@@ -24,12 +24,12 @@ public class EncounterFortune extends Fortune {
 			for (int i = 0; i < 8; i++) {
 				BlockPos pos = target.getBlockPos().add(MathHelper.nextInt(world.random, -3, 3), 0, MathHelper.nextInt(world.random, -3, 3));
 				if (!world.getBlockState(pos).getMaterial().blocksMovement()) {
-					if (entity instanceof MobEntity) {
-						((MobEntity) entity).initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
-						((MobEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, Integer.MAX_VALUE, 1));
-						((MobEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE, 1));
-						((MobEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, Integer.MAX_VALUE, 1));
-						((MobEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, Integer.MAX_VALUE, 1));
+					if (entity instanceof MobEntity mob) {
+						mob.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
+						mob.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, Integer.MAX_VALUE, 1));
+						mob.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE, 1));
+						mob.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, Integer.MAX_VALUE, 1));
+						mob.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, Integer.MAX_VALUE, 1));
 					}
 					entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
 					world.spawnEntity(entity);

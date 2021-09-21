@@ -67,7 +67,7 @@ public class TransformationAbilityPacket {
 			ScaleData width = BWScaleTypes.MODIFY_WIDTH_TYPE.getScaleData(player);
 			ScaleData height = BWScaleTypes.MODIFY_HEIGHT_TYPE.getScaleData(player);
 			if (transformationComponent.getTransformation() == BWTransformations.VAMPIRE && (forced || (BewitchmentAPI.isPledged(player, BWPledges.LILITH) && BloodComponent.get(player).getBlood() > 0))) {
-				PlayerLookup.tracking(player).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, player));
+				PlayerLookup.tracking(player).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, player));
 				SpawnSmokeParticlesPacket.send(player, player);
 				world.playSound(null, player.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, player.getSoundCategory(), 1, 1);
 				transformationComponent.setAlternateForm(!isAlternateForm);
@@ -85,7 +85,7 @@ public class TransformationAbilityPacket {
 				}
 			}
 			else if (transformationComponent.getTransformation() == BWTransformations.WEREWOLF && (forced || BewitchmentAPI.isPledged(player, BWPledges.HERNE))) {
-				PlayerLookup.tracking(player).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, player));
+				PlayerLookup.tracking(player).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, player));
 				SpawnSmokeParticlesPacket.send(player, player);
 				world.playSound(null, player.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, player.getSoundCategory(), 1, 1);
 				transformationComponent.setAlternateForm(!isAlternateForm);

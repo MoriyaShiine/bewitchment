@@ -32,8 +32,8 @@ public class DragonsBloodDoorBlock extends TerraformDoorBlock implements BlockEn
 	
 	@Nullable
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world0, BlockState state0, BlockEntityType<T> type) {
-		return (world, pos, state, blockEntity) -> SigilBlockEntity.tick(world, pos, state, (SigilBlockEntity) blockEntity);
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+		return (tickerWorld, pos, tickerState, blockEntity) -> SigilBlockEntity.tick(tickerWorld, pos, tickerState, (SigilBlockEntity) blockEntity);
 	}
 	
 	@Override

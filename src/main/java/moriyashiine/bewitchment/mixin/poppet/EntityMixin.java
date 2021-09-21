@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class EntityMixin {
 	@Inject(method = "isSubmergedIn", at = @At("RETURN"), cancellable = true)
 	private void isSubmergedIn(Tag<Fluid> tag, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!callbackInfo.getReturnValue() && (Object) this instanceof LivingEntity entity && tag == FluidTags.WATER && AdditionalWaterDataComponent.get(entity).isSubmerged()) {
+		if (!callbackInfo.getReturnValue() && (Object) this instanceof LivingEntity living && tag == FluidTags.WATER && AdditionalWaterDataComponent.get(living).isSubmerged()) {
 			callbackInfo.setReturnValue(true);
 		}
 	}

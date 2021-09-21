@@ -41,8 +41,8 @@ public class SigilBlock extends HorizontalFacingBlock implements BlockEntityProv
 	
 	@Nullable
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world0, BlockState state0, BlockEntityType<T> type) {
-		return (world, pos, state, blockEntity) -> SigilBlockEntity.tick(world, pos, state, (SigilBlockEntity) blockEntity);
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+		return (tickerWorld, pos, tickerState, blockEntity) -> SigilBlockEntity.tick(tickerWorld, pos, tickerState, (SigilBlockEntity) blockEntity);
 	}
 	
 	@Override
@@ -64,11 +64,10 @@ public class SigilBlock extends HorizontalFacingBlock implements BlockEntityProv
 	@Environment(EnvType.CLIENT)
 	@Override
 	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
-		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity instanceof SigilHolder) {
+		if (world.getBlockEntity(pos) instanceof SigilHolder sigilHolder) {
 			for (Item sigil : Registry.ITEM) {
-				if (sigil instanceof SigilItem) {
-					if (((SigilHolder) blockEntity).getSigil() == ((SigilItem) sigil).sigil) {
+				if (sigil instanceof SigilItem sigilItem) {
+					if (sigilHolder.getSigil() == sigilItem.sigil) {
 						return new ItemStack(sigil);
 					}
 				}

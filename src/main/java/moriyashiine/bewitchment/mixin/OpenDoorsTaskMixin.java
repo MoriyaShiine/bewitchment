@@ -26,8 +26,8 @@ public abstract class OpenDoorsTaskMixin {
 	
 	@Inject(method = "run", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/server/world/ServerWorld;getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;", ordinal = 1), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
 	private void run(ServerWorld world, LivingEntity entity, long time, CallbackInfo ci, Path path, PathNode pathNode, PathNode pathNode2, BlockPos pos, BlockState state) {
-		if (state.getBlock() instanceof SpecialDoor) {
-			ActionResult result = ((SpecialDoor) state.getBlock()).onSpecialUse(state, world, pos, entity, Hand.MAIN_HAND);
+		if (state.getBlock() instanceof SpecialDoor specialDoor) {
+			ActionResult result = specialDoor.onSpecialUse(state, world, pos, entity, Hand.MAIN_HAND);
 			if (state.isIn(BlockTags.WOODEN_DOORS)) {
 				DoorBlock doorBlock = (DoorBlock) state.getBlock();
 				if (!doorBlock.isOpen(state) && result != ActionResult.FAIL) {

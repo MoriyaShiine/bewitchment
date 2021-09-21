@@ -50,8 +50,8 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 		Entity owner = getOwner();
 		Entity entity = result.getEntity();
 		float damage = 7;
-		if (entity instanceof LivingEntity) {
-			damage += EnchantmentHelper.getAttackDamage(spear, ((LivingEntity) entity).getGroup());
+		if (entity instanceof LivingEntity livingEntity) {
+			damage += EnchantmentHelper.getAttackDamage(spear, livingEntity.getGroup());
 		}
 		if (owner instanceof HerneEntity) {
 			damage *= 3;
@@ -62,9 +62,9 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 				return;
 			}
 			if (entity instanceof LivingEntity livingEntity) {
-				if (owner instanceof LivingEntity) {
+				if (owner instanceof LivingEntity livingOwner) {
 					EnchantmentHelper.onUserDamaged(livingEntity, owner);
-					EnchantmentHelper.onTargetDamaged((LivingEntity) owner, livingEntity);
+					EnchantmentHelper.onTargetDamaged(livingOwner, livingEntity);
 				}
 				onHit(livingEntity);
 			}
@@ -77,11 +77,8 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 	protected EntityHitResult getEntityCollision(Vec3d currentPosition, Vec3d nextPosition) {
 		if (isOwnerAlive()) {
 			EntityHitResult collision = ProjectileUtil.getEntityCollision(this.world, this, currentPosition, nextPosition, getBoundingBox().stretch(getVelocity()).expand(1), this::canHit);
-			if (collision != null) {
-				Entity entity = collision.getEntity();
-				if (entity instanceof MobEntity mob && getOwner().getUuid().equals(MinionComponent.get(mob).getMaster())) {
-					return null;
-				}
+			if (collision != null && collision.getEntity() instanceof MobEntity mob && getOwner().getUuid().equals(MinionComponent.get(mob).getMaster())) {
+				return null;
 			}
 		}
 		return dealtDamage ? null : super.getEntityCollision(currentPosition, nextPosition);

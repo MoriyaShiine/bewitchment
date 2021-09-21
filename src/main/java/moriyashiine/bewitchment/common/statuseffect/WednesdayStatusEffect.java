@@ -22,11 +22,11 @@ public class WednesdayStatusEffect extends StatusEffect {
 	public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
 		super.onRemoved(entity, attributes, amplifier);
 		entity.world.playSound(null, entity.getBlockPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1, 1);
-		PlayerLookup.tracking(entity).forEach(playerEntity -> SpawnExplosionParticlesPacket.send(playerEntity, entity));
+		PlayerLookup.tracking(entity).forEach(trackingPlayer -> SpawnExplosionParticlesPacket.send(trackingPlayer, entity));
 		if (entity instanceof PlayerEntity player) {
 			SpawnExplosionParticlesPacket.send(player, entity);
 		}
-		if (entity instanceof ToadEntity && ((ToadEntity) entity).isFromWednesdayRitual) {
+		if (entity instanceof ToadEntity toad && toad.isFromWednesdayRitual) {
 			entity.remove(Entity.RemovalReason.DISCARDED);
 		}
 		else {
