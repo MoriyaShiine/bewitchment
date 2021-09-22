@@ -22,7 +22,7 @@ public abstract class LivingEntityMixin extends Entity {
 	}
 	
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
-	private float modifyDamage1(float amount, DamageSource source) {
+	private float modifyDamage(float amount, DamageSource source) {
 		if (!world.isClient && source.getAttacker() instanceof PlayerEntity player && BewitchmentAPI.isVampire(player, false)) {
 			amount /= 8;
 		}
