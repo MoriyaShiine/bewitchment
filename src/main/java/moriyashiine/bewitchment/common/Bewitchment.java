@@ -29,12 +29,12 @@ import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fabricmc.fabric.api.util.TriState;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -61,7 +61,6 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.explosion.Explosion;
-import top.theillusivec4.somnus.api.PlayerSleepEvents;
 import top.theillusivec4.somnus.api.WorldSleepEvents;
 
 public class Bewitchment implements ModInitializer {
@@ -164,35 +163,37 @@ public class Bewitchment implements ModInitializer {
 			}
 			return newTime;
 		});
-		PlayerSleepEvents.CAN_SLEEP_NOW.register((player, pos) -> {
-			if (player.world.getBlockState(pos).getBlock() instanceof CoffinBlock) {
-				return player.world.isDay() ? TriState.TRUE : TriState.FALSE;
-			}
-			return TriState.DEFAULT;
-		});
-		PlayerSleepEvents.TRY_SLEEP.register((player, pos) -> {
-			if (player.world.getBlockState(pos).getBlock() instanceof CoffinBlock && player.world.isNight()) {
-				player.sendMessage(new TranslatableText("block.minecraft.bed.coffin"), true);
+		EntitySleepEvents.ALLOW_SLEEP_TIME.register((player, sleepingPos, vanillaResult) -> player.world.getBlockState(sleepingPos).getBlock() instanceof CoffinBlock && player.world.isDay() ? ActionResult.success(player.world.isClient) : ActionResult.PASS);
+		EntitySleepEvents.ALLOW_SLEEPING.register((player, sleepingPos) -> {
+			if (TransformationComponent.get(player).isAlternateForm()) {
+				player.sendMessage(new TranslatableText("block.minecraft.bed.transformation"), true);
 				return PlayerEntity.SleepFailureReason.OTHER_PROBLEM;
+			}
+			if (player.world.getBlockState(sleepingPos).getBlock() instanceof CoffinBlock) {
+				if (player.world.isNight()) {
+					player.sendMessage(new TranslatableText("block.minecraft.bed.coffin"), true);
+					return PlayerEntity.SleepFailureReason.OTHER_PROBLEM;
+				}
+				return null;
 			}
 			return null;
 		});
-		PlayerSleepEvents.WAKE_UP.register((player, reset, update) -> {
-			if (!player.world.isClient) {
-				BWUtil.getBlockPoses(player.getBlockPos(), 12, currentPos -> player.world.getBlockEntity(currentPos) instanceof BrazierBlockEntity brazier && brazier.incenseRecipe != null).forEach(foundPos -> {
-					IncenseRecipe recipe = ((BrazierBlockEntity) player.world.getBlockEntity(foundPos)).incenseRecipe;
+		EntitySleepEvents.STOP_SLEEPING.register((entity, sleepingPos) -> {
+			if (!entity.world.isClient) {
+				BWUtil.getBlockPoses(entity.getBlockPos(), 12, currentPos -> entity.world.getBlockEntity(currentPos) instanceof BrazierBlockEntity brazier && brazier.incenseRecipe != null).forEach(foundPos -> {
+					IncenseRecipe recipe = ((BrazierBlockEntity) entity.world.getBlockEntity(foundPos)).incenseRecipe;
 					int durationMultiplier = 1;
-					BlockPos nearestSigil = BWUtil.getClosestBlockPos(player.getBlockPos(), 16, currentPos -> player.world.getBlockEntity(currentPos) instanceof SigilBlockEntity sigil && sigil.getSigil() == BWSigils.EXTENDING);
+					BlockPos nearestSigil = BWUtil.getClosestBlockPos(entity.getBlockPos(), 16, currentPos -> entity.world.getBlockEntity(currentPos) instanceof SigilBlockEntity sigil && sigil.getSigil() == BWSigils.EXTENDING);
 					if (nearestSigil != null) {
-						BlockEntity blockEntity = player.world.getBlockEntity(nearestSigil);
+						BlockEntity blockEntity = entity.world.getBlockEntity(nearestSigil);
 						SigilHolder sigilHolder = ((SigilHolder) blockEntity);
-						if (sigilHolder.test(player)) {
+						if (sigilHolder.test(entity)) {
 							sigilHolder.setUses(sigilHolder.getUses() - 1);
 							blockEntity.markDirty();
 							durationMultiplier = 2;
 						}
 					}
-					player.addStatusEffect(new StatusEffectInstance(recipe.effect, 24000 * durationMultiplier, recipe.amplifier, true, false));
+					entity.addStatusEffect(new StatusEffectInstance(recipe.effect, 24000 * durationMultiplier, recipe.amplifier, true, false));
 				});
 			}
 		});

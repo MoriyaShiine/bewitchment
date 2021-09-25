@@ -67,7 +67,6 @@
 	"ritual.LivingEntityMixin",
 	"ritual.ZombieVillagerEntityAccessor",
 	"sigil.LivingEntityMixin",
-	"transformation.BedBlockMixin",
 	"transformation.EntityMixin",
 	"transformation.LivingEntityMixin",
 	"transformation.PlayerEntityMixin",
