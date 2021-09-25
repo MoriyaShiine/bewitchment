@@ -4,12 +4,12 @@ import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectType;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.util.math.BlockPos;
 
 public class WebbedStatusEffect extends StatusEffect {
-	public WebbedStatusEffect(StatusEffectType type, int color) {
-		super(type, color);
+	public WebbedStatusEffect(StatusEffectCategory category, int color) {
+		super(category, color);
 	}
 	
 	@Override

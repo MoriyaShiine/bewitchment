@@ -27,8 +27,8 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.entity.boss.ServerBossBar;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
@@ -207,7 +207,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 	
 	@Override
 	public boolean canHaveStatusEffect(StatusEffectInstance effect) {
-		return effect.getEffectType().getType() == StatusEffectType.BENEFICIAL;
+		return effect.getEffectType().getCategory() == StatusEffectCategory.BENEFICIAL;
 	}
 	
 	@Override
@@ -347,8 +347,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 	}
 	
 	@Override
-	public @Nullable
-	PlayerEntity getCurrentCustomer() {
+	public @Nullable PlayerEntity getCurrentCustomer() {
 		return customer;
 	}
 }

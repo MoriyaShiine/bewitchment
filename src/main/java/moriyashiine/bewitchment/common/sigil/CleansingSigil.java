@@ -4,7 +4,7 @@ import moriyashiine.bewitchment.api.registry.Sigil;
 import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectType;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -25,7 +25,7 @@ public class CleansingSigil extends Sigil {
 		if (flag) {
 			flag = false;
 			for (StatusEffect effect : Registry.STATUS_EFFECT) {
-				if (user.hasStatusEffect(effect) && effect.getType() == StatusEffectType.HARMFUL) {
+				if (user.hasStatusEffect(effect) && effect.getCategory() == StatusEffectCategory.HARMFUL) {
 					if (!world.isClient) {
 						user.removeStatusEffect(effect);
 					}

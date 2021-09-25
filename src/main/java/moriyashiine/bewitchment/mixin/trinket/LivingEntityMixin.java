@@ -10,8 +10,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtList;
@@ -54,7 +54,7 @@ public abstract class LivingEntityMixin extends Entity {
 							boolean used = false;
 							List<StatusEffectInstance> effects = PotionUtil.getPotionEffects(belt);
 							for (StatusEffectInstance effect : effects) {
-								if (effect.getEffectType().getType() == StatusEffectType.HARMFUL) {
+								if (effect.getEffectType().getCategory() == StatusEffectCategory.HARMFUL) {
 									if (!livingSource.hasStatusEffect(effect.getEffectType()) && BewitchmentAPI.drainMagic(player, 2, true) && livingSource.addStatusEffect(effect)) {
 										used = true;
 									}

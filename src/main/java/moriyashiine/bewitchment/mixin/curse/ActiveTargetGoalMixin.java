@@ -4,7 +4,7 @@ import moriyashiine.bewitchment.api.component.CursesComponent;
 import moriyashiine.bewitchment.common.registry.BWCurses;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
-import net.minecraft.entity.ai.goal.FollowTargetGoal;
+import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.mob.MobEntity;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,8 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.function.Predicate;
 
-@Mixin(FollowTargetGoal.class)
-public abstract class FollowTargetGoalMixin<T extends LivingEntity> {
+@Mixin(ActiveTargetGoal.class)
+public abstract class ActiveTargetGoalMixin<T extends LivingEntity> {
 	@Shadow
 	protected TargetPredicate targetPredicate;
 	

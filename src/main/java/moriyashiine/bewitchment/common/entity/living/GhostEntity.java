@@ -150,7 +150,7 @@ public class GhostEntity extends BWHostileEntity {
 		goalSelector.add(2, new LookAtEntityGoal(this, PlayerEntity.class, 8));
 		goalSelector.add(3, new LookAroundGoal(this));
 		targetSelector.add(1, new RevengeGoal(this));
-		targetSelector.add(2, new FollowTargetGoal<>(this, PlayerEntity.class, true));
+		targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
 	}
 	
 	public static StatusEffectInstance getEffect(int type, int duration) {

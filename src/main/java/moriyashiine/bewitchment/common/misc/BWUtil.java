@@ -12,7 +12,7 @@ import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.FollowTargetGoal;
+import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -56,8 +56,8 @@ public class BWUtil {
 		return pos;
 	}
 	
-	public static FollowTargetGoal<LivingEntity> createGenericPledgeableTargetGoal(MobEntity entity) {
-		return new FollowTargetGoal<>(entity, LivingEntity.class, 10, true, false, foundEntity -> {
+	public static ActiveTargetGoal<LivingEntity> createGenericPledgeableTargetGoal(MobEntity entity) {
+		return new ActiveTargetGoal<>(entity, LivingEntity.class, 10, true, false, foundEntity -> {
 			if (foundEntity instanceof ArmorStandEntity) {
 				return false;
 			}

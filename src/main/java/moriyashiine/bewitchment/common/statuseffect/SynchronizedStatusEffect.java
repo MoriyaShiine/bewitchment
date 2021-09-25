@@ -4,12 +4,12 @@ import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffectType;
 
 public class SynchronizedStatusEffect extends StatusEffect {
-	public SynchronizedStatusEffect(StatusEffectType type, int color) {
-		super(type, color);
+	public SynchronizedStatusEffect(StatusEffectCategory category, int color) {
+		super(category, color);
 	}
 	
 	@Override

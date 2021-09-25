@@ -4,15 +4,15 @@ import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffectType;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class TheftStatusEffect extends StatusEffect {
-	public TheftStatusEffect(StatusEffectType type, int color) {
-		super(type, color);
+	public TheftStatusEffect(StatusEffectCategory statusEffectCategory, int color) {
+		super(statusEffectCategory, color);
 	}
 	
 	@Override
@@ -24,7 +24,7 @@ public class TheftStatusEffect extends StatusEffect {
 	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
 		if (!entity.world.isClient && entity.age % 20 == 0) {
 			entity.world.getEntitiesByClass(LivingEntity.class, entity.getBoundingBox().expand(3 * (amplifier + 1)), foundEntity -> foundEntity != entity).forEach(livingEntity -> {
-				List<StatusEffectInstance> statusEffects = livingEntity.getStatusEffects().stream().filter(instance -> instance.getEffectType().getType() == StatusEffectType.BENEFICIAL && !instance.isAmbient()).collect(Collectors.toList());
+				List<StatusEffectInstance> statusEffects = livingEntity.getStatusEffects().stream().filter(instance -> instance.getEffectType().getCategory() == StatusEffectCategory.BENEFICIAL && !instance.isAmbient()).collect(Collectors.toList());
 				for (StatusEffectInstance statusEffect : statusEffects) {
 					entity.addStatusEffect(new StatusEffectInstance(statusEffect.getEffectType(), statusEffect.getDuration() / 2, statusEffect.getAmplifier()));
 					livingEntity.removeStatusEffect(statusEffect.getEffectType());

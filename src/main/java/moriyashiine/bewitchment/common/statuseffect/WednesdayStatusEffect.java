@@ -8,14 +8,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectType;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 
 public class WednesdayStatusEffect extends StatusEffect {
-	public WednesdayStatusEffect(StatusEffectType type, int color) {
-		super(type, color);
+	public WednesdayStatusEffect(StatusEffectCategory category, int color) {
+		super(category, color);
 	}
 	
 	@Override

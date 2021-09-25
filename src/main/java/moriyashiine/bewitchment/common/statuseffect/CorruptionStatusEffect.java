@@ -3,8 +3,8 @@ package moriyashiine.bewitchment.common.statuseffect;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.registry.Registry;
 
@@ -30,8 +30,8 @@ public class CorruptionStatusEffect extends StatusEffect {
 		INVERSE_EFFECTS.put(BWStatusEffects.NOURISHING, StatusEffects.HUNGER);
 	}
 	
-	public CorruptionStatusEffect(StatusEffectType type, int color) {
-		super(type, color);
+	public CorruptionStatusEffect(StatusEffectCategory category, int color) {
+		super(category, color);
 	}
 	
 	@Override
@@ -48,7 +48,7 @@ public class CorruptionStatusEffect extends StatusEffect {
 	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
 		if (!entity.world.isClient) {
 			Registry.STATUS_EFFECT.stream().forEach(effect -> {
-				if (effect.getType() == StatusEffectType.BENEFICIAL && entity.hasStatusEffect(effect) && !entity.getStatusEffect(effect).isAmbient()) {
+				if (effect.getCategory() == StatusEffectCategory.BENEFICIAL && entity.hasStatusEffect(effect) && !entity.getStatusEffect(effect).isAmbient()) {
 					StatusEffect inverse = INVERSE_EFFECTS.get(effect);
 					StatusEffectInstance inverseEffect = null;
 					if (inverse != null) {

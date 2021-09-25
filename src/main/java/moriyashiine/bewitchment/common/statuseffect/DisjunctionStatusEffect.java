@@ -3,11 +3,11 @@ package moriyashiine.bewitchment.common.statuseffect;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectType;
+import net.minecraft.entity.effect.StatusEffectCategory;
 
 public class DisjunctionStatusEffect extends StatusEffect {
-	public DisjunctionStatusEffect(StatusEffectType type, int color) {
-		super(type, color);
+	public DisjunctionStatusEffect(StatusEffectCategory category, int color) {
+		super(category, color);
 	}
 	
 	@Override

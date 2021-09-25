@@ -158,8 +158,7 @@ public class DemonScreenHandler extends ScreenHandler {
 		}
 		
 		@Override
-		public @Nullable
-		PlayerEntity getCurrentCustomer() {
+		public @Nullable PlayerEntity getCurrentCustomer() {
 			return costumer;
 		}
 		

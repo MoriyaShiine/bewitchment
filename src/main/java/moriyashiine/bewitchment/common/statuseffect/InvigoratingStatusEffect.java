@@ -3,12 +3,12 @@ package moriyashiine.bewitchment.common.statuseffect;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectType;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class InvigoratingStatusEffect extends StatusEffect {
-	public InvigoratingStatusEffect(StatusEffectType type, int color) {
-		super(type, color);
+	public InvigoratingStatusEffect(StatusEffectCategory category, int color) {
+		super(category, color);
 	}
 	
 	@Override

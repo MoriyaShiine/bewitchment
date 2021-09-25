@@ -180,7 +180,7 @@ public class SnakeEntity extends BWTameableEntity {
 		targetSelector.add(0, new TrackOwnerAttackerGoal(this));
 		targetSelector.add(1, new AttackWithOwnerGoal(this));
 		targetSelector.add(2, new RevengeGoal(this));
-		targetSelector.add(3, new FollowTargetIfTamedGoal<>(this, LivingEntity.class, false, entity -> entity instanceof ChickenEntity || entity instanceof RabbitEntity));
+		targetSelector.add(3, new UntamedActiveTargetGoal<>(this, LivingEntity.class, false, entity -> entity instanceof ChickenEntity || entity instanceof RabbitEntity));
 	}
 	
 	public void toggleAttack(boolean attacking) {

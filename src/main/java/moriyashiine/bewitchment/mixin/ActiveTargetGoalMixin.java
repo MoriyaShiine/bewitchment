@@ -5,7 +5,7 @@ import moriyashiine.bewitchment.common.entity.component.MinionComponent;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.FollowTargetGoal;
+import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.TrackTargetGoal;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,12 +15,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(FollowTargetGoal.class)
-public abstract class FollowTargetGoalMixin<T extends LivingEntity> extends TrackTargetGoal {
+@Mixin(ActiveTargetGoal.class)
+public abstract class ActiveTargetGoalMixin<T extends LivingEntity> extends TrackTargetGoal {
 	@Shadow
 	protected LivingEntity targetEntity;
 	
-	public FollowTargetGoalMixin(MobEntity mob, boolean checkVisibility) {
+	public ActiveTargetGoalMixin(MobEntity mob, boolean checkVisibility) {
 		super(mob, checkVisibility);
 	}
 	
