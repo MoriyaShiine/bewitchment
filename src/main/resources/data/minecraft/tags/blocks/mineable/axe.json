@@ -1,6 +1,14 @@
 {
   "replace": false,
   "values": [
+	"bewitchment:juniper_chest",
+	"bewitchment:trapped_juniper_chest",
+	"bewitchment:cypress_chest",
+	"bewitchment:trapped_cypress_chest",
+	"bewitchment:elder_chest",
+	"bewitchment:trapped_elder_chest",
+	"bewitchment:dragons_blood_chest",
+	"bewitchment:trapped_dragons_blood_chest",
 	"bewitchment:glowing_bramble",
 	"bewitchment:ender_bramble",
 	"bewitchment:fruiting_bramble",
