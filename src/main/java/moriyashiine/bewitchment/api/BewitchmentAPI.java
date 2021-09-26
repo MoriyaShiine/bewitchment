@@ -73,6 +73,9 @@ public class BewitchmentAPI {
 	}
 	
 	public static PoppetData getPoppetFromInventory(World world, PoppetItem item, Entity owner, DefaultedList<ItemStack> inventory) {
+		if (inventory == null) {
+			return PoppetData.EMPTY;
+		}
 		for (int i = 0; i < inventory.size(); i++) {
 			ItemStack stack = inventory.get(i);
 			if (stack.getItem() == item && TaglockItem.hasTaglock(stack)) {
