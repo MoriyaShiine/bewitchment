@@ -50,8 +50,7 @@ public class SigilItem extends Item {
 		PlayerEntity player = context.getPlayer();
 		boolean client = world.isClient;
 		BlockState state = world.getBlockState(pos);
-		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity instanceof SigilHolder sigilHolder && !sigil.active) {
+		if (!sigil.active) {
 			ItemPlacementContext placementContext = new ItemPlacementContext(context);
 			if (!state.canReplace(placementContext)) {
 				pos = pos.offset(context.getSide());
@@ -64,7 +63,8 @@ public class SigilItem extends Item {
 				if (!client) {
 					world.playSound(null, pos, sigilState.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS, 1, MathHelper.nextFloat(world.random, 0.8f, 1.2f));
 					world.setBlockState(pos, sigilState);
-					blockEntity = world.getBlockEntity(pos);
+					BlockEntity blockEntity = world.getBlockEntity(pos);
+					SigilHolder sigilHolder = (SigilHolder) blockEntity;
 					sigilHolder.setSigil(sigil);
 					sigilHolder.setUses(sigil.uses * (BewitchmentAPI.getFamiliar(player) == BWEntityTypes.SNAKE ? 2 : 1));
 					sigilHolder.setOwner(player.getUuid());
@@ -80,11 +80,12 @@ public class SigilItem extends Item {
 				return ActionResult.success(client);
 			}
 		}
-		else if (blockEntity instanceof SigilHolder sigilHolder && state.getBlock() != BWObjects.SIGIL) {
-			if (state.getBlock() instanceof DoorBlock && state.get(DoorBlock.HALF) == DoubleBlockHalf.UPPER) {
-				blockEntity = world.getBlockEntity(pos.down());
-			}
-			if (sigilHolder.getSigil() == null) {
+		else {
+			BlockEntity blockEntity = world.getBlockEntity(pos);
+			if (blockEntity instanceof SigilHolder sigilHolder && state.getBlock() != BWObjects.SIGIL) {
+				if (state.getBlock() instanceof DoorBlock && state.get(DoorBlock.HALF) == DoubleBlockHalf.UPPER) {
+					blockEntity = world.getBlockEntity(pos.down());
+				}
 				if (!client) {
 					sigilHolder.setSigil(sigil);
 					sigilHolder.setUses(sigil.uses * (BewitchmentAPI.getFamiliar(player) == BWEntityTypes.SNAKE ? 2 : 1));
