@@ -13,8 +13,9 @@
 	"Samaritans"
   ],
   "contact": {
-	"website": "https://www.curseforge.com/minecraft/mc-mods/bewitchment",
-	"repo": "https://github.com/MoriyaShiine/bewitchment"
+	"homepage": "https://www.curseforge.com/minecraft/mc-mods/bewitchment",
+	"sources": "https://github.com/MoriyaShiine/bewitchment",
+	"issues": "https://github.com/MoriyaShiine/bewitchment/issues"
   },
   "license": "CC BY-NC-ND 4.0",
   "icon": "assets/bewitchment/icon.png",
@@ -44,7 +45,6 @@
 	"fabricloader": "*",
 	"fabric": ">=0.37.2+1.17",
 	"minecraft": "1.17.*",
-	"cardinal-components-entity": "*",
 	"cloth-config2": "*",
 	"impersonate": "*",
 	"patchouli": "*",
@@ -53,7 +53,7 @@
 	"somnus": "*",
 	"trinkets": "*"
   },
-  "conflicts": {
+  "breaks": {
 	"optifabric": "*"
   },
   "custom": {
