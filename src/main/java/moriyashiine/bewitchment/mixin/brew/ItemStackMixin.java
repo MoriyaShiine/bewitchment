@@ -10,15 +10,20 @@ import net.minecraft.text.TranslatableText;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
+	@Unique
 	private static final TranslatableText POTION = new TranslatableText("item." + Bewitchment.MODID + ".potion");
+	@Unique
 	private static final TranslatableText SPLASH_POTION = new TranslatableText("item." + Bewitchment.MODID + ".splash_potion");
+	@Unique
 	private static final TranslatableText LINGERING_POTION = new TranslatableText("item." + Bewitchment.MODID + ".lingering_potion");
+	@Unique
 	private static final TranslatableText TIPPED_ARROW = new TranslatableText("item." + Bewitchment.MODID + ".tipped_arrow");
 	
 	@Shadow
