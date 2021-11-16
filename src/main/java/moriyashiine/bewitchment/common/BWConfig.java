@@ -4,11 +4,15 @@ import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import net.minecraft.world.biome.Biome;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Config(name = Bewitchment.MODID)
 public class BWConfig implements ConfigData {
+	public List<String> disabledPoppets = new ArrayList<>();
+	public boolean enableCurses = true;
+	
 	public int silverSize = 6;
 	public int silverMaxHeight = 48;
 	public int silverCount = 5;

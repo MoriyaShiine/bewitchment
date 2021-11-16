@@ -7,6 +7,7 @@ import moriyashiine.bewitchment.api.component.TransformationComponent;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.misc.PoppetData;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
 import moriyashiine.bewitchment.common.entity.component.AdditionalWerewolfDataComponent;
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
@@ -78,6 +79,9 @@ public class BewitchmentAPI {
 		}
 		for (int i = 0; i < inventory.size(); i++) {
 			ItemStack stack = inventory.get(i);
+			if (Bewitchment.config.disabledPoppets.contains(Registry.ITEM.getId(stack.getItem()).toString())) {
+				continue;
+			}
 			if (stack.getItem() == item && TaglockItem.hasTaglock(stack)) {
 				UUID uuid = null;
 				if (owner != null) {

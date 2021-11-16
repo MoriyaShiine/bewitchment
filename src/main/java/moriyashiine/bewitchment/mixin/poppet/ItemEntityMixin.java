@@ -2,6 +2,7 @@ package moriyashiine.bewitchment.mixin.poppet;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.misc.PoppetData;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.component.AdditionalWaterDataComponent;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.entity.Entity;
@@ -10,6 +11,7 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -29,7 +31,7 @@ public abstract class ItemEntityMixin extends Entity {
 	
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo callbackInfo) {
-		if (getStack().getItem() == BWObjects.VOODOO_POPPET) {
+		if (getStack().getItem() == BWObjects.VOODOO_POPPET && !Bewitchment.config.disabledPoppets.contains(Registry.ITEM.getId(getStack().getItem()).toString())) {
 			LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, getStack());
 			if (owner != null) {
 				if (getVelocity().length() > 1 / 8f) {

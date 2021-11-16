@@ -100,7 +100,9 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 			if (!blockEntity.loaded) {
 				if (!world.isClient && state.get(Properties.LIT)) {
 					blockEntity.incenseRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.INCENSE_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(blockEntity, world)).findFirst().orElse(null);
-					blockEntity.curseRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CURSE_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(blockEntity, world)).findFirst().orElse(null);
+					if (Bewitchment.config.enableCurses) {
+						blockEntity.curseRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CURSE_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(blockEntity, world)).findFirst().orElse(null);
+					}
 					blockEntity.hasIncense = blockEntity.incenseRecipe != null;
 					blockEntity.markDirty();
 					blockEntity.syncBrazier();
@@ -254,7 +256,7 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 						hasIncense = true;
 						syncBrazier();
 					}
-					else {
+					else if (Bewitchment.config.enableCurses) {
 						CurseRecipe foundCurseRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CURSE_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
 						if (foundCurseRecipe != null && getTarget() != null) {
 							curseRecipe = foundCurseRecipe;
