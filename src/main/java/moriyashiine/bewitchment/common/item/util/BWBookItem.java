@@ -4,8 +4,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.registry.Registry;
@@ -25,9 +23,8 @@ public class BWBookItem extends Item {
 		if (user instanceof ServerPlayerEntity serverPlayer) {
 			Book book = BookRegistry.INSTANCE.books.get(Registry.ITEM.getId(this));
 			PatchouliAPI.get().openBookGUI(serverPlayer, book.id);
-			SoundEvent sfx = PatchouliSounds.getSound(book.openSound, PatchouliSounds.book_open);
-			user.playSound(sfx, 1, (float) (0.7 + Math.random() * 0.4));
+			user.playSound(PatchouliSounds.getSound(book.openSound, PatchouliSounds.BOOK_OPEN), 1, (float) (0.7 + Math.random() * 0.4));
 		}
-		return new TypedActionResult<>(ActionResult.SUCCESS, user.getStackInHand(hand));
+		return TypedActionResult.success(user.getStackInHand(hand));
 	}
 }
