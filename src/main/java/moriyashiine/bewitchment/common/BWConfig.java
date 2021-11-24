@@ -13,6 +13,8 @@ public class BWConfig implements ConfigData {
 	public List<String> disabledPoppets = new ArrayList<>();
 	public boolean enableCurses = true;
 	
+	public int altarDistributionRadius = 24;
+	
 	public int silverSize = 6;
 	public int silverMaxHeight = 48;
 	public int silverCount = 5;

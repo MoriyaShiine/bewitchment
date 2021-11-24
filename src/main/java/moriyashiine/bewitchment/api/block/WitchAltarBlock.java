@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.api.block;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
+import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWTags;
@@ -183,7 +184,7 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 				worldState.potentialCandelabras.add(pos.asLong());
 				worldState.markDirty();
 			}
-			for (BlockPos foundPos : BWUtil.getBlockPoses(pos, 24, currentPos -> world.getBlockEntity(currentPos) instanceof UsesAltarPower)) {
+			for (BlockPos foundPos : BWUtil.getBlockPoses(pos, Bewitchment.config.altarDistributionRadius, currentPos -> world.getBlockEntity(currentPos) instanceof UsesAltarPower)) {
 				BlockEntity blockEntity = world.getBlockEntity(foundPos);
 				((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, pos));
 				blockEntity.markDirty();
@@ -207,7 +208,7 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);
 		if (!world.isClient && state.getBlock() != newState.getBlock()) {
-			for (BlockPos foundPos : BWUtil.getBlockPoses(pos, 24, currentPos -> world.getBlockEntity(currentPos) instanceof UsesAltarPower)) {
+			for (BlockPos foundPos : BWUtil.getBlockPoses(pos, Bewitchment.config.altarDistributionRadius, currentPos -> world.getBlockEntity(currentPos) instanceof UsesAltarPower)) {
 				BlockEntity blockEntity = world.getBlockEntity(foundPos);
 				((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, foundPos));
 				blockEntity.markDirty();
@@ -222,7 +223,7 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 	
 	@Nullable
 	public static BlockPos getClosestAltarPos(World world, BlockPos pos) {
-		return BWUtil.getClosestBlockPos(pos, 24, currentPos -> world.getBlockEntity(currentPos) instanceof WitchAltarBlockEntity);
+		return BWUtil.getClosestBlockPos(pos, Bewitchment.config.altarDistributionRadius, currentPos -> world.getBlockEntity(currentPos) instanceof WitchAltarBlockEntity);
 	}
 	
 	private static int calculateLuminance(WitchAltarBlockEntity blockEntity) {
