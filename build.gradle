@@ -121,7 +121,6 @@ dependencies {
     }
     modImplementation "com.github.apace100:origins-fabric:${origins_version}"
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
-    modRuntime "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
 }
 
 processResources {
