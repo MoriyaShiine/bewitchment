@@ -47,10 +47,9 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @SuppressWarnings("ConstantConditions")
 public class BewitchmentAPI {
@@ -73,7 +72,7 @@ public class BewitchmentAPI {
 		return null;
 	}
 	
-	public static PoppetData getPoppetFromInventory(World world, PoppetItem item, Entity owner, DefaultedList<ItemStack> inventory) {
+	public static PoppetData getPoppetFromInventory(World world, PoppetItem item, Entity owner, List<ItemStack> inventory) {
 		if (inventory == null) {
 			return PoppetData.EMPTY;
 		}
@@ -118,7 +117,7 @@ public class BewitchmentAPI {
 			}
 		}
 		for (PlayerEntity player : ((ServerWorld) world).getPlayers()) {
-			PoppetData result = getPoppetFromInventory(world, item, owner, player.getInventory().main);
+			PoppetData result = getPoppetFromInventory(world, item, owner, Stream.concat(player.getInventory().main.stream(), player.getInventory().offHand.stream()).collect(Collectors.toList()));
 			if (result != PoppetData.EMPTY) {
 				return result;
 			}

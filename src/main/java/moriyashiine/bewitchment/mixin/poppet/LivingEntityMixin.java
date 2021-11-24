@@ -29,6 +29,9 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
@@ -66,7 +69,7 @@ public abstract class LivingEntityMixin extends Entity {
 	private float modifyDamage(float amount, DamageSource source) {
 		if (!world.isClient) {
 			if (amount > 0 && (Object) this instanceof PlayerEntity player && !BewitchmentAPI.isVampire(this, true)) {
-				PoppetData poppetData = BewitchmentAPI.getPoppetFromInventory(world, BWObjects.VAMPIRIC_POPPET, null, player.getInventory().main);
+				PoppetData poppetData = BewitchmentAPI.getPoppetFromInventory(world, BWObjects.VAMPIRIC_POPPET, null, Stream.concat(player.getInventory().main.stream(), player.getInventory().offHand.stream()).collect(Collectors.toList()));
 				if (!poppetData.stack.isEmpty()) {
 					LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, poppetData.stack);
 					if (!BewitchmentAPI.isVampire(owner, true) && !getUuid().equals(owner.getUuid()) && owner.damage(BWDamageSources.VAMPIRE, amount)) {
