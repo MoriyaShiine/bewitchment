@@ -1,15 +1,15 @@
 {
   "replace": false,
   "values": [
-	"coal_ore",
-	"iron_ore",
-	"gold_ore",
-	"lapis_ore",
-	"redstone_ore",
-	"diamond_ore",
-	"emerald_ore",
+	"#minecraft:coal_ores",
+	"#minecraft:copper_ores",
+	"#minecraft:iron_ores",
+	"#minecraft:gold_ores",
+	"#minecraft:lapis_ores",
+	"#minecraft:redstone_ores",
+	"#minecraft:diamond_ores",
+	"#minecraft:emerald_ores",
 	"nether_quartz_ore",
-	"nether_gold_ore",
 	"ancient_debris",
 	"#c:silver_ores",
 	"#c:salt_ores"
