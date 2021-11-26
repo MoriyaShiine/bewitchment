@@ -125,10 +125,12 @@ public class BewitchmentAPI {
 	
 	public static ServerPlayerEntity getFakePlayer(World world) {
 		if (!world.isClient) {
-			if (fakePlayer == null || fakePlayer.getMainHandStack().getItem() != Items.WOODEN_AXE) {
+			if (fakePlayer == null) {
 				fakePlayer = new ServerPlayerEntity(world.getServer(), (ServerWorld) world, new GameProfile(UUID.randomUUID(), "FAKE_PLAYER"));
 				fakePlayer.networkHandler = new ServerPlayNetworkHandler(world.getServer(), new ClientConnection(NetworkSide.SERVERBOUND), fakePlayer);
-				fakePlayer.setStackInHand(Hand.MAIN_HAND, new ItemStack(Items.WOODEN_AXE));
+				ItemStack axe = new ItemStack(Items.WOODEN_AXE);
+				axe.getOrCreateNbt().putBoolean("Unbreakable", true);
+				fakePlayer.setStackInHand(Hand.MAIN_HAND, axe);
 			}
 			return fakePlayer;
 		}

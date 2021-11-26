@@ -12,14 +12,10 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.tag.BlockTags;
-import net.minecraft.util.Hand;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -89,7 +85,7 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 					blockEntity.scan(Short.MAX_VALUE);
 					blockEntity.markedForScan = false;
 				}
-				blockEntity.scan(80);
+				blockEntity.scan(40);
 				if (world.getTime() % 20 == 0) {
 					if (world.getBlockState(pos.up()).getBlock() == BWObjects.BLESSED_STONE) {
 						blockEntity.power = Integer.MAX_VALUE;
@@ -163,7 +159,6 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 		return false;
 	}
 	
-	@SuppressWarnings("ConstantConditions")
 	private void scan(int times) {
 		if (world != null) {
 			for (int i = 0; i < times; i++) {
@@ -171,25 +166,10 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 				int x = counter & 31;
 				int y = (counter >> 5) & 31;
 				int z = (counter >> 10) & 31;
-				Block checkedBlock = world.getBlockState(checking.set(pos.getX() + x - 15, pos.getY() + y - 15, pos.getZ() + z - 15)).getBlock();
-				if (givesAltarPower(checkedBlock)) {
-					boolean strippedLog = false;
-					if (BlockTags.LOGS.contains(checkedBlock)) {
-						MinecraftServer server = getWorld().getServer();
-						ServerWorld overworld = server.getOverworld();
-						checking.set(BlockPos.ORIGIN);
-						BlockState original = overworld.getBlockState(checking);
-						overworld.setBlockState(checking, checkedBlock.getDefaultState());
-						BlockState checkingState = overworld.getBlockState(checking);
-						checkingState.getBlock().onUse(checkingState, world, checking, BewitchmentAPI.getFakePlayer(world), Hand.MAIN_HAND, new BlockHitResult(Vec3d.ZERO, Direction.UP, checking, false));
-						if (Registry.BLOCK.getId(overworld.getBlockState(checking).getBlock()).getPath().contains("stripped")) {
-							strippedLog = true;
-						}
-						overworld.setBlockState(checking, original);
-					}
-					if (!strippedLog) {
-						checked.put(checkedBlock, Math.min(checked.getOrDefault(checkedBlock, 0) + 1, 256));
-					}
+				BlockState checkedState = world.getBlockState(checking.set(pos.getX() + x - 15, pos.getY() + y - 15, pos.getZ() + z - 15));
+				Block checkedBlock = checkedState.getBlock();
+				if (givesAltarPower(checkedBlock) && !(BlockTags.LOGS.contains(checkedBlock) && Registry.BLOCK.getId(world.getBlockState(checking).getBlock()).getPath().contains("stripped"))) {
+					checked.put(checkedBlock, Math.min(checked.getOrDefault(checkedBlock, 0) + 1, 256));
 				}
 				if (counter == Short.MAX_VALUE - 1) {
 					gain = getPentacleValue(getStack(1).getItem());
