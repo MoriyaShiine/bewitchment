@@ -1,9 +1,7 @@
 package moriyashiine.bewitchment.api.component;
 
-import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import moriyashiine.bewitchment.api.registry.Contract;
-import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import net.fabricmc.fabric.api.util.NbtType;
@@ -15,9 +13,8 @@ import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-public class ContractsComponent implements ComponentV3, ServerTickingComponent {
+public class ContractsComponent implements ServerTickingComponent {
 	private final PlayerEntity obj;
 	private final List<Contract.Instance> contracts = new ArrayList<>();
 	
@@ -100,13 +97,5 @@ public class ContractsComponent implements ComponentV3, ServerTickingComponent {
 			contractsTag.add(contractCompound);
 		}
 		return contractsTag;
-	}
-	
-	public static ContractsComponent get(PlayerEntity obj) {
-		return BWComponents.CONTRACTS_COMPONENT.get(obj);
-	}
-	
-	public static Optional<ContractsComponent> maybeGet(PlayerEntity obj) {
-		return BWComponents.CONTRACTS_COMPONENT.maybeGet(obj);
 	}
 }

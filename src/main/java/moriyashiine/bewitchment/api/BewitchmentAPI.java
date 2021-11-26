@@ -1,7 +1,6 @@
 package moriyashiine.bewitchment.api;
 
 import com.mojang.authlib.GameProfile;
-import moriyashiine.bewitchment.api.component.MagicComponent;
 import moriyashiine.bewitchment.api.component.PledgeComponent;
 import moriyashiine.bewitchment.api.component.TransformationComponent;
 import moriyashiine.bewitchment.api.item.PoppetItem;
@@ -9,7 +8,6 @@ import moriyashiine.bewitchment.api.misc.PoppetData;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
-import moriyashiine.bewitchment.common.entity.component.AdditionalWerewolfDataComponent;
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
@@ -145,7 +143,7 @@ public class BewitchmentAPI {
 		}
 		else if (BewitchmentAPI.isWerewolf(player, false)) {
 			WerewolfEntity entity = BWEntityTypes.WEREWOLF.create(player.world);
-			entity.getDataTracker().set(BWHostileEntity.VARIANT, AdditionalWerewolfDataComponent.get(player).getVariant());
+			entity.getDataTracker().set(BWHostileEntity.VARIANT, BWComponents.ADDITIONAL_WEREWOLF_DATA_COMPONENT.get(player).getVariant());
 			return entity;
 		}
 		return null;
@@ -167,7 +165,7 @@ public class BewitchmentAPI {
 		if (player.world.isClient) {
 			return false;
 		}
-		return MagicComponent.get(player).fillMagic(amount, simulate);
+		return BWComponents.MAGIC_COMPONENT.get(player).fillMagic(amount, simulate);
 	}
 	
 	public static boolean drainMagic(PlayerEntity player, int amount, boolean simulate) {
@@ -180,12 +178,12 @@ public class BewitchmentAPI {
 		if (player.hasStatusEffect(BWStatusEffects.INHIBITED)) {
 			return false;
 		}
-		return MagicComponent.get(player).drainMagic(amount, simulate);
+		return BWComponents.MAGIC_COMPONENT.get(player).drainMagic(amount, simulate);
 	}
 	
 	public static boolean isVampire(Entity entity, boolean includeHumanForm) {
 		if (entity instanceof PlayerEntity player) {
-			TransformationComponent transformationComponent = TransformationComponent.get(player);
+			TransformationComponent transformationComponent = BWComponents.TRANSFORMATION_COMPONENT.get(player);
 			if (transformationComponent.getTransformation() == BWTransformations.VAMPIRE) {
 				return includeHumanForm || transformationComponent.isAlternateForm();
 			}
@@ -195,7 +193,7 @@ public class BewitchmentAPI {
 	
 	public static boolean isWerewolf(Entity entity, boolean includeHumanForm) {
 		if (entity instanceof PlayerEntity player) {
-			TransformationComponent transformationComponent = TransformationComponent.get(player);
+			TransformationComponent transformationComponent = BWComponents.TRANSFORMATION_COMPONENT.get(player);
 			if (transformationComponent.getTransformation() == BWTransformations.WEREWOLF) {
 				return includeHumanForm || transformationComponent.isAlternateForm();
 			}
@@ -218,7 +216,7 @@ public class BewitchmentAPI {
 	}
 	
 	public static boolean isPledged(PlayerEntity player, String pledge) {
-		PledgeComponent pledgeComponent = PledgeComponent.get(player);
+		PledgeComponent pledgeComponent = BWComponents.PLEDGE_COMPONENT.get(player);
 		if (!player.world.isClient) {
 			BWUniversalWorldState universalWorldState = BWUniversalWorldState.get(player.world);
 			for (int i = universalWorldState.pledgesToRemove.size() - 1; i >= 0; i--) {
@@ -233,7 +231,7 @@ public class BewitchmentAPI {
 	}
 	
 	public static void unpledge(PlayerEntity player) {
-		PledgeComponent.get(player).setPledge(BWPledges.NONE);
+		BWComponents.PLEDGE_COMPONENT.get(player).setPledge(BWPledges.NONE);
 	}
 	
 	public static int getMoonPhase(WorldAccess world) {

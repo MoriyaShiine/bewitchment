@@ -10,7 +10,6 @@ import moriyashiine.bewitchment.api.event.AllowVampireHeal;
 import moriyashiine.bewitchment.api.event.OnTransformationSet;
 import moriyashiine.bewitchment.api.registry.Transformation;
 import moriyashiine.bewitchment.common.entity.component.AdditionalWerewolfDataComponent;
-import moriyashiine.bewitchment.common.entity.component.RespawnTimerComponent;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
 import moriyashiine.bewitchment.common.registry.BWComponents;
@@ -27,7 +26,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 
-import java.util.Optional;
 import java.util.UUID;
 
 public class TransformationComponent implements AutoSyncedComponent, ServerTickingComponent {
@@ -78,18 +76,18 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 		if (vampire) {
 			boolean pledgedToLilith = BewitchmentAPI.isPledged(obj, BWPledges.LILITH);
 			obj.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
-			if (RespawnTimerComponent.get(obj).getRespawnTimer() <= 0 && obj.world.isDay() && !obj.world.isRaining() && obj.world.isSkyVisible(obj.getBlockPos()) && AllowVampireBurn.EVENT.invoker().allowBurn(obj)) {
+			if (BWComponents.RESPAWN_TIMER_COMPONENT.get(obj).getRespawnTimer() <= 0 && obj.world.isDay() && !obj.world.isRaining() && obj.world.isSkyVisible(obj.getBlockPos()) && AllowVampireBurn.EVENT.invoker().allowBurn(obj)) {
 				obj.setOnFireFor(8);
 			}
 			HungerManager hungerManager = obj.getHungerManager();
-			if (BloodComponent.get(obj).getBlood() > 0) {
+			if (BWComponents.BLOOD_COMPONENT.get(obj).getBlood() > 0) {
 				if (AllowVampireHeal.EVENT.invoker().allowHeal(obj, pledgedToLilith)) {
 					if (obj.age % (pledgedToLilith ? 30 : 40) == 0) {
 						if (obj.getHealth() < obj.getMaxHealth()) {
 							obj.heal(1);
 							hungerManager.addExhaustion(3);
 						}
-						if ((hungerManager.isNotFull() || hungerManager.getSaturationLevel() < 10) && BloodComponent.get(obj).drainBlood(1, false)) {
+						if ((hungerManager.isNotFull() || hungerManager.getSaturationLevel() < 10) && BWComponents.BLOOD_COMPONENT.get(obj).drainBlood(1, false)) {
 							hungerManager.add(1, 20);
 						}
 					}
@@ -109,7 +107,7 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 			}
 		}
 		if (BewitchmentAPI.isWerewolf(obj, true)) {
-			AdditionalWerewolfDataComponent additionalWerewolfDataComponent = AdditionalWerewolfDataComponent.get(obj);
+			AdditionalWerewolfDataComponent additionalWerewolfDataComponent = BWComponents.ADDITIONAL_WEREWOLF_DATA_COMPONENT.get(obj);
 			boolean forced = additionalWerewolfDataComponent.isForcedTransformation();
 			if (!obj.isCreative() && !obj.isSpectator() && !isAlternateForm() && obj.world.isNight() && BewitchmentAPI.getMoonPhase(obj.world) == 0 && obj.world.isSkyVisible(obj.getBlockPos())) {
 				TransformationAbilityPacket.useAbility(obj, true);
@@ -223,13 +221,5 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 			armorToughnessAttribute.removeModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_1);
 			movementSpeedAttribute.removeModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_1);
 		}
-	}
-	
-	public static TransformationComponent get(PlayerEntity obj) {
-		return BWComponents.TRANSFORMATION_COMPONENT.get(obj);
-	}
-	
-	public static Optional<TransformationComponent> maybeGet(PlayerEntity obj) {
-		return BWComponents.TRANSFORMATION_COMPONENT.maybeGet(obj);
 	}
 }

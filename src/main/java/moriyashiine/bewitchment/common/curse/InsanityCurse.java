@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.common.curse;
 
 import moriyashiine.bewitchment.api.registry.Curse;
-import moriyashiine.bewitchment.common.entity.component.FakeMobComponent;
 import moriyashiine.bewitchment.common.misc.BWUtil;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -36,7 +36,7 @@ public class InsanityCurse extends Curse {
 			if (entity instanceof MobEntity mob) {
 				BWUtil.attemptTeleport(entity, target.getBlockPos(), 24, false);
 				mob.initialize((ServerWorldAccess) target.world, target.world.getLocalDifficulty(target.getBlockPos()), SpawnReason.EVENT, null, null);
-				FakeMobComponent.get(mob).setTarget(target.getUuid());
+				BWComponents.FAKE_MOB_COMPONENT.get(mob).setTarget(target.getUuid());
 				entity.setSilent(true);
 				target.world.spawnEntity(entity);
 			}

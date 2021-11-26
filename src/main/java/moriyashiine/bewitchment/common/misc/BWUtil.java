@@ -1,10 +1,10 @@
 package moriyashiine.bewitchment.common.misc;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.component.CursesComponent;
 import moriyashiine.bewitchment.api.entity.Pledgeable;
 import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
 import moriyashiine.bewitchment.common.item.ScepterItem;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWCurses;
 import moriyashiine.bewitchment.common.registry.BWMaterials;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
@@ -79,7 +79,7 @@ public class BWUtil {
 	}
 	
 	public static boolean rejectTrades(LivingEntity merchant) {
-		return !merchant.world.getEntitiesByClass(PlayerEntity.class, new Box(merchant.getBlockPos()).expand(8), foundEntity -> merchant.canSee(foundEntity) && foundEntity.isAlive() && CursesComponent.get(foundEntity).hasCurse(BWCurses.APATHY)).isEmpty();
+		return !merchant.world.getEntitiesByClass(PlayerEntity.class, new Box(merchant.getBlockPos()).expand(8), foundEntity -> merchant.canSee(foundEntity) && foundEntity.isAlive() && BWComponents.CURSES_COMPONENT.get(foundEntity).hasCurse(BWCurses.APATHY)).isEmpty();
 	}
 	
 	public static int getArmorPieces(LivingEntity livingEntity, Predicate<ItemStack> predicate) {

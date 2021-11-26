@@ -2,7 +2,7 @@ package moriyashiine.bewitchment.common.block;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.block.WitchAltarBlock;
-import moriyashiine.bewitchment.api.component.*;
+import moriyashiine.bewitchment.api.component.FortuneComponent;
 import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
@@ -90,9 +90,9 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 							taglockCompound.putLong("LocationPos", owner.getBlockPos().asLong());
 							taglockCompound.putString("LocationWorld", world.getRegistryKey().getValue().toString());
 							taglockCompound.putInt("Level", owner.experienceLevel);
-							taglockCompound.put("Curses", CursesComponent.get(owner).toNbtCurse());
-							taglockCompound.put("Contracts", ContractsComponent.get(owner).toNbtContract());
-							taglockCompound.putString("Transformation", "transformation." + BWRegistries.TRANSFORMATIONS.getId(TransformationComponent.get(owner).getTransformation()).toString().replace(":", "."));
+							taglockCompound.put("Curses", BWComponents.CURSES_COMPONENT.get(owner).toNbtCurse());
+							taglockCompound.put("Contracts", BWComponents.CONTRACTS_COMPONENT.get(owner).toNbtContract());
+							taglockCompound.putString("Transformation", "transformation." + BWRegistries.TRANSFORMATIONS.getId(BWComponents.TRANSFORMATION_COMPONENT.get(owner).getTransformation()).toString().replace(":", "."));
 							BWUniversalWorldState universalWorldState = BWUniversalWorldState.get(world);
 							String familiar = "none";
 							for (int i = 0; i < universalWorldState.familiars.size(); i++) {
@@ -102,7 +102,7 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 								}
 							}
 							taglockCompound.putString("Familiar", familiar);
-							taglockCompound.putString("Pledge", PledgeComponent.get(owner).getPledge());
+							taglockCompound.putString("Pledge", BWComponents.PLEDGE_COMPONENT.get(owner).getPledge());
 							sound = BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE;
 						}
 						else {
@@ -116,11 +116,11 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 					}
 				}
 				else {
-					FortuneComponent fortuneComponent = FortuneComponent.get(player);
+					FortuneComponent fortuneComponent = BWComponents.FORTUNE_COMPONENT.get(player);
 					if (fortuneComponent.getFortune() == null) {
 						sound = BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE;
 						Fortune fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
-						if (CursesComponent.get(player).hasCurse(BWCurses.UNLUCKY)) {
+						if (BWComponents.CURSES_COMPONENT.get(player).hasCurse(BWCurses.UNLUCKY)) {
 							while (fortune.positive) {
 								fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
 							}

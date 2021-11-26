@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.api.entity;
 
-import moriyashiine.bewitchment.common.entity.component.BroomUserComponent;
 import moriyashiine.bewitchment.common.item.TaglockItem;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -79,7 +79,7 @@ public class BroomEntity extends Entity {
 			Entity passenger = getPrimaryPassenger();
 			if (passenger instanceof PlayerEntity player) {
 				setRotation(passenger.getYaw(), passenger.getPitch());
-				if (BroomUserComponent.get(player).isPressingForward()) {
+				if (BWComponents.BROOM_USER_COMPONENT.get(player).isPressingForward()) {
 					addVelocity(passenger.getRotationVector().x / 8 * getSpeed(), passenger.getRotationVector().y / 8 * getSpeed(), passenger.getRotationVector().z / 8 * getSpeed());
 					setVelocity(MathHelper.clamp(getVelocity().x, -getSpeed(), getSpeed()), MathHelper.clamp(getVelocity().y, -getSpeed(), getSpeed()), MathHelper.clamp(getVelocity().z, -getSpeed(), getSpeed()));
 				}

@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.common.item;
 
-import moriyashiine.bewitchment.api.component.ContractsComponent;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.api.EnvType;
@@ -40,7 +40,7 @@ public class ContractItem extends Item {
 		if (!world.isClient && stack.hasNbt() && user instanceof PlayerEntity player) {
 			Contract contract = BWRegistries.CONTRACTS.get(new Identifier(stack.getOrCreateNbt().getString("Contract")));
 			if (contract != null) {
-				ContractsComponent.get(player).addContract(new Contract.Instance(contract, stack.getNbt().getInt("Duration"), 0));
+				BWComponents.CONTRACTS_COMPONENT.get(player).addContract(new Contract.Instance(contract, stack.getNbt().getInt("Duration"), 0));
 				world.playSound(null, player.getBlockPos(), BWSoundEvents.ITEM_CONTRACT_USE, SoundCategory.PLAYERS, 1, 1);
 				if (!player.isCreative()) {
 					stack.decrement(1);

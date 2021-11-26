@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.brew;
 
-import moriyashiine.bewitchment.common.entity.component.PolymorphComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
@@ -21,9 +21,9 @@ public abstract class AreaEffectCloudEntityMixin extends Entity {
 	@Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)Z"))
 	private boolean addStatusEffect(LivingEntity entity, StatusEffectInstance effect, Entity source) {
 		if (effect.getEffectType() == BWStatusEffects.POLYMORPH) {
-			PolymorphComponent.maybeGet(this).ifPresent(thisPolymorphComponent -> {
+			BWComponents.POLYMORPH_COMPONENT.maybeGet(this).ifPresent(thisPolymorphComponent -> {
 				if (thisPolymorphComponent.getUuid() != null) {
-					PolymorphComponent.maybeGet(entity).ifPresent(entityPolymorphComponent -> {
+					BWComponents.POLYMORPH_COMPONENT.maybeGet(entity).ifPresent(entityPolymorphComponent -> {
 						entityPolymorphComponent.setUuid(thisPolymorphComponent.getUuid());
 						entityPolymorphComponent.setName(thisPolymorphComponent.getName());
 					});

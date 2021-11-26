@@ -6,8 +6,6 @@ import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
-import java.util.Optional;
-
 public class MagicComponent implements AutoSyncedComponent, ServerTickingComponent {
 	public static int MAX_MAGIC = 100;
 	
@@ -75,13 +73,5 @@ public class MagicComponent implements AutoSyncedComponent, ServerTickingCompone
 			return true;
 		}
 		return false;
-	}
-	
-	public static MagicComponent get(PlayerEntity obj) {
-		return BWComponents.MAGIC_COMPONENT.get(obj);
-	}
-	
-	public static Optional<MagicComponent> maybeGet(PlayerEntity obj) {
-		return BWComponents.MAGIC_COMPONENT.maybeGet(obj);
 	}
 }

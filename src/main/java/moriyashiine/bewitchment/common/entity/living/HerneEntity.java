@@ -2,7 +2,6 @@ package moriyashiine.bewitchment.common.entity.living;
 
 import com.google.common.collect.Sets;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.component.TransformationComponent;
 import moriyashiine.bewitchment.api.entity.Pledgeable;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
@@ -171,7 +170,7 @@ public class HerneEntity extends BWHostileEntity implements Pledgeable {
 					PlayerLookup.tracking(player).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, player));
 					SpawnSmokeParticlesPacket.send(player, player);
 					world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_PLING, player.getSoundCategory(), 1, 1);
-					TransformationComponent.maybeGet(player).ifPresent(transformationComponent -> {
+					BWComponents.TRANSFORMATION_COMPONENT.maybeGet(player).ifPresent(transformationComponent -> {
 						if (transformationComponent.isAlternateForm()) {
 							TransformationAbilityPacket.useAbility(player, true);
 						}

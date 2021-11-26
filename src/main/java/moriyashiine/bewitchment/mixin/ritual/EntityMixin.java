@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.ritual;
 
-import moriyashiine.bewitchment.common.entity.component.AdditionalWaterDataComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -11,14 +11,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class EntityMixin {
 	@Inject(method = "isWet", at = @At("RETURN"), cancellable = true)
 	private void isWet(CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!callbackInfo.getReturnValue() && AdditionalWaterDataComponent.get((Entity) (Object) this).getWetTimer() > 0) {
+		if (!callbackInfo.getReturnValue() && BWComponents.ADDITIONAL_WATER_DATA_COMPONENT.get(this).getWetTimer() > 0) {
 			callbackInfo.setReturnValue(true);
 		}
 	}
 	
 	@Inject(method = "isTouchingWaterOrRain", at = @At("RETURN"), cancellable = true)
 	private void isTouchingWaterOrRain(CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!callbackInfo.getReturnValue() && AdditionalWaterDataComponent.get((Entity) (Object) this).getWetTimer() > 0) {
+		if (!callbackInfo.getReturnValue() && BWComponents.ADDITIONAL_WATER_DATA_COMPONENT.get(this).getWetTimer() > 0) {
 			callbackInfo.setReturnValue(true);
 		}
 	}

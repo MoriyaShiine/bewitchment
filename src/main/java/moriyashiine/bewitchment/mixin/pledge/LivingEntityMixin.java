@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.mixin.pledge;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.component.PledgeComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWPledges;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
@@ -23,7 +23,7 @@ public abstract class LivingEntityMixin extends Entity {
 	
 	@Inject(method = "getGroup", at = @At("HEAD"), cancellable = true)
 	private void getGroup(CallbackInfoReturnable<EntityGroup> callbackInfo) {
-		if ((Object) this instanceof PlayerEntity player && !PledgeComponent.get(player).getPledge().equals(BWPledges.NONE) && !BewitchmentAPI.isVampire(this, true)) {
+		if ((Object) this instanceof PlayerEntity player && !BWComponents.PLEDGE_COMPONENT.get(player).getPledge().equals(BWPledges.NONE) && !BewitchmentAPI.isVampire(this, true)) {
 			callbackInfo.setReturnValue(BewitchmentAPI.DEMON);
 		}
 	}

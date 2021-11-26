@@ -5,6 +5,7 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.component.BloodComponent;
 import moriyashiine.bewitchment.api.component.MagicComponent;
 import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -48,7 +49,7 @@ public abstract class InGameHudMixin extends DrawableHelper {
 	@Inject(method = "renderStatusBars", at = @At(value = "INVOKE", shift = At.Shift.AFTER, ordinal = 2, target = "Lnet/minecraft/client/MinecraftClient;getProfiler()Lnet/minecraft/util/profiler/Profiler;"))
 	private void renderPre(MatrixStack matrices, CallbackInfo callbackInfo) {
 		PlayerEntity player = getCameraPlayer();
-		MagicComponent.maybeGet(player).ifPresent(magicComponent -> {
+		BWComponents.MAGIC_COMPONENT.maybeGet(player).ifPresent(magicComponent -> {
 			if (magicComponent.getMagicTimer() > 0) {
 				RenderSystem.setShaderTexture(0, BEWITCHMENT_GUI_ICONS_TEXTURE);
 				RenderSystem.setShaderColor(1, 1, 1, magicComponent.getMagicTimer() / 10f);
@@ -78,7 +79,7 @@ public abstract class InGameHudMixin extends DrawableHelper {
 	}
 	
 	private void drawBlood(MatrixStack matrices, LivingEntity entity, int x, int y, int droplets) {
-		BloodComponent.maybeGet(entity).ifPresent(bloodComponent -> {
+		BWComponents.BLOOD_COMPONENT.maybeGet(entity).ifPresent(bloodComponent -> {
 			int v = entity.hasStatusEffect(StatusEffects.HUNGER) ? 9 : 0;
 			float blood = ((float) bloodComponent.getBlood() / BloodComponent.MAX_BLOOD * droplets);
 			int full = (int) blood;

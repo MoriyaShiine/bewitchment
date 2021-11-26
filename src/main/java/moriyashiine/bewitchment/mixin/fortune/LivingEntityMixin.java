@@ -1,6 +1,7 @@
 package moriyashiine.bewitchment.mixin.fortune;
 
 import moriyashiine.bewitchment.api.component.FortuneComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWFortunes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -21,7 +22,7 @@ public abstract class LivingEntityMixin extends Entity {
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
 	private float modifyDamage(float amount, DamageSource source) {
 		if (!world.isClient && amount > 0 && source.isProjectile() && source.getAttacker() instanceof PlayerEntity player) {
-			FortuneComponent fortuneComponent = FortuneComponent.get(player);
+			FortuneComponent fortuneComponent = BWComponents.FORTUNE_COMPONENT.get(player);
 			if (fortuneComponent.getFortune() != null && fortuneComponent.getFortune().fortune == BWFortunes.HAWKEYE) {
 				fortuneComponent.getFortune().duration = 0;
 				amount *= 3;

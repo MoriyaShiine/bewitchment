@@ -6,8 +6,6 @@ import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
 
-import java.util.Optional;
-
 public class AdditionalWaterDataComponent implements AutoSyncedComponent, ServerTickingComponent {
 	private final Entity obj;
 	private boolean submerged = false;
@@ -52,13 +50,5 @@ public class AdditionalWaterDataComponent implements AutoSyncedComponent, Server
 	public void setWetTimer(int wetTimer) {
 		this.wetTimer = wetTimer;
 		BWComponents.ADDITIONAL_WATER_DATA_COMPONENT.sync(obj);
-	}
-	
-	public static AdditionalWaterDataComponent get(Entity obj) {
-		return BWComponents.ADDITIONAL_WATER_DATA_COMPONENT.get(obj);
-	}
-	
-	public static Optional<AdditionalWaterDataComponent> maybeGet(Entity obj) {
-		return BWComponents.ADDITIONAL_WATER_DATA_COMPONENT.maybeGet(obj);
 	}
 }

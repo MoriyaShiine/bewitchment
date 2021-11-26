@@ -7,8 +7,6 @@ import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
-import java.util.Optional;
-
 public class AdditionalWerewolfDataComponent implements AutoSyncedComponent, CommonTickingComponent {
 	private final PlayerEntity obj;
 	private int variant = 0;
@@ -53,13 +51,5 @@ public class AdditionalWerewolfDataComponent implements AutoSyncedComponent, Com
 	public void setForcedTransformation(boolean forcedTransformation) {
 		this.forcedTransformation = forcedTransformation;
 		BWComponents.ADDITIONAL_WEREWOLF_DATA_COMPONENT.sync(obj);
-	}
-	
-	public static AdditionalWerewolfDataComponent get(PlayerEntity obj) {
-		return BWComponents.ADDITIONAL_WEREWOLF_DATA_COMPONENT.get(obj);
-	}
-	
-	public static Optional<AdditionalWerewolfDataComponent> maybeGet(PlayerEntity obj) {
-		return BWComponents.ADDITIONAL_WEREWOLF_DATA_COMPONENT.maybeGet(obj);
 	}
 }

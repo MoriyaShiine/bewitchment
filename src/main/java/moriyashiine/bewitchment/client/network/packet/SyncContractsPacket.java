@@ -1,9 +1,9 @@
 package moriyashiine.bewitchment.client.network.packet;
 
 import io.netty.buffer.Unpooled;
-import moriyashiine.bewitchment.api.component.ContractsComponent;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -24,7 +24,7 @@ public class SyncContractsPacket {
 	public static void send(PlayerEntity player) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		NbtCompound contracts = new NbtCompound();
-		contracts.put("Contracts", ContractsComponent.get(player).toNbtContract());
+		contracts.put("Contracts", BWComponents.CONTRACTS_COMPONENT.get(player).toNbtContract());
 		buf.writeNbt(contracts);
 		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
 	}
@@ -35,7 +35,7 @@ public class SyncContractsPacket {
 			@Override
 			public void run() {
 				if (client.player != null) {
-					ContractsComponent.maybeGet(client.player).ifPresent(contractsComponent -> {
+					BWComponents.CONTRACTS_COMPONENT.maybeGet(client.player).ifPresent(contractsComponent -> {
 						contractsComponent.getContracts().clear();
 						NbtList contractsList = contractsCompound.getList("Contracts", NbtType.COMPOUND);
 						for (int i = 0; i < contractsList.size(); i++) {

@@ -4,7 +4,7 @@ import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketItem;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.client.network.packet.SpawnSpecterBangleParticlesPacket;
-import moriyashiine.bewitchment.common.entity.component.FullInvisibilityComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,7 +21,7 @@ public class SpecterBangleItem extends TrinketItem {
 			if (entity.getRandom().nextFloat() < 1 / 40f) {
 				BewitchmentAPI.drainMagic(player, 1, false);
 			}
-			FullInvisibilityComponent.maybeGet(player).ifPresent(fullInvisibilityComponent -> {
+			BWComponents.FULL_INVISIBILITY_COMPONENT.maybeGet(player).ifPresent(fullInvisibilityComponent -> {
 				if (!fullInvisibilityComponent.isFullInvisible()) {
 					fullInvisibilityComponent.setFullInvisible(true);
 					entity.setInvisible(true);

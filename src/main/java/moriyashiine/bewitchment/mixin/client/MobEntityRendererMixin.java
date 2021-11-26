@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.client;
 
-import moriyashiine.bewitchment.common.entity.component.FakeMobComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -17,10 +17,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Environment(EnvType.CLIENT)
 @Mixin(MobEntityRenderer.class)
 public abstract class MobEntityRendererMixin<T extends MobEntity, M extends EntityModel<T>> {
-	@Inject(method = "shouldRender", at = @At("RETURN"), cancellable = true)
+	@Inject(method = "shouldRender(Lnet/minecraft/entity/mob/MobEntity;Lnet/minecraft/client/render/Frustum;DDD)Z", at = @At("RETURN"), cancellable = true)
 	private void shouldRender(T mobEntity, Frustum frustum, double d, double e, double f, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (callbackInfo.getReturnValue()) {
-			FakeMobComponent.maybeGet(mobEntity).ifPresent(fakeMobComponent -> {
+			BWComponents.FAKE_MOB_COMPONENT.maybeGet(mobEntity).ifPresent(fakeMobComponent -> {
 				if (fakeMobComponent.getTarget() != null && !MinecraftClient.getInstance().player.getUuid().equals(fakeMobComponent.getTarget())) {
 					callbackInfo.setReturnValue(false);
 				}

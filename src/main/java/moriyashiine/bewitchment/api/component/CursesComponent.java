@@ -1,9 +1,7 @@
 package moriyashiine.bewitchment.api.component;
 
-import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import moriyashiine.bewitchment.api.registry.Curse;
-import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.LivingEntity;
@@ -13,9 +11,8 @@ import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-public class CursesComponent implements ComponentV3, ServerTickingComponent {
+public class CursesComponent implements ServerTickingComponent {
 	private final LivingEntity obj;
 	private final List<Curse.Instance> curses = new ArrayList<>();
 	
@@ -89,13 +86,5 @@ public class CursesComponent implements ComponentV3, ServerTickingComponent {
 			cursesList.add(curseCompound);
 		}
 		return cursesList;
-	}
-	
-	public static CursesComponent get(LivingEntity obj) {
-		return BWComponents.CURSES_COMPONENT.get(obj);
-	}
-	
-	public static Optional<CursesComponent> maybeGet(LivingEntity obj) {
-		return BWComponents.CURSES_COMPONENT.maybeGet(obj);
 	}
 }

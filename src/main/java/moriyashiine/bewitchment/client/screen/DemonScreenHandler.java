@@ -1,14 +1,10 @@
 package moriyashiine.bewitchment.client.screen;
 
-import moriyashiine.bewitchment.api.component.ContractsComponent;
 import moriyashiine.bewitchment.client.network.packet.SyncContractsPacket;
 import moriyashiine.bewitchment.client.network.packet.SyncDemonTradesPacket;
 import moriyashiine.bewitchment.common.entity.DemonMerchant;
 import moriyashiine.bewitchment.common.entity.living.DemonEntity;
-import moriyashiine.bewitchment.common.registry.BWDamageSources;
-import moriyashiine.bewitchment.common.registry.BWObjects;
-import moriyashiine.bewitchment.common.registry.BWRegistries;
-import moriyashiine.bewitchment.common.registry.BWScreenHandlers;
+import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.LivingEntity;
@@ -68,7 +64,7 @@ public class DemonScreenHandler extends ScreenHandler {
 		Slot slot = slots.get(slotIndex);
 		if (slot instanceof DemonTradeSlot tradeSlot) {
 			DemonEntity.DemonTradeOffer offer = tradeSlot.getOffer();
-			ContractsComponent.maybeGet(player).ifPresent(contractsComponent -> {
+			BWComponents.CONTRACTS_COMPONENT.maybeGet(player).ifPresent(contractsComponent -> {
 				if (!contractsComponent.hasContract(offer.getContract())) {
 					demonMerchant.onSell(offer);
 					demonMerchant.trade(offer);

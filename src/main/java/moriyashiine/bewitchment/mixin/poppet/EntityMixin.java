@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.poppet;
 
-import moriyashiine.bewitchment.common.entity.component.AdditionalWaterDataComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.Fluid;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class EntityMixin {
 	@Inject(method = "isSubmergedIn", at = @At("RETURN"), cancellable = true)
 	private void isSubmergedIn(Tag<Fluid> tag, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!callbackInfo.getReturnValue() && (Object) this instanceof LivingEntity living && tag == FluidTags.WATER && AdditionalWaterDataComponent.get(living).isSubmerged()) {
+		if (!callbackInfo.getReturnValue() && (Object) this instanceof LivingEntity living && tag == FluidTags.WATER && BWComponents.ADDITIONAL_WATER_DATA_COMPONENT.get(living).isSubmerged()) {
 			callbackInfo.setReturnValue(true);
 		}
 	}

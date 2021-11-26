@@ -1,13 +1,9 @@
 package moriyashiine.bewitchment.mixin.poppet;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.component.CursesComponent;
-import moriyashiine.bewitchment.api.component.TransformationComponent;
 import moriyashiine.bewitchment.api.event.ReviveEvents;
 import moriyashiine.bewitchment.api.misc.PoppetData;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
-import moriyashiine.bewitchment.common.entity.component.AdditionalWaterDataComponent;
-import moriyashiine.bewitchment.common.entity.component.AdditionalWerewolfDataComponent;
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
@@ -57,7 +53,7 @@ public abstract class LivingEntityMixin extends Entity {
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo callbackInfo) {
 		if (!world.isClient) {
-			AdditionalWaterDataComponent.maybeGet((LivingEntity) (Object) this).ifPresent(additionalWaterDataComponent -> {
+			BWComponents.ADDITIONAL_WATER_DATA_COMPONENT.maybeGet((LivingEntity) (Object) this).ifPresent(additionalWaterDataComponent -> {
 				if (additionalWaterDataComponent.isSubmerged()) {
 					additionalWaterDataComponent.setSubmerged(false);
 				}
@@ -144,8 +140,8 @@ public abstract class LivingEntityMixin extends Entity {
 					callbackInfo.setReturnValue(true);
 				}
 			}
-			if (callbackInfo.getReturnValue() && (Object) this instanceof PlayerEntity player && CursesComponent.get(player).hasCurse(BWCurses.SUSCEPTIBILITY)) {
-				TransformationComponent.maybeGet(player).ifPresent(transformationComponent -> {
+			if (callbackInfo.getReturnValue() && (Object) this instanceof PlayerEntity player && BWComponents.CURSES_COMPONENT.get(player).hasCurse(BWCurses.SUSCEPTIBILITY)) {
+				BWComponents.TRANSFORMATION_COMPONENT.maybeGet(player).ifPresent(transformationComponent -> {
 					if (transformationComponent.getTransformation() == BWTransformations.HUMAN) {
 						if (source.getSource() instanceof VampireEntity || (source.getSource() instanceof PlayerEntity playerSource && BewitchmentAPI.isVampire(playerSource, true) && BewitchmentAPI.isPledged(playerSource, BWPledges.LILITH))) {
 							transformationComponent.getTransformation().onRemoved(player);
@@ -164,10 +160,10 @@ public abstract class LivingEntityMixin extends Entity {
 								variant = source.getSource().getDataTracker().get(BWHostileEntity.VARIANT);
 							}
 							else if (source.getSource() instanceof PlayerEntity playerSource) {
-								variant = AdditionalWerewolfDataComponent.get(playerSource).getVariant();
+								variant = BWComponents.ADDITIONAL_WEREWOLF_DATA_COMPONENT.get(playerSource).getVariant();
 							}
 							if (variant > -1) {
-								AdditionalWerewolfDataComponent.get(player).setVariant(variant);
+								BWComponents.ADDITIONAL_WEREWOLF_DATA_COMPONENT.get(player).setVariant(variant);
 							}
 							PlayerLookup.tracking(this).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, this));
 							SpawnSmokeParticlesPacket.send(player, this);

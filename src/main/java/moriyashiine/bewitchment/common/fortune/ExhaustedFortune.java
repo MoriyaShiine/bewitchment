@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.fortune;
 
-import moriyashiine.bewitchment.api.component.MagicComponent;
 import moriyashiine.bewitchment.api.registry.Fortune;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 
@@ -12,6 +12,6 @@ public class ExhaustedFortune extends Fortune {
 	
 	@Override
 	public boolean finish(ServerWorld world, PlayerEntity target) {
-		return MagicComponent.get(target).drainMagic(50, false);
+		return BWComponents.MAGIC_COMPONENT.get(target).drainMagic(50, false);
 	}
 }

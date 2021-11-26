@@ -2,8 +2,6 @@ package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.entity.Pledgeable;
-import moriyashiine.bewitchment.common.entity.component.CaduceusFireballComponent;
-import moriyashiine.bewitchment.common.entity.component.MinionComponent;
 import moriyashiine.bewitchment.common.entity.living.BaphometEntity;
 import moriyashiine.bewitchment.common.entity.living.HerneEntity;
 import moriyashiine.bewitchment.common.entity.living.LeonardEntity;
@@ -102,7 +100,7 @@ public abstract class LivingEntityMixin extends Entity {
 			Entity attacker = source.getAttacker();
 			Entity directSource = source.getSource();
 			if (directSource instanceof FireballEntity fireball) {
-				if (attacker instanceof PlayerEntity && CaduceusFireballComponent.get(fireball).isFromCaduceus()) {
+				if (attacker instanceof PlayerEntity && BWComponents.CADUCEUS_FIREBALL_COMPONENT.get(fireball).isFromCaduceus()) {
 					amount *= 1.5f;
 				}
 				if (attacker instanceof BaphometEntity) {
@@ -155,14 +153,14 @@ public abstract class LivingEntityMixin extends Entity {
 	
 	@Inject(method = "dropLoot", at = @At("HEAD"), cancellable = true)
 	private void dropLoot(DamageSource source, boolean causedByPlayer, CallbackInfo callbackInfo) {
-		if ((Object) this instanceof MobEntity mob && MinionComponent.get(mob).getMaster() != null) {
+		if ((Object) this instanceof MobEntity mob && BWComponents.MINION_COMPONENT.get(mob).getMaster() != null) {
 			callbackInfo.cancel();
 		}
 	}
 	
 	@Inject(method = "isAffectedBySplashPotions", at = @At("RETURN"), cancellable = true)
 	private void isAffectedBySplashPotions(CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (callbackInfo.getReturnValue() && (Object) this instanceof MobEntity mob && MinionComponent.get(mob).getMaster() != null) {
+		if (callbackInfo.getReturnValue() && (Object) this instanceof MobEntity mob && BWComponents.MINION_COMPONENT.get(mob).getMaster() != null) {
 			callbackInfo.setReturnValue(false);
 		}
 	}

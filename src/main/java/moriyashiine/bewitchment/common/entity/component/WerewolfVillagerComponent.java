@@ -1,9 +1,7 @@
 package moriyashiine.bewitchment.common.entity.component;
 
-import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.component.CursesComponent;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
 import moriyashiine.bewitchment.common.registry.BWComponents;
@@ -15,9 +13,7 @@ import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.nbt.NbtCompound;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Optional;
-
-public class WerewolfVillagerComponent implements ComponentV3, ServerTickingComponent {
+public class WerewolfVillagerComponent implements ServerTickingComponent {
 	private final VillagerEntity obj;
 	private NbtCompound storedWerewolf = null;
 	private int despawnTimer = 2400;
@@ -64,7 +60,7 @@ public class WerewolfVillagerComponent implements ComponentV3, ServerTickingComp
 					entity.setFireTicks(obj.getFireTicks());
 					entity.clearStatusEffects();
 					obj.getStatusEffects().forEach(entity::addStatusEffect);
-					CursesComponent.maybeGet(entity).ifPresent(entityCursesComponent -> CursesComponent.maybeGet(obj).ifPresent(thisCursesComponent -> {
+					BWComponents.CURSES_COMPONENT.maybeGet(entity).ifPresent(entityCursesComponent -> BWComponents.CURSES_COMPONENT.maybeGet(obj).ifPresent(thisCursesComponent -> {
 						entityCursesComponent.getCurses().clear();
 						thisCursesComponent.getCurses().forEach(entityCursesComponent::addCurse);
 					}));
@@ -93,13 +89,5 @@ public class WerewolfVillagerComponent implements ComponentV3, ServerTickingComp
 	
 	public void setDespawnTimer(int despawnTimer) {
 		this.despawnTimer = despawnTimer;
-	}
-	
-	public static WerewolfVillagerComponent get(VillagerEntity obj) {
-		return BWComponents.WEREWOLF_VILLAGER_COMPONENT.get(obj);
-	}
-	
-	public static Optional<WerewolfVillagerComponent> maybeGet(VillagerEntity obj) {
-		return BWComponents.WEREWOLF_VILLAGER_COMPONENT.maybeGet(obj);
 	}
 }

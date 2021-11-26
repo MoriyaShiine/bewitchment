@@ -1,7 +1,6 @@
 package moriyashiine.bewitchment.mixin.curse;
 
-import moriyashiine.bewitchment.api.component.CursesComponent;
-import moriyashiine.bewitchment.common.entity.component.FakeMobComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWCurses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -40,7 +39,7 @@ public abstract class MobEntityMixin extends LivingEntity {
 	@ModifyVariable(method = "setTarget", at = @At("HEAD"))
 	private LivingEntity modifyTarget(LivingEntity target) {
 		if (!world.isClient && target != null) {
-			UUID insanityTargetUUID = FakeMobComponent.get((MobEntity) (Object) this).getTarget();
+			UUID insanityTargetUUID = BWComponents.FAKE_MOB_COMPONENT.get(this).getTarget();
 			if (insanityTargetUUID != null && !target.getUuid().equals(insanityTargetUUID)) {
 				return null;
 			}
@@ -50,7 +49,7 @@ public abstract class MobEntityMixin extends LivingEntity {
 	
 	@Inject(method = "dropLoot", at = @At("HEAD"))
 	private void dropLoot(DamageSource source, boolean causedByPlayer, CallbackInfo callbackInfo) {
-		if (!world.isClient && (Object) this instanceof SpiderEntity && !spawnedByArachnophobia && source.getAttacker() instanceof LivingEntity livingAttacker && CursesComponent.get(livingAttacker).hasCurse(BWCurses.ARACHNOPHOBIA)) {
+		if (!world.isClient && (Object) this instanceof SpiderEntity && !spawnedByArachnophobia && source.getAttacker() instanceof LivingEntity livingAttacker && BWComponents.CURSES_COMPONENT.get(livingAttacker).hasCurse(BWCurses.ARACHNOPHOBIA)) {
 			for (int i = 0; i < random.nextInt(3) + 3; i++) {
 				SpiderEntity spider;
 				if (random.nextFloat() < 1 / 8192f) {

@@ -5,8 +5,6 @@ import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
-import java.util.Optional;
-
 public class BroomUserComponent implements AutoSyncedComponent {
 	private final PlayerEntity obj;
 	private boolean pressingForward = false;
@@ -32,13 +30,5 @@ public class BroomUserComponent implements AutoSyncedComponent {
 	public void setPressingForward(boolean pressingForward) {
 		this.pressingForward = pressingForward;
 		BWComponents.BROOM_USER_COMPONENT.sync(obj);
-	}
-	
-	public static BroomUserComponent get(PlayerEntity obj) {
-		return BWComponents.BROOM_USER_COMPONENT.get(obj);
-	}
-	
-	public static Optional<BroomUserComponent> maybeGet(PlayerEntity obj) {
-		return BWComponents.BROOM_USER_COMPONENT.maybeGet(obj);
 	}
 }

@@ -1,9 +1,9 @@
 package moriyashiine.bewitchment.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import moriyashiine.bewitchment.api.component.ContractsComponent;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.DemonEntity;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.util.Window;
@@ -80,7 +80,7 @@ public class DemonScreen extends HandledScreen<DemonScreenHandler> {
 		for (int i = 0; i < cost; i++) {
 			heartX += 9;
 			drawTexture(matrices, heartX, heartY, 16, 0, 9, 9);
-			if (!ContractsComponent.get(client.player).hasContract(offer.getContract())) {
+			if (!BWComponents.CONTRACTS_COMPONENT.get(client.player).hasContract(offer.getContract())) {
 				if (fullGroups > 0) {
 					fullGroups--;
 					i++;

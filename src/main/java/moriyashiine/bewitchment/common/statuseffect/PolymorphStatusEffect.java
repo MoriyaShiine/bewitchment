@@ -3,7 +3,7 @@ package moriyashiine.bewitchment.common.statuseffect;
 import com.mojang.authlib.GameProfile;
 import io.github.ladysnake.impersonate.Impersonator;
 import moriyashiine.bewitchment.common.Bewitchment;
-import moriyashiine.bewitchment.common.entity.component.PolymorphComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
@@ -21,7 +21,7 @@ public class PolymorphStatusEffect extends StatusEffect {
 	@Override
 	public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
 		if (entity instanceof ServerPlayerEntity player) {
-			PolymorphComponent.maybeGet(player).ifPresent(polymorphComponent -> {
+			BWComponents.POLYMORPH_COMPONENT.maybeGet(player).ifPresent(polymorphComponent -> {
 				if (polymorphComponent.getUuid() != null) {
 					Impersonator.get(player).impersonate(IMPERSONATE_IDENTIFIER, new GameProfile(polymorphComponent.getUuid(), polymorphComponent.getName()));
 				}

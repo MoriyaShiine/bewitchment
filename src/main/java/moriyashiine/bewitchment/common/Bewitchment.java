@@ -9,15 +9,12 @@ import moriyashiine.bewitchment.api.block.CandelabraBlock;
 import moriyashiine.bewitchment.api.block.PoppetShelfBlock;
 import moriyashiine.bewitchment.api.block.WitchAltarBlock;
 import moriyashiine.bewitchment.api.component.BloodComponent;
-import moriyashiine.bewitchment.api.component.ContractsComponent;
-import moriyashiine.bewitchment.api.component.TransformationComponent;
 import moriyashiine.bewitchment.api.event.BloodSuckEvents;
 import moriyashiine.bewitchment.common.block.*;
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
-import moriyashiine.bewitchment.common.entity.component.AdditionalWerewolfDataComponent;
 import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.network.packet.CauldronTeleportPacket;
@@ -82,8 +79,8 @@ public class Bewitchment implements ModInitializer {
 		BWCommands.registerArgumentTypes();
 		ServerLifecycleEvents.SERVER_STOPPED.register(server -> BewitchmentAPI.fakePlayer = null);
 		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
-			TransformationComponent.get(newPlayer).setAlternateForm(false);
-			AdditionalWerewolfDataComponent.get(newPlayer).setForcedTransformation(false);
+			BWComponents.TRANSFORMATION_COMPONENT.get(newPlayer).setAlternateForm(false);
+			BWComponents.ADDITIONAL_WEREWOLF_DATA_COMPONENT.get(newPlayer).setForcedTransformation(false);
 		});
 		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killedEntity) -> {
 			if (entity instanceof LivingEntity livingEntity) {
@@ -120,12 +117,12 @@ public class Bewitchment implements ModInitializer {
 							ItemScatterer.spawn(world, killedEntity.getX() + 0.5, killedEntity.getY() + 0.5, killedEntity.getZ() + 0.5, drop);
 						}
 					}
-					if (livingEntity instanceof PlayerEntity player && livingEntity.getOffHandStack().getItem() == Items.GLASS_BOTTLE && BloodComponent.get(killedEntity).getBlood() > 20 && BWTags.HAS_BLOOD.contains(killedEntity.getType())) {
+					if (livingEntity instanceof PlayerEntity player && livingEntity.getOffHandStack().getItem() == Items.GLASS_BOTTLE && BWComponents.BLOOD_COMPONENT.get(killedEntity).getBlood() > 20 && BWTags.HAS_BLOOD.contains(killedEntity.getType())) {
 						world.playSound(null, livingEntity.getBlockPos(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1, 0.5f);
 						BWUtil.addItemToInventoryAndConsume(player, Hand.OFF_HAND, new ItemStack(BWObjects.BOTTLE_OF_BLOOD));
 					}
 				}
-				if (livingEntity instanceof PlayerEntity player && ContractsComponent.get(player).hasContract(BWContracts.DEATH)) {
+				if (livingEntity instanceof PlayerEntity player && BWComponents.CONTRACTS_COMPONENT.get(player).hasContract(BWContracts.DEATH)) {
 					livingEntity.heal(livingEntity.getMaxHealth() / 4f);
 				}
 			}
@@ -135,8 +132,8 @@ public class Bewitchment implements ModInitializer {
 				int toGive = BWTags.HAS_BLOOD.contains(entity.getType()) ? 5 : entity instanceof AnimalEntity ? 1 : 0;
 				toGive = BloodSuckEvents.BLOOD_AMOUNT.invoker().onBloodSuck(player, livingEntity, toGive);
 				if (toGive > 0) {
-					BloodComponent playerBloodComponent = BloodComponent.get(player);
-					BloodComponent entityBloodComponent = BloodComponent.get(livingEntity);
+					BloodComponent playerBloodComponent = BWComponents.BLOOD_COMPONENT.get(player);
+					BloodComponent entityBloodComponent = BWComponents.BLOOD_COMPONENT.get(livingEntity);
 					if (playerBloodComponent.fillBlood(toGive, true) && entityBloodComponent.drainBlood(10, true)) {
 						if (!world.isClient && livingEntity.hurtTime == 0) {
 							BloodSuckEvents.ON_BLOOD_SUCK.invoker().onBloodSuck(player, livingEntity, toGive);
@@ -165,7 +162,7 @@ public class Bewitchment implements ModInitializer {
 		});
 		EntitySleepEvents.ALLOW_SLEEP_TIME.register((player, sleepingPos, vanillaResult) -> player.world.getBlockState(sleepingPos).getBlock() instanceof CoffinBlock && player.world.isDay() ? ActionResult.success(player.world.isClient) : ActionResult.PASS);
 		EntitySleepEvents.ALLOW_SLEEPING.register((player, sleepingPos) -> {
-			if (TransformationComponent.get(player).isAlternateForm()) {
+			if (BWComponents.TRANSFORMATION_COMPONENT.get(player).isAlternateForm()) {
 				player.sendMessage(new TranslatableText("block.minecraft.bed.transformation"), true);
 				return PlayerEntity.SleepFailureReason.OTHER_PROBLEM;
 			}

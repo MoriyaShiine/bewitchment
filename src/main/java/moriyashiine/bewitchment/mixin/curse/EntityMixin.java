@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.curse;
 
-import moriyashiine.bewitchment.common.entity.component.FakeMobComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.world.World;
@@ -18,7 +18,7 @@ public abstract class EntityMixin {
 	
 	@Inject(method = "setOnFireFor", at = @At("HEAD"), cancellable = true)
 	private void setOnFireFor(int seconds, CallbackInfo callbackInfo) {
-		if (!world.isClient && (Object) this instanceof MobEntity mob && FakeMobComponent.get(mob).getTarget() != null) {
+		if (!world.isClient && (Object) this instanceof MobEntity mob && BWComponents.FAKE_MOB_COMPONENT.get(mob).getTarget() != null) {
 			callbackInfo.cancel();
 		}
 	}

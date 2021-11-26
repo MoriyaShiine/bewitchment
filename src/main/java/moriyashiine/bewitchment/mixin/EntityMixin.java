@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin;
 
-import moriyashiine.bewitchment.common.entity.component.MinionComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -27,10 +27,10 @@ public abstract class EntityMixin {
 	private void isInvulnerableTo(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!callbackInfo.getReturnValue() && !world.isClient && (Object) this instanceof MobEntity mob) {
 			if (source.getAttacker() instanceof LivingEntity living) {
-				if (living.getUuid().equals(MinionComponent.get(mob).getMaster())) {
+				if (living.getUuid().equals(BWComponents.MINION_COMPONENT.get(mob).getMaster())) {
 					callbackInfo.setReturnValue(true);
 				}
-				else if (living instanceof MobEntity mobAttacker && getUuid().equals(MinionComponent.get(mobAttacker).getMaster())) {
+				else if (living instanceof MobEntity mobAttacker && getUuid().equals(BWComponents.MINION_COMPONENT.get(mobAttacker).getMaster())) {
 					callbackInfo.setReturnValue(true);
 				}
 			}

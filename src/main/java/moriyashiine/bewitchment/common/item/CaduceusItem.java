@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.common.entity.component.CaduceusFireballComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -36,7 +36,7 @@ public class CaduceusItem extends MiningToolItem {
 				FireballEntity fireball = new FireballEntity(world, user, user.getRotationVector().x, user.getRotationVector().y, user.getRotationVector().z, 1);
 				fireball.setOwner(user);
 				fireball.setPos(fireball.getX(), fireball.getY() + 1, fireball.getZ());
-				CaduceusFireballComponent.get(fireball).setFromCaduceus(true);
+				BWComponents.CADUCEUS_FIREBALL_COMPONENT.get(fireball).setFromCaduceus(true);
 				world.playSound(null, user.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_SHOOT, SoundCategory.HOSTILE, 1, 1);
 				world.spawnEntity(fireball);
 				stack.damage(1, user, stackUser -> stackUser.sendToolBreakStatus(user.getActiveHand()));

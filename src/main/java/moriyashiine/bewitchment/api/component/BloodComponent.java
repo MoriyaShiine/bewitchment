@@ -9,8 +9,6 @@ import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
 
-import java.util.Optional;
-
 public class BloodComponent implements AutoSyncedComponent, ServerTickingComponent {
 	public static int MAX_BLOOD = 100;
 	
@@ -70,13 +68,5 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 			return true;
 		}
 		return false;
-	}
-	
-	public static BloodComponent get(LivingEntity obj) {
-		return BWComponents.BLOOD_COMPONENT.get(obj);
-	}
-	
-	public static Optional<BloodComponent> maybeGet(LivingEntity obj) {
-		return BWComponents.BLOOD_COMPONENT.maybeGet(obj);
 	}
 }

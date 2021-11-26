@@ -50,7 +50,7 @@ public class BWDamageSources {
 	private static float handleVampireDamage(LivingEntity entity, DamageSource source, float amount) {
 		if (!isEffective(source, true)) {
 			if (entity.getHealth() - amount < 1) {
-				BloodComponent bloodComponent = BloodComponent.get(entity);
+				BloodComponent bloodComponent = BWComponents.BLOOD_COMPONENT.get(entity);
 				while (entity.getHealth() - amount <= 0 && bloodComponent.getBlood() > 0) {
 					amount--;
 					bloodComponent.drainBlood(1, false);

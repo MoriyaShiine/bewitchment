@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.contract;
 
-import moriyashiine.bewitchment.api.component.ContractsComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWContracts;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -27,7 +27,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	
 	@ModifyVariable(method = "addExperience", at = @At("HEAD"))
 	private int modifyAddExperience(int experience) {
-		if (ContractsComponent.get((PlayerEntity) (Object) this).hasContract(BWContracts.PRIDE)) {
+		if (BWComponents.CONTRACTS_COMPONENT.get(this).hasContract(BWContracts.PRIDE)) {
 			experience *= 2;
 		}
 		return experience;
@@ -37,7 +37,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	private void eatFood(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> callbackInfo) {
 		if (!world.isClient) {
 			FoodComponent foodComponent = stack.getItem().getFoodComponent();
-			if (foodComponent != null && ContractsComponent.get((PlayerEntity) (Object) this).hasContract(BWContracts.GLUTTONY)) {
+			if (foodComponent != null && BWComponents.CONTRACTS_COMPONENT.get(this).hasContract(BWContracts.GLUTTONY)) {
 				getHungerManager().add(foodComponent.getHunger(), foodComponent.getSaturationModifier());
 			}
 		}

@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.brew;
 
-import moriyashiine.bewitchment.common.entity.component.PolymorphComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PotionItem;
@@ -16,7 +16,7 @@ public abstract class PotionItemMixin {
 	@Inject(method = "finishUsing", at = @At("HEAD"))
 	private void finishUsing(ItemStack stack, World world, LivingEntity user, CallbackInfoReturnable<ItemStack> callbackInfo) {
 		if (!world.isClient) {
-			PolymorphComponent.maybeGet(user).ifPresent(polymorphComponent -> {
+			BWComponents.POLYMORPH_COMPONENT.maybeGet(user).ifPresent(polymorphComponent -> {
 				NbtCompound compound = stack.getNbt();
 				if (compound != null) {
 					String name = compound.getString("PolymorphName");

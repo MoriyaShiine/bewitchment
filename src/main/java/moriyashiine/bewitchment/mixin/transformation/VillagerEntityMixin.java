@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.transformation;
 
-import moriyashiine.bewitchment.common.entity.component.WerewolfVillagerComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResult;
@@ -14,6 +14,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class VillagerEntityMixin {
 	@Inject(method = "interactMob", at = @At("HEAD"))
 	private void interactMob(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> callbackInfo) {
-		WerewolfVillagerComponent.get((VillagerEntity) (Object) this).setDespawnTimer(-1);
+		BWComponents.WEREWOLF_VILLAGER_COMPONENT.get(this).setDespawnTimer(-1);
 	}
 }

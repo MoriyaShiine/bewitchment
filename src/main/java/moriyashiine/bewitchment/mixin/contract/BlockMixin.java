@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.contract;
 
-import moriyashiine.bewitchment.api.component.ContractsComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWContracts;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.block.Block;
@@ -29,18 +29,16 @@ public abstract class BlockMixin {
 	@Inject(method = "getDroppedStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/entity/BlockEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/item/ItemStack;)Ljava/util/List;", at = @At("RETURN"), cancellable = true)
 	private static void getDroppedStacks(BlockState state, ServerWorld world, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity entity, ItemStack stack, CallbackInfoReturnable<List<ItemStack>> callbackInfo) {
 		if (entity instanceof PlayerEntity player) {
-			ContractsComponent.maybeGet(player).ifPresent(contractsComponent -> {
+			BWComponents.CONTRACTS_COMPONENT.maybeGet(player).ifPresent(contractsComponent -> {
 				List<ItemStack> drops = callbackInfo.getReturnValue();
 				if (!drops.isEmpty() && !EnchantmentHelper.get(stack).containsKey(Enchantments.SILK_TOUCH)) {
 					if (contractsComponent.hasContract(BWContracts.GREED)) {
 						for (int i = 0; i < drops.size(); i++) {
 							if (BWTags.ORES.contains(state.getBlock().asItem())) {
 								for (Recipe<?> smeltingRecipe : world.getRecipeManager().listAllOfType(RecipeType.SMELTING)) {
-									if (BWTags.ORES.contains(drops.get(i).getItem())) {
-										for (Ingredient ingredient : smeltingRecipe.getIngredients()) {
-											if (ingredient.test(drops.get(i))) {
-												drops.set(i, new ItemStack(smeltingRecipe.getOutput().getItem(), smeltingRecipe.getOutput().getCount() * drops.get(i).getCount()));
-											}
+									for (Ingredient ingredient : smeltingRecipe.getIngredients()) {
+										if (ingredient.test(drops.get(i))) {
+											drops.set(i, new ItemStack(smeltingRecipe.getOutput().getItem(), smeltingRecipe.getOutput().getCount() * drops.get(i).getCount()));
 										}
 									}
 								}

@@ -1,7 +1,6 @@
 package moriyashiine.bewitchment.common.entity.living;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.component.ContractsComponent;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.client.network.packet.SyncContractsPacket;
 import moriyashiine.bewitchment.client.network.packet.SyncDemonTradesPacket;
@@ -9,6 +8,7 @@ import moriyashiine.bewitchment.client.screen.DemonScreenHandler;
 import moriyashiine.bewitchment.common.entity.DemonMerchant;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.misc.BWUtil;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWMaterials;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
@@ -306,7 +306,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 		
 		public void apply(DemonMerchant merchant) {
 			if (merchant.getCurrentCustomer() != null) {
-				ContractsComponent.get(merchant.getCurrentCustomer()).addContract(new Contract.Instance(contract, getDuration(), getCost(merchant)));
+				BWComponents.CONTRACTS_COMPONENT.get(merchant.getCurrentCustomer()).addContract(new Contract.Instance(contract, getDuration(), getCost(merchant)));
 			}
 		}
 		

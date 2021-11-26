@@ -1,10 +1,10 @@
 package moriyashiine.bewitchment.common.ritualfunction;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.component.CursesComponent;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
 import moriyashiine.bewitchment.common.item.TaglockItem;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.mixin.ritual.ZombieVillagerEntityAccessor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
@@ -51,7 +51,7 @@ public class CleanseRitualFunction extends RitualFunction {
 		}
 		if (taglock != null) {
 			LivingEntity livingEntity = BewitchmentAPI.getTaglockOwner(world, taglock);
-			CursesComponent.maybeGet(livingEntity).ifPresent(cursesComponent -> {
+			BWComponents.CURSES_COMPONENT.maybeGet(livingEntity).ifPresent(cursesComponent -> {
 				for (Curse.Instance instance : cursesComponent.getCurses()) {
 					if (catFamiliar || (world.random.nextFloat() < (instance.curse.type == Curse.Type.LESSER ? 7.5f / 10f : 5 / 10f))) {
 						cursesComponent.removeCurse(instance.curse);

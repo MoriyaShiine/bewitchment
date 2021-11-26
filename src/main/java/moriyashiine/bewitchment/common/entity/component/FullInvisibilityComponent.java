@@ -7,8 +7,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
-import java.util.Optional;
-
 public class FullInvisibilityComponent implements AutoSyncedComponent, ServerTickingComponent {
 	private final PlayerEntity obj;
 	private boolean fullInvisible = false;
@@ -43,13 +41,5 @@ public class FullInvisibilityComponent implements AutoSyncedComponent, ServerTic
 	public void setFullInvisible(boolean fullInvisible) {
 		this.fullInvisible = fullInvisible;
 		BWComponents.FULL_INVISIBILITY_COMPONENT.sync(obj);
-	}
-	
-	public static FullInvisibilityComponent get(PlayerEntity obj) {
-		return BWComponents.FULL_INVISIBILITY_COMPONENT.get(obj);
-	}
-	
-	public static Optional<FullInvisibilityComponent> maybeGet(PlayerEntity obj) {
-		return BWComponents.FULL_INVISIBILITY_COMPONENT.maybeGet(obj);
 	}
 }

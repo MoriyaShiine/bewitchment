@@ -1,8 +1,8 @@
 package moriyashiine.bewitchment.common.ritualfunction;
 
 import moriyashiine.bewitchment.api.registry.RitualFunction;
-import moriyashiine.bewitchment.common.entity.component.AdditionalWaterDataComponent;
 import moriyashiine.bewitchment.common.misc.BWUtil;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -23,7 +23,7 @@ public class MakeEntitiesWetRitualFunction extends RitualFunction {
 	@Override
 	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
 		int radius = catFamiliar ? 9 : 3;
-		world.getEntitiesByClass(Entity.class, new Box(effectivePos).expand(radius), Entity::isAlive).forEach(entity -> AdditionalWaterDataComponent.get(entity).setWetTimer(6000 * (catFamiliar ? 3 : 1)));
+		world.getEntitiesByClass(Entity.class, new Box(effectivePos).expand(radius), Entity::isAlive).forEach(entity -> BWComponents.ADDITIONAL_WATER_DATA_COMPONENT.get(entity).setWetTimer(6000 * (catFamiliar ? 3 : 1)));
 		BWUtil.getBlockPoses(effectivePos, radius, currentPos -> world.getBlockState(currentPos).getBlock() instanceof AbstractFireBlock).forEach(foundPos -> world.setBlockState(foundPos, Blocks.AIR.getDefaultState()));
 		super.start(world, glyphPos, effectivePos, inventory, catFamiliar);
 	}

@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.common.entity.living;
 
-import moriyashiine.bewitchment.api.component.BloodComponent;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
@@ -39,7 +39,7 @@ public class VampireEntity extends BWHostileEntity {
 	public void tick() {
 		super.tick();
 		if (!world.isClient) {
-			BloodComponent.maybeGet(this).ifPresent(bloodComponent -> {
+			BWComponents.BLOOD_COMPONENT.maybeGet(this).ifPresent(bloodComponent -> {
 				if (getHealth() < getMaxHealth() && (age + getId()) % 40 == 0 && bloodComponent.getBlood() > 0) {
 					heal(1);
 					if (random.nextFloat() < 1 / 4f) {

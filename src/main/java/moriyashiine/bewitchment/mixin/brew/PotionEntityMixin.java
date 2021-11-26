@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.brew;
 
-import moriyashiine.bewitchment.common.entity.component.PolymorphComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -47,7 +47,7 @@ public abstract class PotionEntityMixin extends ThrownItemEntity {
 			UUID uuid = getItem().getNbt().getUuid("PolymorphUUID");
 			String name = getItem().getNbt().getString("PolymorphName");
 			for (LivingEntity livingEntity : world.getNonSpectatingEntities(LivingEntity.class, getBoundingBox().expand(4, 2, 4))) {
-				PolymorphComponent.maybeGet(livingEntity).ifPresent(polymorphComponent -> {
+				BWComponents.POLYMORPH_COMPONENT.maybeGet(livingEntity).ifPresent(polymorphComponent -> {
 					polymorphComponent.setUuid(uuid);
 					polymorphComponent.setName(name);
 				});
@@ -58,7 +58,7 @@ public abstract class PotionEntityMixin extends ThrownItemEntity {
 	@Inject(method = "applyLingeringPotion", at = @At(value = "INVOKE", target = "net/minecraft/entity/AreaEffectCloudEntity.setPotion(Lnet/minecraft/potion/Potion;)V"), locals = LocalCapture.CAPTURE_FAILSOFT)
 	private void applyLingeringPotion(ItemStack stack, Potion potion, CallbackInfo callbackInfo, AreaEffectCloudEntity cloud) {
 		if (stack.hasNbt() && stack.getNbt().contains("PolymorphUUID")) {
-			PolymorphComponent.maybeGet(cloud).ifPresent(polymorphComponent -> {
+			BWComponents.POLYMORPH_COMPONENT.maybeGet(cloud).ifPresent(polymorphComponent -> {
 				polymorphComponent.setUuid(stack.getNbt().getUuid("PolymorphUUID"));
 				polymorphComponent.setName(stack.getNbt().getString("PolymorphName"));
 			});

@@ -1,18 +1,14 @@
 package moriyashiine.bewitchment.api.component;
 
-import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import moriyashiine.bewitchment.api.registry.Fortune;
-import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 
-import java.util.Optional;
-
-public class FortuneComponent implements ComponentV3, ServerTickingComponent {
+public class FortuneComponent implements ServerTickingComponent {
 	private final PlayerEntity obj;
 	private Fortune.Instance fortune = null;
 	
@@ -62,13 +58,5 @@ public class FortuneComponent implements ComponentV3, ServerTickingComponent {
 	
 	public void setFortune(Fortune.Instance fortune) {
 		this.fortune = fortune;
-	}
-	
-	public static FortuneComponent get(PlayerEntity obj) {
-		return BWComponents.FORTUNE_COMPONENT.get(obj);
-	}
-	
-	public static Optional<FortuneComponent> maybeGet(PlayerEntity obj) {
-		return BWComponents.FORTUNE_COMPONENT.maybeGet(obj);
 	}
 }

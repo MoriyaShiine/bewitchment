@@ -3,7 +3,7 @@ package moriyashiine.bewitchment.mixin.poppet;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.misc.PoppetData;
 import moriyashiine.bewitchment.common.Bewitchment;
-import moriyashiine.bewitchment.common.entity.component.AdditionalWaterDataComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -53,7 +53,7 @@ public abstract class ItemEntityMixin extends Entity {
 					owner.velocityModified = true;
 				}
 				if (isSubmergedInWater()) {
-					AdditionalWaterDataComponent.get(owner).setSubmerged(true);
+					BWComponents.ADDITIONAL_WATER_DATA_COMPONENT.get(owner).setSubmerged(true);
 				}
 			}
 		}

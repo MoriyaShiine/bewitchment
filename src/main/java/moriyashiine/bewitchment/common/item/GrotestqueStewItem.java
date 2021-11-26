@@ -2,6 +2,7 @@ package moriyashiine.bewitchment.common.item;
 
 import moriyashiine.bewitchment.api.component.PledgeComponent;
 import moriyashiine.bewitchment.api.entity.Pledgeable;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWPledges;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.minecraft.entity.LivingEntity;
@@ -21,7 +22,7 @@ public class GrotestqueStewItem extends Item {
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (!world.isClient && user instanceof PlayerEntity player) {
-			PledgeComponent pledgeComponent = PledgeComponent.get(player);
+			PledgeComponent pledgeComponent = BWComponents.PLEDGE_COMPONENT.get(player);
 			if (pledgeComponent.getPledge().equals(BWPledges.NONE)) {
 				LivingEntity closest = null;
 				for (LivingEntity livingEntity : world.getEntitiesByClass(LivingEntity.class, new Box(user.getBlockPos()).expand(8), foundEntity -> foundEntity.isAlive() && foundEntity instanceof Pledgeable)) {

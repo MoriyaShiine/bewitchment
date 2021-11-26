@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.client;
 
-import moriyashiine.bewitchment.common.entity.component.FullInvisibilityComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class EntityRenderDispatcherMixin {
 	@Inject(method = "renderShadow", at = @At("HEAD"), cancellable = true)
 	private static void renderShadow(MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity, float opacity, float tickDelta, WorldView world, float radius, CallbackInfo callbackInfo) {
-		if (entity instanceof PlayerEntity player && FullInvisibilityComponent.get(player).isFullInvisible()) {
+		if (entity instanceof PlayerEntity player && BWComponents.FULL_INVISIBILITY_COMPONENT.get(player).isFullInvisible()) {
 			callbackInfo.cancel();
 		}
 	}

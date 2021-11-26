@@ -1,6 +1,5 @@
 package moriyashiine.bewitchment.common.entity.component;
 
-import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.registry.BWComponents;
@@ -10,10 +9,9 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 
-import java.util.Optional;
 import java.util.UUID;
 
-public class MinionComponent implements ComponentV3, ServerTickingComponent {
+public class MinionComponent implements ServerTickingComponent {
 	private final MobEntity obj;
 	private UUID master = null;
 	
@@ -52,13 +50,5 @@ public class MinionComponent implements ComponentV3, ServerTickingComponent {
 	public void setMaster(UUID master) {
 		this.master = master;
 		BWComponents.MINION_COMPONENT.sync(obj);
-	}
-	
-	public static MinionComponent get(MobEntity obj) {
-		return BWComponents.MINION_COMPONENT.get(obj);
-	}
-	
-	public static Optional<MinionComponent> maybeGet(MobEntity obj) {
-		return BWComponents.MINION_COMPONENT.maybeGet(obj);
 	}
 }

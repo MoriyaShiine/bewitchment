@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.contract;
 
-import moriyashiine.bewitchment.api.component.ContractsComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWContracts;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.MerchantEntity;
@@ -22,7 +22,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
 	@Inject(method = "onDeath", at = @At("HEAD"))
 	private void onDeath(CallbackInfo callbackInfo) {
 		if (!world.isClient && attackingPlayer != null) {
-			if (ContractsComponent.get(attackingPlayer).hasContract(BWContracts.ENVY) && !getOffers().isEmpty()) {
+			if (BWComponents.CONTRACTS_COMPONENT.get(attackingPlayer).hasContract(BWContracts.ENVY) && !getOffers().isEmpty()) {
 				for (TradeOffer offer : getOffers()) {
 					if (!offer.isDisabled()) {
 						ItemScatterer.spawn(world, getX() + 0.5, getY() + 0.5, getZ() + 0.5, offer.getSellItem());

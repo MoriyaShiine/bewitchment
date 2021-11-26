@@ -1,9 +1,9 @@
 package moriyashiine.bewitchment.mixin;
 
-import moriyashiine.bewitchment.common.entity.component.MinionComponent;
 import moriyashiine.bewitchment.common.entity.living.GhostEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.misc.BWUtil;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -32,7 +32,7 @@ public abstract class MobEntityMixin extends LivingEntity {
 			if (target instanceof GhostEntity) {
 				return null;
 			}
-			if (target instanceof MobEntity mob && getUuid().equals(MinionComponent.get(mob).getMaster())) {
+			if (target instanceof MobEntity mob && getUuid().equals(BWComponents.MINION_COMPONENT.get(mob).getMaster())) {
 				return null;
 			}
 			if (isUndead() && !BWUtil.getBlockPoses(target.getBlockPos(), 2, foundPos -> BWTags.UNDEAD_MASK.contains(world.getBlockState(foundPos).getBlock())).isEmpty()) {

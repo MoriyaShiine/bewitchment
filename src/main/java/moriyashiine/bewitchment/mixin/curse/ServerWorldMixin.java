@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.curse;
 
-import moriyashiine.bewitchment.api.component.CursesComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWCurses;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LightningEntity;
@@ -18,7 +18,7 @@ public abstract class ServerWorldMixin {
 	private void spawnEntity(Entity entity, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (entity instanceof LightningEntity) {
 			LivingEntity closest = null;
-			for (LivingEntity foundLiving : entity.world.getEntitiesByClass(LivingEntity.class, new Box(entity.getBlockPos()).expand(256), currentLiving -> currentLiving.isAlive() && CursesComponent.get(currentLiving).hasCurse(BWCurses.LIGHTNING_ROD))) {
+			for (LivingEntity foundLiving : entity.world.getEntitiesByClass(LivingEntity.class, new Box(entity.getBlockPos()).expand(256), currentLiving -> currentLiving.isAlive() && BWComponents.CURSES_COMPONENT.get(currentLiving).hasCurse(BWCurses.LIGHTNING_ROD))) {
 				if (closest == null || foundLiving.distanceTo(entity) < closest.distanceTo(entity)) {
 					closest = foundLiving;
 				}

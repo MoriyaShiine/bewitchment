@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.curse;
 
-import moriyashiine.bewitchment.api.component.CursesComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWCurses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -27,7 +27,7 @@ public abstract class EndermanEntityMixin extends HostileEntity {
 	
 	@Inject(method = "isPlayerStaring", at = @At("RETURN"), cancellable = true)
 	private void isPlayerStaring(PlayerEntity player, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!callbackInfo.getReturnValue() && !player.isCreative() && getTarget() == null && CursesComponent.get(player).hasCurse(BWCurses.OUTRAGE) && distanceTo(player) <= getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE) / 4 && canSee(player)) {
+		if (!callbackInfo.getReturnValue() && !player.isCreative() && getTarget() == null && BWComponents.CURSES_COMPONENT.get(player).hasCurse(BWCurses.OUTRAGE) && distanceTo(player) <= getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE) / 4 && canSee(player)) {
 			setTarget(player);
 			callbackInfo.setReturnValue(true);
 		}

@@ -1,7 +1,7 @@
 package moriyashiine.bewitchment.mixin.familiar;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.common.entity.component.FamiliarComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -37,7 +37,7 @@ public abstract class LivingEntityMixin extends Entity {
 	
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
 	private float modifyDamage(float amount, DamageSource source) {
-		if (!world.isClient && FamiliarComponent.get((LivingEntity) (Object) this).isFamiliar()) {
+		if (!world.isClient && BWComponents.FAMILIAR_COMPONENT.get(this).isFamiliar()) {
 			amount /= 8;
 		}
 		return amount;

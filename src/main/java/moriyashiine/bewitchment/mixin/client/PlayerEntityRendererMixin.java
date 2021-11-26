@@ -4,7 +4,7 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.entity.BroomEntity;
 import moriyashiine.bewitchment.client.renderer.ContributorHornsFeatureRenderer;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
-import moriyashiine.bewitchment.common.entity.component.FullInvisibilityComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -39,14 +39,14 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 		addFeature(new ContributorHornsFeatureRenderer(this, ctx.getModelLoader()));
 	}
 	
-	@Inject(method = "render", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "render(Lnet/minecraft/client/network/AbstractClientPlayerEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At("HEAD"), cancellable = true)
 	private void render(AbstractClientPlayerEntity player, float yaw, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, CallbackInfo callbackInfo) {
 		Optional<BlockPos> pos = player.getSleepingPosition();
 		if (pos.isPresent() && player.world.getBlockState(pos.get()).getBlock() instanceof CoffinBlock) {
 			callbackInfo.cancel();
 			return;
 		}
-		if (FullInvisibilityComponent.get(player).isFullInvisible()) {
+		if (BWComponents.FULL_INVISIBILITY_COMPONENT.get(player).isFullInvisible()) {
 			callbackInfo.cancel();
 			return;
 		}

@@ -1,6 +1,6 @@
 package moriyashiine.bewitchment.mixin.contract;
 
-import moriyashiine.bewitchment.api.component.ContractsComponent;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWContracts;
 import net.minecraft.entity.ai.goal.AnimalMateGoal;
 import net.minecraft.entity.ai.goal.Goal;
@@ -25,7 +25,7 @@ public abstract class AnimalMateGoalMixin extends Goal {
 	@Inject(method = "breed", at = @At("HEAD"))
 	private void breed(CallbackInfo callbackInfo) {
 		ServerPlayerEntity player = animal.getLovingPlayer();
-		if (player != null && ContractsComponent.get(player).hasContract(BWContracts.LUST)) {
+		if (player != null && BWComponents.CONTRACTS_COMPONENT.get(player).hasContract(BWContracts.LUST)) {
 			animal.breed(player.getServerWorld(), mate);
 			animal.breed(player.getServerWorld(), mate);
 		}

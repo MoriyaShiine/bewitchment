@@ -8,8 +8,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.MathHelper;
 
-import java.util.Optional;
-
 public class FamiliarComponent implements AutoSyncedComponent, CommonTickingComponent {
 	private final LivingEntity obj;
 	private boolean familiar = false;
@@ -49,13 +47,5 @@ public class FamiliarComponent implements AutoSyncedComponent, CommonTickingComp
 	public void setFamiliar(boolean familiar) {
 		this.familiar = familiar;
 		BWComponents.FAMILIAR_COMPONENT.sync(obj);
-	}
-	
-	public static FamiliarComponent get(LivingEntity obj) {
-		return BWComponents.FAMILIAR_COMPONENT.get(obj);
-	}
-	
-	public static Optional<FamiliarComponent> maybeGet(LivingEntity obj) {
-		return BWComponents.FAMILIAR_COMPONENT.maybeGet(obj);
 	}
 }
