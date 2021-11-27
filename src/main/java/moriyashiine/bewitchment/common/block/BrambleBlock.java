@@ -1,7 +1,9 @@
 package moriyashiine.bewitchment.common.block;
 
+import moriyashiine.bewitchment.common.component.entity.TeleportTimerComponent;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.misc.interfaces.EntityShapeContextAdditionAccessor;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWProperties;
 import moriyashiine.bewitchment.common.world.BWWorldState;
@@ -85,7 +87,19 @@ public class BrambleBlock extends SugarCaneBlock {
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (!world.isClient && entity instanceof LivingEntity) {
 			if (this == BWObjects.ENDER_BRAMBLE && !entity.hasVehicle()) {
-				BWUtil.attemptTeleport(entity, entity.getBlockPos(), 64, true);
+				boolean teleport = true;
+				if (entity instanceof PlayerEntity player) {
+					TeleportTimerComponent teleportTimerComponent = BWComponents.TELEPORT_TIMER_COMPONENT.get(player);
+					if (teleportTimerComponent.getTeleportTimer() > 0) {
+						teleport = false;
+					}
+					else {
+						teleportTimerComponent.setTeleportTimer(20);
+					}
+				}
+				if (teleport) {
+					BWUtil.attemptTeleport(entity, entity.getBlockPos(), 64, true);
+				}
 			}
 			if (this == BWObjects.SCORCHED_BRAMBLE) {
 				entity.setOnFireFor(10);

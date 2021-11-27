@@ -1,4 +1,4 @@
-package moriyashiine.bewitchment.common.entity.component;
+package moriyashiine.bewitchment.common.component.entity;
 
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import io.github.ladysnake.impersonate.Impersonator;

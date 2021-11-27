@@ -9,7 +9,7 @@ import moriyashiine.bewitchment.api.event.AllowVampireBurn;
 import moriyashiine.bewitchment.api.event.AllowVampireHeal;
 import moriyashiine.bewitchment.api.event.OnTransformationSet;
 import moriyashiine.bewitchment.api.registry.Transformation;
-import moriyashiine.bewitchment.common.entity.component.AdditionalWerewolfDataComponent;
+import moriyashiine.bewitchment.common.component.entity.AdditionalWerewolfDataComponent;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
 import moriyashiine.bewitchment.common.registry.BWComponents;
