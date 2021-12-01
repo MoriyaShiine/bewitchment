@@ -15,13 +15,8 @@ public class BWConfig implements ConfigData {
 	
 	public int altarDistributionRadius = 24;
 	
-	public int silverSize = 6;
-	public int silverMaxHeight = 48;
-	public int silverCount = 5;
-	
-	public int saltSize = 12;
-	public int saltMaxHeight = 96;
-	public int saltCount = 6;
+	public boolean generateSilver = true;
+	public boolean generateSalt = true;
 	
 	public List<String> owlBiomeCategories = Arrays.asList(Biome.Category.TAIGA.getName(), Biome.Category.FOREST.getName());
 	public int owlWeight = 10;

@@ -19,6 +19,7 @@
 	"LivingEntityMixin",
 	"MobEntityMixin",
 	"OpenDoorsTaskMixin",
+	"OrePlacedFeaturesAccessor",
 	"PlayerEntityMixin",
 	"ServerWorldMixin",
 	"SimpleBlockStateProviderAccessor",
