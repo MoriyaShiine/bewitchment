@@ -12,10 +12,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.command.argument.EntityAnchorArgumentType;
-import net.minecraft.entity.EntityGroup;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -125,6 +122,11 @@ public class GhostEntity extends BWHostileEntity {
 	
 	@Override
 	public boolean isInLava() {
+		return false;
+	}
+	
+	@Override
+	protected boolean canStartRiding(Entity entity) {
 		return false;
 	}
 	

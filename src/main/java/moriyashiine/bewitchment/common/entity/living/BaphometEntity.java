@@ -206,6 +206,11 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 	}
 	
 	@Override
+	protected boolean canStartRiding(Entity entity) {
+		return false;
+	}
+	
+	@Override
 	public boolean canHaveStatusEffect(StatusEffectInstance effect) {
 		return effect.getEffectType().getCategory() == StatusEffectCategory.BENEFICIAL;
 	}
