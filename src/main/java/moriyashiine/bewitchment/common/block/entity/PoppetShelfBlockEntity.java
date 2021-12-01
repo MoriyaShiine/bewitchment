@@ -1,11 +1,12 @@
 package moriyashiine.bewitchment.common.block.entity;
 
 import moriyashiine.bewitchment.api.item.PoppetItem;
+import moriyashiine.bewitchment.client.network.packet.SyncPoppetShelfPacket;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Block;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class PoppetShelfBlockEntity extends BlockEntity {
 	@Environment(EnvType.CLIENT)
-	public final DefaultedList<ItemStack> clientInventory = DefaultedList.ofSize(9, ItemStack.EMPTY);
+	public DefaultedList<ItemStack> clientInventory = DefaultedList.ofSize(9, ItemStack.EMPTY);
 	
 	public PoppetShelfBlockEntity(BlockPos pos, BlockState state) {
 		super(BWBlockEntityTypes.POPPET_SHELF, pos, state);
@@ -38,8 +39,8 @@ public class PoppetShelfBlockEntity extends BlockEntity {
 			if (firstEmpty != -1) {
 				DefaultedList<ItemStack> inventory = worldState.poppetShelves.get(pos.asLong());
 				inventory.set(firstEmpty, stack.split(1));
-				worldState.markDirty();
 				sync();
+				worldState.markDirty();
 			}
 		}
 		else {
@@ -47,8 +48,8 @@ public class PoppetShelfBlockEntity extends BlockEntity {
 			if (inventory != null) {
 				ItemScatterer.spawn(world, pos, inventory);
 				worldState.poppetShelves.remove(pos.asLong());
-				worldState.markDirty();
 				sync();
+				worldState.markDirty();
 			}
 		}
 	}
@@ -84,7 +85,7 @@ public class PoppetShelfBlockEntity extends BlockEntity {
 	
 	public void sync() {
 		if (world != null && !world.isClient) {
-			world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_LISTENERS);
+			PlayerLookup.tracking(this).forEach(trackingPlayer -> SyncPoppetShelfPacket.send(trackingPlayer, pos));
 		}
 	}
 	

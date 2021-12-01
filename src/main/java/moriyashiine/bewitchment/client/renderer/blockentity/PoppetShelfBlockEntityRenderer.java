@@ -15,7 +15,6 @@ import net.minecraft.util.math.Vec3f;
 
 @Environment(EnvType.CLIENT)
 public class PoppetShelfBlockEntityRenderer implements BlockEntityRenderer<PoppetShelfBlockEntity> {
-	
 	@Override
 	public void render(PoppetShelfBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 		Direction direction = entity.getCachedState().get(Properties.HORIZONTAL_FACING);

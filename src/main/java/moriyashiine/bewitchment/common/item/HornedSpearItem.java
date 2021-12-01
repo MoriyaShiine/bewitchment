@@ -3,7 +3,7 @@ package moriyashiine.bewitchment.common.item;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
-import moriyashiine.bewitchment.client.network.packet.SyncHornedSpearEntity;
+import moriyashiine.bewitchment.client.network.packet.SyncHornedSpearPacket;
 import moriyashiine.bewitchment.common.entity.projectile.HornedSpearEntity;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
@@ -88,7 +88,7 @@ public class HornedSpearItem extends SwordItem {
 			spear.pickupType = PersistentProjectileEntity.PickupPermission.DISALLOWED;
 		}
 		world.spawnEntity(spear);
-		PlayerLookup.tracking(spear).forEach(trackingPlayer -> SyncHornedSpearEntity.send(trackingPlayer, spear));
+		PlayerLookup.tracking(spear).forEach(trackingPlayer -> SyncHornedSpearPacket.send(trackingPlayer, spear));
 		world.playSoundFromEntity(null, spear, BWSoundEvents.ITEM_HORNED_SPEAR_USE, SoundCategory.PLAYERS, 1, 1);
 		if (owner instanceof PlayerEntity player && !player.isCreative()) {
 			stack.decrement(1);
