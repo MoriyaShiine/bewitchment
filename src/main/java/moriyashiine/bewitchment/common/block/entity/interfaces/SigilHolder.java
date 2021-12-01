@@ -1,9 +1,10 @@
 package moriyashiine.bewitchment.common.block.entity.interfaces;
 
 import moriyashiine.bewitchment.api.registry.Sigil;
+import moriyashiine.bewitchment.common.block.entity.DragonsBloodChestBlockEntity;
+import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -12,7 +13,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -77,7 +77,7 @@ public interface SigilHolder {
 			if (result == ActionResult.SUCCESS) {
 				BlockEntity blockEntity = world.getBlockEntity(pos);
 				setUses(getUses() - 1);
-				syncSigilHolder(world, blockEntity);
+				syncSigilHolder(blockEntity);
 				blockEntity.markDirty();
 			}
 		}
@@ -90,7 +90,7 @@ public interface SigilHolder {
 					int used = getSigil().tick(world, pos);
 					if (used > 0) {
 						setUses(getUses() - used);
-						syncSigilHolder(world, blockEntity);
+						syncSigilHolder(blockEntity);
 						blockEntity.markDirty();
 					}
 				}
@@ -100,7 +100,7 @@ public interface SigilHolder {
 					setSigil(null);
 					setUses(0);
 					setModeOnWhitelist(false);
-					syncSigilHolder(world, blockEntity);
+					syncSigilHolder(blockEntity);
 					blockEntity.markDirty();
 					if (blockEntity.getCachedState().getBlock() == BWObjects.SIGIL) {
 						world.setBlockState(pos, Blocks.AIR.getDefaultState());
@@ -120,9 +120,12 @@ public interface SigilHolder {
 		return true;
 	}
 	
-	default void syncSigilHolder(World world, BlockEntity blockEntity) {
-		if (world instanceof ServerWorld && blockEntity instanceof BlockEntityClientSerializable blockEntityClientSerializable) {
-			blockEntityClientSerializable.sync();
+	default void syncSigilHolder(BlockEntity blockEntity) {
+		if (blockEntity instanceof SigilBlockEntity sigilBlockEntity) {
+			sigilBlockEntity.sync();
+		}
+		else if (blockEntity instanceof DragonsBloodChestBlockEntity dragonsBloodChestBlockEntity) {
+			dragonsBloodChestBlockEntity.sync();
 		}
 	}
 	

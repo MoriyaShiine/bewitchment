@@ -1,7 +1,8 @@
 package moriyashiine.bewitchment.common.block.entity.interfaces;
 
+import moriyashiine.bewitchment.common.block.entity.ElderChestBlockEntity;
+import moriyashiine.bewitchment.common.block.entity.LockableBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWTags;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
@@ -11,7 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -73,7 +73,7 @@ public interface Lockable {
 							}
 							lockable.setModeOnWhitelist(true);
 							lockable.setLocked(true);
-							syncLockable(world, blockEntity);
+							syncLockable(blockEntity);
 							blockEntity.markDirty();
 						}
 						return ActionResult.SUCCESS;
@@ -103,9 +103,12 @@ public interface Lockable {
 		return true;
 	}
 	
-	default void syncLockable(World world, BlockEntity blockEntity) {
-		if (world instanceof ServerWorld && blockEntity instanceof BlockEntityClientSerializable blockEntityClientSerializable) {
-			blockEntityClientSerializable.sync();
+	default void syncLockable(BlockEntity blockEntity) {
+		if (blockEntity instanceof LockableBlockEntity lockableBlockEntity) {
+			lockableBlockEntity.sync();
+		}
+		else if (blockEntity instanceof ElderChestBlockEntity elderChestBlockEntity) {
+			elderChestBlockEntity.sync();
 		}
 	}
 	

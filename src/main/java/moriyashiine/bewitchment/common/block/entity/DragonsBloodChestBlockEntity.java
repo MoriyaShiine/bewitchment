@@ -3,19 +3,23 @@ package moriyashiine.bewitchment.common.block.entity;
 import moriyashiine.bewitchment.api.registry.Sigil;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.ChestBlockEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class DragonsBloodChestBlockEntity extends BWChestBlockEntity implements BlockEntityClientSerializable, SigilHolder {
+public class DragonsBloodChestBlockEntity extends BWChestBlockEntity implements SigilHolder {
 	private final List<UUID> entities = new ArrayList<>();
 	private UUID owner = null;
 	private Sigil sigil = null;
@@ -76,25 +80,34 @@ public class DragonsBloodChestBlockEntity extends BWChestBlockEntity implements 
 	}
 	
 	@Override
-	public void fromClientTag(NbtCompound tag) {
-		fromNbtSigil(tag);
+	public NbtCompound toInitialChunkDataNbt() {
+		NbtCompound nbt = super.toInitialChunkDataNbt();
+		writeNbt(nbt);
+		return nbt;
 	}
 	
+	@Nullable
 	@Override
-	public NbtCompound toClientTag(NbtCompound tag) {
-		toNbtSigil(tag);
-		return tag;
+	public Packet<ClientPlayPacketListener> toUpdatePacket() {
+		return BlockEntityUpdateS2CPacket.create(this);
 	}
 	
 	@Override
 	public void readNbt(NbtCompound nbt) {
-		fromClientTag(nbt);
 		super.readNbt(nbt);
+		fromNbtSigil(nbt);
 	}
 	
 	@Override
-	public NbtCompound writeNbt(NbtCompound nbt) {
-		return super.writeNbt(toClientTag(nbt));
+	protected void writeNbt(NbtCompound nbt) {
+		super.writeNbt(nbt);
+		toNbtSigil(nbt);
+	}
+	
+	public void sync() {
+		if (world != null && !world.isClient) {
+			world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_LISTENERS);
+		}
 	}
 	
 	public static void tick(World world, BlockPos pos, BlockState state, DragonsBloodChestBlockEntity blockEntity) {

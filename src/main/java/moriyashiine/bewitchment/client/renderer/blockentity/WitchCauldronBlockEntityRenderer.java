@@ -78,7 +78,7 @@ public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<Wit
 				matrices.multiply(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getRotation());
 				matrices.scale(-0.025f, -0.025f, 0.025f);
 				Text name = entity.getCustomName();
-				Matrix4f model = matrices.peek().getModel();
+				Matrix4f model = matrices.peek().getPositionMatrix();
 				int x = -MinecraftClient.getInstance().textRenderer.getWidth(name) / 2;
 				MinecraftClient.getInstance().textRenderer.draw(name, x, 0, 0x20ffff, false, model, vertexConsumers, true, (int) (MinecraftClient.getInstance().options.getTextBackgroundOpacity(0.25f) * 255f) << 24, light);
 				MinecraftClient.getInstance().textRenderer.draw(name, x, 0, -1, false, model, vertexConsumers, false, 0, light);
@@ -89,7 +89,7 @@ public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<Wit
 	
 	private void renderPortal(WitchCauldronBlockEntity entity, BlockPos pos, MatrixStack matrices, VertexConsumerProvider vertexConsumers) {
 		matrices.push();
-		Matrix4f matrix4f = matrices.peek().getModel();
+		Matrix4f matrix4f = matrices.peek().getPositionMatrix();
 		VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEndPortal()); //todo maybe look at coloring this again
 		vertexConsumer.vertex(matrix4f, 0.125f, 0, 0.875f).next();
 		vertexConsumer.vertex(matrix4f, 0.875f, 0, 0.875f).next();
@@ -100,7 +100,7 @@ public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<Wit
 	
 	private void renderWater(WitchCauldronBlockEntity entity, MatrixStack matrices, VertexConsumer buffer, int light, int overlay, Sprite sprite) {
 		matrices.push();
-		Matrix4f mat = matrices.peek().getModel();
+		Matrix4f mat = matrices.peek().getPositionMatrix();
 		float sizeFactor = 0.125f;
 		float maxV = (sprite.getMaxV() - sprite.getMinV()) * sizeFactor;
 		float minV = (sprite.getMaxV() - sprite.getMinV()) * (1 - sizeFactor);

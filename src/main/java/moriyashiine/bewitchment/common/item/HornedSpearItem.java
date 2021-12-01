@@ -78,7 +78,7 @@ public class HornedSpearItem extends SwordItem {
 	public static void spawnEntity(World world, LivingEntity owner, ItemStack stack) {
 		stack.damage(1, owner, stackUser -> stackUser.sendToolBreakStatus(stackUser.getActiveHand()));
 		HornedSpearEntity spear = new HornedSpearEntity(BWEntityTypes.HORNED_SPEAR, owner, world, stack.copy());
-		spear.setProperties(owner, owner.getPitch(), owner.getYaw(), 0, 3, 1);
+		spear.setVelocity(owner, owner.getPitch(), owner.getYaw(), 0, 3, 1);
 		if (owner instanceof PlayerEntity player) {
 			if (player.isCreative()) {
 				spear.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;

@@ -110,7 +110,7 @@ public class AthameItem extends SwordItem {
 			if (player != null && player.getUuid().equals(taglockHolder.getOwner()) && taglockHolder.getFirstEmptySlot() != 0) {
 				if (!client) {
 					ItemScatterer.spawn(world, pos, taglockHolder.getTaglockInventory());
-					taglockHolder.syncTaglockHolder(world, blockEntity);
+					taglockHolder.syncTaglockHolder(blockEntity);
 					blockEntity.markDirty();
 				}
 				return ActionResult.success(client);

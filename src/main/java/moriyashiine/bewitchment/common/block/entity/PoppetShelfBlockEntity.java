@@ -5,22 +5,26 @@ import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
-public class PoppetShelfBlockEntity extends BlockEntity implements BlockEntityClientSerializable {
+public class PoppetShelfBlockEntity extends BlockEntity {
 	@Environment(EnvType.CLIENT)
-	public DefaultedList<ItemStack> clientInventory = DefaultedList.ofSize(9, ItemStack.EMPTY);
+	public final DefaultedList<ItemStack> clientInventory = DefaultedList.ofSize(9, ItemStack.EMPTY);
 	
 	public PoppetShelfBlockEntity(BlockPos pos, BlockState state) {
 		super(BWBlockEntityTypes.POPPET_SHELF, pos, state);
@@ -50,18 +54,38 @@ public class PoppetShelfBlockEntity extends BlockEntity implements BlockEntityCl
 	}
 	
 	@Override
-	public void fromClientTag(NbtCompound tag) {
-		clientInventory.clear();
-		Inventories.readNbt(tag, clientInventory);
+	public NbtCompound toInitialChunkDataNbt() {
+		NbtCompound nbt = super.toInitialChunkDataNbt();
+		writeNbt(nbt);
+		return nbt;
+	}
+	
+	@Nullable
+	@Override
+	public Packet<ClientPlayPacketListener> toUpdatePacket() {
+		return BlockEntityUpdateS2CPacket.create(this);
 	}
 	
 	@Override
-	public NbtCompound toClientTag(NbtCompound tag) {
+	public void readNbt(NbtCompound nbt) {
+		super.readNbt(nbt);
+		clientInventory.clear();
+		Inventories.readNbt(nbt, clientInventory);
+	}
+	
+	@Override
+	protected void writeNbt(NbtCompound nbt) {
+		super.writeNbt(nbt);
 		DefaultedList<ItemStack> inventory = BWWorldState.get(world).poppetShelves.get(pos.asLong());
 		if (inventory != null) {
-			Inventories.writeNbt(tag, inventory);
+			Inventories.writeNbt(nbt, inventory);
 		}
-		return tag;
+	}
+	
+	public void sync() {
+		if (world != null && !world.isClient) {
+			world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_LISTENERS);
+		}
 	}
 	
 	private int getFirstEmptySlot() {

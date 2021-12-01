@@ -42,7 +42,7 @@ public class JuniperTrapdoorBlock extends TerraformTrapdoorBlock implements Bloc
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			TaglockHolder taglockHolder = (TaglockHolder) blockEntity;
 			taglockHolder.setOwner(placer.getUuid());
-			taglockHolder.syncTaglockHolder(world, blockEntity);
+			taglockHolder.syncTaglockHolder(blockEntity);
 			blockEntity.markDirty();
 		}
 	}

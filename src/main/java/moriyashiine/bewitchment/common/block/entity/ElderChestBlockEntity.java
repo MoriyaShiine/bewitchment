@@ -2,17 +2,21 @@ package moriyashiine.bewitchment.common.block.entity;
 
 import moriyashiine.bewitchment.common.block.entity.interfaces.Lockable;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.math.BlockPos;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ElderChestBlockEntity extends BWChestBlockEntity implements BlockEntityClientSerializable, Lockable {
+public class ElderChestBlockEntity extends BWChestBlockEntity implements Lockable {
 	private final List<UUID> entities = new ArrayList<>();
 	private UUID owner = null;
 	private boolean modeOnWhitelist = false, locked = false;
@@ -61,24 +65,33 @@ public class ElderChestBlockEntity extends BWChestBlockEntity implements BlockEn
 	}
 	
 	@Override
-	public void fromClientTag(NbtCompound tag) {
-		fromNbtLockable(tag);
+	public NbtCompound toInitialChunkDataNbt() {
+		NbtCompound nbt = super.toInitialChunkDataNbt();
+		writeNbt(nbt);
+		return nbt;
 	}
 	
+	@Nullable
 	@Override
-	public NbtCompound toClientTag(NbtCompound tag) {
-		toNbtLockable(tag);
-		return tag;
+	public Packet<ClientPlayPacketListener> toUpdatePacket() {
+		return BlockEntityUpdateS2CPacket.create(this);
 	}
 	
 	@Override
 	public void readNbt(NbtCompound nbt) {
-		fromClientTag(nbt);
 		super.readNbt(nbt);
+		fromNbtLockable(nbt);
 	}
 	
 	@Override
-	public NbtCompound writeNbt(NbtCompound nbt) {
-		return super.writeNbt(toClientTag(nbt));
+	protected void writeNbt(NbtCompound nbt) {
+		super.writeNbt(nbt);
+		toNbtLockable(nbt);
+	}
+	
+	public void sync() {
+		if (world != null && !world.isClient) {
+			world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_LISTENERS);
+		}
 	}
 }

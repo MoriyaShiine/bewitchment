@@ -10,7 +10,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
 
 public class BloodComponent implements AutoSyncedComponent, ServerTickingComponent {
-	public static int MAX_BLOOD = 100;
+	public static final int MAX_BLOOD = 100;
 	
 	private final LivingEntity obj;
 	private int blood = MAX_BLOOD;

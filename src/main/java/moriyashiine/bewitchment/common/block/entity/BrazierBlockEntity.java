@@ -10,7 +10,7 @@ import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.recipe.CurseRecipe;
 import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
 import moriyashiine.bewitchment.common.registry.*;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
@@ -22,6 +22,9 @@ import net.minecraft.item.FlintAndSteelItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
@@ -34,9 +37,10 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings({"ConstantConditions", "OptionalGetWithoutIsPresent"})
-public class BrazierBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Inventory, UsesAltarPower {
+public class BrazierBlockEntity extends BlockEntity implements Inventory, UsesAltarPower {
 	private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
 	
 	private BlockPos altarPos = null;
@@ -52,36 +56,45 @@ public class BrazierBlockEntity extends BlockEntity implements BlockEntityClient
 	}
 	
 	@Override
-	public void fromClientTag(NbtCompound tag) {
-		if (tag.contains("AltarPos")) {
-			setAltarPos(BlockPos.fromLong(tag.getLong("AltarPos")));
-		}
-		inventory.clear();
-		Inventories.readNbt(tag, inventory);
-		timer = tag.getInt("Timer");
-		hasIncense = tag.getBoolean("HasIncense");
+	public NbtCompound toInitialChunkDataNbt() {
+		NbtCompound nbt = super.toInitialChunkDataNbt();
+		writeNbt(nbt);
+		return nbt;
 	}
 	
+	@Nullable
 	@Override
-	public NbtCompound toClientTag(NbtCompound tag) {
-		if (getAltarPos() != null) {
-			tag.putLong("AltarPos", getAltarPos().asLong());
-		}
-		Inventories.writeNbt(tag, inventory);
-		tag.putInt("Timer", timer);
-		tag.putBoolean("HasIncense", hasIncense);
-		return tag;
+	public Packet<ClientPlayPacketListener> toUpdatePacket() {
+		return BlockEntityUpdateS2CPacket.create(this);
 	}
 	
 	@Override
 	public void readNbt(NbtCompound nbt) {
-		fromClientTag(nbt);
 		super.readNbt(nbt);
+		if (nbt.contains("AltarPos")) {
+			setAltarPos(BlockPos.fromLong(nbt.getLong("AltarPos")));
+		}
+		inventory.clear();
+		Inventories.readNbt(nbt, inventory);
+		timer = nbt.getInt("Timer");
+		hasIncense = nbt.getBoolean("HasIncense");
 	}
 	
 	@Override
-	public NbtCompound writeNbt(NbtCompound nbt) {
-		return super.writeNbt(toClientTag(nbt));
+	protected void writeNbt(NbtCompound nbt) {
+		super.writeNbt(nbt);
+		if (getAltarPos() != null) {
+			nbt.putLong("AltarPos", getAltarPos().asLong());
+		}
+		Inventories.writeNbt(nbt, inventory);
+		nbt.putInt("Timer", timer);
+		nbt.putBoolean("HasIncense", hasIncense);
+	}
+	
+	public void sync() {
+		if (world != null && !world.isClient) {
+			world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_LISTENERS);
+		}
 	}
 	
 	@Override

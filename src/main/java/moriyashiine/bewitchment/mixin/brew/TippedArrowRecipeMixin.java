@@ -14,7 +14,7 @@ import java.util.UUID;
 @SuppressWarnings("ConstantConditions")
 @Mixin(TippedArrowRecipe.class)
 public class TippedArrowRecipeMixin {
-	@Inject(method = "craft", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
+	@Inject(method = "craft(Lnet/minecraft/inventory/CraftingInventory;)Lnet/minecraft/item/ItemStack;", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
 	private void craft(CraftingInventory inventory, CallbackInfoReturnable<ItemStack> callbackInfo) {
 		ItemStack stack = inventory.getStack(1 + inventory.getWidth());
 		if (stack.hasNbt() && stack.getNbt().contains("BewitchmentBrew")) {

@@ -9,7 +9,6 @@ import moriyashiine.bewitchment.common.block.GlyphBlock;
 import moriyashiine.bewitchment.common.item.WaystoneItem;
 import moriyashiine.bewitchment.common.recipe.RitualRecipe;
 import moriyashiine.bewitchment.common.registry.*;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -23,6 +22,9 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -36,11 +38,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
-public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Inventory, UsesAltarPower {
+public class GlyphBlockEntity extends BlockEntity implements Inventory, UsesAltarPower {
 	private static final byte[][] inner = {{0, 0, 1, 1, 1, 0, 0}, {0, 1, 0, 0, 0, 1, 0}, {1, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 1}, {0, 1, 0, 0, 0, 1, 0}, {0, 0, 1, 1, 1, 0, 0}};
 	private static final byte[][] outer = {{0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0}};
 	
@@ -60,48 +63,57 @@ public class GlyphBlockEntity extends BlockEntity implements BlockEntityClientSe
 	}
 	
 	@Override
-	public void fromClientTag(NbtCompound tag) {
-		if (tag.contains("AltarPos")) {
-			setAltarPos(BlockPos.fromLong(tag.getLong("AltarPos")));
-		}
-		if (tag.contains("EffectivePos")) {
-			effectivePos = BlockPos.fromLong(tag.getLong("EffectivePos"));
-		}
-		inventory.clear();
-		Inventories.readNbt(tag, inventory);
-		ritualFunction = BWRegistries.RITUAL_FUNCTIONS.get(new Identifier(tag.getString("RitualFunction")));
-		timer = tag.getInt("Timer");
-		endTime = tag.getInt("EndTime");
-		catFamiliar = tag.getBoolean("CatFamiliar");
+	public NbtCompound toInitialChunkDataNbt() {
+		NbtCompound nbt = super.toInitialChunkDataNbt();
+		writeNbt(nbt);
+		return nbt;
 	}
 	
+	@Nullable
 	@Override
-	public NbtCompound toClientTag(NbtCompound tag) {
-		if (getAltarPos() != null) {
-			tag.putLong("AltarPos", getAltarPos().asLong());
-		}
-		if (effectivePos != null) {
-			tag.putLong("EffectivePos", effectivePos.asLong());
-		}
-		Inventories.writeNbt(tag, inventory);
-		if (ritualFunction != null) {
-			tag.putString("RitualFunction", BWRegistries.RITUAL_FUNCTIONS.getId(ritualFunction).toString());
-		}
-		tag.putInt("Timer", timer);
-		tag.putInt("EndTime", endTime);
-		tag.putBoolean("CatFamiliar", catFamiliar);
-		return tag;
+	public Packet<ClientPlayPacketListener> toUpdatePacket() {
+		return BlockEntityUpdateS2CPacket.create(this);
 	}
 	
 	@Override
 	public void readNbt(NbtCompound nbt) {
-		fromClientTag(nbt);
 		super.readNbt(nbt);
+		if (nbt.contains("AltarPos")) {
+			setAltarPos(BlockPos.fromLong(nbt.getLong("AltarPos")));
+		}
+		if (nbt.contains("EffectivePos")) {
+			effectivePos = BlockPos.fromLong(nbt.getLong("EffectivePos"));
+		}
+		inventory.clear();
+		Inventories.readNbt(nbt, inventory);
+		ritualFunction = BWRegistries.RITUAL_FUNCTIONS.get(new Identifier(nbt.getString("RitualFunction")));
+		timer = nbt.getInt("Timer");
+		endTime = nbt.getInt("EndTime");
+		catFamiliar = nbt.getBoolean("CatFamiliar");
 	}
 	
 	@Override
-	public NbtCompound writeNbt(NbtCompound nbt) {
-		return super.writeNbt(toClientTag(nbt));
+	protected void writeNbt(NbtCompound nbt) {
+		super.writeNbt(nbt);
+		if (getAltarPos() != null) {
+			nbt.putLong("AltarPos", getAltarPos().asLong());
+		}
+		if (effectivePos != null) {
+			nbt.putLong("EffectivePos", effectivePos.asLong());
+		}
+		Inventories.writeNbt(nbt, inventory);
+		if (ritualFunction != null) {
+			nbt.putString("RitualFunction", BWRegistries.RITUAL_FUNCTIONS.getId(ritualFunction).toString());
+		}
+		nbt.putInt("Timer", timer);
+		nbt.putInt("EndTime", endTime);
+		nbt.putBoolean("CatFamiliar", catFamiliar);
+	}
+	
+	public void sync() {
+		if (world != null && !world.isClient) {
+			world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_LISTENERS);
+		}
 	}
 	
 	@Override

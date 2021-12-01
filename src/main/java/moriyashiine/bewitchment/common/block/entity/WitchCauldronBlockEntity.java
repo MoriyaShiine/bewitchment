@@ -7,8 +7,8 @@ import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.recipe.CauldronBrewingRecipe;
 import moriyashiine.bewitchment.common.recipe.OilRecipe;
 import moriyashiine.bewitchment.common.registry.*;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.util.NbtType;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EntityType;
@@ -24,6 +24,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.sound.SoundCategory;
@@ -44,7 +47,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
-public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Inventory, Nameable, UsesAltarPower {
+public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, Nameable, UsesAltarPower {
 	private static final TranslatableText DEFAULT_NAME = new TranslatableText(BWObjects.WITCH_CAULDRON.getTranslationKey());
 	
 	private Box box;
@@ -68,45 +71,54 @@ public class WitchCauldronBlockEntity extends BlockEntity implements BlockEntity
 	}
 	
 	@Override
-	public void fromClientTag(NbtCompound tag) {
-		if (tag.contains("AltarPos")) {
-			setAltarPos(BlockPos.fromLong(tag.getLong("AltarPos")));
-		}
-		Inventories.readNbt(tag, inventory);
-		mode = Mode.valueOf(tag.getString("Mode"));
-		if (tag.contains("CustomName", NbtType.STRING)) {
-			customName = Text.Serializer.fromJson(tag.getString("CustomName"));
-		}
-		if (tag.contains("Color")) {
-			color = tag.getInt("Color");
-		}
-		heatTimer = tag.getInt("HeatTimer");
+	public NbtCompound toInitialChunkDataNbt() {
+		NbtCompound nbt = super.toInitialChunkDataNbt();
+		writeNbt(nbt);
+		return nbt;
 	}
 	
+	@Nullable
 	@Override
-	public NbtCompound toClientTag(NbtCompound tag) {
-		if (getAltarPos() != null) {
-			tag.putLong("AltarPos", getAltarPos().asLong());
-		}
-		Inventories.writeNbt(tag, inventory);
-		tag.putString("Mode", mode.name);
-		if (customName != null) {
-			tag.putString("CustomName", Text.Serializer.toJson(customName));
-		}
-		tag.putInt("Color", color);
-		tag.putInt("HeatTimer", heatTimer);
-		return tag;
+	public Packet<ClientPlayPacketListener> toUpdatePacket() {
+		return BlockEntityUpdateS2CPacket.create(this);
 	}
 	
 	@Override
 	public void readNbt(NbtCompound nbt) {
-		fromClientTag(nbt);
 		super.readNbt(nbt);
+		if (nbt.contains("AltarPos")) {
+			setAltarPos(BlockPos.fromLong(nbt.getLong("AltarPos")));
+		}
+		Inventories.readNbt(nbt, inventory);
+		mode = Mode.valueOf(nbt.getString("Mode"));
+		if (nbt.contains("CustomName", NbtType.STRING)) {
+			customName = Text.Serializer.fromJson(nbt.getString("CustomName"));
+		}
+		if (nbt.contains("Color")) {
+			color = nbt.getInt("Color");
+		}
+		heatTimer = nbt.getInt("HeatTimer");
 	}
 	
 	@Override
-	public NbtCompound writeNbt(NbtCompound nbt) {
-		return super.writeNbt(toClientTag(nbt));
+	protected void writeNbt(NbtCompound nbt) {
+		super.writeNbt(nbt);
+		if (getAltarPos() != null) {
+			nbt.putLong("AltarPos", getAltarPos().asLong());
+		}
+		Inventories.writeNbt(nbt, inventory);
+		nbt.putString("Mode", mode.name);
+		if (customName != null) {
+			nbt.putString("CustomName", Text.Serializer.toJson(customName));
+		}
+		nbt.putInt("Color", color);
+		nbt.putInt("HeatTimer", heatTimer);
+	}
+	
+	public void sync() {
+		if (world != null && !world.isClient) {
+			world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_LISTENERS);
+		}
 	}
 	
 	@Override

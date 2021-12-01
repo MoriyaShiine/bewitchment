@@ -2,7 +2,6 @@ package moriyashiine.bewitchment.common.block.entity;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.registry.*;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -12,6 +11,9 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.collection.DefaultedList;
@@ -19,11 +21,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityClientSerializable, Inventory {
+public class WitchAltarBlockEntity extends BlockEntity implements Inventory {
 	private int loadingTimer = 20;
 	
 	private final Map<Block, Integer> checked = new HashMap<>();
@@ -41,32 +44,41 @@ public class WitchAltarBlockEntity extends BlockEntity implements BlockEntityCli
 	}
 	
 	@Override
-	public void fromClientTag(NbtCompound tag) {
-		inventory.clear();
-		Inventories.readNbt(tag, inventory);
-		power = tag.getInt("Power");
-		maxPower = tag.getInt("MaxPower");
-		gain = tag.getInt("Gain");
+	public NbtCompound toInitialChunkDataNbt() {
+		NbtCompound nbt = super.toInitialChunkDataNbt();
+		writeNbt(nbt);
+		return nbt;
 	}
 	
+	@Nullable
 	@Override
-	public NbtCompound toClientTag(NbtCompound tag) {
-		Inventories.writeNbt(tag, inventory);
-		tag.putInt("Power", power);
-		tag.putInt("MaxPower", maxPower);
-		tag.putInt("Gain", gain);
-		return tag;
+	public Packet<ClientPlayPacketListener> toUpdatePacket() {
+		return BlockEntityUpdateS2CPacket.create(this);
 	}
 	
 	@Override
 	public void readNbt(NbtCompound nbt) {
-		fromClientTag(nbt);
 		super.readNbt(nbt);
+		inventory.clear();
+		Inventories.readNbt(nbt, inventory);
+		power = nbt.getInt("Power");
+		maxPower = nbt.getInt("MaxPower");
+		gain = nbt.getInt("Gain");
 	}
 	
 	@Override
-	public NbtCompound writeNbt(NbtCompound nbt) {
-		return super.writeNbt(toClientTag(nbt));
+	protected void writeNbt(NbtCompound nbt) {
+		super.writeNbt(nbt);
+		Inventories.writeNbt(nbt, inventory);
+		nbt.putInt("Power", power);
+		nbt.putInt("MaxPower", maxPower);
+		nbt.putInt("Gain", gain);
+	}
+	
+	public void sync() {
+		if (world != null && !world.isClient) {
+			world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_LISTENERS);
+		}
 	}
 	
 	public static void tick(World world, BlockPos pos, BlockState state, WitchAltarBlockEntity blockEntity) {

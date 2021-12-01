@@ -31,7 +31,7 @@ public class AdditionalWerewolfDataComponent implements AutoSyncedComponent, Com
 	@Override
 	public void tick() {
 		if (BewitchmentAPI.isWerewolf(obj, false)) {
-			obj.flyingSpeed *= 1.5f;
+			obj.airStrafingSpeed *= 1.5f;
 		}
 	}
 	

@@ -1,16 +1,14 @@
 package moriyashiine.bewitchment.common.block.entity.interfaces;
 
-import moriyashiine.bewitchment.client.network.packet.SyncTaglockHolderBlockEntity;
+import moriyashiine.bewitchment.common.block.entity.JuniperChestBlockEntity;
+import moriyashiine.bewitchment.common.block.entity.TaglockHolderBlockEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -60,7 +58,7 @@ public interface TaglockHolder {
 				ItemStack stack = taglockHolder.getTaglockInventory().get(i);
 				if (stack.getItem() instanceof TaglockItem && !TaglockItem.hasTaglock(stack)) {
 					TaglockItem.putTaglock(stack, entity);
-					syncTaglockHolder(world, blockEntity);
+					syncTaglockHolder(blockEntity);
 					blockEntity.markDirty();
 					break;
 				}
@@ -77,12 +75,12 @@ public interface TaglockHolder {
 		return -1;
 	}
 	
-	default void syncTaglockHolder(World world, BlockEntity blockEntity) {
-		if (world instanceof ServerWorld) {
-			if (blockEntity instanceof BlockEntityClientSerializable blockEntityClientSerializable) {
-				blockEntityClientSerializable.sync();
-			}
-			PlayerLookup.tracking(blockEntity).forEach(trackingPlayer -> SyncTaglockHolderBlockEntity.send(trackingPlayer, blockEntity));
+	default void syncTaglockHolder(BlockEntity blockEntity) {
+		if (blockEntity instanceof TaglockHolderBlockEntity taglockHolderBlockEntity) {
+			taglockHolderBlockEntity.sync();
+		}
+		else if (blockEntity instanceof JuniperChestBlockEntity juniperChestBlockEntity) {
+			juniperChestBlockEntity.sync();
 		}
 	}
 	

@@ -20,6 +20,8 @@
 	"MobEntityMixin",
 	"OpenDoorsTaskMixin",
 	"PlayerEntityMixin",
+	"ServerWorldMixin",
+	"SimpleBlockStateProviderAccessor",
 	"SpawnHelperMixin",
 	"VillagerEntityMixin",
 	"brew.AreaEffectCloudEntityMixin",

@@ -121,7 +121,7 @@ public class WerewolfEntityModel<T extends WerewolfEntity> extends BipedEntityMo
 		copyRotation(BipedLeftLeg, super.leftLeg);
 		BipedLeftLeg.pitch /= 2;
 		BipedLeftLeg.pitch -= 3 / 4f;
-		BipedLeftLeg.yaw += -0.2269f;
+		BipedLeftLeg.yaw -= 0.2269f;
 		BipedLeftLeg.roll -= 0.0873f;
 		copyRotation(BipedRightLeg, super.rightLeg);
 		BipedRightLeg.pitch /= 2;

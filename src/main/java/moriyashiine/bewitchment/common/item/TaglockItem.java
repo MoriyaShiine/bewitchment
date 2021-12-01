@@ -89,7 +89,7 @@ public class TaglockItem extends Item {
 					if (firstEmpty != -1) {
 						if (!client) {
 							taglockHolder.getTaglockInventory().set(firstEmpty, stack.split(1));
-							taglockHolder.syncTaglockHolder(world, blockEntity);
+							taglockHolder.syncTaglockHolder(blockEntity);
 							blockEntity.markDirty();
 						}
 						return ActionResult.success(client);
@@ -109,7 +109,7 @@ public class TaglockItem extends Item {
 								if (!player.isCreative()) {
 									stack.decrement(1);
 								}
-								lockable.syncLockable(world, blockEntity);
+								lockable.syncLockable(blockEntity);
 								blockEntity.markDirty();
 							}
 							return ActionResult.success(client);
@@ -130,7 +130,7 @@ public class TaglockItem extends Item {
 								if (!player.isCreative()) {
 									stack.decrement(1);
 								}
-								sigilHolder.syncSigilHolder(world, blockEntity);
+								sigilHolder.syncSigilHolder(blockEntity);
 								blockEntity.markDirty();
 							}
 						}

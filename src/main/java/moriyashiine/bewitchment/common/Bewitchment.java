@@ -1,16 +1,11 @@
 package moriyashiine.bewitchment.common;
 
-import io.github.flemmli97.flan.api.permission.ObjectToPermissionMap;
-import io.github.flemmli97.flan.api.permission.PermissionRegistry;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.block.CandelabraBlock;
-import moriyashiine.bewitchment.api.block.PoppetShelfBlock;
-import moriyashiine.bewitchment.api.block.WitchAltarBlock;
 import moriyashiine.bewitchment.api.component.BloodComponent;
 import moriyashiine.bewitchment.api.event.BloodSuckEvents;
-import moriyashiine.bewitchment.common.block.*;
+import moriyashiine.bewitchment.common.block.CoffinBlock;
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
@@ -32,7 +27,6 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityGroup;
@@ -58,7 +52,6 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.explosion.Explosion;
-import top.theillusivec4.somnus.api.WorldSleepEvents;
 
 public class Bewitchment implements ModInitializer {
 	public static final String MODID = "bewitchment";
@@ -150,16 +143,6 @@ public class Bewitchment implements ModInitializer {
 			}
 			return ActionResult.PASS;
 		});
-		WorldSleepEvents.WORLD_WAKE_TIME.register((world, newTime, curTime) -> {
-			if (world.isDay()) {
-				long time = curTime;
-				while (time % 24000 < 13000) {
-					time++;
-				}
-				return time;
-			}
-			return newTime;
-		});
 		EntitySleepEvents.ALLOW_SLEEP_TIME.register((player, sleepingPos, vanillaResult) -> player.world.getBlockState(sleepingPos).getBlock() instanceof CoffinBlock && player.world.isDay() ? ActionResult.success(player.world.isClient) : ActionResult.PASS);
 		EntitySleepEvents.ALLOW_SLEEPING.register((player, sleepingPos) -> {
 			if (BWComponents.TRANSFORMATION_COMPONENT.get(player).isAlternateForm()) {
@@ -220,8 +203,9 @@ public class Bewitchment implements ModInitializer {
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.END_STONE_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.OBSIDIAN_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.PURPUR_WITCH_ALTAR);
-		if (FabricLoader.getInstance().isModLoaded("flan")) {
-			ObjectToPermissionMap.registerBlockPredicateMap(block -> block instanceof WitchAltarBlock || block instanceof GlyphBlock || block instanceof WitchCauldronBlock || block instanceof BrazierBlock || block instanceof CrystalBallBlock || block instanceof PoppetShelfBlock || block instanceof CandelabraBlock, () -> PermissionRegistry.INTERACTBLOCK);
-		}
+		//todo flan compat
+		//		if (FabricLoader.getInstance().isModLoaded("flan")) {
+		//			ObjectToPermissionMap.registerBlockPredicateMap(block -> block instanceof WitchAltarBlock || block instanceof GlyphBlock || block instanceof WitchCauldronBlock || block instanceof BrazierBlock || block instanceof CrystalBallBlock || block instanceof PoppetShelfBlock || block instanceof CandelabraBlock, () -> PermissionRegistry.INTERACTBLOCK);
+		//		}
 	}
 }

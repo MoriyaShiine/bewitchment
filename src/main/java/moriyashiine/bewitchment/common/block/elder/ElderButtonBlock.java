@@ -45,7 +45,7 @@ public class ElderButtonBlock extends TerraformButtonBlock implements BlockEntit
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			Lockable lockable = (Lockable) blockEntity;
 			lockable.setOwner(placer.getUuid());
-			lockable.syncLockable(world, blockEntity);
+			lockable.syncLockable(blockEntity);
 			blockEntity.markDirty();
 		}
 	}

@@ -82,7 +82,7 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 	@Override
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
 		if (state.get(Properties.WATERLOGGED)) {
-			world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+			world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
 			state = state.with(BWProperties.LEVEL, 0);
 			state = state.with(Properties.LIT, false);
 		}

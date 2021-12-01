@@ -42,16 +42,16 @@
   ],
   "accessWidener": "bewitchment.accesswidener",
   "depends": {
-	"fabricloader": "*",
-	"fabric": ">=0.37.2+1.17",
-	"minecraft": "1.17.*",
-	"cloth-config2": "*",
-	"impersonate": "*",
-	"patchouli": "*",
-	"pehkui": "*",
-	"playerabilitylib": "*",
-	"somnus": "*",
-	"trinkets": "*"
+	"fabricloader": ">=0.12.6",
+	"fabric": ">=0.43.1",
+	"minecraft": "1.18.x",
+	"java": ">=17",
+	"cloth-config2": ">=6.0.42",
+	"impersonate": ">=2.4.0",
+	"patchouli": ">=1.18-60",
+	"pehkui": ">=3.0.0",
+	"playerabilitylib": ">=1.5.0",
+	"trinkets": ">=3.1.0"
   },
   "breaks": {
 	"optifabric": "*"

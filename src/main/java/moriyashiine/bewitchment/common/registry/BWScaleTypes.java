@@ -2,10 +2,7 @@ package moriyashiine.bewitchment.common.registry;
 
 import moriyashiine.bewitchment.common.Bewitchment;
 import net.minecraft.util.Identifier;
-import virtuoel.pehkui.api.ScaleModifier;
-import virtuoel.pehkui.api.ScaleRegistries;
-import virtuoel.pehkui.api.ScaleType;
-import virtuoel.pehkui.api.TypedScaleModifier;
+import virtuoel.pehkui.api.*;
 
 import java.util.Map;
 
@@ -21,7 +18,7 @@ public class BWScaleTypes {
 	}
 	
 	public static void init() {
-		ScaleType.WIDTH.getDefaultBaseValueModifiers().add(MODIFY_WIDTH_MODIFIER);
-		ScaleType.HEIGHT.getDefaultBaseValueModifiers().add(MODIFY_HEIGHT_MODIFIER);
+		ScaleTypes.WIDTH.getDefaultBaseValueModifiers().add(MODIFY_WIDTH_MODIFIER);
+		ScaleTypes.HEIGHT.getDefaultBaseValueModifiers().add(MODIFY_HEIGHT_MODIFIER);
 	}
 }

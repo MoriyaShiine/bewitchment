@@ -26,8 +26,8 @@ public abstract class AnimalMateGoalMixin extends Goal {
 	private void breed(CallbackInfo callbackInfo) {
 		ServerPlayerEntity player = animal.getLovingPlayer();
 		if (player != null && BWComponents.CONTRACTS_COMPONENT.get(player).hasContract(BWContracts.LUST)) {
-			animal.breed(player.getServerWorld(), mate);
-			animal.breed(player.getServerWorld(), mate);
+			animal.breed(player.getWorld(), mate);
+			animal.breed(player.getWorld(), mate);
 		}
 	}
 }

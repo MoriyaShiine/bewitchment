@@ -8,7 +8,6 @@ import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DoorBlock;
@@ -68,7 +67,7 @@ public class SigilItem extends Item {
 					sigilHolder.setSigil(sigil);
 					sigilHolder.setUses(sigil.uses * (BewitchmentAPI.getFamiliar(player) == BWEntityTypes.SNAKE ? 2 : 1));
 					sigilHolder.setOwner(player.getUuid());
-					((BlockEntityClientSerializable) blockEntity).sync();
+					sigilHolder.syncSigilHolder(blockEntity);
 					blockEntity.markDirty();
 					if (player instanceof ServerPlayerEntity serverPlayerEntity) {
 						Criteria.PLACED_BLOCK.trigger(serverPlayerEntity, pos, stack);
@@ -90,7 +89,7 @@ public class SigilItem extends Item {
 					sigilHolder.setSigil(sigil);
 					sigilHolder.setUses(sigil.uses * (BewitchmentAPI.getFamiliar(player) == BWEntityTypes.SNAKE ? 2 : 1));
 					sigilHolder.setOwner(player.getUuid());
-					((BlockEntityClientSerializable) blockEntity).sync();
+					sigilHolder.syncSigilHolder(blockEntity);
 					blockEntity.markDirty();
 					if (!player.isCreative()) {
 						stack.decrement(1);

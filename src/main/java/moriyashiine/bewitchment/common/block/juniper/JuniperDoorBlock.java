@@ -50,7 +50,7 @@ public class JuniperDoorBlock extends TerraformDoorBlock implements BlockEntityP
 			BlockEntity blockEntity = world.getBlockEntity(state.get(HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos);
 			TaglockHolder taglockHolder = (TaglockHolder) blockEntity;
 			taglockHolder.setOwner(placer.getUuid());
-			taglockHolder.syncTaglockHolder(world, blockEntity);
+			taglockHolder.syncTaglockHolder(blockEntity);
 			blockEntity.markDirty();
 		}
 	}

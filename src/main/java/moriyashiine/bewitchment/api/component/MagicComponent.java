@@ -7,7 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
 public class MagicComponent implements AutoSyncedComponent, ServerTickingComponent {
-	public static int MAX_MAGIC = 100;
+	public static final int MAX_MAGIC = 100;
 	
 	private final PlayerEntity obj;
 	private int magic = 0, magicTimer = 60;

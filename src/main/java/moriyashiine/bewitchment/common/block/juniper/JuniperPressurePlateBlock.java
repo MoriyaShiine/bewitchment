@@ -43,7 +43,7 @@ public class JuniperPressurePlateBlock extends TerraformPressurePlateBlock imple
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			TaglockHolder taglockHolder = (TaglockHolder) blockEntity;
 			taglockHolder.setOwner(placer.getUuid());
-			taglockHolder.syncTaglockHolder(world, blockEntity);
+			taglockHolder.syncTaglockHolder(blockEntity);
 			blockEntity.markDirty();
 		}
 	}

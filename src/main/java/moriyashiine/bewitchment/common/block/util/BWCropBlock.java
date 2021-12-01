@@ -42,7 +42,7 @@ public class BWCropBlock extends CropBlock {
 			modelAge = age == 0 ? 2 : age == 1 ? 3 : age == 2 ? 5 : 6;
 		}
 		if (this == BWObjects.MANDRAKE_CROP) {
-			modelAge = age == 0 ? 1 : age == 1 ? 2 : age == 2 ? 3 : 3;
+			modelAge = age == 0 ? 1 : age == 1 ? 2 : 3;
 		}
 		return AGE_TO_SHAPE[modelAge];
 	}
