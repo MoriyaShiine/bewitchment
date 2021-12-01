@@ -28,6 +28,7 @@ import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.YOffset;
 import net.minecraft.world.gen.decorator.CountPlacementModifier;
 import net.minecraft.world.gen.decorator.HeightRangePlacementModifier;
+import net.minecraft.world.gen.decorator.RarityFilterPlacementModifier;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.feature.size.FeatureSize;
 import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize;
@@ -44,11 +45,11 @@ public class BWWorldGenerators {
 	private static final FeatureSize EMPTY_SIZE = new TwoLayersFeatureSize(0, 0, 0);
 	
 	public static final ConfiguredFeature<TreeFeatureConfig, ?> JUNIPER_TREE = Feature.TREE.configure(new TreeFeatureConfig.Builder(SimpleBlockStateProviderAccessor.callInit(BWObjects.JUNIPER_LOG.getDefaultState()), new ForkingTrunkPlacer(5, 0, 0), SimpleBlockStateProviderAccessor.callInit(BWObjects.JUNIPER_LEAVES.getDefaultState()), new AcaciaFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0)), EMPTY_SIZE).ignoreVines().build());
-	public static final PlacedFeature JUNIPER_TREE_WITH_CHANCE = JUNIPER_TREE.withWouldSurviveFilter(BWObjects.JUNIPER_SAPLING);
+	public static final PlacedFeature JUNIPER_TREE_WITH_CHANCE = JUNIPER_TREE.withPlacement(VegetationPlacedFeatures.modifiersWithWouldSurvive(RarityFilterPlacementModifier.of(10), BWObjects.JUNIPER_SAPLING));
 	public static final ConfiguredFeature<TreeFeatureConfig, ?> CYPRESS_TREE = Feature.TREE.configure(new TreeFeatureConfig.Builder(SimpleBlockStateProviderAccessor.callInit(BWObjects.CYPRESS_LOG.getDefaultState()), new StraightTrunkPlacer(6, 1, 1), SimpleBlockStateProviderAccessor.callInit(BWObjects.CYPRESS_LEAVES.getDefaultState()), new LargeOakFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 4), EMPTY_SIZE).ignoreVines().build());
-	public static final PlacedFeature CYPRESS_TREE_WITH_CHANCE = CYPRESS_TREE.withWouldSurviveFilter(BWObjects.CYPRESS_SAPLING);
+	public static final PlacedFeature CYPRESS_TREE_WITH_CHANCE = CYPRESS_TREE.withPlacement(VegetationPlacedFeatures.modifiersWithWouldSurvive(RarityFilterPlacementModifier.of(10), BWObjects.CYPRESS_SAPLING));
 	public static final ConfiguredFeature<TreeFeatureConfig, ?> ELDER_TREE = Feature.TREE.configure(new TreeFeatureConfig.Builder(SimpleBlockStateProviderAccessor.callInit(BWObjects.ELDER_LOG.getDefaultState()), new StraightTrunkPlacer(4, 0, 1), SimpleBlockStateProviderAccessor.callInit(BWObjects.ELDER_LEAVES.getDefaultState()), new LargeOakFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 4), EMPTY_SIZE).ignoreVines().build());
-	public static final PlacedFeature ELDER_TREE_WITH_CHANCE = ELDER_TREE.withWouldSurviveFilter(BWObjects.ELDER_SAPLING);
+	public static final PlacedFeature ELDER_TREE_WITH_CHANCE = ELDER_TREE.withPlacement(VegetationPlacedFeatures.modifiersWithWouldSurvive(RarityFilterPlacementModifier.of(10), BWObjects.ELDER_SAPLING));
 	public static final ConfiguredFeature<TreeFeatureConfig, ?> DRAGONS_BLOOD_TREE = Feature.TREE.configure(new TreeFeatureConfig.Builder(SimpleBlockStateProviderAccessor.callInit(BWObjects.DRAGONS_BLOOD_LOG.getDefaultState().with(BWProperties.NATURAL, true)), new StraightTrunkPlacer(5, 1, 1), SimpleBlockStateProviderAccessor.callInit(BWObjects.DRAGONS_BLOOD_LEAVES.getDefaultState()), new MegaPineFoliagePlacer(ConstantIntProvider.create(1), ConstantIntProvider.create(0), ConstantIntProvider.create(3)), EMPTY_SIZE).ignoreVines().build());
 	
 	public static final List<OreFeatureConfig.Target> SILVER_ORES = List.of(OreFeatureConfig.createTarget(OreConfiguredFeatures.STONE_ORE_REPLACEABLES, BWObjects.SILVER_ORE.getDefaultState()), OreFeatureConfig.createTarget(OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES, BWObjects.DEEPSLATE_SILVER_ORE.getDefaultState()));
@@ -84,7 +85,6 @@ public class BWWorldGenerators {
 		Registry.register(BuiltinRegistries.PLACED_FEATURE, new Identifier(Bewitchment.MODID, "silver_ore_lower"), SILVER_ORE_LOWER);
 		Registry.register(BuiltinRegistries.PLACED_FEATURE, new Identifier(Bewitchment.MODID, "salt_ore_upper"), SALT_ORE_UPPER);
 		Registry.register(BuiltinRegistries.PLACED_FEATURE, new Identifier(Bewitchment.MODID, "salt_ore_lower"), SALT_ORE_LOWER);
-		
 		BiomeModification worldGen = BiomeModifications.create(new Identifier(Bewitchment.MODID, "world_features"));
 		worldGen.add(ModificationPhase.ADDITIONS, BiomeSelectors.categories(Biome.Category.SAVANNA), context -> context.getGenerationSettings().addBuiltInFeature(GenerationStep.Feature.VEGETAL_DECORATION, JUNIPER_TREE_WITH_CHANCE));
 		worldGen.add(ModificationPhase.ADDITIONS, BiomeSelectors.categories(Biome.Category.TAIGA, Biome.Category.SWAMP), context -> context.getGenerationSettings().addBuiltInFeature(GenerationStep.Feature.VEGETAL_DECORATION, CYPRESS_TREE_WITH_CHANCE));
