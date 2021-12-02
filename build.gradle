@@ -80,8 +80,8 @@ dependencies {
     include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${cardinal_components_version}"
     modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${cardinal_components_version}"
     include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${cardinal_components_version}"
-    modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${reach_version}"
-    include "com.jamieswhiteshirt:reach-entity-attributes:${reach_version}"
+    modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"
+    include "com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"
     modImplementation "com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}"
     include "com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}"
     modImplementation "com.terraformersmc.terraform-api:terraform-wood-api-v1:${terraform_wood_api_version}"
@@ -96,15 +96,13 @@ dependencies {
     modImplementation("com.github.virtuoel:pehkui:${pehkui_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-    modImplementation "io.github.ladysnake:PlayerAbilityLib:${pal_version}"
+    modImplementation "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
     modImplementation "com.github.emilyalexandra:trinkets:${trinkets_version}"
 
-//    modCompileOnly("squeek.appleskin:appleskin-fabric:${appleskin_version}:api") {
-//        transitive = false
-//    }
-//    modRuntime("squeek.appleskin:appleskin-fabric:${appleskin_version}") {
-//        exclude module: 'modmenu'
-//    }
+    modCompileOnly("squeek.appleskin:appleskin-fabric:${appleskin_version}:api") {
+        transitive = false
+    }
+    modRuntime "squeek.appleskin:appleskin-fabric:${appleskin_version}"
 //    modImplementation("io.github.flemmli97:flan:${minecraft_version}-${flan_version}") {
 //        transitive = false
 //    }
