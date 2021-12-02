@@ -24,6 +24,10 @@ repositories {
         }
     }
     maven {
+        name "impersonate"
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+    maven {
         name "reach entity attributes"
         url "https://maven.jamieswhiteshirt.com/libs-release"
         content {
@@ -37,10 +41,6 @@ repositories {
     maven {
         name "cloth config, rei"
         url "https://maven.shedaniel.me"
-    }
-    maven {
-        name "impersonate"
-        url "https://oss.sonatype.org/content/repositories/snapshots"
     }
     maven {
         name "patchouli"
@@ -80,6 +80,11 @@ dependencies {
     include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${cardinal_components_version}"
     modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${cardinal_components_version}"
     include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${cardinal_components_version}"
+    include "me.lucko:fabric-permissions-api:${fabric_permissions_api_version}"
+    modImplementation "io.github.ladysnake:impersonate:${impersonate_version}"
+    include "io.github.ladysnake:impersonate:${impersonate_version}"
+    modImplementation "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
+    include "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
     modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"
     include "com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"
     modImplementation "com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}"
@@ -91,12 +96,10 @@ dependencies {
     modImplementation("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-    modImplementation "io.github.ladysnake:impersonate:${impersonate_version}"
     modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}"
     modImplementation("com.github.virtuoel:pehkui:${pehkui_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-    modImplementation "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
     modImplementation "com.github.emilyalexandra:trinkets:${trinkets_version}"
 
     modCompileOnly("squeek.appleskin:appleskin-fabric:${appleskin_version}:api") {
