@@ -105,7 +105,7 @@ dependencies {
     modCompileOnly("squeek.appleskin:appleskin-fabric:${appleskin_version}:api") {
         transitive = false
     }
-    modRuntime "squeek.appleskin:appleskin-fabric:${appleskin_version}"
+    modRuntimeOnly "squeek.appleskin:appleskin-fabric:${appleskin_version}"
 //    modImplementation("io.github.flemmli97:flan:${minecraft_version}-${flan_version}") {
 //        transitive = false
 //    }
