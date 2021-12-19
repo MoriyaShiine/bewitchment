@@ -51,13 +51,6 @@ repositories {
         url "https://maven.ryanliptak.com/"
     }
     maven {
-        name "fall flying lib"
-        url "https://maven.cafeteria.dev"
-        content {
-            includeGroup 'net.adriantodt.fabricmc'
-        }
-    }
-    maven {
         name "flan"
         url "https://gitlab.com/api/v4/projects/21830712/packages/maven"
     }
@@ -77,9 +70,8 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${loader_version}"
 
     modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${cardinal_components_version}"
-    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${cardinal_components_version}"
     modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${cardinal_components_version}"
-    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${cardinal_components_version}"
+    //^ don't include because trinkets already does
     include "me.lucko:fabric-permissions-api:${fabric_permissions_api_version}"
     modImplementation "io.github.ladysnake:impersonate:${impersonate_version}"
     include "io.github.ladysnake:impersonate:${impersonate_version}"
@@ -105,14 +97,11 @@ dependencies {
     modCompileOnly("squeek.appleskin:appleskin-fabric:${appleskin_version}:api") {
         transitive = false
     }
-    modRuntimeOnly "squeek.appleskin:appleskin-fabric:${appleskin_version}"
-//    modImplementation("io.github.flemmli97:flan:${minecraft_version}-${flan_version}") {
+//    modRuntimeOnly "squeek.appleskin:appleskin-fabric:${appleskin_version}"
+//    modCompileOnly("io.github.flemmli97:flan:${flan_version}-api") {
 //        transitive = false
 //    }
-//    modCompileOnly("io.github.flemmli97:flan:${minecraft_version}-${flan_version}:api") {
-//        transitive = false
-//    }
-//    modRuntime("io.github.flemmli97:flan:${minecraft_version}-${flan_version}") {
+//    modRuntimeOnly("io.github.flemmli97:flan:${flan_version}") {
 //        transitive = false
 //    }
     modCompileOnly "com.github.apace100:origins-fabric:${origins_version}"
