@@ -86,37 +86,48 @@ public class Bewitchment implements ModInitializer {
 						((GlyphBlockEntity) world.getBlockEntity(glyphPos)).onUse(world, glyphPos, livingEntity, Hand.MAIN_HAND, killedEntity);
 					}
 					if (world.isNight()) {
-						boolean chicken = killedEntity instanceof ChickenEntity;
-						if ((chicken && (world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.EXTREME_HILLS || world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.ICY)) || (killedEntity instanceof WolfEntity && (world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.TAIGA || world.getBiome(killedEntity.getBlockPos()).getCategory() == Biome.Category.FOREST))) {
-							BlockPos brazierPos = BWUtil.getClosestBlockPos(killedEntity.getBlockPos(), 8, currentPos -> world.getBlockEntity(currentPos) instanceof BrazierBlockEntity brazier && brazier.incenseRecipe.effect == BWStatusEffects.MORTAL_COIL);
-							if (brazierPos != null) {
-								world.breakBlock(brazierPos, false);
-								world.createExplosion(null, brazierPos.getX() + 0.5, brazierPos.getY() + 0.5, brazierPos.getZ() + 0.5, 3, Explosion.DestructionType.BREAK);
-								MobEntity boss = chicken ? BWEntityTypes.LILITH.create(world) : BWEntityTypes.HERNE.create(world);
-								if (boss != null) {
+						boolean chicken = killedEntity instanceof ChickenEntity, wolf = killedEntity instanceof WolfEntity;
+						if (chicken || wolf) {
+							Biome.Category category = world.getBiome(killedEntity.getBlockPos()).getCategory();
+							MobEntity boss = null;
+							if (chicken) {
+								if (category == Biome.Category.EXTREME_HILLS || category == Biome.Category.ICY || category == Biome.Category.MOUNTAIN) {
+									boss = BWEntityTypes.LILITH.create(world);
+								}
+							}
+							if (wolf) {
+								if (category == Biome.Category.TAIGA || category == Biome.Category.FOREST) {
+									boss = BWEntityTypes.HERNE.create(world);
+								}
+							}
+							if (boss != null) {
+								BlockPos brazierPos = BWUtil.getClosestBlockPos(killedEntity.getBlockPos(), 8, currentPos -> world.getBlockEntity(currentPos) instanceof BrazierBlockEntity brazier && brazier.incenseRecipe.effect == BWStatusEffects.MORTAL_COIL);
+								if (brazierPos != null) {
+									world.breakBlock(brazierPos, false);
+									world.createExplosion(null, brazierPos.getX() + 0.5, brazierPos.getY() + 0.5, brazierPos.getZ() + 0.5, 3, Explosion.DestructionType.BREAK);
 									boss.initialize(world, world.getLocalDifficulty(brazierPos), SpawnReason.EVENT, null, null);
 									boss.updatePositionAndAngles(brazierPos.getX() + 0.5, brazierPos.getY(), brazierPos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
 									world.spawnEntity(boss);
 								}
 							}
 						}
-					}
-					for (AthameDropRecipe recipe : world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_DROP_RECIPE_TYPE)) {
-						if (recipe.entity_type.equals(killedEntity.getType()) && world.random.nextFloat() < recipe.chance * (EnchantmentHelper.getLooting(livingEntity) + 1)) {
-							ItemStack drop = recipe.getOutput().copy();
-							if (recipe.entity_type == EntityType.PLAYER) {
-								drop.getOrCreateNbt().putString("SkullOwner", killedEntity.getName().getString());
+						for (AthameDropRecipe recipe : world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_DROP_RECIPE_TYPE)) {
+							if (recipe.entity_type.equals(killedEntity.getType()) && world.random.nextFloat() < recipe.chance * (EnchantmentHelper.getLooting(livingEntity) + 1)) {
+								ItemStack drop = recipe.getOutput().copy();
+								if (recipe.entity_type == EntityType.PLAYER) {
+									drop.getOrCreateNbt().putString("SkullOwner", killedEntity.getName().getString());
+								}
+								ItemScatterer.spawn(world, killedEntity.getX() + 0.5, killedEntity.getY() + 0.5, killedEntity.getZ() + 0.5, drop);
 							}
-							ItemScatterer.spawn(world, killedEntity.getX() + 0.5, killedEntity.getY() + 0.5, killedEntity.getZ() + 0.5, drop);
+						}
+						if (livingEntity instanceof PlayerEntity player && livingEntity.getOffHandStack().getItem() == Items.GLASS_BOTTLE && BWComponents.BLOOD_COMPONENT.get(killedEntity).getBlood() > 20 && BWTags.HAS_BLOOD.contains(killedEntity.getType())) {
+							world.playSound(null, livingEntity.getBlockPos(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1, 0.5f);
+							BWUtil.addItemToInventoryAndConsume(player, Hand.OFF_HAND, new ItemStack(BWObjects.BOTTLE_OF_BLOOD));
 						}
 					}
-					if (livingEntity instanceof PlayerEntity player && livingEntity.getOffHandStack().getItem() == Items.GLASS_BOTTLE && BWComponents.BLOOD_COMPONENT.get(killedEntity).getBlood() > 20 && BWTags.HAS_BLOOD.contains(killedEntity.getType())) {
-						world.playSound(null, livingEntity.getBlockPos(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1, 0.5f);
-						BWUtil.addItemToInventoryAndConsume(player, Hand.OFF_HAND, new ItemStack(BWObjects.BOTTLE_OF_BLOOD));
+					if (livingEntity instanceof PlayerEntity player && BWComponents.CONTRACTS_COMPONENT.get(player).hasContract(BWContracts.DEATH)) {
+						livingEntity.heal(livingEntity.getMaxHealth() / 4f);
 					}
-				}
-				if (livingEntity instanceof PlayerEntity player && BWComponents.CONTRACTS_COMPONENT.get(player).hasContract(BWContracts.DEATH)) {
-					livingEntity.heal(livingEntity.getMaxHealth() / 4f);
 				}
 			}
 		});
