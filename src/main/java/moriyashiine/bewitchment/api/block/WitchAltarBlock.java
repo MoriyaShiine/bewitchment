@@ -107,6 +107,7 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 						world.setBlockState(pos, state.with(Properties.LEVEL_15, calculateLuminance(blockEntity)), 11);
 						world.updateComparators(pos, this);
 						blockEntity.markedForScan = true;
+						blockEntity.markDirty();
 						blockEntity.sync();
 					}
 				}
@@ -116,6 +117,7 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 						world.setBlockState(pos, state.with(Properties.LEVEL_15, 0), 11);
 						world.updateComparators(pos, this);
 						blockEntity.markedForScan = true;
+						blockEntity.markDirty();
 						blockEntity.sync();
 					}
 					else {

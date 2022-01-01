@@ -86,11 +86,13 @@ public class WitchAltarBlockEntity extends BlockEntity implements Inventory {
 			if (blockEntity.loadingTimer > 0) {
 				blockEntity.loadingTimer--;
 				if (blockEntity.loadingTimer == 0) {
-					blockEntity.markDirty();
 					blockEntity.markedForScan = true;
 				}
 			}
 			else {
+				if (world.getTime() % 20 == 0) {
+					blockEntity.markDirty();
+				}
 				if (blockEntity.markedForScan) {
 					blockEntity.counter = 0;
 					blockEntity.checked.clear();
