@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @SuppressWarnings("ConstantConditions")
 @Mixin(Entity.class)
 public abstract class EntityMixin {
-	@ModifyVariable(method = "setPose", at = @At("HEAD"))
+	@ModifyVariable(method = "setPose", at = @At("HEAD"), argsOnly = true)
 	private EntityPose modifySetPose(EntityPose pose) {
 		if (((Object) this) instanceof PlayerEntity player && (BewitchmentAPI.isVampire(player, false) || BewitchmentAPI.isWerewolf(player, false)) && (pose == EntityPose.FALL_FLYING || pose == EntityPose.SWIMMING)) {
 			return EntityPose.STANDING;

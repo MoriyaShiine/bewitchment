@@ -50,7 +50,7 @@ public abstract class LivingEntityMixin extends Entity {
 		super(type, world);
 	}
 	
-	@ModifyVariable(method = "damage", at = @At("HEAD"))
+	@ModifyVariable(method = "damage", at = @At("HEAD"), argsOnly = true)
 	private DamageSource modifyDamage0(DamageSource source) {
 		if (!world.isClient) {
 			Entity attacker = source.getSource();
@@ -61,7 +61,7 @@ public abstract class LivingEntityMixin extends Entity {
 		return source;
 	}
 	
-	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
+	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage1(float amount, DamageSource source) {
 		if (!world.isClient) {
 			if (!source.isOutOfWorld() && (hasStatusEffect(BWStatusEffects.ETHEREAL) || (source.getAttacker() instanceof LivingEntity livingAttacker && livingAttacker.hasStatusEffect(BWStatusEffects.ETHEREAL)))) {

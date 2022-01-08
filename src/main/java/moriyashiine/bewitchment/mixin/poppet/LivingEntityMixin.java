@@ -62,7 +62,7 @@ public abstract class LivingEntityMixin extends Entity {
 		}
 	}
 	
-	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
+	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage(float amount, DamageSource source) {
 		if (!world.isClient) {
 			if (amount > 0 && (Object) this instanceof PlayerEntity player && !BewitchmentAPI.isVampire(this, true)) {

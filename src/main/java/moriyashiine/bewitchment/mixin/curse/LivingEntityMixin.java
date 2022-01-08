@@ -25,7 +25,7 @@ public abstract class LivingEntityMixin extends Entity {
 		super(type, world);
 	}
 	
-	@ModifyVariable(method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)Z", at = @At("HEAD"))
+	@ModifyVariable(method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)Z", at = @At("HEAD"), argsOnly = true)
 	private StatusEffectInstance modifyStatusEffect(StatusEffectInstance effect) {
 		if (!world.isClient && !effect.isAmbient() && effect.getEffectType().getCategory() == StatusEffectCategory.HARMFUL && BWComponents.CURSES_COMPONENT.get((LivingEntity) (Object) this).hasCurse(BWCurses.COMPROMISED)) {
 			return new StatusEffectInstance(effect.getEffectType(), effect.getDuration(), effect.getAmplifier() + 1, false, effect.shouldShowParticles(), effect.shouldShowIcon());
@@ -33,7 +33,7 @@ public abstract class LivingEntityMixin extends Entity {
 		return effect;
 	}
 	
-	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
+	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage(float amount, DamageSource source) {
 		if (!world.isClient) {
 			CursesComponent cursesComponent = BWComponents.CURSES_COMPONENT.get((LivingEntity) (Object) this);

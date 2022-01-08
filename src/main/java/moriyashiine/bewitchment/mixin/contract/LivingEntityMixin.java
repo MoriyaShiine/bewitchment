@@ -25,7 +25,7 @@ public abstract class LivingEntityMixin extends Entity {
 		super(type, world);
 	}
 	
-	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
+	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage(float amount, DamageSource source) {
 		if (!world.isClient) {
 			Entity directSource = source.getSource();

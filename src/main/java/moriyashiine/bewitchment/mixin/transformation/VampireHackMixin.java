@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin({Entity.class, LivingEntity.class, PlayerEntity.class, ServerPlayerEntity.class})
 public class VampireHackMixin {
-	@ModifyVariable(method = "damage", at = @At("HEAD"))
+	@ModifyVariable(method = "damage", at = @At("HEAD"), argsOnly = true)
 	private DamageSource modifyDamage(DamageSource source) {
 		if (source.isFire() && BewitchmentAPI.isVampire((Entity) (Object) this, true)) {
 			return BWDamageSources.SUN;

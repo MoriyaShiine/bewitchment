@@ -19,7 +19,7 @@ public abstract class LivingEntityMixin extends Entity {
 		super(type, world);
 	}
 	
-	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
+	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage(float amount, DamageSource source) {
 		if (!world.isClient && amount > 0 && source.isProjectile() && source.getAttacker() instanceof PlayerEntity player) {
 			FortuneComponent fortuneComponent = BWComponents.FORTUNE_COMPONENT.get(player);

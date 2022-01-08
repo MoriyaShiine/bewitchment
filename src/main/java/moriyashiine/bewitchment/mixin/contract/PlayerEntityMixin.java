@@ -25,7 +25,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 		super(entityType, world);
 	}
 	
-	@ModifyVariable(method = "addExperience", at = @At("HEAD"))
+	@ModifyVariable(method = "addExperience", at = @At("HEAD"), argsOnly = true)
 	private int modifyAddExperience(int experience) {
 		if (BWComponents.CONTRACTS_COMPONENT.get(this).hasContract(BWContracts.PRIDE)) {
 			experience *= 2;

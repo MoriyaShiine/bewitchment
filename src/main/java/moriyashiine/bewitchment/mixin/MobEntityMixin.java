@@ -26,7 +26,7 @@ public abstract class MobEntityMixin extends LivingEntity {
 		super(entityType, world);
 	}
 	
-	@ModifyVariable(method = "setTarget", at = @At("HEAD"))
+	@ModifyVariable(method = "setTarget", at = @At("HEAD"), argsOnly = true)
 	private LivingEntity modifyTarget(LivingEntity target) {
 		if (!world.isClient && target != null) {
 			if (target instanceof GhostEntity) {

@@ -27,7 +27,7 @@ public abstract class LivingEntityMixin extends Entity {
 		super(type, world);
 	}
 	
-	@ModifyVariable(method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)Z", at = @At("HEAD"))
+	@ModifyVariable(method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)Z", at = @At("HEAD"), argsOnly = true)
 	private StatusEffectInstance modifyStatusEffect(StatusEffectInstance effect) {
 		if (!world.isClient && !effect.isAmbient() && effect.getEffectType().getCategory() == StatusEffectCategory.BENEFICIAL && (Object) this instanceof PlayerEntity player && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.TOAD) {
 			return new StatusEffectInstance(effect.getEffectType(), (int) (effect.getDuration() * (effect.getEffectType().isInstant() ? 1 : 1.5f)), effect.getAmplifier() + (effect.getEffectType().isInstant() ? 1 : 0), false, effect.shouldShowParticles(), effect.shouldShowIcon());
@@ -35,7 +35,7 @@ public abstract class LivingEntityMixin extends Entity {
 		return effect;
 	}
 	
-	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
+	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage(float amount, DamageSource source) {
 		if (!world.isClient && BWComponents.FAMILIAR_COMPONENT.get(this).isFamiliar()) {
 			amount /= 8;

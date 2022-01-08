@@ -31,7 +31,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 		super(entityType, world);
 	}
 	
-	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", ordinal = 0, target = "Lnet/minecraft/entity/player/PlayerEntity;getHealth()F"), ordinal = 0)
+	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", ordinal = 0, target = "Lnet/minecraft/entity/player/PlayerEntity;getHealth()F"), ordinal = 0, argsOnly = true)
 	private float modifyDamage(float amount, DamageSource source) {
 		if (!world.isClient) {
 			amount = BWDamageSources.handleDamage(this, source, amount);
@@ -39,7 +39,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 		return amount;
 	}
 	
-	@ModifyVariable(method = "addExhaustion", at = @At("HEAD"))
+	@ModifyVariable(method = "addExhaustion", at = @At("HEAD"), argsOnly = true)
 	private float modifyExhaustion(float exhaustion) {
 		if (!world.isClient) {
 			if (BewitchmentAPI.isWerewolf(this, true)) {

@@ -72,7 +72,7 @@ public abstract class LivingEntityMixin extends Entity {
 		}
 	}
 	
-	@ModifyVariable(method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)Z", at = @At("HEAD"))
+	@ModifyVariable(method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)Z", at = @At("HEAD"), argsOnly = true)
 	private StatusEffectInstance modifyStatusEffect(StatusEffectInstance effect) {
 		if (!world.isClient && !effect.isAmbient() && !effect.getEffectType().isInstant() && effect.getEffectType().getCategory() == StatusEffectCategory.HARMFUL) {
 			float durationMultiplier = 1;
@@ -86,7 +86,7 @@ public abstract class LivingEntityMixin extends Entity {
 		return effect;
 	}
 	
-	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getHealth()F"), ordinal = 0)
+	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getHealth()F"), ordinal = 0, argsOnly = true)
 	private float modifyDamage0(float amount, DamageSource source) {
 		if (!world.isClient) {
 			amount = BWDamageSources.handleDamage((LivingEntity) (Object) this, source, amount);
@@ -94,7 +94,7 @@ public abstract class LivingEntityMixin extends Entity {
 		return amount;
 	}
 	
-	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"))
+	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage1(float amount, DamageSource source) {
 		if (!world.isClient) {
 			Entity attacker = source.getAttacker();
