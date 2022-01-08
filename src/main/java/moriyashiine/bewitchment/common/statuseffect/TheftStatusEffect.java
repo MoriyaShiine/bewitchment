@@ -8,7 +8,6 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class TheftStatusEffect extends StatusEffect {
 	public TheftStatusEffect(StatusEffectCategory statusEffectCategory, int color) {

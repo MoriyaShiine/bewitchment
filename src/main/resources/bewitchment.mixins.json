@@ -50,7 +50,6 @@
 	"curse.MobEntityMixin",
 	"curse.ServerWorldMixin",
 	"familiar.CreeperEntityMixin",
-	"familiar.EntityMixin",
 	"familiar.LivingEntityMixin",
 	"familiar.PlayerEntityMixin",
 	"familiar.StatusEffectMixin",

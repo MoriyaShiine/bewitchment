@@ -17,6 +17,7 @@ import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.api.registry.Transformation;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
+import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.ArgumentTypes;
 import net.minecraft.command.argument.EntityArgumentType;
@@ -203,6 +204,22 @@ public class BWCommands {
 			}
 			return 0;
 		}))));
+		dispatcher.register(CommandManager.literal("removefamiliar").then(CommandManager.argument("player", EntityArgumentType.player()).executes(context -> {
+			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
+			if (player != null) {
+				BWUniversalWorldState universalWorldState = BWUniversalWorldState.get(player.world);
+				for (int i = universalWorldState.familiars.size() - 1; i >= 0; i--) {
+					if (player.getUuid().equals(universalWorldState.familiars.get(i).getLeft())) {
+						universalWorldState.familiars.remove(i);
+						universalWorldState.markDirty();
+						context.getSource().sendFeedback(new TranslatableText("commands.removefamiliar.success", player.getName()), true);
+						return Command.SINGLE_SUCCESS;
+					}
+				}
+				context.getSource().sendFeedback(new TranslatableText("commands.removefamiliar.no_familiar", player.getName()), true);
+			}
+			return 0;
+		})));
 	}
 	
 	public static void registerArgumentTypes() {

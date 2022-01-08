@@ -3,6 +3,7 @@ package moriyashiine.bewitchment.mixin.familiar;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
+import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -41,6 +42,20 @@ public abstract class LivingEntityMixin extends Entity {
 			amount /= 8;
 		}
 		return amount;
+	}
+	
+	@Inject(method = "onDeath", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getDamageTracker()Lnet/minecraft/entity/damage/DamageTracker;", ordinal = 1))
+	private void removeFamiliar(DamageSource source, CallbackInfo ci) {
+		if (!world.isClient) {
+			BWUniversalWorldState universalWorldState = BWUniversalWorldState.get(world);
+			for (int i = universalWorldState.familiars.size() - 1; i >= 0; i--) {
+				if (getUuid().equals(universalWorldState.familiars.get(i).getRight().getUuid("UUID"))) {
+					universalWorldState.familiars.remove(i);
+					universalWorldState.markDirty();
+					break;
+				}
+			}
+		}
 	}
 	
 	@Inject(method = "handleFallDamage", at = @At("HEAD"), cancellable = true)
