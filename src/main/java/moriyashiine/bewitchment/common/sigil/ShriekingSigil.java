@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.bewitchment.common.sigil;
 
 import moriyashiine.bewitchment.api.registry.Sigil;

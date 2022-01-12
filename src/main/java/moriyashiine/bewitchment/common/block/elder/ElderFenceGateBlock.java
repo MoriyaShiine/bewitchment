@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.bewitchment.common.block.elder;
 
 import moriyashiine.bewitchment.common.block.entity.LockableBlockEntity;

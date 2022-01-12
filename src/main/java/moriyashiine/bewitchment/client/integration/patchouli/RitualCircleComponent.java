@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.bewitchment.client.integration.patchouli;
 
 import com.mojang.blaze3d.systems.RenderSystem;

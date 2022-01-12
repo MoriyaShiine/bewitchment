@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.bewitchment.api.entity;
 
 import moriyashiine.bewitchment.common.misc.BWUtil;

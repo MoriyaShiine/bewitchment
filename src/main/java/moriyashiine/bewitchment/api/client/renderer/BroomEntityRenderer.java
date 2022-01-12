@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.bewitchment.api.client.renderer;
 
 import moriyashiine.bewitchment.api.client.model.BroomEntityModel;

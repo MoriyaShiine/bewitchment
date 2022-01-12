@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.bewitchment.mixin.curse;
 
 import moriyashiine.bewitchment.common.registry.BWComponents;

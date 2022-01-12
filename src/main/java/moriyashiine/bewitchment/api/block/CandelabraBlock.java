@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.bewitchment.api.block;
 
 import moriyashiine.bewitchment.common.world.BWWorldState;

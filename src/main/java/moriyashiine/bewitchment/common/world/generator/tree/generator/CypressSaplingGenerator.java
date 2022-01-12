@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.bewitchment.common.world.generator.tree.generator;
 
 import moriyashiine.bewitchment.common.registry.BWWorldGenerators;

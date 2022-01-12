@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.bewitchment.client.screen;
 
 import moriyashiine.bewitchment.common.entity.DemonMerchant;

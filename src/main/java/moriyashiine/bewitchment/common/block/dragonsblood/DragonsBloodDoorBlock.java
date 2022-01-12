@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.bewitchment.common.block.dragonsblood;
 
 import com.terraformersmc.terraform.wood.block.TerraformDoorBlock;

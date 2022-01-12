@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.bewitchment.client.integration.rei.display;
 
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;

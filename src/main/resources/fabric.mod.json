@@ -17,7 +17,7 @@
 	"sources": "https://github.com/MoriyaShiine/bewitchment",
 	"issues": "https://github.com/MoriyaShiine/bewitchment/issues"
   },
-  "license": "CC BY-NC-ND 4.0",
+  "license": "All Rights Reserved",
   "icon": "assets/bewitchment/icon.png",
   "environment": "*",
   "entrypoints": {
@@ -43,10 +43,10 @@
   "accessWidener": "bewitchment.accesswidener",
   "depends": {
 	"fabricloader": ">=0.12.12",
-	"fabric": ">=0.44.0",
 	"minecraft": "1.18.x",
 	"java": ">=17",
 	"cloth-config2": ">=6.1.48",
+	"fabric": ">=0.44.0",
 	"patchouli": ">=1.18-61",
 	"pehkui": ">=3.0.0",
 	"trinkets": ">=3.1.0"

@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.bewitchment.mixin.integration.origins;
 
 import io.github.apace100.apoli.power.Power;

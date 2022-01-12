@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.bewitchment.mixin.brew;
 
 import net.minecraft.inventory.CraftingInventory;
