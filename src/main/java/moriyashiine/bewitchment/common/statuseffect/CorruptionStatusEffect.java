@@ -14,7 +14,7 @@ import java.util.Map;
 @SuppressWarnings("ConstantConditions")
 public class CorruptionStatusEffect extends StatusEffect {
 	public static final Map<StatusEffect, StatusEffect> INVERSE_EFFECTS = new HashMap<>();
-	
+
 	static {
 		INVERSE_EFFECTS.put(StatusEffects.STRENGTH, StatusEffects.WEAKNESS);
 		INVERSE_EFFECTS.put(StatusEffects.REGENERATION, StatusEffects.POISON);
@@ -29,21 +29,21 @@ public class CorruptionStatusEffect extends StatusEffect {
 		INVERSE_EFFECTS.put(BWStatusEffects.ENCHANTED, BWStatusEffects.INHIBITED);
 		INVERSE_EFFECTS.put(BWStatusEffects.NOURISHING, StatusEffects.HUNGER);
 	}
-	
+
 	public CorruptionStatusEffect(StatusEffectCategory category, int color) {
 		super(category, color);
 	}
-	
+
 	@Override
 	public boolean isInstant() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean canApplyUpdateEffect(int duration, int amplifier) {
 		return true;
 	}
-	
+
 	@Override
 	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
 		if (!entity.world.isClient) {

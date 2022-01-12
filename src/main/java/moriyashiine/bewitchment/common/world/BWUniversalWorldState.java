@@ -15,7 +15,7 @@ import java.util.UUID;
 public class BWUniversalWorldState extends PersistentState {
 	public final List<UUID> pledgesToRemove = new ArrayList<>();
 	public final List<Pair<UUID, NbtCompound>> familiars = new ArrayList<>();
-	
+
 	public static BWUniversalWorldState readNbt(NbtCompound nbt) {
 		BWUniversalWorldState universalWorldState = new BWUniversalWorldState();
 		NbtList pledgesToRemoveList = nbt.getList("PledgesToRemove", NbtType.COMPOUND);
@@ -29,7 +29,7 @@ public class BWUniversalWorldState extends PersistentState {
 		}
 		return universalWorldState;
 	}
-	
+
 	@Override
 	public NbtCompound writeNbt(NbtCompound nbt) {
 		NbtList pledgesToRemoveList = new NbtList();
@@ -49,7 +49,7 @@ public class BWUniversalWorldState extends PersistentState {
 		nbt.put("Familiars", familiarsList);
 		return nbt;
 	}
-	
+
 	@SuppressWarnings("ConstantConditions")
 	public static BWUniversalWorldState get(World world) {
 		return world.getServer().getOverworld().getPersistentStateManager().getOrCreate(BWUniversalWorldState::readNbt, BWUniversalWorldState::new, Bewitchment.MODID);

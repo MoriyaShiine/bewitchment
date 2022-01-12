@@ -24,19 +24,19 @@ public class DragonsBloodChestBlock extends BWChestBlock {
 	public DragonsBloodChestBlock(Settings settings, Supplier<BlockEntityType<? extends ChestBlockEntity>> supplier, boolean trapped) {
 		super(settings, supplier, trapped);
 	}
-	
+
 	@Nullable
 	@Override
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
 		return new DragonsBloodChestBlockEntity(BWBlockEntityTypes.DRAGONS_BLOOD_CHEST, pos, state, BWChestBlockEntity.Type.DRAGONS_BLOOD, trapped);
 	}
-	
+
 	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
 		return (tickerWorld, pos, tickerState, blockEntity) -> DragonsBloodChestBlockEntity.tick(tickerWorld, pos, tickerState, (DragonsBloodChestBlockEntity) blockEntity);
 	}
-	
+
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		SigilHolder.onUse(world, pos, player, hand);

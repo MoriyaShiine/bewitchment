@@ -17,16 +17,16 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class DemonEntityRenderer extends MobEntityRenderer<DemonEntity, DemonEntityModel<DemonEntity>> {
 	private static Identifier[] MALE_TEXTURES, FEMALE_TEXTURES;
-	
+
 	private final DemonEntityModel<DemonEntity> MALE_MODEL, FEMALE_MODEL;
-	
+
 	public DemonEntityRenderer(EntityRendererFactory.Context context) {
 		super(context, new DemonEntityModel<>(context.getPart(BewitchmentClient.MALE_DEMON_MODEL_LAYER), true), 0.5f);
 		addFeature(new HeldItemFeatureRenderer<>(this));
 		MALE_MODEL = model;
 		FEMALE_MODEL = new DemonEntityModel<>(context.getPart(BewitchmentClient.FEMALE_DEMON_MODEL_LAYER), false);
 	}
-	
+
 	@Override
 	public Identifier getTexture(DemonEntity entity) {
 		if (MALE_TEXTURES == null) {
@@ -41,7 +41,7 @@ public class DemonEntityRenderer extends MobEntityRenderer<DemonEntity, DemonEnt
 		int variant = entity.getDataTracker().get(BWHostileEntity.VARIANT);
 		return entity.getDataTracker().get(DemonEntity.MALE) ? MALE_TEXTURES[variant] : FEMALE_TEXTURES[variant];
 	}
-	
+
 	@Override
 	public void render(DemonEntity mobEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
 		model = mobEntity.getDataTracker().get(DemonEntity.MALE) ? MALE_MODEL : FEMALE_MODEL;

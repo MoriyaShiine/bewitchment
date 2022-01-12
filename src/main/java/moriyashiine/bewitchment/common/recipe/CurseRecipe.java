@@ -23,60 +23,59 @@ public class CurseRecipe implements Recipe<Inventory> {
 	public final DefaultedList<Ingredient> input;
 	public final Curse curse;
 	public final int cost;
-	
+
 	public CurseRecipe(Identifier identifier, DefaultedList<Ingredient> input, Curse curse, int cost) {
 		this.identifier = identifier;
 		this.input = input;
 		this.curse = curse;
 		this.cost = cost;
 	}
-	
+
 	@Override
 	public boolean matches(Inventory inv, World world) {
 		return RitualRecipe.matches(inv, input);
 	}
-	
+
 	@Override
 	public ItemStack craft(Inventory inv) {
 		return ItemStack.EMPTY;
 	}
-	
+
 	@Override
 	public boolean fits(int width, int height) {
 		return true;
 	}
-	
+
 	@Override
 	public ItemStack getOutput() {
 		return ItemStack.EMPTY;
 	}
-	
+
 	@Override
 	public Identifier getId() {
 		return identifier;
 	}
-	
+
 	@Override
 	public RecipeSerializer<?> getSerializer() {
 		return BWRecipeTypes.CURSE_RECIPE_SERIALIZER;
 	}
-	
+
 	@Override
 	public RecipeType<?> getType() {
 		return BWRecipeTypes.CURSE_RECIPE_TYPE;
 	}
-	
+
 	@SuppressWarnings("ConstantConditions")
 	public static class Serializer implements RecipeSerializer<CurseRecipe> {
 		private static final ItemStack TAGLOCK = new ItemStack(BWObjects.TAGLOCK);
-		
+
 		@Override
 		public CurseRecipe read(Identifier id, JsonObject json) {
 			DefaultedList<Ingredient> ingredients = RitualRecipe.Serializer.getIngredients(JsonHelper.getArray(json, "ingredients"));
 			if (ingredients.isEmpty()) {
 				throw new JsonParseException("No ingredients for curse recipe");
-			}
-			else if (ingredients.size() > 4) {
+			} else if (ingredients.size() > 4) {
 				throw new JsonParseException("Too many ingredients for curse recipe");
 			}
 			boolean foundTaglock = false;
@@ -91,7 +90,7 @@ public class CurseRecipe implements Recipe<Inventory> {
 			}
 			return new CurseRecipe(id, ingredients, BWRegistries.CURSES.get(new Identifier(JsonHelper.getString(json, "curse"))), JsonHelper.getInt(json, "cost"));
 		}
-		
+
 		@Override
 		public CurseRecipe read(Identifier id, PacketByteBuf buf) {
 			DefaultedList<Ingredient> defaultedList = DefaultedList.ofSize(buf.readVarInt(), Ingredient.EMPTY);
@@ -100,7 +99,7 @@ public class CurseRecipe implements Recipe<Inventory> {
 			}
 			return new CurseRecipe(id, defaultedList, BWRegistries.CURSES.get(new Identifier(buf.readString())), buf.readInt());
 		}
-		
+
 		@Override
 		public void write(PacketByteBuf buf, CurseRecipe recipe) {
 			buf.writeVarInt(recipe.input.size());

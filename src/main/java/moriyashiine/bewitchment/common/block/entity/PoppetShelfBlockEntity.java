@@ -26,11 +26,11 @@ import org.jetbrains.annotations.Nullable;
 public class PoppetShelfBlockEntity extends BlockEntity {
 	@Environment(EnvType.CLIENT)
 	public DefaultedList<ItemStack> clientInventory = DefaultedList.ofSize(9, ItemStack.EMPTY);
-	
+
 	public PoppetShelfBlockEntity(BlockPos pos, BlockState state) {
 		super(BWBlockEntityTypes.POPPET_SHELF, pos, state);
 	}
-	
+
 	public void onUse(World world, BlockPos pos, PlayerEntity player, Hand hand) {
 		BWWorldState worldState = BWWorldState.get(world);
 		ItemStack stack = player.getStackInHand(hand);
@@ -42,8 +42,7 @@ public class PoppetShelfBlockEntity extends BlockEntity {
 				sync();
 				worldState.markDirty();
 			}
-		}
-		else {
+		} else {
 			DefaultedList<ItemStack> inventory = worldState.poppetShelves.get(pos.asLong());
 			if (inventory != null) {
 				ItemScatterer.spawn(world, pos, inventory);
@@ -53,27 +52,27 @@ public class PoppetShelfBlockEntity extends BlockEntity {
 			}
 		}
 	}
-	
+
 	@Override
 	public NbtCompound toInitialChunkDataNbt() {
 		NbtCompound nbt = super.toInitialChunkDataNbt();
 		writeNbt(nbt);
 		return nbt;
 	}
-	
+
 	@Nullable
 	@Override
 	public Packet<ClientPlayPacketListener> toUpdatePacket() {
 		return BlockEntityUpdateS2CPacket.create(this);
 	}
-	
+
 	@Override
 	public void readNbt(NbtCompound nbt) {
 		super.readNbt(nbt);
 		clientInventory.clear();
 		Inventories.readNbt(nbt, clientInventory);
 	}
-	
+
 	@Override
 	protected void writeNbt(NbtCompound nbt) {
 		super.writeNbt(nbt);
@@ -82,13 +81,13 @@ public class PoppetShelfBlockEntity extends BlockEntity {
 			Inventories.writeNbt(nbt, inventory);
 		}
 	}
-	
+
 	public void sync() {
 		if (world != null && !world.isClient) {
 			PlayerLookup.tracking(this).forEach(trackingPlayer -> SyncPoppetShelfPacket.send(trackingPlayer, pos));
 		}
 	}
-	
+
 	private int getFirstEmptySlot() {
 		BWWorldState worldState = BWWorldState.get(world);
 		DefaultedList<ItemStack> inventory = worldState.poppetShelves.get(pos.asLong());
@@ -98,8 +97,7 @@ public class PoppetShelfBlockEntity extends BlockEntity {
 					return i;
 				}
 			}
-		}
-		else {
+		} else {
 			worldState.poppetShelves.put(pos.asLong(), DefaultedList.ofSize(9, ItemStack.EMPTY));
 			worldState.markDirty();
 			return 0;

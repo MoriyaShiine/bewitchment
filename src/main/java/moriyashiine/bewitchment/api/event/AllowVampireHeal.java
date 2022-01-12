@@ -14,6 +14,6 @@ public interface AllowVampireHeal {
 		}
 		return true;
 	});
-	
+
 	boolean allowHeal(PlayerEntity player, boolean isPledgedToLilith);
 }

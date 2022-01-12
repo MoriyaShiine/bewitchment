@@ -23,27 +23,27 @@ import java.util.List;
 public class IncenseCategory implements DisplayCategory<IncenseDisplay> {
 	public static final TranslatableText TITLE = new TranslatableText("rei.bewitchment.incenses");
 	public static final EntryStack<ItemStack> ICON = EntryStacks.of(BWObjects.BRAZIER);
-	
+
 	@Override
 	public Renderer getIcon() {
 		return ICON;
 	}
-	
+
 	@Override
 	public Text getTitle() {
 		return TITLE;
 	}
-	
+
 	@Override
 	public int getDisplayHeight() {
 		return 49;
 	}
-	
+
 	@Override
 	public CategoryIdentifier<? extends IncenseDisplay> getCategoryIdentifier() {
 		return BWREIPlugin.INCENSES;
 	}
-	
+
 	@Override
 	public List<Widget> setupDisplay(IncenseDisplay display, Rectangle bounds) {
 		Point startPoint = new Point(bounds.getCenterX() - 64, bounds.getCenterY() - 16);

@@ -35,12 +35,12 @@ import java.util.List;
 @SuppressWarnings("ConstantConditions")
 public class SigilItem extends Item {
 	public final Sigil sigil;
-	
+
 	public SigilItem(Settings settings, Sigil sigil) {
 		super(settings);
 		this.sigil = sigil;
 	}
-	
+
 	@Override
 	public ActionResult useOnBlock(ItemUsageContext context) {
 		World world = context.getWorld();
@@ -78,8 +78,7 @@ public class SigilItem extends Item {
 				}
 				return ActionResult.success(client);
 			}
-		}
-		else {
+		} else {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof SigilHolder sigilHolder && state.getBlock() != BWObjects.SIGIL) {
 				if (state.getBlock() instanceof DoorBlock && state.get(DoorBlock.HALF) == DoubleBlockHalf.UPPER) {
@@ -100,12 +99,12 @@ public class SigilItem extends Item {
 		}
 		return super.useOnBlock(context);
 	}
-	
+
 	@Override
 	public String getTranslationKey() {
 		return BWObjects.SIGIL.getTranslationKey();
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {

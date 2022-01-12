@@ -17,11 +17,11 @@ import java.util.List;
 public class ContractsComponent implements ServerTickingComponent {
 	private final PlayerEntity obj;
 	private final List<Contract.Instance> contracts = new ArrayList<>();
-	
+
 	public ContractsComponent(PlayerEntity obj) {
 		this.obj = obj;
 	}
-	
+
 	@Override
 	public void readFromNbt(NbtCompound tag) {
 		NbtList contractsList = tag.getList("Contracts", NbtType.COMPOUND);
@@ -30,12 +30,12 @@ public class ContractsComponent implements ServerTickingComponent {
 			addContract(new Contract.Instance(BWRegistries.CONTRACTS.get(new Identifier(contractCompound.getString("Contract"))), contractCompound.getInt("Duration"), contractCompound.getInt("Cost")));
 		}
 	}
-	
+
 	@Override
 	public void writeToNbt(NbtCompound tag) {
 		tag.put("Contracts", toNbtContract());
 	}
-	
+
 	@Override
 	public void serverTick() {
 		int level = 0;
@@ -55,15 +55,15 @@ public class ContractsComponent implements ServerTickingComponent {
 			}
 		}
 	}
-	
+
 	public List<Contract.Instance> getContracts() {
 		return contracts;
 	}
-	
+
 	public boolean hasContract(Contract contract) {
 		return getContracts().stream().anyMatch(instance -> instance.contract == contract);
 	}
-	
+
 	public void addContract(Contract.Instance instance) {
 		if (hasContract(instance.contract)) {
 			for (Contract.Instance contract : getContracts()) {
@@ -75,7 +75,7 @@ public class ContractsComponent implements ServerTickingComponent {
 		}
 		getContracts().add(instance);
 	}
-	
+
 	public void removeContract(Contract contract) {
 		if (hasContract(contract)) {
 			for (Contract.Instance instance : getContracts()) {
@@ -85,7 +85,7 @@ public class ContractsComponent implements ServerTickingComponent {
 			}
 		}
 	}
-	
+
 	@SuppressWarnings("ConstantConditions")
 	public NbtList toNbtContract() {
 		NbtList contractsTag = new NbtList();

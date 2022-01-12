@@ -23,7 +23,7 @@ import net.minecraft.util.math.BlockPos;
 public class GhostEntityRenderer extends MobEntityRenderer<GhostEntity, GhostEntityModel<GhostEntity>> {
 	public static final Identifier EMPTY = new Identifier("minecraft", "textures/block/redstone_dust_overlay.png");
 	private static Identifier[] TEXTURES;
-	
+
 	public GhostEntityRenderer(EntityRendererFactory.Context context) {
 		super(context, new GhostEntityModel<>(context.getPart(BewitchmentClient.GHOST_MODEL_LAYER)), 0);
 		addFeature(new HeldItemFeatureRenderer<>(this));
@@ -42,12 +42,12 @@ public class GhostEntityRenderer extends MobEntityRenderer<GhostEntity, GhostEnt
 			}
 		});
 	}
-	
+
 	@Override
 	public Identifier getTexture(GhostEntity entity) {
 		return EMPTY;
 	}
-	
+
 	@Override
 	protected int getBlockLight(GhostEntity entity, BlockPos blockPos) {
 		return 15;

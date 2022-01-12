@@ -16,14 +16,14 @@ import net.minecraft.util.Identifier;
 @SuppressWarnings("ConstantConditions")
 public class SyncHornedSpearPacket {
 	public static final Identifier ID = new Identifier(Bewitchment.MODID, "sync_horned_spear");
-	
+
 	public static void send(PlayerEntity player, HornedSpearEntity entity) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		buf.writeInt(entity.getId());
 		buf.writeItemStack(entity.spear);
 		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
 	}
-	
+
 	public static void handle(MinecraftClient client, ClientPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
 		int entityId = buf.readInt();
 		ItemStack spear = buf.readItemStack();

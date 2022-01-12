@@ -31,17 +31,17 @@ import java.util.List;
 public abstract class LivingEntityMixin extends Entity {
 	@Shadow
 	public abstract boolean hasStatusEffect(StatusEffect effect);
-	
+
 	@Shadow
 	public abstract boolean addStatusEffect(StatusEffectInstance effect);
-	
+
 	@Shadow
 	public int hurtTime;
-	
+
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
-	
+
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damageHead(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
@@ -58,8 +58,7 @@ public abstract class LivingEntityMixin extends Entity {
 									if (!livingSource.hasStatusEffect(effect.getEffectType()) && BewitchmentAPI.drainMagic(player, 2, true) && livingSource.addStatusEffect(effect)) {
 										used = true;
 									}
-								}
-								else if (!hasStatusEffect(effect.getEffectType()) && BewitchmentAPI.drainMagic(player, 2, true) && addStatusEffect(effect)) {
+								} else if (!hasStatusEffect(effect.getEffectType()) && BewitchmentAPI.drainMagic(player, 2, true) && addStatusEffect(effect)) {
 									if (belt.getNbt().contains("PolymorphUUID")) {
 										BWComponents.POLYMORPH_COMPONENT.maybeGet(this).ifPresent(polymorphComponent -> {
 											polymorphComponent.setUuid(belt.getNbt().getUuid("PolymorphUUID"));
@@ -85,7 +84,7 @@ public abstract class LivingEntityMixin extends Entity {
 			}
 		}
 	}
-	
+
 	@Inject(method = "damage", at = @At("RETURN"))
 	private void damageReturn(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (callbackInfo.getReturnValue() && !world.isClient && source.getSource() instanceof PlayerEntity player && player.getMainHandStack().isEmpty() && TrinketsApi.getTrinketComponent(player).get().isEquipped(BWObjects.ZEPHYR_HARNESS) && BewitchmentAPI.drainMagic(player, 1, false)) {

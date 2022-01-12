@@ -21,7 +21,7 @@ import net.minecraft.util.Identifier;
 public class BaphometEntityRenderer extends MobEntityRenderer<BaphometEntity, BaphometEntityModel<BaphometEntity>> {
 	private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/living/baphomet/baphomet.png");
 	private static Identifier[] TEXTURES;
-	
+
 	public BaphometEntityRenderer(EntityRendererFactory.Context context) {
 		super(context, new BaphometEntityModel<>(context.getPart(BewitchmentClient.BAPHOMET_MODEL_LAYER)), 0.5f);
 		addFeature(new HeldItemFeatureRenderer<>(this));
@@ -39,7 +39,7 @@ public class BaphometEntityRenderer extends MobEntityRenderer<BaphometEntity, Ba
 			}
 		});
 	}
-	
+
 	@Override
 	public Identifier getTexture(BaphometEntity entity) {
 		return TEXTURE;

@@ -23,7 +23,7 @@ public class OwlEntityModel<T extends OwlEntity> extends AnimalModel<T> {
 	private final ModelPart lWing04;
 	private final ModelPart tail01;
 	private final ModelPart head;
-	
+
 	public OwlEntityModel(ModelPart root) {
 		body = root.getChild("body");
 		rFoot = body.getChild("rFoot");
@@ -39,7 +39,7 @@ public class OwlEntityModel<T extends OwlEntity> extends AnimalModel<T> {
 		tail01 = body.getChild("tail01");
 		head = body.getChild("head");
 	}
-	
+
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = new ModelData();
 		ModelPartData root = data.getRoot();
@@ -74,7 +74,7 @@ public class OwlEntityModel<T extends OwlEntity> extends AnimalModel<T> {
 		beak.addChild("rBeak", ModelPartBuilder.create().cuboid(-0.5F, -0.5F, -0.55F, 1.0F, 2.0F, 1.0F), ModelTransform.of(0.6F, 0.1F, 0.0F, 0.0F, 0.0F, 0.3491F));
 		return TexturedModelData.of(data, 64, 32);
 	}
-	
+
 	@Override
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 		head.pitch = (float) (headPitch * (Math.PI / 180f));
@@ -101,8 +101,7 @@ public class OwlEntityModel<T extends OwlEntity> extends AnimalModel<T> {
 			rWing04.visible = true;
 			lFoot.pitch = 1;
 			rFoot.pitch = 1;
-		}
-		else {
+		} else {
 			body.pivotY = 13.5f;
 			body.pivotZ = 0;
 			body.pitch = 0;
@@ -126,18 +125,17 @@ public class OwlEntityModel<T extends OwlEntity> extends AnimalModel<T> {
 		}
 		if (entity.isInSittingPose()) {
 			lFoot.yaw = 2 / 3f;
-		}
-		else {
+		} else {
 			lFoot.yaw = 0.0873f;
 		}
 		rFoot.yaw = -lFoot.yaw;
 	}
-	
+
 	@Override
 	protected Iterable<ModelPart> getHeadParts() {
 		return ImmutableList.of();
 	}
-	
+
 	@Override
 	protected Iterable<ModelPart> getBodyParts() {
 		return ImmutableList.of(body);

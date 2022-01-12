@@ -16,13 +16,13 @@ import net.minecraft.util.Identifier;
 
 public class SpawnExplosionParticlesPacket {
 	public static final Identifier ID = new Identifier(Bewitchment.MODID, "spawn_explosion_particles");
-	
+
 	public static void send(PlayerEntity player, Entity entity) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		buf.writeInt(entity.getId());
 		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
 	}
-	
+
 	public static void handle(MinecraftClient client, ClientPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
 		int id = buf.readInt();
 		client.execute(() -> {

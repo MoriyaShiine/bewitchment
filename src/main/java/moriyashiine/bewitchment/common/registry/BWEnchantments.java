@@ -10,7 +10,7 @@ import net.minecraft.util.registry.Registry;
 
 public class BWEnchantments {
 	public static final Enchantment MAGIC_PROTECTION = new MagicProtectionEnchantment(Enchantment.Rarity.UNCOMMON, ProtectionEnchantment.Type.FIRE, EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET);
-	
+
 	public static void init() {
 		Registry.register(Registry.ENCHANTMENT, new Identifier(Bewitchment.MODID, "magic_protection"), MAGIC_PROTECTION);
 	}

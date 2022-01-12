@@ -29,12 +29,12 @@ public class ContractItem extends Item {
 	public ContractItem(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		return ItemUsage.consumeHeldItem(world, user, hand);
 	}
-	
+
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (!world.isClient && stack.hasNbt() && user instanceof PlayerEntity player) {
@@ -50,17 +50,17 @@ public class ContractItem extends Item {
 		}
 		return stack;
 	}
-	
+
 	@Override
 	public UseAction getUseAction(ItemStack stack) {
 		return UseAction.BOW;
 	}
-	
+
 	@Override
 	public int getMaxUseTime(ItemStack stack) {
 		return 32;
 	}
-	
+
 	@Override
 	public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
 		if (isIn(group)) {
@@ -72,7 +72,7 @@ public class ContractItem extends Item {
 			});
 		}
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {

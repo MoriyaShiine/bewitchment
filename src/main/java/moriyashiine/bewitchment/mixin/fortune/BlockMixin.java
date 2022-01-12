@@ -50,8 +50,7 @@ public abstract class BlockMixin {
 							}
 							drops.addAll(treasure);
 							fortuneComponent.getFortune().duration = 0;
-						}
-						else if (fortuneComponent.getFortune().fortune == BWFortunes.INFESTED && world.random.nextFloat() < 1 / 25f) {
+						} else if (fortuneComponent.getFortune().fortune == BWFortunes.INFESTED && world.random.nextFloat() < 1 / 25f) {
 							SilverfishEntity silverfish = EntityType.SILVERFISH.create(world);
 							if (silverfish != null) {
 								silverfish.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);

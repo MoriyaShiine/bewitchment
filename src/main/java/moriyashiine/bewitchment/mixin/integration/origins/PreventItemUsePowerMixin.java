@@ -16,11 +16,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class PreventItemUsePowerMixin extends Power {
 	@Unique
 	private static final Identifier VEGETARIAN = new Identifier("origins", "vegetarian");
-	
+
 	public PreventItemUsePowerMixin(PowerType<?> type, LivingEntity entity) {
 		super(type, entity);
 	}
-	
+
 	@Inject(method = "doesPrevent", at = @At("RETURN"), cancellable = true)
 	private void doesPrevent(ItemStack stack, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (callbackInfo.getReturnValue() && BewitchmentAPI.isWerewolf(entity, true) && getType().getIdentifier().equals(VEGETARIAN)) {

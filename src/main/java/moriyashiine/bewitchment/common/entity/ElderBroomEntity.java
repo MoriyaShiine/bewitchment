@@ -13,11 +13,11 @@ import net.minecraft.world.World;
 public class ElderBroomEntity extends BroomEntity {
 	private BlockPos originalPos = null;
 	private String originalWorld = null;
-	
+
 	public ElderBroomEntity(EntityType<?> type, World world) {
 		super(type, world);
 	}
-	
+
 	@Override
 	protected void readCustomDataFromNbt(NbtCompound nbt) {
 		super.readCustomDataFromNbt(nbt);
@@ -26,7 +26,7 @@ public class ElderBroomEntity extends BroomEntity {
 			originalWorld = nbt.getString("OriginalWorld");
 		}
 	}
-	
+
 	@Override
 	protected void writeCustomDataToNbt(NbtCompound nbt) {
 		super.writeCustomDataToNbt(nbt);
@@ -35,14 +35,14 @@ public class ElderBroomEntity extends BroomEntity {
 			nbt.putString("OriginalWorld", originalWorld);
 		}
 	}
-	
+
 	@Override
 	protected void addPassenger(Entity passenger) {
 		super.addPassenger(passenger);
 		originalPos = getBlockPos();
 		originalWorld = world.getRegistryKey().toString();
 	}
-	
+
 	@Override
 	public Vec3d updatePassengerForDismount(LivingEntity passenger) {
 		Vec3d value = super.updatePassengerForDismount(passenger);

@@ -10,7 +10,7 @@ public class ThunderboltFortune extends Fortune {
 	public ThunderboltFortune(boolean positive) {
 		super(positive);
 	}
-	
+
 	@Override
 	public boolean finish(ServerWorld world, PlayerEntity target) {
 		LightningEntity entity = EntityType.LIGHTNING_BOLT.create(world);

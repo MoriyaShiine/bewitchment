@@ -15,12 +15,12 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class WerewolfEntityRenderer extends MobEntityRenderer<WerewolfEntity, WerewolfEntityModel<WerewolfEntity>> {
 	private static Identifier[] TEXTURES;
-	
+
 	public WerewolfEntityRenderer(EntityRendererFactory.Context context) {
 		super(context, new WerewolfEntityModel<>(context.getPart(BewitchmentClient.WEREWOLF_MODEL_LAYER)), 0.5f);
 		addFeature(new HeldItemFeatureRenderer<>(this));
 	}
-	
+
 	@Override
 	public Identifier getTexture(WerewolfEntity entity) {
 		if (TEXTURES == null) {

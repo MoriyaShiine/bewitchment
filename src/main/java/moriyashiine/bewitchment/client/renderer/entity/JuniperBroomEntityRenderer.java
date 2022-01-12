@@ -8,11 +8,11 @@ import net.minecraft.util.Identifier;
 
 public class JuniperBroomEntityRenderer extends BroomEntityRenderer<BroomEntity> {
 	private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/broom/juniper.png");
-	
+
 	public JuniperBroomEntityRenderer(EntityRendererFactory.Context context) {
 		super(context);
 	}
-	
+
 	@Override
 	public Identifier getTexture(BroomEntity entity) {
 		return TEXTURE;

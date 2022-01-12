@@ -49,40 +49,40 @@ import java.util.List;
 @SuppressWarnings("ConstantConditions")
 public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, Nameable, UsesAltarPower {
 	private static final TranslatableText DEFAULT_NAME = new TranslatableText(BWObjects.WITCH_CAULDRON.getTranslationKey());
-	
+
 	private Box box;
-	
+
 	private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
-	
+
 	private BlockPos altarPos = null;
-	
+
 	public OilRecipe oilRecipe = null;
-	
+
 	public Mode mode = Mode.NORMAL;
-	
+
 	public Text customName;
-	
+
 	public int color = 0x3f76e4, heatTimer = 0;
-	
+
 	private boolean loaded = false;
-	
+
 	public WitchCauldronBlockEntity(BlockPos pos, BlockState state) {
 		super(BWBlockEntityTypes.WITCH_CAULDRON, pos, state);
 	}
-	
+
 	@Override
 	public NbtCompound toInitialChunkDataNbt() {
 		NbtCompound nbt = super.toInitialChunkDataNbt();
 		writeNbt(nbt);
 		return nbt;
 	}
-	
+
 	@Nullable
 	@Override
 	public Packet<ClientPlayPacketListener> toUpdatePacket() {
 		return BlockEntityUpdateS2CPacket.create(this);
 	}
-	
+
 	@Override
 	public void readNbt(NbtCompound nbt) {
 		super.readNbt(nbt);
@@ -99,7 +99,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, 
 		}
 		heatTimer = nbt.getInt("HeatTimer");
 	}
-	
+
 	@Override
 	protected void writeNbt(NbtCompound nbt) {
 		super.writeNbt(nbt);
@@ -114,34 +114,34 @@ public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, 
 		nbt.putInt("Color", color);
 		nbt.putInt("HeatTimer", heatTimer);
 	}
-	
+
 	public void sync() {
 		if (world != null && !world.isClient) {
 			world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_LISTENERS);
 		}
 	}
-	
+
 	@Override
 	public Text getName() {
 		return hasCustomName() ? getCustomName() : DEFAULT_NAME;
 	}
-	
+
 	@Nullable
 	@Override
 	public Text getCustomName() {
 		return customName;
 	}
-	
+
 	@Override
 	public BlockPos getAltarPos() {
 		return altarPos;
 	}
-	
+
 	@Override
 	public void setAltarPos(BlockPos pos) {
 		altarPos = pos;
 	}
-	
+
 	public static void tick(World world, BlockPos pos, BlockState state, WitchCauldronBlockEntity blockEntity) {
 		if (world != null) {
 			if (!blockEntity.loaded) {
@@ -176,12 +176,12 @@ public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, 
 			}
 		}
 	}
-	
+
 	@Override
 	public int size() {
 		return inventory.size();
 	}
-	
+
 	@Override
 	public boolean isEmpty() {
 		for (int i = 0; i < size(); i++) {
@@ -191,47 +191,47 @@ public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, 
 		}
 		return true;
 	}
-	
+
 	@Override
 	public ItemStack getStack(int slot) {
 		return inventory.get(slot);
 	}
-	
+
 	@Override
 	public ItemStack removeStack(int slot, int amount) {
 		return Inventories.splitStack(inventory, slot, amount);
 	}
-	
+
 	@Override
 	public ItemStack removeStack(int slot) {
 		return Inventories.removeStack(inventory, slot);
 	}
-	
+
 	@Override
 	public void setStack(int slot, ItemStack stack) {
 		inventory.set(slot, stack);
 	}
-	
+
 	@Override
 	public boolean canPlayerUse(PlayerEntity player) {
 		return player.squaredDistanceTo(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) < 16;
 	}
-	
+
 	@Override
 	public void clear() {
 		inventory.clear();
 	}
-	
+
 	public void syncCauldron() {
 		sync();
 	}
-	
+
 	public void setColor(int color) {
 		if (world != null) {
 			this.color = color;
 		}
 	}
-	
+
 	public Mode reset() {
 		if (world != null) {
 			setColor(0x3f76e4);
@@ -241,12 +241,12 @@ public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, 
 		}
 		return Mode.NORMAL;
 	}
-	
+
 	public Mode fail() {
 		setColor(0x6b4423);
 		return Mode.FAILED;
 	}
-	
+
 	private int getFirstEmptySlot() {
 		for (int i = 0; i < size(); i++) {
 			if (getStack(i).isEmpty()) {
@@ -255,15 +255,14 @@ public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, 
 		}
 		return -1;
 	}
-	
+
 	private Mode insertStack(ItemStack stack) {
 		if (world != null) {
 			if (stack.getItem() == BWObjects.WOOD_ASH) {
 				Mode reset = reset();
 				syncCauldron();
 				return reset;
-			}
-			else if (mode != Mode.FAILED && mode != Mode.TELEPORTATION) {
+			} else if (mode != Mode.FAILED && mode != Mode.TELEPORTATION) {
 				int firstEmpty = getFirstEmptySlot();
 				if (firstEmpty != -1) {
 					setStack(firstEmpty, stack);
@@ -280,14 +279,12 @@ public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, 
 								return Mode.BREWING;
 							}
 						}
-					}
-					else {
+					} else {
 						oilRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.OIL_RECIPE_TYPE).stream().filter(recipe -> recipe.matches(this, world)).findFirst().orElse(null);
 						if (oilRecipe != null) {
 							setColor(oilRecipe.color);
 							return Mode.OIL_CRAFTING;
-						}
-						else if (firstEmpty == 0 && stack.getItem() == Items.ENDER_PEARL) {
+						} else if (firstEmpty == 0 && stack.getItem() == Items.ENDER_PEARL) {
 							clear();
 							setColor(0x319a89);
 							return Mode.TELEPORTATION;
@@ -300,7 +297,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, 
 		}
 		return fail();
 	}
-	
+
 	public ItemStack getPotion(LivingEntity creator) {
 		ItemStack stack = new ItemStack(Items.POTION);
 		if (world != null) {
@@ -317,11 +314,9 @@ public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, 
 				CauldronBrewingRecipe cauldronBrewingRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CAULDRON_BREWING_RECIPE_TYPE).stream().filter(recipe -> recipe.input.test(stackInSlot)).findFirst().orElse(null);
 				if (cauldronBrewingRecipe != null && effects.stream().noneMatch(effect -> effect.getEffectType() == cauldronBrewingRecipe.output)) {
 					effects.add(new StatusEffectInstance(cauldronBrewingRecipe.output, cauldronBrewingRecipe.time));
-				}
-				else if (stackInSlot.getItem() == Items.REDSTONE) {
+				} else if (stackInSlot.getItem() == Items.REDSTONE) {
 					durationBoost++;
-				}
-				else if (stackInSlot.getItem() == Items.GLOWSTONE_DUST) {
+				} else if (stackInSlot.getItem() == Items.GLOWSTONE_DUST) {
 					amplifierBoost++;
 				}
 			}
@@ -344,8 +339,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, 
 			for (int i = effects.size() - 1; i >= 0; i--) {
 				if (effects.get(i).getEffectType() == BWStatusEffects.CORRUPTION) {
 					finalEffects.add(effects.remove(i));
-				}
-				else if (effects.get(i).getEffectType() == BWStatusEffects.POLYMORPH) {
+				} else if (effects.get(i).getEffectType() == BWStatusEffects.POLYMORPH) {
 					StatusEffectInstance removed = effects.remove(i);
 					finalEffects.add(new StatusEffectInstance(removed.getEffectType(), removed.getDuration(), removed.getAmplifier(), removed.isAmbient(), false, removed.shouldShowIcon()));
 				}
@@ -357,7 +351,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, 
 		}
 		return stack;
 	}
-	
+
 	public int getBrewCost() {
 		int cost = 0;
 		for (int i = 0; i < size(); i++) {
@@ -367,42 +361,37 @@ public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, 
 		}
 		return cost;
 	}
-	
+
 	public int getTargetLevel(ItemStack stack) {
 		Item item = stack.getItem();
 		int level = getCachedState().get(BWProperties.LEVEL);
 		if (mode == Mode.NORMAL) {
 			if (item == Items.BUCKET && level == 3) {
 				return 0;
-			}
-			else if (item == Items.WATER_BUCKET && level == 0) {
+			} else if (item == Items.WATER_BUCKET && level == 0) {
 				return 3;
-			}
-			else if (item == Items.GLASS_BOTTLE) {
+			} else if (item == Items.GLASS_BOTTLE) {
 				return level - 1;
-			}
-			else if (item == Items.POTION && level < 3 && PotionUtil.getPotion(stack) == Potions.WATER) {
+			} else if (item == Items.POTION && level < 3 && PotionUtil.getPotion(stack) == Potions.WATER) {
 				return level + 1;
 			}
-		}
-		else if (mode == Mode.OIL_CRAFTING) {
+		} else if (mode == Mode.OIL_CRAFTING) {
 			if (oilRecipe != null && item == Items.GLASS_BOTTLE) {
 				return level - 1;
 			}
-		}
-		else if (mode == Mode.BREWING) {
+		} else if (mode == Mode.BREWING) {
 			if (item == Items.GLASS_BOTTLE) {
 				return level - 1;
 			}
 		}
 		return -1;
 	}
-	
+
 	public enum Mode {
 		NORMAL("NORMAL"), OIL_CRAFTING("OIL_CRAFTING"), BREWING("BREWING"), TELEPORTATION("TELEPORTATION"), FAILED("FAILED");
-		
+
 		public final String name;
-		
+
 		Mode(String name) {
 			this.name = name;
 		}

@@ -26,7 +26,7 @@ public class PoppetShelfBlockEntityRenderer implements BlockEntityRenderer<Poppe
 		renderRow(entity.clientInventory.get(3), entity.clientInventory.get(4), entity.clientInventory.get(5), 0.5f, matrices, vertexConsumers, light, overlay);
 		renderRow(entity.clientInventory.get(6), entity.clientInventory.get(7), entity.clientInventory.get(8), 0.2f, matrices, vertexConsumers, light, overlay);
 	}
-	
+
 	private static void renderRow(ItemStack one, ItemStack two, ItemStack three, float yOffset, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 		matrices.push();
 		double xOffset = 0.32 * 5;

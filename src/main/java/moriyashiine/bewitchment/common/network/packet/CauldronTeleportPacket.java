@@ -24,14 +24,14 @@ import net.minecraft.world.World;
 @SuppressWarnings("ConstantConditions")
 public class CauldronTeleportPacket {
 	public static final Identifier ID = new Identifier(Bewitchment.MODID, "cauldron_teleport");
-	
+
 	public static void send(BlockPos cauldronPos, String message) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		buf.writeBlockPos(cauldronPos);
 		buf.writeString(message);
 		ClientPlayNetworking.send(ID, buf);
 	}
-	
+
 	public static void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
 		BlockPos cauldronPos = buf.readBlockPos();
 		String message = buf.readString(Short.MAX_VALUE);
@@ -59,12 +59,10 @@ public class CauldronTeleportPacket {
 				}
 				if (hasPower) {
 					BWUtil.teleport(player, closest.getX() + 0.5, closest.getY() - 0.4375, closest.getZ() + 0.5, true);
-				}
-				else {
+				} else {
 					player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.insufficent_altar_power", message), true);
 				}
-			}
-			else {
+			} else {
 				player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.invalid_cauldron", message), true);
 			}
 		});

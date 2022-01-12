@@ -80,14 +80,14 @@ import java.util.List;
 @Environment(EnvType.CLIENT)
 public class BewitchmentClient implements ClientModInitializer {
 	public static final KeyBinding TRANSFORMATION_ABILITY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key." + Bewitchment.MODID + ".transformation_ability", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "itemGroup." + Bewitchment.MODID + "." + Bewitchment.MODID));
-	
+
 	public static final EntityModelLayer CONTRIBUTOR_HORNS_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "contributor_horns"), "main");
 	public static final EntityModelLayer WITCH_ARMOR_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "witch_armor"), "main");
 	public static final EntityModelLayer SPECTER_BANGLE_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "specter_bangle"), "main");
 	public static final EntityModelLayer PRICKLY_BELT_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "prickly_belt"), "main");
 	public static final EntityModelLayer DRUID_BAND_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "druid_band"), "main");
 	public static final EntityModelLayer ZEPHYR_HARNESS_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "zephyr_harness"), "main");
-	
+
 	public static final EntityModelLayer BROOM_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "broom"), "main");
 	public static final EntityModelLayer OWL_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "owl"), "main");
 	public static final EntityModelLayer RAVEN_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "raven"), "main");
@@ -103,7 +103,7 @@ public class BewitchmentClient implements ClientModInitializer {
 	public static final EntityModelLayer BAPHOMET_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "baphomet"), "main");
 	public static final EntityModelLayer LILITH_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "lilith"), "main");
 	public static final EntityModelLayer HERNE_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MODID, "herne"), "main");
-	
+
 	@Override
 	public void onInitializeClient() {
 		ClientPlayNetworking.registerGlobalReceiver(SyncContractsPacket.ID, SyncContractsPacket::handle);
@@ -270,7 +270,7 @@ public class BewitchmentClient implements ClientModInitializer {
 		TrinketRendererRegistry.registerRenderer(BWObjects.SPECTER_BANGLE, new TrinketRenderer() {
 			private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/trinket/specter_bangle.png");
 			private static Model model;
-			
+
 			@Override
 			public void render(ItemStack stack, SlotReference slotReference, EntityModel<? extends LivingEntity> contextModel, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, LivingEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
 				if (model == null) {
@@ -283,7 +283,7 @@ public class BewitchmentClient implements ClientModInitializer {
 		TrinketRendererRegistry.registerRenderer(BWObjects.PRICKLY_BELT, new TrinketRenderer() {
 			private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/trinket/prickly_belt.png");
 			private static Model model;
-			
+
 			@Override
 			public void render(ItemStack stack, SlotReference slotReference, EntityModel<? extends LivingEntity> contextModel, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, LivingEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
 				if (model == null) {
@@ -303,7 +303,7 @@ public class BewitchmentClient implements ClientModInitializer {
 		TrinketRendererRegistry.registerRenderer(BWObjects.DRUID_BAND, new TrinketRenderer() {
 			private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/trinket/druid_band.png");
 			private static Model model;
-			
+
 			@Override
 			public void render(ItemStack stack, SlotReference slotReference, EntityModel<? extends LivingEntity> contextModel, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, LivingEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
 				if (model == null) {
@@ -316,7 +316,7 @@ public class BewitchmentClient implements ClientModInitializer {
 		TrinketRendererRegistry.registerRenderer(BWObjects.ZEPHYR_HARNESS, new TrinketRenderer() {
 			private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/trinket/zephyr_harness.png");
 			private static Model model;
-			
+
 			@Override
 			public void render(ItemStack stack, SlotReference slotReference, EntityModel<? extends LivingEntity> contextModel, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, LivingEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
 				if (model == null) {
@@ -328,15 +328,14 @@ public class BewitchmentClient implements ClientModInitializer {
 		});
 		ClientTickEvents.END_WORLD_TICK.register(new ClientTickEvents.EndWorldTick() {
 			private int transformationAbilityCooldown = 0;
-			
+
 			@Override
 			public void onEndTick(ClientWorld world) {
 				PlayerEntity player = MinecraftClient.getInstance().player;
 				if (player != null) {
 					if (transformationAbilityCooldown > 0) {
 						transformationAbilityCooldown--;
-					}
-					else if (BewitchmentClient.TRANSFORMATION_ABILITY.isPressed()) {
+					} else if (BewitchmentClient.TRANSFORMATION_ABILITY.isPressed()) {
 						transformationAbilityCooldown = 20;
 						TransformationAbilityPacket.send();
 					}
@@ -350,7 +349,7 @@ public class BewitchmentClient implements ClientModInitializer {
 			}
 		});
 	}
-	
+
 	private static ModelPart getPart(EntityModelLayer layer) {
 		return MinecraftClient.getInstance().getEntityModelLoader().getModelPart(layer);
 	}

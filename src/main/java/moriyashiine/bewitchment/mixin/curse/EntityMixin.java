@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class EntityMixin {
 	@Shadow
 	public World world;
-	
+
 	@Inject(method = "setOnFireFor", at = @At("HEAD"), cancellable = true)
 	private void setOnFireFor(int seconds, CallbackInfo callbackInfo) {
 		if (!world.isClient && (Object) this instanceof MobEntity mob && BWComponents.FAKE_MOB_COMPONENT.get(mob).getTarget() != null) {

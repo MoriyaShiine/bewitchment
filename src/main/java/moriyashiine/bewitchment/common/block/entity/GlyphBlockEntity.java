@@ -46,35 +46,35 @@ import java.util.List;
 public class GlyphBlockEntity extends BlockEntity implements Inventory, UsesAltarPower {
 	private static final byte[][] inner = {{0, 0, 1, 1, 1, 0, 0}, {0, 1, 0, 0, 0, 1, 0}, {1, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 1}, {0, 1, 0, 0, 0, 1, 0}, {0, 0, 1, 1, 1, 0, 0}};
 	private static final byte[][] outer = {{0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0}, {0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0}};
-	
+
 	private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(6, ItemStack.EMPTY);
-	
+
 	private BlockPos altarPos = null, effectivePos = null;
-	
+
 	public RitualFunction ritualFunction = null;
 	private int timer = 0, endTime = 0;
-	
+
 	private boolean catFamiliar = false;
-	
+
 	private boolean loaded = false;
-	
+
 	public GlyphBlockEntity(BlockPos pos, BlockState state) {
 		super(BWBlockEntityTypes.GLYPH, pos, state);
 	}
-	
+
 	@Override
 	public NbtCompound toInitialChunkDataNbt() {
 		NbtCompound nbt = super.toInitialChunkDataNbt();
 		writeNbt(nbt);
 		return nbt;
 	}
-	
+
 	@Nullable
 	@Override
 	public Packet<ClientPlayPacketListener> toUpdatePacket() {
 		return BlockEntityUpdateS2CPacket.create(this);
 	}
-	
+
 	@Override
 	public void readNbt(NbtCompound nbt) {
 		super.readNbt(nbt);
@@ -91,7 +91,7 @@ public class GlyphBlockEntity extends BlockEntity implements Inventory, UsesAlta
 		endTime = nbt.getInt("EndTime");
 		catFamiliar = nbt.getBoolean("CatFamiliar");
 	}
-	
+
 	@Override
 	protected void writeNbt(NbtCompound nbt) {
 		super.writeNbt(nbt);
@@ -109,23 +109,23 @@ public class GlyphBlockEntity extends BlockEntity implements Inventory, UsesAlta
 		nbt.putInt("EndTime", endTime);
 		nbt.putBoolean("CatFamiliar", catFamiliar);
 	}
-	
+
 	public void sync() {
 		if (world != null && !world.isClient) {
 			world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_LISTENERS);
 		}
 	}
-	
+
 	@Override
 	public BlockPos getAltarPos() {
 		return altarPos;
 	}
-	
+
 	@Override
 	public void setAltarPos(BlockPos pos) {
 		this.altarPos = pos;
 	}
-	
+
 	public static void tick(World world, BlockPos pos, BlockState state, GlyphBlockEntity blockEntity) {
 		if (world != null) {
 			if (!blockEntity.loaded) {
@@ -165,12 +165,12 @@ public class GlyphBlockEntity extends BlockEntity implements Inventory, UsesAlta
 			}
 		}
 	}
-	
+
 	@Override
 	public int size() {
 		return inventory.size();
 	}
-	
+
 	@Override
 	public boolean isEmpty() {
 		for (int i = 0; i < size(); i++) {
@@ -180,49 +180,48 @@ public class GlyphBlockEntity extends BlockEntity implements Inventory, UsesAlta
 		}
 		return true;
 	}
-	
+
 	@Override
 	public ItemStack getStack(int slot) {
 		return inventory.get(slot);
 	}
-	
+
 	@Override
 	public ItemStack removeStack(int slot, int amount) {
 		return Inventories.splitStack(inventory, slot, amount);
 	}
-	
+
 	@Override
 	public ItemStack removeStack(int slot) {
 		return Inventories.removeStack(inventory, slot);
 	}
-	
+
 	@Override
 	public void setStack(int slot, ItemStack stack) {
 		inventory.set(slot, stack);
 	}
-	
+
 	@Override
 	public boolean canPlayerUse(PlayerEntity player) {
 		return player.squaredDistanceTo(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) < 16;
 	}
-	
+
 	@Override
 	public void clear() {
 		inventory.clear();
 	}
-	
+
 	public void syncGlyph() {
 		sync();
 	}
-	
+
 	public void onUse(World world, BlockPos pos, LivingEntity user, Hand hand, LivingEntity sacrifice) {
 		ItemStack stack = user.getStackInHand(hand);
 		if (ritualFunction != null && pos.equals(effectivePos) && stack.getItem() instanceof WaystoneItem && stack.hasNbt() && stack.getOrCreateNbt().contains("LocationPos")) {
 			effectivePos = BlockPos.fromLong(stack.getOrCreateNbt().getLong("LocationPos"));
 			stack.damage(1, user, stackUser -> stackUser.sendToolBreakStatus(hand));
 			syncGlyph();
-		}
-		else {
+		} else {
 			if (ritualFunction == null) {
 				SimpleInventory test = new SimpleInventory(size());
 				List<ItemEntity> items = world.getEntitiesByType(EntityType.ITEM, new Box(pos).expand(2, 0, 2), entity -> true);
@@ -268,8 +267,7 @@ public class GlyphBlockEntity extends BlockEntity implements Inventory, UsesAlta
 				if (user instanceof PlayerEntity player) {
 					player.sendMessage(new TranslatableText("ritual.none"), true);
 				}
-			}
-			else if (sacrifice == null) {
+			} else if (sacrifice == null) {
 				world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FAIL, SoundCategory.BLOCKS, 1, 1);
 				ItemScatterer.spawn(world, pos, this);
 				effectivePos = null;
@@ -281,7 +279,7 @@ public class GlyphBlockEntity extends BlockEntity implements Inventory, UsesAlta
 			}
 		}
 	}
-	
+
 	private boolean hasValidChalk(RitualRecipe recipe) {
 		BlockPos.Mutable mutable = new BlockPos.Mutable();
 		for (int x = 0; x < inner.length; x++) {
@@ -302,7 +300,7 @@ public class GlyphBlockEntity extends BlockEntity implements Inventory, UsesAlta
 		}
 		return true;
 	}
-	
+
 	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	private boolean isValidGlyph(String name, Block block) {
 		if (name.equals("normal") && block == BWObjects.GLYPH) {

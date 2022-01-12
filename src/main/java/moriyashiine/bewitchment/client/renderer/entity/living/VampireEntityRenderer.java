@@ -14,11 +14,11 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class VampireEntityRenderer extends MobEntityRenderer<VampireEntity, VampireEntityModel<VampireEntity>> {
 	private static Identifier[] TEXTURES;
-	
+
 	public VampireEntityRenderer(EntityRendererFactory.Context context) {
 		super(context, new VampireEntityModel<>(context.getPart(BewitchmentClient.VAMPIRE_MODEL_LAYER)), 0.3f);
 	}
-	
+
 	@Override
 	public Identifier getTexture(VampireEntity entity) {
 		if (TEXTURES == null) {

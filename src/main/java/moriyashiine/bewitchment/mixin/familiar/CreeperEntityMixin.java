@@ -17,7 +17,7 @@ public class CreeperEntityMixin extends HostileEntity {
 	protected CreeperEntityMixin(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 	}
-	
+
 	@Inject(method = "initGoals", at = @At("TAIL"))
 	private void initGoals(CallbackInfo callbackInfo) {
 		goalSelector.add(3, new FleeEntityGoal<>(this, PlayerEntity.class, 6, 1, 1.2, entity -> entity instanceof PlayerEntity player && BewitchmentAPI.getFamiliar(player) == EntityType.CAT));

@@ -25,28 +25,25 @@ public abstract class ItemStackMixin {
 	private static final TranslatableText LINGERING_POTION = new TranslatableText("item." + Bewitchment.MODID + ".lingering_potion");
 	@Unique
 	private static final TranslatableText TIPPED_ARROW = new TranslatableText("item." + Bewitchment.MODID + ".tipped_arrow");
-	
+
 	@Shadow
 	@Nullable
 	public abstract NbtCompound getNbt();
-	
+
 	@Shadow
 	public abstract Item getItem();
-	
+
 	@Inject(method = "getName", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 0, target = "Lnet/minecraft/item/ItemStack;getItem()Lnet/minecraft/item/Item;"), cancellable = true)
 	private void getName(CallbackInfoReturnable<Text> callbackInfo) {
 		NbtCompound nbt = getNbt();
 		if (nbt != null && nbt.getBoolean("BewitchmentBrew")) {
 			if (getItem() == Items.POTION) {
 				callbackInfo.setReturnValue(POTION);
-			}
-			else if (getItem() == Items.SPLASH_POTION) {
+			} else if (getItem() == Items.SPLASH_POTION) {
 				callbackInfo.setReturnValue(SPLASH_POTION);
-			}
-			else if (getItem() == Items.LINGERING_POTION) {
+			} else if (getItem() == Items.LINGERING_POTION) {
 				callbackInfo.setReturnValue(LINGERING_POTION);
-			}
-			else if (getItem() == Items.TIPPED_ARROW) {
+			} else if (getItem() == Items.TIPPED_ARROW) {
 				callbackInfo.setReturnValue(TIPPED_ARROW);
 			}
 		}

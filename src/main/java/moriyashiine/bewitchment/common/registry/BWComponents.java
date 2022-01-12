@@ -25,7 +25,7 @@ public class BWComponents implements EntityComponentInitializer {
 	public static final ComponentKey<TransformationComponent> TRANSFORMATION_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MODID, "transformation"), TransformationComponent.class);
 	public static final ComponentKey<BloodComponent> BLOOD_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MODID, "blood"), BloodComponent.class);
 	public static final ComponentKey<CursesComponent> CURSES_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MODID, "curses"), CursesComponent.class);
-	
+
 	public static final ComponentKey<AdditionalWerewolfDataComponent> ADDITIONAL_WEREWOLF_DATA_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MODID, "additional_werewolf_data"), AdditionalWerewolfDataComponent.class);
 	public static final ComponentKey<RespawnTimerComponent> RESPAWN_TIMER_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MODID, "respawn_timer"), RespawnTimerComponent.class);
 	public static final ComponentKey<TeleportTimerComponent> TELEPORT_TIMER_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MODID, "teleport_timer"), TeleportTimerComponent.class);
@@ -38,7 +38,7 @@ public class BWComponents implements EntityComponentInitializer {
 	public static final ComponentKey<FakeMobComponent> FAKE_MOB_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MODID, "fake_mob"), FakeMobComponent.class);
 	public static final ComponentKey<WerewolfVillagerComponent> WEREWOLF_VILLAGER_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MODID, "werewolf_villager"), WerewolfVillagerComponent.class);
 	public static final ComponentKey<CaduceusFireballComponent> CADUCEUS_FIREBALL_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MODID, "caduceus_fireball"), CaduceusFireballComponent.class);
-	
+
 	@Override
 	public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
 		registry.registerForPlayers(CONTRACTS_COMPONENT, ContractsComponent::new, RespawnCopyStrategy.ALWAYS_COPY);

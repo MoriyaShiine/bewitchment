@@ -18,7 +18,7 @@ public class HellhoundEntityModel<T extends HellhoundEntity> extends EntityModel
 	private final ModelPart rHindleg;
 	private final ModelPart rForeleg;
 	private final ModelPart neck;
-	
+
 	public HellhoundEntityModel(ModelPart root) {
 		body = root.getChild("body");
 		lForeleg = root.getChild("lForeleg");
@@ -28,7 +28,7 @@ public class HellhoundEntityModel<T extends HellhoundEntity> extends EntityModel
 		rForeleg = root.getChild("rForeleg");
 		neck = root.getChild("neck");
 	}
-	
+
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = new ModelData();
 		ModelPartData root = data.getRoot();
@@ -65,7 +65,7 @@ public class HellhoundEntityModel<T extends HellhoundEntity> extends EntityModel
 		lHorn05.addChild("lHorn06", ModelPartBuilder.create().uv(58, 13).cuboid(-0.49F, -3.0F, -0.5F, 1.0F, 3.0F, 1.0F), ModelTransform.of(0.0F, -2.7F, 0.0F, -0.6283F, 0.0F, 0.0F));
 		return TexturedModelData.of(data, 64, 64);
 	}
-	
+
 	@Override
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 		neck.pitch = (float) (headPitch * (Math.PI / 180f));
@@ -76,7 +76,7 @@ public class HellhoundEntityModel<T extends HellhoundEntity> extends EntityModel
 		lHindleg.pitch = -rHindleg.pitch;
 		tail00.roll = (MathHelper.cos(limbAngle * 2 / 3f) * limbDistance) + MathHelper.sin((animationProgress + entity.getId()) * 1 / 8f) * 0.25f;
 	}
-	
+
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
 		neck.render(matrices, vertices, light, overlay, red, green, blue, alpha);

@@ -19,13 +19,13 @@ import java.util.function.Consumer;
 public abstract class ItemStackMixin {
 	@Shadow
 	public abstract void setDamage(int damage);
-	
+
 	@Shadow
 	public abstract int getDamage();
-	
+
 	@Shadow
 	public abstract int getMaxDamage();
-	
+
 	@Inject(method = "damage(ILnet/minecraft/entity/LivingEntity;Ljava/util/function/Consumer;)V", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V"), cancellable = true)
 	private <T extends LivingEntity> void damage(int amount, T entity, Consumer<T> breakCallback, CallbackInfo callbackInfo) {
 		if (getDamage() == getMaxDamage()) {

@@ -27,41 +27,41 @@ import java.util.UUID;
 
 public class BroomEntity extends Entity {
 	public ItemStack stack = ItemStack.EMPTY;
-	
+
 	private float damage = 0;
-	
+
 	private int lerpSteps;
 	private double lerpX;
 	private double lerpY;
 	private double lerpZ;
 	private double lerpYaw;
 	private double lerpPitch;
-	
+
 	public BroomEntity(EntityType<?> type, World world) {
 		super(type, world);
 	}
-	
+
 	@Override
 	protected void initDataTracker() {
 	}
-	
+
 	@Override
 	protected void readCustomDataFromNbt(NbtCompound nbt) {
 		stack = ItemStack.fromNbt(nbt.getCompound("Stack"));
 		damage = nbt.getFloat("Damage");
 	}
-	
+
 	@Override
 	protected void writeCustomDataToNbt(NbtCompound nbt) {
 		nbt.put("Stack", stack.writeNbt(new NbtCompound()));
 		nbt.putFloat("Damage", damage);
 	}
-	
+
 	@Override
 	public Packet<?> createSpawnPacket() {
 		return new EntitySpawnS2CPacket(this, 0);
 	}
-	
+
 	@Override
 	public void tick() {
 		super.tick();
@@ -86,8 +86,7 @@ public class BroomEntity extends Entity {
 			}
 			move(MovementType.SELF, getVelocity());
 			setVelocity(getVelocity().multiply(0.9));
-		}
-		else {
+		} else {
 			setVelocity(Vec3d.ZERO);
 		}
 		if (!world.isClient && damage > 0) {
@@ -95,18 +94,17 @@ public class BroomEntity extends Entity {
 			damage = Math.max(damage, 0);
 		}
 	}
-	
+
 	@Override
 	public ActionResult interact(PlayerEntity player, Hand hand) {
 		if (player.shouldCancelInteraction()) {
 			return ActionResult.PASS;
-		}
-		else if (!world.isClient) {
+		} else if (!world.isClient) {
 			return player.startRiding(this) ? ActionResult.CONSUME : ActionResult.PASS;
 		}
 		return super.interact(player, hand);
 	}
-	
+
 	@Override
 	public boolean damage(DamageSource source, float amount) {
 		if (isInvulnerableTo(source)) {
@@ -121,42 +119,42 @@ public class BroomEntity extends Entity {
 		}
 		return true;
 	}
-	
+
 	@Nullable
 	@Override
 	public Entity getPrimaryPassenger() {
 		return getPassengerList().isEmpty() ? null : getPassengerList().get(0);
 	}
-	
+
 	@Override
 	protected boolean canAddPassenger(Entity passenger) {
 		return getPrimaryPassenger() == null;
 	}
-	
+
 	@Override
 	public boolean collidesWith(Entity other) {
 		return BoatEntity.canCollide(this, other);
 	}
-	
+
 	@Override
 	public boolean collides() {
 		return !isRemoved();
 	}
-	
+
 	@Override
 	public boolean isPushable() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
 		return false;
 	}
-	
+
 	@Override
 	protected void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition) {
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void updateTrackedPositionAndAngles(double x, double y, double z, float yaw, float pitch, int interpolationSteps, boolean interpolate) {
@@ -167,18 +165,18 @@ public class BroomEntity extends Entity {
 		lerpPitch = pitch;
 		lerpSteps = 10;
 	}
-	
+
 	public void init(ItemStack stack) {
 	}
-	
+
 	protected ItemStack getDroppedStack() {
 		return stack;
 	}
-	
+
 	protected UUID getOwner() {
 		return TaglockItem.getTaglockUUID(stack);
 	}
-	
+
 	protected float getSpeed() {
 		return 0.75f;
 	}

@@ -13,21 +13,21 @@ import net.minecraft.world.BlockView;
 
 public class CoffinBlock extends BedBlock {
 	private static final VoxelShape SHAPE = createCuboidShape(0, 0, 0, 16, 10, 16);
-	
+
 	public CoffinBlock(DyeColor color, Settings settings) {
 		super(color, settings);
 	}
-	
+
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		return SHAPE;
 	}
-	
+
 	@Override
 	public BlockRenderType getRenderType(BlockState state) {
 		return BlockRenderType.MODEL;
 	}
-	
+
 	@Override
 	public void onEntityLand(BlockView world, Entity entity) {
 		BWObjects.CYPRESS_PLANKS.onEntityLand(world, entity);

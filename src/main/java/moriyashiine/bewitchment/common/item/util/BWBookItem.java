@@ -17,7 +17,7 @@ public class BWBookItem extends Item {
 	public BWBookItem(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		if (user instanceof ServerPlayerEntity serverPlayer) {

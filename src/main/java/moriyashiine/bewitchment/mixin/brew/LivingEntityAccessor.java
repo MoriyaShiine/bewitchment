@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface LivingEntityAccessor {
 	@Invoker("getNextAirUnderwater")
 	int bw_getNextAirUnderwater(int air);
-	
+
 	@Invoker("getNextAirOnLand")
 	int bw_getNextAirOnLand(int air);
 }

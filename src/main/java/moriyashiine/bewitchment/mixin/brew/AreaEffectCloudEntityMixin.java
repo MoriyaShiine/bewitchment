@@ -17,7 +17,7 @@ public abstract class AreaEffectCloudEntityMixin extends Entity {
 	public AreaEffectCloudEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
-	
+
 	@Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)Z"))
 	private boolean addStatusEffect(LivingEntity entity, StatusEffectInstance effect, Entity source) {
 		if (effect.getEffectType() == BWStatusEffects.POLYMORPH) {

@@ -10,7 +10,7 @@ public class ClumsinessFortune extends Fortune {
 	public ClumsinessFortune(boolean positive) {
 		super(positive);
 	}
-	
+
 	@Override
 	public boolean finish(ServerWorld world, PlayerEntity target) {
 		boolean drop = target.dropItem(target.getMainHandStack(), false, true) != null;

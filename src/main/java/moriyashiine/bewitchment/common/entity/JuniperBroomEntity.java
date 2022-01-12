@@ -8,7 +8,7 @@ public class JuniperBroomEntity extends BroomEntity {
 	public JuniperBroomEntity(EntityType<?> type, World world) {
 		super(type, world);
 	}
-	
+
 	@Override
 	protected float getSpeed() {
 		return 1.5f;

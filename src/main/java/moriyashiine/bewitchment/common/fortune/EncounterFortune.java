@@ -16,7 +16,7 @@ public class EncounterFortune extends Fortune {
 	public EncounterFortune(boolean positive) {
 		super(positive);
 	}
-	
+
 	@Override
 	public boolean finish(ServerWorld world, PlayerEntity target) {
 		Entity entity = BWTags.ENCOUNTER_FORTUNE.getRandom(world.random).create(world);

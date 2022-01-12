@@ -17,7 +17,7 @@ public class SpawnLightningRitualFunction extends RitualFunction {
 	public SpawnLightningRitualFunction(ParticleType<?> startParticle, Predicate<LivingEntity> sacrifice) {
 		super(startParticle, sacrifice);
 	}
-	
+
 	@Override
 	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
 		summonLightning(world, effectivePos);
@@ -28,7 +28,7 @@ public class SpawnLightningRitualFunction extends RitualFunction {
 		}
 		super.start(world, glyphPos, effectivePos, inventory, catFamiliar);
 	}
-	
+
 	private void summonLightning(World world, BlockPos pos) {
 		LightningEntity entity = EntityType.LIGHTNING_BOLT.create(world);
 		if (entity != null) {

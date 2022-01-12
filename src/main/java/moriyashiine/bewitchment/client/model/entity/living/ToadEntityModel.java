@@ -21,7 +21,7 @@ public class ToadEntityModel<T extends ToadEntity> extends AnimalModel<T> {
 	private final ModelPart rArm00;
 	private final ModelPart rHand;
 	private final ModelPart head;
-	
+
 	public ToadEntityModel(ModelPart root) {
 		body = root.getChild("body");
 		lLeg00 = body.getChild("lLeg00");
@@ -36,7 +36,7 @@ public class ToadEntityModel<T extends ToadEntity> extends AnimalModel<T> {
 		rHand = rArm00.getChild("rArm01").getChild("rHand");
 		head = body.getChild("head");
 	}
-	
+
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = new ModelData();
 		ModelPartData root = data.getRoot();
@@ -58,7 +58,7 @@ public class ToadEntityModel<T extends ToadEntity> extends AnimalModel<T> {
 		throat.addChild("lowerJaw", ModelPartBuilder.create().uv(13, 28).cuboid(-2.1F, -0.5F, -2.0F, 4.0F, 1.0F, 3.0F), ModelTransform.of(0.0F, 0.0F, -2.5F, 0.0F, 0.0F, 0.0F));
 		return TexturedModelData.of(data, 32, 32);
 	}
-	
+
 	@Override
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 		boolean altLegs = false;
@@ -75,8 +75,7 @@ public class ToadEntityModel<T extends ToadEntity> extends AnimalModel<T> {
 				lLeg00.pitch = 1;
 				altLegs = true;
 			}
-		}
-		else {
+		} else {
 			body.pitch = -0.4014f;
 			lArm00.pitch = 0.3491f;
 			lHand.pitch = 0.4538f;
@@ -86,8 +85,7 @@ public class ToadEntityModel<T extends ToadEntity> extends AnimalModel<T> {
 		if (altLegs) {
 			lLeg01.pitch = -0.5f;
 			lFoot.pitch = 1.5f;
-		}
-		else {
+		} else {
 			lLeg01.pitch = 0.8727f;
 			lFoot.pitch = 0.3142f;
 		}
@@ -98,12 +96,12 @@ public class ToadEntityModel<T extends ToadEntity> extends AnimalModel<T> {
 		rLeg01.pitch = lLeg01.pitch;
 		rFoot.pitch = lFoot.pitch;
 	}
-	
+
 	@Override
 	protected Iterable<ModelPart> getHeadParts() {
 		return ImmutableList.of();
 	}
-	
+
 	@Override
 	protected Iterable<ModelPart> getBodyParts() {
 		return ImmutableList.of(body);

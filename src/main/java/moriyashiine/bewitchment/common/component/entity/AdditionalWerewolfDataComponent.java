@@ -11,43 +11,43 @@ public class AdditionalWerewolfDataComponent implements AutoSyncedComponent, Com
 	private final PlayerEntity obj;
 	private int variant = 0;
 	private boolean forcedTransformation = false;
-	
+
 	public AdditionalWerewolfDataComponent(PlayerEntity obj) {
 		this.obj = obj;
 	}
-	
+
 	@Override
 	public void readFromNbt(NbtCompound tag) {
 		setForcedTransformation(tag.getBoolean("ForcedTransformation"));
 		setVariant(tag.getInt("WerewolfVariant"));
 	}
-	
+
 	@Override
 	public void writeToNbt(NbtCompound tag) {
 		tag.putBoolean("ForcedTransformation", isForcedTransformation());
 		tag.putInt("WerewolfVariant", getVariant());
 	}
-	
+
 	@Override
 	public void tick() {
 		if (BewitchmentAPI.isWerewolf(obj, false)) {
 			obj.airStrafingSpeed *= 1.5f;
 		}
 	}
-	
+
 	public int getVariant() {
 		return variant;
 	}
-	
+
 	public void setVariant(int variant) {
 		this.variant = variant;
 		BWComponents.ADDITIONAL_WEREWOLF_DATA_COMPONENT.sync(obj);
 	}
-	
+
 	public boolean isForcedTransformation() {
 		return forcedTransformation;
 	}
-	
+
 	public void setForcedTransformation(boolean forcedTransformation) {
 		this.forcedTransformation = forcedTransformation;
 		BWComponents.ADDITIONAL_WEREWOLF_DATA_COMPONENT.sync(obj);

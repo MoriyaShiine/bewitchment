@@ -17,7 +17,7 @@ import java.util.List;
 public class CauldronBrewingDisplay implements Display {
 	private final List<EntryIngredient> input;
 	private final List<EntryIngredient> output;
-	
+
 	public CauldronBrewingDisplay(CauldronBrewingRecipe recipe) {
 		input = Collections.singletonList(EntryIngredients.ofIngredient(recipe.input));
 		List<StatusEffectInstance> effects = Collections.singletonList(new StatusEffectInstance(recipe.output, recipe.time));
@@ -26,17 +26,17 @@ public class CauldronBrewingDisplay implements Display {
 		potion.getOrCreateNbt().putBoolean("BewitchmentBrew", true);
 		output = Collections.singletonList(EntryIngredients.of(potion));
 	}
-	
+
 	@Override
 	public List<EntryIngredient> getInputEntries() {
 		return input;
 	}
-	
+
 	@Override
 	public List<EntryIngredient> getOutputEntries() {
 		return output;
 	}
-	
+
 	@Override
 	public CategoryIdentifier<?> getCategoryIdentifier() {
 		return BWREIPlugin.CAULDRON_BREWING;

@@ -34,23 +34,23 @@ import java.util.stream.Stream;
 public abstract class LivingEntityMixin extends Entity {
 	@Shadow
 	public abstract boolean addStatusEffect(StatusEffectInstance effect);
-	
+
 	@Shadow
 	public abstract boolean clearStatusEffects();
-	
+
 	@Shadow
 	public abstract void setHealth(float health);
-	
+
 	@Shadow
 	protected abstract float getSoundVolume();
-	
+
 	@Shadow
 	public abstract float getSoundPitch();
-	
+
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
-	
+
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo callbackInfo) {
 		if (!world.isClient) {
@@ -61,7 +61,7 @@ public abstract class LivingEntityMixin extends Entity {
 			});
 		}
 	}
-	
+
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage(float amount, DamageSource source) {
 		if (!world.isClient) {
@@ -116,7 +116,7 @@ public abstract class LivingEntityMixin extends Entity {
 		}
 		return amount;
 	}
-	
+
 	@Inject(method = "tryUseTotem", at = @At("RETURN"), cancellable = true)
 	private void tryUseTotem(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
@@ -151,16 +151,14 @@ public abstract class LivingEntityMixin extends Entity {
 							PlayerLookup.tracking(this).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, this));
 							SpawnSmokeParticlesPacket.send(player, this);
 							world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_CURSE, getSoundCategory(), getSoundVolume(), getSoundPitch());
-						}
-						else if (source.getSource() instanceof WerewolfEntity || (source.getSource() instanceof PlayerEntity playerSource && BewitchmentAPI.isWerewolf(playerSource, false) && BewitchmentAPI.isPledged(playerSource, BWPledges.HERNE))) {
+						} else if (source.getSource() instanceof WerewolfEntity || (source.getSource() instanceof PlayerEntity playerSource && BewitchmentAPI.isWerewolf(playerSource, false) && BewitchmentAPI.isPledged(playerSource, BWPledges.HERNE))) {
 							transformationComponent.getTransformation().onRemoved(player);
 							transformationComponent.setTransformation(BWTransformations.WEREWOLF);
 							transformationComponent.getTransformation().onAdded(player);
 							int variant = -1;
 							if (source.getSource() instanceof WerewolfEntity) {
 								variant = source.getSource().getDataTracker().get(BWHostileEntity.VARIANT);
-							}
-							else if (source.getSource() instanceof PlayerEntity playerSource) {
+							} else if (source.getSource() instanceof PlayerEntity playerSource) {
 								variant = BWComponents.ADDITIONAL_WEREWOLF_DATA_COMPONENT.get(playerSource).getVariant();
 							}
 							if (variant > -1) {

@@ -17,7 +17,7 @@ import java.util.List;
 public class RitualDisplay implements Display {
 	private final List<EntryIngredient> input;
 	private final List<EntryIngredient> output;
-	
+
 	public RitualDisplay(RitualRecipe recipe) {
 		input = EntryIngredients.ofIngredients(recipe.input);
 		ItemStack chalk = new ItemStack(BWObjects.GOLDEN_CHALK).setCustomName(new TranslatableText("ritual." + recipe.getId().toString().replaceAll(":", ".").replaceAll("/", ".")));
@@ -31,17 +31,17 @@ public class RitualDisplay implements Display {
 		}
 		output = Collections.singletonList(EntryIngredients.of(chalk));
 	}
-	
+
 	@Override
 	public List<EntryIngredient> getInputEntries() {
 		return input;
 	}
-	
+
 	@Override
 	public List<EntryIngredient> getOutputEntries() {
 		return output;
 	}
-	
+
 	@Override
 	public CategoryIdentifier<?> getCategoryIdentifier() {
 		return BWREIPlugin.RITUALS;

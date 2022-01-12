@@ -20,7 +20,7 @@ public class DragonsBloodBroomItem extends BroomItem {
 	public DragonsBloodBroomItem(Settings settings, EntityType<?> broom) {
 		super(settings, broom);
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {

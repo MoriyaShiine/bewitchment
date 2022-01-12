@@ -18,12 +18,12 @@ import java.util.Map;
 
 public class BWWorldState extends PersistentState {
 	public final Map<Long, DefaultedList<ItemStack>> poppetShelves = new LinkedHashMap<>();
-	
+
 	public final List<Long> potentialCandelabras = new ArrayList<>();
 	public final List<Long> potentialSigils = new ArrayList<>();
 	public final List<Long> witchCauldrons = new ArrayList<>();
 	public final List<Long> glowingBrambles = new ArrayList<>();
-	
+
 	public static BWWorldState readNbt(NbtCompound nbt) {
 		BWWorldState worldState = new BWWorldState();
 		NbtList poppetShelvesList = nbt.getList("PoppetShelves", NbtType.COMPOUND);
@@ -58,7 +58,7 @@ public class BWWorldState extends PersistentState {
 		}
 		return worldState;
 	}
-	
+
 	@Override
 	public NbtCompound writeNbt(NbtCompound nbt) {
 		NbtList poppetShelvesList = new NbtList();
@@ -101,7 +101,7 @@ public class BWWorldState extends PersistentState {
 		nbt.put("GlowingBrambles", glowingBramblesList);
 		return nbt;
 	}
-	
+
 	public static BWWorldState get(World world) {
 		return ((ServerWorld) world).getPersistentStateManager().getOrCreate(BWWorldState::readNbt, BWWorldState::new, Bewitchment.MODID + "_universal");
 	}

@@ -30,7 +30,7 @@ public class DragonsBloodLogBlock extends StrippableLogBlock {
 		super(stripped, top, settings);
 		setDefaultState(getDefaultState().with(BWProperties.NATURAL, false).with(BWProperties.CUT, false));
 	}
-	
+
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		ItemStack stack = player.getStackInHand(hand);
@@ -45,7 +45,7 @@ public class DragonsBloodLogBlock extends StrippableLogBlock {
 		}
 		return super.onUse(state, world, pos, player, hand, hit);
 	}
-	
+
 	@Override
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		if (state.get(BWProperties.CUT)) {
@@ -64,7 +64,7 @@ public class DragonsBloodLogBlock extends StrippableLogBlock {
 			}
 		}
 	}
-	
+
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
 		super.appendProperties(builder.add(BWProperties.NATURAL, BWProperties.CUT));

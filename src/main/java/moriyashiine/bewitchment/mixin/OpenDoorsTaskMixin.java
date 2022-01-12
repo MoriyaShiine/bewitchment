@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public abstract class OpenDoorsTaskMixin {
 	@Shadow
 	protected abstract void rememberToCloseDoor(ServerWorld world, LivingEntity entity, BlockPos pos);
-	
+
 	@Inject(method = "run", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/server/world/ServerWorld;getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;", ordinal = 1), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
 	private void run(ServerWorld world, LivingEntity entity, long time, CallbackInfo ci, Path path, PathNode pathNode, PathNode pathNode2, BlockPos pos, BlockState state) {
 		if (state.getBlock() instanceof SpecialDoor specialDoor) {

@@ -14,12 +14,12 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class LilithEntityRenderer extends MobEntityRenderer<LilithEntity, LilithEntityModel<LilithEntity>> {
 	private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/living/lilith.png");
-	
+
 	public LilithEntityRenderer(EntityRendererFactory.Context context) {
 		super(context, new LilithEntityModel<>(context.getPart(BewitchmentClient.LILITH_MODEL_LAYER)), 0.5f);
 		addFeature(new HeldItemFeatureRenderer<>(this));
 	}
-	
+
 	@Override
 	public Identifier getTexture(LilithEntity entity) {
 		return TEXTURE;

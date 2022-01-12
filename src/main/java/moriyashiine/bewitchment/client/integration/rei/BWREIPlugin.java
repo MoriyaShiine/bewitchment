@@ -18,7 +18,7 @@ public class BWREIPlugin implements REIClientPlugin {
 	public static final CategoryIdentifier<CauldronBrewingDisplay> CAULDRON_BREWING = CategoryIdentifier.of(new Identifier(Bewitchment.MODID, "cauldron_brewing"));
 	public static final CategoryIdentifier<IncenseDisplay> INCENSES = CategoryIdentifier.of(new Identifier(Bewitchment.MODID, "incenses"));
 	public static final CategoryIdentifier<CursesDisplay> CURSES = CategoryIdentifier.of(new Identifier(Bewitchment.MODID, "curses"));
-	
+
 	@Override
 	public void registerCategories(CategoryRegistry registry) {
 		registry.add(new AthameStrippingCategory());
@@ -43,7 +43,7 @@ public class BWREIPlugin implements REIClientPlugin {
 		registry.addWorkstations(CURSES, CursesCategory.ICON);
 		registry.removePlusButton(CURSES);
 	}
-	
+
 	@Override
 	public void registerDisplays(DisplayRegistry registry) {
 		registry.registerFiller(AthameStrippingRecipe.class, AthameStrippingDisplay::new);

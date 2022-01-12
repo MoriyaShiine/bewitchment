@@ -25,91 +25,91 @@ public class DragonsBloodChestBlockEntity extends BWChestBlockEntity implements 
 	private Sigil sigil = null;
 	private int uses = 0;
 	private boolean modeOnWhitelist = false;
-	
+
 	public DragonsBloodChestBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, Type type, boolean trapped) {
 		super(blockEntityType, blockPos, blockState, type, trapped);
 	}
-	
+
 	public DragonsBloodChestBlockEntity(BlockPos blockPos, BlockState blockState) {
 		this(BWBlockEntityTypes.DRAGONS_BLOOD_CHEST, blockPos, blockState, Type.DRAGONS_BLOOD, false);
 	}
-	
+
 	@Override
 	public List<UUID> getEntities() {
 		return entities;
 	}
-	
+
 	@Override
 	public UUID getOwner() {
 		return owner;
 	}
-	
+
 	@Override
 	public void setOwner(UUID owner) {
 		this.owner = owner;
 	}
-	
+
 	@Override
 	public Sigil getSigil() {
 		return sigil;
 	}
-	
+
 	@Override
 	public void setSigil(Sigil sigil) {
 		this.sigil = sigil;
 	}
-	
+
 	@Override
 	public int getUses() {
 		return uses;
 	}
-	
+
 	@Override
 	public void setUses(int uses) {
 		this.uses = uses;
 	}
-	
+
 	@Override
 	public boolean getModeOnWhitelist() {
 		return modeOnWhitelist;
 	}
-	
+
 	@Override
 	public void setModeOnWhitelist(boolean modeOnWhitelist) {
 		this.modeOnWhitelist = modeOnWhitelist;
 	}
-	
+
 	@Override
 	public NbtCompound toInitialChunkDataNbt() {
 		NbtCompound nbt = super.toInitialChunkDataNbt();
 		writeNbt(nbt);
 		return nbt;
 	}
-	
+
 	@Nullable
 	@Override
 	public Packet<ClientPlayPacketListener> toUpdatePacket() {
 		return BlockEntityUpdateS2CPacket.create(this);
 	}
-	
+
 	@Override
 	public void readNbt(NbtCompound nbt) {
 		super.readNbt(nbt);
 		fromNbtSigil(nbt);
 	}
-	
+
 	@Override
 	protected void writeNbt(NbtCompound nbt) {
 		super.writeNbt(nbt);
 		toNbtSigil(nbt);
 	}
-	
+
 	public void sync() {
 		if (world != null && !world.isClient) {
 			world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_LISTENERS);
 		}
 	}
-	
+
 	public static void tick(World world, BlockPos pos, BlockState state, DragonsBloodChestBlockEntity blockEntity) {
 		if (world.isClient) {
 			ChestBlockEntity.clientTick(world, pos, state, blockEntity);

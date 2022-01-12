@@ -27,7 +27,7 @@ public abstract class LivingEntityMixin extends Entity {
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
-	
+
 	@ModifyVariable(method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)Z", at = @At("HEAD"), argsOnly = true)
 	private StatusEffectInstance modifyStatusEffect(StatusEffectInstance effect) {
 		if (!world.isClient && !effect.isAmbient() && effect.getEffectType().getCategory() == StatusEffectCategory.BENEFICIAL && (Object) this instanceof PlayerEntity player && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.TOAD) {
@@ -35,7 +35,7 @@ public abstract class LivingEntityMixin extends Entity {
 		}
 		return effect;
 	}
-	
+
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage(float amount, DamageSource source) {
 		if (!world.isClient && BWComponents.FAMILIAR_COMPONENT.get(this).isFamiliar()) {
@@ -43,7 +43,7 @@ public abstract class LivingEntityMixin extends Entity {
 		}
 		return amount;
 	}
-	
+
 	@Inject(method = "onDeath", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getDamageTracker()Lnet/minecraft/entity/damage/DamageTracker;", ordinal = 1))
 	private void removeFamiliar(DamageSource source, CallbackInfo ci) {
 		if (!world.isClient) {
@@ -57,14 +57,14 @@ public abstract class LivingEntityMixin extends Entity {
 			}
 		}
 	}
-	
+
 	@Inject(method = "handleFallDamage", at = @At("HEAD"), cancellable = true)
 	private void handleFallDamage(float fallDistance, float damageMultiplier, DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if ((Object) this instanceof PlayerEntity player && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.OWL) {
 			callbackInfo.setReturnValue(false);
 		}
 	}
-	
+
 	@Inject(method = "fall", at = @At("HEAD"), cancellable = true)
 	private void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition, CallbackInfo callbackInfo) {
 		if ((Object) this instanceof PlayerEntity player && onGround && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.OWL) {

@@ -36,7 +36,7 @@ public class SaltLineBlock extends Block {
 	private static final Map<Direction, VoxelShape> NON_SIDE_SHAPES = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, VoxelShapes.union(SIDE_SHAPES.get(Direction.NORTH), createCuboidShape(3, 0, 0, 13, 16, 1)), Direction.SOUTH, VoxelShapes.union(SIDE_SHAPES.get(Direction.SOUTH), createCuboidShape(3, 0, 15, 13, 16, 16)), Direction.EAST, VoxelShapes.union(SIDE_SHAPES.get(Direction.EAST), createCuboidShape(15, 0, 3, 16, 16, 13)), Direction.WEST, VoxelShapes.union(SIDE_SHAPES.get(Direction.WEST), createCuboidShape(0, 0, 3, 1, 16, 13))));
 	private static final VoxelShape DOT_SHAPE = createCuboidShape(3, 0, 3, 13, 1, 13);
 	private final Map<BlockState, VoxelShape> outlineShapes = new HashMap<>();
-	
+
 	public SaltLineBlock(Settings settings) {
 		super(settings);
 		setDefaultState(getDefaultState().with(WIRE_CONNECTION_NORTH, WireConnection.NONE).with(WIRE_CONNECTION_EAST, WireConnection.NONE).with(WIRE_CONNECTION_SOUTH, WireConnection.NONE).with(WIRE_CONNECTION_WEST, WireConnection.NONE));
@@ -46,20 +46,19 @@ public class SaltLineBlock extends Block {
 				WireConnection wireConnection = state.get(DIRECTION_TO_WIRE_CONNECTION_PROPERTY.get(direction));
 				if (wireConnection == WireConnection.SIDE) {
 					voxelShape = VoxelShapes.union(voxelShape, SIDE_SHAPES.get(direction));
-				}
-				else if (wireConnection == WireConnection.UP) {
+				} else if (wireConnection == WireConnection.UP) {
 					voxelShape = VoxelShapes.union(voxelShape, NON_SIDE_SHAPES.get(direction));
 				}
 			}
 			outlineShapes.put(state, voxelShape);
 		}
 	}
-	
+
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		return outlineShapes.get(state);
 	}
-	
+
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		if (context instanceof EntityShapeContext entityShapeContext && entityShapeContext.getEntity() instanceof LivingEntity living && BewitchmentAPI.isWeakToSilver(living)) {
@@ -67,27 +66,25 @@ public class SaltLineBlock extends Block {
 		}
 		return super.getCollisionShape(state, world, pos, context);
 	}
-	
+
 	@Nullable
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
 		return getPlacementState(ctx.getWorld(), ctx.getBlockPos());
 	}
-	
+
 	@Override
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
 		if (direction == Direction.DOWN) {
 			return state;
-		}
-		else if (direction == Direction.UP) {
+		} else if (direction == Direction.UP) {
 			return getPlacementState(world, pos);
-		}
-		else {
+		} else {
 			WireConnection wireConnection = getConnectionFromNeighbors(world, pos, direction, !world.getBlockState(pos.up()).isSolidBlock(world, pos));
 			return wireConnection.isConnected() == state.get(DIRECTION_TO_WIRE_CONNECTION_PROPERTY.get(direction)).isConnected() && !isFullyConnected(state) ? state.with(DIRECTION_TO_WIRE_CONNECTION_PROPERTY.get(direction), wireConnection) : getPlacementState(world, pos);
 		}
 	}
-	
+
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		if (player.getAbilities().allowModifyWorld) {
@@ -107,13 +104,13 @@ public class SaltLineBlock extends Block {
 		}
 		return ActionResult.PASS;
 	}
-	
+
 	@Override
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
 		BlockPos blockPos = pos.down();
 		return canRunOnTop(world, blockPos, world.getBlockState(blockPos));
 	}
-	
+
 	@Override
 	public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
 		if (!world.isClient && !state.canPlaceAt(world, pos)) {
@@ -121,7 +118,7 @@ public class SaltLineBlock extends Block {
 			world.removeBlock(pos, false);
 		}
 	}
-	
+
 	@Override
 	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
 		if (!oldState.isOf(state.getBlock()) && !world.isClient) {
@@ -131,7 +128,7 @@ public class SaltLineBlock extends Block {
 			updateNeighbors(world, pos);
 		}
 	}
-	
+
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!moved && !state.isOf(newState.getBlock())) {
@@ -144,7 +141,7 @@ public class SaltLineBlock extends Block {
 			}
 		}
 	}
-	
+
 	@Override
 	public void prepare(BlockState state, WorldAccess world, BlockPos pos, int flags, int maxUpdateDepth) {
 		BlockPos.Mutable mutable = new BlockPos.Mutable();
@@ -167,7 +164,7 @@ public class SaltLineBlock extends Block {
 			}
 		}
 	}
-	
+
 	@Override
 	public BlockState rotate(BlockState state, BlockRotation rotation) {
 		return switch (rotation) {
@@ -177,7 +174,7 @@ public class SaltLineBlock extends Block {
 			default -> state;
 		};
 	}
-	
+
 	@Override
 	public BlockState mirror(BlockState state, BlockMirror mirror) {
 		return switch (mirror) {
@@ -186,20 +183,20 @@ public class SaltLineBlock extends Block {
 			default -> super.mirror(state, mirror);
 		};
 	}
-	
+
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
 		builder.add(WIRE_CONNECTION_NORTH, WIRE_CONNECTION_SOUTH, WIRE_CONNECTION_EAST, WIRE_CONNECTION_WEST);
 	}
-	
+
 	private static boolean isFullyConnected(BlockState state) {
 		return state.get(WIRE_CONNECTION_NORTH).isConnected() && state.get(WIRE_CONNECTION_SOUTH).isConnected() && state.get(WIRE_CONNECTION_EAST).isConnected() && state.get(WIRE_CONNECTION_WEST).isConnected();
 	}
-	
+
 	private static boolean isNotConnected(BlockState state) {
 		return !state.get(WIRE_CONNECTION_NORTH).isConnected() && !state.get(WIRE_CONNECTION_SOUTH).isConnected() && !state.get(WIRE_CONNECTION_EAST).isConnected() && !state.get(WIRE_CONNECTION_WEST).isConnected();
 	}
-	
+
 	private BlockState getPlacementState(BlockView world, BlockPos pos) {
 		BlockState state = getDefaultState();
 		boolean notSolid = !world.getBlockState(pos.up()).isSolidBlock(world, pos);
@@ -231,7 +228,7 @@ public class SaltLineBlock extends Block {
 		}
 		return state;
 	}
-	
+
 	private WireConnection getConnectionFromNeighbors(BlockView blockView, BlockPos blockPos, Direction direction, boolean notSolid) {
 		BlockPos offset = blockPos.offset(direction);
 		BlockState state = blockView.getBlockState(offset);
@@ -240,11 +237,11 @@ public class SaltLineBlock extends Block {
 		}
 		return !state.isOf(this) && (state.isSolidBlock(blockView, offset) || !blockView.getBlockState(offset.down()).isOf(this)) ? WireConnection.NONE : WireConnection.SIDE;
 	}
-	
+
 	private boolean canRunOnTop(BlockView world, BlockPos pos, BlockState floor) {
 		return floor.isSideSolidFullSquare(world, pos, Direction.UP) || floor.isOf(Blocks.HOPPER);
 	}
-	
+
 	private void updateNeighbors(World world, BlockPos pos) {
 		List<BlockPos> toUpdate = new ArrayList<>();
 		for (Direction direction : Direction.Type.HORIZONTAL) {

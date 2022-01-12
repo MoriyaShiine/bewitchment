@@ -10,12 +10,12 @@ public class GillsStatusEffect extends StatusEffect {
 	public GillsStatusEffect(StatusEffectCategory category, int color) {
 		super(category, color);
 	}
-	
+
 	@Override
 	public boolean canApplyUpdateEffect(int duration, int amplifier) {
 		return true;
 	}
-	
+
 	@Override
 	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
 		boolean damage = false;
@@ -24,8 +24,7 @@ public class GillsStatusEffect extends StatusEffect {
 			if (entity.getAir() == -20) {
 				damage = true;
 			}
-		}
-		else if (entity.getAir() < entity.getMaxAir()) {
+		} else if (entity.getAir() < entity.getMaxAir()) {
 			entity.setAir(((LivingEntityAccessor) entity).bw_getNextAirOnLand(entity.getAir()));
 			return;
 		}

@@ -12,12 +12,12 @@ import net.minecraft.world.World;
 
 public class BroomItem extends Item {
 	private final EntityType<?> broom;
-	
+
 	public BroomItem(Settings settings, EntityType<?> broom) {
 		super(settings);
 		this.broom = broom;
 	}
-	
+
 	@Override
 	public ActionResult useOnBlock(ItemUsageContext context) {
 		World world = context.getWorld();

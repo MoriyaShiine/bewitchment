@@ -10,17 +10,17 @@ public class InvigoratingStatusEffect extends StatusEffect {
 	public InvigoratingStatusEffect(StatusEffectCategory category, int color) {
 		super(category, color);
 	}
-	
+
 	@Override
 	public boolean isInstant() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean canApplyUpdateEffect(int duration, int amplifier) {
 		return true;
 	}
-	
+
 	@Override
 	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
 		if (entity instanceof PlayerEntity player) {

@@ -20,71 +20,71 @@ public class LockableBlockEntity extends BlockEntity implements Lockable {
 	private final List<UUID> entities = new ArrayList<>();
 	private UUID owner = null;
 	private boolean modeOnWhitelist = false, locked = false;
-	
+
 	public LockableBlockEntity(BlockPos pos, BlockState state) {
 		super(BWBlockEntityTypes.LOCKABLE, pos, state);
 	}
-	
+
 	@Override
 	public List<UUID> getEntities() {
 		return entities;
 	}
-	
+
 	@Override
 	public UUID getOwner() {
 		return owner;
 	}
-	
+
 	@Override
 	public void setOwner(UUID owner) {
 		this.owner = owner;
 	}
-	
+
 	@Override
 	public boolean getModeOnWhitelist() {
 		return modeOnWhitelist;
 	}
-	
+
 	@Override
 	public void setModeOnWhitelist(boolean modeOnWhitelist) {
 		this.modeOnWhitelist = modeOnWhitelist;
 	}
-	
+
 	@Override
 	public boolean getLocked() {
 		return locked;
 	}
-	
+
 	@Override
 	public void setLocked(boolean locked) {
 		this.locked = locked;
 	}
-	
+
 	@Override
 	public NbtCompound toInitialChunkDataNbt() {
 		NbtCompound nbt = super.toInitialChunkDataNbt();
 		writeNbt(nbt);
 		return nbt;
 	}
-	
+
 	@Nullable
 	@Override
 	public Packet<ClientPlayPacketListener> toUpdatePacket() {
 		return BlockEntityUpdateS2CPacket.create(this);
 	}
-	
+
 	@Override
 	public void readNbt(NbtCompound nbt) {
 		super.readNbt(nbt);
 		fromNbtLockable(nbt);
 	}
-	
+
 	@Override
 	protected void writeNbt(NbtCompound nbt) {
 		super.writeNbt(nbt);
 		toNbtLockable(nbt);
 	}
-	
+
 	public void sync() {
 		if (world != null && !world.isClient) {
 			world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_LISTENERS);

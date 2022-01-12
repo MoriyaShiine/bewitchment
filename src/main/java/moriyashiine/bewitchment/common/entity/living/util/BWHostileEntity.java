@@ -15,11 +15,11 @@ import org.jetbrains.annotations.Nullable;
 
 public abstract class BWHostileEntity extends HostileEntity {
 	public static final TrackedData<Integer> VARIANT = DataTracker.registerData(BWHostileEntity.class, TrackedDataHandlerRegistry.INTEGER);
-	
+
 	protected BWHostileEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 	}
-	
+
 	@Override
 	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityTag) {
 		int variants = getVariants();
@@ -27,18 +27,16 @@ public abstract class BWHostileEntity extends HostileEntity {
 			if (hasShiny()) {
 				if (random.nextInt(8192) == 0) {
 					dataTracker.set(VARIANT, 0);
-				}
-				else {
+				} else {
 					dataTracker.set(VARIANT, random.nextInt(variants - 1) + 1);
 				}
-			}
-			else {
+			} else {
 				dataTracker.set(VARIANT, random.nextInt(variants));
 			}
 		}
 		return super.initialize(world, difficulty, spawnReason, entityData, entityTag);
 	}
-	
+
 	@Override
 	protected void initDataTracker() {
 		super.initDataTracker();
@@ -46,7 +44,7 @@ public abstract class BWHostileEntity extends HostileEntity {
 			dataTracker.startTracking(VARIANT, 1);
 		}
 	}
-	
+
 	@Override
 	public void readCustomDataFromNbt(NbtCompound nbt) {
 		super.readCustomDataFromNbt(nbt);
@@ -54,7 +52,7 @@ public abstract class BWHostileEntity extends HostileEntity {
 			dataTracker.set(VARIANT, nbt.getInt("Variant"));
 		}
 	}
-	
+
 	@Override
 	public void writeCustomDataToNbt(NbtCompound nbt) {
 		super.writeCustomDataToNbt(nbt);
@@ -62,8 +60,8 @@ public abstract class BWHostileEntity extends HostileEntity {
 			nbt.putInt("Variant", dataTracker.get(VARIANT));
 		}
 	}
-	
+
 	protected abstract boolean hasShiny();
-	
+
 	public abstract int getVariants();
 }

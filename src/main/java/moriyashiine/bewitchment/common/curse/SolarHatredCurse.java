@@ -9,7 +9,7 @@ public class SolarHatredCurse extends Curse {
 	public SolarHatredCurse(Type type) {
 		super(type);
 	}
-	
+
 	@Override
 	public void tick(LivingEntity target) {
 		if (target instanceof PlayerEntity player && BWComponents.RESPAWN_TIMER_COMPONENT.get(player).getRespawnTimer() > 0) {

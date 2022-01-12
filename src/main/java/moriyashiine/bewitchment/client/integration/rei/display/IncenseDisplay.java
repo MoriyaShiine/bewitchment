@@ -17,22 +17,22 @@ import java.util.List;
 public class IncenseDisplay implements Display {
 	private final List<EntryIngredient> input;
 	private final List<EntryIngredient> output;
-	
+
 	public IncenseDisplay(IncenseRecipe recipe) {
 		input = EntryIngredients.ofIngredients(recipe.input);
 		output = Collections.singletonList(EntryIngredients.of(PotionUtil.setCustomPotionEffects(new ItemStack(BWObjects.BRAZIER), Collections.singletonList(new StatusEffectInstance(recipe.effect, 24000, recipe.amplifier)))));
 	}
-	
+
 	@Override
 	public List<EntryIngredient> getInputEntries() {
 		return input;
 	}
-	
+
 	@Override
 	public List<EntryIngredient> getOutputEntries() {
 		return output;
 	}
-	
+
 	@Override
 	public CategoryIdentifier<?> getCategoryIdentifier() {
 		return BWREIPlugin.INCENSES;

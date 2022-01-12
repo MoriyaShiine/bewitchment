@@ -19,7 +19,7 @@ public class EnchantRitualFunction extends RitualFunction {
 	public EnchantRitualFunction(ParticleType<?> startParticle, Predicate<LivingEntity> sacrifice) {
 		super(startParticle, sacrifice);
 	}
-	
+
 	@Override
 	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
 		for (ItemEntity itemEntity : world.getEntitiesByType(EntityType.ITEM, new Box(effectivePos).expand(2, 0, 2), entity -> entity.getStack().isEnchantable())) {

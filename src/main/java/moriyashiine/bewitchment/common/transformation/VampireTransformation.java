@@ -16,7 +16,7 @@ public class VampireTransformation extends Transformation {
 			}
 		});
 	}
-	
+
 	@Override
 	public void onRemoved(PlayerEntity player) {
 		player.removeStatusEffect(StatusEffects.NIGHT_VISION);

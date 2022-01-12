@@ -13,7 +13,7 @@ public class JudgmentSigil extends Sigil {
 	public JudgmentSigil(boolean active, int uses) {
 		super(active, uses);
 	}
-	
+
 	@Override
 	public ActionResult use(World world, BlockPos pos, LivingEntity user, Hand hand) {
 		if (BewitchmentAPI.isWeakToSilver(user) && user.damage(DamageSource.MAGIC, 8)) {

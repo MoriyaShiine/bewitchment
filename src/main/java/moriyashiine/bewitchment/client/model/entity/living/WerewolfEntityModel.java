@@ -19,9 +19,9 @@ public class WerewolfEntityModel<T extends WerewolfEntity> extends BipedEntityMo
 	private final ModelPart neck;
 	private final ModelPart lArm01;
 	private final ModelPart rArm01;
-	
+
 	private boolean realArm = false;
-	
+
 	public WerewolfEntityModel(ModelPart root) {
 		super(root);
 		realBody = root.getChild("realBody");
@@ -32,7 +32,7 @@ public class WerewolfEntityModel<T extends WerewolfEntity> extends BipedEntityMo
 		lArm01 = root.getChild("lArm01");
 		rArm01 = root.getChild("rArm01");
 	}
-	
+
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0);
 		ModelPartData root = data.getRoot();
@@ -96,7 +96,7 @@ public class WerewolfEntityModel<T extends WerewolfEntity> extends BipedEntityMo
 		neck.addChild("fur01", ModelPartBuilder.create().uv(90, 0).cuboid(-3.5F, 2.0F, 0.0F, 7.0F, 7.0F, 2.0F, new Dilation(0.1F, 0.1F, 0.1F)), ModelTransform.of(0.0F, 0.0F, -2.9F, 1.7453F, 0.0F, 0.0F));
 		return TexturedModelData.of(data, 128, 64);
 	}
-	
+
 	@Override
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 		realArm = false;
@@ -143,7 +143,7 @@ public class WerewolfEntityModel<T extends WerewolfEntity> extends BipedEntityMo
 			BipedRightLeg.pitch -= 0.5f;
 		}
 	}
-	
+
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
 		neck.render(matrices, vertices, light, overlay, red, green, blue, alpha);
@@ -151,12 +151,12 @@ public class WerewolfEntityModel<T extends WerewolfEntity> extends BipedEntityMo
 		lArm01.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		rArm01.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 	}
-	
+
 	@Override
 	protected ModelPart getArm(Arm arm) {
 		return realArm ? (arm == Arm.LEFT ? lArm01 : rArm01) : super.getArm(arm);
 	}
-	
+
 	private void copyRotation(ModelPart to, ModelPart from) {
 		to.pitch = from.pitch;
 		to.yaw = from.yaw;

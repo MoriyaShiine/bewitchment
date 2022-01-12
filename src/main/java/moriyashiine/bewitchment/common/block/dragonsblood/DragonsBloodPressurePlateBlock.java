@@ -19,19 +19,19 @@ public class DragonsBloodPressurePlateBlock extends TerraformPressurePlateBlock 
 	public DragonsBloodPressurePlateBlock(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Nullable
 	@Override
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
 		return new SigilBlockEntity(pos, state);
 	}
-	
+
 	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
 		return (tickerWorld, pos, tickerState, blockEntity) -> SigilBlockEntity.tick(tickerWorld, pos, tickerState, (SigilBlockEntity) blockEntity);
 	}
-	
+
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity livingEntity) {

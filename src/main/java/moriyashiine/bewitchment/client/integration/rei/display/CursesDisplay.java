@@ -18,24 +18,24 @@ import java.util.List;
 public class CursesDisplay implements Display {
 	private final List<EntryIngredient> input;
 	private final List<EntryIngredient> output;
-	
+
 	public CursesDisplay(CurseRecipe recipe) {
 		input = EntryIngredients.ofIngredients(recipe.input);
 		ItemStack brazier = new ItemStack(BWObjects.BRAZIER).setCustomName(new TranslatableText("curse." + BWRegistries.CURSES.getId(recipe.curse).toString().replace(":", ".")));
 		brazier.getOrCreateNbt().putInt("Cost", recipe.cost);
 		output = Collections.singletonList(EntryIngredients.of(brazier));
 	}
-	
+
 	@Override
 	public List<EntryIngredient> getInputEntries() {
 		return input;
 	}
-	
+
 	@Override
 	public List<EntryIngredient> getOutputEntries() {
 		return output;
 	}
-	
+
 	@Override
 	public CategoryIdentifier<?> getCategoryIdentifier() {
 		return BWREIPlugin.CURSES;

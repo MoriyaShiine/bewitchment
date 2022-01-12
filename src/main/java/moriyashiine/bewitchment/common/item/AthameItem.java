@@ -47,7 +47,7 @@ import java.util.UUID;
 
 public class AthameItem extends SwordItem {
 	private static final EntityAttributeModifier REACH_MODIFIER = new EntityAttributeModifier(UUID.fromString("1f362972-c5c5-4e9d-b69f-1fd13bd269e3"), "Weapon modifier", -0.5, EntityAttributeModifier.Operation.ADDITION);
-	
+
 	private static final DispenserBehavior DISPENSER_BEHAVIOR = new FallibleItemDispenserBehavior() {
 		@Override
 		protected ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
@@ -55,20 +55,19 @@ public class AthameItem extends SwordItem {
 			BlockPos pos = pointer.getPos().offset(pointer.getBlockState().get(Properties.FACING));
 			if (cutLog(world, pos, stack)) {
 				setSuccess(true);
-			}
-			else if (world.getBlockState(pos).getBlock() == BWObjects.GOLDEN_GLYPH) {
+			} else if (world.getBlockState(pos).getBlock() == BWObjects.GOLDEN_GLYPH) {
 				BWObjects.GOLDEN_GLYPH.onUse(world.getBlockState(pos), world, pos, BewitchmentAPI.getFakePlayer(world), Hand.MAIN_HAND, BlockHitResult.createMissed(new Vec3d(pos.getX(), pos.getY(), pos.getZ()), Direction.DOWN, pos));
 				setSuccess(true);
 			}
 			return stack;
 		}
 	};
-	
+
 	public AthameItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
 		super(toolMaterial, attackDamage, attackSpeed, settings);
 		DispenserBlock.registerBehavior(this, DISPENSER_BEHAVIOR);
 	}
-	
+
 	@Override
 	public ActionResult useOnBlock(ItemUsageContext context) {
 		World world = context.getWorld();
@@ -105,8 +104,7 @@ public class AthameItem extends SwordItem {
 				}
 				return ActionResult.success(client);
 			}
-		}
-		else if (blockEntity instanceof TaglockHolder taglockHolder) {
+		} else if (blockEntity instanceof TaglockHolder taglockHolder) {
 			if (player != null && player.getUuid().equals(taglockHolder.getOwner()) && taglockHolder.getFirstEmptySlot() != 0) {
 				if (!client) {
 					ItemScatterer.spawn(world, pos, taglockHolder.getTaglockInventory());
@@ -115,8 +113,7 @@ public class AthameItem extends SwordItem {
 				}
 				return ActionResult.success(client);
 			}
-		}
-		else if (blockEntity instanceof Lockable lockable) {
+		} else if (blockEntity instanceof Lockable lockable) {
 			if (player != null && player.getUuid().equals(lockable.getOwner()) && !lockable.getEntities().isEmpty()) {
 				if (!client) {
 					boolean whitelist = lockable.getModeOnWhitelist();
@@ -130,7 +127,7 @@ public class AthameItem extends SwordItem {
 		}
 		return super.useOnBlock(context);
 	}
-	
+
 	@Override
 	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
 		Multimap<EntityAttribute, EntityAttributeModifier> map = LinkedHashMultimap.create(super.getAttributeModifiers(slot));
@@ -139,7 +136,7 @@ public class AthameItem extends SwordItem {
 		}
 		return map;
 	}
-	
+
 	private static boolean cutLog(World world, BlockPos pos, ItemStack stack) {
 		BlockState state = world.getBlockState(pos);
 		if (state.getBlock() instanceof DragonsBloodLogBlock && state.get(BWProperties.NATURAL) && !state.get(BWProperties.CUT)) {

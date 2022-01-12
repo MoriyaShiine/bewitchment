@@ -13,7 +13,7 @@ public final class ReviveEvents {
 			listener.onRevive(player, source, poppet);
 		}
 	});
-	
+
 	public static final Event<CancelRevive> CANCEL_REVIVE = createArrayBacked(CancelRevive.class, listeners -> (player, source, poppet) -> {
 		for (CancelRevive listener : listeners) {
 			if (listener.shouldCancel(player, source, poppet)) {
@@ -22,11 +22,11 @@ public final class ReviveEvents {
 		}
 		return false;
 	});
-	
+
 	public interface OnRevive {
 		void onRevive(PlayerEntity player, DamageSource source, ItemStack poppet);
 	}
-	
+
 	public interface CancelRevive {
 		boolean shouldCancel(PlayerEntity player, DamageSource source, ItemStack poppet);
 	}

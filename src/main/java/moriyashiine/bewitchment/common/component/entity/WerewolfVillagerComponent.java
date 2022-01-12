@@ -17,11 +17,11 @@ public class WerewolfVillagerComponent implements ServerTickingComponent {
 	private final VillagerEntity obj;
 	private NbtCompound storedWerewolf = null;
 	private int despawnTimer = 2400;
-	
+
 	public WerewolfVillagerComponent(VillagerEntity obj) {
 		this.obj = obj;
 	}
-	
+
 	@Override
 	public void readFromNbt(NbtCompound tag) {
 		if (tag.contains("StoredWerewolf")) {
@@ -31,7 +31,7 @@ public class WerewolfVillagerComponent implements ServerTickingComponent {
 			despawnTimer = tag.getInt("DespawnTimer");
 		}
 	}
-	
+
 	@Override
 	public void writeToNbt(@NotNull NbtCompound tag) {
 		if (storedWerewolf != null) {
@@ -39,7 +39,7 @@ public class WerewolfVillagerComponent implements ServerTickingComponent {
 		}
 		tag.putInt("DespawnTimer", despawnTimer);
 	}
-	
+
 	@Override
 	public void serverTick() {
 		if (getStoredWerewolf() != null) {
@@ -74,19 +74,19 @@ public class WerewolfVillagerComponent implements ServerTickingComponent {
 			}
 		}
 	}
-	
+
 	public NbtCompound getStoredWerewolf() {
 		return storedWerewolf;
 	}
-	
+
 	public void setStoredWerewolf(NbtCompound storedWerewolf) {
 		this.storedWerewolf = storedWerewolf;
 	}
-	
+
 	public int getDespawnTimer() {
 		return despawnTimer;
 	}
-	
+
 	public void setDespawnTimer(int despawnTimer) {
 		this.despawnTimer = despawnTimer;
 	}

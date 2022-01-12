@@ -14,7 +14,7 @@ public class SpecterBangleItem extends TrinketItem {
 	public SpecterBangleItem(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Override
 	public void tick(ItemStack stack, SlotReference slot, LivingEntity entity) {
 		if (entity instanceof PlayerEntity player && entity.isSneaking() && BewitchmentAPI.drainMagic(player, 1, true)) {

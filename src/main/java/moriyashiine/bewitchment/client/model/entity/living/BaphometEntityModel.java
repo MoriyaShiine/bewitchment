@@ -16,7 +16,7 @@ import net.minecraft.util.math.MathHelper;
 @Environment(EnvType.CLIENT)
 public class BaphometEntityModel<T extends BaphometEntity> extends BipedEntityModel<T> {
 	private static final ItemStack CADUCEUS = new ItemStack(BWObjects.CADUCEUS);
-	
+
 	private final ModelPart realBody;
 	private final ModelPart frontLoincloth;
 	private final ModelPart backLoincloth;
@@ -27,9 +27,9 @@ public class BaphometEntityModel<T extends BaphometEntity> extends BipedEntityMo
 	private final ModelPart BipedLeftLeg;
 	private final ModelPart BipedRightLeg;
 	private final ModelPart realHead;
-	
+
 	private boolean realArm = false;
-	
+
 	public BaphometEntityModel(ModelPart root) {
 		super(root);
 		realBody = root.getChild("realBody");
@@ -43,7 +43,7 @@ public class BaphometEntityModel<T extends BaphometEntity> extends BipedEntityMo
 		BipedRightLeg = root.getChild("BipedRightLeg");
 		realHead = root.getChild("realHead");
 	}
-	
+
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0);
 		ModelPartData root = data.getRoot();
@@ -117,7 +117,7 @@ public class BaphometEntityModel<T extends BaphometEntity> extends BipedEntityMo
 		root.addChild("BipedLeftArm", ModelPartBuilder.create().uv(46, 19).cuboid(-1.0F, -2.0F, -2.0F, 3.0F, 16.0F, 4.0F), ModelTransform.of(5.0F, -10.8F, 0.0F, 0.0F, 0.0F, -0.1F));
 		return TexturedModelData.of(data, 128, 64);
 	}
-	
+
 	@Override
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float realHeadYaw, float realHeadPitch) {
 		entity.setStackInHand(Hand.MAIN_HAND, CADUCEUS);
@@ -143,7 +143,7 @@ public class BaphometEntityModel<T extends BaphometEntity> extends BipedEntityMo
 		frontLoincloth.pitch = Math.min(BipedLeftLeg.pitch, BipedRightLeg.pitch) + 1 / 3f - 0.3491f;
 		backLoincloth.pitch = Math.max(BipedLeftLeg.pitch, BipedRightLeg.pitch) + 1 / 3.75f;
 	}
-	
+
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
 		realHead.render(matrices, vertices, light, overlay, red, green, blue, alpha);
@@ -153,12 +153,12 @@ public class BaphometEntityModel<T extends BaphometEntity> extends BipedEntityMo
 		BipedLeftLeg.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		BipedRightLeg.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 	}
-	
+
 	@Override
 	protected ModelPart getArm(Arm arm) {
 		return realArm ? (arm == Arm.LEFT ? BipedLeftArm : BipedRightArm) : super.getArm(arm);
 	}
-	
+
 	private void copyRotation(ModelPart to, ModelPart from) {
 		to.pitch = from.pitch;
 		to.yaw = from.yaw;

@@ -19,17 +19,17 @@ import java.util.UUID;
 
 public interface Pledgeable {
 	String getPledgeID();
-	
+
 	Collection<UUID> getPledgedPlayerUUIDs();
-	
+
 	EntityType<?> getMinionType();
-	
+
 	Collection<StatusEffectInstance> getMinionBuffs();
-	
+
 	int getTimeSinceLastAttack();
-	
+
 	void setTimeSinceLastAttack(int timeSinceLastAttack);
-	
+
 	default void summonMinions(MobEntity pledgeable) {
 		if (!pledgeable.world.isClient && pledgeable.world.getEntitiesByType(getMinionType(), new Box(pledgeable.getBlockPos()).expand(32), entity -> entity instanceof MobEntity mobEntity && !entity.isRemoved() && pledgeable.getUuid().equals(BWComponents.MINION_COMPONENT.get(mobEntity).getMaster())).size() < 3) {
 			for (int i = 0; i < MathHelper.nextInt(pledgeable.getRandom(), 2, 3); i++) {
@@ -47,7 +47,7 @@ public interface Pledgeable {
 			}
 		}
 	}
-	
+
 	default void fromNbtPledgeable(NbtCompound tag) {
 		NbtList pledgedPlayerUUIDsList = tag.getList("PledgedPlayerUUIDs", NbtType.COMPOUND);
 		for (int i = 0; i < pledgedPlayerUUIDsList.size(); i++) {
@@ -55,7 +55,7 @@ public interface Pledgeable {
 		}
 		setTimeSinceLastAttack(tag.getInt("TimeSinceLastAttack"));
 	}
-	
+
 	default void toNbtPledgeable(NbtCompound tag) {
 		NbtList pledgedPlayerUUIDsList = new NbtList();
 		for (UUID uuid : getPledgedPlayerUUIDs()) {

@@ -22,7 +22,7 @@ public class RavenEntityModel<T extends RavenEntity> extends AnimalModel<T> {
 	private final ModelPart rWing02;
 	private final ModelPart rWing03;
 	private final ModelPart rWing04;
-	
+
 	public RavenEntityModel(ModelPart root) {
 		body = root.getChild("body");
 		head = body.getChild("neck").getChild("head");
@@ -37,7 +37,7 @@ public class RavenEntityModel<T extends RavenEntity> extends AnimalModel<T> {
 		rWing03 = rWing02.getChild("rWing03");
 		rWing04 = rWing03.getChild("rWing04");
 	}
-	
+
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = new ModelData();
 		ModelPartData root = data.getRoot();
@@ -71,7 +71,7 @@ public class RavenEntityModel<T extends RavenEntity> extends AnimalModel<T> {
 		rWing03.addChild("rWing04", ModelPartBuilder.create().uv(29, 18).cuboid(0.0F, -0.5F, -1.0F, 8.0F, 0.0F, 6.0F), ModelTransform.of(1.8F, 0.4F, 0.0F, 0.0F, 0.0F, 0.0F));
 		return TexturedModelData.of(data, 64, 32);
 	}
-	
+
 	@Override
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 		head.pitch = (float) (headPitch * (Math.PI / 180f)) + 1;
@@ -97,8 +97,7 @@ public class RavenEntityModel<T extends RavenEntity> extends AnimalModel<T> {
 			rWing04.roll = -lWing04.roll;
 			lLeg01.pitch = 1;
 			rLeg01.pitch = 1;
-		}
-		else {
+		} else {
 			body.pitch = -0.3142f;
 			lWing01.yaw = 1.2741f;
 			lWing01.roll = 0;
@@ -121,17 +120,16 @@ public class RavenEntityModel<T extends RavenEntity> extends AnimalModel<T> {
 		lLeg01.visible = rLeg01.visible = !sitting;
 		if (sitting) {
 			body.pivotY = 21.5f;
-		}
-		else {
+		} else {
 			body.pivotY = 18.2f;
 		}
 	}
-	
+
 	@Override
 	protected Iterable<ModelPart> getHeadParts() {
 		return ImmutableList.of();
 	}
-	
+
 	@Override
 	protected Iterable<ModelPart> getBodyParts() {
 		return ImmutableList.of(body);

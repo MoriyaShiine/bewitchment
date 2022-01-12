@@ -14,6 +14,6 @@ public interface AllowVampireBurn {
 		}
 		return true;
 	});
-	
+
 	boolean allowBurn(PlayerEntity player);
 }

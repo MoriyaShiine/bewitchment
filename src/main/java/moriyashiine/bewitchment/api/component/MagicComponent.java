@@ -8,51 +8,51 @@ import net.minecraft.nbt.NbtCompound;
 
 public class MagicComponent implements AutoSyncedComponent, ServerTickingComponent {
 	public static final int MAX_MAGIC = 100;
-	
+
 	private final PlayerEntity obj;
 	private int magic = 0, magicTimer = 60;
-	
+
 	public MagicComponent(PlayerEntity obj) {
 		this.obj = obj;
 	}
-	
+
 	@Override
 	public void readFromNbt(NbtCompound tag) {
 		setMagic(tag.getInt("Magic"));
 		setMagicTimer(tag.getInt("MagicTimer"));
 	}
-	
+
 	@Override
 	public void writeToNbt(NbtCompound tag) {
 		tag.putInt("Magic", getMagic());
 		tag.putInt("MagicTimer", getMagicTimer());
 	}
-	
+
 	@Override
 	public void serverTick() {
 		if (getMagicTimer() > 0) {
 			setMagicTimer(getMagicTimer() - 1);
 		}
 	}
-	
+
 	public int getMagic() {
 		return magic;
 	}
-	
+
 	public void setMagic(int magic) {
 		this.magic = magic;
 		BWComponents.MAGIC_COMPONENT.sync(obj);
 	}
-	
+
 	public int getMagicTimer() {
 		return magicTimer;
 	}
-	
+
 	public void setMagicTimer(int magicTimer) {
 		this.magicTimer = magicTimer;
 		BWComponents.MAGIC_COMPONENT.sync(obj);
 	}
-	
+
 	public boolean fillMagic(int amount, boolean simulate) {
 		if (getMagic() < MAX_MAGIC) {
 			if (!simulate) {
@@ -63,7 +63,7 @@ public class MagicComponent implements AutoSyncedComponent, ServerTickingCompone
 		}
 		return false;
 	}
-	
+
 	public boolean drainMagic(int amount, boolean simulate) {
 		if (getMagic() - amount >= 0) {
 			if (!simulate) {

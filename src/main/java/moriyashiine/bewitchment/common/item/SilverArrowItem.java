@@ -21,12 +21,12 @@ public class SilverArrowItem extends ArrowItem {
 			return arrowEntity;
 		}
 	};
-	
+
 	public SilverArrowItem(Settings settings) {
 		super(settings);
 		DispenserBlock.registerBehavior(this, DISPENSER_BEHAVIOR);
 	}
-	
+
 	@Override
 	public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter) {
 		return new SilverArrowEntity(BWEntityTypes.SILVER_ARROW, shooter, world);

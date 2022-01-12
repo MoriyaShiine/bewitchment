@@ -30,17 +30,17 @@ import java.util.UUID;
 @SuppressWarnings("ConstantConditions")
 public class ToadEntity extends BWTameableEntity {
 	public boolean isFromWednesdayRitual = false;
-	
+
 	public ToadEntity(EntityType<? extends TameableEntity> type, World world) {
 		super(type, world);
 		setPathfindingPenalty(PathNodeType.WATER, -1);
 		setPathfindingPenalty(PathNodeType.WATER_BORDER, -1);
 	}
-	
+
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 8).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.6);
 	}
-	
+
 	@Override
 	public void tick() {
 		super.tick();
@@ -48,22 +48,22 @@ public class ToadEntity extends BWTameableEntity {
 			jump();
 		}
 	}
-	
+
 	@Override
 	protected boolean hasShiny() {
 		return true;
 	}
-	
+
 	@Override
 	public int getVariants() {
 		return 5;
 	}
-	
+
 	@Override
 	protected boolean isTamingItem(ItemStack stack) {
 		return stack.getItem() == Items.FERMENTED_SPIDER_EYE;
 	}
-	
+
 	@Nullable
 	@Override
 	public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
@@ -81,42 +81,42 @@ public class ToadEntity extends BWTameableEntity {
 		}
 		return child;
 	}
-	
+
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return BWSoundEvents.ENTITY_TOAD_AMBIENT;
 	}
-	
+
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return BWSoundEvents.ENTITY_TOAD_HURT;
 	}
-	
+
 	@Override
 	protected SoundEvent getDeathSound() {
 		return BWSoundEvents.ENTITY_TOAD_DEATH;
 	}
-	
+
 	@Override
 	protected boolean shouldDropLoot() {
 		return super.shouldDropLoot() && !isFromWednesdayRitual;
 	}
-	
+
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
 		return stack.getItem() == Items.SPIDER_EYE;
 	}
-	
+
 	@Override
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
 		return false;
 	}
-	
+
 	@Override
 	protected void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition) {
 	}
-	
+
 	@Override
 	public void setTamed(boolean tamed) {
 		super.setTamed(tamed);
@@ -124,24 +124,23 @@ public class ToadEntity extends BWTameableEntity {
 		if (tamed) {
 			maxHealth.setBaseValue(20);
 			setHealth(getMaxHealth());
-		}
-		else {
+		} else {
 			maxHealth.setBaseValue(8);
 		}
 	}
-	
+
 	@Override
 	public void readCustomDataFromNbt(NbtCompound nbt) {
 		super.readCustomDataFromNbt(nbt);
 		isFromWednesdayRitual = nbt.getBoolean("IsFromWednesdayRitual");
 	}
-	
+
 	@Override
 	public void writeCustomDataToNbt(NbtCompound nbt) {
 		super.writeCustomDataToNbt(nbt);
 		nbt.putBoolean("IsFromWednesdayRitual", isFromWednesdayRitual);
 	}
-	
+
 	@Override
 	protected void initGoals() {
 		goalSelector.add(0, new SwimGoal(this));

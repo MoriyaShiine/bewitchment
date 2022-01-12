@@ -21,7 +21,7 @@ import net.minecraft.util.math.BlockPos;
 @SuppressWarnings({"ConstantConditions", "Convert2Lambda"})
 public class SyncPoppetShelfPacket {
 	public static final Identifier ID = new Identifier(Bewitchment.MODID, "sync_poppet_shelf");
-	
+
 	public static void send(PlayerEntity player, BlockPos pos) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		buf.writeLong(pos.asLong());
@@ -33,7 +33,7 @@ public class SyncPoppetShelfPacket {
 		buf.writeNbt(nbt);
 		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
 	}
-	
+
 	public static void handle(MinecraftClient client, ClientPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
 		BlockPos pos = BlockPos.fromLong(buf.readLong());
 		DefaultedList<ItemStack> inventory = DefaultedList.ofSize(9, ItemStack.EMPTY);

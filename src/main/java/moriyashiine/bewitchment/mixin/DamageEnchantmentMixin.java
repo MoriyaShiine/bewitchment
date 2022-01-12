@@ -15,10 +15,10 @@ public abstract class DamageEnchantmentMixin {
 	@Shadow
 	@Final
 	public int typeIndex;
-	
+
 	@Shadow
 	public abstract float getAttackDamage(int level, EntityGroup group);
-	
+
 	@Inject(method = "getAttackDamage", at = @At("HEAD"), cancellable = true)
 	private void getAttackDamage(int level, EntityGroup group, CallbackInfoReturnable<Float> callbackInfo) {
 		if (typeIndex == 1 && group == BewitchmentAPI.DEMON) {

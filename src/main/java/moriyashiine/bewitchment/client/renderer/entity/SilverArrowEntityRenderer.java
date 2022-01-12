@@ -11,11 +11,11 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class SilverArrowEntityRenderer extends ProjectileEntityRenderer<SilverArrowEntity> {
 	private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/projectiles/silver_arrow.png");
-	
+
 	public SilverArrowEntityRenderer(EntityRendererFactory.Context context) {
 		super(context);
 	}
-	
+
 	@Override
 	public Identifier getTexture(SilverArrowEntity entity) {
 		return TEXTURE;

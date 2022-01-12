@@ -18,17 +18,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ActiveTargetGoalMixin<T extends LivingEntity> extends TrackTargetGoal {
 	@Shadow
 	protected LivingEntity targetEntity;
-	
+
 	public ActiveTargetGoalMixin(MobEntity mob, boolean checkVisibility) {
 		super(mob, checkVisibility);
 	}
-	
+
 	@Inject(method = "findClosestTarget", at = @At("TAIL"))
 	private void findClosestTarget(CallbackInfo callbackInfo) {
 		if (targetEntity instanceof PlayerEntity player && BWComponents.FULL_INVISIBILITY_COMPONENT.get(player).isFullInvisible()) {
 			targetEntity = null;
-		}
-		else if (BWComponents.MINION_COMPONENT.get(mob).getMaster() == null && mob.isUndead() && targetEntity != null && BWUtil.getArmorPieces(targetEntity, stack -> stack.getItem() == BWObjects.HARBINGER) > 0) {
+		} else if (BWComponents.MINION_COMPONENT.get(mob).getMaster() == null && mob.isUndead() && targetEntity != null && BWUtil.getArmorPieces(targetEntity, stack -> stack.getItem() == BWObjects.HARBINGER) > 0) {
 			targetEntity = null;
 		}
 	}

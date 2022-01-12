@@ -16,17 +16,17 @@ import java.util.List;
 
 public class PoppetItem extends Item {
 	public final boolean worksInShelf;
-	
+
 	public PoppetItem(Settings settings, boolean worksInShelf) {
 		super(settings);
 		this.worksInShelf = worksInShelf;
 	}
-	
+
 	@Override
 	public boolean isEnchantable(ItemStack stack) {
 		return false;
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {

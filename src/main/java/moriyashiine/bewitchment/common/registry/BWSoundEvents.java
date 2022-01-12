@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class BWSoundEvents {
 	private static final Map<SoundEvent, Identifier> SOUND_EVENTS = new LinkedHashMap<>();
-	
+
 	public static final SoundEvent BLOCK_GLPYH_PLACE = create("block.glyph.place");
 	public static final SoundEvent BLOCK_GLYPH_FIRE = create("block.glyph.fire");
 	public static final SoundEvent BLOCK_GLYPH_FAIL = create("block.glyph.fail");
@@ -69,14 +69,14 @@ public class BWSoundEvents {
 	public static final SoundEvent ENTITY_HERNE_AMBIENT = create("entity.herne.ambient");
 	public static final SoundEvent ENTITY_HERNE_HURT = create("entity.herne.hurt");
 	public static final SoundEvent ENTITY_HERNE_DEATH = create("entity.herne.death");
-	
+
 	private static SoundEvent create(String name) {
 		Identifier id = new Identifier(Bewitchment.MODID, name);
 		SoundEvent soundEvent = new SoundEvent(id);
 		SOUND_EVENTS.put(soundEvent, id);
 		return soundEvent;
 	}
-	
+
 	public static void init() {
 		SOUND_EVENTS.keySet().forEach(soundEvent -> Registry.register(Registry.SOUND_EVENT, SOUND_EVENTS.get(soundEvent), soundEvent));
 	}

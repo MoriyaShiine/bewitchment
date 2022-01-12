@@ -31,17 +31,17 @@ public class PoppetShelfBlock extends HorizontalFacingBlock implements BlockEnti
 	private static final VoxelShape SOUTH_SHAPE = createCuboidShape(0, 0, 12, 16, 16, 16);
 	private static final VoxelShape WEST_SHAPE = createCuboidShape(0, 0, 0, 4, 16, 16);
 	private static final VoxelShape EAST_SHAPE = createCuboidShape(12, 0, 0, 16, 16, 16);
-	
+
 	public PoppetShelfBlock(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Nullable
 	@Override
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
 		return new PoppetShelfBlockEntity(pos, state);
 	}
-	
+
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		return switch (state.get(FACING)) {
@@ -51,12 +51,12 @@ public class PoppetShelfBlock extends HorizontalFacingBlock implements BlockEnti
 			default -> WEST_SHAPE;
 		};
 	}
-	
+
 	@Override
 	public PistonBehavior getPistonBehavior(BlockState state) {
 		return PistonBehavior.BLOCK;
 	}
-	
+
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		boolean client = world.isClient;
@@ -65,13 +65,13 @@ public class PoppetShelfBlock extends HorizontalFacingBlock implements BlockEnti
 		}
 		return ActionResult.success(client);
 	}
-	
+
 	@Nullable
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
 		return super.getPlacementState(ctx).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER).with(FACING, ctx.getPlayerFacing());
 	}
-	
+
 	@Override
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
 		if (state.get(Properties.WATERLOGGED)) {
@@ -79,12 +79,12 @@ public class PoppetShelfBlock extends HorizontalFacingBlock implements BlockEnti
 		}
 		return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
 	}
-	
+
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.get(Properties.WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
 	}
-	
+
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!world.isClient && state.getBlock() != newState.getBlock()) {
@@ -98,7 +98,7 @@ public class PoppetShelfBlock extends HorizontalFacingBlock implements BlockEnti
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);
 	}
-	
+
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
 		builder.add(Properties.WATERLOGGED, FACING);

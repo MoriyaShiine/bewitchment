@@ -7,7 +7,7 @@ public class WeakLungsCurse extends Curse {
 	public WeakLungsCurse(Type type) {
 		super(type);
 	}
-	
+
 	@Override
 	public void tick(LivingEntity target) {
 		if (target.getAir() > -15) {

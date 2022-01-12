@@ -57,7 +57,7 @@ import static net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSetting
 public class BWObjects {
 	private static final Map<Block, Identifier> BLOCKS = new LinkedHashMap<>();
 	private static final Map<Item, Identifier> ITEMS = new LinkedHashMap<>();
-	
+
 	//misc_no_item
 	public static final Block SALT_LINE = create("salt_line", new SaltLineBlock(copyOf(Blocks.REDSTONE_WIRE)), false);
 	public static final Block TEMPORARY_COBWEB = create("temporary_cobweb", new CobwebBlock(copyOf(Blocks.COBWEB).dropsNothing().ticksRandomly()) {
@@ -367,7 +367,7 @@ public class BWObjects {
 	public static final Item HERNE_SPAWN_EGG = create("herne_spawn_egg", new SpawnEggItem(BWEntityTypes.HERNE, 0x5d482d, 0x294e00, gen()));
 	//books
 	public static final Item BOOK_OF_SHADOWS = create("book_of_shadows", new BWBookItem(gen().maxCount(1)));
-	
+
 	private static <T extends Block> T create(String name, T block, boolean createItem) {
 		BLOCKS.put(block, new Identifier(Bewitchment.MODID, name));
 		if (createItem) {
@@ -375,16 +375,16 @@ public class BWObjects {
 		}
 		return block;
 	}
-	
+
 	private static <T extends Item> T create(String name, T item) {
 		ITEMS.put(item, new Identifier(Bewitchment.MODID, name));
 		return item;
 	}
-	
+
 	private static Item.Settings gen() {
 		return new Item.Settings().group(Bewitchment.BEWITCHMENT_GROUP);
 	}
-	
+
 	private static Block[] createAltar(String name, FabricBlockSettings settings) {
 		settings = settings.luminance(blockState -> blockState.get(Properties.LEVEL_15));
 		Block[] altars = new Block[21];
@@ -399,7 +399,7 @@ public class BWObjects {
 		altars[20] = create("besmirched_" + name, new WitchAltarBlock(settings, unformed, true), false);
 		return altars;
 	}
-	
+
 	public static void init() {
 		BLOCKS.keySet().forEach(block -> Registry.register(Registry.BLOCK, BLOCKS.get(block), block));
 		ITEMS.keySet().forEach(item -> Registry.register(Registry.ITEM, ITEMS.get(item), item));

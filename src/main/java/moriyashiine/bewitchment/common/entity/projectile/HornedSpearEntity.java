@@ -26,25 +26,25 @@ import org.jetbrains.annotations.Nullable;
 public class HornedSpearEntity extends PersistentProjectileEntity {
 	public ItemStack spear = ItemStack.EMPTY;
 	private boolean dealtDamage = false;
-	
+
 	public HornedSpearEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
 		super(entityType, world);
 	}
-	
+
 	public HornedSpearEntity(World world, double x, double y, double z) {
 		super(BWEntityTypes.HORNED_SPEAR, x, y, z, world);
 	}
-	
+
 	public HornedSpearEntity(EntityType<? extends PersistentProjectileEntity> type, LivingEntity owner, World world, ItemStack stack) {
 		super(type, owner, world);
 		spear = stack;
 	}
-	
+
 	@Override
 	protected ItemStack asItemStack() {
 		return spear;
 	}
-	
+
 	@Override
 	protected void onEntityHit(EntityHitResult result) {
 		Entity owner = getOwner();
@@ -71,7 +71,7 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 		}
 		setVelocity(getVelocity().multiply(-0.01, -0.1, -0.01));
 	}
-	
+
 	@Nullable
 	@Override
 	protected EntityHitResult getEntityCollision(Vec3d currentPosition, Vec3d nextPosition) {
@@ -83,7 +83,7 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 		}
 		return dealtDamage ? null : super.getEntityCollision(currentPosition, nextPosition);
 	}
-	
+
 	@Override
 	public void onPlayerCollision(PlayerEntity player) {
 		Entity owner = getOwner();
@@ -91,7 +91,7 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 			super.onPlayerCollision(player);
 		}
 	}
-	
+
 	@Override
 	public void tick() {
 		if (inGroundTime > 4) {
@@ -104,8 +104,7 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 					dropStack(asItemStack(), 0.1f);
 				}
 				remove(RemovalReason.DISCARDED);
-			}
-			else {
+			} else {
 				setNoClip(true);
 				Vec3d vec3d = new Vec3d(entity.getX() - getX(), entity.getEyeY() - getY(), entity.getZ() - getZ());
 				setPos(getX(), getY() + vec3d.y * 0.1, getZ());
@@ -117,40 +116,39 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 		}
 		super.tick();
 	}
-	
+
 	@Override
 	protected void age() {
 		if (pickupType != PickupPermission.ALLOWED) {
 			super.age();
 		}
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	@Override
 	public boolean shouldRender(double cameraX, double cameraY, double cameraZ) {
 		return true;
 	}
-	
+
 	@Override
 	public void readCustomDataFromNbt(NbtCompound nbt) {
 		super.readCustomDataFromNbt(nbt);
 		spear = ItemStack.fromNbt(nbt.getCompound("Spear"));
 		dealtDamage = nbt.getBoolean("DealtDamage");
 	}
-	
+
 	@Override
 	public void writeCustomDataToNbt(NbtCompound nbt) {
 		super.writeCustomDataToNbt(nbt);
 		nbt.put("Spear", spear.writeNbt(new NbtCompound()));
 		nbt.putBoolean("DealtDamage", dealtDamage);
 	}
-	
+
 	private boolean isOwnerAlive() {
 		Entity entity = getOwner();
 		if (entity != null && entity.isAlive()) {
 			return !(entity instanceof ServerPlayerEntity) || !entity.isSpectator();
-		}
-		else {
+		} else {
 			return false;
 		}
 	}

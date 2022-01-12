@@ -19,7 +19,7 @@ import java.util.function.Predicate;
 public abstract class ActiveTargetGoalMixin<T extends LivingEntity> {
 	@Shadow
 	protected TargetPredicate targetPredicate;
-	
+
 	@Inject(method = "<init>(Lnet/minecraft/entity/mob/MobEntity;Ljava/lang/Class;IZZLjava/util/function/Predicate;)V", at = @At("TAIL"))
 	private void init(MobEntity mob, Class<T> targetClass, int reciprocalChance, boolean checkVisibility, boolean checkCanNavigate, @Nullable Predicate<LivingEntity> predicate, CallbackInfo callbackInfo) {
 		if (predicate != null) {

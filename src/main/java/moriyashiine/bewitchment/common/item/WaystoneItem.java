@@ -22,7 +22,7 @@ public class WaystoneItem extends Item {
 	public WaystoneItem(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Override
 	public ActionResult useOnBlock(ItemUsageContext context) {
 		World world = context.getWorld();
@@ -33,12 +33,12 @@ public class WaystoneItem extends Item {
 		}
 		return ActionResult.success(client);
 	}
-	
+
 	@Override
 	public boolean isEnchantable(ItemStack stack) {
 		return false;
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {

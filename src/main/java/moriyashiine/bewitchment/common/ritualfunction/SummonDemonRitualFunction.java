@@ -16,7 +16,7 @@ public class SummonDemonRitualFunction extends RitualFunction {
 	public SummonDemonRitualFunction(ParticleType<?> startParticle, Predicate<LivingEntity> sacrifice) {
 		super(startParticle, sacrifice);
 	}
-	
+
 	@Override
 	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
 		DemonEntity entity = BWEntityTypes.DEMON.create(world);

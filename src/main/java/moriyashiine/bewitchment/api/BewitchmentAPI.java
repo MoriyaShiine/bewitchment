@@ -52,12 +52,12 @@ import java.util.stream.Stream;
 @SuppressWarnings("ConstantConditions")
 public class BewitchmentAPI {
 	public static final Set<AltarMapEntry> ALTAR_MAP_ENTRIES = new HashSet<>();
-	
+
 	@SuppressWarnings("InstantiationOfUtilityClass")
 	public static final EntityGroup DEMON = new EntityGroup();
-	
+
 	public static ServerPlayerEntity fakePlayer = null;
-	
+
 	public static LivingEntity getTaglockOwner(World world, ItemStack taglock) {
 		if (world instanceof ServerWorld && (taglock.getItem() instanceof TaglockItem || taglock.getItem() instanceof PoppetItem) && TaglockItem.hasTaglock(taglock)) {
 			UUID ownerUUID = TaglockItem.getTaglockUUID(taglock);
@@ -69,7 +69,7 @@ public class BewitchmentAPI {
 		}
 		return null;
 	}
-	
+
 	public static PoppetData getPoppetFromInventory(World world, PoppetItem item, Entity owner, List<ItemStack> inventory) {
 		if (inventory == null) {
 			return PoppetData.EMPTY;
@@ -83,8 +83,7 @@ public class BewitchmentAPI {
 				UUID uuid = null;
 				if (owner != null) {
 					uuid = owner.getUuid();
-				}
-				else {
+				} else {
 					LivingEntity taglockOwner = getTaglockOwner(world, stack);
 					if (taglockOwner != null) {
 						uuid = taglockOwner.getUuid();
@@ -97,7 +96,7 @@ public class BewitchmentAPI {
 		}
 		return PoppetData.EMPTY;
 	}
-	
+
 	public static PoppetData getPoppet(World world, PoppetItem item, Entity owner) {
 		if (world.isClient) {
 			return PoppetData.EMPTY;
@@ -122,7 +121,7 @@ public class BewitchmentAPI {
 		}
 		return PoppetData.EMPTY;
 	}
-	
+
 	public static ServerPlayerEntity getFakePlayer(World world) {
 		if (!world.isClient) {
 			if (fakePlayer == null) {
@@ -136,21 +135,20 @@ public class BewitchmentAPI {
 		}
 		return null;
 	}
-	
+
 	public static LivingEntity getTransformedPlayerEntity(PlayerEntity player) {
 		if (BewitchmentAPI.isVampire(player, false)) {
 			BatEntity entity = EntityType.BAT.create(player.world);
 			entity.setRoosting(false);
 			return entity;
-		}
-		else if (BewitchmentAPI.isWerewolf(player, false)) {
+		} else if (BewitchmentAPI.isWerewolf(player, false)) {
 			WerewolfEntity entity = BWEntityTypes.WEREWOLF.create(player.world);
 			entity.getDataTracker().set(BWHostileEntity.VARIANT, BWComponents.ADDITIONAL_WEREWOLF_DATA_COMPONENT.get(player).getVariant());
 			return entity;
 		}
 		return null;
 	}
-	
+
 	public static EntityType<?> getFamiliar(PlayerEntity player) {
 		if (!player.world.isClient) {
 			BWUniversalWorldState universalWorldState = BWUniversalWorldState.get(player.world);
@@ -162,14 +160,14 @@ public class BewitchmentAPI {
 		}
 		return null;
 	}
-	
+
 	public static boolean fillMagic(PlayerEntity player, int amount, boolean simulate) {
 		if (player.world.isClient) {
 			return false;
 		}
 		return BWComponents.MAGIC_COMPONENT.get(player).fillMagic(amount, simulate);
 	}
-	
+
 	public static boolean drainMagic(PlayerEntity player, int amount, boolean simulate) {
 		if (player.world.isClient) {
 			return false;
@@ -182,7 +180,7 @@ public class BewitchmentAPI {
 		}
 		return BWComponents.MAGIC_COMPONENT.get(player).drainMagic(amount, simulate);
 	}
-	
+
 	public static boolean isVampire(Entity entity, boolean includeHumanForm) {
 		if (entity instanceof PlayerEntity player) {
 			TransformationComponent transformationComponent = BWComponents.TRANSFORMATION_COMPONENT.get(player);
@@ -192,7 +190,7 @@ public class BewitchmentAPI {
 		}
 		return entity instanceof VampireEntity;
 	}
-	
+
 	public static boolean isWerewolf(Entity entity, boolean includeHumanForm) {
 		if (entity instanceof PlayerEntity player) {
 			TransformationComponent transformationComponent = BWComponents.TRANSFORMATION_COMPONENT.get(player);
@@ -202,21 +200,21 @@ public class BewitchmentAPI {
 		}
 		return entity instanceof WerewolfEntity;
 	}
-	
+
 	public static boolean isSourceFromSilver(DamageSource source) {
 		if (source.getSource() instanceof LivingEntity livingEntity && livingEntity.getMainHandStack().getItem() instanceof AthameItem) {
 			return true;
 		}
 		return source.getSource() instanceof SilverArrowEntity;
 	}
-	
+
 	public static boolean isWeakToSilver(LivingEntity livingEntity) {
 		if (BWTags.IMMUNE_TO_SILVER.contains(livingEntity.getType())) {
 			return false;
 		}
 		return livingEntity.isUndead() || livingEntity.getGroup() == DEMON || BWTags.VULNERABLE_TO_SILVER.contains(livingEntity.getType());
 	}
-	
+
 	public static boolean isPledged(PlayerEntity player, String pledge) {
 		PledgeComponent pledgeComponent = BWComponents.PLEDGE_COMPONENT.get(player);
 		if (!player.world.isClient) {
@@ -231,15 +229,15 @@ public class BewitchmentAPI {
 		}
 		return pledgeComponent.getPledge().equals(pledge);
 	}
-	
+
 	public static void unpledge(PlayerEntity player) {
 		BWComponents.PLEDGE_COMPONENT.get(player).setPledge(BWPledges.NONE);
 	}
-	
+
 	public static int getMoonPhase(WorldAccess world) {
 		return world.getDimension().getMoonPhase(world.getLunarTime());
 	}
-	
+
 	public static void registerAltarMapEntries(Block[]... altarArray) {
 		for (Block[] altars : altarArray) {
 			ALTAR_MAP_ENTRIES.add(new AltarMapEntry(altars[0], altars[1], Blocks.MOSS_CARPET.asItem()));

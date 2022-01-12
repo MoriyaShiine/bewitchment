@@ -19,7 +19,7 @@ public class HurricaneRitualFunction extends RitualFunction {
 	public HurricaneRitualFunction(ParticleType<?> startParticle, Predicate<LivingEntity> sacrifice) {
 		super(startParticle, sacrifice);
 	}
-	
+
 	@Override
 	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
 		for (BlockPos foundPos : BWUtil.getBlockPoses(effectivePos, catFamiliar ? 24 : 8, currentPos -> world.getBlockState(currentPos).getBlock() instanceof PlantBlock || world.getBlockState(currentPos).getBlock() instanceof LeavesBlock)) {

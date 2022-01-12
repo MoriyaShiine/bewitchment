@@ -18,7 +18,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
 	}
-	
+
 	@Inject(method = "eatFood", at = @At("HEAD"))
 	private void eat(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> callbackInfo) {
 		if (!world.isClient) {

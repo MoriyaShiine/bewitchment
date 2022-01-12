@@ -20,19 +20,19 @@ public class DragonsBloodFenceGateBlock extends FenceGateBlock implements BlockE
 	public DragonsBloodFenceGateBlock(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Nullable
 	@Override
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
 		return new SigilBlockEntity(pos, state);
 	}
-	
+
 	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
 		return (tickerWorld, pos, tickerState, blockEntity) -> SigilBlockEntity.tick(tickerWorld, pos, tickerState, (SigilBlockEntity) blockEntity);
 	}
-	
+
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		SigilHolder.onUse(world, pos, player, hand);

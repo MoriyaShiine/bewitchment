@@ -18,29 +18,28 @@ public class BottleOfBloodItem extends Item {
 	public BottleOfBloodItem(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		return Items.POTION.use(world, user, hand);
 	}
-	
+
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (BewitchmentAPI.isVampire(user, true)) {
 			BWComponents.BLOOD_COMPONENT.get(user).fillBlood(20, false);
-		}
-		else {
+		} else {
 			user.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 200));
 			user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200));
 		}
 		return Items.POTION.finishUsing(stack, world, user);
 	}
-	
+
 	@Override
 	public UseAction getUseAction(ItemStack stack) {
 		return Items.POTION.getUseAction(stack);
 	}
-	
+
 	@Override
 	public int getMaxUseTime(ItemStack stack) {
 		return Items.POTION.getMaxUseTime(stack);

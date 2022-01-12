@@ -10,17 +10,17 @@ import net.minecraft.world.World;
 public class BWChestBlockEntity extends ChestBlockEntity {
 	public final Type type;
 	public final boolean trapped;
-	
+
 	public BWChestBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, Type type, boolean trapped) {
 		super(blockEntityType, blockPos, blockState);
 		this.type = type;
 		this.trapped = trapped;
 	}
-	
+
 	public BWChestBlockEntity(BlockPos blockPos, BlockState blockState) {
 		this(BWBlockEntityTypes.BW_CHEST, blockPos, blockState, Type.JUNIPER, false);
 	}
-	
+
 	@Override
 	protected void onInvOpenOrClose(World world, BlockPos pos, BlockState state, int oldViewerCount, int newViewerCount) {
 		super.onInvOpenOrClose(world, pos, state, oldViewerCount, newViewerCount);
@@ -28,7 +28,7 @@ public class BWChestBlockEntity extends ChestBlockEntity {
 			world.updateNeighborsAlways(pos.down(), getCachedState().getBlock());
 		}
 	}
-	
+
 	public enum Type {
 		JUNIPER, CYPRESS, ELDER, DRAGONS_BLOOD
 	}

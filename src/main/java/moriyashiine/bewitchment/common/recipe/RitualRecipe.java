@@ -27,7 +27,7 @@ public class RitualRecipe implements Recipe<Inventory> {
 	public final String inner, outer;
 	public final RitualFunction ritualFunction;
 	public final int cost, runningTime;
-	
+
 	public RitualRecipe(Identifier identifier, DefaultedList<Ingredient> input, String inner, String outer, RitualFunction ritualFunction, int cost, int runningTime) {
 		this.identifier = identifier;
 		this.input = input;
@@ -37,42 +37,42 @@ public class RitualRecipe implements Recipe<Inventory> {
 		this.cost = cost;
 		this.runningTime = runningTime;
 	}
-	
+
 	@Override
 	public boolean matches(Inventory inv, World world) {
 		return matches(inv, input);
 	}
-	
+
 	@Override
 	public ItemStack craft(Inventory inv) {
 		return ItemStack.EMPTY;
 	}
-	
+
 	@Override
 	public boolean fits(int width, int height) {
 		return true;
 	}
-	
+
 	@Override
 	public ItemStack getOutput() {
 		return ItemStack.EMPTY;
 	}
-	
+
 	@Override
 	public Identifier getId() {
 		return identifier;
 	}
-	
+
 	@Override
 	public RecipeSerializer<?> getSerializer() {
 		return BWRecipeTypes.RITUAL_RECIPE_SERIALIZER;
 	}
-	
+
 	@Override
 	public RecipeType<?> getType() {
 		return BWRecipeTypes.RITUAL_RECIPE_TYPE;
 	}
-	
+
 	public static boolean matches(Inventory inv, DefaultedList<Ingredient> input) {
 		List<ItemStack> checklist = new ArrayList<>();
 		for (int i = 0; i < inv.size(); i++) {
@@ -99,7 +99,7 @@ public class RitualRecipe implements Recipe<Inventory> {
 		}
 		return true;
 	}
-	
+
 	@SuppressWarnings("ConstantConditions")
 	public static class Serializer implements RecipeSerializer<RitualRecipe> {
 		@Override
@@ -107,8 +107,7 @@ public class RitualRecipe implements Recipe<Inventory> {
 			DefaultedList<Ingredient> ingredients = getIngredients(JsonHelper.getArray(json, "ingredients"));
 			if (ingredients.isEmpty()) {
 				throw new JsonParseException("No ingredients for ritual recipe");
-			}
-			else if (ingredients.size() > 6) {
+			} else if (ingredients.size() > 6) {
 				throw new JsonParseException("Too many ingredients for ritual recipe");
 			}
 			String inner = JsonHelper.getString(json, "inner");
@@ -117,7 +116,7 @@ public class RitualRecipe implements Recipe<Inventory> {
 			}
 			return new RitualRecipe(id, ingredients, inner, JsonHelper.getString(json, "outer", ""), BWRegistries.RITUAL_FUNCTIONS.get(new Identifier(JsonHelper.getString(json, "ritual_function"))), JsonHelper.getInt(json, "cost"), JsonHelper.getInt(json, "running_time", 0));
 		}
-		
+
 		@Override
 		public RitualRecipe read(Identifier id, PacketByteBuf buf) {
 			DefaultedList<Ingredient> defaultedList = DefaultedList.ofSize(buf.readVarInt(), Ingredient.EMPTY);
@@ -126,7 +125,7 @@ public class RitualRecipe implements Recipe<Inventory> {
 			}
 			return new RitualRecipe(id, defaultedList, buf.readString(), buf.readString(), BWRegistries.RITUAL_FUNCTIONS.get(new Identifier(buf.readString())), buf.readInt(), buf.readInt());
 		}
-		
+
 		@Override
 		public void write(PacketByteBuf buf, RitualRecipe recipe) {
 			buf.writeVarInt(recipe.input.size());
@@ -139,7 +138,7 @@ public class RitualRecipe implements Recipe<Inventory> {
 			buf.writeInt(recipe.cost);
 			buf.writeInt(recipe.runningTime);
 		}
-		
+
 		public static DefaultedList<Ingredient> getIngredients(JsonArray json) {
 			DefaultedList<Ingredient> ingredients = DefaultedList.of();
 			for (int i = 0; i < json.size(); i++) {

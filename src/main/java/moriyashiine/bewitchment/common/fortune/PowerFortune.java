@@ -10,7 +10,7 @@ public class PowerFortune extends Fortune {
 	public PowerFortune(boolean positive) {
 		super(positive);
 	}
-	
+
 	@Override
 	public boolean tick(ServerWorld world, PlayerEntity target) {
 		if (target.getAttacker() != null) {

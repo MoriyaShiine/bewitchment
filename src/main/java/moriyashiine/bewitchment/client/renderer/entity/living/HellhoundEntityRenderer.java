@@ -14,11 +14,11 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class HellhoundEntityRenderer extends MobEntityRenderer<HellhoundEntity, HellhoundEntityModel<HellhoundEntity>> {
 	private static Identifier[] TEXTURES;
-	
+
 	public HellhoundEntityRenderer(EntityRendererFactory.Context context) {
 		super(context, new HellhoundEntityModel<>(context.getPart(BewitchmentClient.HELLHOUND_MODEL_LAYER)), 0.3f);
 	}
-	
+
 	@Override
 	public Identifier getTexture(HellhoundEntity entity) {
 		if (TEXTURES == null) {

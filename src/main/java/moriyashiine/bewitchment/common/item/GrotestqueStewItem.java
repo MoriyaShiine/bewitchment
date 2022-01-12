@@ -18,7 +18,7 @@ public class GrotestqueStewItem extends Item {
 	public GrotestqueStewItem(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (!world.isClient && user instanceof PlayerEntity player) {

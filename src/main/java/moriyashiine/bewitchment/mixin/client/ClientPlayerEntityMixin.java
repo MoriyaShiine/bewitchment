@@ -19,7 +19,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 	public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
 		super(world, profile);
 	}
-	
+
 	@Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
 	private void sendChatMessage(String message, CallbackInfo callbackInfo) {
 		if (!message.startsWith("/")) {

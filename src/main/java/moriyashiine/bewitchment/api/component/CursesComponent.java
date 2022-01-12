@@ -15,11 +15,11 @@ import java.util.List;
 public class CursesComponent implements ServerTickingComponent {
 	private final LivingEntity obj;
 	private final List<Curse.Instance> curses = new ArrayList<>();
-	
+
 	public CursesComponent(LivingEntity obj) {
 		this.obj = obj;
 	}
-	
+
 	@Override
 	public void readFromNbt(NbtCompound tag) {
 		NbtList cursesList = tag.getList("Curses", NbtType.COMPOUND);
@@ -28,12 +28,12 @@ public class CursesComponent implements ServerTickingComponent {
 			addCurse(new Curse.Instance(BWRegistries.CURSES.get(new Identifier(curseCompound.getString("Curse"))), curseCompound.getInt("Duration")));
 		}
 	}
-	
+
 	@Override
 	public void writeToNbt(NbtCompound tag) {
 		tag.put("Curses", toNbtCurse());
 	}
-	
+
 	@Override
 	public void serverTick() {
 		for (int i = curses.size() - 1; i >= 0; i--) {
@@ -45,15 +45,15 @@ public class CursesComponent implements ServerTickingComponent {
 			}
 		}
 	}
-	
+
 	public List<Curse.Instance> getCurses() {
 		return curses;
 	}
-	
+
 	public boolean hasCurse(Curse curse) {
 		return getCurses().stream().anyMatch(instance -> instance.curse == curse);
 	}
-	
+
 	public void addCurse(Curse.Instance instance) {
 		if (hasCurse(instance.curse)) {
 			for (Curse.Instance curse : getCurses()) {
@@ -65,7 +65,7 @@ public class CursesComponent implements ServerTickingComponent {
 		}
 		getCurses().add(instance);
 	}
-	
+
 	public void removeCurse(Curse curse) {
 		if (hasCurse(curse)) {
 			for (Curse.Instance instance : getCurses()) {
@@ -75,7 +75,7 @@ public class CursesComponent implements ServerTickingComponent {
 			}
 		}
 	}
-	
+
 	@SuppressWarnings("ConstantConditions")
 	public NbtList toNbtCurse() {
 		NbtList cursesList = new NbtList();

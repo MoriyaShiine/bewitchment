@@ -22,17 +22,16 @@ import org.jetbrains.annotations.Nullable;
 
 public abstract class BWTameableEntity extends TameableEntity {
 	public static final TrackedData<Integer> VARIANT = DataTracker.registerData(BWTameableEntity.class, TrackedDataHandlerRegistry.INTEGER);
-	
+
 	protected BWTameableEntity(EntityType<? extends TameableEntity> type, World world) {
 		super(type, world);
 	}
-	
+
 	@Override
 	public boolean damage(DamageSource source, float amount) {
 		if (isInvulnerableTo(source)) {
 			return false;
-		}
-		else {
+		} else {
 			Entity entity = source.getAttacker();
 			setSitting(false);
 			if (entity != null && !(entity instanceof PlayerEntity) && !(entity instanceof PersistentProjectileEntity)) {
@@ -41,7 +40,7 @@ public abstract class BWTameableEntity extends TameableEntity {
 			return super.damage(source, amount);
 		}
 	}
-	
+
 	@Override
 	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityTag) {
 		int variants = getVariants();
@@ -49,18 +48,16 @@ public abstract class BWTameableEntity extends TameableEntity {
 			if (hasShiny()) {
 				if (random.nextInt(8192) == 0) {
 					dataTracker.set(VARIANT, 0);
-				}
-				else {
+				} else {
 					dataTracker.set(VARIANT, random.nextInt(variants - 1) + 1);
 				}
-			}
-			else {
+			} else {
 				dataTracker.set(VARIANT, random.nextInt(variants));
 			}
 		}
 		return super.initialize(world, difficulty, spawnReason, entityData, entityTag);
 	}
-	
+
 	@Override
 	public ActionResult interactMob(PlayerEntity player, Hand hand) {
 		boolean client = world.isClient;
@@ -73,8 +70,7 @@ public abstract class BWTameableEntity extends TameableEntity {
 				}
 				return ActionResult.success(client);
 			}
-		}
-		else {
+		} else {
 			if (!isTamed()) {
 				if (isTamingItem(stack)) {
 					if (!client) {
@@ -85,15 +81,13 @@ public abstract class BWTameableEntity extends TameableEntity {
 							setTarget(null);
 							navigation.stop();
 							world.sendEntityStatus(this, (byte) 7);
-						}
-						else {
+						} else {
 							world.sendEntityStatus(this, (byte) 6);
 						}
 					}
 					return ActionResult.success(client);
 				}
-			}
-			else if (isOwner(player)) {
+			} else if (isOwner(player)) {
 				if (!client) {
 					setSitting(!isSitting());
 				}
@@ -102,7 +96,7 @@ public abstract class BWTameableEntity extends TameableEntity {
 		}
 		return super.interactMob(player, hand);
 	}
-	
+
 	@Override
 	public boolean canAttackWithOwner(LivingEntity target, LivingEntity owner) {
 		if (target instanceof TameableEntity && ((TameableEntity) target).isTamed()) {
@@ -116,7 +110,7 @@ public abstract class BWTameableEntity extends TameableEntity {
 		}
 		return !(target instanceof CreeperEntity) && !(target instanceof GhastEntity);
 	}
-	
+
 	@Override
 	protected void initDataTracker() {
 		super.initDataTracker();
@@ -124,7 +118,7 @@ public abstract class BWTameableEntity extends TameableEntity {
 			dataTracker.startTracking(VARIANT, 1);
 		}
 	}
-	
+
 	@Override
 	public void readCustomDataFromNbt(NbtCompound nbt) {
 		super.readCustomDataFromNbt(nbt);
@@ -132,7 +126,7 @@ public abstract class BWTameableEntity extends TameableEntity {
 			dataTracker.set(VARIANT, nbt.getInt("Variant"));
 		}
 	}
-	
+
 	@Override
 	public void writeCustomDataToNbt(NbtCompound nbt) {
 		super.writeCustomDataToNbt(nbt);
@@ -140,10 +134,10 @@ public abstract class BWTameableEntity extends TameableEntity {
 			nbt.putInt("Variant", dataTracker.get(VARIANT));
 		}
 	}
-	
+
 	protected abstract boolean hasShiny();
-	
+
 	public abstract int getVariants();
-	
+
 	protected abstract boolean isTamingItem(ItemStack stack);
 }

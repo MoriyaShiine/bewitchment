@@ -55,11 +55,11 @@ import net.minecraft.world.explosion.Explosion;
 
 public class Bewitchment implements ModInitializer {
 	public static final String MODID = "bewitchment";
-	
+
 	public static BWConfig config;
-	
+
 	public static final ItemGroup BEWITCHMENT_GROUP = FabricItemGroupBuilder.build(new Identifier(MODID, MODID), () -> new ItemStack(BWObjects.ATHAME));
-	
+
 	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void onInitialize() {

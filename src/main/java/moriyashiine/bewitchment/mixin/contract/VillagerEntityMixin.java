@@ -18,7 +18,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
 	public VillagerEntityMixin(EntityType<? extends MerchantEntity> entityType, World world) {
 		super(entityType, world);
 	}
-	
+
 	@Inject(method = "onDeath", at = @At("HEAD"))
 	private void onDeath(CallbackInfo callbackInfo) {
 		if (!world.isClient && attackingPlayer != null) {

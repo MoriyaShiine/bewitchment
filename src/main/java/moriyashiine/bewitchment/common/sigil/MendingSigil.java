@@ -14,7 +14,7 @@ public class MendingSigil extends Sigil {
 	public MendingSigil(boolean active, int uses) {
 		super(active, uses);
 	}
-	
+
 	@Override
 	public ActionResult use(World world, BlockPos pos, LivingEntity user, Hand hand) {
 		ActionResult result = super.use(world, pos, user, hand);

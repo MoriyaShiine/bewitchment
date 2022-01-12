@@ -14,11 +14,11 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class OwlEntityRenderer extends MobEntityRenderer<OwlEntity, OwlEntityModel<OwlEntity>> {
 	private static Identifier[] TEXTURES;
-	
+
 	public OwlEntityRenderer(EntityRendererFactory.Context context) {
 		super(context, new OwlEntityModel<>(context.getPart(BewitchmentClient.OWL_MODEL_LAYER)), 0.3f);
 	}
-	
+
 	@Override
 	public Identifier getTexture(OwlEntity entity) {
 		if (TEXTURES == null) {

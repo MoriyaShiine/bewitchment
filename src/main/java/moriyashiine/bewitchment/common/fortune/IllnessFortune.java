@@ -10,7 +10,7 @@ public class IllnessFortune extends Fortune {
 	public IllnessFortune(boolean positive) {
 		super(positive);
 	}
-	
+
 	@Override
 	public boolean finish(ServerWorld world, PlayerEntity target) {
 		target.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 600, 1));

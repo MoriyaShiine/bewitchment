@@ -8,11 +8,11 @@ import net.minecraft.util.Identifier;
 
 public class CypressBroomEntityRenderer extends BroomEntityRenderer<BroomEntity> {
 	private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/broom/cypress.png");
-	
+
 	public CypressBroomEntityRenderer(EntityRendererFactory.Context context) {
 		super(context);
 	}
-	
+
 	@Override
 	public Identifier getTexture(BroomEntity entity) {
 		return TEXTURE;

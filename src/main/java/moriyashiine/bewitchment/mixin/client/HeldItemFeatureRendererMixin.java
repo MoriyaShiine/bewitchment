@@ -26,26 +26,21 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
 	public HeldItemFeatureRendererMixin(FeatureRendererContext<T, M> context) {
 		super(context);
 	}
-	
+
 	@Inject(method = "renderItem", at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/client/util/math/MatrixStack;translate(DDD)V"))
 	private void renderItem(LivingEntity entity, ItemStack stack, ModelTransformation.Mode transformationMode, Arm arm, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo callbackInfo) {
 		if (entity instanceof WerewolfEntity) {
 			matrices.translate((arm == Arm.LEFT ? 0.75f : -0.75f) / 3.5f, 1 / 3f, -7 / 8f);
 			matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(45));
-		}
-		else if (entity instanceof DemonEntity) {
+		} else if (entity instanceof DemonEntity) {
 			matrices.translate((arm == Arm.LEFT ? 0.75f : -0.75f) / 24f, 0, -1 / 8f);
-		}
-		else if (entity instanceof LeonardEntity) {
+		} else if (entity instanceof LeonardEntity) {
 			matrices.translate((arm == Arm.LEFT ? 0.75f : -0.75f) / 24f, 0, -5.75 / 16f);
-		}
-		else if (entity instanceof BaphometEntity) {
+		} else if (entity instanceof BaphometEntity) {
 			matrices.translate((arm == Arm.LEFT ? 0.75f : -0.75f) / 24f, 0, -1 / 4f);
-		}
-		else if (entity instanceof LilithEntity) {
+		} else if (entity instanceof LilithEntity) {
 			matrices.translate((arm == Arm.LEFT ? 0.75f : -0.75f) / 24f, 0, -5.75 / 16f);
-		}
-		else if (entity instanceof HerneEntity) {
+		} else if (entity instanceof HerneEntity) {
 			matrices.translate((arm == Arm.LEFT ? 0.75f : -0.75f) / 24f, 0, -4 / 7f);
 		}
 	}

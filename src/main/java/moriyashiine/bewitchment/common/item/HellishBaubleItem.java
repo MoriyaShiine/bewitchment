@@ -13,7 +13,7 @@ public class HellishBaubleItem extends TrinketItem {
 	public HellishBaubleItem(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Override
 	public void tick(ItemStack stack, SlotReference slot, LivingEntity entity) {
 		if (entity instanceof PlayerEntity player && !entity.world.isClient && entity.age % 10 == 0 && entity.isOnFire()) {

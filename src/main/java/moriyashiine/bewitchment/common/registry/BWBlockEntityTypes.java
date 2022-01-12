@@ -17,7 +17,7 @@ import java.util.Set;
 
 public class BWBlockEntityTypes {
 	private static final Map<BlockEntityType<?>, Identifier> BLOCK_ENTITY_TYPES = new LinkedHashMap<>();
-	
+
 	public static final BlockEntityType<BWChestBlockEntity> BW_CHEST = create("bw_chest", FabricBlockEntityTypeBuilder.create(BWChestBlockEntity::new, BWObjects.JUNIPER_CHEST, BWObjects.TRAPPED_JUNIPER_CHEST, BWObjects.CYPRESS_CHEST, BWObjects.TRAPPED_CYPRESS_CHEST, BWObjects.ELDER_CHEST, BWObjects.TRAPPED_ELDER_CHEST).build(null));
 	public static final BlockEntityType<WitchAltarBlockEntity> WITCH_ALTAR = create("witch_altar", FabricBlockEntityTypeBuilder.create(WitchAltarBlockEntity::new, merge(BWObjects.STONE_WITCH_ALTAR, BWObjects.MOSSY_COBBLESTONE_WITCH_ALTAR, BWObjects.PRISMARINE_WITCH_ALTAR, BWObjects.NETHER_BRICK_WITCH_ALTAR, BWObjects.BLACKSTONE_WITCH_ALTAR, BWObjects.GOLDEN_WITCH_ALTAR, BWObjects.END_STONE_WITCH_ALTAR, BWObjects.OBSIDIAN_WITCH_ALTAR, BWObjects.PURPUR_WITCH_ALTAR)).build(null));
 	public static final BlockEntityType<WitchCauldronBlockEntity> WITCH_CAULDRON = create("witch_cauldron", FabricBlockEntityTypeBuilder.create(WitchCauldronBlockEntity::new, BWObjects.WITCH_CAULDRON).build(null));
@@ -30,12 +30,12 @@ public class BWBlockEntityTypes {
 	public static final BlockEntityType<JuniperChestBlockEntity> JUNIPER_CHEST = create("juniper_chest", FabricBlockEntityTypeBuilder.create(JuniperChestBlockEntity::new, BWObjects.JUNIPER_CHEST, BWObjects.TRAPPED_JUNIPER_CHEST).build(null));
 	public static final BlockEntityType<ElderChestBlockEntity> ELDER_CHEST = create("elder_chest", FabricBlockEntityTypeBuilder.create(ElderChestBlockEntity::new, BWObjects.ELDER_CHEST, BWObjects.TRAPPED_ELDER_CHEST).build(null));
 	public static final BlockEntityType<DragonsBloodChestBlockEntity> DRAGONS_BLOOD_CHEST = create("dragons_blood_chest", FabricBlockEntityTypeBuilder.create(DragonsBloodChestBlockEntity::new, BWObjects.DRAGONS_BLOOD_CHEST, BWObjects.TRAPPED_DRAGONS_BLOOD_CHEST).build(null));
-	
+
 	private static <T extends BlockEntity> BlockEntityType<T> create(String name, BlockEntityType<T> type) {
 		BLOCK_ENTITY_TYPES.put(type, new Identifier(Bewitchment.MODID, name));
 		return type;
 	}
-	
+
 	private static Block[] merge(Block[]... blockArrays) {
 		Set<Block> merged = new HashSet<>();
 		for (Block[] blockArray : blockArrays) {
@@ -43,7 +43,7 @@ public class BWBlockEntityTypes {
 		}
 		return merged.toArray(new Block[0]);
 	}
-	
+
 	public static void init() {
 		BLOCK_ENTITY_TYPES.keySet().forEach(blockEntityType -> Registry.register(Registry.BLOCK_ENTITY_TYPE, BLOCK_ENTITY_TYPES.get(blockEntityType), blockEntityType));
 	}

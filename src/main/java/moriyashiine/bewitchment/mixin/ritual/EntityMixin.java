@@ -15,7 +15,7 @@ public abstract class EntityMixin {
 			callbackInfo.setReturnValue(true);
 		}
 	}
-	
+
 	@Inject(method = "isTouchingWaterOrRain", at = @At("RETURN"), cancellable = true)
 	private void isTouchingWaterOrRain(CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!callbackInfo.getReturnValue() && BWComponents.ADDITIONAL_WATER_DATA_COMPONENT.get(this).getWetTimer() > 0) {

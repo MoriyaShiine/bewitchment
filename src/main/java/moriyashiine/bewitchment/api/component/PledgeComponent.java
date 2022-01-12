@@ -10,11 +10,11 @@ import net.minecraft.nbt.NbtCompound;
 public class PledgeComponent implements AutoSyncedComponent, ServerTickingComponent {
 	private final PlayerEntity obj;
 	private String pledge = BWPledges.NONE, pledgeNextTick = "";
-	
+
 	public PledgeComponent(PlayerEntity obj) {
 		this.obj = obj;
 	}
-	
+
 	@Override
 	public void readFromNbt(NbtCompound tag) {
 		String pledge = tag.getString("Pledge");
@@ -24,13 +24,13 @@ public class PledgeComponent implements AutoSyncedComponent, ServerTickingCompon
 		setPledge(pledge);
 		setPledgeNextTick(tag.getString("PledgeNextTick"));
 	}
-	
+
 	@Override
 	public void writeToNbt(NbtCompound tag) {
 		tag.putString("Pledge", getPledge());
 		tag.putString("PledgeNextTick", getPledgeNextTick());
 	}
-	
+
 	@Override
 	public void serverTick() {
 		if (!getPledgeNextTick().isEmpty()) {
@@ -38,21 +38,21 @@ public class PledgeComponent implements AutoSyncedComponent, ServerTickingCompon
 			setPledgeNextTick("");
 		}
 	}
-	
+
 	public String getPledge() {
 		return pledge;
 	}
-	
+
 	public void setPledge(String pledge) {
 		this.pledge = pledge;
 		BWComponents.PLEDGE_COMPONENT.sync(obj);
 		BWComponents.TRANSFORMATION_COMPONENT.get(obj).updateAttributes();
 	}
-	
+
 	public String getPledgeNextTick() {
 		return pledgeNextTick;
 	}
-	
+
 	public void setPledgeNextTick(String pledgeNextTick) {
 		this.pledgeNextTick = pledgeNextTick;
 	}

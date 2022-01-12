@@ -8,11 +8,11 @@ import net.minecraft.util.Identifier;
 
 public class ElderBroomEntityRenderer extends BroomEntityRenderer<BroomEntity> {
 	private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/broom/elder.png");
-	
+
 	public ElderBroomEntityRenderer(EntityRendererFactory.Context context) {
 		super(context);
 	}
-	
+
 	@Override
 	public Identifier getTexture(BroomEntity entity) {
 		return TEXTURE;

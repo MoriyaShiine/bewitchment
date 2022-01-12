@@ -14,12 +14,12 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class HerneEntityRenderer extends MobEntityRenderer<HerneEntity, HerneEntityModel<HerneEntity>> {
 	private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/living/herne.png");
-	
+
 	public HerneEntityRenderer(EntityRendererFactory.Context context) {
 		super(context, new HerneEntityModel<>(context.getPart(BewitchmentClient.HERNE_MODEL_LAYER)), 0.5f);
 		addFeature(new HeldItemFeatureRenderer<>(this));
 	}
-	
+
 	@Override
 	public Identifier getTexture(HerneEntity entity) {
 		return TEXTURE;

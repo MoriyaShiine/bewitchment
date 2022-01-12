@@ -29,11 +29,11 @@ import java.util.UUID;
 
 public class HornedSpearItem extends SwordItem {
 	private static final EntityAttributeModifier REACH_MODIFIER = new EntityAttributeModifier(UUID.fromString("1d25c6a0-3f2c-4d4e-8f5f-941f51aab1b7"), "Weapon modifier", 2, EntityAttributeModifier.Operation.ADDITION);
-	
+
 	public HornedSpearItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
 		super(toolMaterial, attackDamage, attackSpeed, settings);
 	}
-	
+
 	@Override
 	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
 		Multimap<EntityAttribute, EntityAttributeModifier> map = LinkedHashMultimap.create(super.getAttributeModifiers(slot));
@@ -42,7 +42,7 @@ public class HornedSpearItem extends SwordItem {
 		}
 		return map;
 	}
-	
+
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		ItemStack stack = user.getStackInHand(hand);
@@ -51,7 +51,7 @@ public class HornedSpearItem extends SwordItem {
 		}
 		return ItemUsage.consumeHeldItem(world, user, hand);
 	}
-	
+
 	@Override
 	public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
 		int timer = getMaxUseTime(stack) - remainingUseTicks;
@@ -64,17 +64,17 @@ public class HornedSpearItem extends SwordItem {
 			}
 		}
 	}
-	
+
 	@Override
 	public UseAction getUseAction(ItemStack stack) {
 		return UseAction.SPEAR;
 	}
-	
+
 	@Override
 	public int getMaxUseTime(ItemStack stack) {
 		return 72000;
 	}
-	
+
 	public static void spawnEntity(World world, LivingEntity owner, ItemStack stack) {
 		stack.damage(1, owner, stackUser -> stackUser.sendToolBreakStatus(stackUser.getActiveHand()));
 		HornedSpearEntity spear = new HornedSpearEntity(BWEntityTypes.HORNED_SPEAR, owner, world, stack.copy());
@@ -83,8 +83,7 @@ public class HornedSpearItem extends SwordItem {
 			if (player.isCreative()) {
 				spear.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
 			}
-		}
-		else {
+		} else {
 			spear.pickupType = PersistentProjectileEntity.PickupPermission.DISALLOWED;
 		}
 		world.spawnEntity(spear);

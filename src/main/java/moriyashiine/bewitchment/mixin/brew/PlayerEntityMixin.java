@@ -18,11 +18,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class PlayerEntityMixin extends LivingEntity {
 	@Shadow
 	public abstract HungerManager getHungerManager();
-	
+
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
 	}
-	
+
 	@Inject(method = "eatFood", at = @At("HEAD"))
 	private void eatFood(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> callbackInfo) {
 		if (!world.isClient && hasStatusEffect(BWStatusEffects.NOURISHING)) {

@@ -22,12 +22,12 @@ public class HornedSpearEntityRenderer extends EntityRenderer<HornedSpearEntity>
 	public HornedSpearEntityRenderer(EntityRendererFactory.Context context) {
 		super(context);
 	}
-	
+
 	@Override
 	public Identifier getTexture(HornedSpearEntity entity) {
 		return GhostEntityRenderer.EMPTY;
 	}
-	
+
 	@Override
 	public void render(HornedSpearEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
 		ItemStack spear = entity.spear;

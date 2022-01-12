@@ -43,7 +43,7 @@ import java.util.function.Predicate;
 
 public class BWWorldGenerators {
 	private static final FeatureSize EMPTY_SIZE = new TwoLayersFeatureSize(0, 0, 0);
-	
+
 	public static final ConfiguredFeature<TreeFeatureConfig, ?> JUNIPER_TREE = Feature.TREE.configure(new TreeFeatureConfig.Builder(SimpleBlockStateProviderAccessor.callInit(BWObjects.JUNIPER_LOG.getDefaultState()), new ForkingTrunkPlacer(5, 0, 0), SimpleBlockStateProviderAccessor.callInit(BWObjects.JUNIPER_LEAVES.getDefaultState()), new AcaciaFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0)), EMPTY_SIZE).ignoreVines().build());
 	public static final PlacedFeature JUNIPER_TREE_WITH_CHANCE = JUNIPER_TREE.withPlacement(VegetationPlacedFeatures.modifiersWithWouldSurvive(RarityFilterPlacementModifier.of(10), BWObjects.JUNIPER_SAPLING));
 	public static final ConfiguredFeature<TreeFeatureConfig, ?> CYPRESS_TREE = Feature.TREE.configure(new TreeFeatureConfig.Builder(SimpleBlockStateProviderAccessor.callInit(BWObjects.CYPRESS_LOG.getDefaultState()), new StraightTrunkPlacer(6, 1, 1), SimpleBlockStateProviderAccessor.callInit(BWObjects.CYPRESS_LEAVES.getDefaultState()), new LargeOakFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 4), EMPTY_SIZE).ignoreVines().build());
@@ -51,25 +51,25 @@ public class BWWorldGenerators {
 	public static final ConfiguredFeature<TreeFeatureConfig, ?> ELDER_TREE = Feature.TREE.configure(new TreeFeatureConfig.Builder(SimpleBlockStateProviderAccessor.callInit(BWObjects.ELDER_LOG.getDefaultState()), new StraightTrunkPlacer(4, 0, 1), SimpleBlockStateProviderAccessor.callInit(BWObjects.ELDER_LEAVES.getDefaultState()), new LargeOakFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 4), EMPTY_SIZE).ignoreVines().build());
 	public static final PlacedFeature ELDER_TREE_WITH_CHANCE = ELDER_TREE.withPlacement(VegetationPlacedFeatures.modifiersWithWouldSurvive(RarityFilterPlacementModifier.of(10), BWObjects.ELDER_SAPLING));
 	public static final ConfiguredFeature<TreeFeatureConfig, ?> DRAGONS_BLOOD_TREE = Feature.TREE.configure(new TreeFeatureConfig.Builder(SimpleBlockStateProviderAccessor.callInit(BWObjects.DRAGONS_BLOOD_LOG.getDefaultState().with(BWProperties.NATURAL, true)), new StraightTrunkPlacer(5, 1, 1), SimpleBlockStateProviderAccessor.callInit(BWObjects.DRAGONS_BLOOD_LEAVES.getDefaultState()), new MegaPineFoliagePlacer(ConstantIntProvider.create(1), ConstantIntProvider.create(0), ConstantIntProvider.create(3)), EMPTY_SIZE).ignoreVines().build());
-	
+
 	public static final List<OreFeatureConfig.Target> SILVER_ORES = List.of(OreFeatureConfig.createTarget(OreConfiguredFeatures.STONE_ORE_REPLACEABLES, BWObjects.SILVER_ORE.getDefaultState()), OreFeatureConfig.createTarget(OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES, BWObjects.DEEPSLATE_SILVER_ORE.getDefaultState()));
 	public static final List<OreFeatureConfig.Target> SALT_ORES = List.of(OreFeatureConfig.createTarget(OreConfiguredFeatures.STONE_ORE_REPLACEABLES, BWObjects.SALT_ORE.getDefaultState()), OreFeatureConfig.createTarget(OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES, BWObjects.DEEPSLATE_SALT_ORE.getDefaultState()));
-	
+
 	public static final ConfiguredFeature<?, ?> SILVER_ORE = Feature.ORE.configure(new OreFeatureConfig(SILVER_ORES, 10));
 	public static final ConfiguredFeature<?, ?> SILVER_ORE_BURIED = Feature.ORE.configure(new OreFeatureConfig(SILVER_ORES, 10, 0.5f));
 	public static final ConfiguredFeature<?, ?> SALT_ORE = Feature.ORE.configure(new OreFeatureConfig(SALT_ORES, 15));
 	public static final ConfiguredFeature<?, ?> SALT_ORE_BURIED = Feature.ORE.configure(new OreFeatureConfig(SALT_ORES, 15, 0.5f));
-	
+
 	public static final PlacedFeature SILVER_ORE_UPPER = SILVER_ORE_BURIED.withPlacement(OrePlacedFeaturesAccessor.callModifiersWithCount(4, HeightRangePlacementModifier.trapezoid(YOffset.fixed(-64), YOffset.fixed(32))));
 	public static final PlacedFeature SILVER_ORE_LOWER = SILVER_ORE_BURIED.withPlacement(OrePlacedFeaturesAccessor.callModifiers(CountPlacementModifier.of(UniformIntProvider.create(0, 1)), HeightRangePlacementModifier.uniform(YOffset.fixed(-64), YOffset.fixed(-48))));
-	
+
 	public static final PlacedFeature SALT_ORE_UPPER = SALT_ORE.withPlacement(OrePlacedFeaturesAccessor.callModifiersWithCount(30, HeightRangePlacementModifier.uniform(YOffset.fixed(136), YOffset.getTop())));
 	public static final PlacedFeature SALT_ORE_LOWER = SALT_ORE_BURIED.withPlacement(OrePlacedFeaturesAccessor.callModifiersWithCount(20, HeightRangePlacementModifier.trapezoid(YOffset.fixed(0), YOffset.fixed(192))));
-	
+
 	private static void registerEntitySpawn(EntityType<?> type, Predicate<BiomeSelectionContext> predicate, int weight, int minGroupSize, int maxGroupSize) {
 		BiomeModifications.addSpawn(predicate, type.getSpawnGroup(), type, weight, minGroupSize, maxGroupSize);
 	}
-	
+
 	public static void init() {
 		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new Identifier(Bewitchment.MODID, "juniper_tree"), JUNIPER_TREE);
 		Registry.register(BuiltinRegistries.PLACED_FEATURE, new Identifier(Bewitchment.MODID, "juniper_tree"), JUNIPER_TREE_WITH_CHANCE);
@@ -142,7 +142,7 @@ public class BWWorldGenerators {
 			}
 		});
 	}
-	
+
 	private static boolean additionalSpawnCheck(SpawnReason spawnReason, boolean check) {
 		if (spawnReason == SpawnReason.NATURAL || spawnReason == SpawnReason.CHUNK_GENERATION) {
 			return check;

@@ -8,11 +8,11 @@ import net.minecraft.entity.Entity;
 
 public class DruidBandModel extends EntityModel<Entity> {
 	private final ModelPart druidBand;
-	
+
 	public DruidBandModel(ModelPart root) {
 		druidBand = root.getChild("druidBand");
 	}
-	
+
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = new ModelData();
 		ModelPartData root = data.getRoot();
@@ -24,11 +24,11 @@ public class DruidBandModel extends EntityModel<Entity> {
 		woodDetails.addChild("leaf01_r1", ModelPartBuilder.create().uv(9, 12).cuboid(-0.5F, -2.0F, 0.0F, 2.0F, 2.0F, 0.0F, new Dilation(-0.4F, -0.4F, -0.4F)), ModelTransform.of(3.75F, -4.0F, -2.0F, 0.0F, 0.3054F, 0.0F));
 		return TexturedModelData.of(data, 16, 16);
 	}
-	
+
 	@Override
 	public void setAngles(Entity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 	}
-	
+
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
 		druidBand.render(matrices, vertices, light, overlay, red, green, blue, alpha);

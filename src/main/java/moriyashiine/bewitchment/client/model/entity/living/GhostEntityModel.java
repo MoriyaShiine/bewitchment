@@ -18,9 +18,9 @@ public class GhostEntityModel<T extends GhostEntity> extends BipedEntityModel<T>
 	private final ModelPart BipedLeftArm;
 	private final ModelPart BipedRightArm;
 	private final ModelPart realHead;
-	
+
 	private boolean realArm = false;
-	
+
 	public GhostEntityModel(ModelPart root) {
 		super(root);
 		realBody = root.getChild("realBody");
@@ -29,7 +29,7 @@ public class GhostEntityModel<T extends GhostEntity> extends BipedEntityModel<T>
 		BipedRightArm = root.getChild("BipedRightArm");
 		realHead = root.getChild("realHead");
 	}
-	
+
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0);
 		ModelPartData root = data.getRoot();
@@ -45,7 +45,7 @@ public class GhostEntityModel<T extends GhostEntity> extends BipedEntityModel<T>
 		realBodyTrail00.addChild("realBodyTrail01", ModelPartBuilder.create().uv(0, 39).cuboid(-5.0F, 0.0F, -3.0F, 10.0F, 9.0F, 6.0F), ModelTransform.of(0.0F, 5.8F, 0.1F, 0.1047F, 0.0F, 0.0F));
 		return TexturedModelData.of(data, 64, 64);
 	}
-	
+
 	@Override
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float realHeadYaw, float realHeadPitch) {
 		realArm = false;
@@ -59,13 +59,12 @@ public class GhostEntityModel<T extends GhostEntity> extends BipedEntityModel<T>
 			rightArm.roll = MathHelper.sin(animationProgress) / 2;
 			leftArm.pitch += 4.5;
 			leftArm.roll = -rightArm.roll;
-		}
-		else {
+		} else {
 			leftArm.roll = -0.1f;
 			rightArm.roll = 0.1f;
 		}
 	}
-	
+
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
 		realHead.render(matrices, vertices, light, overlay, red, green, blue, alpha);
@@ -73,12 +72,12 @@ public class GhostEntityModel<T extends GhostEntity> extends BipedEntityModel<T>
 		leftArm.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		rightArm.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 	}
-	
+
 	@Override
 	protected ModelPart getArm(Arm arm) {
 		return realArm ? (arm == Arm.LEFT ? BipedLeftArm : BipedRightArm) : super.getArm(arm);
 	}
-	
+
 	private void copyRotation(ModelPart to, ModelPart from) {
 		to.pitch = from.pitch;
 		to.yaw = from.yaw;

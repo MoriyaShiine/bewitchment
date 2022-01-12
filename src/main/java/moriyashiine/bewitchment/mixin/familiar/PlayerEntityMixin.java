@@ -23,11 +23,11 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	private static final EntityAttributeModifier WOLF_FAMILIAR_ARMOR_MODIFIER = new EntityAttributeModifier(UUID.fromString("1b2866e6-ca04-43e4-b643-1142c0791e6d"), "Familiar modifier", 6, EntityAttributeModifier.Operation.ADDITION);
 	@Unique
 	private static final EntityAttributeModifier WOLF_FAMILIAR_ARMOR_TOUGHNESS_MODIFIER = new EntityAttributeModifier(UUID.fromString("ec7f7a2e-d5c5-40c4-9338-c2808946f7c4"), "Familiar modifier", 6, EntityAttributeModifier.Operation.ADDITION);
-	
+
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
 	}
-	
+
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo callbackInfo) {
 		if (!world.isClient) {
@@ -37,8 +37,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 			if (shouldHave && !armorAttribute.hasModifier(WOLF_FAMILIAR_ARMOR_MODIFIER)) {
 				armorAttribute.addPersistentModifier(WOLF_FAMILIAR_ARMOR_MODIFIER);
 				armorToughnessAttribute.addPersistentModifier(WOLF_FAMILIAR_ARMOR_TOUGHNESS_MODIFIER);
-			}
-			else if (!shouldHave && armorAttribute.hasModifier(WOLF_FAMILIAR_ARMOR_MODIFIER)) {
+			} else if (!shouldHave && armorAttribute.hasModifier(WOLF_FAMILIAR_ARMOR_MODIFIER)) {
 				armorAttribute.removeModifier(WOLF_FAMILIAR_ARMOR_MODIFIER);
 				armorToughnessAttribute.removeModifier(WOLF_FAMILIAR_ARMOR_TOUGHNESS_MODIFIER);
 			}

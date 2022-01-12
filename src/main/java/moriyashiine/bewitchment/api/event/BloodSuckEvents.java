@@ -12,7 +12,7 @@ public final class BloodSuckEvents {
 			listener.onBloodSuck(player, target, bloodToGive);
 		}
 	});
-	
+
 	public static final Event<SetBloodAmount> BLOOD_AMOUNT = createArrayBacked(SetBloodAmount.class, listeners -> (player, target, bloodToGive) -> {
 		int result = bloodToGive;
 		for (SetBloodAmount listener : listeners) {
@@ -20,11 +20,11 @@ public final class BloodSuckEvents {
 		}
 		return result;
 	});
-	
+
 	public interface OnBloodSuck {
 		void onBloodSuck(PlayerEntity player, LivingEntity target, int bloodToGive);
 	}
-	
+
 	public interface SetBloodAmount {
 		int onBloodSuck(PlayerEntity player, LivingEntity target, int currentBloodToGive);
 	}

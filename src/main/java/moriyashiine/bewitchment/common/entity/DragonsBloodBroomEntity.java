@@ -32,16 +32,16 @@ import java.util.UUID;
 @SuppressWarnings("ConstantConditions")
 public class DragonsBloodBroomEntity extends BroomEntity {
 	private final List<UUID> entities = new ArrayList<>();
-	
+
 	private Sigil sigil = null;
 	private int uses = 0;
-	
+
 	private boolean modeOnWhitelist = false;
-	
+
 	public DragonsBloodBroomEntity(EntityType<?> type, World world) {
 		super(type, world);
 	}
-	
+
 	@Override
 	public void tick() {
 		super.tick();
@@ -52,7 +52,7 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 			modeOnWhitelist = false;
 		}
 	}
-	
+
 	@Override
 	public ActionResult interact(PlayerEntity player, Hand hand) {
 		boolean client = world.isClient;
@@ -64,13 +64,11 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 					uses = sigil.uses * (BewitchmentAPI.getFamiliar(player) == BWEntityTypes.SNAKE ? 2 : 1);
 					modeOnWhitelist = true;
 					stack.decrement(1);
-				}
-				else if (sigil != null) {
+				} else if (sigil != null) {
 					if (stack.getItem() instanceof TaglockItem && TaglockItem.hasTaglock(stack)) {
 						entities.add(TaglockItem.getTaglockUUID(stack));
 						stack.decrement(1);
-					}
-					else if (stack.getItem() instanceof AthameItem && !entities.isEmpty()) {
+					} else if (stack.getItem() instanceof AthameItem && !entities.isEmpty()) {
 						world.playSound(null, getBlockPos(), BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.NEUTRAL, 1, modeOnWhitelist ? 0.5f : 1);
 						player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.toggle_" + (!modeOnWhitelist ? "whitelist" : "blacklist")), true);
 						modeOnWhitelist = !modeOnWhitelist;
@@ -89,13 +87,13 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 		}
 		return super.interact(player, hand);
 	}
-	
+
 	@Override
 	protected void readCustomDataFromNbt(NbtCompound nbt) {
 		super.readCustomDataFromNbt(nbt);
 		readFromNbt(nbt);
 	}
-	
+
 	@Override
 	protected void writeCustomDataToNbt(NbtCompound nbt) {
 		super.writeCustomDataToNbt(nbt);
@@ -103,21 +101,20 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 			writeToNbt(nbt);
 		}
 	}
-	
+
 	@Override
 	public void init(ItemStack stack) {
 		if (stack.hasNbt()) {
 			readFromNbt(stack.getNbt());
 		}
 	}
-	
+
 	@Override
 	protected ItemStack getDroppedStack() {
 		ItemStack stack = super.getDroppedStack();
 		if (sigil != null) {
 			writeToNbt(stack.getOrCreateNbt());
-		}
-		else if (stack.hasNbt()) {
+		} else if (stack.hasNbt()) {
 			stack.getNbt().remove("Entities");
 			stack.getNbt().remove("Sigil");
 			stack.getNbt().remove("Uses");
@@ -125,7 +122,7 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 		}
 		return stack;
 	}
-	
+
 	private void readFromNbt(NbtCompound nbt) {
 		if (nbt.contains("Sigil")) {
 			NbtList entitiesList = nbt.getList("Entities", NbtType.STRING);
@@ -137,7 +134,7 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 			modeOnWhitelist = nbt.getBoolean("ModeOnWhitelist");
 		}
 	}
-	
+
 	private void writeToNbt(NbtCompound nbt) {
 		if (sigil != null) {
 			NbtList entitiesList = new NbtList();
@@ -150,7 +147,7 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 			nbt.putBoolean("ModeOnWhitelist", modeOnWhitelist);
 		}
 	}
-	
+
 	private boolean test(Entity entity) {
 		if (!entities.isEmpty()) {
 			if (modeOnWhitelist) {

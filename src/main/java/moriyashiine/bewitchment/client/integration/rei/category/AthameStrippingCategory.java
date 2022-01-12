@@ -22,27 +22,27 @@ import java.util.List;
 public class AthameStrippingCategory implements DisplayCategory<AthameStrippingDisplay> {
 	public static final TranslatableText TITLE = new TranslatableText("rei.bewitchment.athame_stripping");
 	public static final EntryStack<ItemStack> ICON = EntryStacks.of(BWObjects.ATHAME);
-	
+
 	@Override
 	public Renderer getIcon() {
 		return ICON;
 	}
-	
+
 	@Override
 	public Text getTitle() {
 		return TITLE;
 	}
-	
+
 	@Override
 	public int getDisplayHeight() {
 		return 36;
 	}
-	
+
 	@Override
 	public CategoryIdentifier<? extends AthameStrippingDisplay> getCategoryIdentifier() {
 		return BWREIPlugin.ATHAME_STRIPPING;
 	}
-	
+
 	@Override
 	public List<Widget> setupDisplay(AthameStrippingDisplay display, Rectangle bounds) {
 		Point startPoint = new Point(bounds.getCenterX() - 64, bounds.getCenterY() - 16);

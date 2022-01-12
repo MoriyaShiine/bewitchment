@@ -36,15 +36,15 @@ import java.util.UUID;
 @SuppressWarnings("ConstantConditions")
 public class SnakeEntity extends BWTameableEntity {
 	public int tongueFlick = 0, attackTick = 0;
-	
+
 	public SnakeEntity(EntityType<? extends TameableEntity> type, World world) {
 		super(type, world);
 	}
-	
+
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 8).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3);
 	}
-	
+
 	@Override
 	public void tick() {
 		super.tick();
@@ -59,22 +59,22 @@ public class SnakeEntity extends BWTameableEntity {
 			tongueFlick = 0;
 		}
 	}
-	
+
 	@Override
 	protected boolean hasShiny() {
 		return true;
 	}
-	
+
 	@Override
 	public int getVariants() {
 		return 5;
 	}
-	
+
 	@Override
 	protected boolean isTamingItem(ItemStack stack) {
 		return stack.getItem() == Items.RABBIT;
 	}
-	
+
 	@Nullable
 	@Override
 	public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
@@ -92,32 +92,32 @@ public class SnakeEntity extends BWTameableEntity {
 		}
 		return child;
 	}
-	
+
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return BWSoundEvents.ENTITY_SNAKE_AMBIENT;
 	}
-	
+
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return BWSoundEvents.ENTITY_SNAKE_HURT;
 	}
-	
+
 	@Override
 	protected SoundEvent getDeathSound() {
 		return BWSoundEvents.ENTITY_SNAKE_DEATH;
 	}
-	
+
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState state) {
 	}
-	
+
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
 		return stack.getItem() == Items.CHICKEN;
 	}
-	
+
 	@Override
 	public boolean tryAttack(Entity target) {
 		boolean flag = super.tryAttack(target);
@@ -129,7 +129,7 @@ public class SnakeEntity extends BWTameableEntity {
 		}
 		return flag;
 	}
-	
+
 	@Override
 	public void setTamed(boolean tamed) {
 		super.setTamed(tamed);
@@ -139,13 +139,12 @@ public class SnakeEntity extends BWTameableEntity {
 			maxHealth.setBaseValue(20);
 			attackDamage.setBaseValue(3);
 			setHealth(getMaxHealth());
-		}
-		else {
+		} else {
 			maxHealth.setBaseValue(8);
 			attackDamage.setBaseValue(1);
 		}
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void handleStatus(byte id) {
@@ -154,12 +153,11 @@ public class SnakeEntity extends BWTameableEntity {
 		}
 		if (id == 5) {
 			attackTick = 2;
-		}
-		else {
+		} else {
 			super.handleStatus(id);
 		}
 	}
-	
+
 	@Override
 	protected void initGoals() {
 		goalSelector.add(0, new SwimGoal(this));
@@ -182,13 +180,12 @@ public class SnakeEntity extends BWTameableEntity {
 		targetSelector.add(2, new RevengeGoal(this));
 		targetSelector.add(3, new UntamedActiveTargetGoal<>(this, LivingEntity.class, false, entity -> entity instanceof ChickenEntity || entity instanceof RabbitEntity));
 	}
-	
+
 	public void toggleAttack(boolean attacking) {
 		if (attacking) {
 			attackTick = 11;
 			world.sendEntityStatus(this, (byte) 4);
-		}
-		else {
+		} else {
 			attackTick = 2;
 			world.sendEntityStatus(this, (byte) 5);
 		}

@@ -18,31 +18,31 @@ import java.util.UUID;
 @SuppressWarnings("ConstantConditions")
 public interface TaglockHolder {
 	DefaultedList<ItemStack> getTaglockInventory();
-	
+
 	UUID getOwner();
-	
+
 	void setOwner(UUID owner);
-	
+
 	default void fromNbtTaglock(NbtCompound nbt) {
 		Inventories.readNbt(nbt.getCompound("TaglockInventory"), getTaglockInventory());
 		if (nbt.contains("Owner")) {
 			setOwner(nbt.getUuid("Owner"));
 		}
 	}
-	
+
 	default void toNbtTaglock(NbtCompound nbt) {
 		nbt.put("TaglockInventory", Inventories.writeNbt(new NbtCompound(), getTaglockInventory()));
 		if (getOwner() != null) {
 			nbt.putUuid("Owner", getOwner());
 		}
 	}
-	
+
 	default void use(World world, BlockPos pos, LivingEntity user) {
 		if (!user.getUuid().equals(getOwner())) {
 			addTaglock(world, pos, user);
 		}
 	}
-	
+
 	default void addTaglock(World world, BlockPos pos, Entity entity) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		TaglockHolder taglockHolder = (TaglockHolder) blockEntity;
@@ -65,7 +65,7 @@ public interface TaglockHolder {
 			}
 		}
 	}
-	
+
 	default int getFirstEmptySlot() {
 		for (int i = 0; i < getTaglockInventory().size(); i++) {
 			if (getTaglockInventory().get(i).isEmpty()) {
@@ -74,16 +74,15 @@ public interface TaglockHolder {
 		}
 		return -1;
 	}
-	
+
 	default void syncTaglockHolder(BlockEntity blockEntity) {
 		if (blockEntity instanceof TaglockHolderBlockEntity taglockHolderBlockEntity) {
 			taglockHolderBlockEntity.sync();
-		}
-		else if (blockEntity instanceof JuniperChestBlockEntity juniperChestBlockEntity) {
+		} else if (blockEntity instanceof JuniperChestBlockEntity juniperChestBlockEntity) {
 			juniperChestBlockEntity.sync();
 		}
 	}
-	
+
 	static void onUse(World world, BlockPos pos, LivingEntity user) {
 		if (world.getBlockEntity(pos) instanceof TaglockHolder taglockHolder) {
 			taglockHolder.use(world, pos, user);

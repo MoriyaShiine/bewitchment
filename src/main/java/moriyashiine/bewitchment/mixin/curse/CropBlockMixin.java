@@ -29,7 +29,7 @@ public class CropBlockMixin {
 			}
 		}
 	}
-	
+
 	@Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
 	private void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo callbackInfo) {
 		for (int i = 0; i < world.getEntitiesByClass(LivingEntity.class, new Box(pos).expand(16), living -> living.isAlive() && BWComponents.CURSES_COMPONENT.get(living).hasCurse(BWCurses.ARMY_OF_WORMS)).size(); i++) {

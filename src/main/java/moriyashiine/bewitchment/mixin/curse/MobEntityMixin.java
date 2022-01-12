@@ -28,14 +28,14 @@ import java.util.UUID;
 public abstract class MobEntityMixin extends LivingEntity {
 	@Unique
 	private boolean spawnedByArachnophobia = false;
-	
+
 	@Shadow
 	public abstract void setTarget(@Nullable LivingEntity target);
-	
+
 	protected MobEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
 	}
-	
+
 	@ModifyVariable(method = "setTarget", at = @At("HEAD"), argsOnly = true)
 	private LivingEntity modifyTarget(LivingEntity target) {
 		if (!world.isClient && target != null) {
@@ -46,7 +46,7 @@ public abstract class MobEntityMixin extends LivingEntity {
 		}
 		return target;
 	}
-	
+
 	@Inject(method = "dropLoot", at = @At("HEAD"))
 	private void dropLoot(DamageSource source, boolean causedByPlayer, CallbackInfo callbackInfo) {
 		if (!world.isClient && (Object) this instanceof SpiderEntity && !spawnedByArachnophobia && source.getAttacker() instanceof LivingEntity livingAttacker && BWComponents.CURSES_COMPONENT.get(livingAttacker).hasCurse(BWCurses.ARACHNOPHOBIA)) {
@@ -54,8 +54,7 @@ public abstract class MobEntityMixin extends LivingEntity {
 				SpiderEntity spider;
 				if (random.nextFloat() < 1 / 8192f) {
 					spider = EntityType.SPIDER.create(world);
-				}
-				else {
+				} else {
 					spider = EntityType.CAVE_SPIDER.create(world);
 					((MobEntityMixin) (Object) spider).spawnedByArachnophobia = true;
 				}
@@ -68,14 +67,14 @@ public abstract class MobEntityMixin extends LivingEntity {
 			}
 		}
 	}
-	
+
 	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
 	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
 		if ((Object) this instanceof CaveSpiderEntity) {
 			spawnedByArachnophobia = nbt.getBoolean("SpawnedByArachnophobia");
 		}
 	}
-	
+
 	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
 	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
 		if ((Object) this instanceof CaveSpiderEntity) {

@@ -25,7 +25,7 @@ public abstract class LivingEntityMixin extends Entity {
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
-	
+
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage(float amount, DamageSource source) {
 		if (!world.isClient && source == DamageSource.FALL) {
@@ -43,7 +43,7 @@ public abstract class LivingEntityMixin extends Entity {
 		}
 		return amount;
 	}
-	
+
 	@Inject(method = "canHaveStatusEffect", at = @At("RETURN"), cancellable = true)
 	private void canHaveStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (callbackInfo.getReturnValue() && !world.isClient && !effect.isAmbient() && effect.getEffectType().getCategory() != StatusEffectCategory.HARMFUL) {

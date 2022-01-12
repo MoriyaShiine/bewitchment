@@ -24,7 +24,7 @@ public class SnakeEntityModel<T extends SnakeEntity> extends AnimalModel<T> {
 	private final ModelPart lFang;
 	private final ModelPart rFang;
 	private final ModelPart tongue;
-	
+
 	public SnakeEntityModel(ModelPart root) {
 		bodyBase = root.getChild("bodyBase");
 		tail01 = bodyBase.getChild("tail01");
@@ -41,7 +41,7 @@ public class SnakeEntityModel<T extends SnakeEntity> extends AnimalModel<T> {
 		rFang = head.getChild("snout").getChild("rFang");
 		tongue = head.getChild("tongue");
 	}
-	
+
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = new ModelData();
 		ModelPartData root = data.getRoot();
@@ -62,7 +62,7 @@ public class SnakeEntityModel<T extends SnakeEntity> extends AnimalModel<T> {
 		head.addChild("tongue", ModelPartBuilder.create().uv(31, 0).cuboid(-0.5F, 0.0F, -2.7F, 1.0F, 0.0F, 4.0F), ModelTransform.of(0.0F, 0.9F, -4.7F, 0.0F, 0.0F, 0.0F));
 		return TexturedModelData.of(data, 64, 32);
 	}
-	
+
 	@Override
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 		head.pitch = (float) (headPitch * (Math.PI / 180f));
@@ -74,8 +74,7 @@ public class SnakeEntityModel<T extends SnakeEntity> extends AnimalModel<T> {
 		if (attacking) {
 			head.pitch = -1;
 			lowerJaw.pitch = 1;
-		}
-		else {
+		} else {
 			head.pitch = 0;
 			lowerJaw.pitch = 0;
 		}
@@ -88,8 +87,7 @@ public class SnakeEntityModel<T extends SnakeEntity> extends AnimalModel<T> {
 			tail04.yaw = 0.5f;
 			tail05.yaw = 1.2f;
 			tail06.yaw = 1.075f;
-		}
-		else {
+		} else {
 			bodyBase.yaw = MathHelper.cos(limbAngle + entity.getId());
 			neck00.yaw = -bodyBase.yaw / 3;
 			neck01.yaw = neck00.yaw;
@@ -101,12 +99,12 @@ public class SnakeEntityModel<T extends SnakeEntity> extends AnimalModel<T> {
 			tail06.yaw = tail05.yaw;
 		}
 	}
-	
+
 	@Override
 	protected Iterable<ModelPart> getHeadParts() {
 		return ImmutableList.of();
 	}
-	
+
 	@Override
 	protected Iterable<ModelPart> getBodyParts() {
 		return ImmutableList.of(bodyBase);

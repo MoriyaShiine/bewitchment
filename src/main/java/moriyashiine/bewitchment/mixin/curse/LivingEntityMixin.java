@@ -24,7 +24,7 @@ public abstract class LivingEntityMixin extends Entity {
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
-	
+
 	@ModifyVariable(method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)Z", at = @At("HEAD"), argsOnly = true)
 	private StatusEffectInstance modifyStatusEffect(StatusEffectInstance effect) {
 		if (!world.isClient && !effect.isAmbient() && effect.getEffectType().getCategory() == StatusEffectCategory.HARMFUL && BWComponents.CURSES_COMPONENT.get((LivingEntity) (Object) this).hasCurse(BWCurses.COMPROMISED)) {
@@ -32,7 +32,7 @@ public abstract class LivingEntityMixin extends Entity {
 		}
 		return effect;
 	}
-	
+
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage(float amount, DamageSource source) {
 		if (!world.isClient) {
@@ -46,14 +46,14 @@ public abstract class LivingEntityMixin extends Entity {
 		}
 		return amount;
 	}
-	
+
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient && (Object) this instanceof MobEntity mob && BWComponents.FAKE_MOB_COMPONENT.get(mob).getTarget() != null) {
 			callbackInfo.cancel();
 		}
 	}
-	
+
 	@Inject(method = "canHaveStatusEffect", at = @At("RETURN"), cancellable = true)
 	private void canHaveStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (callbackInfo.getReturnValue() && !world.isClient && !effect.isAmbient() && effect.getEffectType().getCategory() == StatusEffectCategory.BENEFICIAL && BWComponents.CURSES_COMPONENT.get((LivingEntity) (Object) this).hasCurse(BWCurses.UNLUCKY) && random.nextBoolean()) {

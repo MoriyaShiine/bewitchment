@@ -51,7 +51,7 @@ public class TaglockItem extends Item {
 	public TaglockItem(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Override
 	public ActionResult useOnBlock(ItemUsageContext context) {
 		World world = context.getWorld();
@@ -79,8 +79,7 @@ public class TaglockItem extends Item {
 				}
 			}
 			return ActionResult.success(client);
-		}
-		else {
+		} else {
 			ItemStack stack = context.getStack();
 			BlockEntity blockEntity = world.getBlockEntity(state.getBlock() instanceof DoorBlock && state.get(DoorBlock.HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos);
 			if (blockEntity instanceof TaglockHolder taglockHolder) {
@@ -95,8 +94,7 @@ public class TaglockItem extends Item {
 						return ActionResult.success(client);
 					}
 				}
-			}
-			else if (blockEntity instanceof Lockable lockable) {
+			} else if (blockEntity instanceof Lockable lockable) {
 				if (hasTaglock(stack)) {
 					if (player.getUuid().equals(lockable.getOwner()) && lockable.getLocked()) {
 						UUID uuid = getTaglockUUID(stack);
@@ -116,8 +114,7 @@ public class TaglockItem extends Item {
 						}
 					}
 				}
-			}
-			else if (blockEntity instanceof SigilHolder sigilHolder) {
+			} else if (blockEntity instanceof SigilHolder sigilHolder) {
 				if (hasTaglock(stack)) {
 					if (!client) {
 						if (sigilHolder.getSigil() != null) {
@@ -141,7 +138,7 @@ public class TaglockItem extends Item {
 		}
 		return super.useOnBlock(context);
 	}
-	
+
 	@Override
 	public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
 		if (entity instanceof PlayerEntity) {
@@ -149,7 +146,7 @@ public class TaglockItem extends Item {
 		}
 		return super.useOnEntity(stack, user, entity, hand);
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
@@ -159,8 +156,7 @@ public class TaglockItem extends Item {
 			if (nbt.contains("UsedForScrying")) {
 				if (nbt.contains("Failed")) {
 					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.failed").formatted(Formatting.DARK_GRAY));
-				}
-				else {
+				} else {
 					boolean shifting = Screen.hasShiftDown();
 					BlockPos pos = BlockPos.fromLong(stack.getNbt().getLong("LocationPos"));
 					tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.location", pos.getX(), pos.getY(), pos.getZ(), stack.getNbt().getString("LocationWorld")).formatted(Formatting.DARK_GRAY));
@@ -169,8 +165,7 @@ public class TaglockItem extends Item {
 					NbtList cursesList = nbt.getList("Curses", 10);
 					if (cursesList.isEmpty()) {
 						curseTooltip.append(new TranslatableText(Bewitchment.MODID + ".tooltip.none"));
-					}
-					else if (!shifting) {
+					} else if (!shifting) {
 						curseTooltip.append(new TranslatableText(Bewitchment.MODID + ".tooltip.press_shift"));
 					}
 					tooltip.add(curseTooltip.formatted(Formatting.DARK_GRAY));
@@ -186,8 +181,7 @@ public class TaglockItem extends Item {
 					NbtList contractList = nbt.getList("Contracts", 10);
 					if (contractList.isEmpty()) {
 						contractTooltip.append(new TranslatableText(Bewitchment.MODID + ".tooltip.none"));
-					}
-					else if (!shifting) {
+					} else if (!shifting) {
 						contractTooltip.append(new TranslatableText(Bewitchment.MODID + ".tooltip.press_shift"));
 					}
 					tooltip.add(contractTooltip.formatted(Formatting.DARK_GRAY));
@@ -206,7 +200,7 @@ public class TaglockItem extends Item {
 			}
 		}
 	}
-	
+
 	public static ActionResult useTaglock(PlayerEntity user, LivingEntity entity, Hand hand, boolean checkVisibility, boolean bed) {
 		ItemStack stack = user.getStackInHand(hand);
 		if (entity.isAlive() && !BWTags.TAGLOCK_BLACKLIST.contains(entity.getType()) && !hasTaglock(stack)) {
@@ -250,22 +244,21 @@ public class TaglockItem extends Item {
 					mob.setPersistent();
 				}
 				BWUtil.addItemToInventoryAndConsume(user, hand, putTaglock(new ItemStack(BWObjects.TAGLOCK), entity));
-			}
-			else {
+			} else {
 				user.world.playSoundFromEntity(user, entity, BWSoundEvents.ENTITY_GENERIC_PLING, SoundCategory.PLAYERS, 1, 1);
 			}
 			return ActionResult.success(client);
 		}
 		return ActionResult.FAIL;
 	}
-	
+
 	public static ItemStack putTaglock(ItemStack stack, Entity entity) {
 		stack.getOrCreateNbt().putUuid("OwnerUUID", entity.getUuid());
 		stack.getOrCreateNbt().putString("OwnerName", entity.getDisplayName().getString());
 		stack.getOrCreateNbt().putBoolean("FromPlayer", entity instanceof PlayerEntity);
 		return stack;
 	}
-	
+
 	public static ItemStack copyTo(ItemStack from, ItemStack to) {
 		if (hasTaglock(from)) {
 			to.getOrCreateNbt().putUuid("OwnerUUID", from.getOrCreateNbt().getUuid("OwnerUUID"));
@@ -274,11 +267,11 @@ public class TaglockItem extends Item {
 		}
 		return to;
 	}
-	
+
 	public static boolean hasTaglock(ItemStack stack) {
 		return stack.hasNbt() && stack.getOrCreateNbt().contains("OwnerUUID");
 	}
-	
+
 	public static void removeTaglock(ItemStack stack) {
 		if (stack.hasNbt()) {
 			stack.getOrCreateNbt().remove("OwnerUUID");
@@ -286,21 +279,21 @@ public class TaglockItem extends Item {
 			stack.getOrCreateNbt().remove("FromPlayer");
 		}
 	}
-	
+
 	public static UUID getTaglockUUID(ItemStack stack) {
 		if (hasTaglock(stack)) {
 			return stack.getOrCreateNbt().getUuid("OwnerUUID");
 		}
 		return null;
 	}
-	
+
 	public static String getTaglockName(ItemStack stack) {
 		if (hasTaglock(stack)) {
 			return stack.getOrCreateNbt().getString("OwnerName");
 		}
 		return "";
 	}
-	
+
 	public static boolean isTaglockFromPlayer(ItemStack stack) {
 		return hasTaglock(stack) && stack.getOrCreateNbt().getBoolean("FromPlayer");
 	}

@@ -13,7 +13,7 @@ public interface OrePlacedFeaturesAccessor {
 	static List<PlacementModifier> callModifiers(PlacementModifier countModifier, PlacementModifier heightModifier) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	@Invoker
 	static List<PlacementModifier> callModifiersWithCount(int count, PlacementModifier heightModfier) {
 		throw new UnsupportedOperationException();

@@ -21,7 +21,7 @@ public class TeleportEntitiesRitualFunction extends RitualFunction {
 	public TeleportEntitiesRitualFunction(ParticleType<?> startParticle, Predicate<LivingEntity> sacrifice) {
 		super(startParticle, sacrifice);
 	}
-	
+
 	@Override
 	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
 		BlockPos location = null;
@@ -33,8 +33,7 @@ public class TeleportEntitiesRitualFunction extends RitualFunction {
 					location = livingEntity.getBlockPos();
 					break;
 				}
-			}
-			else if (stack.getItem() instanceof WaystoneItem && stack.hasNbt() && stack.getOrCreateNbt().contains("LocationPos") && world.getRegistryKey().getValue().toString().equals(stack.getOrCreateNbt().getString("LocationWorld"))) {
+			} else if (stack.getItem() instanceof WaystoneItem && stack.hasNbt() && stack.getOrCreateNbt().contains("LocationPos") && world.getRegistryKey().getValue().toString().equals(stack.getOrCreateNbt().getString("LocationWorld"))) {
 				location = BlockPos.fromLong(stack.getOrCreateNbt().getLong("LocationPos"));
 				break;
 			}
@@ -44,8 +43,7 @@ public class TeleportEntitiesRitualFunction extends RitualFunction {
 			for (Entity entity : world.getNonSpectatingEntities(Entity.class, new Box(effectivePos).expand(radius))) {
 				BWUtil.teleport(entity, location.getX() + 0.5, location.getY() - 0.5, location.getZ() + 0.5, true);
 			}
-		}
-		else {
+		} else {
 			ItemScatterer.spawn(world, glyphPos, inventory);
 		}
 		super.start(world, glyphPos, effectivePos, inventory, catFamiliar);

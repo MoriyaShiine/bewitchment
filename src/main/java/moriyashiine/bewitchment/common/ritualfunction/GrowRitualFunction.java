@@ -20,7 +20,7 @@ public class GrowRitualFunction extends RitualFunction {
 	public GrowRitualFunction(ParticleType<?> startParticle, Predicate<LivingEntity> sacrifice) {
 		super(startParticle, sacrifice);
 	}
-	
+
 	@Override
 	public void tick(World world, BlockPos glyphPos, BlockPos effectivePos, boolean catFamiliar) {
 		int radius = catFamiliar ? 9 : 3;
@@ -35,8 +35,7 @@ public class GrowRitualFunction extends RitualFunction {
 					((Fertilizable) world.getBlockState(foundPos).getBlock()).grow((ServerWorld) world, world.random, foundPos, world.getBlockState(foundPos));
 				}
 			}
-		}
-		else {
+		} else {
 			world.addParticle(ParticleTypes.HAPPY_VILLAGER, effectivePos.getX() + MathHelper.nextDouble(world.random, -radius, radius), effectivePos.getY() + 0.5, effectivePos.getZ() + MathHelper.nextDouble(world.random, -radius, radius), 0, 0, 0);
 		}
 	}

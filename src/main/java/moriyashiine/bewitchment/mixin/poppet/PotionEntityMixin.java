@@ -26,7 +26,7 @@ public abstract class PotionEntityMixin extends ThrownItemEntity {
 	public PotionEntityMixin(EntityType<? extends ThrownItemEntity> entityType, World world) {
 		super(entityType, world);
 	}
-	
+
 	@Inject(method = "applySplashPotion", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILSOFT)
 	private void applySplashPotion(List<StatusEffectInstance> statusEffects, @Nullable Entity entity, CallbackInfo callbackInfo, Box box) {
 		List<ItemEntity> itemEntities = world.getNonSpectatingEntities(ItemEntity.class, box);

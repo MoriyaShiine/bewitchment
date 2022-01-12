@@ -9,7 +9,7 @@ public class ApathyCurse extends Curse {
 	public ApathyCurse(Type type) {
 		super(type);
 	}
-	
+
 	@Override
 	public void tick(LivingEntity target) {
 		if (target instanceof PlayerEntity player) {

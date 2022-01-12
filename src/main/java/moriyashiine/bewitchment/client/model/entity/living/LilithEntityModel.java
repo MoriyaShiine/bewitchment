@@ -22,9 +22,9 @@ public class LilithEntityModel<T extends LilithEntity> extends BipedEntityModel<
 	private final ModelPart bipedLeftLeg;
 	private final ModelPart bipedRightLeg;
 	private final ModelPart realHead;
-	
+
 	private boolean realArm = false;
-	
+
 	public LilithEntityModel(ModelPart root) {
 		super(root);
 		realBody = root.getChild("realBody");
@@ -38,7 +38,7 @@ public class LilithEntityModel<T extends LilithEntity> extends BipedEntityModel<
 		bipedRightLeg = root.getChild("bipedRightLeg");
 		realHead = root.getChild("realHead");
 	}
-	
+
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0);
 		ModelPartData root = data.getRoot();
@@ -121,7 +121,7 @@ public class LilithEntityModel<T extends LilithEntity> extends BipedEntityModel<
 		rLeg02.addChild("rTalon04", ModelPartBuilder.create().uv(0, 58).mirrored(true).cuboid(-0.5F, -0.5F, 0.0F, 1.0F, 2.0F, 4.0F), ModelTransform.of(0.0F, 9.7F, 1.6F, -0.0349F, 0.0F, 0.0F));
 		return TexturedModelData.of(data, 128, 64);
 	}
-	
+
 	@Override
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float realHeadYaw, float realHeadPitch) {
 		realArm = false;
@@ -146,7 +146,7 @@ public class LilithEntityModel<T extends LilithEntity> extends BipedEntityModel<
 		frontLoincloth.pitch = Math.min(bipedLeftLeg.pitch, bipedRightLeg.pitch);
 		backLoincloth.pitch = Math.max(bipedLeftLeg.pitch, bipedRightLeg.pitch);
 	}
-	
+
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
 		realHead.render(matrices, vertices, light, overlay, red, green, blue, alpha);
@@ -156,12 +156,12 @@ public class LilithEntityModel<T extends LilithEntity> extends BipedEntityModel<
 		bipedLeftLeg.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		bipedRightLeg.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 	}
-	
+
 	@Override
 	protected ModelPart getArm(Arm arm) {
 		return realArm ? (arm == Arm.LEFT ? bipedLeftArm : bipedRightArm) : super.getArm(arm);
 	}
-	
+
 	private void copyRotation(ModelPart to, ModelPart from) {
 		to.pitch = from.pitch;
 		to.yaw = from.yaw;

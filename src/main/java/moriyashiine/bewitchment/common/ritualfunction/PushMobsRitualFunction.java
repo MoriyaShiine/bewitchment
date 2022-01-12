@@ -15,7 +15,7 @@ public class PushMobsRitualFunction extends RitualFunction {
 	public PushMobsRitualFunction(ParticleType<?> startParticle, Predicate<LivingEntity> sacrifice) {
 		super(startParticle, sacrifice);
 	}
-	
+
 	@Override
 	public void tick(World world, BlockPos glyphPos, BlockPos effectivePos, boolean catFamiliar) {
 		if (!world.isClient) {

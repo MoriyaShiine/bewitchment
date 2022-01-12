@@ -19,18 +19,17 @@ import java.util.UUID;
 public abstract class EntityMixin {
 	@Shadow
 	public abstract UUID getUuid();
-	
+
 	@Shadow
 	public World world;
-	
+
 	@Inject(method = "isInvulnerableTo", at = @At("RETURN"), cancellable = true)
 	private void isInvulnerableTo(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!callbackInfo.getReturnValue() && !world.isClient && (Object) this instanceof MobEntity mob) {
 			if (source.getAttacker() instanceof LivingEntity living) {
 				if (living.getUuid().equals(BWComponents.MINION_COMPONENT.get(mob).getMaster())) {
 					callbackInfo.setReturnValue(true);
-				}
-				else if (living instanceof MobEntity mobAttacker && getUuid().equals(BWComponents.MINION_COMPONENT.get(mobAttacker).getMaster())) {
+				} else if (living instanceof MobEntity mobAttacker && getUuid().equals(BWComponents.MINION_COMPONENT.get(mobAttacker).getMaster())) {
 					callbackInfo.setReturnValue(true);
 				}
 			}

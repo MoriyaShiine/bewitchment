@@ -17,13 +17,13 @@ public class RitualCircleComponent implements ICustomComponent {
 	final transient Identifier[] circles = new Identifier[2];
 	IVariable inner;
 	IVariable outer;
-	
+
 	@Override
 	public void build(int componentX, int componentY, int pageNum) {
 		this.x = componentX;
 		this.y = componentY;
 	}
-	
+
 	@Override
 	public void render(MatrixStack ms, @NotNull IComponentRenderContext context, float pticks, int mouseX, int mouseY) {
 		ms.push();
@@ -38,7 +38,7 @@ public class RitualCircleComponent implements ICustomComponent {
 		DrawableHelper.drawTexture(ms, 0, 0, 4, 4, 7, 7, 16, 16);
 		ms.pop();
 	}
-	
+
 	@Override
 	public void onVariablesAvailable(UnaryOperator<IVariable> lookup) {
 		circles[0] = new Identifier(Bewitchment.MODID, "textures/gui/patchouli/chalk/" + lookup.apply(inner).asString() + ".png");

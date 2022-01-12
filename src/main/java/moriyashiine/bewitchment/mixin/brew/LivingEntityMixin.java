@@ -33,23 +33,23 @@ public abstract class LivingEntityMixin extends Entity {
 	@Shadow
 	@Nullable
 	public abstract StatusEffectInstance getStatusEffect(StatusEffect effect);
-	
+
 	@Shadow
 	public abstract boolean hasStatusEffect(StatusEffect effect);
-	
+
 	@Shadow
 	public abstract boolean removeStatusEffect(StatusEffect type);
-	
+
 	@Shadow
 	public abstract void heal(float amount);
-	
+
 	@Shadow
 	public int hurtTime;
-	
+
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
-	
+
 	@ModifyVariable(method = "damage", at = @At("HEAD"), argsOnly = true)
 	private DamageSource modifyDamage0(DamageSource source) {
 		if (!world.isClient) {
@@ -60,7 +60,7 @@ public abstract class LivingEntityMixin extends Entity {
 		}
 		return source;
 	}
-	
+
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage1(float amount, DamageSource source) {
 		if (!world.isClient) {
@@ -81,7 +81,7 @@ public abstract class LivingEntityMixin extends Entity {
 		}
 		return amount;
 	}
-	
+
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
@@ -91,8 +91,7 @@ public abstract class LivingEntityMixin extends Entity {
 				Vec3d velocity = directSource.getVelocity();
 				directSource.setVelocity(velocity.getX() * 2 * amplifier, velocity.getY() * 2 * amplifier, velocity.getZ() * 2 * amplifier);
 				callbackInfo.setReturnValue(false);
-			}
-			else if (amount > 0 && hurtTime == 0) {
+			} else if (amount > 0 && hurtTime == 0) {
 				if (!hasStatusEffect(StatusEffects.STRENGTH) && !hasStatusEffect(StatusEffects.REGENERATION) && !hasStatusEffect(StatusEffects.RESISTANCE) && directSource instanceof LivingEntity livingSource && livingSource.hasStatusEffect(BWStatusEffects.LEECHING)) {
 					livingSource.heal(amount * (livingSource.getStatusEffect(BWStatusEffects.LEECHING).getAmplifier() + 1) / 8);
 				}
@@ -113,14 +112,14 @@ public abstract class LivingEntityMixin extends Entity {
 			}
 		}
 	}
-	
+
 	@Inject(method = "canBreatheInWater", at = @At("RETURN"), cancellable = true)
 	private void canBreatheInWater(CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!callbackInfo.getReturnValue() && !world.isClient && hasStatusEffect(BWStatusEffects.GILLS)) {
 			callbackInfo.setReturnValue(true);
 		}
 	}
-	
+
 	@Inject(method = "isClimbing", at = @At("RETURN"), cancellable = true)
 	private void isClimbing(CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!callbackInfo.getReturnValue() && hasStatusEffect(BWStatusEffects.CLIMBING) && horizontalCollision) {

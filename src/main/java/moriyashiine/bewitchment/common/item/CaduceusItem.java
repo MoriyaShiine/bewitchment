@@ -23,12 +23,12 @@ public class CaduceusItem extends MiningToolItem {
 	public CaduceusItem(float attackDamage, float attackSpeed, ToolMaterial material, Tag<Block> effectiveBlocks, Settings settings) {
 		super(attackDamage, attackSpeed, material, effectiveBlocks, settings);
 	}
-	
+
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		return ItemUsage.consumeHeldItem(world, user, hand);
 	}
-	
+
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (user instanceof PlayerEntity player) {
@@ -44,22 +44,22 @@ public class CaduceusItem extends MiningToolItem {
 		}
 		return stack;
 	}
-	
+
 	@Override
 	public UseAction getUseAction(ItemStack stack) {
 		return UseAction.BOW;
 	}
-	
+
 	@Override
 	public int getMaxUseTime(ItemStack stack) {
 		return 24;
 	}
-	
+
 	@Override
 	public boolean isSuitableFor(BlockState state) {
 		return true;
 	}
-	
+
 	@Override
 	public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
 		return miningSpeed * 0.75f;

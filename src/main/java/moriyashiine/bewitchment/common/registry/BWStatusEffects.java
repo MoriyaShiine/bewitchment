@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class BWStatusEffects {
 	private static final Map<StatusEffect, Identifier> STATUS_EFFECTS = new LinkedHashMap<>();
-	
+
 	public static final StatusEffect CLIMBING = create("climbing", new EmptyStatusEffect(StatusEffectCategory.BENEFICIAL, 0x605448));
 	public static final StatusEffect CORROSION = create("corrosion", new EmptyStatusEffect(StatusEffectCategory.HARMFUL, 0x6fc536).addAttributeModifier(EntityAttributes.GENERIC_ARMOR, "5b5df91d-001a-464f-a773-ab4ccd62e09f", -3, EntityAttributeModifier.Operation.ADDITION));
 	public static final StatusEffect CORRUPTION = create("corruption", new CorruptionStatusEffect(StatusEffectCategory.HARMFUL, 0x600000));
@@ -42,12 +42,12 @@ public class BWStatusEffects {
 	public static final StatusEffect VOLATILITY = create("volatility", new EmptyStatusEffect(StatusEffectCategory.HARMFUL, 0xb76b00));
 	public static final StatusEffect WEBBED = create("webbed", new WebbedStatusEffect(StatusEffectCategory.HARMFUL, 0x2d312f));
 	public static final StatusEffect WEDNESDAY = create("wednesday", new WednesdayStatusEffect(StatusEffectCategory.BENEFICIAL, 0x00ff00));
-	
+
 	private static <T extends StatusEffect> T create(String name, T effect) {
 		STATUS_EFFECTS.put(effect, new Identifier(Bewitchment.MODID, name));
 		return effect;
 	}
-	
+
 	public static void init() {
 		STATUS_EFFECTS.keySet().forEach(effect -> Registry.register(Registry.STATUS_EFFECT, STATUS_EFFECTS.get(effect), effect));
 	}

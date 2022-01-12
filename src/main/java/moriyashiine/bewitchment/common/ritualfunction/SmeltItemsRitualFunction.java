@@ -23,7 +23,7 @@ public class SmeltItemsRitualFunction extends RitualFunction {
 	public SmeltItemsRitualFunction(ParticleType<?> startParticle, Predicate<LivingEntity> sacrifice) {
 		super(startParticle, sacrifice);
 	}
-	
+
 	@Override
 	public void tick(World world, BlockPos glyphPos, BlockPos effectivePos, boolean catFamiliar) {
 		int radius = catFamiliar ? 9 : 3;
@@ -44,8 +44,7 @@ public class SmeltItemsRitualFunction extends RitualFunction {
 					}
 				}
 			}
-		}
-		else {
+		} else {
 			world.addParticle(ParticleTypes.FLAME, effectivePos.getX() + MathHelper.nextDouble(world.random, -radius, radius), effectivePos.getY() + 0.5, effectivePos.getZ() + MathHelper.nextDouble(world.random, -radius, radius), 0, 0, 0);
 		}
 	}

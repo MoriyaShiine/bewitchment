@@ -15,7 +15,7 @@ public class ZephyrHarnessItem extends TrinketItem {
 	public ZephyrHarnessItem(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Override
 	public Multimap<EntityAttribute, EntityAttributeModifier> getModifiers(ItemStack stack, SlotReference slot, LivingEntity entity, UUID uuid) {
 		Multimap<EntityAttribute, EntityAttributeModifier> modifiers = super.getModifiers(stack, slot, entity, uuid);

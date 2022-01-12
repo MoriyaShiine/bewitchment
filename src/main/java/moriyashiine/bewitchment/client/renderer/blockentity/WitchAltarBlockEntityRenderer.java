@@ -38,13 +38,12 @@ public class WitchAltarBlockEntityRenderer implements BlockEntityRenderer<WitchA
 		renderStack(matrices, vertexConsumers, light, overlay, -0.25f, -0.25f, wand, direction);
 		matrices.pop();
 	}
-	
+
 	private void renderStack(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, float x, float z, ItemStack stack, Direction direction) {
 		if (BWTags.SKULLS.contains(stack.getItem())) {
 			matrices.translate(x, 0.125, z);
 			matrices.scale(0.5f, 0.5f, 0.5f);
-		}
-		else if (stack.getItem() instanceof BlockItem blockItem) {
+		} else if (stack.getItem() instanceof BlockItem blockItem) {
 			matrices.translate(x + 0.25, 0, z - 0.25);
 			matrices.scale(0.5f, 0.5f, 0.5f);
 			matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(-90));
@@ -57,8 +56,7 @@ public class WitchAltarBlockEntityRenderer implements BlockEntityRenderer<WitchA
 			}
 			MinecraftClient.getInstance().getBlockRenderManager().getModelRenderer().render(matrices.peek(), vertexConsumers.getBuffer(RenderLayers.getEntityBlockLayer(state, false)), state, MinecraftClient.getInstance().getBlockRenderManager().getModels().getModel(state), 1, 1, 1, light, overlay);
 			return;
-		}
-		else {
+		} else {
 			matrices.translate(x, 0.01, z);
 			matrices.scale(1 / 3f, 1 / 3f, 1 / 3f);
 			matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));

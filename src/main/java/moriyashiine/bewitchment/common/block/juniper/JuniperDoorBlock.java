@@ -24,25 +24,25 @@ public class JuniperDoorBlock extends TerraformDoorBlock implements BlockEntityP
 	public JuniperDoorBlock(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Nullable
 	@Override
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
 		return new TaglockHolderBlockEntity(pos, state);
 	}
-	
+
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		TaglockHolder.onUse(world, state.get(HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos, player);
 		return super.onUse(state, world, pos, player, hand, hit);
 	}
-	
+
 	@Override
 	public ActionResult onSpecialUse(BlockState state, World world, BlockPos pos, LivingEntity user, Hand hand) {
 		TaglockHolder.onUse(world, state.get(HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos, user);
 		return ActionResult.PASS;
 	}
-	
+
 	@Override
 	public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
 		super.onPlaced(world, pos, state, placer, itemStack);
@@ -54,7 +54,7 @@ public class JuniperDoorBlock extends TerraformDoorBlock implements BlockEntityP
 			blockEntity.markDirty();
 		}
 	}
-	
+
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!world.isClient && state.getBlock() != newState.getBlock() && world.getBlockEntity(pos) instanceof TaglockHolder taglockHolder) {

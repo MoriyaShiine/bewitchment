@@ -30,7 +30,7 @@ import java.util.function.Predicate;
 
 public class BWUtil {
 	public static final TradeOfferList EMPTY_TRADES = new TradeOfferList();
-	
+
 	public static Set<BlockPos> getBlockPoses(BlockPos origin, int radius, Predicate<BlockPos> provider) {
 		Set<BlockPos> blockPoses = new HashSet<>();
 		BlockPos.Mutable mutable = new BlockPos.Mutable();
@@ -45,7 +45,7 @@ public class BWUtil {
 		}
 		return blockPoses;
 	}
-	
+
 	public static BlockPos getClosestBlockPos(BlockPos origin, int radius, Predicate<BlockPos> provider) {
 		BlockPos pos = null;
 		for (BlockPos foundPos : getBlockPoses(origin, radius, provider)) {
@@ -55,7 +55,7 @@ public class BWUtil {
 		}
 		return pos;
 	}
-	
+
 	public static ActiveTargetGoal<LivingEntity> createGenericPledgeableTargetGoal(MobEntity entity) {
 		return new ActiveTargetGoal<>(entity, LivingEntity.class, 10, true, false, foundEntity -> {
 			if (foundEntity instanceof ArmorStandEntity) {
@@ -65,23 +65,22 @@ public class BWUtil {
 				if (BewitchmentAPI.isPledged(player, ((Pledgeable) entity).getPledgeID())) {
 					return false;
 				}
-			}
-			else if (foundEntity.getGroup() == BewitchmentAPI.DEMON) {
+			} else if (foundEntity.getGroup() == BewitchmentAPI.DEMON) {
 				return false;
 			}
 			return BWUtil.getArmorPieces(foundEntity, stack -> stack.getItem() instanceof ArmorItem armorItem && armorItem.getMaterial() == BWMaterials.BESMIRCHED_ARMOR) < 3;
 		});
 	}
-	
+
 	public static boolean isTool(ItemStack stack) {
 		Item item = stack.getItem();
 		return item instanceof ToolItem || item instanceof RangedWeaponItem || item instanceof ScepterItem || item instanceof ShieldItem || item instanceof TridentItem;
 	}
-	
+
 	public static boolean rejectTrades(LivingEntity merchant) {
 		return !merchant.world.getEntitiesByClass(PlayerEntity.class, new Box(merchant.getBlockPos()).expand(8), foundEntity -> merchant.canSee(foundEntity) && foundEntity.isAlive() && BWComponents.CURSES_COMPONENT.get(foundEntity).hasCurse(BWCurses.APATHY)).isEmpty();
 	}
-	
+
 	public static int getArmorPieces(LivingEntity livingEntity, Predicate<ItemStack> predicate) {
 		int amount = 0;
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
@@ -91,19 +90,17 @@ public class BWUtil {
 		}
 		return amount;
 	}
-	
+
 	public static void addItemToInventoryAndConsume(PlayerEntity player, Hand hand, ItemStack toAdd) {
 		boolean shouldAdd = false;
 		ItemStack stack = player.getStackInHand(hand);
 		if (stack.getCount() == 1) {
 			if (player.isCreative()) {
 				shouldAdd = true;
-			}
-			else {
+			} else {
 				player.setStackInHand(hand, toAdd);
 			}
-		}
-		else {
+		} else {
 			stack.decrement(1);
 			shouldAdd = true;
 		}
@@ -113,7 +110,7 @@ public class BWUtil {
 			}
 		}
 	}
-	
+
 	public static void attemptTeleport(Entity entity, BlockPos origin, int distance, boolean hasEffects) {
 		for (int i = 0; i < 32; i++) {
 			BlockPos.Mutable mutable = new BlockPos.Mutable(origin.getX() + MathHelper.nextDouble(entity.world.random, -distance, distance), origin.getY() + MathHelper.nextDouble(entity.world.random, -distance / 2f, distance / 2f), origin.getZ() + MathHelper.nextDouble(entity.world.random, -distance, distance));
@@ -128,7 +125,7 @@ public class BWUtil {
 			}
 		}
 	}
-	
+
 	public static void teleport(Entity entity, double x, double y, double z, boolean hasEffects) {
 		if (hasEffects) {
 			if (!entity.isSilent()) {
@@ -142,8 +139,7 @@ public class BWUtil {
 		if (entity instanceof LivingEntity livingEntity) {
 			if (entity instanceof PlayerEntity player) {
 				player.wakeUp(true, false);
-			}
-			else {
+			} else {
 				livingEntity.wakeUp();
 			}
 		}

@@ -20,7 +20,7 @@ public class PricklyBeltItem extends TrinketItem {
 	public PricklyBeltItem(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {

@@ -12,6 +12,6 @@ public interface OnTransformationSet {
 			listener.onTransformationSet(player, transformation);
 		}
 	});
-	
+
 	void onTransformationSet(PlayerEntity player, Transformation transformation);
 }

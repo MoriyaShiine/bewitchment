@@ -14,7 +14,7 @@ public class SentinelSigil extends Sigil {
 	public SentinelSigil(boolean active, int uses) {
 		super(active, uses);
 	}
-	
+
 	@Override
 	public ActionResult use(World world, BlockPos pos, LivingEntity user, Hand hand) {
 		boolean flag = true;

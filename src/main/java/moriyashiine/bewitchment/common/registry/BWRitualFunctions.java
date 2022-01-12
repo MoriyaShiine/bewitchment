@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class BWRitualFunctions {
 	private static final Map<RitualFunction, Identifier> RITUAL_FUNCTIONS = new LinkedHashMap<>();
-	
+
 	public static final RitualFunction TURN_TO_DAY = create("turn_to_day", new TurnToDayRitualFunction(ParticleTypes.FLAME, null));
 	public static final RitualFunction CLEANSE = create("cleanse", new CleanseRitualFunction(ParticleTypes.ITEM_SNOWBALL, null));
 	public static final RitualFunction PREVENT_DAMAGE = create("prevent_damage", new RitualFunction(ParticleTypes.CRIT, null));
@@ -32,21 +32,21 @@ public class BWRitualFunctions {
 	public static final RitualFunction SPAWN_LIGHTNING = create("spawn_lightning", new SpawnLightningRitualFunction(ParticleTypes.CLOUD, null));
 	public static final RitualFunction PUSH_MOBS = create("push_mobs", new PushMobsRitualFunction(ParticleTypes.CLOUD, null));
 	public static final RitualFunction HURRICANE = create("hurricane", new HurricaneRitualFunction(ParticleTypes.CLOUD, null));
-	
+
 	public static final RitualFunction BIND_FAMILIAR = create("bind_familiar", new BindFamiliarRitualFunction(ParticleTypes.PORTAL, null));
 	public static final RitualFunction UNBIND_FAMILIAR = create("unbind_familiar", new UnbindFamiliarRitualFunction(ParticleTypes.PORTAL, null));
 	public static final RitualFunction SUMMON_WITHER = create("summon_wither", new SummonWitherRitualFunction(ParticleTypes.FLAME, null));
 	public static final RitualFunction SUMMON_DEMON = create("summon_demon", new SummonDemonRitualFunction(ParticleTypes.FLAME, livingEntity -> BWTags.HAS_BLOOD.contains(livingEntity.getType())));
 	public static final RitualFunction SUMMON_LEONARD = create("summon_leonard", new SummonLeonardRitualFunction(ParticleTypes.FLAME, livingEntity -> livingEntity instanceof SheepEntity));
 	public static final RitualFunction SUMMON_BAPHOMET = create("summon_baphomet", new SummonBaphometRitualFunction(ParticleTypes.FLAME, livingEntity -> livingEntity instanceof SheepEntity));
-	
+
 	public static final RitualFunction WEDNESDAY = create("wednesday", new WednesdayRitualFunction(ParticleTypes.ITEM_SLIME, null));
-	
+
 	private static <T extends RitualFunction> T create(String name, T ritualFunction) {
 		RITUAL_FUNCTIONS.put(ritualFunction, new Identifier(Bewitchment.MODID, name));
 		return ritualFunction;
 	}
-	
+
 	public static void init() {
 		RITUAL_FUNCTIONS.keySet().forEach(contract -> Registry.register(BWRegistries.RITUAL_FUNCTIONS, RITUAL_FUNCTIONS.get(contract), contract));
 	}

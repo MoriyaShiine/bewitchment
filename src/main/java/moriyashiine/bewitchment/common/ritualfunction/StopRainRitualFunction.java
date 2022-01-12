@@ -13,17 +13,17 @@ public class StopRainRitualFunction extends RitualFunction {
 	public StopRainRitualFunction(ParticleType<?> startParticle, Predicate<LivingEntity> sacrifice) {
 		super(startParticle, sacrifice);
 	}
-	
+
 	@Override
 	public String getInvalidMessage() {
 		return "ritual.precondition.rain";
 	}
-	
+
 	@Override
 	public boolean isValid(ServerWorld world, BlockPos pos, Inventory inventory) {
 		return world.isRaining();
 	}
-	
+
 	@Override
 	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
 		world.setWeather(world.random.nextInt(6000) + (catFamiliar ? 18000 : 6000), 0, false, false);

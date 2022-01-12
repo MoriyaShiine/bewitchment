@@ -14,11 +14,11 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class RavenEntityRenderer extends MobEntityRenderer<RavenEntity, RavenEntityModel<RavenEntity>> {
 	private static Identifier[] TEXTURES;
-	
+
 	public RavenEntityRenderer(EntityRendererFactory.Context context) {
 		super(context, new RavenEntityModel<>(context.getPart(BewitchmentClient.RAVEN_MODEL_LAYER)), 0.3f);
 	}
-	
+
 	@Override
 	public Identifier getTexture(RavenEntity entity) {
 		if (TEXTURES == null) {

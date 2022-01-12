@@ -22,12 +22,12 @@ public class CauldronBubbleParticle extends SpriteBillboardParticle {
 		colorBlue = (float) velocityZ;
 		maxAge = (int) (4 / (Math.random() * 0.8 + 0.2));
 	}
-	
+
 	@Override
 	public ParticleTextureSheet getType() {
 		return ParticleTextureSheet.PARTICLE_SHEET_OPAQUE;
 	}
-	
+
 	@Override
 	public void tick() {
 		prevPosX = x;
@@ -35,8 +35,7 @@ public class CauldronBubbleParticle extends SpriteBillboardParticle {
 		prevPosZ = z;
 		if (maxAge-- <= 0) {
 			markDead();
-		}
-		else {
+		} else {
 			move(velocityX, velocityY, velocityZ);
 			velocityX *= 0.7;
 			velocityY *= 0.7;
@@ -46,15 +45,15 @@ public class CauldronBubbleParticle extends SpriteBillboardParticle {
 			}
 		}
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	public static class Factory implements ParticleFactory<DefaultParticleType> {
 		private final SpriteProvider spriteProvider;
-		
+
 		public Factory(SpriteProvider spriteProvider) {
 			this.spriteProvider = spriteProvider;
 		}
-		
+
 		@Override
 		public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ) {
 			CauldronBubbleParticle particle = new CauldronBubbleParticle(clientWorld, posX, posY, posZ, velocityX, velocityY, velocityZ);

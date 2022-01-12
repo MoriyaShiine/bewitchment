@@ -11,18 +11,18 @@ import net.minecraft.util.Identifier;
 public class FortuneComponent implements ServerTickingComponent {
 	private final PlayerEntity obj;
 	private Fortune.Instance fortune = null;
-	
+
 	public FortuneComponent(PlayerEntity obj) {
 		this.obj = obj;
 	}
-	
+
 	@Override
 	public void readFromNbt(NbtCompound tag) {
 		if (tag.contains("Fortune")) {
 			setFortune(new Fortune.Instance(BWRegistries.FORTUNES.get(new Identifier(tag.getString("Fortune"))), tag.getInt("FortuneDuration")));
 		}
 	}
-	
+
 	@SuppressWarnings({"ConstantConditions", "NullableProblems"})
 	@Override
 	public void writeToNbt(NbtCompound tag) {
@@ -31,31 +31,29 @@ public class FortuneComponent implements ServerTickingComponent {
 			tag.putInt("FortuneDuration", getFortune().duration);
 		}
 	}
-	
+
 	@Override
 	public void serverTick() {
 		if (getFortune() != null) {
 			if (getFortune().fortune.tick((ServerWorld) obj.world, obj)) {
 				getFortune().duration = 0;
-			}
-			else {
+			} else {
 				getFortune().duration--;
 			}
 			if (getFortune().duration <= 0) {
 				if (getFortune().fortune.finish((ServerWorld) obj.world, obj)) {
 					setFortune(null);
-				}
-				else {
+				} else {
 					getFortune().duration = obj.getRandom().nextInt(120000);
 				}
 			}
 		}
 	}
-	
+
 	public Fortune.Instance getFortune() {
 		return fortune;
 	}
-	
+
 	public void setFortune(Fortune.Instance fortune) {
 		this.fortune = fortune;
 	}

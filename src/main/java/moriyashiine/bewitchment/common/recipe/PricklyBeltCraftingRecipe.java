@@ -19,7 +19,7 @@ public class PricklyBeltCraftingRecipe extends SpecialCraftingRecipe {
 	public PricklyBeltCraftingRecipe(Identifier id) {
 		super(id);
 	}
-	
+
 	@Override
 	public boolean matches(CraftingInventory inv, World world) {
 		boolean foundPricklyBelt = false, foundPotion = false;
@@ -31,8 +31,7 @@ public class PricklyBeltCraftingRecipe extends SpecialCraftingRecipe {
 					foundPricklyBelt = true;
 				}
 				foundItems++;
-			}
-			else if (stack.getItem() == Items.POTION && (!PotionUtil.getPotionEffects(stack).isEmpty() || !PotionUtil.getCustomPotionEffects(stack).isEmpty())) {
+			} else if (stack.getItem() == Items.POTION && (!PotionUtil.getPotionEffects(stack).isEmpty() || !PotionUtil.getCustomPotionEffects(stack).isEmpty())) {
 				if (!foundPotion) {
 					foundPotion = true;
 				}
@@ -41,7 +40,7 @@ public class PricklyBeltCraftingRecipe extends SpecialCraftingRecipe {
 		}
 		return foundPricklyBelt && foundPotion && foundItems == 2;
 	}
-	
+
 	@Override
 	public ItemStack craft(CraftingInventory inv) {
 		ItemStack pricklyBelt = null, potion = null;
@@ -49,8 +48,7 @@ public class PricklyBeltCraftingRecipe extends SpecialCraftingRecipe {
 			ItemStack stack = inv.getStack(i);
 			if (stack.getItem() instanceof PricklyBeltItem) {
 				pricklyBelt = stack.copy();
-			}
-			else if (stack.getItem() == Items.POTION) {
+			} else if (stack.getItem() == Items.POTION) {
 				potion = stack.copy();
 			}
 		}
@@ -78,12 +76,12 @@ public class PricklyBeltCraftingRecipe extends SpecialCraftingRecipe {
 		pricklyBelt.getOrCreateNbt().putInt("PotionUses", uses);
 		return pricklyBelt;
 	}
-	
+
 	@Override
 	public boolean fits(int width, int height) {
 		return true;
 	}
-	
+
 	@Override
 	public RecipeSerializer<?> getSerializer() {
 		return BWRecipeTypes.PRICKLY_BELT_CRAFTING_SERIALIZER;

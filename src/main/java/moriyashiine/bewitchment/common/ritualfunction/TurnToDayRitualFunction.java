@@ -13,17 +13,17 @@ public class TurnToDayRitualFunction extends RitualFunction {
 	public TurnToDayRitualFunction(ParticleType<?> startParticle, Predicate<LivingEntity> sacrifice) {
 		super(startParticle, sacrifice);
 	}
-	
+
 	@Override
 	public String getInvalidMessage() {
 		return "ritual.precondition.night";
 	}
-	
+
 	@Override
 	public boolean isValid(ServerWorld world, BlockPos pos, Inventory inventory) {
 		return world.isNight();
 	}
-	
+
 	@Override
 	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
 		while (world.getTimeOfDay() % 24000 != 0) {

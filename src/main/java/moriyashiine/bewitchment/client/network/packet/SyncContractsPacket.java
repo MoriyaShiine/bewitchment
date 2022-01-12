@@ -20,7 +20,7 @@ import net.minecraft.util.Identifier;
 @SuppressWarnings({"ConstantConditions", "Convert2Lambda"})
 public class SyncContractsPacket {
 	public static final Identifier ID = new Identifier(Bewitchment.MODID, "sync_contracts");
-	
+
 	public static void send(PlayerEntity player) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		NbtCompound contracts = new NbtCompound();
@@ -28,7 +28,7 @@ public class SyncContractsPacket {
 		buf.writeNbt(contracts);
 		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
 	}
-	
+
 	public static void handle(MinecraftClient client, ClientPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
 		NbtCompound contractsCompound = buf.readNbt();
 		client.execute(new Runnable() {

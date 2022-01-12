@@ -20,7 +20,7 @@ public abstract class EntityMixin {
 		}
 		return pose;
 	}
-	
+
 	@Inject(method = "isFireImmune", at = @At("RETURN"), cancellable = true)
 	private void isFireImmune(CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (callbackInfo.getReturnValue() && BewitchmentAPI.isVampire((Entity) (Object) this, true)) {

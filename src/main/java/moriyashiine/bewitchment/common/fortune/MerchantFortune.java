@@ -13,7 +13,7 @@ public class MerchantFortune extends Fortune {
 	public MerchantFortune(boolean positive) {
 		super(positive);
 	}
-	
+
 	@Override
 	public boolean finish(ServerWorld world, PlayerEntity target) {
 		WanderingTraderEntity entity = EntityType.WANDERING_TRADER.create(world);

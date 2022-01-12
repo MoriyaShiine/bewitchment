@@ -19,11 +19,11 @@ import java.util.function.Supplier;
 public abstract class ServerWorldMixin extends World {
 	@Shadow
 	public abstract void setTimeOfDay(long timeOfDay);
-	
+
 	protected ServerWorldMixin(MutableWorldProperties properties, RegistryKey<World> registryRef, DimensionType dimensionType, Supplier<Profiler> profiler, boolean isClient, boolean debugWorld, long seed) {
 		super(properties, registryRef, dimensionType, profiler, isClient, debugWorld, seed);
 	}
-	
+
 	@Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;setTimeOfDay(J)V", shift = At.Shift.AFTER))
 	public void changeCoffinWakeTime(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
 		if (isDay()) {

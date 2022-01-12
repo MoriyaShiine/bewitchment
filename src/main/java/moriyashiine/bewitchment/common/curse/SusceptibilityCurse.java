@@ -10,7 +10,7 @@ public class SusceptibilityCurse extends Curse {
 	public SusceptibilityCurse(Type type) {
 		super(type);
 	}
-	
+
 	@Override
 	public void tick(LivingEntity target) {
 		target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 19, 1, true, false));

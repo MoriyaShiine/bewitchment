@@ -10,5 +10,5 @@ import net.minecraft.util.Identifier;
 public class BWScreenHandlers {
 	public static final ScreenHandlerType<DemonScreenHandler> DEMON_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(new Identifier(Bewitchment.MODID, "demon_screen"), (syncId, inventory) -> new DemonScreenHandler(syncId));
 	public static final ScreenHandlerType<DemonScreenHandler> BAPHOMET_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(new Identifier(Bewitchment.MODID, "baphomet_screen"), (syncId, inventory) -> new BaphometScreenHandler(syncId));
-	
+
 }

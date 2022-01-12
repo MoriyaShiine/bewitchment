@@ -33,7 +33,7 @@ public class ScepterItem extends Item {
 	public ScepterItem(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		if (!PotionUtil.getCustomPotionEffects(user.getStackInHand(hand)).isEmpty()) {
@@ -41,12 +41,12 @@ public class ScepterItem extends Item {
 		}
 		return TypedActionResult.fail(user.getStackInHand(hand));
 	}
-	
+
 	@Override
 	public boolean canRepair(ItemStack stack, ItemStack ingredient) {
 		return ingredient.getItem().equals(Items.NETHERITE_INGOT);
 	}
-	
+
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (user instanceof PlayerEntity player) {
@@ -72,24 +72,24 @@ public class ScepterItem extends Item {
 						}
 						stack.getOrCreateNbt().put("CustomPotionEffects", new NbtList());
 					}
-					
+
 					stack.damage(1, user, stackUser -> stackUser.sendToolBreakStatus(user.getActiveHand()));
 				}
 			}
 		}
 		return stack;
 	}
-	
+
 	@Override
 	public UseAction getUseAction(ItemStack stack) {
 		return !PotionUtil.getCustomPotionEffects(stack).isEmpty() ? UseAction.BOW : UseAction.NONE;
 	}
-	
+
 	@Override
 	public int getMaxUseTime(ItemStack stack) {
 		return 16;
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {

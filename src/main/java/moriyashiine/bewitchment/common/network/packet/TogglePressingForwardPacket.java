@@ -15,13 +15,13 @@ import net.minecraft.util.Identifier;
 
 public class TogglePressingForwardPacket {
 	public static final Identifier ID = new Identifier(Bewitchment.MODID, "toggle_pressing_forward");
-	
+
 	public static void send(boolean pressingForward) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		buf.writeBoolean(pressingForward);
 		ClientPlayNetworking.send(ID, buf);
 	}
-	
+
 	public static void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
 		boolean pressingForward = buf.readBoolean();
 		server.execute(() -> {

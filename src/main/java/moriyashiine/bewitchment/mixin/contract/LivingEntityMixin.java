@@ -20,11 +20,11 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 public abstract class LivingEntityMixin extends Entity {
 	@Shadow
 	public abstract boolean addStatusEffect(StatusEffectInstance effect);
-	
+
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
-	
+
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage(float amount, DamageSource source) {
 		if (!world.isClient) {

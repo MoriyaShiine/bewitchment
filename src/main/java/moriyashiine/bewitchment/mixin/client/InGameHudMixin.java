@@ -32,20 +32,20 @@ public abstract class InGameHudMixin extends DrawableHelper {
 	private static final Identifier BEWITCHMENT_GUI_ICONS_TEXTURE = new Identifier(Bewitchment.MODID, "textures/gui/icons.png");
 	@Unique
 	private static final Identifier EMPTY_TEXTURE = new Identifier(Bewitchment.MODID, "textures/gui/empty.png");
-	
+
 	@Shadow
 	protected abstract PlayerEntity getCameraPlayer();
-	
+
 	@Shadow
 	private int scaledHeight;
-	
+
 	@Shadow
 	private int scaledWidth;
-	
+
 	@Shadow
 	@Final
 	private MinecraftClient client;
-	
+
 	@Inject(method = "renderStatusBars", at = @At(value = "INVOKE", shift = At.Shift.AFTER, ordinal = 2, target = "Lnet/minecraft/client/MinecraftClient;getProfiler()Lnet/minecraft/util/profiler/Profiler;"))
 	private void renderPre(MatrixStack matrices, CallbackInfo callbackInfo) {
 		PlayerEntity player = getCameraPlayer();
@@ -69,7 +69,7 @@ public abstract class InGameHudMixin extends DrawableHelper {
 			RenderSystem.setShaderTexture(0, EMPTY_TEXTURE);
 		}
 	}
-	
+
 	@Inject(method = "renderStatusBars", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 3, target = "Lnet/minecraft/client/MinecraftClient;getProfiler()Lnet/minecraft/util/profiler/Profiler;"))
 	private void renderPost(MatrixStack matrices, CallbackInfo callbackInfo) {
 		PlayerEntity player = getCameraPlayer();
@@ -77,7 +77,7 @@ public abstract class InGameHudMixin extends DrawableHelper {
 			RenderSystem.setShaderTexture(0, GUI_ICONS_TEXTURE);
 		}
 	}
-	
+
 	private void drawBlood(MatrixStack matrices, LivingEntity entity, int x, int y, int droplets) {
 		BWComponents.BLOOD_COMPONENT.maybeGet(entity).ifPresent(bloodComponent -> {
 			int v = entity.hasStatusEffect(StatusEffects.HUNGER) ? 9 : 0;

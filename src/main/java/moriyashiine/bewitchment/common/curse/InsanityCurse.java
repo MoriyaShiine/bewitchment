@@ -18,7 +18,7 @@ public class InsanityCurse extends Curse {
 	public InsanityCurse(Type type) {
 		super(type);
 	}
-	
+
 	@Override
 	public void tick(LivingEntity target) {
 		if (target.age % 20 == 0 && target.getRandom().nextFloat() < 1 / 100f) {

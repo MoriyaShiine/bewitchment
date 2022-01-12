@@ -30,15 +30,15 @@ import org.jetbrains.annotations.Nullable;
 @SuppressWarnings("ConstantConditions")
 public class WerewolfEntity extends BWHostileEntity {
 	public NbtCompound storedVillager;
-	
+
 	public WerewolfEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 	}
-	
+
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 20).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 15).add(EntityAttributes.GENERIC_ARMOR, 20).add(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, 8).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.4).add(ReachEntityAttributes.ATTACK_RANGE, 1).add(StepHeightEntityAttributeMain.STEP_HEIGHT, 1);
 	}
-	
+
 	@Override
 	public void tick() {
 		super.tick();
@@ -72,38 +72,38 @@ public class WerewolfEntity extends BWHostileEntity {
 			}
 		}
 	}
-	
+
 	@Override
 	protected boolean hasShiny() {
 		return true;
 	}
-	
+
 	@Override
 	public int getVariants() {
 		return getVariantsStatic();
 	}
-	
+
 	@Override
 	public EntityGroup getGroup() {
 		return BewitchmentAPI.DEMON;
 	}
-	
+
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return BWSoundEvents.ENTITY_WEREWOLF_AMBIENT;
 	}
-	
+
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return BWSoundEvents.ENTITY_WEREWOLF_HURT;
 	}
-	
+
 	@Override
 	protected SoundEvent getDeathSound() {
 		return BWSoundEvents.ENTITY_WEREWOLF_DEATH;
 	}
-	
+
 	@Override
 	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityTag) {
 		EntityData data = super.initialize(world, difficulty, spawnReason, entityData, entityTag);
@@ -120,7 +120,7 @@ public class WerewolfEntity extends BWHostileEntity {
 		}
 		return data;
 	}
-	
+
 	@Override
 	public void readCustomDataFromNbt(NbtCompound nbt) {
 		super.readCustomDataFromNbt(nbt);
@@ -128,7 +128,7 @@ public class WerewolfEntity extends BWHostileEntity {
 			storedVillager = nbt.getCompound("StoredVillager");
 		}
 	}
-	
+
 	@Override
 	public void writeCustomDataToNbt(NbtCompound nbt) {
 		super.writeCustomDataToNbt(nbt);
@@ -136,7 +136,7 @@ public class WerewolfEntity extends BWHostileEntity {
 			nbt.put("StoredVillager", storedVillager);
 		}
 	}
-	
+
 	@Override
 	protected void initGoals() {
 		goalSelector.add(0, new SwimGoal(this));
@@ -147,7 +147,7 @@ public class WerewolfEntity extends BWHostileEntity {
 		targetSelector.add(0, new RevengeGoal(this));
 		targetSelector.add(1, new ActiveTargetGoal<>(this, LivingEntity.class, 10, true, false, entity -> entity instanceof PlayerEntity || entity instanceof SheepEntity || entity instanceof MerchantEntity || entity.getGroup() == EntityGroup.ILLAGER));
 	}
-	
+
 	public static int getVariantsStatic() {
 		return 7;
 	}

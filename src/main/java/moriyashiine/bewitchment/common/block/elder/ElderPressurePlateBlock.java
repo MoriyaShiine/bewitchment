@@ -22,13 +22,13 @@ public class ElderPressurePlateBlock extends TerraformPressurePlateBlock impleme
 	public ElderPressurePlateBlock(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Nullable
 	@Override
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
 		return new LockableBlockEntity(pos, state);
 	}
-	
+
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		ActionResult result = Lockable.onUse(world, pos, player, hand);
@@ -37,7 +37,7 @@ public class ElderPressurePlateBlock extends TerraformPressurePlateBlock impleme
 		}
 		return super.onUse(state, world, pos, player, hand, hit);
 	}
-	
+
 	@Override
 	public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
 		super.onPlaced(world, pos, state, placer, itemStack);
@@ -49,7 +49,7 @@ public class ElderPressurePlateBlock extends TerraformPressurePlateBlock impleme
 			blockEntity.markDirty();
 		}
 	}
-	
+
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (entity != null) {

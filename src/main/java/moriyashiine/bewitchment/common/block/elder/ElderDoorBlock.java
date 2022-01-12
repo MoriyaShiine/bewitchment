@@ -24,13 +24,13 @@ public class ElderDoorBlock extends TerraformDoorBlock implements BlockEntityPro
 	public ElderDoorBlock(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Nullable
 	@Override
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
 		return new LockableBlockEntity(pos, state);
 	}
-	
+
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		ActionResult result = onSpecialUse(state, world, pos, player, hand);
@@ -39,12 +39,12 @@ public class ElderDoorBlock extends TerraformDoorBlock implements BlockEntityPro
 		}
 		return super.onUse(state, world, pos, player, hand, hit);
 	}
-	
+
 	@Override
 	public ActionResult onSpecialUse(BlockState state, World world, BlockPos pos, LivingEntity user, Hand hand) {
 		return Lockable.onUse(world, state.get(HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos, user, hand);
 	}
-	
+
 	@Override
 	public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
 		super.onPlaced(world, pos, state, placer, itemStack);
@@ -56,7 +56,7 @@ public class ElderDoorBlock extends TerraformDoorBlock implements BlockEntityPro
 			blockEntity.markDirty();
 		}
 	}
-	
+
 	@Override
 	public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
 		BlockEntity blockEntity = world.getBlockEntity(state.get(HALF) == DoubleBlockHalf.UPPER ? pos.down() : pos);
@@ -65,6 +65,6 @@ public class ElderDoorBlock extends TerraformDoorBlock implements BlockEntityPro
 		}
 		super.neighborUpdate(state, world, pos, block, fromPos, notify);
 	}
-	
-	
+
+
 }

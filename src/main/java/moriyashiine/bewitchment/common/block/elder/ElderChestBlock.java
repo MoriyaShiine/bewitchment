@@ -26,13 +26,13 @@ public class ElderChestBlock extends BWChestBlock {
 	public ElderChestBlock(Settings settings, Supplier<BlockEntityType<? extends ChestBlockEntity>> supplier, boolean trapped) {
 		super(settings, supplier, trapped);
 	}
-	
+
 	@Nullable
 	@Override
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
 		return new ElderChestBlockEntity(BWBlockEntityTypes.ELDER_CHEST, pos, state, BWChestBlockEntity.Type.ELDER, trapped);
 	}
-	
+
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		ActionResult result = Lockable.onUse(world, pos, player, hand);
@@ -41,7 +41,7 @@ public class ElderChestBlock extends BWChestBlock {
 		}
 		return super.onUse(state, world, pos, player, hand, hit);
 	}
-	
+
 	@Override
 	public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
 		super.onPlaced(world, pos, state, placer, itemStack);

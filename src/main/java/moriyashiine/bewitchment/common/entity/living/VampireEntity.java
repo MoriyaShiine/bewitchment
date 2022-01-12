@@ -24,17 +24,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class VampireEntity extends BWHostileEntity {
 	public static final TrackedData<Boolean> HAS_TARGET = DataTracker.registerData(VampireEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-	
+
 	private boolean onFireFromSun = false;
-	
+
 	public VampireEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 	}
-	
+
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 20).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5).add(EntityAttributes.GENERIC_ARMOR, 8).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.35);
 	}
-	
+
 	@Override
 	public void tick() {
 		super.tick();
@@ -53,67 +53,67 @@ public class VampireEntity extends BWHostileEntity {
 			}
 		}
 	}
-	
+
 	@Override
 	protected boolean hasShiny() {
 		return true;
 	}
-	
+
 	@Override
 	public int getVariants() {
 		return 2;
 	}
-	
+
 	@Override
 	public EntityGroup getGroup() {
 		return EntityGroup.UNDEAD;
 	}
-	
+
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return BWSoundEvents.ENTITY_VAMPIRE_AMBIENT;
 	}
-	
+
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return BWSoundEvents.ENTITY_VAMPIRE_HURT;
 	}
-	
+
 	@Override
 	protected SoundEvent getDeathSound() {
 		return BWSoundEvents.ENTITY_VAMPIRE_DEATH;
 	}
-	
+
 	@Override
 	protected boolean shouldDropLoot() {
 		return super.shouldDropLoot() && !onFireFromSun;
 	}
-	
+
 	@Override
 	public void setTarget(@Nullable LivingEntity target) {
 		super.setTarget(target);
 		dataTracker.set(HAS_TARGET, target != null);
 	}
-	
+
 	@Override
 	public void readCustomDataFromNbt(NbtCompound nbt) {
 		super.readCustomDataFromNbt(nbt);
 		onFireFromSun = nbt.getBoolean("OnFireFromSun");
 	}
-	
+
 	@Override
 	public void writeCustomDataToNbt(NbtCompound nbt) {
 		super.writeCustomDataToNbt(nbt);
 		nbt.putBoolean("OnFireFromSun", onFireFromSun);
 	}
-	
+
 	@Override
 	protected void initDataTracker() {
 		super.initDataTracker();
 		dataTracker.startTracking(HAS_TARGET, false);
 	}
-	
+
 	@Override
 	protected void initGoals() {
 		goalSelector.add(0, new SwimGoal(this));

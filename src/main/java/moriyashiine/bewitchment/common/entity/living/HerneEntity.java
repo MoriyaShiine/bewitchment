@@ -46,10 +46,10 @@ import java.util.UUID;
 
 public class HerneEntity extends BWHostileEntity implements Pledgeable {
 	private final ServerBossBar bossBar;
-	
+
 	private final Set<UUID> pledgedPlayerUUIDS = new HashSet<>();
 	private int timeSinceLastAttack = 0;
-	
+
 	public HerneEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 		bossBar = new ServerBossBar(getDisplayName(), BossBar.Color.RED, BossBar.Style.PROGRESS);
@@ -57,11 +57,11 @@ public class HerneEntity extends BWHostileEntity implements Pledgeable {
 		setPathfindingPenalty(PathNodeType.DAMAGE_FIRE, 0);
 		experiencePoints = 75;
 	}
-	
+
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 500).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 24).add(EntityAttributes.GENERIC_ARMOR, 10).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 32);
 	}
-	
+
 	@Override
 	public void tick() {
 		super.tick();
@@ -86,8 +86,7 @@ public class HerneEntity extends BWHostileEntity implements Pledgeable {
 				if (timer % 600 == 0) {
 					summonMinions(this);
 				}
-			}
-			else {
+			} else {
 				if (getY() > -64) {
 					heal(8);
 				}
@@ -95,68 +94,68 @@ public class HerneEntity extends BWHostileEntity implements Pledgeable {
 			}
 		}
 	}
-	
+
 	@Override
 	public String getPledgeID() {
 		return BWPledges.HERNE;
 	}
-	
+
 	@Override
 	public Collection<UUID> getPledgedPlayerUUIDs() {
 		return pledgedPlayerUUIDS;
 	}
-	
+
 	@Override
 	public EntityType<?> getMinionType() {
 		return BWEntityTypes.WEREWOLF;
 	}
-	
+
 	@Override
 	public Collection<StatusEffectInstance> getMinionBuffs() {
 		return Sets.newHashSet(new StatusEffectInstance(StatusEffects.STRENGTH, Integer.MAX_VALUE, 1), new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE, 1), new StatusEffectInstance(BWStatusEffects.HARDENING, Integer.MAX_VALUE, 1));
 	}
-	
+
 	@Override
 	public int getTimeSinceLastAttack() {
 		return timeSinceLastAttack;
 	}
-	
+
 	@Override
 	public void setTimeSinceLastAttack(int timeSinceLastAttack) {
 		this.timeSinceLastAttack = timeSinceLastAttack;
 	}
-	
+
 	@Override
 	protected boolean hasShiny() {
 		return false;
 	}
-	
+
 	@Override
 	public int getVariants() {
 		return 1;
 	}
-	
+
 	@Override
 	public EntityGroup getGroup() {
 		return BewitchmentAPI.DEMON;
 	}
-	
+
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return BWSoundEvents.ENTITY_HERNE_AMBIENT;
 	}
-	
+
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return BWSoundEvents.ENTITY_HERNE_HURT;
 	}
-	
+
 	@Override
 	protected SoundEvent getDeathSound() {
 		return BWSoundEvents.ENTITY_HERNE_DEATH;
 	}
-	
+
 	@Override
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
 		if (isAlive() && getTarget() == null && BewitchmentAPI.isWerewolf(player, true)) {
@@ -184,32 +183,32 @@ public class HerneEntity extends BWHostileEntity implements Pledgeable {
 		}
 		return super.interactMob(player, hand);
 	}
-	
+
 	@Override
 	public boolean canBeLeashedBy(PlayerEntity player) {
 		return false;
 	}
-	
+
 	@Override
 	protected boolean canStartRiding(Entity entity) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean canHaveStatusEffect(StatusEffectInstance effect) {
 		return effect.getEffectType().getCategory() == StatusEffectCategory.BENEFICIAL;
 	}
-	
+
 	@Override
 	public boolean isAffectedBySplashPotions() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean cannotDespawn() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean tryAttack(Entity target) {
 		boolean flag = super.tryAttack(target);
@@ -221,16 +220,16 @@ public class HerneEntity extends BWHostileEntity implements Pledgeable {
 		}
 		return flag;
 	}
-	
+
 	@Override
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
 		return false;
 	}
-	
+
 	@Override
 	protected void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition) {
 	}
-	
+
 	@Override
 	public void setTarget(@Nullable LivingEntity target) {
 		if (world.isDay()) {
@@ -238,25 +237,25 @@ public class HerneEntity extends BWHostileEntity implements Pledgeable {
 		}
 		super.setTarget(target);
 	}
-	
+
 	@Override
 	public void setCustomName(@Nullable Text name) {
 		super.setCustomName(name);
 		bossBar.setName(getDisplayName());
 	}
-	
+
 	@Override
 	public void onStartedTrackingBy(ServerPlayerEntity player) {
 		super.onStartedTrackingBy(player);
 		bossBar.addPlayer(player);
 	}
-	
+
 	@Override
 	public void onStoppedTrackingBy(ServerPlayerEntity player) {
 		super.onStoppedTrackingBy(player);
 		bossBar.removePlayer(player);
 	}
-	
+
 	@Override
 	public void readCustomDataFromNbt(NbtCompound nbt) {
 		super.readCustomDataFromNbt(nbt);
@@ -265,13 +264,13 @@ public class HerneEntity extends BWHostileEntity implements Pledgeable {
 		}
 		fromNbtPledgeable(nbt);
 	}
-	
+
 	@Override
 	public void writeCustomDataToNbt(NbtCompound nbt) {
 		super.writeCustomDataToNbt(nbt);
 		toNbtPledgeable(nbt);
 	}
-	
+
 	@Override
 	protected void initGoals() {
 		goalSelector.add(0, new SwimGoal(this));

@@ -18,10 +18,10 @@ public abstract class AnimalMateGoalMixin extends Goal {
 	@Shadow
 	@Final
 	protected AnimalEntity animal;
-	
+
 	@Shadow
 	protected AnimalEntity mate;
-	
+
 	@Inject(method = "breed", at = @At("HEAD"))
 	private void breed(CallbackInfo callbackInfo) {
 		ServerPlayerEntity player = animal.getLovingPlayer();

@@ -20,12 +20,12 @@ public class CleanseRitualFunction extends RitualFunction {
 	public CleanseRitualFunction(ParticleType<?> startParticle, Predicate<LivingEntity> sacrifice) {
 		super(startParticle, sacrifice);
 	}
-	
+
 	@Override
 	public String getInvalidMessage() {
 		return "ritual.precondition.found_entity";
 	}
-	
+
 	@Override
 	public boolean isValid(ServerWorld world, BlockPos pos, Inventory inventory) {
 		ItemStack taglock = null;
@@ -38,7 +38,7 @@ public class CleanseRitualFunction extends RitualFunction {
 		}
 		return taglock != null && BewitchmentAPI.getTaglockOwner(world, taglock) != null;
 	}
-	
+
 	@Override
 	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
 		ItemStack taglock = null;

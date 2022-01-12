@@ -15,7 +15,7 @@ import net.minecraft.util.Hand;
 @Environment(EnvType.CLIENT)
 public class LeonardEntityModel<T extends LeonardEntity> extends BipedEntityModel<T> {
 	private static final ItemStack SCEPTER = new ItemStack(BWObjects.SCEPTER);
-	
+
 	private final ModelPart realBody;
 	private final ModelPart frontLoincloth00;
 	private final ModelPart backLoincloth00;
@@ -24,9 +24,9 @@ public class LeonardEntityModel<T extends LeonardEntity> extends BipedEntityMode
 	private final ModelPart BipedRightArm;
 	private final ModelPart BipedLeftLeg;
 	private final ModelPart BipedRightLeg;
-	
+
 	private boolean realArm = false;
-	
+
 	public LeonardEntityModel(ModelPart root) {
 		super(root);
 		realBody = root.getChild("realBody");
@@ -38,7 +38,7 @@ public class LeonardEntityModel<T extends LeonardEntity> extends BipedEntityMode
 		BipedLeftLeg = root.getChild("BipedLeftLeg");
 		BipedRightLeg = root.getChild("BipedRightLeg");
 	}
-	
+
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0);
 		ModelPartData root = data.getRoot();
@@ -85,7 +85,7 @@ public class LeonardEntityModel<T extends LeonardEntity> extends BipedEntityMode
 		lLeg02.addChild("lFlipper02", ModelPartBuilder.create().uv(28, 48).cuboid(-1.1F, 0.0F, -3.0F, 2.0F, 1.0F, 5.0F), ModelTransform.of(-0.9F, 8.8F, -1.7F, 0.0F, 0.1396F, -0.0349F));
 		return TexturedModelData.of(data, 64, 64);
 	}
-	
+
 	@Override
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float realHeadYaw, float realHeadPitch) {
 		entity.setStackInHand(Hand.MAIN_HAND, SCEPTER);
@@ -109,7 +109,7 @@ public class LeonardEntityModel<T extends LeonardEntity> extends BipedEntityMode
 		frontLoincloth00.pitch = Math.min(BipedLeftLeg.pitch, BipedRightLeg.pitch) - 0.1745f;
 		backLoincloth00.pitch = Math.max(BipedLeftLeg.pitch, BipedRightLeg.pitch);
 	}
-	
+
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
 		realHead.render(matrices, vertices, light, overlay, red, green, blue, alpha);
@@ -119,12 +119,12 @@ public class LeonardEntityModel<T extends LeonardEntity> extends BipedEntityMode
 		BipedLeftLeg.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		BipedRightLeg.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 	}
-	
+
 	@Override
 	protected ModelPart getArm(Arm arm) {
 		return realArm ? (arm == Arm.LEFT ? BipedLeftArm : BipedRightArm) : super.getArm(arm);
 	}
-	
+
 	private void copyRotation(ModelPart to, ModelPart from) {
 		to.pitch = from.pitch;
 		to.yaw = from.yaw;

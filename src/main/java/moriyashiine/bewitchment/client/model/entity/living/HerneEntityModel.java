@@ -15,7 +15,7 @@ import net.minecraft.util.Hand;
 @Environment(EnvType.CLIENT)
 public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T> {
 	public static final ItemStack HORNED_SPEAR = new ItemStack(BWObjects.HORNED_SPEAR);
-	
+
 	private final ModelPart chest;
 	private final ModelPart moss01;
 	private final ModelPart moss02;
@@ -26,9 +26,9 @@ public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T>
 	private final ModelPart bipedLeftLeg;
 	private final ModelPart bipedRightLeg;
 	private final ModelPart neck00;
-	
+
 	private boolean realArm = false;
-	
+
 	public HerneEntityModel(ModelPart root) {
 		super(root);
 		chest = root.getChild("chest");
@@ -42,7 +42,7 @@ public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T>
 		bipedRightLeg = root.getChild("bipedRightLeg");
 		neck00 = root.getChild("neck00");
 	}
-	
+
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0);
 		ModelPartData root = data.getRoot();
@@ -125,7 +125,7 @@ public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T>
 		neck00.addChild("neckFur02", ModelPartBuilder.create().uv(110, 16).cuboid(-3.0F, -1.0F, -1.9F, 6.0F, 8.0F, 2.0F, new Dilation(0.15F, 0.15F, 0.15F)), ModelTransform.of(0.0F, 0.5F, -2.9F, -0.1309F, 0.0F, 0.0F));
 		return TexturedModelData.of(data, 128, 64);
 	}
-	
+
 	@Override
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float realHeadYaw, float realHeadPitch) {
 		entity.setStackInHand(Hand.MAIN_HAND, HORNED_SPEAR);
@@ -151,7 +151,7 @@ public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T>
 		mossR.pitch = moss01.pitch;
 		moss02.pitch = Math.max(bipedLeftLeg.pitch, bipedRightLeg.pitch) + 1 / 3f;
 	}
-	
+
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
 		neck00.render(matrices, vertices, light, overlay, red, green, blue, alpha);
@@ -161,12 +161,12 @@ public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T>
 		bipedLeftLeg.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		bipedRightLeg.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 	}
-	
+
 	@Override
 	protected ModelPart getArm(Arm arm) {
 		return realArm ? (arm == Arm.LEFT ? bipedLeftArm : bipedRightArm) : super.getArm(arm);
 	}
-	
+
 	private void copyRotation(ModelPart to, ModelPart from) {
 		to.pitch = from.pitch;
 		to.yaw = from.yaw;

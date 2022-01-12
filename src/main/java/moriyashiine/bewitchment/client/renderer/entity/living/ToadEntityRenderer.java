@@ -14,11 +14,11 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class ToadEntityRenderer extends MobEntityRenderer<ToadEntity, ToadEntityModel<ToadEntity>> {
 	private static Identifier[] TEXTURES;
-	
+
 	public ToadEntityRenderer(EntityRendererFactory.Context context) {
 		super(context, new ToadEntityModel<>(context.getPart(BewitchmentClient.TOAD_MODEL_LAYER)), 0.3f);
 	}
-	
+
 	@Override
 	public Identifier getTexture(ToadEntity entity) {
 		if (TEXTURES == null) {

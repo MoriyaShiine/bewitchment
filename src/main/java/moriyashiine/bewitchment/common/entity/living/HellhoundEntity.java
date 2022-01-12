@@ -28,11 +28,11 @@ public class HellhoundEntity extends BWHostileEntity {
 	public HellhoundEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 	}
-	
+
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 30).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.425);
 	}
-	
+
 	@Override
 	public void tick() {
 		super.tick();
@@ -41,38 +41,38 @@ public class HellhoundEntity extends BWHostileEntity {
 			world.playSound(null, getBlockPos(), SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, getSoundCategory(), getSoundVolume(), getSoundPitch());
 		}
 	}
-	
+
 	@Override
 	protected boolean hasShiny() {
 		return true;
 	}
-	
+
 	@Override
 	public int getVariants() {
 		return 5;
 	}
-	
+
 	@Override
 	public EntityGroup getGroup() {
 		return BewitchmentAPI.DEMON;
 	}
-	
+
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return BWSoundEvents.ENTITY_HELLHOUND_AMBIENT;
 	}
-	
+
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return BWSoundEvents.ENTITY_HELLHOUND_HURT;
 	}
-	
+
 	@Override
 	protected SoundEvent getDeathSound() {
 		return BWSoundEvents.ENTITY_HELLHOUND_DEATH;
 	}
-	
+
 	@Override
 	public boolean tryAttack(Entity target) {
 		boolean flag = super.tryAttack(target);
@@ -81,7 +81,7 @@ public class HellhoundEntity extends BWHostileEntity {
 		}
 		return flag;
 	}
-	
+
 	@Override
 	protected void initGoals() {
 		goalSelector.add(0, new SwimGoal(this));

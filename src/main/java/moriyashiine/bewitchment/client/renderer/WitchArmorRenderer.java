@@ -22,15 +22,15 @@ public class WitchArmorRenderer implements ArmorRenderer {
 	private static final Identifier WITCH_HAT_VARIANT_TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/armor/witch_hat_variant.png");
 	private static WitchArmorModel<LivingEntity> armorModel;
 	private static WitchArmorModel<LivingEntity> bootsModel;
-	
+
 	private final Identifier texture;
 	private final Item hatItem;
-	
+
 	public WitchArmorRenderer(Identifier texture, @Nullable Item hatItem) {
 		this.texture = texture;
 		this.hatItem = hatItem;
 	}
-	
+
 	@Override
 	public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, ItemStack stack, LivingEntity entity, EquipmentSlot slot, int light, BipedEntityModel<LivingEntity> contextModel) {
 		if (armorModel == null) {
@@ -43,8 +43,7 @@ public class WitchArmorRenderer implements ArmorRenderer {
 			bootsModel.leftLeg.visible = true;
 			bootsModel.rightLeg.visible = true;
 			ArmorRenderer.renderPart(matrices, vertexConsumers, light, stack, bootsModel, texture);
-		}
-		else {
+		} else {
 			boolean hat = stack.getItem() == hatItem;
 			contextModel.setAttributes(armorModel);
 			armorModel.setVisible(false);

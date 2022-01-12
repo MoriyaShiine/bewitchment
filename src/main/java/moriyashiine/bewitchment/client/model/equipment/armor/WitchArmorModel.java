@@ -13,7 +13,7 @@ public class WitchArmorModel<T extends LivingEntity> extends BipedEntityModel<T>
 	public final ModelPart armorLeftBoot;
 	public final ModelPart lowerRightSkirt;
 	public final ModelPart armorRightBoot;
-	
+
 	public WitchArmorModel(ModelPart root) {
 		super(root, RenderLayer::getArmorCutoutNoCull);
 		child = false;
@@ -24,7 +24,7 @@ public class WitchArmorModel<T extends LivingEntity> extends BipedEntityModel<T>
 		lowerRightSkirt = rightLeg.getChild("armorRightLeg").getChild("lowerRightSkirt");
 		armorRightBoot = rightLeg.getChild("armorRightBoot");
 	}
-	
+
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0);
 		ModelPartData head = data.getRoot().getChild(EntityModelPartNames.HEAD);
@@ -33,7 +33,7 @@ public class WitchArmorModel<T extends LivingEntity> extends BipedEntityModel<T>
 		ModelPartData leftLeg = data.getRoot().getChild(EntityModelPartNames.LEFT_LEG);
 		ModelPartData rightArm = data.getRoot().getChild(EntityModelPartNames.RIGHT_ARM);
 		ModelPartData leftArm = data.getRoot().getChild(EntityModelPartNames.LEFT_ARM);
-		
+
 		ModelPartData armorRightLeg = rightLeg.addChild("armorRightLeg", ModelPartBuilder.create(), ModelTransform.of(3.9F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F));
 		armorRightLeg.addChild("tunicRightFront", ModelPartBuilder.create().uv(53, 65).cuboid(-4.0F, 0.0F, 0.0F, 4.0F, 7.0F, 1.0F), ModelTransform.of(-2.01F, 0.0F, -2.1F, -0.1222F, 0.0F, 0.0F));
 		armorRightLeg.addChild("tunicRight", ModelPartBuilder.create().uv(24, 65).cuboid(-4.0F, 0.0F, 0.0F, 4.0F, 7.0F, 1.0F), ModelTransform.of(-6.01F, 0.0F, -2.1F, -0.1222F, 1.5708F, 0.0F));

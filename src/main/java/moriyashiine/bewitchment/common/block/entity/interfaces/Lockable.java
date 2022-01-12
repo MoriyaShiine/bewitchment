@@ -22,19 +22,19 @@ import java.util.UUID;
 
 public interface Lockable {
 	List<UUID> getEntities();
-	
+
 	UUID getOwner();
-	
+
 	void setOwner(UUID owner);
-	
+
 	boolean getModeOnWhitelist();
-	
+
 	void setModeOnWhitelist(boolean modeOnWhitelist);
-	
+
 	boolean getLocked();
-	
+
 	void setLocked(boolean locked);
-	
+
 	default void fromNbtLockable(NbtCompound nbt) {
 		NbtList entitiesList = nbt.getList("Entities", NbtType.STRING);
 		for (int i = 0; i < entitiesList.size(); i++) {
@@ -46,7 +46,7 @@ public interface Lockable {
 		setModeOnWhitelist(nbt.getBoolean("ModeOnWhitelist"));
 		setLocked(nbt.getBoolean("Locked"));
 	}
-	
+
 	default void toNbtLockable(NbtCompound nbt) {
 		NbtList entitiesList = new NbtList();
 		for (int i = 0; i < getEntities().size(); i++) {
@@ -59,7 +59,7 @@ public interface Lockable {
 		nbt.putBoolean("ModeOnWhitelist", getModeOnWhitelist());
 		nbt.putBoolean("Locked", getLocked());
 	}
-	
+
 	default ActionResult use(World world, BlockPos pos, LivingEntity user, Hand hand) {
 		if (user.getUuid().equals(getOwner())) {
 			ItemStack stack = user.getStackInHand(hand);
@@ -86,12 +86,11 @@ public interface Lockable {
 		}
 		return ActionResult.PASS;
 	}
-	
+
 	default boolean test(Entity entity) {
 		if (entity.getUuid().equals(getOwner())) {
 			return true;
-		}
-		else if (getLocked()) {
+		} else if (getLocked()) {
 			if (!getEntities().isEmpty()) {
 				if (getModeOnWhitelist()) {
 					return getEntities().contains(entity.getUuid());
@@ -102,16 +101,15 @@ public interface Lockable {
 		}
 		return true;
 	}
-	
+
 	default void syncLockable(BlockEntity blockEntity) {
 		if (blockEntity instanceof LockableBlockEntity lockableBlockEntity) {
 			lockableBlockEntity.sync();
-		}
-		else if (blockEntity instanceof ElderChestBlockEntity elderChestBlockEntity) {
+		} else if (blockEntity instanceof ElderChestBlockEntity elderChestBlockEntity) {
 			elderChestBlockEntity.sync();
 		}
 	}
-	
+
 	static ActionResult onUse(World world, BlockPos pos, LivingEntity user, Hand hand) {
 		if (world.getBlockEntity(pos) instanceof Lockable lockable) {
 			if (lockable.test(user)) {

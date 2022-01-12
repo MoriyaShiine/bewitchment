@@ -30,7 +30,7 @@ public abstract class PotionEntityMixin extends ThrownItemEntity {
 	public PotionEntityMixin(EntityType<? extends ThrownItemEntity> entityType, World world) {
 		super(entityType, world);
 	}
-	
+
 	@ModifyVariable(method = "applyLingeringPotion", at = @At(value = "INVOKE_ASSIGN", target = "Ljava/util/List;iterator()Ljava/util/Iterator;"))
 	private Iterator<StatusEffectInstance> modifyIterator(Iterator<StatusEffectInstance> iterator, ItemStack stack) {
 		if (stack.getNbt().getBoolean("BewitchmentBrew")) {
@@ -40,7 +40,7 @@ public abstract class PotionEntityMixin extends ThrownItemEntity {
 		}
 		return iterator;
 	}
-	
+
 	@Inject(method = "applySplashPotion", at = @At("HEAD"))
 	private void applySplashPotion(List<StatusEffectInstance> statusEffects, @Nullable Entity entity, CallbackInfo callbackInfo) {
 		if (getItem().hasNbt() && getItem().getNbt().contains("PolymorphUUID")) {
@@ -54,7 +54,7 @@ public abstract class PotionEntityMixin extends ThrownItemEntity {
 			}
 		}
 	}
-	
+
 	@Inject(method = "applyLingeringPotion", at = @At(value = "INVOKE", target = "net/minecraft/entity/AreaEffectCloudEntity.setPotion(Lnet/minecraft/potion/Potion;)V"), locals = LocalCapture.CAPTURE_FAILSOFT)
 	private void applyLingeringPotion(ItemStack stack, Potion potion, CallbackInfo callbackInfo, AreaEffectCloudEntity cloud) {
 		if (stack.hasNbt() && stack.getNbt().contains("PolymorphUUID")) {

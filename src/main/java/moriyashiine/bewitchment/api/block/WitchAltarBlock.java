@@ -42,38 +42,38 @@ import org.jetbrains.annotations.Nullable;
 @SuppressWarnings("ConstantConditions")
 public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntityProvider, Waterloggable {
 	private static final VoxelShape SHAPE = VoxelShapes.union(createCuboidShape(0, 0, 0, 16, 2, 16), createCuboidShape(1, 2, 1, 15, 5, 15), createCuboidShape(2, 5, 2, 14, 10, 14), createCuboidShape(1, 10, 1, 15, 12, 15), createCuboidShape(0, 12, 0, 16, 16, 16));
-	
+
 	private final Block unformed;
 	private final boolean formed;
-	
+
 	public WitchAltarBlock(Settings settings, Block unformed, boolean formed) {
 		super(settings);
 		this.unformed = unformed;
 		this.formed = formed;
 	}
-	
+
 	@Nullable
 	@Override
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
 		return formed ? new WitchAltarBlockEntity(pos, state) : null;
 	}
-	
+
 	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world0, BlockState state0, BlockEntityType<T> type) {
 		return (world, pos, state, blockEntity) -> WitchAltarBlockEntity.tick(world, pos, state, (WitchAltarBlockEntity) blockEntity);
 	}
-	
+
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		return SHAPE;
 	}
-	
+
 	@Override
 	public PistonBehavior getPistonBehavior(BlockState state) {
 		return PistonBehavior.BLOCK;
 	}
-	
+
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		boolean client = world.isClient;
@@ -91,8 +91,7 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 				}
 				return ActionResult.success(client);
 			}
-		}
-		else {
+		} else {
 			WitchAltarBlockEntity blockEntity = (WitchAltarBlockEntity) world.getBlockEntity(pos);
 			if (!client) {
 				if (!stack.isEmpty()) {
@@ -110,8 +109,7 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 						blockEntity.markDirty();
 						blockEntity.sync();
 					}
-				}
-				else {
+				} else {
 					if (player.isSneaking()) {
 						ItemScatterer.spawn(world, pos.add(0, 1, 0), blockEntity);
 						world.setBlockState(pos, state.with(Properties.LEVEL_15, 0), 11);
@@ -119,8 +117,7 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 						blockEntity.markedForScan = true;
 						blockEntity.markDirty();
 						blockEntity.sync();
-					}
-					else {
+					} else {
 						player.sendMessage(new LiteralText(blockEntity.power + " / " + blockEntity.maxPower + " (" + blockEntity.gain + "x)"), true);
 					}
 				}
@@ -129,7 +126,7 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 		}
 		return super.onUse(state, world, pos, player, hand, hit);
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	@Override
 	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
@@ -138,13 +135,13 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 		}
 		return super.getPickStack(world, pos, state);
 	}
-	
+
 	@Nullable
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
 		return super.getPlacementState(ctx).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER).with(FACING, ctx.getPlayerFacing());
 	}
-	
+
 	@Override
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
 		if (state.get(Properties.WATERLOGGED)) {
@@ -152,17 +149,17 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 		}
 		return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
 	}
-	
+
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.get(Properties.WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
 	}
-	
+
 	@Override
 	public boolean hasComparatorOutput(BlockState state) {
 		return formed;
 	}
-	
+
 	@Override
 	public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
 		if (formed) {
@@ -177,7 +174,7 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 		}
 		return 0;
 	}
-	
+
 	@Override
 	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
 		if (formed) {
@@ -193,7 +190,7 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 			}
 		}
 	}
-	
+
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!world.isClient && state.getBlock() != newState.getBlock()) {
@@ -217,17 +214,17 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 			}
 		}
 	}
-	
+
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
 		builder.add(Properties.WATERLOGGED, FACING, Properties.LEVEL_15);
 	}
-	
+
 	@Nullable
 	public static BlockPos getClosestAltarPos(World world, BlockPos pos) {
 		return BWUtil.getClosestBlockPos(pos, Bewitchment.config.altarDistributionRadius, currentPos -> world.getBlockEntity(currentPos) instanceof WitchAltarBlockEntity);
 	}
-	
+
 	private static int calculateLuminance(WitchAltarBlockEntity blockEntity) {
 		int luminance = 0;
 		Item sword = blockEntity.getStack(0).getItem();

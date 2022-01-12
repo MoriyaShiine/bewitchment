@@ -20,9 +20,9 @@ public class VampireEntityModel<T extends VampireEntity> extends BipedEntityMode
 	private final ModelPart lLeg;
 	private final ModelPart rLeg;
 	private final ModelPart crossedArms;
-	
+
 	private boolean realArm = false;
-	
+
 	public VampireEntityModel(ModelPart root) {
 		super(root);
 		realBody = root.getChild("realBody");
@@ -35,7 +35,7 @@ public class VampireEntityModel<T extends VampireEntity> extends BipedEntityMode
 		rLeg = root.getChild("rLeg");
 		crossedArms = root.getChild("crossedArms");
 	}
-	
+
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0);
 		ModelPartData root = data.getRoot();
@@ -57,7 +57,7 @@ public class VampireEntityModel<T extends VampireEntity> extends BipedEntityMode
 		rArm.addChild("rClaw03", ModelPartBuilder.create().mirrored(true).cuboid(-1.1F, 0.0F, -0.5F, 2.0F, 4.0F, 1.0F), ModelTransform.of(-2.3F, 8.6F, 1.2F, 0.0F, 0.0F, -0.1745F));
 		return TexturedModelData.of(data, 64, 64);
 	}
-	
+
 	@Override
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float realHeadYaw, float realHeadPitch) {
 		realArm = false;
@@ -73,7 +73,7 @@ public class VampireEntityModel<T extends VampireEntity> extends BipedEntityMode
 		crossedArms.visible = !hasTarget;
 		downArms.visible = hasTarget;
 	}
-	
+
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
 		realHead.render(matrices, vertices, light, overlay, red, green, blue, alpha);
@@ -84,12 +84,12 @@ public class VampireEntityModel<T extends VampireEntity> extends BipedEntityMode
 		lLeg.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		rLeg.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 	}
-	
+
 	@Override
 	protected ModelPart getArm(Arm arm) {
 		return realArm ? (arm == Arm.LEFT ? lArm : rArm) : super.getArm(arm);
 	}
-	
+
 	private void copyRotation(ModelPart to, ModelPart from) {
 		to.pitch = from.pitch;
 		to.yaw = from.yaw;

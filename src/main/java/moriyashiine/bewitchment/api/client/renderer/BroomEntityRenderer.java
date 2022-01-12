@@ -15,12 +15,12 @@ import net.minecraft.util.math.Vec3f;
 @Environment(EnvType.CLIENT)
 public abstract class BroomEntityRenderer<T extends BroomEntity> extends EntityRenderer<T> {
 	private final BroomEntityModel model;
-	
+
 	protected BroomEntityRenderer(EntityRendererFactory.Context ctx) {
 		super(ctx);
 		model = new BroomEntityModel(ctx.getPart(BewitchmentClient.BROOM_MODEL_LAYER));
 	}
-	
+
 	@Override
 	public void render(T entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
 		matrices.push();

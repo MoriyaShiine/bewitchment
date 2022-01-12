@@ -29,7 +29,7 @@ public abstract class ClientWorldMixin extends World {
 	protected ClientWorldMixin(MutableWorldProperties properties, RegistryKey<World> registryRef, DimensionType dimensionType, Supplier<Profiler> profiler, boolean isClient, boolean debugWorld, long seed) {
 		super(properties, registryRef, dimensionType, profiler, isClient, debugWorld, seed);
 	}
-	
+
 	@ModifyVariable(method = "playSound(DDDLnet/minecraft/sound/SoundEvent;Lnet/minecraft/sound/SoundCategory;FFZ)V", at = @At("HEAD"), ordinal = 0, argsOnly = true)
 	private float modifySound0(float volume, double x, double y, double z, SoundEvent sound, SoundCategory category) {
 		if (category != SoundCategory.MASTER && category != SoundCategory.VOICE) {
@@ -40,7 +40,7 @@ public abstract class ClientWorldMixin extends World {
 		}
 		return volume;
 	}
-	
+
 	@ModifyVariable(method = "playSoundFromEntity", at = @At("HEAD"), ordinal = 0, argsOnly = true)
 	private float modifySound1(float volume, @Nullable PlayerEntity player, Entity entity, SoundEvent sound, SoundCategory category) {
 		if (category != SoundCategory.MASTER && category != SoundCategory.VOICE) {

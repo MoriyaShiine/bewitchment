@@ -21,9 +21,9 @@ public class DemonEntityModel<T extends DemonEntity> extends BipedEntityModel<T>
 	private final ModelPart BipedLeftLeg;
 	private final ModelPart BipedRightLeg;
 	private final ModelPart realHead;
-	
+
 	private boolean realArm = false;
-	
+
 	public DemonEntityModel(ModelPart root, boolean male) {
 		super(root);
 		realBody = root.getChild("realBody");
@@ -36,12 +36,11 @@ public class DemonEntityModel<T extends DemonEntity> extends BipedEntityModel<T>
 		realHead = root.getChild("realHead");
 		if (male) {
 			tail01 = realBody.getChild("tail01");
-		}
-		else {
+		} else {
 			tail01 = realBody.getChild("stomach").getChild("tail01");
 		}
 	}
-	
+
 	public static TexturedModelData getTexturedModelDataMale() {
 		ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0);
 		ModelPartData root = data.getRoot();
@@ -90,7 +89,7 @@ public class DemonEntityModel<T extends DemonEntity> extends BipedEntityModel<T>
 		lHoofClaw02a.addChild("lHoofClaw02b", ModelPartBuilder.create().uv(7, 56).cuboid(-0.49F, -1.1F, -1.2F, 1.0F, 1.0F, 3.0F), ModelTransform.of(0.0F, 0.0F, -1.0F, 0.3491F, 0.0F, 0.0F));
 		return TexturedModelData.of(data, 64, 64);
 	}
-	
+
 	public static TexturedModelData getTexturedModelDataFemale() {
 		ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0);
 		ModelPartData root = data.getRoot();
@@ -147,7 +146,7 @@ public class DemonEntityModel<T extends DemonEntity> extends BipedEntityModel<T>
 		root.addChild("BipedLeftArm", ModelPartBuilder.create().uv(44, 16).cuboid(-1.0F, -2.0F, -2.0F, 3.0F, 14.0F, 4.0F), ModelTransform.of(5.0F, -4.2F, 0.0F, 0.0F, 0.0F, 0.0F));
 		return TexturedModelData.of(data, 64, 64);
 	}
-	
+
 	@Override
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float realHeadYaw, float realHeadPitch) {
 		realArm = false;
@@ -171,7 +170,7 @@ public class DemonEntityModel<T extends DemonEntity> extends BipedEntityModel<T>
 		rWing01.yaw = -lWing01.yaw;
 		tail01.roll = MathHelper.sin(animationProgress / 8) / 8;
 	}
-	
+
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
 		realHead.render(matrices, vertices, light, overlay, red, green, blue, alpha);
@@ -181,12 +180,12 @@ public class DemonEntityModel<T extends DemonEntity> extends BipedEntityModel<T>
 		BipedLeftLeg.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		BipedRightLeg.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 	}
-	
+
 	@Override
 	protected ModelPart getArm(Arm arm) {
 		return realArm ? (arm == Arm.LEFT ? BipedLeftArm : BipedRightArm) : super.getArm(arm);
 	}
-	
+
 	private void copyRotation(ModelPart to, ModelPart from) {
 		to.pitch = from.pitch;
 		to.yaw = from.yaw;

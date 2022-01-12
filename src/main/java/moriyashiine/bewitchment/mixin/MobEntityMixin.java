@@ -25,7 +25,7 @@ public abstract class MobEntityMixin extends LivingEntity {
 	protected MobEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
 	}
-	
+
 	@ModifyVariable(method = "setTarget", at = @At("HEAD"), argsOnly = true)
 	private LivingEntity modifyTarget(LivingEntity target) {
 		if (!world.isClient && target != null) {
@@ -41,7 +41,7 @@ public abstract class MobEntityMixin extends LivingEntity {
 		}
 		return target;
 	}
-	
+
 	@Inject(method = "interactWithItem", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;"), cancellable = true, locals = LocalCapture.CAPTURE_FAILEXCEPTION)
 	private void interactWithItem(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> callbackInfoReturnable, ItemStack heldStack) {
 		if (heldStack.getItem() instanceof TaglockItem) {

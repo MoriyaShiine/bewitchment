@@ -22,27 +22,27 @@ import java.util.List;
 public class CauldronBrewingCategory implements DisplayCategory<CauldronBrewingDisplay> {
 	public static final TranslatableText TITLE = new TranslatableText("rei.bewitchment.cauldron_brewing");
 	public static final EntryStack<ItemStack> ICON = EntryStacks.of(BWObjects.WITCH_CAULDRON);
-	
+
 	@Override
 	public Renderer getIcon() {
 		return ICON;
 	}
-	
+
 	@Override
 	public Text getTitle() {
 		return TITLE;
 	}
-	
+
 	@Override
 	public int getDisplayHeight() {
 		return 36;
 	}
-	
+
 	@Override
 	public CategoryIdentifier<? extends CauldronBrewingDisplay> getCategoryIdentifier() {
 		return BWREIPlugin.CAULDRON_BREWING;
 	}
-	
+
 	@Override
 	public List<Widget> setupDisplay(CauldronBrewingDisplay display, Rectangle bounds) {
 		Point startPoint = new Point(bounds.getCenterX() - 64, bounds.getCenterY() - 16);

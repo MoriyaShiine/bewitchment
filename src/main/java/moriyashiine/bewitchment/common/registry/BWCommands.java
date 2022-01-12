@@ -221,110 +221,110 @@ public class BWCommands {
 			return 0;
 		})));
 	}
-	
+
 	public static void registerArgumentTypes() {
 		ArgumentTypes.register("bewitchment:fortune", FortuneArgumentType.class, new ConstantArgumentSerializer<>(FortuneArgumentType::fortune));
 		ArgumentTypes.register("bewitchment:transformation", TransformationArgumentType.class, new ConstantArgumentSerializer<>(TransformationArgumentType::transformation));
 		ArgumentTypes.register("bewitchment:contract", ContractArgumentType.class, new ConstantArgumentSerializer<>(ContractArgumentType::contract));
 		ArgumentTypes.register("bewitchment:curse", CurseArgumentType.class, new ConstantArgumentSerializer<>(CurseArgumentType::curse));
 	}
-	
+
 	private static class FortuneArgumentType implements ArgumentType<Fortune> {
 		public static final DynamicCommandExceptionType INVALID_FORTUNE_EXCEPTION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.fortune.not_found", object));
 		public static final DynamicCommandExceptionType GET_NO_FORTUNE_EXCEPTION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.fortune.get.no_fortune", object));
 		public static final DynamicCommandExceptionType REMOVE_NO_FORTUNE_EXCEPTION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.fortune.remove.no_fortune", object));
-		
+
 		public static FortuneArgumentType fortune() {
 			return new FortuneArgumentType();
 		}
-		
+
 		public static Fortune getFortune(CommandContext<ServerCommandSource> commandContext, String string) {
 			return commandContext.getArgument(string, Fortune.class);
 		}
-		
+
 		@Override
 		public Fortune parse(StringReader reader) throws CommandSyntaxException {
 			Identifier identifier = Identifier.fromCommandInput(reader);
 			return BWRegistries.FORTUNES.getOrEmpty(identifier).orElseThrow(() -> INVALID_FORTUNE_EXCEPTION.create(identifier));
 		}
-		
+
 		@Override
 		public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
 			return CommandSource.suggestIdentifiers(BWRegistries.FORTUNES.getIds(), builder);
 		}
 	}
-	
+
 	private static class TransformationArgumentType implements ArgumentType<Transformation> {
 		public static final DynamicCommandExceptionType INVALID_TRANSFORMATION_EXCEPTION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.transformation.not_found", object));
-		
+
 		public static TransformationArgumentType transformation() {
 			return new TransformationArgumentType();
 		}
-		
+
 		public static Transformation getTransformation(CommandContext<ServerCommandSource> commandContext, String string) {
 			return commandContext.getArgument(string, Transformation.class);
 		}
-		
+
 		@Override
 		public Transformation parse(StringReader reader) throws CommandSyntaxException {
 			Identifier identifier = Identifier.fromCommandInput(reader);
 			return BWRegistries.TRANSFORMATIONS.getOrEmpty(identifier).orElseThrow(() -> INVALID_TRANSFORMATION_EXCEPTION.create(identifier));
 		}
-		
+
 		@Override
 		public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
 			return CommandSource.suggestIdentifiers(BWRegistries.TRANSFORMATIONS.getIds(), builder);
 		}
 	}
-	
+
 	private static class ContractArgumentType implements ArgumentType<Contract> {
 		public static final DynamicCommandExceptionType INVALID_CONTRACT_EXCEPTION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.contract.not_found", object));
 		public static final DynamicCommandExceptionType GET_NO_CONTRACTS_EXCEPTION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.contract.get.no_contracts", object));
 		public static final DynamicCommandExceptionType GET_NO_CONTRACT_EXCEPTION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.contract.get.no_contract", object));
 		public static final DynamicCommandExceptionType REMOVE_NO_CONTRACT_EXCEPTION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.contract.remove.no_contract", object));
 		public static final DynamicCommandExceptionType CLEAR_NO_CONTRACTS_EXCPETION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.contract.clear.no_contracts", object));
-		
+
 		public static ContractArgumentType contract() {
 			return new ContractArgumentType();
 		}
-		
+
 		public static Contract getContract(CommandContext<ServerCommandSource> commandContext, String string) {
 			return commandContext.getArgument(string, Contract.class);
 		}
-		
+
 		@Override
 		public Contract parse(StringReader reader) throws CommandSyntaxException {
 			Identifier identifier = Identifier.fromCommandInput(reader);
 			return BWRegistries.CONTRACTS.getOrEmpty(identifier).orElseThrow(() -> INVALID_CONTRACT_EXCEPTION.create(identifier));
 		}
-		
+
 		@Override
 		public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
 			return CommandSource.suggestIdentifiers(BWRegistries.CONTRACTS.getIds(), builder);
 		}
 	}
-	
+
 	private static class CurseArgumentType implements ArgumentType<Curse> {
 		public static final DynamicCommandExceptionType INVALID_CURSE_EXCEPTION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.curse.not_found", object));
 		public static final DynamicCommandExceptionType GET_NO_CURSES_EXCEPTION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.curse.get.no_curses", object));
 		public static final DynamicCommandExceptionType GET_NO_CURSE_EXCEPTION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.curse.get.no_curse", object));
 		public static final DynamicCommandExceptionType REMOVE_NO_CURSE_EXCEPTION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.curse.remove.no_curse", object));
 		public static final DynamicCommandExceptionType CLEAR_NO_CURSES_EXCPETION = new DynamicCommandExceptionType(object -> new TranslatableText("commands.curse.clear.no_curses", object));
-		
+
 		public static CurseArgumentType curse() {
 			return new CurseArgumentType();
 		}
-		
+
 		public static Curse getCurse(CommandContext<ServerCommandSource> commandContext, String string) {
 			return commandContext.getArgument(string, Curse.class);
 		}
-		
+
 		@Override
 		public Curse parse(StringReader reader) throws CommandSyntaxException {
 			Identifier identifier = Identifier.fromCommandInput(reader);
 			return BWRegistries.CURSES.getOrEmpty(identifier).orElseThrow(() -> INVALID_CURSE_EXCEPTION.create(identifier));
 		}
-		
+
 		@Override
 		public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
 			return CommandSource.suggestIdentifiers(BWRegistries.CURSES.getIds(), builder);

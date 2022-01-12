@@ -24,11 +24,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ItemEntityMixin extends Entity {
 	@Shadow
 	public abstract ItemStack getStack();
-	
+
 	public ItemEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
-	
+
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo callbackInfo) {
 		if (getStack().getItem() == BWObjects.VOODOO_POPPET && !Bewitchment.config.disabledPoppets.contains(Registry.ITEM.getId(getStack().getItem()).toString())) {
@@ -58,7 +58,7 @@ public abstract class ItemEntityMixin extends Entity {
 			}
 		}
 	}
-	
+
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (getStack().getItem() == BWObjects.VOODOO_POPPET) {

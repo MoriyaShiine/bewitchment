@@ -14,39 +14,38 @@ import java.util.UUID;
 public class MinionComponent implements ServerTickingComponent {
 	private final MobEntity obj;
 	private UUID master = null;
-	
+
 	public MinionComponent(MobEntity obj) {
 		this.obj = obj;
 	}
-	
+
 	@Override
 	public void readFromNbt(NbtCompound tag) {
 		setMaster(tag.getString("MasterUUID").isEmpty() ? null : UUID.fromString(tag.getString("MasterUUID")));
 	}
-	
+
 	@Override
 	public void writeToNbt(NbtCompound tag) {
 		tag.putString("MasterUUID", getMaster() == null ? "" : getMaster().toString());
 	}
-	
+
 	@Override
 	public void serverTick() {
 		if (getMaster() != null) {
 			Entity master = ((ServerWorld) obj.world).getEntity(getMaster());
 			if (master instanceof MobEntity mob && !mob.isDead() && mob.getTarget() != null) {
 				obj.setTarget(mob.getTarget());
-			}
-			else {
+			} else {
 				PlayerLookup.tracking(obj).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, obj));
 				obj.remove(Entity.RemovalReason.DISCARDED);
 			}
 		}
 	}
-	
+
 	public UUID getMaster() {
 		return master;
 	}
-	
+
 	public void setMaster(UUID master) {
 		this.master = master;
 		BWComponents.MINION_COMPONENT.sync(obj);

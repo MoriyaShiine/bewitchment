@@ -11,12 +11,12 @@ import net.minecraft.client.util.math.MatrixStack;
 
 public class ContributorHornsModel extends Model {
 	private final ModelPart armorHead;
-	
+
 	public ContributorHornsModel(ModelPart root) {
 		super(RenderLayer::getEntityTranslucent);
 		armorHead = root.getChild("armorHead");
 	}
-	
+
 	public static TexturedModelData getTexturedModelData() {
 		ModelData data = new ModelData();
 		ModelPartData root = data.getRoot();
@@ -39,7 +39,7 @@ public class ContributorHornsModel extends Model {
 		rHorn04.addChild("rHorn05", ModelPartBuilder.create().uv(12, 0).mirrored(true).cuboid(-0.5F, -2.1F, -0.5F, 1.0F, 2.0F, 1.0F), ModelTransform.of(0.0F, -2.7F, 0.0F, 0.0524F, 0.0F, 0.3142F));
 		return TexturedModelData.of(data, 16, 16);
 	}
-	
+
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
 		armorHead.render(matrices, vertices, light, overlay, red, green, blue, alpha);

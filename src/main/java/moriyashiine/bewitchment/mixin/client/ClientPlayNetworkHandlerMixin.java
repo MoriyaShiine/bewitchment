@@ -26,7 +26,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ClientPlayNetworkHandlerMixin {
 	@Shadow
 	private ClientWorld world;
-	
+
 	@Inject(method = "onEntitySpawn", at = @At("TAIL"))
 	private void onEntitySpawn(EntitySpawnS2CPacket packet, CallbackInfo callbackInfo) {
 		EntityType<?> type = packet.getEntityTypeId();
@@ -36,20 +36,15 @@ public class ClientPlayNetworkHandlerMixin {
 		Entity entity = null;
 		if (type == BWEntityTypes.JUNIPER_BROOM) {
 			entity = new JuniperBroomEntity(BWEntityTypes.JUNIPER_BROOM, world);
-		}
-		else if (type == BWEntityTypes.CYPRESS_BROOM) {
+		} else if (type == BWEntityTypes.CYPRESS_BROOM) {
 			entity = new BroomEntity(BWEntityTypes.CYPRESS_BROOM, world);
-		}
-		else if (type == BWEntityTypes.ELDER_BROOM) {
+		} else if (type == BWEntityTypes.ELDER_BROOM) {
 			entity = new ElderBroomEntity(BWEntityTypes.ELDER_BROOM, world);
-		}
-		else if (type == BWEntityTypes.DRAGONS_BLOOD_BROOM) {
+		} else if (type == BWEntityTypes.DRAGONS_BLOOD_BROOM) {
 			entity = new DragonsBloodBroomEntity(BWEntityTypes.DRAGONS_BLOOD_BROOM, world);
-		}
-		else if (type == BWEntityTypes.SILVER_ARROW) {
+		} else if (type == BWEntityTypes.SILVER_ARROW) {
 			entity = new SilverArrowEntity(world, x, y, z);
-		}
-		else if (type == BWEntityTypes.HORNED_SPEAR) {
+		} else if (type == BWEntityTypes.HORNED_SPEAR) {
 			entity = new HornedSpearEntity(world, x, y, z);
 		}
 		if (entity != null) {

@@ -14,22 +14,22 @@ import java.util.List;
 public class AthameStrippingDisplay implements Display {
 	private final List<EntryIngredient> input;
 	private final List<EntryIngredient> output;
-	
+
 	public AthameStrippingDisplay(AthameStrippingRecipe recipe) {
 		input = Collections.singletonList(EntryIngredients.of(new ItemStack(recipe.log)));
 		output = Collections.singletonList(EntryIngredients.of(recipe.getOutput()));
 	}
-	
+
 	@Override
 	public List<EntryIngredient> getInputEntries() {
 		return input;
 	}
-	
+
 	@Override
 	public List<EntryIngredient> getOutputEntries() {
 		return output;
 	}
-	
+
 	@Override
 	public CategoryIdentifier<?> getCategoryIdentifier() {
 		return BWREIPlugin.ATHAME_STRIPPING;

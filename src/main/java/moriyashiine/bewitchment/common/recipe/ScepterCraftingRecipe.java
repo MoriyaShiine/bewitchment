@@ -16,7 +16,7 @@ public class ScepterCraftingRecipe extends SpecialCraftingRecipe {
 	public ScepterCraftingRecipe(Identifier id) {
 		super(id);
 	}
-	
+
 	@Override
 	public boolean matches(CraftingInventory inv, World world) {
 		boolean foundScepter = false, foundPotion = false;
@@ -28,8 +28,7 @@ public class ScepterCraftingRecipe extends SpecialCraftingRecipe {
 					foundScepter = true;
 				}
 				foundItems++;
-			}
-			else if (stack.getItem() instanceof SplashPotionItem && (!PotionUtil.getPotionEffects(stack).isEmpty() || !PotionUtil.getCustomPotionEffects(stack).isEmpty())) {
+			} else if (stack.getItem() instanceof SplashPotionItem && (!PotionUtil.getPotionEffects(stack).isEmpty() || !PotionUtil.getCustomPotionEffects(stack).isEmpty())) {
 				if (!foundPotion) {
 					foundPotion = true;
 				}
@@ -38,7 +37,7 @@ public class ScepterCraftingRecipe extends SpecialCraftingRecipe {
 		}
 		return foundScepter && foundPotion && foundItems == 2;
 	}
-	
+
 	@Override
 	public ItemStack craft(CraftingInventory inv) {
 		ItemStack scepter = null, potion = null;
@@ -46,8 +45,7 @@ public class ScepterCraftingRecipe extends SpecialCraftingRecipe {
 			ItemStack stack = inv.getStack(i);
 			if (stack.getItem() instanceof ScepterItem) {
 				scepter = stack.copy();
-			}
-			else if (stack.getItem() instanceof SplashPotionItem) {
+			} else if (stack.getItem() instanceof SplashPotionItem) {
 				potion = stack.copy();
 			}
 		}
@@ -59,12 +57,12 @@ public class ScepterCraftingRecipe extends SpecialCraftingRecipe {
 		}
 		return scepter;
 	}
-	
+
 	@Override
 	public boolean fits(int width, int height) {
 		return true;
 	}
-	
+
 	@Override
 	public RecipeSerializer<?> getSerializer() {
 		return BWRecipeTypes.SCEPTER_CRAFTING_SERIALIZER;

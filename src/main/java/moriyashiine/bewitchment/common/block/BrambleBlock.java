@@ -38,11 +38,11 @@ import net.minecraft.world.WorldView;
 import java.util.Random;
 
 public class BrambleBlock extends SugarCaneBlock {
-	
+
 	public BrambleBlock(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		if (this == BWObjects.THICK_BRAMBLE && context instanceof EntityShapeContextAdditionAccessor accessor) {
@@ -53,13 +53,13 @@ public class BrambleBlock extends SugarCaneBlock {
 		}
 		return super.getCollisionShape(state, world, pos, context);
 	}
-	
+
 	@Override
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
 		BlockState downState = world.getBlockState(pos.down());
 		return downState.isOf(this) || downState.isOf(Blocks.GRASS_BLOCK) || downState.isOf(Blocks.DIRT) || downState.isOf(Blocks.COARSE_DIRT) || downState.isOf(Blocks.PODZOL) || downState.isOf(Blocks.SAND) || downState.isOf(Blocks.RED_SAND);
 	}
-	
+
 	@Override
 	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
 		if (this == BWObjects.GLOWING_BRAMBLE && !world.isClient && state.getBlock() != oldState.getBlock()) {
@@ -68,7 +68,7 @@ public class BrambleBlock extends SugarCaneBlock {
 			worldState.markDirty();
 		}
 	}
-	
+
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (this == BWObjects.GLOWING_BRAMBLE && !world.isClient && state.getBlock() != newState.getBlock()) {
@@ -82,7 +82,7 @@ public class BrambleBlock extends SugarCaneBlock {
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);
 	}
-	
+
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (!world.isClient && entity instanceof LivingEntity) {
@@ -92,8 +92,7 @@ public class BrambleBlock extends SugarCaneBlock {
 					TeleportTimerComponent teleportTimerComponent = BWComponents.TELEPORT_TIMER_COMPONENT.get(player);
 					if (teleportTimerComponent.getTeleportTimer() > 0) {
 						teleport = false;
-					}
-					else {
+					} else {
 						teleportTimerComponent.setTeleportTimer(20);
 					}
 				}
@@ -112,37 +111,34 @@ public class BrambleBlock extends SugarCaneBlock {
 			if (entity.isInSneakingPose()) {
 				entity.setVelocity(entity.getVelocity().multiply(1, 0.5, 1));
 				entity.fallDistance = 0;
-			}
-			else {
+			} else {
 				entity.addVelocity(0, 0.4, 0);
 			}
 		}
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
 		ParticleType<?> particleType = null;
 		if (this == BWObjects.ENDER_BRAMBLE) {
 			particleType = ParticleTypes.PORTAL;
-		}
-		else if (this == BWObjects.SCORCHED_BRAMBLE) {
+		} else if (this == BWObjects.SCORCHED_BRAMBLE) {
 			particleType = ParticleTypes.FLAME;
-		}
-		else if (this == BWObjects.FLEETING_BRAMBLE) {
+		} else if (this == BWObjects.FLEETING_BRAMBLE) {
 			particleType = ParticleTypes.CLOUD;
 		}
 		if (particleType != null) {
 			world.addParticle((ParticleEffect) particleType, pos.getX() + 0.5 + MathHelper.nextDouble(random, -0.5, 0.5), pos.getY() + 0.5 + MathHelper.nextDouble(random, -0.5, 0.5), pos.getZ() + 0.5 + MathHelper.nextDouble(random, -0.5, 0.5), 0, 0, 0);
 		}
 	}
-	
+
 	public static class Fruiting extends BrambleBlock {
 		public Fruiting(Settings settings) {
 			super(settings);
 			setDefaultState(getDefaultState().with(BWProperties.HAS_FRUIT, false));
 		}
-		
+
 		@Override
 		public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 			boolean client = world.isClient;
@@ -156,8 +152,7 @@ public class BrambleBlock extends SugarCaneBlock {
 					}
 				}
 				return ActionResult.success(client);
-			}
-			else {
+			} else {
 				ItemStack stack = player.getStackInHand(hand);
 				if (stack.getItem() instanceof BoneMealItem) {
 					if (!world.isClient) {
@@ -172,7 +167,7 @@ public class BrambleBlock extends SugarCaneBlock {
 			}
 			return super.onUse(state, world, pos, player, hand, hit);
 		}
-		
+
 		@Override
 		public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 			super.randomTick(state, world, pos, random);
@@ -181,13 +176,12 @@ public class BrambleBlock extends SugarCaneBlock {
 				int level = state.get(Properties.LEVEL_15);
 				if (level == 15) {
 					world.setBlockState(pos, state.with(Properties.LEVEL_15, 0).with(BWProperties.HAS_FRUIT, true));
-				}
-				else {
+				} else {
 					world.setBlockState(pos, state.with(Properties.LEVEL_15, level + 1));
 				}
 			}
 		}
-		
+
 		@Override
 		protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
 			super.appendProperties(builder.add(Properties.LEVEL_15, BWProperties.HAS_FRUIT));

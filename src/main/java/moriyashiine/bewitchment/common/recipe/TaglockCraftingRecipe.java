@@ -14,7 +14,7 @@ public class TaglockCraftingRecipe extends SpecialCraftingRecipe {
 	public TaglockCraftingRecipe(Identifier id) {
 		super(id);
 	}
-	
+
 	@Override
 	public boolean matches(CraftingInventory inv, World world) {
 		boolean foundTaglock = false, foundCraftable = false;
@@ -26,8 +26,7 @@ public class TaglockCraftingRecipe extends SpecialCraftingRecipe {
 					foundTaglock = true;
 				}
 				foundItems++;
-			}
-			else if (isTaglockCraftable(stack)) {
+			} else if (isTaglockCraftable(stack)) {
 				if (!foundCraftable) {
 					foundCraftable = true;
 				}
@@ -36,7 +35,7 @@ public class TaglockCraftingRecipe extends SpecialCraftingRecipe {
 		}
 		return foundTaglock && foundCraftable && foundItems == 2;
 	}
-	
+
 	@Override
 	public ItemStack craft(CraftingInventory inv) {
 		ItemStack taglock = null, craftedStack = null;
@@ -44,24 +43,23 @@ public class TaglockCraftingRecipe extends SpecialCraftingRecipe {
 			ItemStack stack = inv.getStack(i);
 			if (stack.getItem() instanceof TaglockItem) {
 				taglock = stack.copy();
-			}
-			else if (isTaglockCraftable(stack)) {
+			} else if (isTaglockCraftable(stack)) {
 				craftedStack = stack.copy();
 			}
 		}
 		return TaglockItem.copyTo(taglock, craftedStack);
 	}
-	
+
 	@Override
 	public boolean fits(int width, int height) {
 		return true;
 	}
-	
+
 	@Override
 	public RecipeSerializer<?> getSerializer() {
 		return BWRecipeTypes.TAGLOCK_CRAFTING_SERIALIZER;
 	}
-	
+
 	private static boolean isTaglockCraftable(ItemStack stack) {
 		if (stack.getItem() instanceof PoppetItem) {
 			return TaglockItem.getTaglockUUID(stack) == null;

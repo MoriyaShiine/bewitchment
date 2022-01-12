@@ -16,7 +16,7 @@ public class SmellySigil extends Sigil {
 	public SmellySigil(boolean active, int uses) {
 		super(active, uses);
 	}
-	
+
 	@Override
 	public int tick(World world, BlockPos pos) {
 		int amount = 0;

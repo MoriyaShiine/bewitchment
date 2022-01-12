@@ -27,12 +27,12 @@ import java.util.List;
 @SuppressWarnings("ConstantConditions")
 public class ChalkItem extends Item {
 	private final Block glyph;
-	
+
 	public ChalkItem(Settings settings, Block glyph) {
 		super(settings);
 		this.glyph = glyph;
 	}
-	
+
 	@Override
 	public ActionResult useOnBlock(ItemUsageContext context) {
 		World world = context.getWorld();
@@ -61,17 +61,17 @@ public class ChalkItem extends Item {
 		}
 		return super.useOnBlock(context);
 	}
-	
+
 	@Override
 	public boolean isEnchantable(ItemStack stack) {
 		return false;
 	}
-	
+
 	@Override
 	public String getTranslationKey() {
 		return glyph.getTranslationKey();
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {

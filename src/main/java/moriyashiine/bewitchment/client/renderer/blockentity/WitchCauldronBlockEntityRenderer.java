@@ -26,7 +26,7 @@ import net.minecraft.world.World;
 @Environment(EnvType.CLIENT)
 public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<WitchCauldronBlockEntity> {
 	private static final float[] HEIGHT = {0, 0.25f, 0.4375f, 0.625f};
-	
+
 	@Override
 	public void render(WitchCauldronBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 		World world = entity.getWorld();
@@ -69,7 +69,7 @@ public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<Wit
 			}
 		}
 	}
-	
+
 	private void renderName(WitchCauldronBlockEntity entity, BlockPos pos, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
 		if (entity.hasCustomName()) {
 			if (pos.getSquaredDistance(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getPos(), true) <= 256) {
@@ -86,7 +86,7 @@ public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<Wit
 			}
 		}
 	}
-	
+
 	private void renderPortal(WitchCauldronBlockEntity entity, BlockPos pos, MatrixStack matrices, VertexConsumerProvider vertexConsumers) {
 		matrices.push();
 		Matrix4f matrix4f = matrices.peek().getPositionMatrix();
@@ -97,7 +97,7 @@ public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<Wit
 		vertexConsumer.vertex(matrix4f, 0.125f, 0, 0.125f).next();
 		matrices.pop();
 	}
-	
+
 	private void renderWater(WitchCauldronBlockEntity entity, MatrixStack matrices, VertexConsumer buffer, int light, int overlay, Sprite sprite) {
 		matrices.push();
 		Matrix4f mat = matrices.peek().getPositionMatrix();

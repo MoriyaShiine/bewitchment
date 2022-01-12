@@ -18,7 +18,7 @@ public class SearchBlocksRitualFunction extends RitualFunction {
 	public SearchBlocksRitualFunction(ParticleType<?> startParticle, Predicate<LivingEntity> sacrifice) {
 		super(startParticle, sacrifice);
 	}
-	
+
 	@Override
 	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
 		PlayerEntity closestPlayer = world.getClosestPlayer(glyphPos.getX() + 0.5, glyphPos.getY() + 0.5, glyphPos.getZ() + 0.5, 8, false);

@@ -52,15 +52,15 @@ import java.util.stream.Collectors;
 
 public class BaphometEntity extends BWHostileEntity implements Pledgeable, DemonMerchant {
 	private final ServerBossBar bossBar;
-	
+
 	private final Set<UUID> pledgedPlayerUUIDS = new HashSet<>();
 	private int timeSinceLastAttack = 0;
 	public int flameIndex = random.nextInt(8);
-	
+
 	private final List<DemonEntity.DemonTradeOffer> offers = new ArrayList<>();
 	private PlayerEntity customer = null;
 	private int tradeResetTimer = 0;
-	
+
 	public BaphometEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 		bossBar = new ServerBossBar(getDisplayName(), BossBar.Color.RED, BossBar.Style.PROGRESS);
@@ -68,11 +68,11 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 		setPathfindingPenalty(PathNodeType.DAMAGE_FIRE, 0);
 		experiencePoints = 50;
 	}
-	
+
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 375).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12).add(EntityAttributes.GENERIC_ARMOR, 6).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.75).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 32);
 	}
-	
+
 	@Override
 	public void tick() {
 		super.tick();
@@ -109,8 +109,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 				if (timer % 600 == 0) {
 					summonMinions(this);
 				}
-			}
-			else {
+			} else {
 				if (getY() > -64) {
 					heal(8);
 				}
@@ -118,68 +117,68 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 			}
 		}
 	}
-	
+
 	@Override
 	public String getPledgeID() {
 		return BWPledges.BAPHOMET;
 	}
-	
+
 	@Override
 	public Collection<UUID> getPledgedPlayerUUIDs() {
 		return pledgedPlayerUUIDS;
 	}
-	
+
 	@Override
 	public EntityType<?> getMinionType() {
 		return EntityType.BLAZE;
 	}
-	
+
 	@Override
 	public Collection<StatusEffectInstance> getMinionBuffs() {
 		return Sets.newHashSet(new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE), new StatusEffectInstance(BWStatusEffects.HARDENING, Integer.MAX_VALUE, 1));
 	}
-	
+
 	@Override
 	public int getTimeSinceLastAttack() {
 		return timeSinceLastAttack;
 	}
-	
+
 	@Override
 	public void setTimeSinceLastAttack(int timeSinceLastAttack) {
 		this.timeSinceLastAttack = timeSinceLastAttack;
 	}
-	
+
 	@Override
 	protected boolean hasShiny() {
 		return false;
 	}
-	
+
 	@Override
 	public int getVariants() {
 		return 1;
 	}
-	
+
 	@Override
 	public EntityGroup getGroup() {
 		return BewitchmentAPI.DEMON;
 	}
-	
+
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return BWSoundEvents.ENTITY_BAPHOMET_AMBIENT;
 	}
-	
+
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return BWSoundEvents.ENTITY_BAPHOMET_HURT;
 	}
-	
+
 	@Override
 	protected SoundEvent getDeathSound() {
 		return BWSoundEvents.ENTITY_BAPHOMET_DEATH;
 	}
-	
+
 	@Override
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
 		if (!world.isClient && isAlive() && getTarget() == null && BewitchmentAPI.isPledged(player, getPledgeID())) {
@@ -192,39 +191,38 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 			if (!getOffers().isEmpty()) {
 				SyncContractsPacket.send(player);
 				player.openHandledScreen(new SimpleNamedScreenHandlerFactory((id, playerInventory, customer) -> new BaphometScreenHandler(id, this), getDisplayName())).ifPresent(syncId -> SyncDemonTradesPacket.send(player, this, syncId));
-			}
-			else {
+			} else {
 				setCurrentCustomer(null);
 			}
 		}
 		return ActionResult.success(world.isClient);
 	}
-	
+
 	@Override
 	public boolean canBeLeashedBy(PlayerEntity player) {
 		return false;
 	}
-	
+
 	@Override
 	protected boolean canStartRiding(Entity entity) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean canHaveStatusEffect(StatusEffectInstance effect) {
 		return effect.getEffectType().getCategory() == StatusEffectCategory.BENEFICIAL;
 	}
-	
+
 	@Override
 	public boolean isAffectedBySplashPotions() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean cannotDespawn() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean tryAttack(Entity target) {
 		boolean flag = super.tryAttack(target);
@@ -235,28 +233,28 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 		}
 		return flag;
 	}
-	
+
 	@Override
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
 		return false;
 	}
-	
+
 	@Override
 	protected void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition) {
 	}
-	
+
 	@Override
 	public void setCustomName(@Nullable Text name) {
 		super.setCustomName(name);
 		bossBar.setName(getDisplayName());
 	}
-	
+
 	@Override
 	public void onDeath(DamageSource source) {
 		super.onDeath(source);
 		setCurrentCustomer(null);
 	}
-	
+
 	@Override
 	public void setTarget(@Nullable LivingEntity target) {
 		super.setTarget(target);
@@ -264,19 +262,19 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 			setCurrentCustomer(null);
 		}
 	}
-	
+
 	@Override
 	public void onStartedTrackingBy(ServerPlayerEntity player) {
 		super.onStartedTrackingBy(player);
 		bossBar.addPlayer(player);
 	}
-	
+
 	@Override
 	public void onStoppedTrackingBy(ServerPlayerEntity player) {
 		super.onStoppedTrackingBy(player);
 		bossBar.removePlayer(player);
 	}
-	
+
 	@Override
 	public void readCustomDataFromNbt(NbtCompound nbt) {
 		super.readCustomDataFromNbt(nbt);
@@ -293,7 +291,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 		}
 		tradeResetTimer = nbt.getInt("TradeResetTimer");
 	}
-	
+
 	@Override
 	public void writeCustomDataToNbt(NbtCompound nbt) {
 		super.writeCustomDataToNbt(nbt);
@@ -307,7 +305,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 		}
 		nbt.putInt("TradeResetTimer", tradeResetTimer);
 	}
-	
+
 	@Override
 	protected void initGoals() {
 		goalSelector.add(0, new SwimGoal(this));
@@ -319,7 +317,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 		targetSelector.add(0, new RevengeGoal(this));
 		targetSelector.add(1, BWUtil.createGenericPledgeableTargetGoal(this));
 	}
-	
+
 	@Override
 	public List<DemonEntity.DemonTradeOffer> getOffers() {
 		if (offers.isEmpty()) {
@@ -332,12 +330,12 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 		}
 		return offers;
 	}
-	
+
 	@Override
 	public LivingEntity getDemonTrader() {
 		return this;
 	}
-	
+
 	@Override
 	public void onSell(DemonEntity.DemonTradeOffer offer) {
 		if (!world.isClient) {
@@ -345,12 +343,12 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 			world.playSound(null, getBlockPos(), getAmbientSound(), getSoundCategory(), getSoundVolume(), getSoundPitch());
 		}
 	}
-	
+
 	@Override
 	public void setCurrentCustomer(PlayerEntity customer) {
 		this.customer = customer;
 	}
-	
+
 	@Override
 	public @Nullable PlayerEntity getCurrentCustomer() {
 		return customer;

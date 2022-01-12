@@ -50,10 +50,10 @@ import java.util.UUID;
 
 public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 	private final ServerBossBar bossBar;
-	
+
 	private final Set<UUID> pledgedPlayerUUIDS = new HashSet<>();
 	private int timeSinceLastAttack = 0;
-	
+
 	public LeonardEntity(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 		bossBar = new ServerBossBar(getDisplayName(), BossBar.Color.RED, BossBar.Style.PROGRESS);
@@ -61,11 +61,11 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 		setPathfindingPenalty(PathNodeType.DAMAGE_FIRE, 0);
 		experiencePoints = 50;
 	}
-	
+
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 375).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12).add(EntityAttributes.GENERIC_ARMOR, 6).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25).add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.75).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 32);
 	}
-	
+
 	@Override
 	public void tick() {
 		super.tick();
@@ -90,8 +90,7 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 				if (timer % 600 == 0) {
 					summonMinions(this);
 				}
-			}
-			else {
+			} else {
 				if (getY() > -64) {
 					heal(8);
 				}
@@ -99,93 +98,93 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 			}
 		}
 	}
-	
+
 	@Override
 	public String getPledgeID() {
 		return BWPledges.LEONARD;
 	}
-	
+
 	@Override
 	public Collection<UUID> getPledgedPlayerUUIDs() {
 		return pledgedPlayerUUIDS;
 	}
-	
+
 	@Override
 	public EntityType<?> getMinionType() {
 		return EntityType.WITCH;
 	}
-	
+
 	@Override
 	public Collection<StatusEffectInstance> getMinionBuffs() {
 		return Sets.newHashSet(new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE), new StatusEffectInstance(BWStatusEffects.HARDENING, Integer.MAX_VALUE, 1));
 	}
-	
+
 	@Override
 	public int getTimeSinceLastAttack() {
 		return timeSinceLastAttack;
 	}
-	
+
 	@Override
 	public void setTimeSinceLastAttack(int timeSinceLastAttack) {
 		this.timeSinceLastAttack = timeSinceLastAttack;
 	}
-	
+
 	@Override
 	protected boolean hasShiny() {
 		return false;
 	}
-	
+
 	@Override
 	public int getVariants() {
 		return 1;
 	}
-	
+
 	@Override
 	public EntityGroup getGroup() {
 		return BewitchmentAPI.DEMON;
 	}
-	
+
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return BWSoundEvents.ENTITY_LEONARD_AMBIENT;
 	}
-	
+
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return BWSoundEvents.ENTITY_LEONARD_HURT;
 	}
-	
+
 	@Override
 	protected SoundEvent getDeathSound() {
 		return BWSoundEvents.ENTITY_LEONARD_DEATH;
 	}
-	
+
 	@Override
 	public boolean canBeLeashedBy(PlayerEntity player) {
 		return false;
 	}
-	
+
 	@Override
 	protected boolean canStartRiding(Entity entity) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean canHaveStatusEffect(StatusEffectInstance effect) {
 		return effect.getEffectType().getCategory() == StatusEffectCategory.BENEFICIAL;
 	}
-	
+
 	@Override
 	public boolean isAffectedBySplashPotions() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean cannotDespawn() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean tryAttack(Entity target) {
 		boolean flag = super.tryAttack(target);
@@ -196,34 +195,34 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 		}
 		return flag;
 	}
-	
+
 	@Override
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
 		return false;
 	}
-	
+
 	@Override
 	protected void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition) {
 	}
-	
+
 	@Override
 	public void setCustomName(@Nullable Text name) {
 		super.setCustomName(name);
 		bossBar.setName(getDisplayName());
 	}
-	
+
 	@Override
 	public void onStartedTrackingBy(ServerPlayerEntity player) {
 		super.onStartedTrackingBy(player);
 		bossBar.addPlayer(player);
 	}
-	
+
 	@Override
 	public void onStoppedTrackingBy(ServerPlayerEntity player) {
 		super.onStoppedTrackingBy(player);
 		bossBar.removePlayer(player);
 	}
-	
+
 	@Override
 	public void readCustomDataFromNbt(NbtCompound nbt) {
 		super.readCustomDataFromNbt(nbt);
@@ -232,13 +231,13 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 		}
 		fromNbtPledgeable(nbt);
 	}
-	
+
 	@Override
 	public void writeCustomDataToNbt(NbtCompound nbt) {
 		super.writeCustomDataToNbt(nbt);
 		toNbtPledgeable(nbt);
 	}
-	
+
 	@Override
 	protected void initGoals() {
 		goalSelector.add(0, new SwimGoal(this));
@@ -249,7 +248,7 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 		targetSelector.add(0, new RevengeGoal(this));
 		targetSelector.add(1, BWUtil.createGenericPledgeableTargetGoal(this));
 	}
-	
+
 	private void spawnPotion(BlockPos target, Potion potionType) {
 		PotionEntity potion = new PotionEntity(world, this);
 		potion.setItem(PotionUtil.setPotion(new ItemStack(Items.SPLASH_POTION), potionType));

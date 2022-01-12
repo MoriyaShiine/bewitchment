@@ -15,14 +15,14 @@ import vazkii.patchouli.api.IVariableProvider;
 @SuppressWarnings("ConstantConditions")
 public class CurseProcessor implements IComponentProcessor {
 	protected CurseRecipe recipe;
-	
+
 	@Override
 	public void setup(IVariableProvider variables) {
 		String recipeId = variables.get("recipe").asString();
 		RecipeManager manager = MinecraftClient.getInstance().world.getRecipeManager();
 		recipe = (CurseRecipe) manager.get(new Identifier(recipeId)).filter(recipe -> recipe.getType().equals(BWRecipeTypes.CURSE_RECIPE_TYPE)).orElseThrow(IllegalArgumentException::new);
 	}
-	
+
 	@Override
 	public IVariable process(String key) {
 		if (key.equals("header")) {

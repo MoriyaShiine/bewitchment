@@ -26,19 +26,19 @@ import virtuoel.pehkui.api.ScaleData;
 @SuppressWarnings("ConstantConditions")
 public class TransformationAbilityPacket {
 	public static final Identifier ID = new Identifier(Bewitchment.MODID, "transformation_ability");
-	
+
 	public static final AbilitySource VAMPIRE_FLIGHT_SOURCE = Pal.getAbilitySource(new Identifier(Bewitchment.MODID, "vampire_flight"));
-	
+
 	private static final float VAMPIRE_WIDTH = EntityType.BAT.getWidth() / EntityType.PLAYER.getWidth();
 	private static final float VAMPIRE_HEIGHT = EntityType.BAT.getHeight() / EntityType.PLAYER.getHeight();
 	private static final float WEREWOLF_WIDTH = BWEntityTypes.WEREWOLF.getWidth() / EntityType.PLAYER.getWidth();
 	private static final float WEREWOLF_HEIGHT = BWEntityTypes.WEREWOLF.getHeight() / EntityType.PLAYER.getHeight();
-	
+
 	public static void send() {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		ClientPlayNetworking.send(ID, buf);
 	}
-	
+
 	public static void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
 		server.execute(() -> {
 			if (canUseAbility(player)) {
@@ -46,7 +46,7 @@ public class TransformationAbilityPacket {
 			}
 		});
 	}
-	
+
 	private static boolean canUseAbility(PlayerEntity player) {
 		TransformationComponent transformationComponent = BWComponents.TRANSFORMATION_COMPONENT.get(player);
 		if (transformationComponent.getTransformation() == BWTransformations.VAMPIRE) {
@@ -57,7 +57,7 @@ public class TransformationAbilityPacket {
 		}
 		return false;
 	}
-	
+
 	public static void useAbility(PlayerEntity player, boolean forced) {
 		BWComponents.TRANSFORMATION_COMPONENT.maybeGet(player).ifPresent(transformationComponent -> {
 			World world = player.world;
@@ -74,15 +74,13 @@ public class TransformationAbilityPacket {
 					height.setScale(height.getBaseScale() / VAMPIRE_HEIGHT);
 					VAMPIRE_FLIGHT_SOURCE.revokeFrom(player, VanillaAbilities.ALLOW_FLYING);
 					VAMPIRE_FLIGHT_SOURCE.revokeFrom(player, VanillaAbilities.FLYING);
-				}
-				else {
+				} else {
 					width.setScale(width.getBaseScale() * VAMPIRE_WIDTH);
 					height.setScale(height.getBaseScale() * VAMPIRE_HEIGHT);
 					VAMPIRE_FLIGHT_SOURCE.grantTo(player, VanillaAbilities.ALLOW_FLYING);
 					VAMPIRE_FLIGHT_SOURCE.grantTo(player, VanillaAbilities.FLYING);
 				}
-			}
-			else if (transformationComponent.getTransformation() == BWTransformations.WEREWOLF && (forced || BewitchmentAPI.isPledged(player, BWPledges.HERNE))) {
+			} else if (transformationComponent.getTransformation() == BWTransformations.WEREWOLF && (forced || BewitchmentAPI.isPledged(player, BWPledges.HERNE))) {
 				PlayerLookup.tracking(player).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, player));
 				SpawnSmokeParticlesPacket.send(player, player);
 				world.playSound(null, player.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, player.getSoundCategory(), 1, 1);
@@ -93,8 +91,7 @@ public class TransformationAbilityPacket {
 					if (player.hasStatusEffect(StatusEffects.NIGHT_VISION) && player.getStatusEffect(StatusEffects.NIGHT_VISION).isAmbient()) {
 						player.removeStatusEffect(StatusEffects.NIGHT_VISION);
 					}
-				}
-				else {
+				} else {
 					width.setScale(width.getBaseScale() * WEREWOLF_WIDTH);
 					height.setScale(height.getBaseScale() * WEREWOLF_HEIGHT);
 				}

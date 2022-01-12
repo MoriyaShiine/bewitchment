@@ -14,20 +14,20 @@ public class IncenseSmokeParticle extends LargeFireSmokeParticle {
 		colorGreen = ((float) (Math.random() * 0.2) + 0.8f);
 		colorBlue = ((float) (Math.random() * 0.2) + 0.8f);
 	}
-	
+
 	@Override
 	public ParticleTextureSheet getType() {
 		return ParticleTextureSheet.PARTICLE_SHEET_OPAQUE;
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	public static class Factory implements ParticleFactory<DefaultParticleType> {
 		private final SpriteProvider spriteProvider;
-		
+
 		public Factory(SpriteProvider spriteProvider) {
 			this.spriteProvider = spriteProvider;
 		}
-		
+
 		@Override
 		public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ) {
 			return new IncenseSmokeParticle(clientWorld, posX, posY, posZ, velocityX, velocityY, velocityZ, this.spriteProvider);

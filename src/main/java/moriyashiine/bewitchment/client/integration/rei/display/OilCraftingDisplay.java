@@ -13,22 +13,22 @@ import java.util.List;
 public class OilCraftingDisplay implements Display {
 	private final List<EntryIngredient> input;
 	private final List<EntryIngredient> output;
-	
+
 	public OilCraftingDisplay(OilRecipe recipe) {
 		input = EntryIngredients.ofIngredients(recipe.input);
 		output = Collections.singletonList(EntryIngredients.of(recipe.getOutput()));
 	}
-	
+
 	@Override
 	public List<EntryIngredient> getInputEntries() {
 		return input;
 	}
-	
+
 	@Override
 	public List<EntryIngredient> getOutputEntries() {
 		return output;
 	}
-	
+
 	@Override
 	public CategoryIdentifier<?> getCategoryIdentifier() {
 		return BWREIPlugin.OIL_CRAFTING;

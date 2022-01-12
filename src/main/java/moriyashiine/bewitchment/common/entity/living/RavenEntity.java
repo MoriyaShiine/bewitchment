@@ -36,26 +36,26 @@ public class RavenEntity extends BWTameableEntity {
 		super(type, world);
 		moveControl = new FlightMoveControl(this, 180, false);
 	}
-	
+
 	public static DefaultAttributeContainer.Builder createAttributes() {
 		return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 8).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25).add(EntityAttributes.GENERIC_FLYING_SPEED, 0.6);
 	}
-	
+
 	@Override
 	protected boolean hasShiny() {
 		return true;
 	}
-	
+
 	@Override
 	public int getVariants() {
 		return 2;
 	}
-	
+
 	@Override
 	protected boolean isTamingItem(ItemStack stack) {
 		return stack.getItem() == Items.GOLD_NUGGET || BWTags.SILVER_NUGGETS.contains(stack.getItem());
 	}
-	
+
 	@Nullable
 	@Override
 	public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
@@ -73,7 +73,7 @@ public class RavenEntity extends BWTameableEntity {
 		}
 		return child;
 	}
-	
+
 	@Override
 	protected EntityNavigation createNavigation(World world) {
 		BirdNavigation birdNavigation = new BirdNavigation(this, world);
@@ -82,52 +82,52 @@ public class RavenEntity extends BWTameableEntity {
 		birdNavigation.setCanEnterOpenDoors(true);
 		return birdNavigation;
 	}
-	
+
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return BWSoundEvents.ENTITY_RAVEN_AMBIENT;
 	}
-	
+
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return BWSoundEvents.ENTITY_RAVEN_HURT;
 	}
-	
+
 	@Override
 	protected SoundEvent getDeathSound() {
 		return BWSoundEvents.ENTITY_RAVEN_DEATH;
 	}
-	
+
 	@Override
 	public boolean isBreedingItem(ItemStack stack) {
 		return stack.getItem() == Items.WHEAT_SEEDS;
 	}
-	
+
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState state) {
 		playSound(SoundEvents.ENTITY_PARROT_STEP, 0.15f, 1);
 	}
-	
+
 	@Override
 	protected void addFlapEffects() {
 		playSound(BWSoundEvents.ENTITY_RAVEN_FLY, 0.15f, 1);
 	}
-	
+
 	@Override
 	protected boolean hasWings() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
 		return false;
 	}
-	
+
 	@Override
 	protected void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition) {
 	}
-	
+
 	@Override
 	public void setTamed(boolean tamed) {
 		super.setTamed(tamed);
@@ -137,13 +137,12 @@ public class RavenEntity extends BWTameableEntity {
 			maxHealth.setBaseValue(20);
 			attackDamage.setBaseValue(3);
 			setHealth(getMaxHealth());
-		}
-		else {
+		} else {
 			maxHealth.setBaseValue(8);
 			attackDamage.setBaseValue(1);
 		}
 	}
-	
+
 	@Override
 	protected void initGoals() {
 		goalSelector.add(0, new SwimGoal(this));

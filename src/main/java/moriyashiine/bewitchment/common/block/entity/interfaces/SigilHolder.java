@@ -25,23 +25,23 @@ import java.util.UUID;
 @SuppressWarnings("ConstantConditions")
 public interface SigilHolder {
 	List<UUID> getEntities();
-	
+
 	UUID getOwner();
-	
+
 	void setOwner(UUID owner);
-	
+
 	Sigil getSigil();
-	
+
 	void setSigil(Sigil sigil);
-	
+
 	int getUses();
-	
+
 	void setUses(int uses);
-	
+
 	boolean getModeOnWhitelist();
-	
+
 	void setModeOnWhitelist(boolean modeOnWhitelist);
-	
+
 	default void fromNbtSigil(NbtCompound nbt) {
 		NbtList entitiesList = nbt.getList("Entities", NbtType.STRING);
 		for (int i = 0; i < entitiesList.size(); i++) {
@@ -54,7 +54,7 @@ public interface SigilHolder {
 		setUses(nbt.getInt("Uses"));
 		setModeOnWhitelist(nbt.getBoolean("ModeOnWhitelist"));
 	}
-	
+
 	default void toNbtSigil(NbtCompound nbt) {
 		NbtList entitiesList = new NbtList();
 		for (int i = 0; i < getEntities().size(); i++) {
@@ -70,7 +70,7 @@ public interface SigilHolder {
 		nbt.putInt("Uses", getUses());
 		nbt.putBoolean("ModeOnWhitelist", getModeOnWhitelist());
 	}
-	
+
 	default void use(World world, BlockPos pos, LivingEntity user, Hand hand) {
 		if (getSigil() != null && getSigil().active && test(user)) {
 			ActionResult result = getSigil().use(world, pos, user, hand);
@@ -82,7 +82,7 @@ public interface SigilHolder {
 			}
 		}
 	}
-	
+
 	default void tick(World world, BlockPos pos, BlockEntity blockEntity) {
 		if (world != null && !world.isClient) {
 			if (getSigil() != null) {
@@ -109,7 +109,7 @@ public interface SigilHolder {
 			}
 		}
 	}
-	
+
 	default boolean test(Entity entity) {
 		if (!getEntities().isEmpty()) {
 			if (getModeOnWhitelist()) {
@@ -119,16 +119,15 @@ public interface SigilHolder {
 		}
 		return true;
 	}
-	
+
 	default void syncSigilHolder(BlockEntity blockEntity) {
 		if (blockEntity instanceof SigilBlockEntity sigilBlockEntity) {
 			sigilBlockEntity.sync();
-		}
-		else if (blockEntity instanceof DragonsBloodChestBlockEntity dragonsBloodChestBlockEntity) {
+		} else if (blockEntity instanceof DragonsBloodChestBlockEntity dragonsBloodChestBlockEntity) {
 			dragonsBloodChestBlockEntity.sync();
 		}
 	}
-	
+
 	static void onUse(World world, BlockPos pos, LivingEntity user, Hand hand) {
 		if (world.getBlockEntity(pos) instanceof SigilHolder sigilHolder && sigilHolder.test(user)) {
 			sigilHolder.use(world, pos, user, hand);

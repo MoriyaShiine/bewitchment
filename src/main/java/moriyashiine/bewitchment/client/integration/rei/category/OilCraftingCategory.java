@@ -23,27 +23,27 @@ import java.util.List;
 public class OilCraftingCategory implements DisplayCategory<OilCraftingDisplay> {
 	public static final TranslatableText TITLE = new TranslatableText("rei.bewitchment.oil_crafting");
 	public static final EntryStack<ItemStack> ICON = EntryStacks.of(BWObjects.WITCH_CAULDRON);
-	
+
 	@Override
 	public Renderer getIcon() {
 		return ICON;
 	}
-	
+
 	@Override
 	public Text getTitle() {
 		return TITLE;
 	}
-	
+
 	@Override
 	public int getDisplayHeight() {
 		return 49;
 	}
-	
+
 	@Override
 	public CategoryIdentifier<? extends OilCraftingDisplay> getCategoryIdentifier() {
 		return BWREIPlugin.OIL_CRAFTING;
 	}
-	
+
 	@Override
 	public List<Widget> setupDisplay(OilCraftingDisplay display, Rectangle bounds) {
 		Point startPoint = new Point(bounds.getCenterX() - 64, bounds.getCenterY() - 16);

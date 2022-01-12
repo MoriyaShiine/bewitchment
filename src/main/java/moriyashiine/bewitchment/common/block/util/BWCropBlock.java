@@ -23,11 +23,11 @@ import net.minecraft.world.World;
 
 public class BWCropBlock extends CropBlock {
 	private static final VoxelShape[] AGE_TO_SHAPE = {Block.createCuboidShape(0, 0, 0, 16, 2, 16), Block.createCuboidShape(0, 0, 0, 16, 4, 16), Block.createCuboidShape(0, 0, 0, 16, 6, 16), Block.createCuboidShape(0, 0, 0, 16, 8, 16), Block.createCuboidShape(0, 0, 0, 16, 10, 16), Block.createCuboidShape(0, 0, 0, 16, 12, 16), Block.createCuboidShape(0, 0, 0, 16, 14, 16), Block.createCuboidShape(0, 0, 0, 16, 16, 16)};
-	
+
 	public BWCropBlock(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		int age = getAge(state);
@@ -46,28 +46,28 @@ public class BWCropBlock extends CropBlock {
 		}
 		return AGE_TO_SHAPE[modelAge];
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	@Override
 	protected ItemConvertible getSeedsItem() {
 		return this == BWObjects.ACONITE_CROP ? BWObjects.ACONITE_SEEDS : this == BWObjects.BELLADONNA_CROP ? BWObjects.BELLADONNA_SEEDS : this == BWObjects.GARLIC_CROP ? BWObjects.GARLIC : BWObjects.MANDRAKE_SEEDS;
 	}
-	
+
 	@Override
 	public IntProperty getAgeProperty() {
 		return Properties.AGE_3;
 	}
-	
+
 	@Override
 	public int getMaxAge() {
 		return 3;
 	}
-	
+
 	@Override
 	protected int getGrowthAmount(World world) {
 		return MathHelper.nextInt(world.random, 1, 2);
 	}
-	
+
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		super.onEntityCollision(state, world, pos, entity);
@@ -75,8 +75,7 @@ public class BWCropBlock extends CropBlock {
 			boolean damage = false;
 			if (this == BWObjects.GARLIC_CROP && BewitchmentAPI.isVampire(entity, true)) {
 				damage = true;
-			}
-			else if (this == BWObjects.ACONITE_CROP && BewitchmentAPI.isWerewolf(entity, true)) {
+			} else if (this == BWObjects.ACONITE_CROP && BewitchmentAPI.isWerewolf(entity, true)) {
 				damage = true;
 			}
 			if (damage) {
@@ -84,7 +83,7 @@ public class BWCropBlock extends CropBlock {
 			}
 		}
 	}
-	
+
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
 		builder.add(getAgeProperty());

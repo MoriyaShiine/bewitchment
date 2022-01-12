@@ -22,27 +22,27 @@ import java.util.List;
 public class AthameDropCategory implements DisplayCategory<AthameDropDisplay> {
 	public static final TranslatableText TITLE = new TranslatableText("rei.bewitchment.athame_drops");
 	public static final EntryStack<ItemStack> ICON = EntryStacks.of(BWObjects.ATHAME);
-	
+
 	@Override
 	public Renderer getIcon() {
 		return ICON;
 	}
-	
+
 	@Override
 	public Text getTitle() {
 		return TITLE;
 	}
-	
+
 	@Override
 	public int getDisplayHeight() {
 		return 36;
 	}
-	
+
 	@Override
 	public CategoryIdentifier<? extends AthameDropDisplay> getCategoryIdentifier() {
 		return BWREIPlugin.ATHAME_DROPS;
 	}
-	
+
 	@Override
 	public List<Widget> setupDisplay(AthameDropDisplay display, Rectangle bounds) {
 		Point startPoint = new Point(bounds.getCenterX() - 64, bounds.getCenterY() - 16);

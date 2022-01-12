@@ -23,27 +23,27 @@ import java.util.List;
 public class RitualCategory implements DisplayCategory<RitualDisplay> {
 	public static final TranslatableText TITLE = new TranslatableText("rei.bewitchment.rituals");
 	public static final EntryStack<ItemStack> ICON = EntryStacks.of(BWObjects.GOLDEN_CHALK);
-	
+
 	@Override
 	public Renderer getIcon() {
 		return ICON;
 	}
-	
+
 	@Override
 	public Text getTitle() {
 		return TITLE;
 	}
-	
+
 	@Override
 	public int getDisplayHeight() {
 		return 49;
 	}
-	
+
 	@Override
 	public CategoryIdentifier<? extends RitualDisplay> getCategoryIdentifier() {
 		return BWREIPlugin.RITUALS;
 	}
-	
+
 	@Override
 	public List<Widget> setupDisplay(RitualDisplay display, Rectangle bounds) {
 		Point startPoint = new Point(bounds.getCenterX() - 64, bounds.getCenterY() - 16);

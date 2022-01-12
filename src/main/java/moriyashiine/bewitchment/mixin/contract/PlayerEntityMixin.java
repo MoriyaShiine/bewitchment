@@ -20,11 +20,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class PlayerEntityMixin extends LivingEntity {
 	@Shadow
 	public abstract HungerManager getHungerManager();
-	
+
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
 	}
-	
+
 	@ModifyVariable(method = "addExperience", at = @At("HEAD"), argsOnly = true)
 	private int modifyAddExperience(int experience) {
 		if (BWComponents.CONTRACTS_COMPONENT.get(this).hasContract(BWContracts.PRIDE)) {
@@ -32,7 +32,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 		}
 		return experience;
 	}
-	
+
 	@Inject(method = "eatFood", at = @At("HEAD"))
 	private void eatFood(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> callbackInfo) {
 		if (!world.isClient) {

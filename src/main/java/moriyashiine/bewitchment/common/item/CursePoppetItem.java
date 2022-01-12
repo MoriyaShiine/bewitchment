@@ -32,13 +32,13 @@ public class CursePoppetItem extends PoppetItem {
 	public CursePoppetItem(Settings settings, boolean worksInShelf) {
 		super(settings, worksInShelf);
 	}
-	
+
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		ItemStack stack = user.getStackInHand(hand);
 		return stack.hasNbt() && stack.getOrCreateNbt().getBoolean("Cursed") && stack.getOrCreateNbt().contains("OwnerUUID") ? ItemUsage.consumeHeldItem(world, user, hand) : super.use(world, user, hand);
 	}
-	
+
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (!world.isClient && stack.hasNbt()) {
@@ -77,17 +77,17 @@ public class CursePoppetItem extends PoppetItem {
 		}
 		return stack;
 	}
-	
+
 	@Override
 	public UseAction getUseAction(ItemStack stack) {
 		return stack.hasNbt() && stack.getOrCreateNbt().getBoolean("Cursed") && stack.getOrCreateNbt().contains("OwnerUUID") ? UseAction.BOW : super.getUseAction(stack);
 	}
-	
+
 	@Override
 	public int getMaxUseTime(ItemStack stack) {
 		return 32;
 	}
-	
+
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		super.appendTooltip(stack, world, tooltip, context);

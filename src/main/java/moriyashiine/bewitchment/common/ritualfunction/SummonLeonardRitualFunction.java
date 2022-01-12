@@ -16,7 +16,7 @@ public class SummonLeonardRitualFunction extends RitualFunction {
 	public SummonLeonardRitualFunction(ParticleType<?> startParticle, Predicate<LivingEntity> sacrifice) {
 		super(startParticle, sacrifice);
 	}
-	
+
 	@Override
 	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
 		LeonardEntity entity = BWEntityTypes.LEONARD.create(world);

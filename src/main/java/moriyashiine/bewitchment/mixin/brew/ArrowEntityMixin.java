@@ -26,7 +26,7 @@ public abstract class ArrowEntityMixin extends Entity {
 	public ArrowEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
-	
+
 	@ModifyVariable(method = "initFromStack", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/potion/PotionUtil;getCustomPotionEffects(Lnet/minecraft/item/ItemStack;)Ljava/util/List;"))
 	private Collection<StatusEffectInstance> modifyGetCustomPotionEffects(Collection<StatusEffectInstance> collection, ItemStack stack) {
 		if (stack.getNbt().getBoolean("BewitchmentBrew")) {
@@ -38,7 +38,7 @@ public abstract class ArrowEntityMixin extends Entity {
 		}
 		return collection;
 	}
-	
+
 	@Inject(method = "asItemStack", at = @At(value = "RETURN", ordinal = 1), locals = LocalCapture.CAPTURE_FAILSOFT)
 	private void asItemStack(CallbackInfoReturnable<ItemStack> callbackInfo, ItemStack stack) {
 		BWComponents.POLYMORPH_COMPONENT.maybeGet(this).ifPresent(polymorphComponent -> {
@@ -48,7 +48,7 @@ public abstract class ArrowEntityMixin extends Entity {
 			}
 		});
 	}
-	
+
 	@Inject(method = "onHit", at = @At("HEAD"))
 	private void onHit(LivingEntity target, CallbackInfo callbackInfo) {
 		BWComponents.POLYMORPH_COMPONENT.maybeGet(this).ifPresent(thisPolymorphComponent -> {
@@ -60,7 +60,7 @@ public abstract class ArrowEntityMixin extends Entity {
 			}
 		});
 	}
-	
+
 	@SuppressWarnings("ConstantConditions")
 	@Inject(method = "initFromStack", at = @At("TAIL"))
 	private void initFromStack(ItemStack stack, CallbackInfo callbackInfo) {
