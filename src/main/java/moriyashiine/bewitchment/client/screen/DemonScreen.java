@@ -42,6 +42,9 @@ public class DemonScreen extends HandledScreen<DemonScreenHandler> {
 	}
 
 	private void drawPortrait(MatrixStack matrices, int mouseX, int mouseY) {
+		if (handler.demonMerchant.getDemonTrader() == null) {
+			return;
+		}
 		RenderSystem.setShaderTexture(0, getBackground());
 		int x = (width - backgroundWidth) / 2 + 56;
 		int y = (height - backgroundHeight) / 2 + 16;
