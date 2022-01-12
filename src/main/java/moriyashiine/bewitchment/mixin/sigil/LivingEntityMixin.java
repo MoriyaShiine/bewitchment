@@ -32,7 +32,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage(float amount, DamageSource source) {
-		if (!world.isClient && source == DamageSource.FALL) {
+		if (!world.isClient && source.isFromFalling()) {
 			BWWorldState worldState = BWWorldState.get(world);
 			BlockPos sigilPos = BWUtil.getClosestBlockPos(getBlockPos(), 16, currentPos -> worldState.potentialSigils.contains(currentPos.asLong()) && world.getBlockEntity(currentPos) instanceof SigilHolder sigilHolder && sigilHolder.getSigil() == BWSigils.HEAVY);
 			if (sigilPos != null) {

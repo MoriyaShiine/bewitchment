@@ -84,7 +84,7 @@ public abstract class LivingEntityMixin extends Entity {
 					}
 				}
 			}
-			if (source.isFire() || source == DamageSource.DROWN || source == DamageSource.FALL || source == DamageSource.FLY_INTO_WALL) {
+			if (source.isFire() || source.isFromFalling() || source == DamageSource.DROWN || source == DamageSource.FLY_INTO_WALL) {
 				PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.PROTECTION_POPPET, this);
 				if (!poppetData.stack.isEmpty()) {
 					boolean sync = false;
