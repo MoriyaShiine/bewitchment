@@ -97,13 +97,6 @@ dependencies {
     modCompileOnly("squeek.appleskin:appleskin-fabric:${appleskin_version}:api") {
         transitive = false
     }
-//    modRuntimeOnly "squeek.appleskin:appleskin-fabric:${appleskin_version}"
-//    modCompileOnly("io.github.flemmli97:flan:${flan_version}-api") {
-//        transitive = false
-//    }
-//    modRuntimeOnly("io.github.flemmli97:flan:${flan_version}") {
-//        transitive = false
-//    }
     modCompileOnly "com.github.apace100:origins-fabric:${origins_version}"
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
 }

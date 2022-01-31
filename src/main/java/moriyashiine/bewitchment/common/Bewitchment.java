@@ -218,9 +218,5 @@ public class Bewitchment implements ModInitializer {
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.END_STONE_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.OBSIDIAN_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.PURPUR_WITCH_ALTAR);
-		//todo flan compat
-		//		if (FabricLoader.getInstance().isModLoaded("flan")) {
-		//			ObjectToPermissionMap.registerBlockPredicateMap(block -> block instanceof WitchAltarBlock || block instanceof GlyphBlock || block instanceof WitchCauldronBlock || block instanceof BrazierBlock || block instanceof CrystalBallBlock || block instanceof PoppetShelfBlock || block instanceof CandelabraBlock, () -> PermissionRegistry.INTERACTBLOCK);
-		//		}
 	}
 }
