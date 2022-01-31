@@ -56,7 +56,7 @@ public class GhostEntity extends BWHostileEntity {
 	}
 
 	public static boolean canSpawn(EntityType<GhostEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-		return findPos(world, pos) == null && MobEntity.canMobSpawn(type, world, spawnReason, pos, random);
+		return findPos(world, pos) == null && HostileEntity.canSpawnInDark(type, world, spawnReason, pos, random);
 	}
 
 	@Override
@@ -263,8 +263,8 @@ public class GhostEntity extends BWHostileEntity {
 				if (blockEntity instanceof WitchAltarBlockEntity witchAltar) {
 					for (int i = 0; i < witchAltar.size(); i++) {
 						Block block = Block.getBlockFromItem(witchAltar.getStack(i).getItem());
-						if (block instanceof CandelabraBlock) {
-							radius = ((CandelabraBlock) block).repellentRadius;
+						if (block instanceof CandelabraBlock candelabraBlock) {
+							radius = candelabraBlock.repellentRadius;
 							break;
 						}
 					}

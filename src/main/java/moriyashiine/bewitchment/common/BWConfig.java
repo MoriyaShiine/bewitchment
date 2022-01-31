@@ -42,15 +42,15 @@ public class BWConfig implements ConfigData {
 	public int toadMinGroupCount = 1;
 	public int toadMaxGroupCount = 3;
 
-	public int ghostWeight = 10;
+	public int ghostWeight = 20;
 	public int ghostMinGroupCount = 1;
 	public int ghostMaxGroupCount = 1;
 
-	public int vampireWeight = 10;
+	public int vampireWeight = 20;
 	public int vampireMinGroupCount = 1;
 	public int vampireMaxGroupCount = 1;
 
-	public int werewolfWeight = 10;
+	public int werewolfWeight = 20;
 	public int werewolfMinGroupCount = 1;
 	public int werewolfMaxGroupCount = 1;
 
