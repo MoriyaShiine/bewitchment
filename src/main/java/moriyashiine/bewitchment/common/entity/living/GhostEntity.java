@@ -65,16 +65,18 @@ public class GhostEntity extends BWHostileEntity {
 		super.tick();
 		noClip = false;
 		setNoGravity(true);
-		if (age % 20 == 0 && getTarget() != null) {
-			int type = dataTracker.get(VARIANT);
-			if (type == 0) {
-				type = random.nextInt(getVariants() - 1) + 1;
+		if (!world.isClient) {
+			if (age % 20 == 0 && getTarget() != null) {
+				int type = dataTracker.get(VARIANT);
+				if (type == 0) {
+					type = random.nextInt(getVariants() - 1) + 1;
+				}
+				getTarget().addStatusEffect(getEffect(type, 100));
 			}
-			getTarget().addStatusEffect(getEffect(type, 100));
-		}
-		if (!world.isClient && !hasCustomName() && world.isDay() && !world.isRaining() && world.isSkyVisibleAllowingSea(getBlockPos())) {
-			PlayerLookup.tracking(this).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, this));
-			remove(RemovalReason.DISCARDED);
+			if (!hasCustomName() && world.isDay() && !world.isRaining() && world.isSkyVisibleAllowingSea(getBlockPos())) {
+				PlayerLookup.tracking(this).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, this));
+				remove(RemovalReason.DISCARDED);
+			}
 		}
 	}
 
