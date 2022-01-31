@@ -6,6 +6,7 @@ package moriyashiine.bewitchment.mixin.integration.origins;
 
 import io.github.apace100.apoli.power.Power;
 import io.github.apace100.apoli.power.PowerType;
+import io.github.apace100.apoli.power.PreventItemUsePower;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -16,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(targets = "io.github.apace100.apoli.power.PreventItemUsePower", remap = false)
+@Mixin(value = PreventItemUsePower.class, remap = false)
 public class PreventItemUsePowerMixin extends Power {
 	@Unique
 	private static final Identifier VEGETARIAN = new Identifier("origins", "vegetarian");
@@ -26,9 +27,9 @@ public class PreventItemUsePowerMixin extends Power {
 	}
 
 	@Inject(method = "doesPrevent", at = @At("RETURN"), cancellable = true)
-	private void doesPrevent(ItemStack stack, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (callbackInfo.getReturnValue() && BewitchmentAPI.isWerewolf(entity, true) && getType().getIdentifier().equals(VEGETARIAN)) {
-			callbackInfo.setReturnValue(false);
+	private void doesPrevent(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+		if (cir.getReturnValue() && BewitchmentAPI.isWerewolf(entity, true) && getType().getIdentifier().equals(VEGETARIAN)) {
+			cir.setReturnValue(false);
 		}
 	}
 }

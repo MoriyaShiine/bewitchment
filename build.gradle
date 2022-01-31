@@ -105,7 +105,6 @@ dependencies {
 //        transitive = false
 //    }
     modCompileOnly "com.github.apace100:origins-fabric:${origins_version}"
-    modRuntimeOnly "com.github.apace100:origins-fabric:${origins_version}"
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
 }
 
