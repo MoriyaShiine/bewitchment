@@ -27,9 +27,13 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 public class TransformationComponent implements AutoSyncedComponent, ServerTickingComponent {
@@ -121,13 +125,26 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 			}
 			if (isAlternateForm()) {
 				obj.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
-				obj.getArmorItems().forEach(stack -> obj.dropStack(stack.split(1)));
+				Set<ItemStack> toDrop = new HashSet<>();
+				obj.getArmorItems().forEach(stack -> {
+					if (!stack.isEmpty()) {
+						toDrop.add(stack);
+					}
+				});
 				if (BWUtil.isTool(obj.getMainHandStack())) {
-					obj.dropStack(obj.getMainHandStack().split(1));
+					toDrop.add(obj.getMainHandStack());
 				}
 				if (BWUtil.isTool(obj.getOffHandStack())) {
-					obj.dropStack(obj.getOffHandStack().split(1));
+					toDrop.add(obj.getOffHandStack());
 				}
+				toDrop.forEach(stack -> {
+					int firstEmptyInventorySlot = getFirstEmptyInventorySlot();
+					if (firstEmptyInventorySlot != -1) {
+						obj.getInventory().setStack(firstEmptyInventorySlot, stack.split(stack.getCount()));
+					} else {
+						obj.dropStack(stack.split(stack.getCount()));
+					}
+				});
 				if (!forced && !BewitchmentAPI.isPledged(obj, BWPledges.HERNE)) {
 					TransformationAbilityPacket.useAbility(obj, true);
 				}
@@ -218,5 +235,14 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 			armorToughnessAttribute.removeModifier(WEREWOLF_ARMOR_TOUGHNESS_MODIFIER_1);
 			movementSpeedAttribute.removeModifier(WEREWOLF_MOVEMENT_SPEED_MODIFIER_1);
 		}
+	}
+
+	private int getFirstEmptyInventorySlot() {
+		for (int i = 0; i < obj.getInventory().main.size(); i++) {
+			if (!PlayerInventory.isValidHotbarIndex(i) && obj.getInventory().main.get(i).isEmpty()) {
+				return i;
+			}
+		}
+		return -1;
 	}
 }
