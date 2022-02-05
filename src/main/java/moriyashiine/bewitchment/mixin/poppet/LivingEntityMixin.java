@@ -6,6 +6,7 @@ package moriyashiine.bewitchment.mixin.poppet;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.event.ReviveEvents;
+import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.misc.PoppetData;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.Bewitchment;
@@ -84,7 +85,7 @@ public abstract class LivingEntityMixin extends Entity {
 					}
 				}
 			}
-			if (source.isFire() || source.isFromFalling() || source == DamageSource.DROWN || source == DamageSource.FLY_INTO_WALL) {
+			if (PoppetItem.PROTECTION_POPPET_SOURCES.test(source)) {
 				PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.PROTECTION_POPPET, this);
 				if (!poppetData.stack.isEmpty()) {
 					boolean sync = false;
