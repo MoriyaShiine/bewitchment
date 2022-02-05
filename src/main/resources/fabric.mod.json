@@ -38,7 +38,8 @@
 	]
   },
   "mixins": [
-	"bewitchment.mixins.json"
+	"bewitchment.mixins.json",
+	"bewitchment.vampirehacks.mixins.json"
   ],
   "accessWidener": "bewitchment.accesswidener",
   "depends": {

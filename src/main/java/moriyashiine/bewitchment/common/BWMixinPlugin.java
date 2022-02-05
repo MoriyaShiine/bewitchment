@@ -24,7 +24,7 @@ public class BWMixinPlugin implements IMixinConfigPlugin {
 
 	@Override
 	public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-		if (mixinClassName.equals("moriyashiine.bewitchment.mixin.integration.origins.PreventItemUsePower")) {
+		if (mixinClassName.startsWith("moriyashiine.bewitchment.mixin.integration.origins")) {
 			return FabricLoader.getInstance().isModLoaded("origins");
 		}
 		return true;

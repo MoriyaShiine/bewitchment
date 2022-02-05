@@ -2,7 +2,7 @@
  * All Rights Reserved (c) 2022 MoriyaShiine
  */
 
-package moriyashiine.bewitchment.mixin.transformation;
+package moriyashiine.bewitchment.mixin.vampirehack;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.common.registry.BWDamageSources;
@@ -16,10 +16,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin({Entity.class, LivingEntity.class, PlayerEntity.class, ServerPlayerEntity.class})
-public class VampireHackMixin {
+public class FireToSunDamageMixin {
 	@ModifyVariable(method = "damage", at = @At("HEAD"), argsOnly = true)
-	private DamageSource modifyDamage(DamageSource source) {
-		if (source.isFire() && BewitchmentAPI.isVampire((Entity) (Object) this, true)) {
+	private DamageSource bewitchment$turnFireDamageIntoSunDamageForVampires(DamageSource source) {
+		if (source.isFire() && BewitchmentAPI.isVampire(Entity.class.cast(this), true)) {
 			return BWDamageSources.SUN;
 		}
 		return source;

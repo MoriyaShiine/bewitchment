@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "moriyashiine.bewitchment.mixin.vampirehack",
+  "compatibilityLevel": "JAVA_16",
+  "mixinPriority": 0,
+  "mixins": [
+	"EntityMixin",
+	"FireToSunDamageMixin",
+	"ProtectionEnchantmentMixin",
+	"RemoveFireInvulnerabilityMixin"
+  ],
+  "injectors": {
+	"defaultRequire": 1
+  }
+}

@@ -10,9 +10,7 @@ import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @SuppressWarnings("ConstantConditions")
 @Mixin(Entity.class)
@@ -23,12 +21,5 @@ public abstract class EntityMixin {
 			return EntityPose.STANDING;
 		}
 		return pose;
-	}
-
-	@Inject(method = "isFireImmune", at = @At("RETURN"), cancellable = true)
-	private void isFireImmune(CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (callbackInfo.getReturnValue() && BewitchmentAPI.isVampire((Entity) (Object) this, true)) {
-			callbackInfo.setReturnValue(false);
-		}
 	}
 }

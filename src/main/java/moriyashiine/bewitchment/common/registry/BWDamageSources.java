@@ -12,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.EntityDamageSource;
+import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("BooleanMethodIsAlwaysInverted")
@@ -20,7 +21,7 @@ public class BWDamageSources {
 	public static final DamageSource WEDNESDAY = new UnblockableDamageSource("wednesday");
 	public static final DamageSource DEATH = new UnblockableDamageSource("death");
 	public static final DamageSource VAMPIRE = new EmptyDamageSource("vampire");
-	public static final DamageSource SUN = new ArmorPiercingDamageSource("onFire");
+	public static final DamageSource SUN = new SunDamageSource("sun");
 
 	public static float handleDamage(LivingEntity entity, DamageSource source, float amount) {
 		if (BewitchmentAPI.isWeakToSilver(entity) && BewitchmentAPI.isSourceFromSilver(source)) {
@@ -97,6 +98,17 @@ public class BWDamageSources {
 			super("player", source);
 			setUsesMagic();
 			setBypassesArmor();
+		}
+	}
+
+	public static class SunDamageSource extends ArmorPiercingDamageSource {
+		public SunDamageSource(String name) {
+			super(name);
+		}
+
+		@Override
+		public Text getDeathMessage(LivingEntity entity) {
+			return DamageSource.ON_FIRE.getDeathMessage(entity);
 		}
 	}
 }

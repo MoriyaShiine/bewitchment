@@ -2,7 +2,7 @@
  * All Rights Reserved (c) 2022 MoriyaShiine
  */
 
-package moriyashiine.bewitchment.mixin.transformation;
+package moriyashiine.bewitchment.mixin.vampirehack;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import net.minecraft.enchantment.ProtectionEnchantment;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ProtectionEnchantment.class)
 public class ProtectionEnchantmentMixin {
 	@Inject(method = "transformFireDuration", at = @At("HEAD"), cancellable = true)
-	private static void transformFireDuration(LivingEntity entity, int duration, CallbackInfoReturnable<Integer> callbackInfo) {
+	private static void bewitchment$makeFireProtectionUselessForVampires(LivingEntity entity, int duration, CallbackInfoReturnable<Integer> callbackInfo) {
 		if (BewitchmentAPI.isVampire(entity, true)) {
 			callbackInfo.setReturnValue(duration);
 		}
