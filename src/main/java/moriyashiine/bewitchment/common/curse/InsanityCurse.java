@@ -27,6 +27,9 @@ public class InsanityCurse extends Curse {
 	public void tick(LivingEntity target) {
 		if (target.age % 20 == 0 && target.getRandom().nextFloat() < 1 / 100f) {
 			List<SpawnSettings.SpawnEntry> entries = target.world.getBiome(target.getBlockPos()).getSpawnSettings().getSpawnEntries(SpawnGroup.MONSTER).getEntries();
+			if (entries.isEmpty()) {
+				return;
+			}
 			Entity entity = null;
 			int tries = 0;
 			while (tries < 16) {
