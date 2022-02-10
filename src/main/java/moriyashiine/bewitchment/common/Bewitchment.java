@@ -79,6 +79,11 @@ public class Bewitchment implements ModInitializer {
 			BWComponents.TRANSFORMATION_COMPONENT.get(newPlayer).setAlternateForm(false);
 			BWComponents.ADDITIONAL_WEREWOLF_DATA_COMPONENT.get(newPlayer).setForcedTransformation(false);
 		});
+		ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
+			if (alive && BWComponents.TRANSFORMATION_COMPONENT.get(oldPlayer).isAlternateForm()) {
+				TransformationAbilityPacket.useAbility(newPlayer, true);
+			}
+		});
 		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, entity, killedEntity) -> {
 			if (entity instanceof LivingEntity livingEntity) {
 				if (livingEntity instanceof PlayerEntity player && killedEntity.getGroup() == EntityGroup.ARTHROPOD && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.TOAD) {
