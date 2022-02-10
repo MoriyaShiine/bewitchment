@@ -52,7 +52,11 @@ public abstract class PotionEntityMixin extends ThrownItemEntity {
 							poppetData.update(world, sync);
 							continue;
 						}
-						owner.addStatusEffect(effect);
+						if (effect.getEffectType().isInstant()) {
+							effect.getEffectType().applyInstantEffect(null, null, owner, effect.getAmplifier(), 0.5);
+						} else {
+							owner.addStatusEffect(new StatusEffectInstance(effect.getEffectType(), effect.getDuration() / 2, effect.getAmplifier(), effect.isAmbient(), effect.shouldShowParticles()));
+						}
 					}
 				}
 			}
