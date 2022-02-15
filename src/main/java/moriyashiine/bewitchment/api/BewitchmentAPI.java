@@ -66,7 +66,7 @@ public class BewitchmentAPI {
 		if (world instanceof ServerWorld && (taglock.getItem() instanceof TaglockItem || taglock.getItem() instanceof PoppetItem) && TaglockItem.hasTaglock(taglock)) {
 			UUID ownerUUID = TaglockItem.getTaglockUUID(taglock);
 			for (ServerWorld serverWorld : world.getServer().getWorlds()) {
-				if (serverWorld.getEntity(ownerUUID) instanceof LivingEntity livingEntity) {
+				if (serverWorld.getEntity(ownerUUID) instanceof LivingEntity livingEntity && livingEntity.isAlive()) {
 					return livingEntity;
 				}
 			}
