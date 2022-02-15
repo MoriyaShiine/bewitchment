@@ -5,6 +5,7 @@
 package moriyashiine.bewitchment.mixin.poppet;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
+import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWObjects;
@@ -14,6 +15,7 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -84,6 +86,15 @@ public abstract class ItemEntityMixin extends Entity {
 			if (source.isFire() || source == DamageSource.LIGHTNING_BOLT || source == DamageSource.CACTUS) {
 				callbackInfo.setReturnValue(false);
 			}
+		}
+	}
+
+	@Inject(method = "applyWaterBuoyancy", at = @At("HEAD"), cancellable = true)
+	private void bewitchment$stopPoppetsFromFloating(CallbackInfo ci) {
+		if (getStack().getItem() instanceof PoppetItem) {
+			Vec3d velocity = getVelocity();
+			setVelocity(velocity.x * 0.99, velocity.y * 0.9, velocity.z * 0.99);
+			ci.cancel();
 		}
 	}
 }
