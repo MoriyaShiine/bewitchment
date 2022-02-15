@@ -33,6 +33,9 @@ public class AdditionalWaterDataComponent implements AutoSyncedComponent, Server
 
 	@Override
 	public void serverTick() {
+		if (isSubmerged()) {
+			setSubmerged(false);
+		}
 		if (getWetTimer() > 0) {
 			setWetTimer(getWetTimer() - 1);
 		}

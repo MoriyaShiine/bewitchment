@@ -61,7 +61,6 @@
 	"pledge.EntityMixin",
 	"pledge.LivingEntityMixin",
 	"pledge.MobEntityMixin",
-	"poppet.EntityMixin",
 	"poppet.ItemEntityMixin",
 	"poppet.ItemStackMixin",
 	"poppet.LivingEntityMixin",
