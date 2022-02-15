@@ -5,7 +5,6 @@
 package moriyashiine.bewitchment.mixin.poppet;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.api.misc.PoppetData;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWObjects;
@@ -15,7 +14,6 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -35,7 +33,7 @@ public abstract class ItemEntityMixin extends Entity {
 
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo callbackInfo) {
-		if (getStack().getItem() == BWObjects.VOODOO_POPPET && !Bewitchment.config.disabledPoppets.contains(Registry.ITEM.getId(getStack().getItem()).toString())) {
+		if (getStack().getItem() == BWObjects.VOODOO_POPPET && !Bewitchment.config.disabledPoppets.contains("bewitchment:voodoo_poppet")) {
 			LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, getStack());
 			if (owner != null) {
 				if (getVelocity().length() > 1 / 8f) {
@@ -43,21 +41,19 @@ public abstract class ItemEntityMixin extends Entity {
 					if (getStack().damage(damage, random, null) && getStack().getDamage() >= getStack().getMaxDamage()) {
 						getStack().decrement(1);
 					}
-					PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner);
-					if (!poppetData.stack.isEmpty()) {
-						boolean sync = false;
-						if (poppetData.stack.damage(damage, random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
-							poppetData.stack.decrement(1);
-							sync = true;
-						}
-						poppetData.update(world, sync);
-						return;
+					if (!BewitchmentAPI.hasVoodooProtection(owner, damage)) {
+						owner.addVelocity(getVelocity().x / 2, getVelocity().y / 2, getVelocity().z / 2);
+						owner.velocityModified = true;
 					}
-					owner.addVelocity(getVelocity().x / 2, getVelocity().y / 2, getVelocity().z / 2);
-					owner.velocityModified = true;
 				}
 				if (isSubmergedInWater()) {
-					BWComponents.ADDITIONAL_WATER_DATA_COMPONENT.get(owner).setSubmerged(true);
+					int damage = age % 20 == 0 ? 1 : 0;
+					if (getStack().damage(damage, random, null) && getStack().getDamage() >= getStack().getMaxDamage()) {
+						getStack().decrement(1);
+					}
+					if (!BewitchmentAPI.hasVoodooProtection(owner, damage)) {
+						BWComponents.ADDITIONAL_WATER_DATA_COMPONENT.get(owner).setSubmerged(true);
+					}
 				}
 			}
 		}
@@ -65,39 +61,23 @@ public abstract class ItemEntityMixin extends Entity {
 
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (getStack().getItem() == BWObjects.VOODOO_POPPET) {
+		if (getStack().getItem() == BWObjects.VOODOO_POPPET && !Bewitchment.config.disabledPoppets.contains("bewitchment:voodoo_poppet")) {
 			if (!world.isClient) {
 				LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, getStack());
 				if (owner != null) {
 					if (source.isFire() || source == DamageSource.LIGHTNING_BOLT) {
 						remove(RemovalReason.DISCARDED);
-						PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner);
-						if (!poppetData.stack.isEmpty()) {
-							boolean sync = false;
-							if (poppetData.stack.damage(getStack().getMaxDamage() / 2, random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
-								poppetData.stack.decrement(1);
-								sync = true;
-							}
-							poppetData.update(world, sync);
-							return;
+						if (!BewitchmentAPI.hasVoodooProtection(owner, getStack().getMaxDamage() / 4)) {
+							owner.setFireTicks(Integer.MAX_VALUE);
 						}
-						owner.setFireTicks(Integer.MAX_VALUE);
 					}
 					if (source == DamageSource.CACTUS && owner.hurtTime == 0) {
 						if (getStack().damage(1, random, null) && getStack().getDamage() >= getStack().getMaxDamage()) {
 							getStack().decrement(1);
 						}
-						PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.VOODOO_PROTECTION_POPPET, owner);
-						if (!poppetData.stack.isEmpty()) {
-							boolean sync = false;
-							if (poppetData.stack.damage(1, random, null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
-								poppetData.stack.decrement(1);
-								sync = true;
-							}
-							poppetData.update(world, sync);
-							return;
+						if (!BewitchmentAPI.hasVoodooProtection(owner, 1)) {
+							owner.damage(DamageSource.CACTUS, 1);
 						}
-						owner.damage(DamageSource.CACTUS, 1);
 					}
 				}
 			}

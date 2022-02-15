@@ -234,6 +234,20 @@ public class BewitchmentAPI {
 		return pledgeComponent.getPledge().equals(pledge);
 	}
 
+	public static boolean hasVoodooProtection(LivingEntity living, int damage) {
+		PoppetData poppetData = BewitchmentAPI.getPoppet(living.world, BWObjects.VOODOO_PROTECTION_POPPET, living);
+		if (!poppetData.stack.isEmpty()) {
+			boolean sync = false;
+			if (poppetData.stack.damage(damage, living.getRandom(), null) && poppetData.stack.getDamage() >= poppetData.stack.getMaxDamage()) {
+				poppetData.stack.decrement(1);
+				sync = true;
+			}
+			poppetData.update(living.world, sync);
+			return true;
+		}
+		return false;
+	}
+
 	public static void unpledge(PlayerEntity player) {
 		BWComponents.PLEDGE_COMPONENT.get(player).setPledge(BWPledges.NONE);
 	}
