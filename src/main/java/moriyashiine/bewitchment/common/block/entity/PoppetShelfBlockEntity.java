@@ -80,9 +80,11 @@ public class PoppetShelfBlockEntity extends BlockEntity {
 	@Override
 	protected void writeNbt(NbtCompound nbt) {
 		super.writeNbt(nbt);
-		DefaultedList<ItemStack> inventory = BWWorldState.get(world).poppetShelves.get(pos.asLong());
-		if (inventory != null) {
-			Inventories.writeNbt(nbt, inventory);
+		if (world != null && !world.isClient) {
+			DefaultedList<ItemStack> inventory = BWWorldState.get(world).poppetShelves.get(pos.asLong());
+			if (inventory != null) {
+				Inventories.writeNbt(nbt, inventory);
+			}
 		}
 	}
 
