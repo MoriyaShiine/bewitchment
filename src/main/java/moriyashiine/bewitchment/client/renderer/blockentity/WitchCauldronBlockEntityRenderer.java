@@ -20,7 +20,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Matrix4f;
@@ -75,17 +74,16 @@ public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<Wit
 	}
 
 	private void renderName(WitchCauldronBlockEntity entity, BlockPos pos, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
-		if (entity.hasCustomName()) {
+		if (entity.name != null) {
 			if (pos.getSquaredDistance(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getPos(), true) <= 256) {
 				matrices.push();
 				matrices.translate(0.5, 1, 0.5);
 				matrices.multiply(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getRotation());
 				matrices.scale(-0.025f, -0.025f, 0.025f);
-				Text name = entity.getCustomName();
 				Matrix4f model = matrices.peek().getPositionMatrix();
-				int x = -MinecraftClient.getInstance().textRenderer.getWidth(name) / 2;
-				MinecraftClient.getInstance().textRenderer.draw(name, x, 0, 0x20ffff, false, model, vertexConsumers, true, (int) (MinecraftClient.getInstance().options.getTextBackgroundOpacity(0.25f) * 255f) << 24, light);
-				MinecraftClient.getInstance().textRenderer.draw(name, x, 0, -1, false, model, vertexConsumers, false, 0, light);
+				int x = -MinecraftClient.getInstance().textRenderer.getWidth(entity.name) / 2;
+				MinecraftClient.getInstance().textRenderer.draw(entity.name, x, 0, 0x20ffff, false, model, vertexConsumers, true, (int) (MinecraftClient.getInstance().options.getTextBackgroundOpacity(0.25f) * 255f) << 24, light);
+				MinecraftClient.getInstance().textRenderer.draw(entity.name, x, 0, -1, false, model, vertexConsumers, false, 0, light);
 				matrices.pop();
 			}
 		}

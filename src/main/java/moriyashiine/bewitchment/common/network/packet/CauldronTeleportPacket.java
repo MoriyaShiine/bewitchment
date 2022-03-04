@@ -9,7 +9,6 @@ import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
-import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWPledges;
 import moriyashiine.bewitchment.common.world.BWWorldState;
@@ -24,6 +23,8 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.Map;
 
 @SuppressWarnings("ConstantConditions")
 public class CauldronTeleportPacket {
@@ -43,11 +44,12 @@ public class CauldronTeleportPacket {
 			World world = player.world;
 			BlockPos closest = null;
 			BWWorldState worldState = BWWorldState.get(world);
-			for (Long longPos : worldState.witchCauldrons) {
-				BlockPos pos = BlockPos.fromLong(longPos);
-				BlockEntity blockEntity = world.getBlockEntity(pos);
-				if (blockEntity instanceof WitchCauldronBlockEntity cauldron && cauldron.hasCustomName() && cauldron.getCustomName().getString().equals(message) && (closest == null || pos.getSquaredDistance(player.getPos(), true) < closest.getSquaredDistance(player.getPos(), true))) {
-					closest = pos;
+			for (Map.Entry<Long, String> entry : worldState.witchCauldrons.entrySet()) {
+				if (message.equals(entry.getValue())) {
+					BlockPos foundCauldronPos = BlockPos.fromLong(entry.getKey());
+					if (closest == null || cauldronPos.getSquaredDistance(player.getPos(), true) < closest.getSquaredDistance(player.getPos(), true)) {
+						closest = foundCauldronPos;
+					}
 				}
 			}
 			if (closest != null) {

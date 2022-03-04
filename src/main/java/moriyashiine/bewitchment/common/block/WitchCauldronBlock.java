@@ -109,7 +109,11 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 			if (nameTag || bucket || waterBucket || glassBottle || waterBottle) {
 				if (!client) {
 					if (nameTag && stack.hasCustomName()) {
-						cauldron.customName = stack.getName();
+						cauldron.name = stack.getName().asString();
+						cauldron.markDirty();
+						BWWorldState worldState = BWWorldState.get(world);
+						worldState.witchCauldrons.put(pos.asLong(), cauldron.name);
+						worldState.markDirty();
 						if (!player.isCreative()) {
 							stack.decrement(1);
 						}
@@ -178,9 +182,6 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 	@Override
 	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
 		if (!world.isClient && state.getBlock() != oldState.getBlock()) {
-			BWWorldState worldState = BWWorldState.get(world);
-			worldState.witchCauldrons.add(pos.asLong());
-			worldState.markDirty();
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			((UsesAltarPower) blockEntity).setAltarPos(WitchAltarBlock.getClosestAltarPos(world, pos));
 			blockEntity.markDirty();
@@ -191,12 +192,10 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!world.isClient && state.getBlock() != newState.getBlock()) {
 			BWWorldState worldState = BWWorldState.get(world);
-			for (int i = worldState.witchCauldrons.size() - 1; i >= 0; i--) {
-				if (worldState.witchCauldrons.get(i) == pos.asLong()) {
-					worldState.witchCauldrons.remove(i);
-					worldState.markDirty();
-				}
-			}
+			System.out.println(worldState.witchCauldrons.remove(pos.asLong()));
+//			if (worldState.witchCauldrons.remove(pos.asLong()) != null) {
+//				worldState.markDirty();
+//			}
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);
 	}

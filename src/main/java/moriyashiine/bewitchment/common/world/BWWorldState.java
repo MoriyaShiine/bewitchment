@@ -22,10 +22,10 @@ import java.util.Map;
 
 public class BWWorldState extends PersistentState {
 	public final Map<Long, DefaultedList<ItemStack>> poppetShelves = new LinkedHashMap<>();
+	public final Map<Long, String> witchCauldrons = new LinkedHashMap<>();
 
 	public final List<Long> potentialCandelabras = new ArrayList<>();
 	public final List<Long> potentialSigils = new ArrayList<>();
-	public final List<Long> witchCauldrons = new ArrayList<>();
 	public final List<Long> glowingBrambles = new ArrayList<>();
 
 	public static BWWorldState readNbt(NbtCompound nbt) {
@@ -40,6 +40,13 @@ public class BWWorldState extends PersistentState {
 			}
 			worldState.poppetShelves.put(poppetShelfCompound.getLong("Pos"), inventory);
 		}
+		NbtList witchCauldronsList = nbt.getList("WitchCauldrons", NbtType.COMPOUND);
+		for (int i = 0; i < witchCauldronsList.size(); i++) {
+			NbtCompound cauldronCompound = witchCauldronsList.getCompound(i);
+			if (cauldronCompound.contains("Name")) {
+				worldState.witchCauldrons.put(cauldronCompound.getLong("Pos"), cauldronCompound.getString("Name"));
+			}
+		}
 		NbtList potentialCandelabrasList = nbt.getList("PotentialCandelabras", NbtType.COMPOUND);
 		for (int i = 0; i < potentialCandelabrasList.size(); i++) {
 			NbtCompound posCompound = potentialCandelabrasList.getCompound(i);
@@ -49,11 +56,6 @@ public class BWWorldState extends PersistentState {
 		for (int i = 0; i < potentialSigilsList.size(); i++) {
 			NbtCompound posCompound = potentialSigilsList.getCompound(i);
 			worldState.potentialSigils.add(posCompound.getLong("Pos"));
-		}
-		NbtList witchCauldronsList = nbt.getList("WitchCauldrons", NbtType.COMPOUND);
-		for (int i = 0; i < witchCauldronsList.size(); i++) {
-			NbtCompound posCompound = witchCauldronsList.getCompound(i);
-			worldState.witchCauldrons.add(posCompound.getLong("Pos"));
 		}
 		NbtList glowingBramblesList = nbt.getList("GlowingBrambles", NbtType.COMPOUND);
 		for (int i = 0; i < glowingBramblesList.size(); i++) {
@@ -75,6 +77,14 @@ public class BWWorldState extends PersistentState {
 			poppetShelvesList.add(poppetShelfCompound);
 		});
 		nbt.put("PoppetShelves", poppetShelvesList);
+		NbtList witchCauldronsList = new NbtList();
+		this.witchCauldrons.forEach((pos, name) -> {
+			NbtCompound cauldronCompound = new NbtCompound();
+			cauldronCompound.putLong("Pos", pos);
+			cauldronCompound.putString("Name", name);
+			witchCauldronsList.add(cauldronCompound);
+		});
+		nbt.put("WitchCauldrons", witchCauldronsList);
 		NbtList potentialCandelabrasList = new NbtList();
 		for (long pos : this.potentialCandelabras) {
 			NbtCompound posCompound = new NbtCompound();
@@ -89,13 +99,6 @@ public class BWWorldState extends PersistentState {
 			potentialSigilsList.add(posCompound);
 		}
 		nbt.put("PotentialSigils", potentialSigilsList);
-		NbtList witchCauldronsList = new NbtList();
-		for (long pos : this.witchCauldrons) {
-			NbtCompound posCompound = new NbtCompound();
-			posCompound.putLong("Pos", pos);
-			witchCauldronsList.add(posCompound);
-		}
-		nbt.put("WitchCauldrons", witchCauldronsList);
 		NbtList glowingBramblesList = new NbtList();
 		for (long pos : this.glowingBrambles) {
 			NbtCompound posCompound = new NbtCompound();

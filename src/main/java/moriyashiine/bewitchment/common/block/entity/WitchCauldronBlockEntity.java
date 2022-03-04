@@ -11,7 +11,6 @@ import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.recipe.CauldronBrewingRecipe;
 import moriyashiine.bewitchment.common.recipe.OilRecipe;
 import moriyashiine.bewitchment.common.registry.*;
-import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -36,9 +35,7 @@ import net.minecraft.potion.Potions;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
-import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Nameable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -51,7 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
-public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, Nameable, UsesAltarPower {
+public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, UsesAltarPower {
 	private static final TranslatableText DEFAULT_NAME = new TranslatableText(BWObjects.WITCH_CAULDRON.getTranslationKey());
 
 	private Box box;
@@ -64,7 +61,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, 
 
 	public Mode mode = Mode.NORMAL;
 
-	public Text customName;
+	public String name;
 
 	public int color = 0x3f76e4, heatTimer = 0;
 
@@ -95,8 +92,8 @@ public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, 
 		}
 		Inventories.readNbt(nbt, inventory);
 		mode = Mode.valueOf(nbt.getString("Mode"));
-		if (nbt.contains("CustomName", NbtType.STRING)) {
-			customName = Text.Serializer.fromJson(nbt.getString("CustomName"));
+		if (nbt.contains("Name")) {
+			name = nbt.getString("Name");
 		}
 		if (nbt.contains("Color")) {
 			color = nbt.getInt("Color");
@@ -112,8 +109,8 @@ public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, 
 		}
 		Inventories.writeNbt(nbt, inventory);
 		nbt.putString("Mode", mode.name);
-		if (customName != null) {
-			nbt.putString("CustomName", Text.Serializer.toJson(customName));
+		if (name != null) {
+			nbt.putString("Name", name);
 		}
 		nbt.putInt("Color", color);
 		nbt.putInt("HeatTimer", heatTimer);
@@ -123,17 +120,6 @@ public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, 
 		if (world != null && !world.isClient) {
 			world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_LISTENERS);
 		}
-	}
-
-	@Override
-	public Text getName() {
-		return hasCustomName() ? getCustomName() : DEFAULT_NAME;
-	}
-
-	@Nullable
-	@Override
-	public Text getCustomName() {
-		return customName;
 	}
 
 	@Override
@@ -172,6 +158,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, 
 									world.spawnEntity(remainder);
 								}
 								blockEntity.mode = blockEntity.insertStack(stack.split(1));
+								blockEntity.markDirty();
 								blockEntity.syncCauldron();
 							}
 						});
