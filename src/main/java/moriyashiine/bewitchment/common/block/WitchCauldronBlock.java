@@ -192,10 +192,9 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!world.isClient && state.getBlock() != newState.getBlock()) {
 			BWWorldState worldState = BWWorldState.get(world);
-			System.out.println(worldState.witchCauldrons.remove(pos.asLong()));
-//			if (worldState.witchCauldrons.remove(pos.asLong()) != null) {
-//				worldState.markDirty();
-//			}
+			if (worldState.witchCauldrons.remove(pos.asLong()) != null) {
+				worldState.markDirty();
+			}
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);
 	}
