@@ -221,7 +221,7 @@ public class GlyphBlockEntity extends BlockEntity implements Inventory, UsesAlta
 
 	public void onUse(World world, BlockPos pos, LivingEntity user, Hand hand, LivingEntity sacrifice) {
 		ItemStack stack = user.getStackInHand(hand);
-		if (ritualFunction != null && pos.equals(effectivePos) && stack.getItem() instanceof WaystoneItem && stack.hasNbt() && stack.getOrCreateNbt().contains("LocationPos")) {
+		if (ritualFunction != null && pos.equals(effectivePos) && stack.getItem() instanceof WaystoneItem && stack.hasNbt() && stack.getOrCreateNbt().contains("LocationPos") && world.getRegistryKey().getValue().toString().equals(stack.getOrCreateNbt().getString("LocationWorld"))) {
 			effectivePos = BlockPos.fromLong(stack.getOrCreateNbt().getLong("LocationPos"));
 			stack.damage(1, user, stackUser -> stackUser.sendToolBreakStatus(hand));
 			syncGlyph();
