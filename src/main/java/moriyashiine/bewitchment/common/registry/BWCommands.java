@@ -39,7 +39,7 @@ import java.util.concurrent.CompletableFuture;
 @SuppressWarnings("ConstantConditions")
 public class BWCommands {
 	public static void init(CommandDispatcher<ServerCommandSource> dispatcher, boolean dedicated) {
-		dispatcher.register(CommandManager.literal("fortune").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.literal("get").then(CommandManager.argument("player", EntityArgumentType.player()).executes(context -> {
+		dispatcher.register(CommandManager.literal("fortune").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)).then(CommandManager.literal("get").then(CommandManager.argument("player", EntityArgumentType.player()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
 			Fortune.Instance fortune = BWComponents.FORTUNE_COMPONENT.get(player).getFortune();
 			if (fortune != null) {
@@ -62,7 +62,7 @@ public class BWCommands {
 			}
 			throw FortuneArgumentType.REMOVE_NO_FORTUNE_EXCEPTION.create(player.getEntityName());
 		}))));
-		dispatcher.register(CommandManager.literal("transformation").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.literal("get").then(CommandManager.argument("player", EntityArgumentType.player()).executes(context -> {
+		dispatcher.register(CommandManager.literal("transformation").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)).then(CommandManager.literal("get").then(CommandManager.argument("player", EntityArgumentType.player()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
 			context.getSource().sendFeedback(new TranslatableText("commands.transformation.get", player.getEntityName(), BWRegistries.TRANSFORMATIONS.getId(BWComponents.TRANSFORMATION_COMPONENT.get(player).getTransformation())), false);
 			return Command.SINGLE_SUCCESS;
@@ -80,7 +80,7 @@ public class BWCommands {
 			});
 			return Command.SINGLE_SUCCESS;
 		})))));
-		dispatcher.register(CommandManager.literal("contract").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.literal("get").then(CommandManager.argument("player", EntityArgumentType.player()).executes(context -> {
+		dispatcher.register(CommandManager.literal("contract").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)).then(CommandManager.literal("get").then(CommandManager.argument("player", EntityArgumentType.player()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
 			ContractsComponent contractsComponent = BWComponents.CONTRACTS_COMPONENT.get(player);
 			if (!contractsComponent.getContracts().isEmpty()) {
@@ -135,7 +135,7 @@ public class BWCommands {
 			}
 			throw ContractArgumentType.CLEAR_NO_CONTRACTS_EXCPETION.create(player.getEntityName());
 		}))));
-		dispatcher.register(CommandManager.literal("curse").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(3)).then(CommandManager.literal("get").then(CommandManager.argument("entity", EntityArgumentType.entity()).executes(context -> {
+		dispatcher.register(CommandManager.literal("curse").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)).then(CommandManager.literal("get").then(CommandManager.argument("entity", EntityArgumentType.entity()).executes(context -> {
 			Entity entity = EntityArgumentType.getEntity(context, "entity");
 			if (entity instanceof LivingEntity livingEntity) {
 				CursesComponent cursesComponent = BWComponents.CURSES_COMPONENT.get(livingEntity);
