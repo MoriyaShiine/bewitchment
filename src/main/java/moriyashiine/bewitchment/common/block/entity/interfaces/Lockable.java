@@ -68,7 +68,7 @@ public interface Lockable {
 		if (user.getUuid().equals(getOwner())) {
 			ItemStack stack = user.getStackInHand(hand);
 			if (!getLocked()) {
-				if (BWTags.SILVER_INGOTS.contains(stack.getItem())) {
+				if (stack.isIn(BWTags.SILVER_INGOTS)) {
 					BlockEntity blockEntity = world.getBlockEntity(pos);
 					if (blockEntity instanceof Lockable lockable) {
 						if (!world.isClient) {

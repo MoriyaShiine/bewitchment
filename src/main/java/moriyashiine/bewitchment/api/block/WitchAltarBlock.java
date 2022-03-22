@@ -99,10 +99,9 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 			WitchAltarBlockEntity blockEntity = (WitchAltarBlockEntity) world.getBlockEntity(pos);
 			if (!client) {
 				if (!stack.isEmpty()) {
-					Item item = stack.getItem();
-					boolean sword = BWTags.SWORDS.contains(item);
-					boolean pentacle = BWTags.PENTACLES.contains(item);
-					boolean wand = BWTags.WANDS.contains(item);
+					boolean sword = stack.isIn(BWTags.SWORDS);
+					boolean pentacle = stack.isIn(BWTags.PENTACLES);
+					boolean wand = stack.isIn(BWTags.WANDS);
 					if (sword || pentacle || wand) {
 						int slot = sword ? 0 : pentacle ? 1 : 2;
 						ItemScatterer.spawn(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, blockEntity.removeStack(slot, 1));

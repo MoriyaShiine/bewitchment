@@ -27,7 +27,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	private void eat(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> callbackInfo) {
 		if (!world.isClient) {
 			FoodComponent foodComponent = stack.getItem().getFoodComponent();
-			if (foodComponent != null && BWTags.WITCHBERRY_FOODS.contains(stack.getItem())) {
+			if (foodComponent != null && stack.isIn(BWTags.WITCHBERRY_FOODS)) {
 				BewitchmentAPI.fillMagic((PlayerEntity) (Object) this, foodComponent.getHunger(), false);
 			}
 		}

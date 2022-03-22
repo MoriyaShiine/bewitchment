@@ -213,10 +213,10 @@ public class BewitchmentAPI {
 	}
 
 	public static boolean isWeakToSilver(LivingEntity livingEntity) {
-		if (BWTags.IMMUNE_TO_SILVER.contains(livingEntity.getType())) {
+		if (livingEntity.getType().isIn(BWTags.IMMUNE_TO_SILVER)) {
 			return false;
 		}
-		return livingEntity.isUndead() || livingEntity.getGroup() == DEMON || BWTags.VULNERABLE_TO_SILVER.contains(livingEntity.getType());
+		return livingEntity.isUndead() || livingEntity.getGroup() == DEMON || livingEntity.getType().isIn(BWTags.VULNERABLE_TO_SILVER);
 	}
 
 	public static boolean isPledged(PlayerEntity player, String pledge) {

@@ -38,7 +38,7 @@ public abstract class BlockMixin {
 				if (!drops.isEmpty() && !EnchantmentHelper.get(stack).containsKey(Enchantments.SILK_TOUCH)) {
 					if (contractsComponent.hasContract(BWContracts.GREED)) {
 						for (int i = 0; i < drops.size(); i++) {
-							if (BWTags.ORES.contains(state.getBlock().asItem())) {
+							if (state.isIn(BWTags.ORES)) {
 								for (Recipe<?> smeltingRecipe : world.getRecipeManager().listAllOfType(RecipeType.SMELTING)) {
 									for (Ingredient ingredient : smeltingRecipe.getIngredients()) {
 										if (ingredient.test(drops.get(i))) {

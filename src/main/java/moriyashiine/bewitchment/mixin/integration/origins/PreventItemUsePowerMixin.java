@@ -28,7 +28,7 @@ public class PreventItemUsePowerMixin extends Power {
 
 	@Inject(method = "doesPrevent", at = @At("RETURN"), cancellable = true)
 	private void doesPrevent(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-		if (cir.getReturnValue() && BewitchmentAPI.isWerewolf(entity, true) && getType().getIdentifier().equals(VEGETARIAN)) {
+		if (cir.getReturnValueZ() && BewitchmentAPI.isWerewolf(entity, true) && getType().getIdentifier().equals(VEGETARIAN)) {
 			cir.setReturnValue(false);
 		}
 	}

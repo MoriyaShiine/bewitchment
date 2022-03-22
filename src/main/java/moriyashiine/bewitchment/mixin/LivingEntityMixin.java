@@ -164,7 +164,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Inject(method = "isAffectedBySplashPotions", at = @At("RETURN"), cancellable = true)
 	private void isAffectedBySplashPotions(CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (callbackInfo.getReturnValue() && (Object) this instanceof MobEntity mob && BWComponents.MINION_COMPONENT.get(mob).getMaster() != null) {
+		if (callbackInfo.getReturnValueZ() && (Object) this instanceof MobEntity mob && BWComponents.MINION_COMPONENT.get(mob).getMaster() != null) {
 			callbackInfo.setReturnValue(false);
 		}
 	}

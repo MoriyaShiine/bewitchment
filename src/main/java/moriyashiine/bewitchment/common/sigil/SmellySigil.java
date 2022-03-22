@@ -28,7 +28,7 @@ public class SmellySigil extends Sigil {
 			SigilHolder sigil = ((SigilHolder) world.getBlockEntity(pos));
 			double x = pos.getX() + 0.5, y = pos.getY() + 0.5, z = pos.getZ() + 0.5;
 			for (HostileEntity entity : world.getEntitiesByClass(HostileEntity.class, new Box(pos).expand(16, 6, 16), LivingEntity::isAlive)) {
-				if (!BWTags.TAGLOCK_BLACKLIST.contains(entity.getType()) && sigil.test(entity)) {
+				if (!entity.getType().isIn(BWTags.TAGLOCK_BLACKLIST) && sigil.test(entity)) {
 					if (entity.getNavigation().getTargetPos() == null || world.getBlockState(entity.getNavigation().getTargetPos()).getBlock() != BWObjects.SIGIL) {
 						if (entity.getTarget() == null && Math.sqrt(entity.squaredDistanceTo(new Vec3d(x, y, z))) > 3 && (entity.getNavigation().getTargetPos() == null || entity.getNavigation().getTargetPos().getSquaredDistance(pos) > 1)) {
 							entity.getNavigation().startMovingTo(x, y, z, 1);

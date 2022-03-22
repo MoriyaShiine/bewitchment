@@ -37,7 +37,7 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 
 	@Override
 	public void serverTick() {
-		if (BWTags.HAS_BLOOD.contains(obj.getType()) && !BewitchmentAPI.isVampire(obj, true) && obj.getRandom().nextFloat() < (obj.isSleeping() ? 1 / 50f : 1 / 500f)) {
+		if (obj.getType().isIn(BWTags.HAS_BLOOD) && !BewitchmentAPI.isVampire(obj, true) && obj.getRandom().nextFloat() < (obj.isSleeping() ? 1 / 50f : 1 / 500f)) {
 			fillBlood(1, false);
 		}
 	}

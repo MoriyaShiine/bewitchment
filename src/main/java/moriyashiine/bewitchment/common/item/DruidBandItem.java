@@ -21,7 +21,7 @@ public class DruidBandItem extends TrinketItem {
 
 	@Override
 	public void tick(ItemStack stack, SlotReference slot, LivingEntity entity) {
-		if (entity instanceof PlayerEntity player && !entity.world.isClient && entity.age % 10 == 0 & BWTags.NATURAL_TERRAIN.contains(entity.world.getBlockState(entity.getBlockPos().down()).getBlock())) {
+		if (entity instanceof PlayerEntity player && !entity.world.isClient && entity.age % 10 == 0 & entity.world.getBlockState(entity.getBlockPos().down()).isIn(BWTags.NATURAL_TERRAIN)) {
 			StatusEffectInstance speed = new StatusEffectInstance(StatusEffects.SPEED, 300, 0, true, false);
 			StatusEffectInstance regeneration = new StatusEffectInstance(StatusEffects.REGENERATION, 300, 0, true, false);
 			boolean canApply = entity.canHaveStatusEffect(speed) && !entity.hasStatusEffect(StatusEffects.SPEED);

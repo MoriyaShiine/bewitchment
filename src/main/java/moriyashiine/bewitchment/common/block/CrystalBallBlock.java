@@ -119,10 +119,10 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 					FortuneComponent fortuneComponent = BWComponents.FORTUNE_COMPONENT.get(player);
 					if (fortuneComponent.getFortune() == null) {
 						sound = BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE;
-						Fortune fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
+						Fortune fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.size()));
 						if (BWComponents.CURSES_COMPONENT.get(player).hasCurse(BWCurses.UNLUCKY)) {
 							while (fortune.positive) {
-								fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.getEntries().size()));
+								fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.size()));
 							}
 						}
 						fortuneComponent.setFortune(new Fortune.Instance(fortune, world.random.nextInt(120000)));

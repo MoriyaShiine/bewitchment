@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MobEntityRendererMixin<T extends MobEntity, M extends EntityModel<T>> {
 	@Inject(method = "shouldRender(Lnet/minecraft/entity/mob/MobEntity;Lnet/minecraft/client/render/Frustum;DDD)Z", at = @At("RETURN"), cancellable = true)
 	private void shouldRender(T mobEntity, Frustum frustum, double d, double e, double f, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (callbackInfo.getReturnValue()) {
+		if (callbackInfo.getReturnValueZ()) {
 			BWComponents.FAKE_MOB_COMPONENT.maybeGet(mobEntity).ifPresent(fakeMobComponent -> {
 				if (fakeMobComponent.getTarget() != null && !MinecraftClient.getInstance().player.getUuid().equals(fakeMobComponent.getTarget())) {
 					callbackInfo.setReturnValue(false);

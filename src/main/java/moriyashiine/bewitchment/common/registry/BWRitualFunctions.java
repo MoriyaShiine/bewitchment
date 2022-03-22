@@ -40,7 +40,7 @@ public class BWRitualFunctions {
 	public static final RitualFunction BIND_FAMILIAR = create("bind_familiar", new BindFamiliarRitualFunction(ParticleTypes.PORTAL, null));
 	public static final RitualFunction UNBIND_FAMILIAR = create("unbind_familiar", new UnbindFamiliarRitualFunction(ParticleTypes.PORTAL, null));
 	public static final RitualFunction SUMMON_WITHER = create("summon_wither", new SummonWitherRitualFunction(ParticleTypes.FLAME, null));
-	public static final RitualFunction SUMMON_DEMON = create("summon_demon", new SummonDemonRitualFunction(ParticleTypes.FLAME, livingEntity -> BWTags.HAS_BLOOD.contains(livingEntity.getType())));
+	public static final RitualFunction SUMMON_DEMON = create("summon_demon", new SummonDemonRitualFunction(ParticleTypes.FLAME, livingEntity -> livingEntity.getType().isIn(BWTags.HAS_BLOOD)));
 	public static final RitualFunction SUMMON_LEONARD = create("summon_leonard", new SummonLeonardRitualFunction(ParticleTypes.FLAME, livingEntity -> livingEntity instanceof SheepEntity));
 	public static final RitualFunction SUMMON_BAPHOMET = create("summon_baphomet", new SummonBaphometRitualFunction(ParticleTypes.FLAME, livingEntity -> livingEntity instanceof SheepEntity));
 

@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "moriyashiine.bewitchment.mixin",
   "plugin": "moriyashiine.bewitchment.common.BWMixinPlugin",
-  "compatibilityLevel": "JAVA_16",
+  "compatibilityLevel": "JAVA_17",
   "mixins": [
 	"AbstractBlockMixin",
 	"AbstractBlockStateMixin",

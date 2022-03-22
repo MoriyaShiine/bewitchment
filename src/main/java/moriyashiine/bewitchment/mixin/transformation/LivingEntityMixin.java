@@ -36,7 +36,7 @@ public abstract class LivingEntityMixin extends Entity {
 	@Inject(method = "getJumpVelocity", at = @At("RETURN"), cancellable = true)
 	private void getJumpVelocity(CallbackInfoReturnable<Float> callbackInfo) {
 		if ((Object) this instanceof PlayerEntity && BewitchmentAPI.isWerewolf(this, false)) {
-			callbackInfo.setReturnValue(callbackInfo.getReturnValue() * 1.5f);
+			callbackInfo.setReturnValue(callbackInfo.getReturnValueF() * 1.5f);
 		}
 	}
 

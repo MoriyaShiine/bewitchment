@@ -30,6 +30,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
@@ -119,7 +120,7 @@ public class WerewolfEntity extends BWHostileEntity {
 	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityTag) {
 		EntityData data = super.initialize(world, difficulty, spawnReason, entityData, entityTag);
 		if (dataTracker.get(VARIANT) != 0) {
-			switch (world.getBiome(getBlockPos()).getCategory()) {
+			switch (Biome.getCategory(world.getBiome(getBlockPos()))) {
 				case FOREST -> dataTracker.set(VARIANT, random.nextBoolean() ? 1 : 2);
 				case TAIGA -> dataTracker.set(VARIANT, random.nextBoolean() ? 3 : 4);
 				case ICY -> dataTracker.set(VARIANT, random.nextBoolean() ? 5 : 6);

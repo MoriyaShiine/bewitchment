@@ -90,7 +90,7 @@ public abstract class LivingEntityMixin extends Entity {
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient) {
 			Entity directSource = source.getSource();
-			if (hasStatusEffect(BWStatusEffects.DEFLECTION) && directSource != null && EntityTypeTags.ARROWS.contains(directSource.getType())) {
+			if (hasStatusEffect(BWStatusEffects.DEFLECTION) && directSource != null && directSource.getType().isIn(EntityTypeTags.ARROWS)) {
 				int amplifier = getStatusEffect(BWStatusEffects.DEFLECTION).getAmplifier() + 1;
 				Vec3d velocity = directSource.getVelocity();
 				directSource.setVelocity(velocity.getX() * 2 * amplifier, velocity.getY() * 2 * amplifier, velocity.getZ() * 2 * amplifier);
@@ -119,14 +119,14 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Inject(method = "canBreatheInWater", at = @At("RETURN"), cancellable = true)
 	private void canBreatheInWater(CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!callbackInfo.getReturnValue() && !world.isClient && hasStatusEffect(BWStatusEffects.GILLS)) {
+		if (!callbackInfo.getReturnValueZ() && !world.isClient && hasStatusEffect(BWStatusEffects.GILLS)) {
 			callbackInfo.setReturnValue(true);
 		}
 	}
 
 	@Inject(method = "isClimbing", at = @At("RETURN"), cancellable = true)
 	private void isClimbing(CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!callbackInfo.getReturnValue() && hasStatusEffect(BWStatusEffects.CLIMBING) && horizontalCollision) {
+		if (!callbackInfo.getReturnValueZ() && hasStatusEffect(BWStatusEffects.CLIMBING) && horizontalCollision) {
 			callbackInfo.setReturnValue(true);
 		}
 	}

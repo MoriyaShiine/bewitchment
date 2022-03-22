@@ -21,9 +21,9 @@ public class CauldronBubbleParticle extends SpriteBillboardParticle {
 		this.velocityX *= 0.1;
 		this.velocityY *= 0.1;
 		this.velocityZ *= 0.1;
-		colorRed = (float) velocityX;
-		colorGreen = (float) velocityY;
-		colorBlue = (float) velocityZ;
+		red = (float) velocityX;
+		green = (float) velocityY;
+		blue = (float) velocityZ;
 		maxAge = (int) (4 / (Math.random() * 0.8 + 0.2));
 	}
 

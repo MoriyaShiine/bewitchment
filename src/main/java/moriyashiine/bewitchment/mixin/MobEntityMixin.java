@@ -39,7 +39,7 @@ public abstract class MobEntityMixin extends LivingEntity {
 			if (target instanceof MobEntity mob && getUuid().equals(BWComponents.MINION_COMPONENT.get(mob).getMaster())) {
 				return null;
 			}
-			if (isUndead() && !BWUtil.getBlockPoses(target.getBlockPos(), 2, foundPos -> BWTags.UNDEAD_MASK.contains(world.getBlockState(foundPos).getBlock())).isEmpty()) {
+			if (isUndead() && !BWUtil.getBlockPoses(target.getBlockPos(), 2, foundPos -> world.getBlockState(foundPos).isIn(BWTags.UNDEAD_MASK)).isEmpty()) {
 				return null;
 			}
 		}
@@ -47,9 +47,9 @@ public abstract class MobEntityMixin extends LivingEntity {
 	}
 
 	@Inject(method = "interactWithItem", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;"), cancellable = true, locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-	private void interactWithItem(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> callbackInfoReturnable, ItemStack heldStack) {
+	private void interactWithItem(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir, ItemStack heldStack) {
 		if (heldStack.getItem() instanceof TaglockItem) {
-			callbackInfoReturnable.setReturnValue(TaglockItem.useTaglock(player, this, hand, true, false));
+			cir.setReturnValue(TaglockItem.useTaglock(player, this, hand, true, false));
 		}
 	}
 }

@@ -40,7 +40,7 @@ public class BWDamageSources {
 		}
 		Entity attacker = source.getSource();
 		if (attacker != null) {
-			if (BWTags.TAGLOCK_BLACKLIST.contains(attacker.getType()) || BewitchmentAPI.isVampire(attacker, true) || BewitchmentAPI.isWerewolf(attacker, true)) {
+			if (attacker.getType().isIn(BWTags.TAGLOCK_BLACKLIST) || BewitchmentAPI.isVampire(attacker, true) || BewitchmentAPI.isWerewolf(attacker, true)) {
 				return true;
 			} else if (attacker instanceof LivingEntity && EnchantmentHelper.getEquipmentLevel(Enchantments.SMITE, (LivingEntity) attacker) > 0) {
 				return true;

@@ -75,7 +75,7 @@ public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<Wit
 
 	private void renderName(WitchCauldronBlockEntity entity, BlockPos pos, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
 		if (entity.name != null) {
-			if (pos.getSquaredDistance(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getPos(), true) <= 256) {
+			if (pos.getSquaredDistance(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getPos()) <= 256) {
 				matrices.push();
 				matrices.translate(0.5, 1, 0.5);
 				matrices.multiply(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getRotation());

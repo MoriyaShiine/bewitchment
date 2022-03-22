@@ -207,7 +207,7 @@ public class TaglockItem extends Item {
 
 	public static ActionResult useTaglock(PlayerEntity user, LivingEntity entity, Hand hand, boolean checkVisibility, boolean bed) {
 		ItemStack stack = user.getStackInHand(hand);
-		if (entity.isAlive() && !BWTags.TAGLOCK_BLACKLIST.contains(entity.getType()) && !hasTaglock(stack)) {
+		if (entity.isAlive() && !entity.getType().isIn(BWTags.TAGLOCK_BLACKLIST) && !hasTaglock(stack)) {
 			boolean failed = false;
 			BlockPos sigilPos = BWUtil.getClosestBlockPos(entity.getBlockPos(), 16, currentPos -> user.world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) user.world.getBlockEntity(currentPos)).getSigil() == BWSigils.SLIPPERY);
 			if (sigilPos == null && bed) {

@@ -7,6 +7,7 @@ package moriyashiine.bewitchment.common.fortune;
 import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.common.registry.BWTags;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -15,6 +16,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.world.World;
 
 public class EncounterFortune extends Fortune {
 	public EncounterFortune(boolean positive) {
@@ -23,24 +27,30 @@ public class EncounterFortune extends Fortune {
 
 	@Override
 	public boolean finish(ServerWorld world, PlayerEntity target) {
-		Entity entity = BWTags.ENCOUNTER_FORTUNE.getRandom(world.random).create(world);
-		if (entity != null) {
-			for (int i = 0; i < 8; i++) {
-				BlockPos pos = target.getBlockPos().add(MathHelper.nextInt(world.random, -3, 3), 0, MathHelper.nextInt(world.random, -3, 3));
-				if (!world.getBlockState(pos).getMaterial().blocksMovement()) {
-					if (entity instanceof MobEntity mob) {
-						mob.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
-						mob.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, Integer.MAX_VALUE, 1));
-						mob.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE, 1));
-						mob.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, Integer.MAX_VALUE, 1));
-						mob.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, Integer.MAX_VALUE, 1));
-					}
-					entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
-					world.spawnEntity(entity);
-					return true;
+		Entity entity = getRandomEntity(world);
+		for (int i = 0; i < 8; i++) {
+			BlockPos pos = target.getBlockPos().add(MathHelper.nextInt(world.random, -3, 3), 0, MathHelper.nextInt(world.random, -3, 3));
+			if (!world.getBlockState(pos).getMaterial().blocksMovement()) {
+				if (entity instanceof MobEntity mob) {
+					mob.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
+					mob.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, Integer.MAX_VALUE, 1));
+					mob.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, Integer.MAX_VALUE, 1));
+					mob.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, Integer.MAX_VALUE, 1));
+					mob.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, Integer.MAX_VALUE, 1));
 				}
+				entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
+				world.spawnEntity(entity);
+				return true;
 			}
 		}
 		return false;
+	}
+
+	private static Entity getRandomEntity(World world) {
+		RegistryEntry<EntityType<?>> entity = null;
+		while (entity == null || !entity.isIn(BWTags.ENCOUNTER_FORTUNE)) {
+			entity = Registry.ENTITY_TYPE.getRandom(world.random).orElse(null);
+		}
+		return entity.value().create(world);
 	}
 }

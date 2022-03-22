@@ -47,7 +47,7 @@ public class CauldronTeleportPacket {
 			for (Map.Entry<Long, String> entry : worldState.witchCauldrons.entrySet()) {
 				if (message.equals(entry.getValue())) {
 					BlockPos foundCauldronPos = BlockPos.fromLong(entry.getKey());
-					if (closest == null || cauldronPos.getSquaredDistance(player.getPos(), true) < closest.getSquaredDistance(player.getPos(), true)) {
+					if (closest == null || cauldronPos.getSquaredDistance(player.getPos()) < closest.getSquaredDistance(player.getPos())) {
 						closest = foundCauldronPos;
 					}
 				}
@@ -58,7 +58,7 @@ public class CauldronTeleportPacket {
 					BlockPos altarPos = ((UsesAltarPower) world.getBlockEntity(cauldronPos)).getAltarPos();
 					if (altarPos != null) {
 						BlockEntity altarBE = world.getBlockEntity(altarPos);
-						if (altarBE instanceof WitchAltarBlockEntity altar && altar.drain((int) Math.sqrt(closest.getSquaredDistance(player.getPos(), true)) / 2, false)) {
+						if (altarBE instanceof WitchAltarBlockEntity altar && altar.drain((int) Math.sqrt(closest.getSquaredDistance(player.getPos())) / 2, false)) {
 							hasPower = true;
 						}
 					}

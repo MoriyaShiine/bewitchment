@@ -44,7 +44,7 @@ public class WitchAltarBlockEntityRenderer implements BlockEntityRenderer<WitchA
 	}
 
 	private void renderStack(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, float x, float z, ItemStack stack, Direction direction) {
-		if (BWTags.SKULLS.contains(stack.getItem())) {
+		if (stack.isIn(BWTags.SKULLS)) {
 			matrices.translate(x, 0.125, z);
 			matrices.scale(0.5f, 0.5f, 0.5f);
 		} else if (stack.getItem() instanceof BlockItem blockItem) {

@@ -57,7 +57,7 @@ public class RavenEntity extends BWTameableEntity {
 
 	@Override
 	protected boolean isTamingItem(ItemStack stack) {
-		return stack.getItem() == Items.GOLD_NUGGET || BWTags.SILVER_NUGGETS.contains(stack.getItem());
+		return stack.getItem() == Items.GOLD_NUGGET || stack.isIn(BWTags.SILVER_NUGGETS);
 	}
 
 	@Nullable

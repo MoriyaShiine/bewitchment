@@ -80,7 +80,7 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 	@Nullable
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		return super.getPlacementState(ctx).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER).with(Properties.LIT, BWTags.HEATS_CAULDRON.contains(ctx.getWorld().getBlockState(ctx.getBlockPos().down()).getBlock()));
+		return super.getPlacementState(ctx).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER).with(Properties.LIT, ctx.getWorld().getBlockState(ctx.getBlockPos().down()).isIn(BWTags.HEATS_CAULDRON));
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 			state = state.with(BWProperties.LEVEL, 0);
 			state = state.with(Properties.LIT, false);
 		} else {
-			state = state.with(Properties.LIT, BWTags.HEATS_CAULDRON.contains(world.getBlockState(pos.down()).getBlock()));
+			state = state.with(Properties.LIT, world.getBlockState(pos.down()).isIn(BWTags.HEATS_CAULDRON));
 		}
 		return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
 	}

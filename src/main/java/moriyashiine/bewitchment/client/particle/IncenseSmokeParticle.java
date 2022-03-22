@@ -14,9 +14,9 @@ import net.minecraft.particle.DefaultParticleType;
 public class IncenseSmokeParticle extends LargeFireSmokeParticle {
 	public IncenseSmokeParticle(ClientWorld clientWorld, double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ, SpriteProvider spriteProvider) {
 		super(clientWorld, posX, posY, posZ, velocityX, velocityY, velocityZ, spriteProvider);
-		colorRed = ((float) (Math.random() * 0.2) + 0.8f);
-		colorGreen = ((float) (Math.random() * 0.2) + 0.8f);
-		colorBlue = ((float) (Math.random() * 0.2) + 0.8f);
+		red = ((float) (Math.random() * 0.2) + 0.8f);
+		green = ((float) (Math.random() * 0.2) + 0.8f);
+		blue = ((float) (Math.random() * 0.2) + 0.8f);
 	}
 
 	@Override

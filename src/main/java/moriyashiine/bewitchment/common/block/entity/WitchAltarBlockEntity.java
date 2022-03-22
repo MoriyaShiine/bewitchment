@@ -12,7 +12,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
@@ -184,11 +183,11 @@ public class WitchAltarBlockEntity extends BlockEntity implements Inventory {
 				int z = (counter >> 10) & 31;
 				BlockState checkedState = world.getBlockState(checking.set(pos.getX() + x - 15, pos.getY() + y - 15, pos.getZ() + z - 15));
 				Block checkedBlock = checkedState.getBlock();
-				if (givesAltarPower(checkedBlock) && !(BlockTags.LOGS.contains(checkedBlock) && Registry.BLOCK.getId(world.getBlockState(checking).getBlock()).getPath().contains("stripped"))) {
+				if (givesAltarPower(checkedState) && !(checkedState.isIn(BlockTags.LOGS) && Registry.BLOCK.getId(checkedBlock).getPath().contains("stripped"))) {
 					checked.put(checkedBlock, Math.min(checked.getOrDefault(checkedBlock, 0) + 1, 256));
 				}
 				if (counter == Short.MAX_VALUE - 1) {
-					gain = getPentacleValue(getStack(1).getItem());
+					gain = getPentacleValue(getStack(1));
 					maxPower = 0;
 					float varietyMultiplier = 1;
 					for (Block block : checked.keySet()) {
@@ -197,7 +196,7 @@ public class WitchAltarBlockEntity extends BlockEntity implements Inventory {
 						}
 						maxPower += checked.get(block);
 					}
-					maxPower = (int) ((maxPower * Math.min(varietyMultiplier, 4) / 10) * getSwordValue(getStack(0).getItem()) + getWandValue(getStack(2).getItem()));
+					maxPower = (int) ((maxPower * Math.min(varietyMultiplier, 4) / 10) * getSwordValue(getStack(0)) + getWandValue(getStack(2)));
 					power = Math.min(power, maxPower);
 					checked.clear();
 				}
@@ -205,22 +204,22 @@ public class WitchAltarBlockEntity extends BlockEntity implements Inventory {
 		}
 	}
 
-	private static boolean givesAltarPower(Block block) {
-		if (block instanceof PlantBlock || block instanceof MushroomBlock || block instanceof Fertilizable && !(block instanceof GrassBlock || block instanceof NyliumBlock)) {
+	private static boolean givesAltarPower(BlockState state) {
+		if (state.getBlock() instanceof PlantBlock || state.getBlock() instanceof MushroomBlock || state.getBlock() instanceof Fertilizable && !(state.getBlock() instanceof GrassBlock || state.getBlock() instanceof NyliumBlock)) {
 			return true;
 		}
-		return BWTags.GIVES_ALTAR_POWER.contains(block);
+		return state.isIn(BWTags.GIVES_ALTAR_POWER);
 	}
 
-	private static float getSwordValue(Item item) {
-		return BWTags.WEAK_SWORDS.contains(item) ? 1.1f : BWTags.AVERAGE_SWORDS.contains(item) ? 1.2f : BWTags.STRONG_SWORDS.contains(item) ? 1.3f : 1;
+	private static float getSwordValue(ItemStack stack) {
+		return stack.isIn(BWTags.WEAK_SWORDS) ? 1.1F : stack.isIn(BWTags.AVERAGE_SWORDS) ? 1.2F : stack.isIn(BWTags.STRONG_SWORDS) ? 1.3F : 1;
 	}
 
-	private static int getPentacleValue(Item item) {
-		return BWTags.WEAK_PENTACLES.contains(item) ? 2 : BWTags.AVERAGE_PENTACLES.contains(item) ? 3 : BWTags.STRONG_PENTACLES.contains(item) ? 5 : 1;
+	private static int getPentacleValue(ItemStack stack) {
+		return stack.isIn(BWTags.WEAK_PENTACLES) ? 2 : stack.isIn(BWTags.AVERAGE_PENTACLES) ? 3 : stack.isIn(BWTags.STRONG_PENTACLES) ? 5 : 1;
 	}
 
-	private static int getWandValue(Item item) {
-		return BWTags.WEAK_WANDS.contains(item) ? 40 : BWTags.AVERAGE_WANDS.contains(item) ? 80 : BWTags.STRONG_WANDS.contains(item) ? 120 : 0;
+	private static int getWandValue(ItemStack stack) {
+		return stack.isIn(BWTags.WEAK_WANDS) ? 40 : stack.isIn(BWTags.AVERAGE_WANDS) ? 80 : stack.isIn(BWTags.STRONG_WANDS) ? 120 : 0;
 	}
 }
