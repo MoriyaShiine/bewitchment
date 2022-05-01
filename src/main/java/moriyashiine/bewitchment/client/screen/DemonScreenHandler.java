@@ -29,12 +29,8 @@ public class DemonScreenHandler extends ScreenHandler {
 	public final DemonMerchant demonMerchant;
 	public final Inventory demonInventory = new SimpleInventory(getOfferCount());
 
-	public DemonScreenHandler(int syncId) {
-		this(syncId, new DemonMerchantImpl());
-	}
-
 	public DemonScreenHandler(int syncId, DemonMerchant merchant) {
-		this(BWScreenHandlers.DEMON_SCREEN_HANDLER, syncId, merchant);
+		this(BWScreenHandlerTypes.DEMON_SCREEN_HANDLER, syncId, merchant);
 	}
 
 	protected DemonScreenHandler(ScreenHandlerType<?> type, int syncId, DemonMerchant merchant) {
@@ -128,7 +124,7 @@ public class DemonScreenHandler extends ScreenHandler {
 		}
 	}
 
-	protected static class DemonMerchantImpl implements DemonMerchant {
+	public static class DemonMerchantImpl implements DemonMerchant {
 		private List<DemonEntity.DemonTradeOffer> offers = new ArrayList<>();
 		private PlayerEntity costumer;
 		private LivingEntity trader;

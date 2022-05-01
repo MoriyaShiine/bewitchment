@@ -45,10 +45,14 @@ public abstract class BlockMixin {
 							Set<ItemStack> treasure = new HashSet<>();
 							for (int i = 0; i < world.random.nextInt(1) + 1; i++) {
 								switch (world.random.nextInt(4)) {
-									case 0 -> treasure.add(new ItemStack(Items.DIAMOND, MathHelper.nextInt(world.random, 1, 3)));
-									case 1 -> treasure.add(new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(world.random, 1, 5)));
-									case 2 -> treasure.add(new ItemStack(Items.IRON_INGOT, MathHelper.nextInt(world.random, 2, 10)));
-									case 3 -> treasure.add(new ItemStack(BWObjects.SILVER_INGOT, MathHelper.nextInt(world.random, 1, 5)));
+									case 0 ->
+											treasure.add(new ItemStack(Items.DIAMOND, MathHelper.nextInt(world.random, 1, 3)));
+									case 1 ->
+											treasure.add(new ItemStack(Items.GOLD_INGOT, MathHelper.nextInt(world.random, 1, 5)));
+									case 2 ->
+											treasure.add(new ItemStack(Items.IRON_INGOT, MathHelper.nextInt(world.random, 2, 10)));
+									case 3 ->
+											treasure.add(new ItemStack(BWObjects.SILVER_INGOT, MathHelper.nextInt(world.random, 1, 5)));
 									default -> treasure.add(ItemStack.EMPTY);
 								}
 							}

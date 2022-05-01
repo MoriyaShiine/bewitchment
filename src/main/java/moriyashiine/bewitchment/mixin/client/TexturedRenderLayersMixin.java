@@ -72,9 +72,12 @@ public class TexturedRenderLayersMixin {
 					}
 				case DRAGONS_BLOOD:
 					switch (type) {
-						case SINGLE -> callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_DRAGONS_BLOOD_CHEST : DRAGONS_BLOOD_CHEST);
-						case LEFT -> callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_DRAGONS_BLOOD_CHEST_LEFT : DRAGONS_BLOOD_CHEST_LEFT);
-						case RIGHT -> callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_DRAGONS_BLOOD_CHEST_RIGHT : DRAGONS_BLOOD_CHEST_RIGHT);
+						case SINGLE ->
+								callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_DRAGONS_BLOOD_CHEST : DRAGONS_BLOOD_CHEST);
+						case LEFT ->
+								callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_DRAGONS_BLOOD_CHEST_LEFT : DRAGONS_BLOOD_CHEST_LEFT);
+						case RIGHT ->
+								callbackInfo.setReturnValue(bwChest.trapped ? TRAPPED_DRAGONS_BLOOD_CHEST_RIGHT : DRAGONS_BLOOD_CHEST_RIGHT);
 					}
 			}
 		}
