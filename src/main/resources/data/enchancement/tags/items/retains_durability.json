@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+	"bewitchment:waystone",
+	"bewitchment:protection_poppet",
+	"bewitchment:death_protection_poppet",
+	"bewitchment:voodoo_poppet",
+	"bewitchment:voodoo_protection_poppet",
+	"bewitchment:mending_poppet",
+	"bewitchment:curse_poppet",
+	"bewitchment:vampiric_poppet",
+	"bewitchment:judgment_poppet",
+	"bewitchment:fatigue_poppet"
+  ]
+}
