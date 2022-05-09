@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Бодрящий",
+  "icon": "bewitchment:elder_bark",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Этот эффект заполнит  $(l:bewitchment:introduction/altars#internalme)ME$(), на фиксированную сумму"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Бодрящий",
+	  "item": "bewitchment:elder_bark",
+	  "text": "Сила эффекта увеличит количество получаемой $(l:bewitchment:introduction/altars#internalme)ME$()."
+	}
+  ]
+}

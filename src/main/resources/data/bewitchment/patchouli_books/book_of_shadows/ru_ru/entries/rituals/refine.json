@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "[Ритуал] Улучшения",
+  "icon": "minecraft:blaze_powder",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Этот $(l:bewitchment:rituals/rituals)Ритуал$() призывает духов огня, по сути превращая круг в очень большой плавильный котел.$(br2)Любой предмет, брошенный в него, плавится так, как если бы его бросили в печь.$(br2)Этот $(l:bewitchment:rituals/rituals)Ритуал$() длится несколько минут."
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/refine"
+	}
+  ]
+}

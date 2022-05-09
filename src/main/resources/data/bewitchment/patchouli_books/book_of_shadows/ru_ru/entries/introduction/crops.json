@@ -1,0 +1,30 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "Растения",
+  "icon": "bewitchment:mandrake_root",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Колдовство использует несколько природных культур для своего искусства. Эти культуры используются для  $(l:bewitchment:rituals/rituals)ритуалов$(), $(l:bewitchment:brewing/brewing_basics)варки экстрактов$(), и многого другого.$(br2)Семена для этих культур можно найти в дикой траве, как и другие семена."
+	},
+	{
+	  "type": "bewitchment:multi_showcase",
+	  "item1": "bewitchment:aconite",
+	  "item2": "bewitchment:belladonna",
+	  "item3": "bewitchment:garlic",
+	  "item4": "bewitchment:mandrake_root",
+	  "header": "Обычные растения",
+	  "text": "Четырьмя обычными культурами являются Аконит, Белладонна, Чеснок и Мандрагора.$(br2)Аконит в основном используется в качестве нейротоксина, в то время как Белладонна известна тем, что отравляет. Чеснок исцеляет, а мандрагора усиливает магию."
+	},
+	{
+	  "type": "patchouli:smelting",
+	  "recipe": "bewitchment:grilled_garlic",
+	  "text": "Чеснок также можно пожарить в печке."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:garlic_bread",
+	  "text": "Жареный чеснок, в свою очередь, может быть добавлен в хлеб, для создания чесночного хлеба."
+	}
+  ]
+}

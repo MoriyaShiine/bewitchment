@@ -1,0 +1,24 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "Змея",
+  "icon": "bewitchment:snake_spawn_egg",
+  "extra_recipe_mappings": {
+	"bewitchment:snake_tongue": 0
+  },
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Змеи обычно появляются в саваннах, пустынях и равнинах, где они охотятся на других животных, убивая их своим ядом.$(br2) Если убить змею, с неё может упасть Змеиный Язык, так же как с $(l:bewitchment:creatures/hellhound)адского пса$().$(br2)Змей можно приручить Сырым кроликом и разводить Сырой курицей."
+	},
+	{
+	  "type": "patchouli:text",
+	  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+	  "text": "Змеи могут быть $(l:bewitchment:rituals/binding)фамильярами$(). Ведьмы со змеей $(l:bewitchment:rituals/binding)фамильяром$() способны создавать гораздо более долговечные $(l:bewitchment:sigils/using_sigils)сигилы$().$(br2)Кроме того, они получают пользу от яда; он не причиняет им вреда и наполняет их $(l:bewitchment:introduction/altars#internalme)ME$()."
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "bewitchment:snake",
+	  "scale": 0.6
+	}
+  ]
+}

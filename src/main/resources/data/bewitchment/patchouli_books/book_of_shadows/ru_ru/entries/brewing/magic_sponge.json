@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Волшебная губка",
+  "icon": "bewitchment:dragons_blood_resin",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Волшебная губка уменьшит урон от магических источников и, в свою очередь, пополнит $(l:bewitchment:introduction/altars#internalme)ME$() в зависимости от полученного урона."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Волшебная губка",
+	  "item": "bewitchment:dragons_blood_resin",
+	  "text": "Более высокая сила эффекта уменьшеньшает магический урон."
+	}
+  ]
+}

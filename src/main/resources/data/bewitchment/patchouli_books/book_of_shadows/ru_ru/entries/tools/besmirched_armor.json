@@ -1,0 +1,27 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Проклятая Броня",
+  "icon": "bewitchment:besmirched_robes",
+  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Эта непристойная одежда идеально вписывается в коллекцию готического стиля.$(l:bewitchment:creatures/demon) Демоны$() любого вида неспособны отличить владельца проклятой брони от своих сородичей, что позволяет им торговать с ними.$(br2)Ковры из этой ткани идеально подходят для $(l:bewitchment:introduction/altars)Алтарей$()."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:besmirched_hat",
+	  "recipe2": "bewitchment:besmirched_hood"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:besmirched_robes",
+	  "recipe2": "bewitchment:besmirched_pants"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:besmirched_wool",
+	  "recipe2": "bewitchment:besmirched_carpet"
+	}
+  ]
+}

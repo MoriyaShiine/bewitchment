@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "[Ритуал] Призыва Леонарда",
+  "icon": "bewitchment:leonard_spawn_egg",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Этот $(l:bewitchment:rituals/rituals)Ритуал$() призывает Повелителя $(l:bewitchment:brewing/brewing_basics)Зельеварения$(), самого $(l:bewitchment:creatures/leonard)Леонарда$().$(br2)Убедитесь, что держите его подальше от вещей, которые вам дороги.$(br2)Подготовьте $(l:bewitchment:tools/grotesque_stew)Гротескное Рагу$(), если вы захотите дать ему $(l:bewitchment:tools/grotesque_stew)Клятву$().$(br2) $(l:bewitchment:rituals/rituals)Ритуал$() начинается с принесения в жертву овцы с помощью $(l:bewitchment:tools/athame)Атамэ$()."
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/summon_leonard"
+	}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "Защита",
+  "icon": "bewitchment:protection_poppet",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Кукла защиты не защитит вас от зомби или скелетов; однако она защитит от источников ущерба окружающей среде, таких как пожар, утопление и т.д."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:protection_poppet"
+	}
+  ]
+}

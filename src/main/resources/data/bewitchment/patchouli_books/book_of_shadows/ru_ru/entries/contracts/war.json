@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "Война",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 2,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "$(l:bewitchment:contracts/concept_contracts)Контракт$() вызывает агрессию среди ближайших сущностей, заставляя их атаковать друг друга, если они стоят рядом с тем, кто имеет данный $(l:bewitchment:contracts/concept_contracts)контракт$()."
+	}
+  ]
+}

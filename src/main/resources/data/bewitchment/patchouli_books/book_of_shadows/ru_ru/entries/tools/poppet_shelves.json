@@ -1,0 +1,42 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Кукольные Полки",
+  "icon": "bewitchment:oak_poppet_shelf",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Кукольные полки создают красивую мебель. Они могут хранить до девяти $(l:bewitchment:poppets/poppet_practice)Кукол$(), которые будут активны.$(br2)Это делает полки с куклами удобными для освобождения места в инвентаре, сохраняя при этом все $(l:bewitchment:poppets/poppet_practice)Куклы$() активными."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:oak_poppet_shelf",
+	  "recipe2": "bewitchment:spruce_poppet_shelf"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:birch_poppet_shelf",
+	  "recipe2": "bewitchment:jungle_poppet_shelf"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:acacia_poppet_shelf",
+	  "recipe2": "bewitchment:dark_oak_poppet_shelf"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:crimson_poppet_shelf",
+	  "recipe2": "bewitchment:warped_poppet_shelf"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:juniper_poppet_shelf",
+	  "recipe2": "bewitchment:cypress_poppet_shelf"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:elder_poppet_shelf",
+	  "recipe2": "bewitchment:dragons_blood_poppet_shelf"
+	}
+  ]
+}

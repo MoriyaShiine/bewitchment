@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Адская Безделушка",
+  "icon": "bewitchment:hellish_bauble",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Благодаря силе огня адская безделушка делает владельца невосприимчивым к огню, используя $(l:bewitchment:introduction/altars#internalme)ME$().$(br2) Будучи изготовленным из незерита, этот предмет полностью огнестойкий."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:hellish_bauble"
+	}
+  ]
+}

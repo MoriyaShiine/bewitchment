@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "Вампир",
+  "icon": "bewitchment:vampire_spawn_egg",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Вампиры - повелители ночи, у них мало слабостей. Они появляются в равнинных и таежных биомах, в новолуния, где меньше всего света. $(br2) Известно, что они нападают на людей, поэтому вам следует вооружиться против них огнем или мечом с зачарованием Кары."
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "bewitchment:vampire",
+	  "offset": 0.1
+	}
+  ]
+}

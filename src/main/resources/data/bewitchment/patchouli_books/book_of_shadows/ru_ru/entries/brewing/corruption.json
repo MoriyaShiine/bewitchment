@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Разложение",
+  "icon": "bewitchment:demon_horn",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Используя $(l:bewitchment:brewing/brewing_basics)зельеварение$(), с помощью Рога Демона, вы можете обратить положительные эффекты зелья в их отрицательный аналог. $(br2) При добавлении в качестве ингредиента зелья разложения всегда будет на первом месте, что означает, что она инвертирует все предыдущие эффекты при выпивании, но не эффекты зелья."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Разложение",
+	  "item": "bewitchment:demon_horn"
+	}
+  ]
+}

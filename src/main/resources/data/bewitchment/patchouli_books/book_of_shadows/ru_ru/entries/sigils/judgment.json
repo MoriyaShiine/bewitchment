@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "[Сигил] Приговора",
+  "icon": "bewitchment:judgment_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "$(l:bewitchment:sigils/using_sigils)Активация Сигила$() Приговора наносит ущерб любой нечисти, которое активирует его."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:judgment_sigil"
+	}
+  ]
+}

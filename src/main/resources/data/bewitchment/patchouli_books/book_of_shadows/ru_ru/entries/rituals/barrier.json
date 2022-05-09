@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "[Ритуал] Барьера",
+  "icon": "bewitchment:salt",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Это небольшой $(l:bewitchment:rituals/rituals)Ритуал$() использует силу ветра и соли, чтобы оттеснить враждебных существ.$(br2) Он будет длиться около половины дня."
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/barrier"
+	}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "[Сигил] Распада",
+  "icon": "bewitchment:decay_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "$(l:bewitchment:sigils/using_sigils)Активация сигила$() распада будет применять сильный эффект иссушения."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:decay_sigil"
+	}
+  ]
+}

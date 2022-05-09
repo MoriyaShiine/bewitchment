@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Нестабильность",
+  "icon": "minecraft:fire_charge",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Делает цель чрезвычайно нестабильной. При попадании по цели, эффект вызовет разрушительный взрыв, мгновенно устраняющий эффект и наносящий вред всем существам вокруг."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Нестабильность",
+	  "item": "minecraft:fire_charge",
+	  "text": "Урон от взрыва зависит от силы эффекта."
+	}
+  ]
+}

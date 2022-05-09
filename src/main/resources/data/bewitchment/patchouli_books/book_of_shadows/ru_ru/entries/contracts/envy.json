@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "Зависть",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 1,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "$(l:bewitchment:contracts/concept_contracts)Контракт$() зависти позволяет вам красть сделки жителей деревни, бессердечно убивая их."
+	}
+  ]
+}

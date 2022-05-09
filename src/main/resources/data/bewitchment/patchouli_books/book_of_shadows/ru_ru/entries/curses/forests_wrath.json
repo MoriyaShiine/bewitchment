@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "Гнев леса",
+  "icon": "minecraft:oak_sapling",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Это $(l:bewitchment:curses/conducting_curses)Проклятие$() отбрасывает страдания природы обратно на человечество, заставляя любого $(l:bewitchment:curses/conducting_curses)Проклятого$() страдать так же, как и природа. Это удваивает урон от огня, а также от топоров."
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/forests_wrath"
+	}
+  ]
+}

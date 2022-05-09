@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Оглушение",
+  "icon": "minecraft:honeycomb",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Ухудшает слышимость для того, у кого есть этот эффект."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Оглушение",
+	  "item": "minecraft:honeycomb",
+	  "text": "Чем выше интенсивность зелья, тем сильнее уменьшается звук."
+	}
+  ]
+}

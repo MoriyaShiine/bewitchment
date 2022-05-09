@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "Кукла защиты от вуду",
+  "icon": "bewitchment:voodoo_protection_poppet",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Кукла для защиты от Вуду - это ответная реакция на $(l:bewitchment:poppets/voodoo)Куклы вуду$().$(br2)Перенаправляя вредоносную энергию, любой, кто связан с ней, полностью невосприимчив к воздействию $(l:bewitchment:poppets/voodoo)куклы вуду$()."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:voodoo_protection_poppet"
+	}
+  ]
+}

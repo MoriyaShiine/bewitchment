@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Пиявка",
+  "icon": "bewitchment:bottle_of_blood",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Исцеляет цель в зависимости от нанесенного урона."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Пиявка",
+	  "item": "bewitchment:bottle_of_blood",
+	  "text": "Чем выше сила эффекта, тем больше здоровья восстанавливается.$(br2)Этот эффект не сработает, если у вас есть $(l:bewitchment:brewing//mundane_brews#strength)Сила$(), $(l:bewitchment:brewing/mundane_brews#regeneration)Регенерация$(), или $(l:bewitchment:brewing/mundane_brews#resistance)Сопротивление.$()"
+	}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "[Ритуал] Испарения",
+  "icon": "minecraft:netherrack",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Этот $(l:bewitchment:rituals/rituals)Ритуал$() направляет энергию огня, удаляя любую находящуюся поблизости воду."
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/evaporate"
+	}
+  ]
+}

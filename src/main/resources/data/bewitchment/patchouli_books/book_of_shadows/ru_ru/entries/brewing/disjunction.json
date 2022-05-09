@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Разъединение",
+  "icon": "minecraft:ender_pearl",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Разъединяет цель, пытаясь телепортировать ее в небольшом радиусе."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Разъединение",
+	  "item": "minecraft:ender_pearl",
+	  "text": "Радиус телепортации увеличивается с увеличением мощности эффекта."
+	}
+  ]
+}

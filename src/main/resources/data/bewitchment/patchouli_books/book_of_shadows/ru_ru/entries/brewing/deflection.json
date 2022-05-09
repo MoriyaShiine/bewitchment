@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Деформация",
+  "icon": "minecraft:phantom_membrane",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Выбрасывает стрелы от цели, заставляя их возвращаться с того места, откуда они были выпущены."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Деформация",
+	  "item": "minecraft:phantom_membrane",
+	  "text": "Стрелы становятся быстрее в зависимости от силы эффекта деформации."
+	}
+  ]
+}

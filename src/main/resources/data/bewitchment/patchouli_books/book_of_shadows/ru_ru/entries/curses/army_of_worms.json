@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "Армия червей",
+  "icon": "minecraft:poisonous_potato",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Это $(l:bewitchment:curses/conducting_curses)Проклятие$() вызывает раздражение, вызывая червей. Любые посевы рядом с проклятой целью, будут уничтожены."
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/army_of_worms"
+	}
+  ]
+}

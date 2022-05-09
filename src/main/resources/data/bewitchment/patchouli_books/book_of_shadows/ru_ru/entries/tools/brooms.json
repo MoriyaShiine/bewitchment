@@ -1,0 +1,32 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Мётлы",
+  "icon": "bewitchment:juniper_broom",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Мётлы - это магические приспособления, обычно используемые ведьмами. За счет использования $(l:bewitchment:introduction/altars#internalme)ME$(), они позволяют пользователю летать по небу.$(br2)Мётлы бывают четырех вариантов, каждый из которых обладает уникальными свойствами."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:juniper_broom",
+	  "text": "$(l:bewitchment:introduction/juniper_trees)Можжевеловые$() Мётлы - самые быстрые из всех Мётл, без каких-либо других особых свойств."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:cypress_broom",
+	  "text": "$(l:bewitchment:introduction/cypress_trees)Кипарисовые$() Брукс защищает пользователя, уменьшая, как получение, так и нанесение урона."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:elder_broom",
+	  "text": "$(l:bewitchment:introduction/elder_trees)Бузинная$() метла вернет пользователя туда, где он садился, после спешивания."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:dragons_blood_broom",
+	  "text": "Мётлы из $(l:bewitchment:introduction/dragons_blood_trees)Крови дракона $() могут иметь $(l:bewitchment:sigils/using_sigils)Сигилы$(), применяемые к ним, так же, как и к любым другим $(l:bewitchment:introduction/dragons_blood_trees)Блокам Драконьей Крови$()."
+	}
+  ]
+}

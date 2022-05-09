@@ -1,0 +1,37 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "Серебро",
+  "icon": "bewitchment:silver_ingot",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Появляясь рядом с золотом, Серебро является символом чистоты.$(br2)Блоки серебра нанесут урон нечисти, которые стоят на нем.$(br2)Каждый раз, когда в этой книге используется термин *нечисть* это эквивалентно тому, имеет ли данная сущность слабость к зачарованию Кары."
+	},
+	{
+	  "type": "patchouli:image",
+	  "images": [
+		"bewitchment:textures/gui/patchouli/silver_ore.png"
+	  ],
+	  "border": true
+	},
+	{
+	  "type": "patchouli:smelting",
+	  "recipe": "bewitchment:silver_ingot_from_smelting_raw_silver",
+	  "text": "Необработанное серебро может быть обработано в печах и доменных печах."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:raw_silver_block",
+	  "recipe2": "bewitchment:silver_block"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:silver_nugget"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:silver_arrow",
+	  "text": "Серебряными стрелами можно стрелять так же, как обычными стрелами, но у них есть встроенный эффект Кары (smite)."
+	}
+  ]
+}

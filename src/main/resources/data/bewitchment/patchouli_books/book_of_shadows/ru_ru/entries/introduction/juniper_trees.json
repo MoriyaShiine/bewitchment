@@ -1,0 +1,53 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "Можжевеловые деревья",
+  "icon": "bewitchment:juniper_sapling",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Можжевеловое дерево олицетворяет жизнь. Вы можете вставить до трех $(l:bewitchment:tools/taglock)Экстракторов ДНК$() в блоки, сделанные из этого дерева. При использовании эти блоки будут собираться в $(l:bewitchment:tools/taglock)Экстрактор ДНК$() от кого угодно, кроме их владельца.$(br2)$(l:bewitchment:tools/taglock)Экстрактор ДНК$() вставляется при использовании их в блоке с [Shift]; вы можете собрать их с помощью $(l:bewitchment:tools/athame)атаме$() используя [Shift]."
+	},
+	{
+	  "type": "patchouli:image",
+	  "images": [
+		"bewitchment:textures/gui/patchouli/juniper_tree.png"
+	  ],
+	  "border": true
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:juniper_wood",
+	  "recipe2": "bewitchment:juniper_planks"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:juniper_stairs",
+	  "recipe2": "bewitchment:juniper_slab"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:juniper_fence",
+	  "recipe2": "bewitchment:juniper_fence_gate"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:juniper_pressure_plate",
+	  "recipe2": "bewitchment:juniper_button"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:juniper_trapdoor",
+	  "recipe2": "bewitchment:juniper_door"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:juniper_chest",
+	  "recipe2": "bewitchment:trapped_juniper_chest"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:juniper_sign",
+	  "recipe2": "bewitchment:juniper_boat"
+	}
+  ]
+}

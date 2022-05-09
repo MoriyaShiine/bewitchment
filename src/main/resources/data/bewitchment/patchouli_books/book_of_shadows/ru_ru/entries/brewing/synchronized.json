@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Синхронизированный",
+  "icon": "minecraft:ghast_tear",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Синхронизированный эффект применит любой эффект, который у вас есть, к близлежащим объектам."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Синхронизированный",
+	  "item": "minecraft:ghast_tear",
+	  "text": "Синхронизированные эффекты сокращаются вдвое.$(br2)Этот эффект несовместим с $(l:bewitchment:brewing/theft)Кражей$().$(br2) Чем выше сила этого эффекта, тем дальше он будет распространяться."
+	}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "[Сигил] Очищения",
+  "icon": "bewitchment:cleansing_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "$(l:bewitchment:sigils/using_sigils)Активация сигила$() очищения удаляет все вредные эффекты зелья у того, кто его активирует."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:cleansing_sigil"
+	}
+  ]
+}

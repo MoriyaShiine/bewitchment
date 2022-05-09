@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "[Сигил] Вони",
+  "icon": "bewitchment:smelly_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "sortnum": 1,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Этот $(l:bewitchment:sigils/using_sigils)Пассивный Сигил$() воняет, заставляя близлежащие враждебные объекты двигаться к нему."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:smelly_sigil"
+	}
+  ]
+}

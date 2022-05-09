@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "[Ритуал] Наполнения",
+  "icon": "minecraft:enchanted_book",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Чрезвычайно мощный $(l:bewitchment:rituals/rituals)Ритуал$(); призывая более глубокие, тёмные силы воды, он способен накладывать мощные чары на предметы.$(br2)Предметы, подлежащие зачаровыванию, должны быть брошены в круг $(o)после того, как$() он был запущен.$(br2)Для каждого зачарованного предмета потребуется пять уровней опыта."
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/imbue"
+	}
+  ]
+}

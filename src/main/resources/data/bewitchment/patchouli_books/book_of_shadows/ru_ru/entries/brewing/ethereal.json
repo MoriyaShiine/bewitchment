@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Эфирный",
+  "icon": "bewitchment:ectoplasm",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Сущности под эффектом 'эфирный' не могут получать и наносить урон."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Эфирный",
+	  "item": "bewitchment:ectoplasm",
+	  "text": "Увеличение силы эффекта невозможна."
+	}
+  ]
+}

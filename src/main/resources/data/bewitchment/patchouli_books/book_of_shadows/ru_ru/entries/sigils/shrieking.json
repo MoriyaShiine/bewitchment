@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "[Сигил] Крика",
+  "icon": "bewitchment:shrieking_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "$(l:bewitchment:sigils/using_sigils)Активация Сигила$() издаст ужасный звук при его активации."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:shrieking_sigil"
+	}
+  ]
+}

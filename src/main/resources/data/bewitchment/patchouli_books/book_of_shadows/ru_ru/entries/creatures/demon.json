@@ -1,0 +1,20 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "Демоны",
+  "icon": "bewitchment:demon_spawn_egg",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "extra_recipe_mappings": {
+	"bewitchment:demon_heart": 1
+  },
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Мрачные существа, выползающие прямо из преисподней, Демоны обычно $(l:bewitchment:rituals/summon_demon)призываются$() и будут атаковать огнем любое живое существо вокруг них.$(br2)К демонам можно безопасно обращаться с $(l:bewitchment:tools/besmirched_armor)Проклятой бронёй$(), покупая у них $(l:bewitchment:contracts/concept_contracts)контракты$().$(br2)Убийство Демона даст по крайней мере одно Сердце Демона."
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "bewitchment:demon",
+	  "offset": 0.2
+	}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Паутинчитый",
+  "icon": "minecraft:cobweb",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Мгновенно создает временную паутину вокруг цели."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Паутинчитый",
+	  "item": "minecraft:cobweb",
+	  "text": "Сила эффекта увеличивает радиус расположения паутины."
+	}
+  ]
+}

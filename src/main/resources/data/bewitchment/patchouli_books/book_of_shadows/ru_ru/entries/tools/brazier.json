@@ -1,0 +1,45 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Жаровня",
+  "icon": "bewitchment:brazier",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Жаровня - незаменимый инструмент для $(l:bewitchment:curses/conducting_curses)Проклятий$(). Кроме этого, её можно использовать для $(l:bewitchment:tools/brazier#incense)Благовоний$().$(br2)Жаровня может вместить до четырех предметов. Чтобы начать ей пользоваться, вам нужно зажечь её с помощью огнива."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:brazier",
+	  "text": "Для удобства жаровни также можно прикрепить к потолку."
+	},
+	{
+	  "type": "patchouli:text",
+	  "title": "Благовония",
+	  "anchor": "incense",
+	  "text": "Благовония - это простой способ использования жаровни. Благовония могут применять расширенные эффекты состояния после пробуждения. $(br2)Просто зажгите ближайшую жаровню с необходимыми ингредиентами и ложитесь спать."
+	},
+	{
+	  "type": "bewitchment:incense_compressed",
+	  "recipe1": "bewitchment:incenses/light",
+	  "recipe2": "bewitchment:incenses/dark"
+	},
+	{
+	  "type": "bewitchment:incense_compressed",
+	  "recipe1": "bewitchment:incenses/water",
+	  "recipe2": "bewitchment:incenses/fire"
+	},
+	{
+	  "type": "bewitchment:incense_compressed",
+	  "recipe1": "bewitchment:incenses/earth",
+	  "recipe2": "bewitchment:incenses/air"
+	},
+	{
+	  "type": "bewitchment:incense",
+	  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+	  "recipe": "bewitchment:incenses/mortal_coil",
+	  "anchor": "mortal_coil",
+	  "text": "Благовония Смертельной Спирали используются для довольно непристойных обрядов.$(br2)$(o)Возможно, вы не захотите готовить это перед сном $()."
+	}
+  ]
+}

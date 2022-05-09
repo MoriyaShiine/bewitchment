@@ -1,0 +1,27 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Доспехи Алхимика",
+  "icon": "bewitchment:alchemist_robes",
+  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Эта высококлассные доспехи позволяют владельцу овладеть $(l:bewitchment:brewing/brewing_basics)Зельеварением$().(br2)Ковры, изготовленные из той же ткани, могут быть размещены на $(l:bewitchment:introduction/altars)Алтарях$()."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:alchemist_hat",
+	  "recipe2": "bewitchment:alchemist_hood"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:alchemist_robes",
+	  "recipe2": "bewitchment:alchemist_pants"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:alchemist_wool",
+	  "recipe2": "bewitchment:alchemist_carpet"
+	}
+  ]
+}

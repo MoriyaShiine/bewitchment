@@ -1,0 +1,47 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Ягоды",
+  "icon": "bewitchment:thick_bramble",
+  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Ягоды - искусственно созданные с помощью $(l:bewitchment:brewing/elemental_oils)Элементных Экстрактов$().$(br2)Каждая ягода обладает уникальным эффектом, связанным со своим элементом."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:glowing_bramble",
+	  "text": "Светящаяся ягода излучает свет и предотвращает появление мобов в радиусе 24 блоков."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:ender_bramble",
+	  "text": "Эндер ягода телепортирует всё, что с ним столкнется, в случайное место в радиусе 64 блоков."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:fruiting_bramble",
+	  "text": "Плодоносящая ягода будет выращивать ведьмовскую ягоду, которую можно использовать для изготовления $(l:bewitchment:introduction/altars#internalme )ME$()-восстанавливающие лакомства."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:scorched_bramble",
+	  "text": "Огненная ягода подожжет сущности. Её также можно использовать в качестве относительно приличного топлива."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:thick_bramble",
+	  "text": "Из-за своей невероятной толщины сквозь Густую ягоду можно пройти только крадучись."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:fleeting_bramble",
+	  "text": "Небесная ягода запустит в воздух всё, что попадет в нее, если только она не крадется."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:witchberry_pie",
+	  "recipe2": "bewitchment:witchberry_cookie"
+	}
+  ]
+}

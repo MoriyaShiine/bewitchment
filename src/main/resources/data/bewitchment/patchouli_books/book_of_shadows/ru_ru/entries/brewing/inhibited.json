@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Подавление",
+  "icon": "bewitchment:silver_ingot",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Этот эффект блокирует использование $(l:bewitchment:introduction/altars#internalme)ME$() Это означает, что они не могут использовать предметы, требующие $(l:bewitchment:introduction/altars)магическую энергию$()."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Подавление",
+	  "item": "bewitchment:silver_ingot",
+	  "text": "Эффект никак не усилить."
+	}
+  ]
+}

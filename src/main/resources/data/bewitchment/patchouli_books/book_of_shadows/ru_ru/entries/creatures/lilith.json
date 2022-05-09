@@ -1,0 +1,26 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "Лилит",
+  "icon": "bewitchment:lilith_spawn_egg",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Лилит, Мать $(l:bewitchment:creatures/vampire)вампиров$().$(br2)$(l:bewitchment:tools/grotesque_stew)Клятва$() ей, позволит вам свободно перевоплощаться в летучую мышь, позволяя свободно перемещаться в воздухе. В качестве альтернативы ей можно предложить $(l:bewitchment:introduction/crops)чеснок$(), освобождая жертву от ее $(l:bewitchment:curses/conducting_curses)проклятия$()."
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "bewitchment:lilith",
+	  "offset": 0.2
+	},
+	{
+	  "type": "patchouli:text",
+	  "title": "Призыв Лилит",
+	  "text": "Чтобы вызвать Лилит, необходимо несколько вещей:$(li) $(l:bewitchment:tools/brazier#mortal_coil)Благовония Смертной спирали$()$(li) Курица $(li)Горный или ледяной биом$(br2)Во-первых, запустите $(l:bewitchment:tools/brazier#incense)Жаровню$() в правильном биоме, ночью. Затем вам нужно будет убить курицу с помощью $(l:bewitchment:tools/athame)Атамэ$(), не подалёку от места проведения ритуала."
+	},
+	{
+	  "type": "patchouli:text",
+	  "text": "Ты захочешь оставить Лилит рядом, если захочешь дать ей$(l:bewitchment:tools/grotesque_stew)клятву$(), так что решайте, куда ее призвать, с умом.$(br2)Приняв $(l:bewitchment:tools/grotesque_stew)клятву$(), вы сможете переключать свою форму на летучую мышь, нажав [$(k:bewitchment.transformation_ability)]."
+	}
+  ]
+}

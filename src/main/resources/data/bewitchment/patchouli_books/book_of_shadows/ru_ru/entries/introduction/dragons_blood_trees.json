@@ -1,0 +1,54 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "Деревья драконьей крови",
+  "icon": "bewitchment:dragons_blood_sapling",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Саженцы Крови Дракона можно найти в Крепостях Незера.$(br2)Разрезая кору с помощью $(l:bewitchment:tools/athame)атамэ$() заставит дерево кровоточить, образуя Смолу Драконьей Крови.$(br2)Блоки, изготовленные из этого дерева, излучают ауру силы и могут быть использованы в $(l:bewitchment:sigils/using_sigils)Сигилах$()."
+	},
+	{
+	  "type": "patchouli:image",
+	  "images": [
+		"bewitchment:textures/gui/patchouli/dragons_blood_tree.png"
+	  ],
+	  "border": true
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:dragons_blood_wood",
+	  "recipe2": "bewitchment:dragons_blood_planks"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:dragons_blood_stairs",
+	  "recipe2": "bewitchment:dragons_blood_slab"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:dragons_blood_fence",
+	  "recipe2": "bewitchment:dragons_blood_fence_gate"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:dragons_blood_pressure_plate",
+	  "recipe2": "bewitchment:dragons_blood_button"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:dragons_blood_trapdoor",
+	  "recipe2": "bewitchment:dragons_blood_door"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:dragons_blood_chest",
+	  "recipe2": "bewitchment:trapped_dragons_blood_chest"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:dragons_blood_sign",
+	  "recipe2": "bewitchment:dragons_blood_boat"
+	}
+  ]
+}
