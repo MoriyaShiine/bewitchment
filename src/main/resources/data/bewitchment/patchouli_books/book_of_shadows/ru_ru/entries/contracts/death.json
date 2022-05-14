@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "Смерть",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 2,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "$(l:bewitchment:contracts/concept_contracts)Контракт$() смерти заставляет вас жаждать смерти других живых существ.$(br2) Всё, что будет убито вашей рукой - исцелит вас."
+	}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "Громоотвод",
+  "icon": "bewitchment:silver_nugget",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Делает цель более восприимчивой к удару молнии. Любая молния, находящаяся поблизости от цели, вместо этого перенаправится непосредственно на нее.."
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/lightning_rod"
+	}
+  ]
+}

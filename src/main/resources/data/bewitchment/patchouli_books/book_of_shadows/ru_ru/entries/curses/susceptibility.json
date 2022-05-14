@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:curses",
+  "name": "Уязвимость",
+  "icon": "minecraft:rotten_flesh",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Это $(l:bewitchment:curses/conducting_curses)Проклятие$() ослабляет тело, из-за чего цель получает в два раза больше магического урона и ей труднее двигаться.$(br2)Ходят слухи, что это $(l:bewitchment:curses/conducting_curses)Проклятие$() даже связано с гораздо худшими судьбами, такими как $(l:bewitchment:curses/vampirism)Вампиры$() и $(l:bewitchment:curses/lycanthropy)Ликантропия$()."
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/susceptibility",
+	  "text": "Это $(l:bewitchment:curses/conducting_curses)Сильное Проклятие$(); избавиться от него немного сложнее."
+	}
+  ]
+}

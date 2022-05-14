@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "Вожделение",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 1,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Похоть приносит любовь в воздух ~ $(br2) Это приводит к тому, что животные начинают размножаться рядом с тем, у кого есть этот $(l:bewitchment:contracts/concept_contracts)контракт$() и приносят в три раза больше потомства."
+	}
+  ]
+}

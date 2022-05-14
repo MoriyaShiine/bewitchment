@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Коррозия",
+  "icon": "minecraft:dragon_breath",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Аналог $(l:bewitchment:brewing/hardening)Упрочнения$() уменьшит броню на фиксированную величину."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Коррозия",
+	  "item": "minecraft:dragon_breath",
+	  "text": "Уменьшение брони пропорционально силе зелья."
+	}
+  ]
+}

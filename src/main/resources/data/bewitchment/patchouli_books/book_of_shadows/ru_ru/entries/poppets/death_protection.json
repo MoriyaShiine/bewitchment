@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "Защита от смерти",
+  "icon": "bewitchment:death_protection_poppet",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "У жнеца смерти нет ничего против тебя, когда ты используешь Куклу для защиты от смерти.$(br2)Очень похожий на Тотем Бессмертия, эта $(l:bewitchment:poppets/poppet_practice)кукла$() однажды спасёт тебя от смерти.$(br2)Куклы для защиты от смерти не работают в $(l:bewitchment:tools/poppet_shelves)полочках для кукол$()."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:death_protection_poppet"
+	}
+  ]
+}

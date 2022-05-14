@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "[Ритуал] Перевоплощения",
+  "icon": "minecraft:iron_sword",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Применив простой $(l:bewitchment:rituals/rituals)Ритуал$() перевоплощения, магическая энергия может быть компенсирована. Это удалит любые чары с предмета, а также восстановит его в процессе.$(br2) Предметы, затронутые этим $(l:bewitchment:rituals/rituals)Ритуалом$() должны быть брошены в круг $(o) после того, как$() ритуал был запущен. Это дополнительно сбросит стоимость наковальни для предметов."
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/hex"
+	}
+  ]
+}

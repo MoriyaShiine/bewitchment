@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Упрочнение",
+  "icon": "minecraft:scute",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Этот эффект укрепляет кожу, давая небольшой бонус к броне."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Упрочнение",
+	  "item": "minecraft:scute",
+	  "text": "Бонус к броне пропорционален силе эффекта."
+	}
+  ]
+}

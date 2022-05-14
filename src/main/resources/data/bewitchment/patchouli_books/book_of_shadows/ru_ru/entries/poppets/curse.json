@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "Проклятие",
+  "icon": "bewitchment:curse_poppet",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Кукла с защитой от проклятий защитит своего владельца от $(l:bewitchment:curses/conducting_curses)проклятий$(). $(l:bewitchment:poppets/poppet_practice)Кукла$() делает это, поглощая $(l:bewitchment:curses/conducting_curses)проклятие$() как губка. $(br2)Как только $(l:bewitchment:poppets/poppet_practice)кукла$() успешно поглотила $(l:bewitchment:curses/conducting_curses)проклятие$(), его можно отразить обратно владельцу $(l:bewitchment:curses/conducting_curses)проклятия$()."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:curse_poppet"
+	}
+  ]
+}

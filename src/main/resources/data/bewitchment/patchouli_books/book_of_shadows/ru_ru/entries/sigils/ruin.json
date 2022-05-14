@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "[Сигил] Разрушения",
+  "icon": "bewitchment:ruin_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "sortnum": 1,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "$(l:bewitchment:sigils/using_sigils)Пассивный Сигил$() Разрушения предотвращает закрепление вокруг него любого положительного эффекта зелья."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:ruin_sigil"
+	}
+  ]
+}

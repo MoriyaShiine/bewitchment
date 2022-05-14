@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "Повреждение",
+  "icon": "minecraft:textures/mob_effect/weakness.png",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Это $(l:bewitchment:curses/conducting_curses)Проклятие$() повреждает кровоток цели. Это приведет к усилению негативных последствий."
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/compromised"
+	}
+  ]
+}

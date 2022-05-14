@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "[Ритуал] Урагана",
+  "icon": "minecraft:feather",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Волшебным образом создавая волшебный ветер, этот $(l:bewitchment:rituals/rituals)Ритуал$() удаляет все близлежащие растения и листья.$(br2)Он также запускает любые объекты, захваченные порывом ветра, очень высоко в воздух."
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/hurricane"
+	}
+  ]
+}

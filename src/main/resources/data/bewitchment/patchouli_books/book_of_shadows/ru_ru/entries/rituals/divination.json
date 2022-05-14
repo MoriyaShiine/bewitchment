@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "[Ритуал] Гадания",
+  "icon": "minecraft:emerald_ore",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "$(l:bewitchment:rituals/rituals)Ритуал$() гадания ищет на земле определенный блок под центральным символом (то есть под блоком, к которому он прикреплен).$(br2)Он не выдаст точное положение, только количество.$(br2)При поиске этих блоков, имейте в виду, что радиус этого $(l:bewitchment:rituals/rituals)ритуала$() ограничен фрагментом $(l:bewitchment:creatures/cat)при нормальных условиях$()."
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/divination"
+	}
+  ]
+}

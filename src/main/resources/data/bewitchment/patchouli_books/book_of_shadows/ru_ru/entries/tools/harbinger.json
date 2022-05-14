@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Предвестник",
+  "icon": "bewitchment:harbinger",
+  "advancement": "bewitchment:hidden_unlocks/harbinger",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Приобретенный путем победы над $(l:bewitchment:creatures/lilith)Королевой вампиров$() в бою эти ботинки обладают защитой, сравнимой с ботинками из Незерита.$(br2) Из-за их темной энергии нежить нейтральна к владельцу.$(br2) Предвестник может быть восстановлен с помощью слитков Незерита.$(br2)."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "item": "bewitchment:harbinger"
+	}
+  ]
+}

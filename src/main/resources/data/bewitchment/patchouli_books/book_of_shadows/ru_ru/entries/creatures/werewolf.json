@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "Оборотень",
+  "icon": "bewitchment:werewolf_spawn_egg",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Оборотни - жертвы $(l:bewitchment:curses/lycanthropy)Ликантропии$() - они бродят по лесам, тайге и ледяным биомам в полнолуние. Они очень слабы против зачарования Кары.$(br2)Когда встает солнце, они возвращаются в свою человеческую форму."
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "bewitchment:werewolf",
+	  "offset": 0.1
+	}
+  ]
+}

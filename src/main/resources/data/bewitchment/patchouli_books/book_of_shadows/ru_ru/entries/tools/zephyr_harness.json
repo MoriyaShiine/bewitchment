@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Накидка лёгкости",
+  "icon": "bewitchment:zephyr_harness",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Накидка лёгкости делает своего владельца неудержимым, как самый сильный ветер, полностью сводя на нет большинство форм отбрасывания. $(br2)Кроме этого, Накидка позволяет ее владельцу подбрасывать объекты в воздух, нанося им удары только кулаком. Однако, это потребляет $(l:bewitchment:introduction/altars#internalme)МЕ$()."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:zephyr_harness"
+	}
+  ]
+}

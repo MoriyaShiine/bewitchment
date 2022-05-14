@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "Невезучесть",
+  "icon": "minecraft:textures/mob_effect/unluck.png",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "$(l:bewitchment:tools/crystal_ball)Удача$() не проявляет благосклонности к жертвам этого $(l:bewitchment:curses/conducting_curses)Проклятия$(); это также означает, что благотворный эффект статуса может не сработать."
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/unlucky"
+	}
+  ]
+}

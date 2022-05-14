@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "Обжорство",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 1,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Обжорство удваивает питательный эффект пищи... Вкусно."
+	}
+  ]
+}

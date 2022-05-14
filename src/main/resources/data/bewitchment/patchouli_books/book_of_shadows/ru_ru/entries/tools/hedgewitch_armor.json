@@ -1,0 +1,27 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Броня Природы",
+  "icon": "bewitchment:hedgewitch_robes",
+  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Эта старая классика зарекомендовала себя на протяжении веков колдовства. При ношении она увеличивает урожайность.$(br2)Ковры из той же ткани также можно разместить на $(l:bewitchment:introduction/altars)Алтари$()."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:hedgewitch_hat",
+	  "recipe2": "bewitchment:hedgewitch_hood"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:hedgewitch_robes",
+	  "recipe2": "bewitchment:hedgewitch_pants"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:hedgewitch_wool",
+	  "recipe2": "bewitchment:hedgewitch_carpet"
+	}
+  ]
+}

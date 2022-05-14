@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Чистота",
+  "icon": "bewitchment:birch_bark",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Применяя очищающие свойства Березы, эффект Чистоты может ослабить воздействие вредных эффектов. $(br2) С каждым усилением этот эффект уменьшит силу негативного эффекта."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Чистота",
+	  "item": "bewitchment:birch_bark",
+	  "text": "Это означает, что вы можете устранить негативных эффектов больше, взависимости от силы эффекта."
+	}
+  ]
+}

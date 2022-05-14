@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "Кошки",
+  "icon": "minecraft:cat_spawn_egg",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Кошки - привередливые существа. Тем не менее, само их присутствие успокаивает многих.$(br2)Когда ведьма связана с $(l:bewitchment:rituals/binding)фамильяром$(), таким, как кошка, это очень поможет с $(l:bewitchment:rituals/rituals)ритуалами$().$(br2)Кроме того, Криперы и Фантомы будут держаться подальше от ведьмы с Кошкой-$(l:bewitchment:rituals/binding)фамильяром$()."
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "minecraft:cat",
+	  "scale": 0.6
+	}
+  ]
+}

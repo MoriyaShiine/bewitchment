@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Сытый",
+  "icon": "minecraft:bamboo",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Эффект сытости повышает эффективность пищи."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Nourishing",
+	  "item": "minecraft:bamboo",
+	  "text": "Увеличение эффективности пищи маштабируется силой самого эффекта."
+	}
+  ]
+}

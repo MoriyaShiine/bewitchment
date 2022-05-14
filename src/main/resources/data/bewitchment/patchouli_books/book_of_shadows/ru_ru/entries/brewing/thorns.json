@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Шипы",
+  "icon": "minecraft:cactus",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Эффект шипов действует так, как следует из его названия. Каждый объект, который попытается нанести ущерб пользователю, получит обратный урон."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Шипы",
+	  "item": "minecraft:cactus",
+	  "text": "Урон, наносимый шипами, пропорционален силе эффекта."
+	}
+  ]
+}

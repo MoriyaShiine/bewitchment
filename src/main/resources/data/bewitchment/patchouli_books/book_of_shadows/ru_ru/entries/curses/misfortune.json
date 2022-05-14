@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "Несчастье",
+  "icon": "minecraft:clay_ball",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Это классическое $(l:bewitchment:curses/conducting_curses)Проклятие$() иногда будет применять неприятные эффекты. Они включают, но не ограничиваются ими: Яд, Слабость, Слепоту и Тошноту."
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/misfortune"
+	}
+  ]
+}

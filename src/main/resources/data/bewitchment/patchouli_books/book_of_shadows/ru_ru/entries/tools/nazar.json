@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Ожерелье Назара",
+  "icon": "bewitchment:nazar",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Используя силы света, Ожерелье Назара обычно используются для защиты от $(l:bewitchment:curses/conducting_curses)Проклятий$().$(br2)При ношении оно сократит продолжительность любого $(l:bewitchment:curses/conducting_curses)Проклятия$() пополам.$(br2) Для этого требуется около половины средств владельца $(l:bewitchment:introduction/altars#internalme)МЕ$()"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:nazar"
+	}
+  ]
+}

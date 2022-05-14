@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "Чума",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 2,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Те, кто отмечен Чумой, способны эффективно наносить тяжелые болезни своим врагам."
+	}
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "Леонард",
+  "icon": "bewitchment:leonard_spawn_egg",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Леонард покровитель ведьм, $(l:bewitchment:brewing/brewing_basics)варки в котле$() и...$(br2)Леонард $(l:bewitchment:creatures/demon)Великий Демон$().$(br2)Ведьмы дают $(l:bewitchment:tools/grotesque_stew)клятву$() чтобы они могли использовать два модификатора могущества, используя $(l:bewitchment:brewing/brewing_basics)Котёл$(). $(l:bewitchment:tools/grotesque_stew)Клятва$() Леонарду также позволяет игрокам $(l:bewitchment:tools/witch_cauldron#teleportation)телепортироваться$() используя $(l:bewitchment:tools/witch_cauldron)ведьмин котёл$() без использования $(l:bewitchment:introduction/altars)ME$()."
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "bewitchment:leonard",
+	  "offset": 0.2
+	}
+  ]
+}

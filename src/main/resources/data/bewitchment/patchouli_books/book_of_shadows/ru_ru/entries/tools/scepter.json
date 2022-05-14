@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Скипетр",
+  "icon": "bewitchment:scepter",
+  "advancement": "bewitchment:hidden_unlocks/scepter",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Эта могущественная реликвия получается путем победы над $(l:bewitchment:creatures/leonard)Леонардом$().$(br2)Его можно комбинировать со Взрывным Зельем, которое затем можно бросить четыре раза с помощью Скипетра используя $(l:bewitchment:introduction/altars#internalme)ME$().$(br2)Скипетр может быть отремонтирован с использованием Незериевых слитков."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "item": "bewitchment:scepter"
+	}
+  ]
+}

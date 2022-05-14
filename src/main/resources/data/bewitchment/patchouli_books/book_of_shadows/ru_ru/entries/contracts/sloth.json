@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "Лень",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 1,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Лень позволяет вам восстанавливаться намного быстрее, когда вы стоите на месте."
+	}
+  ]
+}

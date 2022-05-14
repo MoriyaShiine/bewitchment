@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Зачарованный",
+  "icon": "minecraft:lapis_block",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Делает обычные атаки магическими, позволяя им проходить броню."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Зачарованный",
+	  "item": "minecraft:lapis_block",
+	  "text": "Магический урон ниже физического, однако в зависимости от силы эффекта добавляется неплохой бонус к урону."
+	}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Кража",
+  "icon": "minecraft:diamond",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Этот эффект украдет положительные эффекты любого близлежащего объекта и применит их к вам. Внешние эффекты являются исключением из этого правила."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Кража",
+	  "item": "minecraft:diamond",
+	  "text": "Кража эффекта уменьшит его продолжительность вдвое.$(br2)Этот эффект несовместим с $(l:bewitchment:brewing/synchronized)Синхронизированный$().$(br2)Чем выше сила этого эффекта, тем дальше он будет распространяться."
+	}
+  ]
+}

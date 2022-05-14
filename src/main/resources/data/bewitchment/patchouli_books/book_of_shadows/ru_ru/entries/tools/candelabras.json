@@ -1,0 +1,21 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Подсвечники",
+  "icon": "bewitchment:iron_candelabra",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Подсвечники - один из причудливых источников освещения. $(br2) Их можно зажечь с помощью огнива. Когда они горят, они будут отталкивать $(l:bewitchment:creatures/ghost)Призраков$(), не позволяя им приближаться к нему. В зависимости от материала из которого сделан подсвечник, увеличивается и отталкивающий эффект."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:iron_candelabra",
+	  "recipe2": "bewitchment:golden_candelabra"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:silver_candelabra",
+	  "recipe2": "bewitchment:netherite_candelabra"
+	}
+  ]
+}

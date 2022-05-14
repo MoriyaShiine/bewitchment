@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "Ярость",
+  "icon": "minecraft:sweet_berries",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Это $(l:bewitchment:curses/conducting_curses)Проклятие$() сделает обычно нейтральных мобов, таких как Эндермены или Зомбифицированные Пиглины, агрессивными по отношению к цели."
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/outrage"
+	}
+  ]
+}

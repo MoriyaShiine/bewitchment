@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "Волк",
+  "icon": "minecraft:wolf_spawn_egg",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Прирученные волки - драгоценные существа; когда их друг в беде, они обычно готовы помочь, даже рискуя собственной жизнью.$(br2)Волки могут быть связаны $(l:bewitchment:rituals/binding)Ритуалом$(), который увеличит долговечность $(l:bewitchment:poppets/poppet_practice)Куклы$().$(br2) Они также увеличивают броню своей ведьмы."
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "minecraft:wolf",
+	  "scale": 0.6
+	}
+  ]
+}

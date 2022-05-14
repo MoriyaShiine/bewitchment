@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "[Ритуал] Бессмертия",
+  "icon": "minecraft:diamond",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Этот $(l:bewitchment:rituals/rituals)Ритуал$() света имеет высшую степень, дарующую временное бессмертие. Любой урон - за исключением пустоты - полностью аннулируется.$(br2)Эффект распространяется на любое живое существо поблизости и длится около половины дня."
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/immortality"
+	}
+  ]
+}

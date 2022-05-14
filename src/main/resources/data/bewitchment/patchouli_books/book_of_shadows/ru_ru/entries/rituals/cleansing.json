@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "[Ритуал] Очищения",
+  "icon": "minecraft:golden_apple",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "$(l:bewitchment:rituals/rituals)Ритуал$() очищения призывает свет очистить свою цель от $(l:bewitchment:curses/conducting_curses)проклятия$(). Цель указывается с помощью $(l:bewitchment:tools/taglock)Экстрактора ДНК$().$(br2)$(l:bewitchment:rituals/rituals)Ритуал$() также применим к зомби-жителям. Это превратит их в обычных жителей."
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/cleansing",
+	  "text": "Обратите внимание, что этот  $(l:bewitchment:rituals/rituals)Ритуал$() не гарантирует успеха. От некоторых $(l:bewitchment:curses/conducting_curses)проклятий$() может быть сложнее избавиться, но - как и в случае со стиркой - достаточно сильное трение все отмоет.."
+	}
+  ]
+}

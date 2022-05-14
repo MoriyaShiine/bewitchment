@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Хрустальный Шар",
+  "icon": "bewitchment:crystal_ball",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Хрустальные шары - обычные инструменты для гадания. $(br2) При использовании они принесут заклинателю целое состояние $(l:bewitchment:introduction/altars)ME$(), взятый из соседнего $(l:bewitchment:introduction/altars)Алтаря$().$(br2)Дополнительно могут быть использованы хрустальные шары для гадания. При использовании вместе с $(l:bewitchment:tools/taglock)Экстрактором ДНК$(), хрустальный шар даст точную информацию о цели."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:crystal_ball"
+	}
+  ]
+}

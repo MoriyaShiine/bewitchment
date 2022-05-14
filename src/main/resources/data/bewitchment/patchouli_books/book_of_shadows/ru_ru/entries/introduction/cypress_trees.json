@@ -1,0 +1,53 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "Кипарисовые Деревья",
+  "icon": "bewitchment:cypress_sapling",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Кипарисы появляются в таежных и болотных биомах.$(br2)Что касается защиты, блоки, сделанные из нее, будут маскировать вас от нежити на небольшой территории."
+	},
+	{
+	  "type": "patchouli:image",
+	  "images": [
+		"bewitchment:textures/gui/patchouli/cypress_tree.png"
+	  ],
+	  "border": true
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:cypress_wood",
+	  "recipe2": "bewitchment:cypress_planks"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:cypress_stairs",
+	  "recipe2": "bewitchment:cypress_slab"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:cypress_fence",
+	  "recipe2": "bewitchment:cypress_fence_gate"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:cypress_pressure_plate",
+	  "recipe2": "bewitchment:cypress_button"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:cypress_trapdoor",
+	  "recipe2": "bewitchment:cypress_door"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:cypress_chest",
+	  "recipe2": "bewitchment:trapped_cypress_chest"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:cypress_sign",
+	  "recipe2": "bewitchment:cypress_boat"
+	}
+  ]
+}

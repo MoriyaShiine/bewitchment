@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Призрачный браслет",
+  "icon": "bewitchment:specter_bangle",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Эта великолепная безделушка будет сгибать тени вокруг владельца, пока он крадется. $(br2) Это потребляет $(l:bewitchment:introduction/altars#internalme) ME $() и сделает пользователя полностью невидимым, и только легкий дым намекает на его присутствие."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:specter_bangle"
+	}
+  ]
+}

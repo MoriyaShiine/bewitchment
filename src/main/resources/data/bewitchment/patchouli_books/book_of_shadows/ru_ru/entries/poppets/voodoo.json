@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "Вуду",
+  "icon": "bewitchment:voodoo_poppet",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Кукла Вуду - классика.$(br2) Ее можно использовать для перемещения объектов, утопления их, поджога и даже применения к ним эффектов зелий из любого места!$(br2)Куклы Вуду не работают в $(l:bewitchment:tools/poppet_shelves)полке для кукол$()."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:voodoo_poppet"
+	}
+  ]
+}

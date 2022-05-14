@@ -1,0 +1,22 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "Соль",
+  "icon": "bewitchment:salt",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Используемая с древних времен, соль может быть помещена в виде пыли, чтобы блокировать нечисть. $(br2)Помимо защитных свойств, соль также служит обычным переключающим материалом.$(br2)Соляную руду можно найти близко к поверхности, что облегчает ее добычу."
+	},
+	{
+	  "type": "patchouli:image",
+	  "images": [
+		"bewitchment:textures/gui/patchouli/salt_ore.png"
+	  ],
+	  "border": true
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:salt_block"
+	}
+  ]
+}

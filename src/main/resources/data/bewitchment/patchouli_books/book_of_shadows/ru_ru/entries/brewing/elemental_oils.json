@@ -1,0 +1,43 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Элементные экстракты",
+  "icon": "bewitchment:cleansing_balm",
+  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "priority": true,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Элементные экстракты являются важными компонентами при колдовстве. Они сделаны из  $(l:bewitchment:introduction/bark)коры$() и других компонентов.$(br2)Чтобы изготовить несколько банок с экстрактом, сначала бросьте кусочек $(l:bewitchment:introduction/bark)коры$() в кипящий $(l:bewitchment:tools/witch_cauldron)ведьмин котел$(), затем добавьте остальные ингредиенты. Как только он приобретет приятный, соответствующий цвет, вы сможете разлить его по бутылкам."
+	},
+	{
+	  "type": "bewitchment:oil",
+	  "recipe": "bewitchment:oil_crafting/cleansing_balm",
+	  "text": "Очищающий бальзам ассоциируется со светом и такой же яркий."
+	},
+	{
+	  "type": "bewitchment:oil",
+	  "recipe": "bewitchment:oil_crafting/grim_elixir",
+	  "text": "Связанный с принципом тьмы, Мрачный эликсир темный, как кровь."
+	},
+	{
+	  "type": "bewitchment:oil",
+	  "recipe": "bewitchment:oil_crafting/aqua_cerate",
+	  "text": "Морской эликсир синего цвета, как вода.$(br2)Для этого можно использовать любой вид рыбы.."
+	},
+	{
+	  "type": "bewitchment:oil",
+	  "recipe": "bewitchment:oil_crafting/fiery_serum",
+	  "text": "Огненная сыворотка ярко-оранжевого цвета. Она включает в себя принцип пламени."
+	},
+	{
+	  "type": "bewitchment:oil",
+	  "recipe": "bewitchment:oil_crafting/earth_ichor",
+	  "text": "Земляной экстракт содержит землю."
+	},
+	{
+	  "type": "bewitchment:oil",
+	  "recipe": "bewitchment:oil_crafting/heaven_extract",
+	  "text": "Небесный экстракт полностью белый и представляет собой воздух.$(br2)Будьте осторожны, чтобы не выбросить $(l:bewitchment:introduction/crops)корень мандрагоры$() первым, вы можете случайно создать $(l:bewitchment:brewing/brewing_basics)зелье$()."
+	} 
+  ]
+}

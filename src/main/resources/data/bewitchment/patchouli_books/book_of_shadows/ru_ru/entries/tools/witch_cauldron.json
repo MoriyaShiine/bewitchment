@@ -1,0 +1,27 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Ведьмин Котел",
+  "icon": "bewitchment:witch_cauldron",
+  "priority": true,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Укрепив обычный котел с помощью $(l:bewitchment:introduction/silver)Серебра$(), вы можете создать Ведьмин Котел.$(br2)Этот волшебный котел чрезвычайно универсален в использовании и в частности, используется для $(l:bewitchment:brewing/elemental_oils)Создания Экстрактов$(), $(l:bewitchment:brewing/brewing_basics)Зельеварения$() и телепортация."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:witch_cauldron"
+	},
+	{
+	  "type": "patchouli:text",
+	  "title": "Использование",
+	  "text": "Предметы можно бросать в Ведьмин котел, как только он закипит. Чтобы заставить его закипеть, поместите под него, лаву или магму. $(br2) Обратите внимание, что для Котла Ведьмы требуется $(l:bewitchment:introduction/altars)Сила алтаря$(), за исключением создания $(l:bewitchment:brewing/elemental_oils)Экстрактов$()."
+	},
+	{
+	  "type": "patchouli:text",
+	  "title": "Телепортация",
+	  "anchor": "teleportation",
+	  "text": "Чтобы телепортироваться с помощью Ведьминого Котла, просто бросьте Жемчужину Эндера, наступите на Ведьмин Котёл и скажите (в чат), куда вы направляетесь. Этим пунктом назначения должен быть другой Котел Ведьмы, который был назван с помощью тега(бирки) имени. $(br2)Стоимость телепортации составляет  2ME/блок, при условии, что у вас нет $(l:bewitchment:creatures/leonard)Кого-нибудь$(), чтобы помочь вам."
+	}
+  ]
+}

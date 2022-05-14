@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:curses",
+  "name": "Проводящие Проклятия",
+  "priority": true,
+  "icon": "bewitchment:brazier",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Проклятия - это вредоносная магия, применяемая с помощью $(l:bewitchment:tools/brazier)Жаровни$().$(br2)Чтобы выбрать эффективное проклятие, вам понадобится $(l:bewitchment:tools/taglock)Экстрактор ДНК$() вашей цели и поместите ее в $(l:bewitchment:tools/brazier)Жаровню$(), в дополнение к другим ингредиентам.$(br2)После добавления всех ингредиентов зажгите $(l:bewitchment:tools/brazier)Жаровню$() с помощью Огнива, чтобы наложить проклятие."
+	},
+	{
+	  "type": "patchouli:text",
+	  "text": "Проклятия исчезнут через семь дней, но они также могут быть $(l:bewitchment:rituals/cleansing)Очищены$() используя соответствующий ритуал.$(br2)Обратите внимание, что для всех проклятий требуется не менее 400 доступной $(l:bewitchment:introduction/altars)ME$(); более мощные проклятия требуют 800 $(l:bewitchment:introduction/altars)ME$()."
+	}
+  ]
+}

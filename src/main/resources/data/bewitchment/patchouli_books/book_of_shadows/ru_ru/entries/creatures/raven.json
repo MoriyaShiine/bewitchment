@@ -1,0 +1,21 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "Ворон",
+  "icon": "bewitchment:raven_spawn_egg",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Вороны - темные птицы, которых можно встретить на равнинах и в лесах. Если убить ворона, с него выпадет перо. $(br2) Воронов можно приручить Золотыми самородками или Серебряными самородками и разводить семенами пшеницы."
+	},
+	{
+	  "type": "patchouli:text",
+	  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+	  "text": "Вороны-$(l:bewitchment:rituals/binding)фамильяры$(), позволяют ведьме улучшать $(l:bewitchment:curses/conducting_curses)проклятия$().$(br2)Вороны-$(l:bewitchment:rituals/binding)фамильяры$() также удваивают продолжительность $(l:bewitchment:curses/conducting_curses)проклятия$() наложенные ведьмой, что делает их гораздо более эффективными."
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "bewitchment:raven",
+	  "scale": 0.6
+	}
+  ]
+}

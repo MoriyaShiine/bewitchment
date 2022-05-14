@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Воспламенение",
+  "icon": "minecraft:blaze_powder",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Это приведет к беспрерывному поджиганию цели до тех пор, пока эффект активен."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Воспламенение",
+	  "item": "minecraft:blaze_powder",
+	  "text": "На воспламенение не влияет сила эффекта."
+	}
+  ]
+}

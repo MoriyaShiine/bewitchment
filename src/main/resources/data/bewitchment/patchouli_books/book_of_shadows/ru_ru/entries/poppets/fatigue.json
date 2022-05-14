@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "Усталость",
+  "icon": "bewitchment:fatigue_poppet",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Когда вы привязаны к Кукле Усталости, враги, которые атакуют вас, будут сильно ослаблены на несколько секунд."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:fatigue_poppet"
+	}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "Кукла Вампиризма",
+  "icon": "bewitchment:vampiric_poppet",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Вампирская кукла переносит урон, наносимый пользователю, на связанную сущность за счет прочности.$(br2)По иронии судьбы, это, похоже, не работает на $(l:bewitchment:creatures/vampire)Вампиров$().$(br2)Вампирские куклы не работают в $(l:bewitchment:tools/poppet_shelves)полке для кукол$()."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:vampiric_poppet"
+	}
+  ]
+}

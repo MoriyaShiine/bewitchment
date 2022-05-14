@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "[Ритуал] Кары",
+  "icon": "minecraft:redstone",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "$(l:bewitchment:rituals/rituals)Ритуал$() кары вызывает молнию возле $(l:bewitchment:rituals/rituals)Ритуала$().$(br2)Это очень хорошо работает с $(l:bewitchment:tools/waystone)Путеводными камнями$()."
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/smite"
+	}
+  ]
+}

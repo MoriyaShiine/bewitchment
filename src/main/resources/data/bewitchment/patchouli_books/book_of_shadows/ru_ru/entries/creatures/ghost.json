@@ -1,0 +1,19 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "Призраки",
+  "icon": "bewitchment:ghost_spawn_egg",
+  "extra_recipe_mappings": {
+	"bewitchment:ectoplasm": 1
+  },
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Призраки - это потерянные души, блуждающие по ночам, где только могут.$(br2)Заметив поблизости людей, они применят свои недолговечные проклятия в виде негативных эффектов.$(br2)Если убить призрака, с него выпадет эктоплазма."
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "bewitchment:ghost",
+	  "offset": 0.1
+	}
+  ]
+}

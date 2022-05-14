@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "[Сигил] Починки",
+  "icon": "bewitchment:mending_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "$(l:bewitchment:sigils/using_sigils)Активация Сигила$() Починки даст Регенерацию и Сопротивление тому, кто его активировал."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:mending_sigil"
+	}
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "Гнев",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 1,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Этот $(l:bewitchment:contracts/concept_contracts)контракт$() увеличит твой урон при снижении здоровья.$(br2)Наконец-то ты отомстишь своим обидчикам!"
+	}
+  ]
+}

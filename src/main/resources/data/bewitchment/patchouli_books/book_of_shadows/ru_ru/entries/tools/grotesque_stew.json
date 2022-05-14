@@ -1,0 +1,22 @@
+{
+  "category": "bewitchment:tools",
+  "name": "Гротескное Рагу",
+  "priority": true,
+  "icon": "bewitchment:grotesque_stew",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Это сомнительное рагу является частью обряда посвящения.$(br2)Выпивая и пристально глядя в глаза $(l:bewitchment:creatures/demon)Большого Демона$(), ведьма может дать им клятву.$(br2)Клятва $(l:bewitchment:creatures/demon)Большому Демону$() обладает уникальными преимуществами в зависимости от $(l:bewitchment:creatures/demon)Демона$()."
+	},
+	{
+	  "type": "patchouli:text",
+	  "text": "Точные преимущества указаны в соответствующих записях.$(br2)A $(l:bewitchment:creatures/demon)Демон$(), которому дана клятва, должен оставаться в мире, чтобы клятва была активной. Ведьма может дать клятву только одному $(l:bewitchment:creatures/demon)Демону$() в одно время.$(br2)Атакуя $(l:bewitchment:creatures/demon)Демона$() любым способом немедленно отменит клятву."
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:grotesque_stew",
+	  "text": "Важно отметить, что ведьмы, которые таким образом портят свою душу, склонны к тем же слабостям, что и $(l:bewitchment:creatures/demon)Демоны$()."
+	}
+  ]
+}

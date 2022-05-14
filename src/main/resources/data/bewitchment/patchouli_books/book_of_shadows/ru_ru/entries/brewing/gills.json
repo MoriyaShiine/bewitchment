@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "Жабры",
+  "icon": "minecraft:cod",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "Этот эффект заменяет легкие цели - жабрами, делая их способными дышать ТОЛЬКО под водой."
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Жабры",
+	  "item": "minecraft:cod",
+	  "text": "Для крафта можно использовать любую рыбу."
+	}
+  ]
+}
