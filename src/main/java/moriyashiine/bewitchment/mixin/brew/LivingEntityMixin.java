@@ -6,9 +6,11 @@ package moriyashiine.bewitchment.mixin.brew;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.client.network.packet.SpawnExplosionParticlesPacket;
+import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWDamageSources;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -114,6 +116,20 @@ public abstract class LivingEntityMixin extends Entity {
 					removeStatusEffect(BWStatusEffects.VOLATILITY);
 				}
 			}
+		}
+	}
+
+	@Inject(method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)Z", at = @At(value = "HEAD"))
+	private void addStatusEffect(StatusEffectInstance effect, Entity source, CallbackInfoReturnable<Boolean> cir) {
+		if (effect.getEffectType() == BWStatusEffects.POLYMORPH && source instanceof AreaEffectCloudEntity) {
+			BWComponents.POLYMORPH_COMPONENT.maybeGet(source).ifPresent(sourcePolymorphComponent -> {
+				if (sourcePolymorphComponent.getUuid() != null) {
+					BWComponents.POLYMORPH_COMPONENT.maybeGet(LivingEntity.class.cast(this)).ifPresent(entityPolymorphComponent -> {
+						entityPolymorphComponent.setUuid(sourcePolymorphComponent.getUuid());
+						entityPolymorphComponent.setName(sourcePolymorphComponent.getName());
+					});
+				}
+			});
 		}
 	}
 
