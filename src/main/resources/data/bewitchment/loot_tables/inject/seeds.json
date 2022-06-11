@@ -1,105 +1,106 @@
 {
-  "type": "block",
+  "type": "minecraft:block",
   "pools": [
 	{
 	  "rolls": 1,
 	  "entries": [
 		{
-		  "type": "minecraft:alternatives",
-		  "children": [
+		  "type": "minecraft:item",
+		  "name": "bewitchment:aconite_seeds",
+		  "functions": [
 			{
-			  "type": "item",
-			  "conditions": [
-				{
-				  "condition": "random_chance",
-				  "chance": 0.025
-				}
-			  ],
-			  "functions": [
-				{
-				  "function": "apply_bonus",
-				  "enchantment": "fortune",
-				  "formula": "uniform_bonus_count",
-				  "parameters": {
-					"bonusMultiplier": 2
-				  }
-				},
-				{
-				  "function": "explosion_decay"
-				}
-			  ],
-			  "name": "bewitchment:aconite_seeds"
-			},
-			{
-			  "type": "item",
-			  "conditions": [
-				{
-				  "condition": "random_chance",
-				  "chance": 0.025
-				}
-			  ],
-			  "functions": [
-				{
-				  "function": "apply_bonus",
-				  "enchantment": "fortune",
-				  "formula": "uniform_bonus_count",
-				  "parameters": {
-					"bonusMultiplier": 2
-				  }
-				},
-				{
-				  "function": "explosion_decay"
-				}
-			  ],
-			  "name": "bewitchment:belladonna_seeds"
-			},
-			{
-			  "type": "item",
-			  "conditions": [
-				{
-				  "condition": "random_chance",
-				  "chance": 0.025
-				}
-			  ],
-			  "functions": [
-				{
-				  "function": "apply_bonus",
-				  "enchantment": "fortune",
-				  "formula": "uniform_bonus_count",
-				  "parameters": {
-					"bonusMultiplier": 2
-				  }
-				},
-				{
-				  "function": "explosion_decay"
-				}
-			  ],
-			  "name": "bewitchment:garlic"
-			},
-			{
-			  "type": "item",
-			  "conditions": [
-				{
-				  "condition": "random_chance",
-				  "chance": 0.025
-				}
-			  ],
-			  "functions": [
-				{
-				  "function": "apply_bonus",
-				  "enchantment": "fortune",
-				  "formula": "uniform_bonus_count",
-				  "parameters": {
-					"bonusMultiplier": 2
-				  }
-				},
-				{
-				  "function": "explosion_decay"
-				}
-			  ],
-			  "name": "bewitchment:mandrake_seeds"
+			  "function": "minecraft:apply_bonus",
+			  "enchantment": "minecraft:fortune",
+			  "formula": "minecraft:uniform_bonus_count",
+			  "parameters": {
+				"bonusMultiplier": 2
+			  }
 			}
 		  ]
+		},
+		{
+		  "type": "minecraft:item",
+		  "name": "bewitchment:belladonna_seeds",
+		  "functions": [
+			{
+			  "function": "minecraft:apply_bonus",
+			  "enchantment": "minecraft:fortune",
+			  "formula": "minecraft:uniform_bonus_count",
+			  "parameters": {
+				"bonusMultiplier": 2
+			  }
+			}
+		  ]
+		},
+		{
+		  "type": "minecraft:item",
+		  "name": "bewitchment:garlic",
+		  "functions": [
+			{
+			  "function": "minecraft:apply_bonus",
+			  "enchantment": "minecraft:fortune",
+			  "formula": "minecraft:uniform_bonus_count",
+			  "parameters": {
+				"bonusMultiplier": 2
+			  }
+			}
+		  ]
+		},
+		{
+		  "type": "minecraft:item",
+		  "name": "bewitchment:mandrake_seeds",
+		  "functions": [
+			{
+			  "function": "minecraft:apply_bonus",
+			  "enchantment": "minecraft:fortune",
+			  "formula": "minecraft:uniform_bonus_count",
+			  "parameters": {
+				"bonusMultiplier": 2
+			  }
+			}
+		  ]
+		}
+	  ],
+	  "functions": [
+		{
+		  "function": "minecraft:explosion_decay"
+		}
+	  ],
+	  "conditions": [
+		{
+		  "condition": "minecraft:inverted",
+		  "term": {
+			"condition": "minecraft:match_tool",
+			"predicate": {
+			  "items": [
+				"minecraft:shears"
+			  ]
+			}
+		  }
+		},
+		{
+		  "condition": "minecraft:inverted",
+		  "term": {
+			"condition": "minecraft:block_state_property",
+			"block": "minecraft:tall_grass",
+			"properties": {
+			  "half": "upper"
+			}
+		  }
+		},
+		{
+		  "condition": "minecraft:inverted",
+		  "term": {
+			"condition": "minecraft:block_state_property",
+			"block": "minecraft:large_fern",
+			"properties": {
+			  "half": "upper"
+			}
+		  }
+		},
+		{
+		  "condition": "minecraft:random_chance",
+		  "chance": 0.0625
 		}
 	  ]
 	}

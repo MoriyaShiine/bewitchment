@@ -111,7 +111,7 @@ public class BWWorldGenerators {
 		LootTableLoadingCallback.EVENT.register((resourceManager, lootManager, identifier, fabricLootSupplierBuilder, lootTableSetter) -> {
 			Identifier seeds = new Identifier(Bewitchment.MODID, "inject/seeds");
 			Identifier nether_fortress = new Identifier(Bewitchment.MODID, "inject/nether_fortress");
-			if (Blocks.GRASS.getLootTableId().equals(identifier) || Blocks.TALL_GRASS.getLootTableId().equals(identifier) || Blocks.FERN.getLootTableId().equals(identifier) || Blocks.LARGE_FERN.getLootTableId().equals(identifier)) {
+			if (Blocks.GRASS.getLootTableId().equals(identifier) || Blocks.FERN.getLootTableId().equals(identifier) || Blocks.TALL_GRASS.getLootTableId().equals(identifier) || Blocks.LARGE_FERN.getLootTableId().equals(identifier)) {
 				fabricLootSupplierBuilder.withPool(LootPool.builder().with(LootTableEntry.builder(seeds).weight(1)).build());
 			}
 			if (LootTables.NETHER_BRIDGE_CHEST.equals(identifier)) {

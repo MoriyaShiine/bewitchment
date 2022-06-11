@@ -38,6 +38,6 @@
 	  "type": "bewitchment:oil",
 	  "recipe": "bewitchment:oil_crafting/heaven_extract",
 	  "text": "Небесный экстракт полностью белый и представляет собой воздух.$(br2)Будьте осторожны, чтобы не выбросить $(l:bewitchment:introduction/crops)корень мандрагоры$() первым, вы можете случайно создать $(l:bewitchment:brewing/brewing_basics)зелье$()."
-	} 
+	}
   ]
 }
