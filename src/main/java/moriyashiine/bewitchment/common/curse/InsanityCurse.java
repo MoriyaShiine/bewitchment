@@ -45,6 +45,7 @@ public class InsanityCurse extends Curse {
 				mob.initialize((ServerWorldAccess) target.world, target.world.getLocalDifficulty(target.getBlockPos()), SpawnReason.EVENT, null, null);
 				BWComponents.FAKE_MOB_COMPONENT.get(mob).setTarget(target.getUuid());
 				entity.setSilent(true);
+				mob.setCanPickUpLoot(false);
 				target.world.spawnEntity(entity);
 			}
 		}

@@ -54,7 +54,7 @@ public abstract class LivingEntityMixin extends Entity {
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!world.isClient && (Object) this instanceof MobEntity mob && BWComponents.FAKE_MOB_COMPONENT.get(mob).getTarget() != null) {
-			callbackInfo.cancel();
+			callbackInfo.setReturnValue(false);
 		}
 	}
 
