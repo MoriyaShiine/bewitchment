@@ -1,0 +1,24 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "蛇",
+  "icon": "bewitchment:snake_spawn_egg",
+  "extra_recipe_mappings": {
+	"bewitchment:snake_tongue": 0
+  },
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "蛇通常出现在热带草原、沙漠和平原，它们在那里捕食其他动物，并用毒液杀死它们。$(br2)蛇可能会掉落它们的蛇舌，尽管它也可以从$(l:bewitchment:creatures/hellhound)地狱之犬$()那里获得。$(br2)蛇可以用生兔肉驯服，用生鸡肉繁殖。"
+	},
+	{
+	  "type": "patchouli:text",
+	  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+	  "text": "蛇可以成为$(l:bewitchment:rituals/binding)宠物$()。拥有蛇$(l:bewitchment:rituals/binding)宠物$()的巫师能够制作出更耐用的$(l:bewitchment:sigils/using_sigils)符文$()。$(br2)此外，它们还能从毒药中获益；毒药不会伤害它们，并能补充它们的$(l:bewitchment:introduction/altars#internalme)内部ME缓冲区$()。"
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "bewitchment:snake",
+	  "scale": 0.6
+	}
+  ]
+}

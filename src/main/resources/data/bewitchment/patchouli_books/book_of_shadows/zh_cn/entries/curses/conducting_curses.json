@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:curses",
+  "name": "进行诅咒",
+  "priority": true,
+  "icon": "bewitchment:brazier",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "诅咒是用$(l:bewitchment:tools/brazier)火盆$()施放的恶意魔法。$(br2)要施放有效的诅咒，除了其他成分外，您还需要目标的$(l:bewitchment:tools/taglock)巫媒$()并将其放入$(l:bewitchment:tools/brazier)火盆$()中。$(br2)放入所有材料后，用打火石点燃$(l:bewitchment:tools/brazier)火盆$()以施放诅咒。"
+	},
+	{
+	  "type": "patchouli:text",
+	  "text": "诅咒会在 7 天后消失，但也可以使用相应的仪式来$(l:bewitchment:rituals/cleansing)净化$()。$(br2)请注意，所有诅咒都需要至少 400 $(l:bewitchment:introduction/altars)ME$()；强力诅咒需要 800 $(l:bewitchment:introduction/altars)ME$()。"
+	}
+  ]
+}

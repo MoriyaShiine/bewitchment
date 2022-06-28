@@ -1,0 +1,26 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "黑尔讷",
+  "icon": "bewitchment:herne_spawn_egg",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "黑尔讷，狂猎之王，通常是通过遭受$(l:bewitchment:curses/lycanthropy)狼人病$()的折磨来$(l:bewitchment:tools/grotesque_stew)宣誓$()的。他可以赋予几乎完全的$(l:bewitchment:curses/conducting_curses)诅咒$()控制权，让受害者可以随意转变。或者，可以给他提供$(l:bewitchment:introduction/crops)乌头$()，完全消除$(l:bewitchment:curses/conducting_curses)诅咒$()。$(br2)召唤他是相当复杂的，将在本条目中概述。"
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "bewitchment:herne",
+	  "offset": 0.2
+	},
+	{
+	  "type": "patchouli:text",
+	  "title": "召唤黑尔讷",
+	  "text": "要召唤黑尔讷，需要几样东西：$(li)一个$(l:bewitchment:tools/brazier#mortal_coil)凡人线圈香$()$(li)一只狼$(li)一个森林或针叶林生物群落。$(br2)首先，在晚上于正确的生物群落里开始上$(l:bewitchment:tools/brazier#incense)香$()。然后你需要在不远处用$(l:bewitchment:tools/athame)仪式刀$()杀死一只狼。"
+	},
+	{
+	  "type": "patchouli:text",
+	  "text": "明智地选择做这件事的地点；如果你想向他$(l:bewitchment:tools/grotesque_stew)宣誓$()，你需要把黑尔讷留在身边。$(br2)一旦$(l:bewitchment:tools/grotesque_stew)宣誓$()，你可以通过按[$(k:bewitchment.transformation_ability)]切换成你的狼形。"
+	}
+  ]
+}

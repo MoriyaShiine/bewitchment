@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "战争",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 2,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "战争$(l:bewitchment:contracts/concept_contracts)契约$()下的生命在附近的实体中引起敌意，使它们互相残杀。"
+	}
+  ]
+}

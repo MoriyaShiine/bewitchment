@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "偏离",
+  "icon": "minecraft:phantom_membrane",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "使箭矢偏离目标，使它们从射出的地方更快地返回。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "偏离",
+	  "item": "minecraft:phantom_membrane",
+	  "text": "偏转效果越强，箭的速度就越快。"
+	}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "森林之怒",
+  "icon": "minecraft:oak_sapling",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这个$(l:bewitchment:curses/conducting_curses)诅咒$()将大自然的痛苦归还给人类，使任何被它$(l:bewitchment:curses/conducting_curses)诅咒$()的人都会遭受同样的痛苦。这会使火焰和斧头的伤害加倍。"
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/forests_wrath"
+	}
+  ]
+}

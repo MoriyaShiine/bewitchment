@@ -1,0 +1,19 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "幽灵",
+  "icon": "bewitchment:ghost_spawn_egg",
+  "extra_recipe_mappings": {
+	"bewitchment:ectoplasm": 1
+  },
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "鬼魂是迷失的灵魂，在夜里游荡，无论在哪里都会被唤醒。$(br2)一旦注意到附近的人类，它们就会以负面状态的形式施加它们短暂的诅咒。$(br2)幽灵会掉落灵皮。"
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "bewitchment:ghost",
+	  "offset": 0.1
+	}
+  ]
+}

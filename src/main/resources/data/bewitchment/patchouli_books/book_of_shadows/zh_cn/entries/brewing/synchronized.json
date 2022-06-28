@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "同步",
+  "icon": "minecraft:ghast_tear",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "同步的效果将把你的任何效果应用到附近的实体。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "Synchronized",
+	  "item": "minecraft:ghast_tear",
+	  "text": "同步效果被切成两半。$(br2)此效果与$(l:bewitchment:brewing/theft)盗窃$()不兼容.$(br2)这个效果的强度越高，它就会达到越远。"
+	}
+  ]
+}

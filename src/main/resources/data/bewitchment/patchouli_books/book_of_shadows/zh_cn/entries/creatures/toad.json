@@ -1,0 +1,21 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "蟾蜍",
+  "icon": "bewitchment:toad_spawn_egg",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "蟾蜍可以在丛林和沼泽中找到，在周围快乐地跳跃。杀死后，蟾蜍会掉落粘液球。$(br2)蟾蜍可以用发酵蛛眼来驯服，也可以用普通的蜘蛛眼来繁殖。"
+	},
+	{
+	  "type": "patchouli:text",
+	  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+	  "text": "蟾蜍$(l:bewitchment:rituals/binding)宠物$()会给予绑定它的巫师增强的正面状态效果。$(br2)杀死节肢动物也会为这类巫师治疗四分之一的最大健康值。"
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "bewitchment:toad",
+	  "scale": 0.6
+	}
+  ]
+}

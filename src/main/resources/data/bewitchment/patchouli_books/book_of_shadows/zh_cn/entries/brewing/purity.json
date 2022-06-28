@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "净化",
+  "icon": "bewitchment:birch_bark",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "通过应用桦树的清洁力量，净化效果可以削弱有害状态的影响。$(br2)对于每一个强度，这个效应将减少一个负面效应的力量，也减少它自己的力量。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "净化",
+	  "item": "bewitchment:birch_bark",
+	  "text": "具体来说，这意味着效果越强，你就可以消除更多的负面影响。"
+	}
+  ]
+}

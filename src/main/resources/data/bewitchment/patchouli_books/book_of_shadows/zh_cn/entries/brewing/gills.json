@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "鳃",
+  "icon": "minecraft:cod",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这种恶意的效果将目标的肺部替换成鳃，使他们只能在水下呼吸。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "鳃",
+	  "item": "minecraft:cod",
+	  "text": "任何鱼都可以用来做这个。"
+	}
+  ]
+}

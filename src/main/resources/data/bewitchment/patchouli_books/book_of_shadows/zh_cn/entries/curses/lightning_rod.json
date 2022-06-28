@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "避雷针",
+  "icon": "bewitchment:silver_nugget",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "使目标更容易受到闪电的影响。目标附近的任何闪电都会直接劈到它。"
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/lightning_rod"
+	}
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:curses",
+  "name": "易感",
+  "icon": "minecraft:rotten_flesh",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这个$(l:bewitchment:curses/conducting_curses)诅咒$()会削弱身体，使目标受到两倍的魔法伤害，并使他们更难移动。$(br2)有传言说，这个$(l:bewitchment:curses/conducting_curses)诅咒$()甚至与更糟糕的命运有关，例如$(l:bewitchment:curses/vampirism)吸血鬼$()和$(l:bewitchment:curses/lycanthropy)狼人$()。"
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/susceptibility",
+	  "text": "这是一个$(l:bewitchment:curses/conducting_curses)强力诅咒$()；要摆脱它稍显困难。"
+	}
+  ]
+}

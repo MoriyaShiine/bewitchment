@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "概念：契约",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "priority": true,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "契约是以健康为代价从$(l:bewitchment:creatures/demon)恶魔$()那里购买的异世界的契约。$(br2)契约通常持续七天，而且不能被破坏。"
+	}
+  ]
+}

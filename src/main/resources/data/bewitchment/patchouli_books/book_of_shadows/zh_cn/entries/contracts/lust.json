@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "色欲",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 1,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "色欲让空气充满爱~$(br2)这将使拥有此$(l:bewitchment:contracts/concept_contracts)契约$()的人所繁殖的动物比平时多出三倍。"
+	}
+  ]
+}

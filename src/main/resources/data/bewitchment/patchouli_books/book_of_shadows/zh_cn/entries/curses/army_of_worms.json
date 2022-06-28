@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "蠕虫大军",
+  "icon": "minecraft:poisonous_potato",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这个$(l:bewitchment:curses/conducting_curses)诅咒$()通过召唤蠕虫来造成烦恼。被$(l:bewitchment:curses/conducting_curses)诅咒$()个体附近的任何作物都会受到影响。"
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/army_of_worms"
+	}
+  ]
+}

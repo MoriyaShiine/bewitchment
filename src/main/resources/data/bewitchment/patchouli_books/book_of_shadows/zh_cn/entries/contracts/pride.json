@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "傲慢",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 1,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "傲慢$(l:bewitchment:contracts/concept_contracts)契约$()将使你获得的经验翻倍。"
+	}
+  ]
+}

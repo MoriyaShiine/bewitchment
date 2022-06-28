@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "多态",
+  "icon": "bewitchment:taglock{OwnerName:Aelpecyem}",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "多态一定是最通用的效果之一。在多态效应下的玩家会将自己的形态变成所使用的$(l:bewitchment:tools/taglock)巫媒$()的目标。$(br2)这种药水可以制成飞溅药剂或类似的变体，就像其他药水一样。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "多态",
+	  "item": "bewitchment:taglock{FromPlayer: 1b, OwnerUUID: [I; 1672005179, -1854323673, -2070260447, 778045631], OwnerName:\"Aelpecyem\"}",
+	  "text": "强度对这种药水没有影响。$(br2)这个药水只有在用另一个玩家的$(l:bewitchment:tools/taglock)巫媒$()创建时才有效。"
+	}
+  ]
+}

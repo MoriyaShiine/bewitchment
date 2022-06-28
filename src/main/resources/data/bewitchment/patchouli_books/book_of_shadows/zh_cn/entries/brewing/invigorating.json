@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "提神",
+  "icon": "bewitchment:elder_bark",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这将使消耗它的人的$(l:bewitchment:introduction/altars#internalme)内部ME缓冲区$()充满一个固定的数量。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "提神",
+	  "item": "bewitchment:elder_bark",
+	  "text": "强度会增加获得的$(l:bewitchment:introduction/altars#internalme)ME$()数量."
+	}
+  ]
+}

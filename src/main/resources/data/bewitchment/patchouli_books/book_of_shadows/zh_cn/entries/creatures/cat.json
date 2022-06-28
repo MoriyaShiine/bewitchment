@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "猫",
+  "icon": "minecraft:cat_spawn_egg",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "猫是很挑剔的东西。即便如此，他们的存在也让许多人感到舒心。$(br2)当绑定为一个$(l:bewitchment:rituals/binding)宠物$()时，猫会对$(l:bewitchment:rituals/rituals)仪式$()有很大帮助。$(br2)此外，爬行者和幻翼会远离有猫$(l:bewitchment:rituals/binding)宠物$()的女巫。"
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "minecraft:cat",
+	  "scale": 0.6
+	}
+  ]
+}

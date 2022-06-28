@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "盗窃",
+  "icon": "minecraft:diamond",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这个效果会窃取附近任何实体的正面效果，并将其应用于你。环境效应是一个例外。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "盗窃",
+	  "item": "minecraft:diamond",
+	  "text": "偷取一个效果将使其持续时间减半。$(br2)此效果与$(l:bewitchment:brewing/synchronized)同步$()不兼容。$(br2)这个效果的强度越高，它就会达到越远。"
+	}
+  ]
+}

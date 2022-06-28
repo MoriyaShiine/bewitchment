@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "虚幻",
+  "icon": "bewitchment:ectoplasm",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "虚幻生物无法受到或造成伤害"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "虚幻",
+	  "item": "bewitchment:ectoplasm",
+	  "text": "强度并不影响这种效果。"
+	}
+  ]
+}

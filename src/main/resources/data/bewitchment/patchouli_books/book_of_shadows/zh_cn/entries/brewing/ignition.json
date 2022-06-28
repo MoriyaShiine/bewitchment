@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "引燃",
+  "icon": "minecraft:blaze_powder",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "只要效果还在，目标着的火就不会熄灭。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "引燃",
+	  "item": "minecraft:blaze_powder",
+	  "text": "引燃不受强度的影响。"
+	}
+  ]
+}

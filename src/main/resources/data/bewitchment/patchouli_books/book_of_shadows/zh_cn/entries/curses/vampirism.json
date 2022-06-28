@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "吸血者",
+  "icon": "bewitchment:bottle_of_blood",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "吸血者是一个可怕的$(l:bewitchment:curses/conducting_curses)诅咒$()，大多数人认为它已经终结了。$(br2)技术上，$(l:bewitchment:creatures/vampire)吸血者$()是不朽的，尽管它们的不朽是以吸食人类的血液为基础的；没有它，它们就会死去。$(br2)吸血者的移动速度和攻击伤害有小幅加成。此外，它们对$(l:bewitchment:introduction/silver)银$()和$(l:bewitchment:introduction/crops)大蒜$()很虚弱。"
+	},
+	{
+	  "type": "patchouli:text",
+	  "text": "吸血者诅咒不能用$(l:bewitchment:tools/brazier)火盆$()施放；相反，它必须从另一个$(l:bewitchment:creatures/vampire)吸血鬼$()获得。$(br2)要受到此$(l:bewitchment:curses/conducting_curses)诅咒$()，一个人必须处于$(l:bewitchment:curses/susceptibility)易感$()$(l:bewitchment:curses/conducting_curses)诅咒$()之下并被$(l:bewitchment:creatures/vampire)吸血鬼$()杀死……但仍然幸存下来。$(br2)$(o)但你为什么要获得这个诅咒？"
+	}
+  ]
+}
