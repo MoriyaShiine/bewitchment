@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:tools",
+  "name": "幽灵手镯",
+  "icon": "bewitchment:specter_bangle",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "只要佩戴者在潜行，这个华丽的小饰品就会弯曲佩戴者周围的阴影。$(br2)这样做会消耗 $(l:bewitchment:introduction/altars#internalme)ME$() 并使使用者完全隐形，只有轻微的烟雾暗示他们。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:specter_bangle"
+	}
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "盐",
+  "icon": "bewitchment:salt",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "自古以来就使用盐，可以将盐作为粉尘阻挡邪恶的生物，这让它享有保护者的称号。$(br2)除了具有保护作用外，盐还可以作为一种常见的巫术材料。$(br2)盐矿可以在靠近地表的地方找到，因此很容易开采。"
+	},
+	{
+	  "type": "patchouli:image",
+	  "images": [
+		"bewitchment:textures/gui/patchouli/salt_ore.png"
+	  ],
+	  "border": true
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:salt_block"
+	}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "入夜",
+  "icon": "bewitchment:silver_ingot",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "通过呼唤月亮，女巫可以把白天换成黑夜。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/nightfall"
+	}
+  ]
+}

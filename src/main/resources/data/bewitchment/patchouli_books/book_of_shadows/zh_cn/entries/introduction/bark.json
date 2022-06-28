@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "树皮",
+  "icon": "bewitchment:oak_bark",
+  "advancement": "bewitchment:hidden_unlocks/athame",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "有人说树皮是树上最神奇的部分，所以早期的女巫学会了用$(l:bewitchment:tools/athame)仪式刀$()从木头上剥下树皮。$(br2)$(o)请注意，有些树林太难剥去树皮了。$()"
+	},
+	{
+	  "type": "patchouli:campfire",
+	  "recipe": "bewitchment:wood_ash_from_campfire_cooking",
+	  "text": "树皮可以用来做很多事情，其中之一就是木灰。$(br2)木灰是通过将树皮放在篝火上制成的。当被它扔进装满的$(l:bewitchment:tools/witch_cauldron)女巫釜锅$()时，它会立即被倒空。"
+	}
+  ]
+}

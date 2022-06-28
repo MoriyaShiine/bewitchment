@@ -1,0 +1,37 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "银",
+  "icon": "bewitchment:silver_ingot",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "白银在黄金附近产生，是纯洁的象征。$(br2)银块会伤害站在它上面的邪恶实体。$(br2)本书中任何时候使用邪恶实体一词都等同于给定实体对猛击有弱点。"
+	},
+	{
+	  "type": "patchouli:image",
+	  "images": [
+		"bewitchment:textures/gui/patchouli/silver_ore.png"
+	  ],
+	  "border": true
+	},
+	{
+	  "type": "patchouli:smelting",
+	  "recipe": "bewitchment:silver_ingot_from_smelting_raw_silver",
+	  "text": "粗银可以在熔炉和高炉中加工。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:raw_silver_block",
+	  "recipe2": "bewitchment:silver_block"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:silver_nugget"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:silver_arrow",
+	  "text": "银箭可以像普通箭一样射出，但它们具有自带的猛击效果。"
+	}
+  ]
+}

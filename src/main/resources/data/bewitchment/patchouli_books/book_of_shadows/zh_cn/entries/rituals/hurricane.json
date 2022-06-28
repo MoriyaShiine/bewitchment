@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "飓风",
+  "icon": "minecraft:feather",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "通过神奇地创造魔法风，这个$(l:bewitchment:rituals/rituals)仪式$()可以去除附近的任何植物和树叶。$(br2)它还将把任何在阵风中捕获的实体发射到高空。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/hurricane"
+	}
+  ]
+}

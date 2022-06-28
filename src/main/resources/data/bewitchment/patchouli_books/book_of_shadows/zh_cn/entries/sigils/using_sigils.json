@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "使用符文",
+  "icon": "bewitchment:mending_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "priority": true,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "符文是蕴含力量的魔法符号。它们可以分为两组：主动符文和被动符文。$(br2)主动符文需要放置在可用的方块或$(l:bewitchment:introduction/dragons_blood_trees)龙血$()制成的扫帚上。$(br2)被动符文可以放置在任何地方，并将其效果应用于周围的一切。"
+	},
+	{
+	  "type": "patchouli:text",
+	  "text": "$(l:bewitchment:tools/taglock)巫媒$()可以添加到符文中以控制它影响的对象。如果将符文设置为将$(l:bewitchment:tools/taglock)巫媒$()视为白名单，则符文只会影响其中的人。如果将其设置为黑名单，则该印记不会影响$(l:bewitchment:tools/taglock)巫媒$()中的任何人。$(br2)潜行时使用$(l:bewitchment:tools/athame)仪式刀$()来在黑名单和白名单之间切换。$(br2)应该注意的是，所有的符文时长都有限。"
+	}
+  ]
+}

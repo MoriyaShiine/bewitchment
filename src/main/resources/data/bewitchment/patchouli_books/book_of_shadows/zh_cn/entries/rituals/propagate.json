@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "繁殖",
+  "icon": "minecraft:bone_meal",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这个$(l:bewitchment:rituals/rituals)仪式$()使附近的农作物、动物和人类成长。$(br2)有时最好不要质疑魔法。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/propagate"
+	}
+  ]
+}

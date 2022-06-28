@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:tools",
+  "name": "带刺腰带",
+  "icon": "bewitchment:prickly_belt",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "带刺腰带是一个方便的小饰品，能够存储状态效果。$(br2)当受到攻击时，佩戴者将获得正面效果，而攻击者将获得负面效果，代价是 $(l:bewitchment:introduction/altars#internalme)ME$()。$(br2)要添加状态效果，只需将腰带与药水结合使用即可。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:prickly_belt"
+	}
+  ]
+}

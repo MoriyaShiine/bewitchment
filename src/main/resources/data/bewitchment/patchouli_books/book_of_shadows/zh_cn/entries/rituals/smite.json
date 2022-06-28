@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "惩戒",
+  "icon": "minecraft:redstone",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "惩戒在$(l:bewitchment:rituals/rituals)仪式$()的有效位置召唤一道闪电。$(br2)这对$(l:bewitchment:tools/waystone)道标石$()非常有效。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/smite"
+	}
+  ]
+}

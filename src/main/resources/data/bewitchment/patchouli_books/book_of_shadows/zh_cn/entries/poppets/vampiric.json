@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "吸血鬼",
+  "icon": "bewitchment:vampiric_poppet",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "吸血鬼巫毒娃娃以耐久为代价将使用者受到的伤害转移到绑定的实体上。$(br2)具有讽刺意味的是，这似乎不适用于$(l:bewitchment:creatures/vampire)吸血鬼$()本身。$(br2)吸血鬼巫毒娃娃在$(l:bewitchment:tools/poppet_shelves)搁架$()中不起作用。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:vampiric_poppet"
+	}
+  ]
+}

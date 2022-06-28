@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "弥合",
+  "icon": "bewitchment:mending_poppet",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "就像稀有且令人垂涎的附魔一样，弥合巫毒娃娃将修复绑定到它的任何人的盔甲和持有的物品。$(br2)这种效果不是被动应用的；相反，它会在物品正常损坏时应用，重置其耐久度并摧毁此$(l:bewitchment:poppets/poppet_practice)巫毒娃娃$()。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:mending_poppet"
+	}
+  ]
+}

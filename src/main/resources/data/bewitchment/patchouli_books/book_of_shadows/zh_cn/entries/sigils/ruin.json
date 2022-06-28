@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "损毁",
+  "icon": "bewitchment:ruin_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "sortnum": 1,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这个损毁$(l:bewitchment:sigils/using_sigils)被动符文$()可以防止任何正面的药水效果在它周围发生。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:ruin_sigil"
+	}
+  ]
+}

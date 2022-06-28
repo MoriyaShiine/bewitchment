@@ -1,0 +1,42 @@
+{
+  "category": "bewitchment:tools",
+  "name": "搁架",
+  "icon": "bewitchment:oak_poppet_shelf",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "搁架是漂亮的家具。它们最多可以存储九个全部处于激活状态的$(l:bewitchment:poppets/poppet_practice)巫毒娃娃$()。$(br2)这使得搁架有利于释放背包空间，同时仍然拥有所有$(l:bewitchment:poppets/poppet_practice)巫毒娃娃$()的效果。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:oak_poppet_shelf",
+	  "recipe2": "bewitchment:spruce_poppet_shelf"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:birch_poppet_shelf",
+	  "recipe2": "bewitchment:jungle_poppet_shelf"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:acacia_poppet_shelf",
+	  "recipe2": "bewitchment:dark_oak_poppet_shelf"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:crimson_poppet_shelf",
+	  "recipe2": "bewitchment:warped_poppet_shelf"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:juniper_poppet_shelf",
+	  "recipe2": "bewitchment:cypress_poppet_shelf"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:elder_poppet_shelf",
+	  "recipe2": "bewitchment:dragons_blood_poppet_shelf"
+	}
+  ]
+}

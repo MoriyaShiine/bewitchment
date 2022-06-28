@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "魔法",
+  "icon": "minecraft:iron_sword",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "通过应用一个简单的魔法$(l:bewitchment:rituals/rituals)仪式$()，可以补偿魔法能量。这将移除物品上的所有附魔，并在此过程中对其进行修复。$(br2)受此$(l:bewitchment:rituals/rituals)仪式$()影响的物品需要在启动$(o)后$()扔进圆圈中。 它还会额外重置物品的铁砧损耗。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/hex"
+	}
+  ]
+}

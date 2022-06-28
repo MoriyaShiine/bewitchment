@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "沐晨",
+  "icon": "minecraft:gold_ingot",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "沐晨$(l:bewitchment:rituals/rituals)仪式$()，简单地说，让它变成白天。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/sunrise"
+	}
+  ]
+}

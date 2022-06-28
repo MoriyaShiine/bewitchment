@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "召唤伦纳德",
+  "icon": "bewitchment:leonard_spawn_egg",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这个$(l:bewitchment:rituals/rituals)仪式$()召唤$(l:bewitchment:brewing/brewing_basics)酿造$()之王，也就是$(l:bewitchment:creatures/leonard)伦纳德$()本人。$(br2)确保让他远离你珍视的东西。$(br2)如果你想向他$(l:bewitchment:tools/grotesque_stew)宣誓$()，需要准备$(l:bewitchment:tools/grotesque_stew)大乱炖$()。$(br2)$(l:bewitchment:rituals/rituals)仪式$()从用$(l:bewitchment:tools/athame)仪式刀$()牺牲一只羊开始。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/summon_leonard"
+	}
+  ]
+}

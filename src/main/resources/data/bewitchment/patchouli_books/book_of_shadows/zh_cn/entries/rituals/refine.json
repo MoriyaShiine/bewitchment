@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "炼制",
+  "icon": "minecraft:blaze_powder",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这个$(l:bewitchment:rituals/rituals)仪式$()召唤火灵，基本上让这个符文法圈变成了一个很大的熔炉。$(br2)任何扔进其中的物品都会像被扔进熔炉一样被熔炼。$(br2)这个$(l:bewitchment:rituals/rituals)仪式$()持续几分钟。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/refine"
+	}
+  ]
+}

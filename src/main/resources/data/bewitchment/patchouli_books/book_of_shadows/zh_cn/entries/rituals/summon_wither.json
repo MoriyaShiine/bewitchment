@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "召唤凋零",
+  "icon": "minecraft:wither_skeleton_skull",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "召唤凋灵。$(br2)了解凋灵的破坏性倾向后，您可能想在远离您家的地方进行此操作。$(br2)与大多数召唤$(l:bewitchment:rituals/rituals)仪式$()不同，这不需要牺牲。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/summon_wither"
+	}
+  ]
+}

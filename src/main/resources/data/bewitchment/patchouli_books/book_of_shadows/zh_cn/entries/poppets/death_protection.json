@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "死亡庇佑",
+  "icon": "bewitchment:death_protection_poppet",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "当您使用死亡庇佑巫毒娃娃时，收割者对你毫无办法。$(br2)就像不死图腾一样，这个$(l:bewitchment:poppets/poppet_practice)巫毒娃娃$()会将你从死亡边缘拉回来一次。$(br2)死亡庇佑巫毒娃娃在$(l:bewitchment:tools/poppet_shelves)搁架$()中不起作用。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:death_protection_poppet"
+	}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "审判",
+  "icon": "bewitchment:judgment_poppet",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "当绑定到审判巫毒娃娃时，任何攻击你的邪恶生物都会发现他们的攻击伤害只剩下四分之一。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:judgment_poppet"
+	}
+  ]
+}

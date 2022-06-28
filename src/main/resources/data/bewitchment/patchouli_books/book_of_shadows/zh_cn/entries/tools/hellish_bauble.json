@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:tools",
+  "name": "地狱饰品",
+  "icon": "bewitchment:hellish_bauble",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "通过火的力量，地狱饰品使佩戴者一旦使用一些 $(l:bewitchment:introduction/altars#internalme)ME$() 激活就对火免疫。$(br2)该物品由下界合金制成，完全防火。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:hellish_bauble"
+	}
+  ]
+}

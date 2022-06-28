@@ -1,0 +1,22 @@
+{
+  "category": "bewitchment:tools",
+  "name": "大乱炖",
+  "priority": true,
+  "icon": "bewitchment:grotesque_stew",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "恶心心~$(br2)这个问题多多的炖菜是宣誓仪式的一部分。$(br2)一边喝一边深深注视$(l:bewitchment:creatures/demon)大恶魔$()的眼睛，巫师可以向它们宣誓。$(br2)根据$(l:bewitchment:creatures/demon)恶魔$()的不同，向$(l:bewitchment:creatures/demon)大恶魔$()宣誓有不同的独特好处。"
+	},
+	{
+	  "type": "patchouli:text",
+	  "text": "确切的好处在相应的条目中进行了概述。$(br2)被宣誓的$(l:bewitchment:creatures/demon)恶魔$()必须留在世界上才能生效，而女巫一次只能向一个恶魔$(l:bewitchment:creatures/demon)宣誓$()。$(br2)以任何方式攻击$(l:bewitchment:creatures/demon)恶魔$()都会立即撤销誓约。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:grotesque_stew",
+	  "text": "值得注意的是，以这种方式污染自己灵魂的女巫很容易出现与$(l:bewitchment:creatures/demon)恶魔$()相同的弱点。"
+	}
+  ]
+}

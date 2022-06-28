@@ -1,0 +1,90 @@
+{
+  "category": "bewitchment:tools",
+  "name": "棺材",
+  "icon": "bewitchment:white_coffin",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "棺材最初来自$(l:bewitchment:creatures/vampire)吸血鬼$()，最近得到了夜间活跃的女巫的青睐。$(br2)当你一个人睡时，你可以跳过一天。$(br2)棺材，就像床一样，如果是白色的，就可以染色。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:white_coffin"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:orange_coffin",
+	  "recipe2": "bewitchment:orange_coffin_from_white_coffin"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:magenta_coffin",
+	  "recipe2": "bewitchment:magenta_coffin_from_white_coffin"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:light_blue_coffin",
+	  "recipe2": "bewitchment:light_blue_coffin_from_white_coffin"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:yellow_coffin",
+	  "recipe2": "bewitchment:yellow_coffin_from_white_coffin"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:lime_coffin",
+	  "recipe2": "bewitchment:lime_coffin_from_white_coffin"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:pink_coffin",
+	  "recipe2": "bewitchment:pink_coffin_from_white_coffin"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:gray_coffin",
+	  "recipe2": "bewitchment:gray_coffin_from_white_coffin"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:light_gray_coffin",
+	  "recipe2": "bewitchment:light_gray_coffin_from_white_coffin"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:cyan_coffin",
+	  "recipe2": "bewitchment:cyan_coffin_from_white_coffin"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:purple_coffin",
+	  "recipe2": "bewitchment:purple_coffin_from_white_coffin"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:blue_coffin",
+	  "recipe2": "bewitchment:blue_coffin_from_white_coffin"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:brown_coffin",
+	  "recipe2": "bewitchment:brown_coffin_from_white_coffin"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:green_coffin",
+	  "recipe2": "bewitchment:green_coffin_from_white_coffin"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:red_coffin",
+	  "recipe2": "bewitchment:red_coffin_from_white_coffin"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:black_coffin",
+	  "recipe2": "bewitchment:black_coffin_from_white_coffin"
+	}
+  ]
+}

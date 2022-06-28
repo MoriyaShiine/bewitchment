@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "净化",
+  "icon": "minecraft:golden_apple",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "净化$(l:bewitchment:rituals/rituals)仪式$()召唤光来净化它的目标身上的$(l:bewitchment:curses/conducting_curses)诅咒$()。目标由$(l:bewitchment:tools/taglock)巫媒$()指定。$(br2)该$(l:bewitchment:rituals/rituals)仪式$()也适用于僵尸村民。这样做会将它们变成普通的村民。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/cleansing",
+	  "text": "请注意，此$(l:bewitchment:rituals/rituals)仪式$()不能保证成功。有些$(l:bewitchment:curses/conducting_curses)诅咒$()可能更难摆脱，但是——就像洗涤一样——用力揉搓可以消除任何东西。"
+	}
+  ]
+}

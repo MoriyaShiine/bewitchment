@@ -1,0 +1,47 @@
+{
+  "category": "bewitchment:tools",
+  "name": "荆棘",
+  "icon": "bewitchment:thick_bramble",
+  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "荆棘是一种神奇的杂草，是在$(l:bewitchment:brewing/elemental_oils)元素润滑油$()的帮助下人工创造的。$(br2)每个荆棘都有与其元素相关的独特效果。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:glowing_bramble",
+	  "text": "发光荆棘会发光并阻止 24 格半径内的生物生成。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:ender_bramble",
+	  "text": "末影荆棘会将任何与它碰撞的物体传送到 64 格半径内的随机位置。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:fruiting_bramble",
+	  "text": "果实荆棘会长出巫莓，可用于制作可恢复 $(l:bewitchment:introduction/altars#internalme)ME$() 的物品。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:scorched_bramble",
+	  "text": "灼热荆棘会使实体着火。它也可以用作相对不错的燃料。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:thick_bramble",
+	  "text": "由于其令人难以置信的厚度，浓密荆棘只能在潜行时通过。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:fleeting_bramble",
+	  "text": "浮云荆棘会将任何进入它的东西发射到空中，除非它在潜行。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:witchberry_pie",
+	  "recipe2": "bewitchment:witchberry_cookie"
+	}
+  ]
+}

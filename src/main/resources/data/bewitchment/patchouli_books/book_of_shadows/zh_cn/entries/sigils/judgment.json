@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "审判",
+  "icon": "bewitchment:judgment_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "审判$(l:bewitchment:sigils/using_sigils)主动符文$()会伤害任何激活它的邪恶生物。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:judgment_sigil"
+	}
+  ]
+}

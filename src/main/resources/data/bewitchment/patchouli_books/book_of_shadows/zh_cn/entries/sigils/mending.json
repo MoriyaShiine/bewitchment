@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "弥合",
+  "icon": "bewitchment:mending_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "弥合是一个$(l:bewitchment:sigils/using_sigils)主动符文$().$(br)激活后，它会给激活它的人提供再生和抗性提升。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:mending_sigil"
+	}
+  ]
+}

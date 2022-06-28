@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "召唤巴弗灭",
+  "icon": "bewitchment:baphomet_spawn_egg",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "通过恶魔信使，这个$(l:bewitchment:rituals/rituals)仪式$()召唤$(l:bewitchment:creatures/baphomet)巴弗灭$()；你会想让它们远离其他生物。$(br2)如果您想向他们$(l:bewitchment:tools/grotesque_stew)宣誓$()，请准备$(l:bewitchment:tools/grotesque_stew)大乱炖$()。$(br2)$(l:bewitchment:rituals/rituals)仪式$()从用$(l:bewitchment:tools/athame)仪式刀$()牺牲一只羊开始。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/summon_baphomet"
+	}
+  ]
+}
