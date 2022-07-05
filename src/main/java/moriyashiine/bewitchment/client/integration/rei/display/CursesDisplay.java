@@ -13,7 +13,7 @@ import moriyashiine.bewitchment.common.recipe.CurseRecipe;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,7 +25,7 @@ public class CursesDisplay implements Display {
 
 	public CursesDisplay(CurseRecipe recipe) {
 		input = EntryIngredients.ofIngredients(recipe.input);
-		ItemStack brazier = new ItemStack(BWObjects.BRAZIER).setCustomName(new TranslatableText("curse." + BWRegistries.CURSES.getId(recipe.curse).toString().replace(":", ".")));
+		ItemStack brazier = new ItemStack(BWObjects.BRAZIER).setCustomName(Text.translatable("curse." + BWRegistries.CURSES.getId(recipe.curse).toString().replace(":", ".")));
 		brazier.getOrCreateNbt().putInt("Cost", recipe.cost);
 		output = Collections.singletonList(EntryIngredients.of(brazier));
 	}

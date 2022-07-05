@@ -4,11 +4,11 @@
 
 package moriyashiine.bewitchment.common.block.juniper;
 
-import com.terraformersmc.terraform.wood.block.TerraformPressurePlateBlock;
 import moriyashiine.bewitchment.common.block.entity.TaglockHolderBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -23,9 +23,9 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("ConstantConditions")
-public class JuniperPressurePlateBlock extends TerraformPressurePlateBlock implements BlockEntityProvider {
+public class JuniperPressurePlateBlock extends PressurePlateBlock implements BlockEntityProvider {
 	public JuniperPressurePlateBlock(Settings settings) {
-		super(settings);
+		super(ActivationRule.EVERYTHING, settings);
 	}
 
 	@Nullable

@@ -33,7 +33,7 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
@@ -239,7 +239,7 @@ public class GlyphBlockEntity extends BlockEntity implements Inventory, UsesAlta
 						if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain((int) (recipe.cost * (cat ? 0.75f : 1)), false)) {
 							world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FIRE, SoundCategory.BLOCKS, 1, 1);
 							if (user instanceof PlayerEntity player) {
-								player.sendMessage(new TranslatableText("ritual." + recipe.getId().toString().replace(":", ".").replace("/", ".")), true);
+								player.sendMessage(Text.translatable("ritual." + recipe.getId().toString().replace(":", ".").replace("/", ".")), true);
 							}
 							for (int i = 0; i < items.size(); i++) {
 								for (PlayerEntity trackingPlayer : PlayerLookup.tracking(items.get(i))) {
@@ -257,19 +257,19 @@ public class GlyphBlockEntity extends BlockEntity implements Inventory, UsesAlta
 						}
 						world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FAIL, SoundCategory.BLOCKS, 1, 1);
 						if (user instanceof PlayerEntity player) {
-							player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.insufficent_altar_power"), true);
+							player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.insufficent_altar_power"), true);
 						}
 						return;
 					}
 					world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FAIL, SoundCategory.BLOCKS, 1, 1);
 					if (user instanceof PlayerEntity player) {
-						player.sendMessage(new TranslatableText(recipe.ritualFunction.getInvalidMessage()), true);
+						player.sendMessage(Text.translatable(recipe.ritualFunction.getInvalidMessage()), true);
 					}
 					return;
 				}
 				world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FAIL, SoundCategory.BLOCKS, 1, 1);
 				if (user instanceof PlayerEntity player) {
-					player.sendMessage(new TranslatableText("ritual.none"), true);
+					player.sendMessage(Text.translatable("ritual.none"), true);
 				}
 			} else if (sacrifice == null) {
 				world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FAIL, SoundCategory.BLOCKS, 1, 1);

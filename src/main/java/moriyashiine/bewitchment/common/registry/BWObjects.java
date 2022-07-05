@@ -6,7 +6,7 @@ package moriyashiine.bewitchment.common.registry;
 
 import com.terraformersmc.terraform.sign.block.TerraformSignBlock;
 import com.terraformersmc.terraform.sign.block.TerraformWallSignBlock;
-import com.terraformersmc.terraform.wood.block.*;
+import com.terraformersmc.terraform.wood.block.StrippableLogBlock;
 import dev.emi.trinkets.api.TrinketItem;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.block.CandelabraBlock;
@@ -48,12 +48,12 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Random;
 
 import static net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings.copyOf;
 import static net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings.of;
@@ -89,7 +89,7 @@ public class BWObjects {
 	public static final Block JUNIPER_SAPLING = create("juniper_sapling", new BWSaplingBlock(new JuniperSaplingGenerator(), copyOf(Blocks.OAK_SAPLING)), true);
 	public static final Block POTTED_JUNIPER_SAPLING = create("potted_juniper_sapling", new FlowerPotBlock(JUNIPER_SAPLING, copyOf(Blocks.POTTED_OAK_SAPLING)), false);
 	public static final Block JUNIPER_PLANKS = create("juniper_planks", new Block(copyOf(Blocks.OAK_PLANKS)), true);
-	public static final Block JUNIPER_STAIRS = create("juniper_stairs", new TerraformStairsBlock(JUNIPER_PLANKS, copyOf(Blocks.OAK_STAIRS)), true);
+	public static final Block JUNIPER_STAIRS = create("juniper_stairs", new StairsBlock(JUNIPER_PLANKS.getDefaultState(), copyOf(Blocks.OAK_STAIRS)), true);
 	public static final Block JUNIPER_SLAB = create("juniper_slab", new SlabBlock(copyOf(Blocks.OAK_SLAB)), true);
 	public static final Block JUNIPER_FENCE = create("juniper_fence", new FenceBlock(copyOf(Blocks.OAK_FENCE)), true);
 	public static final Block JUNIPER_FENCE_GATE = create("juniper_fence_gate", new JuniperFenceGateBlock(copyOf(Blocks.OAK_FENCE_GATE)), true);
@@ -113,14 +113,14 @@ public class BWObjects {
 	public static final Block CYPRESS_SAPLING = create("cypress_sapling", new BWSaplingBlock(new CypressSaplingGenerator(), copyOf(JUNIPER_SAPLING)), true);
 	public static final Block POTTED_CYPRESS_SAPLING = create("potted_cypress_sapling", new FlowerPotBlock(CYPRESS_SAPLING, copyOf(POTTED_JUNIPER_SAPLING)), false);
 	public static final Block CYPRESS_PLANKS = create("cypress_planks", new Block(copyOf(JUNIPER_PLANKS)), true);
-	public static final Block CYPRESS_STAIRS = create("cypress_stairs", new TerraformStairsBlock(CYPRESS_PLANKS, copyOf(JUNIPER_STAIRS)), true);
+	public static final Block CYPRESS_STAIRS = create("cypress_stairs", new StairsBlock(CYPRESS_PLANKS.getDefaultState(), copyOf(JUNIPER_STAIRS)), true);
 	public static final Block CYPRESS_SLAB = create("cypress_slab", new SlabBlock(copyOf(JUNIPER_SLAB)), true);
 	public static final Block CYPRESS_FENCE = create("cypress_fence", new FenceBlock(copyOf(JUNIPER_FENCE)), true);
 	public static final Block CYPRESS_FENCE_GATE = create("cypress_fence_gate", new FenceGateBlock(copyOf(JUNIPER_FENCE_GATE)), true);
-	public static final Block CYPRESS_PRESSURE_PLATE = create("cypress_pressure_plate", new TerraformPressurePlateBlock(copyOf(JUNIPER_PRESSURE_PLATE)), true);
-	public static final Block CYPRESS_BUTTON = create("cypress_button", new TerraformButtonBlock(copyOf(JUNIPER_BUTTON)), true);
-	public static final Block CYPRESS_TRAPDOOR = create("cypress_trapdoor", new TerraformTrapdoorBlock(copyOf(JUNIPER_TRAPDOOR)), true);
-	public static final Block CYPRESS_DOOR = create("cypress_door", new TerraformDoorBlock(copyOf(JUNIPER_DOOR)), false);
+	public static final Block CYPRESS_PRESSURE_PLATE = create("cypress_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, copyOf(JUNIPER_PRESSURE_PLATE)), true);
+	public static final Block CYPRESS_BUTTON = create("cypress_button", new WoodenButtonBlock(copyOf(JUNIPER_BUTTON)), true);
+	public static final Block CYPRESS_TRAPDOOR = create("cypress_trapdoor", new TrapdoorBlock(copyOf(JUNIPER_TRAPDOOR)), true);
+	public static final Block CYPRESS_DOOR = create("cypress_door", new DoorBlock(copyOf(JUNIPER_DOOR)), false);
 	public static final Item CYPRESS_DOOR_ITEM = create("cypress_door", new TallBlockItem(CYPRESS_DOOR, gen()));
 	public static final Block CYPRESS_CHEST = create("cypress_chest", new BWChestBlock(copyOf(JUNIPER_CHEST), () -> BWBlockEntityTypes.BW_CHEST, false), true);
 	public static final Block TRAPPED_CYPRESS_CHEST = create("trapped_cypress_chest", new BWChestBlock(copyOf(JUNIPER_CHEST), () -> BWBlockEntityTypes.BW_CHEST, true), true);
@@ -137,7 +137,7 @@ public class BWObjects {
 	public static final Block ELDER_SAPLING = create("elder_sapling", new BWSaplingBlock(new ElderSaplingGenerator(), copyOf(JUNIPER_SAPLING)), true);
 	public static final Block POTTED_ELDER_SAPLING = create("potted_elder_sapling", new FlowerPotBlock(ELDER_SAPLING, copyOf(POTTED_JUNIPER_SAPLING)), false);
 	public static final Block ELDER_PLANKS = create("elder_planks", new Block(copyOf(JUNIPER_PLANKS)), true);
-	public static final Block ELDER_STAIRS = create("elder_stairs", new TerraformStairsBlock(ELDER_PLANKS, copyOf(JUNIPER_STAIRS)), true);
+	public static final Block ELDER_STAIRS = create("elder_stairs", new StairsBlock(ELDER_PLANKS.getDefaultState(), copyOf(JUNIPER_STAIRS)), true);
 	public static final Block ELDER_SLAB = create("elder_slab", new SlabBlock(copyOf(JUNIPER_SLAB)), true);
 	public static final Block ELDER_FENCE = create("elder_fence", new FenceBlock(copyOf(JUNIPER_FENCE)), true);
 	public static final Block ELDER_FENCE_GATE = create("elder_fence_gate", new ElderFenceGateBlock(copyOf(JUNIPER_FENCE_GATE)), true);
@@ -161,7 +161,7 @@ public class BWObjects {
 	public static final Block DRAGONS_BLOOD_SAPLING = create("dragons_blood_sapling", new BWSaplingBlock(new DragonsBloodSaplingGenerator(), copyOf(JUNIPER_SAPLING)), true);
 	public static final Block POTTED_DRAGONS_BLOOD_SAPLING = create("potted_dragons_blood_sapling", new FlowerPotBlock(DRAGONS_BLOOD_SAPLING, copyOf(POTTED_JUNIPER_SAPLING)), false);
 	public static final Block DRAGONS_BLOOD_PLANKS = create("dragons_blood_planks", new Block(copyOf(JUNIPER_PLANKS)), true);
-	public static final Block DRAGONS_BLOOD_STAIRS = create("dragons_blood_stairs", new TerraformStairsBlock(DRAGONS_BLOOD_PLANKS, copyOf(JUNIPER_STAIRS)), true);
+	public static final Block DRAGONS_BLOOD_STAIRS = create("dragons_blood_stairs", new StairsBlock(DRAGONS_BLOOD_PLANKS.getDefaultState(), copyOf(JUNIPER_STAIRS)), true);
 	public static final Block DRAGONS_BLOOD_SLAB = create("dragons_blood_slab", new SlabBlock(copyOf(JUNIPER_SLAB)), true);
 	public static final Block DRAGONS_BLOOD_FENCE = create("dragons_blood_fence", new FenceBlock(copyOf(JUNIPER_FENCE)), true);
 	public static final Block DRAGONS_BLOOD_FENCE_GATE = create("dragons_blood_fence_gate", new DragonsBloodFenceGateBlock(copyOf(JUNIPER_FENCE_GATE)), true);

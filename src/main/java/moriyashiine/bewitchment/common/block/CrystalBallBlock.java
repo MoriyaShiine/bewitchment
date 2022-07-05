@@ -31,7 +31,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -109,11 +109,11 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 							sound = BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE;
 						} else {
 							taglockCompound.putBoolean("Failed", true);
-							player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.blocked_by_shadows"), true);
+							player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.blocked_by_shadows"), true);
 						}
 						BWUtil.addItemToInventoryAndConsume(player, hand, newTaglock);
 					} else {
-						player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.invalid_entity"), true);
+						player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.invalid_entity"), true);
 					}
 				} else {
 					FortuneComponent fortuneComponent = BWComponents.FORTUNE_COMPONENT.get(player);
@@ -126,14 +126,14 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 							}
 						}
 						fortuneComponent.setFortune(new Fortune.Instance(fortune, world.random.nextInt(120000)));
-						player.sendMessage(new TranslatableText("fortune." + BWRegistries.FORTUNES.getId(fortune).toString().replace(":", ".")), true);
+						player.sendMessage(Text.translatable("fortune." + BWRegistries.FORTUNES.getId(fortune).toString().replace(":", ".")), true);
 
 					} else {
-						player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.has_fortune"), true);
+						player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.has_fortune"), true);
 					}
 				}
 			} else {
-				player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.insufficent_altar_power"), true);
+				player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.insufficent_altar_power"), true);
 			}
 			world.playSound(null, pos, sound, SoundCategory.BLOCKS, 1, 1);
 		}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_right",
+  "textures": {
+	"bottom": "bewitchment:block/elder_door_bottom",
+	"top": "bewitchment:block/elder_door_top"
+  }
+}

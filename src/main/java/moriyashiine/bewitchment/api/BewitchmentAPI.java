@@ -10,7 +10,7 @@ import moriyashiine.bewitchment.api.component.TransformationComponent;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.misc.PoppetData;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
-import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.BWConfig;
 import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
@@ -80,7 +80,7 @@ public class BewitchmentAPI {
 		}
 		for (int i = 0; i < inventory.size(); i++) {
 			ItemStack stack = inventory.get(i);
-			if (Bewitchment.config.disabledPoppets.contains(Registry.ITEM.getId(stack.getItem()).toString())) {
+			if (BWConfig.disabledPoppets.contains(Registry.ITEM.getId(stack.getItem()).toString())) {
 				continue;
 			}
 			if (stack.getItem() == item && TaglockItem.hasTaglock(stack)) {
@@ -129,7 +129,7 @@ public class BewitchmentAPI {
 	public static ServerPlayerEntity getFakePlayer(World world) {
 		if (!world.isClient) {
 			if (fakePlayer == null) {
-				fakePlayer = new ServerPlayerEntity(world.getServer(), (ServerWorld) world, new GameProfile(UUID.randomUUID(), "FAKE_PLAYER"));
+				fakePlayer = new ServerPlayerEntity(world.getServer(), (ServerWorld) world, new GameProfile(UUID.randomUUID(), "FAKE_PLAYER"), null);
 				fakePlayer.networkHandler = new ServerPlayNetworkHandler(world.getServer(), new ClientConnection(NetworkSide.SERVERBOUND), fakePlayer);
 				ItemStack axe = new ItemStack(Items.WOODEN_AXE);
 				axe.getOrCreateNbt().putBoolean("Unbreakable", true);

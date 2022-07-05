@@ -35,7 +35,8 @@ import net.minecraft.potion.Potions;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -49,7 +50,7 @@ import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
 public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, UsesAltarPower {
-	private static final TranslatableText DEFAULT_NAME = new TranslatableText(BWObjects.WITCH_CAULDRON.getTranslationKey());
+	private static final MutableText DEFAULT_NAME = Text.translatable(BWObjects.WITCH_CAULDRON.getTranslationKey());
 
 	private Box box;
 

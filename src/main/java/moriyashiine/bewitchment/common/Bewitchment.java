@@ -4,8 +4,7 @@
 
 package moriyashiine.bewitchment.common;
 
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+import eu.midnightdust.lib.config.MidnightConfig;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.component.BloodComponent;
 import moriyashiine.bewitchment.api.event.BloodSuckEvents;
@@ -24,13 +23,14 @@ import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityGroup;
@@ -48,32 +48,29 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.explosion.Explosion;
 
 public class Bewitchment implements ModInitializer {
 	public static final String MODID = "bewitchment";
 
-	public static BWConfig config;
-
 	public static final ItemGroup BEWITCHMENT_GROUP = FabricItemGroupBuilder.build(new Identifier(MODID, MODID), () -> new ItemStack(BWObjects.ATHAME));
 
 	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void onInitialize() {
-		AutoConfig.register(BWConfig.class, GsonConfigSerializer::new);
-		config = AutoConfig.getConfigHolder(BWConfig.class).getConfig();
+		MidnightConfig.init(MODID, BWConfig.class);
 		ServerPlayNetworking.registerGlobalReceiver(CauldronTeleportPacket.ID, CauldronTeleportPacket::handle);
 		ServerPlayNetworking.registerGlobalReceiver(TransformationAbilityPacket.ID, TransformationAbilityPacket::handle);
 		ServerPlayNetworking.registerGlobalReceiver(TogglePressingForwardPacket.ID, TogglePressingForwardPacket::handle);
 		CommandRegistrationCallback.EVENT.register(BWCommands::init);
-		BWCommands.registerArgumentTypes();
 		ServerLifecycleEvents.SERVER_STOPPED.register(server -> BewitchmentAPI.fakePlayer = null);
 		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
 			BWComponents.TRANSFORMATION_COMPONENT.get(newPlayer).setAlternateForm(false);
@@ -100,15 +97,15 @@ public class Bewitchment implements ModInitializer {
 					if (world.isNight()) {
 						boolean chicken = killedEntity instanceof ChickenEntity, wolf = killedEntity instanceof WolfEntity;
 						if (chicken || wolf) {
-							Biome.Category category = Biome.getCategory(world.getBiome(killedEntity.getBlockPos()));
+							RegistryEntry<Biome> biome = world.getBiome(killedEntity.getBlockPos());
 							MobEntity boss = null;
 							if (chicken) {
-								if (category == Biome.Category.EXTREME_HILLS || category == Biome.Category.ICY || category == Biome.Category.MOUNTAIN) {
+								if (biome.isIn(ConventionalBiomeTags.EXTREME_HILLS) || biome.isIn(ConventionalBiomeTags.ICY) || biome.isIn(ConventionalBiomeTags.MOUNTAIN)) {
 									boss = BWEntityTypes.LILITH.create(world);
 								}
 							}
 							if (wolf) {
-								if (category == Biome.Category.TAIGA || category == Biome.Category.FOREST) {
+								if (biome.isIn(ConventionalBiomeTags.TAIGA) || biome.isIn(ConventionalBiomeTags.FOREST)) {
 									boss = BWEntityTypes.HERNE.create(world);
 								}
 							}
@@ -166,12 +163,12 @@ public class Bewitchment implements ModInitializer {
 		EntitySleepEvents.ALLOW_SLEEP_TIME.register((player, sleepingPos, vanillaResult) -> player.world.getBlockState(sleepingPos).getBlock() instanceof CoffinBlock && player.world.isDay() ? ActionResult.success(player.world.isClient) : ActionResult.PASS);
 		EntitySleepEvents.ALLOW_SLEEPING.register((player, sleepingPos) -> {
 			if (BWComponents.TRANSFORMATION_COMPONENT.get(player).isAlternateForm()) {
-				player.sendMessage(new TranslatableText("block.minecraft.bed.transformation"), true);
+				player.sendMessage(Text.translatable("block.minecraft.bed.transformation"), true);
 				return PlayerEntity.SleepFailureReason.OTHER_PROBLEM;
 			}
 			if (player.world.getBlockState(sleepingPos).getBlock() instanceof CoffinBlock) {
 				if (player.world.isNight()) {
-					player.sendMessage(new TranslatableText("block.minecraft.bed.coffin"), true);
+					player.sendMessage(Text.translatable("block.minecraft.bed.coffin"), true);
 					return PlayerEntity.SleepFailureReason.OTHER_PROBLEM;
 				}
 				return null;

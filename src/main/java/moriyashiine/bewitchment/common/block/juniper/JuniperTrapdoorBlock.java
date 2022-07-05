@@ -4,11 +4,11 @@
 
 package moriyashiine.bewitchment.common.block.juniper;
 
-import com.terraformersmc.terraform.wood.block.TerraformTrapdoorBlock;
 import moriyashiine.bewitchment.common.block.entity.TaglockHolderBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.TrapdoorBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("ConstantConditions")
-public class JuniperTrapdoorBlock extends TerraformTrapdoorBlock implements BlockEntityProvider {
+public class JuniperTrapdoorBlock extends TrapdoorBlock implements BlockEntityProvider {
 	public JuniperTrapdoorBlock(Settings settings) {
 		super(settings);
 	}

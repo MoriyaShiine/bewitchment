@@ -22,7 +22,7 @@ public class WerewolfEntityRenderer extends MobEntityRenderer<WerewolfEntity, We
 
 	public WerewolfEntityRenderer(EntityRendererFactory.Context context) {
 		super(context, new WerewolfEntityModel<>(context.getPart(BewitchmentClient.WEREWOLF_MODEL_LAYER)), 0.5f);
-		addFeature(new HeldItemFeatureRenderer<>(this));
+		addFeature(new HeldItemFeatureRenderer<>(this, context.getHeldItemRenderer()));
 	}
 
 	@Override

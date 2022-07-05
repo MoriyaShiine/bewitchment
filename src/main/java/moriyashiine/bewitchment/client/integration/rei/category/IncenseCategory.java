@@ -18,14 +18,14 @@ import moriyashiine.bewitchment.client.integration.rei.BWREIPlugin;
 import moriyashiine.bewitchment.client.integration.rei.display.IncenseDisplay;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class IncenseCategory implements DisplayCategory<IncenseDisplay> {
-	public static final TranslatableText TITLE = new TranslatableText("rei.bewitchment.incenses");
+	public static final MutableText TITLE = Text.translatable("rei.bewitchment.incenses");
 	public static final EntryStack<ItemStack> ICON = EntryStacks.of(BWObjects.BRAZIER);
 
 	@Override

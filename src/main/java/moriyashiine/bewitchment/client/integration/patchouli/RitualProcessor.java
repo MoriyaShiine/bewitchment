@@ -10,7 +10,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeManager;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
@@ -31,7 +31,7 @@ public class RitualProcessor implements IComponentProcessor {
 	public IVariable process(String key) {
 		switch (key) {
 			case "header":
-				return IVariable.from(new TranslatableText("ritual." + recipe.getId().toString().replaceAll(":", ".").replaceAll("/", ".")));
+				return IVariable.from(Text.translatable("ritual." + recipe.getId().toString().replaceAll(":", ".").replaceAll("/", ".")));
 			case "inner":
 				return IVariable.wrap(recipe.inner);
 			case "outer":

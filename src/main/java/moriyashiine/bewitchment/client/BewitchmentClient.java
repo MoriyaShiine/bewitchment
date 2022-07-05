@@ -142,9 +142,9 @@ public class BewitchmentClient implements ClientModInitializer {
 		ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> tintIndex == 1 ? ((BedBlock) state.getBlock()).getColor().getFireworkColor() : 0xffffff, BWObjects.WHITE_COFFIN, BWObjects.ORANGE_COFFIN, BWObjects.MAGENTA_COFFIN, BWObjects.LIGHT_BLUE_COFFIN, BWObjects.YELLOW_COFFIN, BWObjects.LIME_COFFIN, BWObjects.PINK_COFFIN, BWObjects.GRAY_COFFIN, BWObjects.LIGHT_GRAY_COFFIN, BWObjects.CYAN_COFFIN, BWObjects.PURPLE_COFFIN, BWObjects.BLUE_COFFIN, BWObjects.BROWN_COFFIN, BWObjects.GREEN_COFFIN, BWObjects.RED_COFFIN, BWObjects.BLACK_COFFIN);
 		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex == 1 ? ((BedBlock) Block.getBlockFromItem(stack.getItem())).getColor().getFireworkColor() : 0xffffff, BWObjects.WHITE_COFFIN, BWObjects.ORANGE_COFFIN, BWObjects.MAGENTA_COFFIN, BWObjects.LIGHT_BLUE_COFFIN, BWObjects.YELLOW_COFFIN, BWObjects.LIME_COFFIN, BWObjects.PINK_COFFIN, BWObjects.GRAY_COFFIN, BWObjects.LIGHT_GRAY_COFFIN, BWObjects.CYAN_COFFIN, BWObjects.PURPLE_COFFIN, BWObjects.BLUE_COFFIN, BWObjects.BROWN_COFFIN, BWObjects.GREEN_COFFIN, BWObjects.RED_COFFIN, BWObjects.BLACK_COFFIN);
 		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex == 0 ? 0x7f0000 : 0xffffff, BWObjects.BOTTLE_OF_BLOOD);
-		ModelPredicateProviderRegistry.register(BWObjects.HEDGEWITCH_HAT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity, seed) -> stack.getName().asString().toLowerCase().contains("faith") ? 1 : 0);
-		ModelPredicateProviderRegistry.register(BWObjects.ALCHEMIST_HAT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity, seed) -> stack.getName().asString().toLowerCase().contains("faith") ? 1 : 0);
-		ModelPredicateProviderRegistry.register(BWObjects.BESMIRCHED_HAT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity, seed) -> stack.getName().asString().toLowerCase().contains("faith") ? 1 : 0);
+		ModelPredicateProviderRegistry.register(BWObjects.HEDGEWITCH_HAT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity, seed) -> stack.getName().getString().toLowerCase().contains("faith") ? 1 : 0);
+		ModelPredicateProviderRegistry.register(BWObjects.ALCHEMIST_HAT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity, seed) -> stack.getName().getString().toLowerCase().contains("faith") ? 1 : 0);
+		ModelPredicateProviderRegistry.register(BWObjects.BESMIRCHED_HAT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity, seed) -> stack.getName().getString().toLowerCase().contains("faith") ? 1 : 0);
 		ModelPredicateProviderRegistry.register(BWObjects.NAZAR, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity, seed) -> stack.hasNbt() && stack.getNbt().getBoolean("Worn") ? 1 : 0);
 		ModelPredicateProviderRegistry.register(BWObjects.PRICKLY_BELT, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity, seed) -> stack.hasNbt() && stack.getNbt().getInt("PotionUses") > 0 ? 1 : 0);
 		ModelPredicateProviderRegistry.register(BWObjects.HORNED_SPEAR, new Identifier(Bewitchment.MODID, "variant"), (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1 : 0);
@@ -158,10 +158,10 @@ public class BewitchmentClient implements ClientModInitializer {
 		BlockEntityRendererRegistry.register(BWBlockEntityTypes.JUNIPER_CHEST, ChestBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.register(BWBlockEntityTypes.ELDER_CHEST, ChestBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.register(BWBlockEntityTypes.DRAGONS_BLOOD_CHEST, ChestBlockEntityRenderer::new);
-		TerraformBoatClientHelper.registerModelLayer(new Identifier(Bewitchment.MODID, "juniper"));
-		TerraformBoatClientHelper.registerModelLayer(new Identifier(Bewitchment.MODID, "cypress"));
-		TerraformBoatClientHelper.registerModelLayer(new Identifier(Bewitchment.MODID, "elder"));
-		TerraformBoatClientHelper.registerModelLayer(new Identifier(Bewitchment.MODID, "dragons_blood"));
+		TerraformBoatClientHelper.registerModelLayers(new Identifier(Bewitchment.MODID, "juniper"));
+		TerraformBoatClientHelper.registerModelLayers(new Identifier(Bewitchment.MODID, "cypress"));
+		TerraformBoatClientHelper.registerModelLayers(new Identifier(Bewitchment.MODID, "elder"));
+		TerraformBoatClientHelper.registerModelLayers(new Identifier(Bewitchment.MODID, "dragons_blood"));
 		EntityModelLayerRegistry.registerModelLayer(CONTRIBUTOR_HORNS_MODEL_LAYER, ContributorHornsModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(WITCH_ARMOR_MODEL_LAYER, WitchArmorModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(SPECTER_BANGLE_MODEL_LAYER, SpecterBangleModel::getTexturedModelData);

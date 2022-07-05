@@ -18,7 +18,6 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
@@ -80,13 +79,13 @@ public class ChalkItem extends Item {
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		if (stack.hasNbt() && stack.getOrCreateNbt().contains("InnerCircle")) {
-			tooltip.add(new TranslatableText("bewitchment.tooltip.inner_circle", new TranslatableText(stack.getOrCreateNbt().getString("InnerCircle"))).formatted(Formatting.GRAY));
+			tooltip.add(Text.translatable("bewitchment.tooltip.inner_circle", Text.translatable(stack.getOrCreateNbt().getString("InnerCircle"))).formatted(Formatting.GRAY));
 			if (stack.getOrCreateNbt().contains("OuterCircle")) {
-				tooltip.add(new TranslatableText("bewitchment.tooltip.outer_circle", new TranslatableText(stack.getOrCreateNbt().getString("OuterCircle"))).formatted(Formatting.GRAY));
+				tooltip.add(Text.translatable("bewitchment.tooltip.outer_circle", Text.translatable(stack.getOrCreateNbt().getString("OuterCircle"))).formatted(Formatting.GRAY));
 			}
-			tooltip.add(new TranslatableText("bewitchment.tooltip.cost", stack.getOrCreateNbt().getInt("Cost")).formatted(Formatting.GRAY));
+			tooltip.add(Text.translatable("bewitchment.tooltip.cost", stack.getOrCreateNbt().getInt("Cost")).formatted(Formatting.GRAY));
 			if (stack.getOrCreateNbt().contains("RunningTime")) {
-				tooltip.add(new TranslatableText("bewitchment.tooltip.running_time", stack.getOrCreateNbt().getInt("RunningTime") / 20f).formatted(Formatting.GRAY));
+				tooltip.add(Text.translatable("bewitchment.tooltip.running_time", stack.getOrCreateNbt().getInt("RunningTime") / 20f).formatted(Formatting.GRAY));
 			}
 		}
 	}

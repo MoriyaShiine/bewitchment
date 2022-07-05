@@ -13,7 +13,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.function.Predicate;
@@ -29,7 +29,7 @@ public class SearchBlocksRitualFunction extends RitualFunction {
 		if (closestPlayer != null) {
 			Block block = world.getBlockState(glyphPos.down(2)).getBlock();
 			int blocks = BWUtil.getBlockPoses(effectivePos, catFamiliar ? 48 : 16, currentPos -> world.getBlockState(currentPos).getBlock() == block).size();
-			closestPlayer.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.found_block" + (blocks == 1 ? "" : "s"), blocks, block.getName()), true);
+			closestPlayer.sendMessage(Text.translatable(Bewitchment.MODID + ".message.found_block" + (blocks == 1 ? "" : "s"), blocks, block.getName()), true);
 		}
 		super.start(world, glyphPos, effectivePos, inventory, catFamiliar);
 	}

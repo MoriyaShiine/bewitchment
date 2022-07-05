@@ -5,7 +5,7 @@
 package moriyashiine.bewitchment.mixin.poppet;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.BWConfig;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -33,7 +33,7 @@ public abstract class PotionEntityMixin extends ThrownItemEntity {
 
 	@Inject(method = "applySplashPotion", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILSOFT)
 	private void applySplashPotion(List<StatusEffectInstance> statusEffects, @Nullable Entity entity, CallbackInfo callbackInfo, Box box) {
-		if (Bewitchment.config.disabledPoppets.contains("bewitchment:voodoo_poppet")) {
+		if (BWConfig.disabledPoppets.contains("bewitchment:voodoo_poppet")) {
 			return;
 		}
 		List<ItemEntity> itemEntities = world.getNonSpectatingEntities(ItemEntity.class, box);

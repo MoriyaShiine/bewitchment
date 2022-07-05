@@ -4,12 +4,12 @@
 
 package moriyashiine.bewitchment.common.block.juniper;
 
-import com.terraformersmc.terraform.wood.block.TerraformDoorBlock;
 import moriyashiine.bewitchment.common.block.entity.TaglockHolderBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
 import moriyashiine.bewitchment.common.block.util.interfaces.SpecialDoor;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.DoorBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.LivingEntity;
@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("ConstantConditions")
-public class JuniperDoorBlock extends TerraformDoorBlock implements BlockEntityProvider, SpecialDoor {
+public class JuniperDoorBlock extends DoorBlock implements BlockEntityProvider, SpecialDoor {
 	public JuniperDoorBlock(Settings settings) {
 		super(settings);
 	}

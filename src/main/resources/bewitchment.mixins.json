@@ -8,6 +8,7 @@
 	"AbstractBlockMixin",
 	"AbstractBlockStateMixin",
 	"ActiveTargetGoalMixin",
+	"ArgumentTypesMixin",
 	"BlockEntityTypeMixin",
 	"BlockMixin",
 	"BlocksAccessor",

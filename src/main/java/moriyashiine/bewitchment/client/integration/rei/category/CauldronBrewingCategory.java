@@ -17,14 +17,14 @@ import moriyashiine.bewitchment.client.integration.rei.BWREIPlugin;
 import moriyashiine.bewitchment.client.integration.rei.display.CauldronBrewingDisplay;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CauldronBrewingCategory implements DisplayCategory<CauldronBrewingDisplay> {
-	public static final TranslatableText TITLE = new TranslatableText("rei.bewitchment.cauldron_brewing");
+	public static final MutableText TITLE = Text.translatable("rei.bewitchment.cauldron_brewing");
 	public static final EntryStack<ItemStack> ICON = EntryStacks.of(BWObjects.WITCH_CAULDRON);
 
 	@Override

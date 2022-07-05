@@ -36,7 +36,7 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.property.Properties;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
@@ -102,7 +102,7 @@ public class AthameItem extends SwordItem {
 				if (!client && !sigilHolder.getEntities().isEmpty()) {
 					boolean whitelist = sigilHolder.getModeOnWhitelist();
 					world.playSound(null, pos, BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.BLOCKS, 1, whitelist ? 0.5f : 1);
-					player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.toggle_" + (!whitelist ? "whitelist" : "blacklist")), true);
+					player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.toggle_" + (!whitelist ? "whitelist" : "blacklist")), true);
 					sigilHolder.setModeOnWhitelist(!whitelist);
 					blockEntity.markDirty();
 				}
@@ -122,7 +122,7 @@ public class AthameItem extends SwordItem {
 				if (!client) {
 					boolean whitelist = lockable.getModeOnWhitelist();
 					world.playSound(null, pos, BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.BLOCKS, 1, whitelist ? 0.5f : 1);
-					player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.toggle_" + (!whitelist ? "whitelist" : "blacklist")), true);
+					player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.toggle_" + (!whitelist ? "whitelist" : "blacklist")), true);
 					lockable.setModeOnWhitelist(!whitelist);
 					blockEntity.markDirty();
 				}

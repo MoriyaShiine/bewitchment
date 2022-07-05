@@ -109,7 +109,7 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 			if (nameTag || bucket || waterBucket || glassBottle || waterBottle) {
 				if (!client) {
 					if (nameTag && stack.hasCustomName()) {
-						cauldron.name = stack.getName().asString();
+						cauldron.name = stack.getName().getString();
 						cauldron.markDirty();
 						BWWorldState worldState = BWWorldState.get(world);
 						worldState.witchCauldrons.put(pos.asLong(), cauldron.name);

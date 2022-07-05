@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.11-SNAPSHOT'
+    id 'fabric-loom' version '0.12-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -48,6 +48,10 @@ repositories {
         url "https://api.modrinth.com/maven"
     }
     maven {
+        name "modrinth"
+        url "https://api.modrinth.com/maven"
+    }
+    maven {
         name "jitpack"
         url "https://jitpack.io"
     }
@@ -61,9 +65,14 @@ dependencies {
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
     //^ don't include because trinkets already does
+    modImplementation "me.lucko:fabric-permissions-api:${fabric_permissions_api_version}"
     include "me.lucko:fabric-permissions-api:${fabric_permissions_api_version}"
-    modImplementation "io.github.ladysnake:impersonate:${impersonate_version}"
+    modImplementation("io.github.ladysnake:impersonate:${impersonate_version}") {
+        transitive = false
+    }
     include "io.github.ladysnake:impersonate:${impersonate_version}"
+    modImplementation "maven.modrinth:midnightlib:${midnightlib_version}"
+    include "maven.modrinth:midnightlib:${midnightlib_version}"
     modImplementation "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
     include "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
     modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}"
@@ -73,9 +82,6 @@ dependencies {
     modImplementation "com.terraformersmc.terraform-api:terraform-wood-api-v1:${terraform_wood_api_version}"
     include "com.terraformersmc.terraform-api:terraform-wood-api-v1:${terraform_wood_api_version}"
 
-    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
     modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}"
     modImplementation("com.github.virtuoel:pehkui:${pehkui_version}") {

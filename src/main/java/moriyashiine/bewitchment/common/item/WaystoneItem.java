@@ -12,7 +12,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
@@ -48,7 +47,7 @@ public class WaystoneItem extends Item {
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		if (stack.hasNbt() && stack.getNbt().contains("LocationPos")) {
 			BlockPos pos = BlockPos.fromLong(stack.getNbt().getLong("LocationPos"));
-			tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.location", pos.getX(), pos.getY(), pos.getZ(), stack.getNbt().getString("LocationWorld")).formatted(Formatting.GRAY));
+			tooltip.add(Text.translatable(Bewitchment.MODID + ".tooltip.location", pos.getX(), pos.getY(), pos.getZ(), stack.getNbt().getString("LocationWorld")).formatted(Formatting.GRAY));
 		}
 	}
 }

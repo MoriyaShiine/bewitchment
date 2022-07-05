@@ -10,7 +10,7 @@ import moriyashiine.bewitchment.common.registry.BWRegistries;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeManager;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
@@ -30,7 +30,7 @@ public class CurseProcessor implements IComponentProcessor {
 	@Override
 	public IVariable process(String key) {
 		if (key.equals("header")) {
-			return IVariable.from(new TranslatableText("curse." + BWRegistries.CURSES.getId(recipe.curse).toString().replace(":", ".")));
+			return IVariable.from(Text.translatable("curse." + BWRegistries.CURSES.getId(recipe.curse).toString().replace(":", ".")));
 		}
 		for (int i = 0; i < recipe.input.size(); i++) {
 			if (key.equals("ingredient" + i)) {

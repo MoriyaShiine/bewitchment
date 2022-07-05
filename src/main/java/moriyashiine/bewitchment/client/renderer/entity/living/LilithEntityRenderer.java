@@ -21,7 +21,7 @@ public class LilithEntityRenderer extends MobEntityRenderer<LilithEntity, Lilith
 
 	public LilithEntityRenderer(EntityRendererFactory.Context context) {
 		super(context, new LilithEntityModel<>(context.getPart(BewitchmentClient.LILITH_MODEL_LAYER)), 0.5f);
-		addFeature(new HeldItemFeatureRenderer<>(this));
+		addFeature(new HeldItemFeatureRenderer<>(this, context.getHeldItemRenderer()));
 	}
 
 	@Override

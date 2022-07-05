@@ -23,7 +23,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -75,7 +74,7 @@ public class CursePoppetItem extends PoppetItem {
 					}
 				}
 				if (user instanceof PlayerEntity player) {
-					player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.invalid_entity", stack.getOrCreateNbt().getString("OwnerName")), true);
+					player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.invalid_entity", stack.getOrCreateNbt().getString("OwnerName")), true);
 				}
 			}
 		}
@@ -96,7 +95,7 @@ public class CursePoppetItem extends PoppetItem {
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		super.appendTooltip(stack, world, tooltip, context);
 		if (stack.hasNbt() && stack.getOrCreateNbt().contains("Curse")) {
-			tooltip.add(new TranslatableText("curse." + stack.getOrCreateNbt().getString("Curse").replace(":", ".")).formatted(Formatting.DARK_RED));
+			tooltip.add(Text.translatable("curse." + stack.getOrCreateNbt().getString("Curse").replace(":", ".")).formatted(Formatting.DARK_RED));
 		}
 	}
 }

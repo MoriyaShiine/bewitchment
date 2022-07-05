@@ -11,7 +11,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.GhastEntity;
-import net.minecraft.entity.passive.HorseBaseEntity;
+import net.minecraft.entity.passive.AbstractHorseEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
@@ -106,7 +106,7 @@ public abstract class BWTameableEntity extends TameableEntity {
 		if (target instanceof TameableEntity && ((TameableEntity) target).isTamed()) {
 			return false;
 		}
-		if (target instanceof HorseBaseEntity && ((HorseBaseEntity) target).isTame()) {
+		if (target instanceof AbstractHorseEntity horse && horse.isTame()) {
 			return false;
 		}
 		if (target instanceof PlayerEntity targetPlayer && owner instanceof PlayerEntity ownerPlayer && !ownerPlayer.shouldDamagePlayer(targetPlayer)) {

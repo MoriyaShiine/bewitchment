@@ -9,7 +9,7 @@ import moriyashiine.bewitchment.api.event.ReviveEvents;
 import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.api.misc.PoppetData;
 import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
-import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.BWConfig;
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
@@ -145,7 +145,7 @@ public abstract class LivingEntityMixin extends Entity {
 					callbackInfo.setReturnValue(true);
 				}
 			}
-			if (callbackInfo.getReturnValueZ() && (Object) this instanceof PlayerEntity player && (!Bewitchment.config.enableCurses || BWComponents.CURSES_COMPONENT.get(player).hasCurse(BWCurses.SUSCEPTIBILITY))) {
+			if (callbackInfo.getReturnValueZ() && (Object) this instanceof PlayerEntity player && (!BWConfig.enableCurses || BWComponents.CURSES_COMPONENT.get(player).hasCurse(BWCurses.SUSCEPTIBILITY))) {
 				BWComponents.TRANSFORMATION_COMPONENT.maybeGet(player).ifPresent(transformationComponent -> {
 					if (transformationComponent.getTransformation() == BWTransformations.HUMAN) {
 						if (source.getSource() instanceof VampireEntity || (source.getSource() instanceof PlayerEntity playerSource && BewitchmentAPI.isVampire(playerSource, true) && BewitchmentAPI.isPledged(playerSource, BWPledges.LILITH))) {

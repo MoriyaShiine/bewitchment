@@ -18,14 +18,14 @@ import moriyashiine.bewitchment.client.integration.rei.BWREIPlugin;
 import moriyashiine.bewitchment.client.integration.rei.display.CursesDisplay;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CursesCategory implements DisplayCategory<CursesDisplay> {
-	public static final TranslatableText TITLE = new TranslatableText("rei.bewitchment.curses");
+	public static final MutableText TITLE = Text.translatable("rei.bewitchment.curses");
 	public static final EntryStack<ItemStack> ICON = EntryStacks.of(BWObjects.BRAZIER);
 
 	@Override

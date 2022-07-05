@@ -13,6 +13,7 @@ import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -27,13 +28,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Random;
 
 @SuppressWarnings("ConstantConditions")
 public class WerewolfEntity extends BWHostileEntity {
@@ -120,11 +121,16 @@ public class WerewolfEntity extends BWHostileEntity {
 	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityTag) {
 		EntityData data = super.initialize(world, difficulty, spawnReason, entityData, entityTag);
 		if (dataTracker.get(VARIANT) != 0) {
-			switch (Biome.getCategory(world.getBiome(getBlockPos()))) {
-				case FOREST -> dataTracker.set(VARIANT, random.nextBoolean() ? 1 : 2);
-				case TAIGA -> dataTracker.set(VARIANT, random.nextBoolean() ? 3 : 4);
-				case ICY -> dataTracker.set(VARIANT, random.nextBoolean() ? 5 : 6);
-				default -> dataTracker.set(VARIANT, random.nextInt(getVariants() - 1) + 1);
+			RegistryEntry<Biome> biome = world.getBiome(getBlockPos());
+			if (biome.isIn(ConventionalBiomeTags.FOREST)) {
+				dataTracker.set(VARIANT, random.nextBoolean() ? 1 : 2);
+			} else if (biome.isIn(ConventionalBiomeTags.TAIGA)) {
+				dataTracker.set(VARIANT, random.nextBoolean() ? 3 : 4);
+			}
+			if (biome.isIn(ConventionalBiomeTags.ICY)) {
+				dataTracker.set(VARIANT, random.nextBoolean() ? 5 : 6);
+			} else {
+				dataTracker.set(VARIANT, random.nextInt(getVariants() - 1) + 1);
 			}
 		}
 		if (spawnReason == SpawnReason.NATURAL) {

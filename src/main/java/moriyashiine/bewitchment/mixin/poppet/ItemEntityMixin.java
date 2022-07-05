@@ -6,7 +6,7 @@ package moriyashiine.bewitchment.mixin.poppet;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.item.PoppetItem;
-import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.BWConfig;
 import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.entity.Entity;
@@ -35,7 +35,7 @@ public abstract class ItemEntityMixin extends Entity {
 
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo callbackInfo) {
-		if (getStack().getItem() == BWObjects.VOODOO_POPPET && !Bewitchment.config.disabledPoppets.contains("bewitchment:voodoo_poppet")) {
+		if (getStack().getItem() == BWObjects.VOODOO_POPPET && !BWConfig.disabledPoppets.contains("bewitchment:voodoo_poppet")) {
 			LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, getStack());
 			if (owner != null) {
 				if (getVelocity().length() > 1 / 8f) {
@@ -63,7 +63,7 @@ public abstract class ItemEntityMixin extends Entity {
 
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (getStack().getItem() == BWObjects.VOODOO_POPPET && !Bewitchment.config.disabledPoppets.contains("bewitchment:voodoo_poppet")) {
+		if (getStack().getItem() == BWObjects.VOODOO_POPPET && !BWConfig.disabledPoppets.contains("bewitchment:voodoo_poppet")) {
 			if (!world.isClient) {
 				LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, getStack());
 				if (owner != null) {

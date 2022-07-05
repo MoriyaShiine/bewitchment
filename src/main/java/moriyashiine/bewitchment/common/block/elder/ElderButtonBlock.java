@@ -4,11 +4,11 @@
 
 package moriyashiine.bewitchment.common.block.elder;
 
-import com.terraformersmc.terraform.wood.block.TerraformButtonBlock;
 import moriyashiine.bewitchment.common.block.entity.LockableBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.Lockable;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.WoodenButtonBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("ConstantConditions")
-public class ElderButtonBlock extends TerraformButtonBlock implements BlockEntityProvider {
+public class ElderButtonBlock extends WoodenButtonBlock implements BlockEntityProvider {
 	public ElderButtonBlock(Settings settings) {
 		super(settings);
 	}

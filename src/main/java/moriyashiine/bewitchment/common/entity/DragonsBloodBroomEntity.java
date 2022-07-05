@@ -23,7 +23,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -74,7 +74,7 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 						stack.decrement(1);
 					} else if (stack.getItem() instanceof AthameItem && !entities.isEmpty()) {
 						world.playSound(null, getBlockPos(), BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.NEUTRAL, 1, modeOnWhitelist ? 0.5f : 1);
-						player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.toggle_" + (!modeOnWhitelist ? "whitelist" : "blacklist")), true);
+						player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.toggle_" + (!modeOnWhitelist ? "whitelist" : "blacklist")), true);
 						modeOnWhitelist = !modeOnWhitelist;
 					}
 				}

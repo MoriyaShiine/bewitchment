@@ -36,12 +36,12 @@ import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
-import java.util.Random;
 
 public class GhostEntity extends BWHostileEntity {
 	public static final TrackedData<Boolean> HAS_TARGET = DataTracker.registerData(GhostEntity.class, TrackedDataHandlerRegistry.BOOLEAN);

@@ -30,7 +30,7 @@ public class GhostEntityRenderer extends MobEntityRenderer<GhostEntity, GhostEnt
 
 	public GhostEntityRenderer(EntityRendererFactory.Context context) {
 		super(context, new GhostEntityModel<>(context.getPart(BewitchmentClient.GHOST_MODEL_LAYER)), 0);
-		addFeature(new HeldItemFeatureRenderer<>(this));
+		addFeature(new HeldItemFeatureRenderer<>(this, context.getHeldItemRenderer()));
 		addFeature(new FeatureRenderer<>(this) {
 			@Override
 			public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, GhostEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {

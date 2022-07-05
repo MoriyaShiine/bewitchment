@@ -24,11 +24,10 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Random;
 
 public class HellhoundEntity extends BWHostileEntity {
 	public HellhoundEntity(EntityType<? extends HostileEntity> entityType, World world) {

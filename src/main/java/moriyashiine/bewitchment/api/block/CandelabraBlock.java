@@ -28,14 +28,13 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Random;
 
 public class CandelabraBlock extends Block implements Waterloggable {
 	private static final VoxelShape SHAPE = VoxelShapes.union(createCuboidShape(6, 0, 6, 10, 2, 10), createCuboidShape(6.5, 2, 6.5, 9.5, 3, 9.5), createCuboidShape(7, 3, 7, 9, 16, 9), createCuboidShape(1, 7.5, 7, 15, 8.5, 9), createCuboidShape(7, 7.5, 1, 9, 8.5, 15), createCuboidShape(7, 8.5, 1, 9, 14.5, 3), createCuboidShape(1, 8.5, 7, 3, 14.5, 9), createCuboidShape(13, 8.5, 7, 15, 14.5, 9), createCuboidShape(7, 8.5, 13, 9, 14.5, 15), createCuboidShape(6.5, 9.5, 0.5, 9.5, 10.5, 3.5), createCuboidShape(0.5, 9.5, 6.5, 3.5, 10.5, 9.5), createCuboidShape(12.5, 9.5, 6.5, 15.5, 10.5, 9.5), createCuboidShape(6.5, 9.5, 12.5, 9.5, 10.5, 15.5), createCuboidShape(6.5, 11, 6.5, 9.5, 12, 9.5));

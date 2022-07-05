@@ -19,7 +19,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -66,10 +66,10 @@ public class CauldronTeleportPacket {
 				if (hasPower) {
 					BWUtil.teleport(player, closest.getX() + 0.5, closest.getY() - 0.4375, closest.getZ() + 0.5, true);
 				} else {
-					player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.insufficent_altar_power", message), true);
+					player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.insufficent_altar_power", message), true);
 				}
 			} else {
-				player.sendMessage(new TranslatableText(Bewitchment.MODID + ".message.invalid_cauldron", message), true);
+				player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.invalid_cauldron", message), true);
 			}
 		});
 	}

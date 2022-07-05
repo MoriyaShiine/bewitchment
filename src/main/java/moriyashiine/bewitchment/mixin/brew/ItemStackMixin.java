@@ -9,8 +9,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -22,13 +22,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
 	@Unique
-	private static final TranslatableText POTION = new TranslatableText("item." + Bewitchment.MODID + ".potion");
+	private static final MutableText POTION = Text.translatable("item." + Bewitchment.MODID + ".potion");
 	@Unique
-	private static final TranslatableText SPLASH_POTION = new TranslatableText("item." + Bewitchment.MODID + ".splash_potion");
+	private static final MutableText SPLASH_POTION = Text.translatable("item." + Bewitchment.MODID + ".splash_potion");
 	@Unique
-	private static final TranslatableText LINGERING_POTION = new TranslatableText("item." + Bewitchment.MODID + ".lingering_potion");
+	private static final MutableText LINGERING_POTION = Text.translatable("item." + Bewitchment.MODID + ".lingering_potion");
 	@Unique
-	private static final TranslatableText TIPPED_ARROW = new TranslatableText("item." + Bewitchment.MODID + ".tipped_arrow");
+	private static final MutableText TIPPED_ARROW = Text.translatable("item." + Bewitchment.MODID + ".tipped_arrow");
 
 	@Shadow
 	@Nullable

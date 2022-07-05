@@ -61,7 +61,7 @@ public class WitchArmorRenderer implements ArmorRenderer {
 			armorModel.rightLeg.visible = slot == EquipmentSlot.LEGS;
 			armorModel.lowerLeftSkirt.visible = entity.getEquippedStack(EquipmentSlot.FEET).isEmpty();
 			armorModel.lowerRightSkirt.visible = armorModel.lowerLeftSkirt.visible;
-			ArmorRenderer.renderPart(matrices, vertexConsumers, light, stack, armorModel, hat && stack.getName().asString().toLowerCase().contains("faith") ? WITCH_HAT_VARIANT_TEXTURE : texture);
+			ArmorRenderer.renderPart(matrices, vertexConsumers, light, stack, armorModel, hat && stack.getName().getString().toLowerCase().contains("faith") ? WITCH_HAT_VARIANT_TEXTURE : texture);
 		}
 	}
 }

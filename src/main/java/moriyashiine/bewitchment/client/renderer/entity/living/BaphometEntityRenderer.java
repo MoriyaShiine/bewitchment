@@ -28,7 +28,7 @@ public class BaphometEntityRenderer extends MobEntityRenderer<BaphometEntity, Ba
 
 	public BaphometEntityRenderer(EntityRendererFactory.Context context) {
 		super(context, new BaphometEntityModel<>(context.getPart(BewitchmentClient.BAPHOMET_MODEL_LAYER)), 0.5f);
-		addFeature(new HeldItemFeatureRenderer<>(this));
+		addFeature(new HeldItemFeatureRenderer<>(this, context.getHeldItemRenderer()));
 		addFeature(new FeatureRenderer<>(this) {
 			@Override
 			public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, BaphometEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {

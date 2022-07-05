@@ -7,7 +7,7 @@ package moriyashiine.bewitchment.api.block;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.api.registry.AltarMapEntry;
-import moriyashiine.bewitchment.common.Bewitchment;
+import moriyashiine.bewitchment.common.BWConfig;
 import moriyashiine.bewitchment.common.block.entity.WitchAltarBlockEntity;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWTags;
@@ -29,7 +29,7 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
@@ -121,7 +121,7 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 						blockEntity.markDirty();
 						blockEntity.sync();
 					} else {
-						player.sendMessage(new LiteralText(blockEntity.power + " / " + blockEntity.maxPower + " (" + blockEntity.gain + "x)"), true);
+						player.sendMessage(Text.literal(blockEntity.power + " / " + blockEntity.maxPower + " (" + blockEntity.gain + "x)"), true);
 					}
 				}
 			}
@@ -186,7 +186,7 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 				worldState.potentialCandelabras.add(pos.asLong());
 				worldState.markDirty();
 			}
-			for (BlockPos foundPos : BWUtil.getBlockPoses(pos, Bewitchment.config.altarDistributionRadius, currentPos -> world.getBlockEntity(currentPos) instanceof UsesAltarPower)) {
+			for (BlockPos foundPos : BWUtil.getBlockPoses(pos, BWConfig.altarDistributionRadius, currentPos -> world.getBlockEntity(currentPos) instanceof UsesAltarPower)) {
 				BlockEntity blockEntity = world.getBlockEntity(foundPos);
 				((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, pos));
 				blockEntity.markDirty();
@@ -210,7 +210,7 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);
 		if (!world.isClient && state.getBlock() != newState.getBlock()) {
-			for (BlockPos foundPos : BWUtil.getBlockPoses(pos, Bewitchment.config.altarDistributionRadius, currentPos -> world.getBlockEntity(currentPos) instanceof UsesAltarPower)) {
+			for (BlockPos foundPos : BWUtil.getBlockPoses(pos, BWConfig.altarDistributionRadius, currentPos -> world.getBlockEntity(currentPos) instanceof UsesAltarPower)) {
 				BlockEntity blockEntity = world.getBlockEntity(foundPos);
 				((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, foundPos));
 				blockEntity.markDirty();
@@ -225,7 +225,7 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 
 	@Nullable
 	public static BlockPos getClosestAltarPos(World world, BlockPos pos) {
-		return BWUtil.getClosestBlockPos(pos, Bewitchment.config.altarDistributionRadius, currentPos -> world.getBlockEntity(currentPos) instanceof WitchAltarBlockEntity);
+		return BWUtil.getClosestBlockPos(pos, BWConfig.altarDistributionRadius, currentPos -> world.getBlockEntity(currentPos) instanceof WitchAltarBlockEntity);
 	}
 
 	private static int calculateLuminance(WitchAltarBlockEntity blockEntity) {

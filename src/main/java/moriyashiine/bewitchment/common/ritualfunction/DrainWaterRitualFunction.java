@@ -24,7 +24,7 @@ public class DrainWaterRitualFunction extends RitualFunction {
 
 	@Override
 	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
-		for (BlockPos foundPos : BWUtil.getBlockPoses(effectivePos, catFamiliar ? 24 : 8, currentPos -> world.getFluidState(currentPos).getFluid().isIn(FluidTags.WATER) && world.getBlockState(currentPos).getBlock() instanceof FluidDrainable && world.getWorldBorder().contains(currentPos))) {
+		for (BlockPos foundPos : BWUtil.getBlockPoses(effectivePos, catFamiliar ? 24 : 8, currentPos -> world.getFluidState(currentPos).isIn(FluidTags.WATER) && world.getBlockState(currentPos).getBlock() instanceof FluidDrainable && world.getWorldBorder().contains(currentPos))) {
 			BlockState state = world.getBlockState(foundPos);
 			((FluidDrainable) state.getBlock()).tryDrainFluid(world, foundPos, state);
 		}

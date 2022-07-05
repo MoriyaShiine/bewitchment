@@ -12,7 +12,6 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -29,8 +28,8 @@ public class DragonsBloodBroomItem extends BroomItem {
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		if (stack.hasNbt() && stack.getNbt().contains("Sigil")) {
-			tooltip.add(new TranslatableText("sigil." + stack.getNbt().getString("Sigil").replace(":", ".")).formatted(Formatting.GRAY));
-			tooltip.add(new TranslatableText(Bewitchment.MODID + ".tooltip.uses_left", stack.getNbt().getInt("Uses")).formatted(Formatting.GRAY));
+			tooltip.add(Text.translatable("sigil." + stack.getNbt().getString("Sigil").replace(":", ".")).formatted(Formatting.GRAY));
+			tooltip.add(Text.translatable(Bewitchment.MODID + ".tooltip.uses_left", stack.getNbt().getInt("Uses")).formatted(Formatting.GRAY));
 		}
 	}
 }

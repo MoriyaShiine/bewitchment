@@ -13,7 +13,7 @@ import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.recipe.RitualRecipe;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +24,7 @@ public class RitualDisplay implements Display {
 
 	public RitualDisplay(RitualRecipe recipe) {
 		input = EntryIngredients.ofIngredients(recipe.input);
-		ItemStack chalk = new ItemStack(BWObjects.GOLDEN_CHALK).setCustomName(new TranslatableText("ritual." + recipe.getId().toString().replaceAll(":", ".").replaceAll("/", ".")));
+		ItemStack chalk = new ItemStack(BWObjects.GOLDEN_CHALK).setCustomName(Text.translatable("ritual." + recipe.getId().toString().replaceAll(":", ".").replaceAll("/", ".")));
 		chalk.getOrCreateNbt().putString("InnerCircle", "chalk." + Bewitchment.MODID + "." + recipe.inner);
 		if (!recipe.outer.isEmpty()) {
 			chalk.getOrCreateNbt().putString("OuterCircle", "chalk." + Bewitchment.MODID + "." + recipe.outer);

@@ -4,12 +4,12 @@
 
 package moriyashiine.bewitchment.common.block.dragonsblood;
 
-import com.terraformersmc.terraform.wood.block.TerraformDoorBlock;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.block.util.interfaces.SpecialDoor;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.DoorBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -23,7 +23,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class DragonsBloodDoorBlock extends TerraformDoorBlock implements BlockEntityProvider, SpecialDoor {
+public class DragonsBloodDoorBlock extends DoorBlock implements BlockEntityProvider, SpecialDoor {
 	public DragonsBloodDoorBlock(Settings settings) {
 		super(settings);
 	}
