@@ -1,0 +1,32 @@
+{
+  "category": "bewitchment:tools",
+  "name": "扫帚",
+  "icon": "bewitchment:juniper_broom",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "扫帚是巫师常用的魔法器具。通过使用 $(l:bewitchment:introduction/altars#internalme)ME$()，它们使使用者能够飞越天空。$(br2)扫帚有四种变体，每种都有独特的属性。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:juniper_broom",
+	  "text": "$(l:bewitchment:introduction/juniper_trees)杜松$()扫帚是所有扫帚中最快的，没有任何其他特殊属性。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:cypress_broom",
+	  "text": "$(l:bewitchment:introduction/cypress_trees)柏木$()扫帚保护使用者，减少伤害输入和输出。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:elder_broom",
+	  "text": "$(l:bewitchment:introduction/elder_trees)接骨木$()扫帚将在下来后将用户返回到骑上它的位置。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:dragons_blood_broom",
+	  "text": "$(l:bewitchment:introduction/dragons_blood_trees)龙血木$()扫帚可以应用$(l:bewitchment:sigils/using_sigils)主动符文$()，就像任何其他$(l:bewitchment:introduction/dragons_blood_trees)龙血$()方块一样。"
+	}
+  ]
+}

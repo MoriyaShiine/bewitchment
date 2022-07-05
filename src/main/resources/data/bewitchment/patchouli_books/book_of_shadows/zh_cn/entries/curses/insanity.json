@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:curses",
+  "name": "精神错乱",
+  "icon": "minecraft:red_mushroom",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这个$(l:bewitchment:curses/conducting_curses)诅咒$()会腐化心灵......它会使受影响的目标看到不存在的怪物。它无法攻击它们；然而，这不适用于视角。"
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/insanity",
+	  "text": "这是一个$(l:bewitchment:curses/conducting_curses)强力诅咒$()；要摆脱它稍微困难一些。"
+	}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "浸泡",
+  "icon": "minecraft:enchanted_book",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "一个非常强大的$(l:bewitchment:rituals/rituals)仪式$()；通过调用更深、更隐蔽的水力，它能够对物品施加强大的魔法。$(br2)要附魔的物品必须在开始$(o)后$()扔进圆圈中。$(br2)每个附魔物品都需要五个经验等级。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/imbue"
+	}
+  ]
+}

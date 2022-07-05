@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "狼人",
+  "icon": "bewitchment:werewolf_spawn_egg",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "狼人——$(l:bewitchment:curses/lycanthropy)狼人病$()的受害者——在满月时漫游森林、针叶林和冰雪生物群落。它们对猛击仪式有非常大的弱势。$(br2)当太阳升起时，它们又变回人的形态。"
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "bewitchment:werewolf",
+	  "offset": 0.1
+	}
+  ]
+}

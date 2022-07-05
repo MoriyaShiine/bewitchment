@@ -1,0 +1,53 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "仪式",
+  "icon": "bewitchment:golden_chalk",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "priority": true,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "仪式是一种强大的魔法应用，用来对世界产生直接影响。它们是通过绘制魔法阵并加入适当的成分来铸造的。"
+	},
+	{
+	  "type": "patchouli:text",
+	  "text": "仪式需要附近有一个提供 $(l:bewitchment:introduction/altars)ME$() 的$(l:bewitchment:introduction/altars)祭坛$()； 仪式条目中始终注明所需的$(l:bewitchment:introduction/altars) ME $()量。$(br2)每个仪式都有一个内圈和一个可选的外圈，用不同的粉笔绘制，具体取决于仪式。"
+	},
+	{
+	  "type": "patchouli:multiblock",
+	  "multiblock": {
+		"mapping": {
+		  "g": "bewitchment:glyph",
+		  "0": "bewitchment:golden_glyph"
+		},
+		"pattern": [
+		  [
+			"___ggggg___",
+			"__g_____g__",
+			"_g__ggg__g_",
+			"g__g___g__g",
+			"g_g_____g_g",
+			"g_g__0__g_g",
+			"g_g_____g_g",
+			"g__g___g__g",
+			"_g__ggg__g_",
+			"__g_____g__",
+			"___ggggg___"
+		  ]
+		]
+	  },
+	  "text": "一个金色符文总是在法阵的中心。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:chalk",
+	  "recipe2": "bewitchment:golden_chalk",
+	  "anchor": "chalk"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:fiery_chalk",
+	  "recipe2": "bewitchment:eldritch_chalk"
+	}
+  ]
+}

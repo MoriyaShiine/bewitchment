@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:tools",
+  "name": "双蛇杖",
+  "icon": "bewitchment:caduceus",
+  "advancement": "bewitchment:hidden_unlocks/caduceus",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "双蛇杖是$(l:bewitchment:creatures/baphomet)巴弗灭$()的首选工具。$(br2)它具有与下界合金相当的多工具功能。它也可以用来投掷强大的火球，但需要消耗一些 $(l:bewitchment:introduction/altars#internalme)ME$()。$(br2)双蛇杖可以用下界合金锭修复。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "item": "bewitchment:caduceus"
+	}
+  ]
+}

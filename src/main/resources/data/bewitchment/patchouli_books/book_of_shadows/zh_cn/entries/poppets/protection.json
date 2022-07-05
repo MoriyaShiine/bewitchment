@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "庇佑",
+  "icon": "bewitchment:protection_poppet",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "庇佑巫毒娃娃不会保护您免受僵尸或骷髅的伤害；但是，它可以抵御任何与它绑定的人免受来自环境的伤害，例如火焰、溺水和速度。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:protection_poppet"
+	}
+  ]
+}

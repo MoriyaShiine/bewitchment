@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "永生",
+  "icon": "minecraft:diamond",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这种光之$(l:bewitchment:rituals/rituals)仪式$()是最高等级的，给予暂时的无敌。任何伤害——除了坠入虚空——完全无效。$(br2)该效果适用于附近的任何生物，并且持续大约半天。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/immortality"
+	}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "太阳之恨",
+  "icon": "minecraft:sunflower",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "通过削弱目标的皮肤，这个诅咒使他们对阳光的照射非常敏感。事实上，这会导致字面意思上的——让它们着火。"
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/solar_hatred"
+	}
+  ]
+}

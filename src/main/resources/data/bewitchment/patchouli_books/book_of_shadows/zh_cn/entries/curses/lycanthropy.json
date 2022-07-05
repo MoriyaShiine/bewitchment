@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "狼人病",
+  "icon": "bewitchment:aconite",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "狼人病是一种凶猛的疾病，会在思想、身体和灵魂上留下疤痕。在满月下，它的患者会变成渴望新鲜肉的狼人。虽然在野兽形态下身体强壮，但银会伤害他们，乌头也会伤害他们。狼人也完全以肉为食，无论它们的形态如何。"
+	},
+	{
+	  "type": "patchouli:text",
+	  "text": "它们对$(l:bewitchment:introduction/silver)银$()的弱点也意味着无法长时间持有诸如$(l:bewitchment:tools/athame)仪式刀$()之类的工具。$(br2)狼人病在$(l:bewitchment:curses/susceptibility)易感$()$(l:bewitchment:curses/conducting_curses)诅咒$()下可从另一个$(l:bewitchment:creatures/werewolf)狼人$()那里感染——只要它不是新感染的狼人；你仍然必须$(l:bewitchment:poppets/death_protection)以某种方式幸存下来$()。$(br2)$(o)这听起来是个好主意！"
+	}
+  ]
+}

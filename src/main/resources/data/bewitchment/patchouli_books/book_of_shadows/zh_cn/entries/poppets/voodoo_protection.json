@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "伏都教庇佑",
+  "icon": "bewitchment:voodoo_protection_poppet",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "伏都教庇佑巫毒娃娃是$(l:bewitchment:poppets/voodoo)伏都教巫毒娃娃$()的对应物。$(br2)通过重定向恶意能量，任何绑定到它的人都完全不受$(l:bewitchment:poppets/voodoo)伏都教巫毒娃娃$()的影响。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:voodoo_protection_poppet"
+	}
+  ]
+}

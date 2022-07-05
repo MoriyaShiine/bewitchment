@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "沥血",
+  "icon": "bewitchment:bottle_of_blood",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "根据造成的伤害来治疗目标。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "沥血",
+	  "item": "bewitchment:bottle_of_blood",
+	  "text": "强度越高，回复的血量越多。$(br2)如果你有$(l:bewitchment:brewing/mundane_brews#strength)力量$()，$(l:bewitchment:brewing/mundane_brews#regeneration)再生$()或者$(l:bewitchment:brewing/mundane_brews#resistance)抗性提升$()效果，这个效果将不会生效。"
+	}
+  ]
+}

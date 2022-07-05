@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "腐败",
+  "icon": "bewitchment:demon_horn",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "使用用$(l:bewitchment:brewing/brewing_basics)恶魔之角$()酿造出来的药水，你可以将积极的药水效果逆转为消极的对应效果。$(br2)当作为药水成分加入时，腐败将始终处于首位，这意味着它在喝下时将颠覆之前的所有效果，而不是药水的效果。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "腐败",
+	  "item": "bewitchment:demon_horn"
+	}
+  ]
+}

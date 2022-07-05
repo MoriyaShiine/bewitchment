@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "滋润",
+  "icon": "minecraft:bamboo",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "滋润效果增加了食物的有效性，使消耗食物时的收益平缓增加。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "滋润",
+	  "item": "minecraft:bamboo",
+	  "text": "增益的增加与强度成正比。"
+	}
+  ]
+}

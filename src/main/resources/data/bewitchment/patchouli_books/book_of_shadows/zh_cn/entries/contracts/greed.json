@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "贪婪",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 1,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "在贪婪$(l:bewitchment:contracts/concept_contracts)契约$()下，矿石会自动冶炼，掉落的数量是平时的两倍。"
+	}
+  ]
+}

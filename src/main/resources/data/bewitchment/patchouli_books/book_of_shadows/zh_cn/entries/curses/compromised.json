@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "损害",
+  "icon": "minecraft:textures/mob_effect/weakness.png",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "该$(l:bewitchment:curses/conducting_curses)诅咒$()会损害目标的血液。这将导致负面效果增强。"
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/compromised"
+	}
+  ]
+}

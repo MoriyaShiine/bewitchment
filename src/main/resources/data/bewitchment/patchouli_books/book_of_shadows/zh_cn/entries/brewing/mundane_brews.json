@@ -1,0 +1,160 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "普通的酿造",
+  "icon": "bewitchment:witch_cauldron",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "priority": true,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "尽管$(l:bewitchment:tools/witch_cauldron)女巫釜锅$()可以被用来制作更多更加不可思议的$(l:bewitchment:brewing/brewing_basics)药水$()，有些女巫有时可能更喜欢使用更微妙的$(l:bewitchment:brewing/brewing_basics)酿造方法$()。$(br)本条目中的所有$(l:bewitchment:brewing/brewing_basics)酿造$()方法都可以通过其他方式完成，不过$(l:bewitchment:tools/witch_cauldron)女巫釜锅$()可以让你把它们变得更强。$(br)在$(l:bewitchment:tools/witch_cauldron)女巫釜锅$()中$(l:bewitchment:brewing/brewing_basics)酿造$()的普通药水所使用的原料略有不同。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "伤害吸收",
+	  "item": "minecraft:honey_bottle",
+	  "text": "临时增加额外生命值。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "失明",
+	  "item": "minecraft:ink_sac",
+	  "text": "大幅减少目标的视野，使其周围的一切都变暗。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "防火",
+	  "item": "minecraft:nether_wart",
+	  "text": "赋予对火的免疫力。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "发光",
+	  "item": "minecraft:glistering_melon_slice",
+	  "text": "让目标发出令人厌恶的光芒。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "速掘",
+	  "item": "minecraft:dandelion",
+	  "text": "增加挖掘和攻击的速度。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "饥饿",
+	  "item": "minecraft:rotten_flesh",
+	  "text": "赋予饥饿效果。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "瞬间治疗",
+	  "item": "bewitchment:garlic",
+	  "text": "利用$(l:bewitchment:introducton/crops)大蒜$()的治疗特性，瞬间治疗一定数量的生命值。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "瞬间伤害",
+	  "item": "bewitchment:cypress_bark",
+	  "text": "瞬间损害一定数量的健康，使用$(l:bewitchment:introduction/cypress_trees)柏树$()的致命能量。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "隐身",
+	  "item": "minecraft:vine",
+	  "text": "使目标隐身。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "跳跃提升",
+	  "item": "minecraft:rabbit_foot",
+	  "text": "跳跃提升，不用过多解释。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "漂浮",
+	  "item": "minecraft:chorus_fruit",
+	  "text": "缓慢地将目标升入天空。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "挖掘疲劳",
+	  "item": "minecraft:poppy",
+	  "text": "挖掘疲劳使目标的打击速度大大降低。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "反胃",
+	  "item": "bewitchment:aconite",
+	  "text": "通过使目标迷失方向而诱发病态。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "夜视",
+	  "item": "minecraft:carrot",
+	  "text": "胡萝卜对你的眼睛不错。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "中毒",
+	  "item": "bewitchment:belladonna",
+	  "text": "将致命的毒素注入目标的血液中。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "再生",
+	  "item": "bewitchment:juniper_bark",
+	  "text": "通过利用$(l:bewitchment:introduction/juniper_trees)杜松$()的生命能量，再生在应用时能加快恢复过程。",
+	  "anchor": "regeneration"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "抗性提升",
+	  "item": "bewitchment:spruce_bark",
+	  "text": "减少受到的伤害。",
+	  "anchor": "resistance"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "缓降",
+	  "item": "minecraft:feather",
+	  "text": "让目标像羽毛一样轻轻落下。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "缓慢",
+	  "item": "minecraft:slime_ball",
+	  "text": "减少目标的移动速度。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "速度",
+	  "item": "minecraft:sugar_cane",
+	  "text": "利用甘蔗的能量特性增加移动速度。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "力量",
+	  "item": "bewitchment:oak_bark",
+	  "text": "利用橡木的能量，增加伤害输出。",
+	  "anchor": "strength"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "水下呼吸",
+	  "item": "minecraft:kelp",
+	  "text": "允许在水下呼吸。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "虚弱",
+	  "item": "minecraft:red_mushroom",
+	  "text": "减少目标的攻击伤害。$(br2)你也可以用棕色的蘑菇来做这个。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "凋零",
+	  "item": "minecraft:wither_rose",
+	  "text": "逐渐减少目标的血量。"
+	}
+  ]
+}

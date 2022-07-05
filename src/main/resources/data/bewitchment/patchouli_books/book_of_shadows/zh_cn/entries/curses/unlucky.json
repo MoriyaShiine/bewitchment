@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "晦气",
+  "icon": "minecraft:textures/mob_effect/unluck.png",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "$(l:bewitchment:tools/crystal_ball)幸运$()不在眷顾这个$(l:bewitchment:curses/conducting_curses)诅咒$()的受害者；这也意味着正面效果可能无法发挥作用。"
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/unlucky"
+	}
+  ]
+}

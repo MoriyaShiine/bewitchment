@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "臭臭",
+  "icon": "bewitchment:smelly_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "sortnum": 1,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "臭臭$(l:bewitchment:sigils/using_sigils)被动符文$()很臭，导致附近的敌对实体向它移动。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:smelly_sigil"
+	}
+  ]
+}

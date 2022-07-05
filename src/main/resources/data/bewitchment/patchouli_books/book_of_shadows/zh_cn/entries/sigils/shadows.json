@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "暗影",
+  "icon": "bewitchment:shadows_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "sortnum": 1,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "暗影$(l:bewitchment:sigils/using_sigils)被动符文$()在它周围投射出一种魔法般的黑暗光环，阻止瞄准它的$(l:bewitchment:tools/crystal_ball)水晶球$()窥探。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:shadows_sigil"
+	}
+  ]
+}

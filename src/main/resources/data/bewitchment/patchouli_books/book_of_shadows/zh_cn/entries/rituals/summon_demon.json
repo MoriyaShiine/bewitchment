@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "召唤恶魔",
+  "icon": "bewitchment:demon_spawn_egg",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这个$(l:bewitchment:rituals/rituals)仪式$()通过使用$(l:bewitchment:tools/athame)仪式刀$()牺牲一个人来把$(l:bewitchment:creatures/demon)恶魔$()与它们地狱般的老巢分开。$(br2)$(l:bewitchment:creatures/demon)恶魔$()提供各种各样的交易，但除非你穿着$(l:bewitchment:tools/besmirched_armor)污渍法师盔甲$()，否则它们通常会攻击你。$(br2)如果他们真的攻击你，让它们们远离任何易燃物。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/summon_demon"
+	}
+  ]
+}

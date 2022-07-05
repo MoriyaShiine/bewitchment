@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "懒惰",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 1,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "懒惰让你在静止时再生得更快。"
+	}
+  ]
+}

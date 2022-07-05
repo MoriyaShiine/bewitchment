@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "攀爬",
+  "icon": "minecraft:spider_eye",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "允许受影响的人像蜘蛛一样爬墙。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "攀爬",
+	  "item": "minecraft:spider_eye",
+	  "text": "这种效果不受强度的影响。"
+	}
+  ]
+}

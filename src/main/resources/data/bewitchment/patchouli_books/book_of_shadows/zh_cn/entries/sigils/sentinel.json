@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "哨兵",
+  "icon": "bewitchment:sentinel_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "哨兵$(l:bewitchment:sigils/using_sigils)主动符文$()捕获$(l:bewitchment:creatures/ghost)幽灵$()的灵魂。激活时，它会产生一个随机负面效果。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:sentinel_sigil"
+	}
+  ]
+}

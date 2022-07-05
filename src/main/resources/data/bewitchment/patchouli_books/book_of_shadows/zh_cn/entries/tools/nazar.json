@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:tools",
+  "name": "纳扎尔邪眼",
+  "icon": "bewitchment:nazar",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "使用光的力量，纳扎尔邪眼通常用于保护免受$(l:bewitchment:curses/conducting_curses)诅咒$()。$(br2)佩戴时，它们会将任何$(l:bewitchment:curses/conducting_curses)诅咒$()的持续时间减半。$(br2)这需要佩戴者大约一半的 $(l:bewitchment:introduction/altars#internalme)ME$()。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:nazar"
+	}
+  ]
+}

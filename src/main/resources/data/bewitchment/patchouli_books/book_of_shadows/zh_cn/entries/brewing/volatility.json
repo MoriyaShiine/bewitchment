@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "活泼性",
+  "icon": "minecraft:fire_charge",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "使得目标极度不稳定。当被击中时，会引起破坏性的爆炸，瞬间消除效果并伤害周围所有实体。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "活泼性",
+	  "item": "minecraft:fire_charge",
+	  "text": "爆炸伤害与效果的强度成正比。"
+	}
+  ]
+}

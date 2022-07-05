@@ -1,0 +1,25 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "酿造基础",
+  "icon": "bewitchment:witch_cauldron",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "priority": true,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "酿造的精细工艺是巫术的核心学科。正如其名字所暗示的那样，它全部是关于酿造药水的$(br2)要开始酿造，你需要一个沸腾的$(l:bewitchment:tools/witch_cauldron)女巫釜锅$()，一些$(l:bewitchment:introduction/altars)祭坛之力$()，以及其他杂七杂八的配料。$(br2)要开始酿造，首先要在$(l:bewitchment:tools/witch_cauldron)女巫釜锅$()中加入$(l:bewitchment:introduction/crops)曼陀罗根$()。"
+	},
+	{
+	  "type": "patchouli:text",
+	  "text": "在加入了$(l:bewitchment:introduction/crops)曼陀罗根$()之后，你可以添加其他配料。每种材料都会使装瓶所需的$(l:bewitchment:introduction/altars)祭坛之力$()增加150，如果在酿造时$(l:bewitchment:introduction/altars)祭坛之力$()不足，将导致酿造立即失败，所以请记住这一点。$(br2)成分可分为基础成分和改性剂。无论你有多少$(l:bewitchment:introduction/altars)祭坛之力$()，你最多只能添加4种配料。"
+	},
+	{
+	  "type": "patchouli:text",
+	  "text": "基础成分为你的药水添加效果。你总是希望至少有一个这样的材料。某些基础成分所提供的确切效果在其他条目中有所概述。可以添加更多的成分，不过这要以改性剂的空间为代价。$(br2)改性剂会增强你的药水效果：红石粉会增加持续时间，而萤石粉会使它更有效力。"
+	},
+	{
+	  "type": "patchouli:text",
+	  "text": "你只能添加一个增强效力的改性剂；然而，其他改性剂在技术上只受剩余空间的限制，以及你的$(l:bewitchment:introduction/altars)祭坛力量$()。$(br2)最后，你可以使用普通的酿造台对你的药水进行后期处理。还要注意的是，当药水呈褐色时，通常意味着你的酿造失败了。$(br2)$(o)也许你应该自己做实验，找出哪些能成功，哪些不能？$()"
+	}
+  ]
+}

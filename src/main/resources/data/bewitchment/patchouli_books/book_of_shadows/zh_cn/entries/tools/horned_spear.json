@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:tools",
+  "name": "魔角尖枪",
+  "icon": "bewitchment:horned_spear",
+  "advancement": "bewitchment:hidden_unlocks/horned_spear",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这把矛是$(l:bewitchment:creatures/herne)黑尔讷$()的狩猎武器。$(br2)就像三叉戟一样，它可以向目标投掷，并且总是会回到投掷它的人身上。$(br2)魔角尖枪可以使用下界合金锭修复。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "item": "bewitchment:horned_spear"
+	}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "下沉",
+  "icon": "minecraft:iron_ingot",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "使目标快速下沉，特别是在水中或飞行时。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "下沉",
+	  "item": "minecraft:iron_ingot",
+	  "text": "更高的强度使目标快速下沉。"
+	}
+  ]
+}

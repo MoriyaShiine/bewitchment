@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "死亡",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 2,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "死亡$(l:bewitchment:contracts/concept_contracts)契约$()使你渴望其他生命体的死亡。$(br2)凡是经你的手杀死的，都会治疗你。"
+	}
+  ]
+}

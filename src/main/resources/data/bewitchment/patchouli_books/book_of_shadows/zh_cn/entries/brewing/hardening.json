@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "变硬",
+  "icon": "minecraft:scute",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这个效果使皮肤变硬，增加固定地护甲值。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "变硬",
+	  "item": "minecraft:scute",
+	  "text": "护甲值的增加与效果的强度成正比。"
+	}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "挥发",
+  "icon": "minecraft:netherrack",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这个$(l:bewitchment:rituals/rituals)仪式$()引导火的能量，去除附近的任何水。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/evaporate"
+	}
+  ]
+}

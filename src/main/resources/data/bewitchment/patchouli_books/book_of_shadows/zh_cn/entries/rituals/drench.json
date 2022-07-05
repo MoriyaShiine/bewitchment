@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "浸透",
+  "icon": "minecraft:ghast_tear",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "一种$(l:bewitchment:rituals/rituals)仪式$()，用水的能量填充空气，使周围的一切都变湿并熄灭火焰。$(br2)它的范围相当有限，因此您通常希望在需要弄湿某些东西的非常特殊的情况下使用它。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/drench"
+	}
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "地狱之犬",
+  "icon": "bewitchment:hellhound_spawn_egg",
+  "advancement": "minecraft:nether/root",
+  "extra_recipe_mappings": {
+	"bewitchment:demon_horn": 1
+  },
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "地狱之犬在下界生成。$(br2)它们充满了攻击性，会攻击附近的任何人，尽管它们会尊重穿戴$(l:bewitchment:tools/besmirched_armor)污渍法师防具$()的人。$(br2)地狱犬会掉落恶魔之角。"
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "bewitchment:hellhound",
+	  "scale": 0.6
+	}
+  ]
+}

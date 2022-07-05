@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:tools",
+  "name": "仪式刀",
+  "priority": true,
+  "icon": "bewitchment:athame",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "仪式刀是任何巫师的必备工具。它可以用来收集怪物的头，以及其他称心用途。$(br2)它由$(l:bewitchment:introduction/silver)银$()制成，非常适合对付邪恶的生物。$(br2)血瓶可以通过在副手拿着一个玻璃瓶的同时用仪式刀杀死一个类人生物来获得。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:athame",
+	  "text": "仪式刀也可用于从发射器开始$(l:bewitchment:rituals/rituals)仪式$()。"
+	}
+  ]
+}

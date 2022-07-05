@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:tools",
+  "name": "权杖",
+  "icon": "bewitchment:scepter",
+  "advancement": "bewitchment:hidden_unlocks/scepter",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这件强大的掉落物是通过击败$(l:bewitchment:creatures/leonard)伦纳德$()获得的。$(br2)它可以与喷溅药水结合使用，然后可以以 $(l:bewitchment:introduction/altars#internalme)ME$()为代价投掷权杖四次。$(br2)可以使用下界合金锭修复权杖。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "item": "bewitchment:scepter"
+	}
+  ]
+}
