@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "饥荒",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 2,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "在饥荒$(l:bewitchment:contracts/concept_contracts)契约$()下，你越是饥饿，受到的伤害就越少。"
+	}
+  ]
+}

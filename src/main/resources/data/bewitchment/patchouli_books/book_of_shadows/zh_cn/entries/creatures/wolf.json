@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "狼",
+  "icon": "minecraft:wolf_spawn_egg",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "被驯服的狼是一种珍贵的生物；当它们的朋友有需要时，它们通常会准备帮助，甚至冒着自己的生命危险。$(br2)当作为$(l:bewitchment:rituals/binding)宠物$()被绑定时，狼会增加$(l:bewitchment:poppets/poppet_practice)巫毒娃娃$()的有效时间。$(br2)它们的保护精神也会自然地增加它们的巫师的盔甲。"
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "minecraft:wolf",
+	  "scale": 0.6
+	}
+  ]
+}

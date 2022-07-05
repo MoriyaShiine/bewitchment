@@ -1,0 +1,43 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "元素润滑油",
+  "icon": "bewitchment:cleansing_balm",
+  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "priority": true,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "元素润滑油是巫术工艺中必不可少的工艺成分。它们由一种$(l:bewitchment:introduction/bark)树皮$()和其他成分制成。$(br2)要制作几瓶元素润滑油，首先把一块$(l:bewitchment:introduction/bark)树皮$()扔进沸腾的$(l:bewitchment:tools/witch_cauldron)女巫釜锅$()里，然后加入其他成分。一旦它达到令人愉快的、匹配的颜色，你就可以把它装在瓶子里。"
+	},
+	{
+	  "type": "bewitchment:oil",
+	  "recipe": "bewitchment:oil_crafting/cleansing_balm",
+	  "text": "净化药膏与光有关，也同样明亮。"
+	},
+	{
+	  "type": "bewitchment:oil",
+	  "recipe": "bewitchment:oil_crafting/grim_elixir",
+	  "text": "与黑暗的本源有关，冷酷灵药是黑暗的，像血一样。"
+	},
+	{
+	  "type": "bewitchment:oil",
+	  "recipe": "bewitchment:oil_crafting/aqua_cerate",
+	  "text": "海洋蜡膏是蓝色的，像水一样。$(br2)任何类型的鱼都可以用来做这个。"
+	},
+	{
+	  "type": "bewitchment:oil",
+	  "recipe": "bewitchment:oil_crafting/fiery_serum",
+	  "text": "炽热血清是一团亮橙色。它结合了火焰的本源。"
+	},
+	{
+	  "type": "bewitchment:oil",
+	  "recipe": "bewitchment:oil_crafting/earth_ichor",
+	  "text": "这种草绿色的润滑油融合了泥土的成分。"
+	},
+	{
+	  "type": "bewitchment:oil",
+	  "recipe": "bewitchment:oil_crafting/heaven_extract",
+	  "text": "极乐浸膏是完全白色的，代表空气。$(br2)小心不要一开始就加了$(l:bewitchment:introduction/crops)曼陀罗根$()，不然你可能意外地做成了$(l:bewitchment:brewing/brewing_basics)酿造$()。"
+	}
+  ]
+}

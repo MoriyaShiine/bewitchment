@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "恐高",
+  "icon": "minecraft:spider_eye",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "通过魔法和随机无性繁殖的力量，这种$(l:bewitchment:curses/conducting_curses)诅咒$()会引起对蜘蛛的巨大恐惧，甚至可能在实际$(l:bewitchment:curses/conducting_curses)诅咒$()的持续时间内持续下去。"
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/arachnophobia"
+	}
+  ]
+}

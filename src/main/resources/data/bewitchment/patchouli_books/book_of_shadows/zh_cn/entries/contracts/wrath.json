@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "暴怒",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 1,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "有时受伤会让你感到愤怒，有了暴怒$(l:bewitchment:contracts/concept_contracts)契约$()，你终于可以合理地表现出这种愤怒了！$(br2)签署这个$(l:bewitchment:contracts/concept_contracts)契约$()会在生命值较低的情况下增加你的伤害输出。"
+	}
+  ]
+}

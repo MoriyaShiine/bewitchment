@@ -1,0 +1,27 @@
+{
+  "category": "bewitchment:tools",
+  "name": "炼金术士盔甲",
+  "icon": "bewitchment:alchemist_robes",
+  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这种高端时装使佩戴者能够掌握$(l:bewitchment:brewing/brewing_basics)药水酿造$()，使$(l:bewitchment:brewing/brewing_basics)酿造$()的持续时间加倍。$(br2)由相同面料制成的地毯可以放在$(l:bewitchment:introduction/altars)祭坛$()上。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:alchemist_hat",
+	  "recipe2": "bewitchment:alchemist_hood"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:alchemist_robes",
+	  "recipe2": "bewitchment:alchemist_pants"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:alchemist_wool",
+	  "recipe2": "bewitchment:alchemist_carpet"
+	}
+  ]
+}

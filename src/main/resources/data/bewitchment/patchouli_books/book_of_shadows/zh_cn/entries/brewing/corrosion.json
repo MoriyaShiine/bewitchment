@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "腐蚀",
+  "icon": "minecraft:dragon_breath",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "与$(l:bewitchment:brewing/hardening)硬化$()相对应，将减少一个固定数量的护甲值。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "腐蚀",
+	  "item": "minecraft:dragon_breath",
+	  "text": "护甲值的减少与药水的强度成正比。"
+	}
+  ]
+}

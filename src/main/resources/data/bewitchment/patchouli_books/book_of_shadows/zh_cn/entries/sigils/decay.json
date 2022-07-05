@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "腐烂",
+  "icon": "bewitchment:decay_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "腐烂是一个$(l:bewitchment:sigils/using_sigils)主动符文$()，激活时会产生很强的凋零效果。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:decay_sigil"
+	}
+  ]
+}

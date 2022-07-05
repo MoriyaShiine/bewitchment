@@ -1,0 +1,21 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "乌鸦",
+  "icon": "bewitchment:raven_spawn_egg",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "乌鸦是黑色的鸟类，可以在平原和森林中找到。被杀死后，它们会掉落羽毛。$(br2)乌鸦可以用金锭或银锭驯服，用小麦种子繁殖。"
+	},
+	{
+	  "type": "patchouli:text",
+	  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+	  "text": "乌鸦可以被绑定为$(l:bewitchment:rituals/binding)宠物$()，使巫师能够偶尔反弹$(l:bewitchment:curses/conducting_curses)诅咒$().$(br2)乌鸦$(l:bewitchment:rituals/binding)宠物$()也可以让巫师施放的$(l:bewitchment:curses/conducting_curses)诅咒$()时长翻倍，使得它们更加有效。"
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "bewitchment:raven",
+	  "scale": 0.6
+	}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "肺部虚弱",
+  "icon": "minecraft:gunpowder",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这个$(l:bewitchment:curses/conducting_curses)诅咒$()的受害者呼吸困难。$(br)在水下时，它们会立即开始溺水。"
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/weak_lungs"
+	}
+  ]
+}

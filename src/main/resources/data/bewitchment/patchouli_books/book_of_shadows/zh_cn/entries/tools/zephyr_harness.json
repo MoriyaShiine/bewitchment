@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:tools",
+  "name": "和风挽具",
+  "icon": "bewitchment:zephyr_harness",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "和风挽具使佩戴者像最强的风一样不可阻挡，完全抵消大多数形式的击退。$(br2)除此之外，该挽具允许佩戴者在用空手猛击实体时将实体抛向空中。然而，这会消耗 $(l:bewitchment:introduction/altars#internalme)ME$()。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:zephyr_harness"
+	}
+  ]
+}

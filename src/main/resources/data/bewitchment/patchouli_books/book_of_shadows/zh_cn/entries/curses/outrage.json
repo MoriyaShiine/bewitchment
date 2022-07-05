@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "愤怒",
+  "icon": "minecraft:sweet_berries",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "该$(l:bewitchment:curses/conducting_curses)诅咒$()会使通常中立的生物如末影人或僵尸猪灵对目标具有攻击性。"
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/outrage"
+	}
+  ]
+}

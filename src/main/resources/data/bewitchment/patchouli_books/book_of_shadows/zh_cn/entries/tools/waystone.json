@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:tools",
+  "name": "道标石",
+  "icon": "bewitchment:waystone",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "道标石注入了末影能量，使它们能够存储位置。这反过来又允许他们重定向仪式，将他们投射到不同的地方。要重定向仪式，请在仪式开始后在金色粉笔迹上使用道标石。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:waystone"
+	}
+  ]
+}

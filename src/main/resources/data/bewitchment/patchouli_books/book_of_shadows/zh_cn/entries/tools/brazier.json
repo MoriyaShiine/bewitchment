@@ -1,0 +1,45 @@
+{
+  "category": "bewitchment:tools",
+  "name": "火盆",
+  "icon": "bewitchment:brazier",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "火盆是$(l:bewitchment:curses/conducting_curses)诅咒$()的必备工具。 除此之外，它还可以用于$(l:bewitchment:tools/brazier#incense)香$()。$(br2)一个火盆最多可容纳四件物品。要开始使用它，您需要使用打火石点燃它。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:brazier",
+	  "text": "为方便起见，火盆也可以安装在天花板上。"
+	},
+	{
+	  "type": "patchouli:text",
+	  "title": "Incenses",
+	  "anchor": "incense",
+	  "text": "熏香是火盆的一种简单使用方法。香可以在醒来后施加延长的状态效果。$(br2)只需用所需的成分点燃附近的火盆，然后睡觉。"
+	},
+	{
+	  "type": "bewitchment:incense_compressed",
+	  "recipe1": "bewitchment:incenses/light",
+	  "recipe2": "bewitchment:incenses/dark"
+	},
+	{
+	  "type": "bewitchment:incense_compressed",
+	  "recipe1": "bewitchment:incenses/water",
+	  "recipe2": "bewitchment:incenses/fire"
+	},
+	{
+	  "type": "bewitchment:incense_compressed",
+	  "recipe1": "bewitchment:incenses/earth",
+	  "recipe2": "bewitchment:incenses/air"
+	},
+	{
+	  "type": "bewitchment:incense",
+	  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+	  "recipe": "bewitchment:incenses/mortal_coil",
+	  "anchor": "mortal_coil",
+	  "text": "凡人盘香用于相当亵渎的仪式。$(br2)$(o)你可能不想在睡觉前准备这个$()。"
+	}
+  ]
+}

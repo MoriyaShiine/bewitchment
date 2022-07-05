@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "神奇海绵",
+  "icon": "bewitchment:dragons_blood_resin",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "神奇海绵会减少来自魔法源的伤害，并反过来根据伤害来补充目标的$(l:bewitchment:introduction/altars#internalme)内部ME缓冲区$()。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "神奇海绵",
+	  "item": "bewitchment:dragons_blood_resin",
+	  "text": "更高的强度会增加魔法伤害的减免。"
+	}
+  ]
+}

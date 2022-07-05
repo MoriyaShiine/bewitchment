@@ -1,0 +1,27 @@
+{
+  "category": "bewitchment:tools",
+  "name": "篱笆巫师盔甲",
+  "icon": "bewitchment:hedgewitch_robes",
+  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这个古老的经典已经在几个世纪的巫术中证明了自己。佩戴时，它会增加作物产量。$(br2)同样面料的地毯也可以放在祭坛上。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:hedgewitch_hat",
+	  "recipe2": "bewitchment:hedgewitch_hood"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:hedgewitch_robes",
+	  "recipe2": "bewitchment:hedgewitch_pants"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:hedgewitch_wool",
+	  "recipe2": "bewitchment:hedgewitch_carpet"
+	}
+  ]
+}

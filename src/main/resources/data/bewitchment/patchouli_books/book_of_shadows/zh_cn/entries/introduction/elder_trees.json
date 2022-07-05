@@ -1,0 +1,53 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "接骨木",
+  "icon": "bewitchment:elder_sapling",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这种高贵的树在森林生物群系中生成。它通常与知识和智慧有关。$(br2)用这种木材制成的方块可以用$(l:bewitchment:introduction/silver)银锭$()锁定。$(br2)锁定的块可以被赋予$(l:bewitchment:tools/taglock)巫媒$()以将某些玩家列入白/黑名单。可以在潜行时使用$(l:bewitchment:tools/athame)仪式刀$()切换黑/白名单。"
+	},
+	{
+	  "type": "patchouli:image",
+	  "images": [
+		"bewitchment:textures/gui/patchouli/elder_tree.png"
+	  ],
+	  "border": true
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:elder_wood",
+	  "recipe2": "bewitchment:elder_planks"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:elder_stairs",
+	  "recipe2": "bewitchment:elder_slab"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:elder_fence",
+	  "recipe2": "bewitchment:elder_fence_gate"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:elder_pressure_plate",
+	  "recipe2": "bewitchment:elder_button"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:elder_trapdoor",
+	  "recipe2": "bewitchment:elder_door"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:elder_chest",
+	  "recipe2": "bewitchment:trapped_elder_chest"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:elder_sign",
+	  "recipe2": "bewitchment:elder_boat"
+	}
+  ]
+}

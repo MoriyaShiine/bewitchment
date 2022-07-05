@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "洪水",
+  "icon": "minecraft:water_bucket",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "一种较小的$(l:bewitchment:rituals/rituals)仪式$()，需要水灵来下雨。$(br2)雨本身是超自然的，大约可以持续半天时间——假如$(l:bewitchment:rituals/rituals)仪式$()没有以某种方式得到$(l:bewitchment:creatures/cat)加强$()的话。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/deluge"
+	}
+  ]
+}

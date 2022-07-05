@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "沉重",
+  "icon": "bewitchment:heavy_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "sortnum": 1,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "沉重$(l:bewitchment:sigils/using_sigils)被动符文$()会神奇地增加周围所有物体的坠落伤害。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:heavy_sigil"
+	}
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "category": "bewitchment:tools",
+  "name": "魔法保护",
+  "icon": "minecraft:enchanted_book",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "魔法保护对于决斗中的巫师来说是一个非常有用的盔甲附魔。它不仅可以减少受到的魔法伤害，还可以将负面药水效果的持续时间减少多达 50%。"
+	}
+  ]
+}

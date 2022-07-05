@@ -1,0 +1,26 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "莉莉丝",
+  "icon": "bewitchment:lilith_spawn_egg",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "$(l:bewitchment:creatures/vampire)吸血鬼$()的山母莉莉丝经常被称呼为给予$(l:bewitchment:curses/vampirism)吸血鬼$()的受害者更高的权力。$(br2)向她$(l:bewitchment:tools/grotesque_stew)宣誓$()后，他们可以自由地改变自己的形态，变成蝙蝠的样子，让他们可以自由地游荡。另外，也可以向她献上$(l:bewitchment:introduction/crops)大蒜$()，使受害者摆脱她的$(l:bewitchment:curses/conducting_curses)诅咒$()。"
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "bewitchment:lilith",
+	  "offset": 0.2
+	},
+	{
+	  "type": "patchouli:text",
+	  "title": "Summoning Lilith",
+	  "text": "要召唤莉莉丝，需要几样东西：$(li)$(l:bewitchment:tools/brazier#mortal_coil)凡人线圈香$()$(li)一只鸡$(li)一个山脉或冰雪生物群系。$(br2)首先，在正确的生物群落中，在晚上开始上$(l:bewitchment:tools/brazier#incense)香$()。然后你需要在不远处用$(l:bewitchment:tools/athame)仪式刀$()杀死一只鸡。"
+	},
+	{
+	  "type": "patchouli:text",
+	  "text": "如果你想向莉莉丝$(l:bewitchment:tools/grotesque_stew)宣誓$()，你会想把她留在身边，所以要明智地决定在哪里召唤她。$(br2)一旦$(l:bewitchment:tools/grotesque_stew)宣誓$()，你可以通过按[$(k:bewitchment.transformation_ability)]切换为你的蝙蝠形态。"
+	}
+  ]
+}

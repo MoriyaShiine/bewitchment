@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "占卜",
+  "icon": "minecraft:emerald_ore",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "占卜$(l:bewitchment:rituals/rituals)仪式$()在地面上搜索中央粉笔迹下方的特定方块（即它所附着的方块下方）。$(br2)它不会给出确切的位置，只会给出计数。$(br2)搜索这些方块时，请记住，此$(l:bewitchment:rituals/rituals)仪式$()的半径仅限于$(l:bewitchment:creatures/cat)正常条件$()下的一个方块。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/divination"
+	}
+  ]
+}

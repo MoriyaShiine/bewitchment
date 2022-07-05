@@ -1,0 +1,53 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "柏树",
+  "icon": "bewitchment:cypress_sapling",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "柏树在针叶林和沼泽生物群系中生成。$(br2)与死亡有关，由它制成的方块会在一小块区域内让你远离不死生物。"
+	},
+	{
+	  "type": "patchouli:image",
+	  "images": [
+		"bewitchment:textures/gui/patchouli/cypress_tree.png"
+	  ],
+	  "border": true
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:cypress_wood",
+	  "recipe2": "bewitchment:cypress_planks"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:cypress_stairs",
+	  "recipe2": "bewitchment:cypress_slab"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:cypress_fence",
+	  "recipe2": "bewitchment:cypress_fence_gate"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:cypress_pressure_plate",
+	  "recipe2": "bewitchment:cypress_button"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:cypress_trapdoor",
+	  "recipe2": "bewitchment:cypress_door"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:cypress_chest",
+	  "recipe2": "bewitchment:trapped_cypress_chest"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:cypress_sign",
+	  "recipe2": "bewitchment:cypress_boat"
+	}
+  ]
+}

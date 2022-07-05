@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "暴食",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 1,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "暴食使食物的滋养作用加倍...... 美味。"
+	}
+  ]
+}

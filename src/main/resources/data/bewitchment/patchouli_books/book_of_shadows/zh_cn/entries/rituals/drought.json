@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "干旱",
+  "icon": "minecraft:dead_bush",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "干旱$(l:bewitchment:rituals/rituals)仪式$()使空气干燥，停止所有雨水。$(br2)它的持续时间与它的对应仪式$(l:bewitchment:rituals/deluge)洪水$()相似。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/drought"
+	}
+  ]
+}

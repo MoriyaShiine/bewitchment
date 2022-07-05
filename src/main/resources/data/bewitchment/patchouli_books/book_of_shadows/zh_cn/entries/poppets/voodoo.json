@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "伏都教",
+  "icon": "bewitchment:voodoo_poppet",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "伏都教巫毒娃娃是经典之作。$(br2)它可以用来移动实体、淹死它们、点燃它们，甚至可以从任何地方对它们施加药水效果！$(br2)伏都教巫毒娃娃在$(l:bewitchment:tools/poppet_shelves)搁架$()中不起作用。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:voodoo_poppet"
+	}
+  ]
+}

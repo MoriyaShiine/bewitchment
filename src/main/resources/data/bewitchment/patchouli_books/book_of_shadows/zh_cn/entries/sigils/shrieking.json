@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "尖啸",
+  "icon": "bewitchment:shrieking_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "尖啸$(l:bewitchment:sigils/using_sigils)主动符文$()在激活时会发出可怕的声音。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:shrieking_sigil"
+	}
+  ]
+}

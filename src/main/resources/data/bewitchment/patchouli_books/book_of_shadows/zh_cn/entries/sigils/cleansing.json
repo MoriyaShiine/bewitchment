@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "净化",
+  "icon": "bewitchment:cleansing_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "净化符文是主动符文，一经$(l:bewitchment:sigils/using_sigils)激活$()，便移除激活者身上的所有负面药水效果。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:cleansing_sigil"
+	}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:curses",
+  "name": "厄运",
+  "icon": "minecraft:clay_ball",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这个经典的$(l:bewitchment:curses/conducting_curses)诅咒$()偶尔会施加令人讨厌的效果。这些包括但不限于中毒、虚弱、失明和恶心。"
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/misfortune"
+	}
+  ]
+}

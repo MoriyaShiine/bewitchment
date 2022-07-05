@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:tools",
+  "name": "德鲁伊束带",
+  "icon": "bewitchment:druid_band",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "德鲁伊束带是一个强大的大地饰品。$(br2)佩戴时，只要在草地等天然土壤上行走，它就会增加你的移动速度和再生能力。$(br2)激活时，德鲁伊束带会消耗 $(l:bewitchment:introduction/altars#internalme)ME$()。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:druid_band"
+	}
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "巴弗灭",
+  "icon": "bewitchment:baphomet_spawn_egg",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "巴弗灭，一个古老的$(l:bewitchment:creatures/demon)大魔王$()，以火、火焰等为名，为全世界许多巫师提供$(l:bewitchment:contracts/concept_contracts)契约$()。$(br2)当被$(l:bewitchment:tools/grotesque_stew)质押$()时，人们可以用它们来换取更多更便宜的$(l:bewitchment:contracts/concept_contracts)契约$()。$(br2)巴弗灭可以被任何足够强大的巫师$(l:bewitchment:rituals/summon_baphomet)召唤$()出来。"
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "bewitchment:baphomet",
+	  "offset": 0.2
+	}
+  ]
+}

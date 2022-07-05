@@ -1,0 +1,54 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "龙血树",
+  "icon": "bewitchment:dragons_blood_sapling",
+  "advancement": "minecraft:nether/find_fortress",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "龙血树树苗可以在下界要塞中找到。$(br2)用$(l:bewitchment:tools/athame)仪式刀$()切割树皮会使其流血，产生龙血树脂。$(br2)用这种木材制成的块会散发出一种力量的光环，并且可以被用来$(l:bewitchment:sigils/using_sigils)激活符文$()。"
+	},
+	{
+	  "type": "patchouli:image",
+	  "images": [
+		"bewitchment:textures/gui/patchouli/dragons_blood_tree.png"
+	  ],
+	  "border": true
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:dragons_blood_wood",
+	  "recipe2": "bewitchment:dragons_blood_planks"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:dragons_blood_stairs",
+	  "recipe2": "bewitchment:dragons_blood_slab"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:dragons_blood_fence",
+	  "recipe2": "bewitchment:dragons_blood_fence_gate"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:dragons_blood_pressure_plate",
+	  "recipe2": "bewitchment:dragons_blood_button"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:dragons_blood_trapdoor",
+	  "recipe2": "bewitchment:dragons_blood_door"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:dragons_blood_chest",
+	  "recipe2": "bewitchment:trapped_dragons_blood_chest"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:dragons_blood_sign",
+	  "recipe2": "bewitchment:dragons_blood_boat"
+	}
+  ]
+}

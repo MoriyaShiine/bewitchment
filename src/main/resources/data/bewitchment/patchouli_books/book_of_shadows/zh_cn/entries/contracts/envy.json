@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "嫉妒",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 1,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "嫉妒$(l:bewitchment:contracts/concept_contracts)契约$()让你通过无情地谋杀村民来窃取他们的商品。"
+	}
+  ]
+}

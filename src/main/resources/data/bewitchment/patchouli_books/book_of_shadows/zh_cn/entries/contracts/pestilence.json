@@ -1,0 +1,13 @@
+{
+  "category": "bewitchment:contracts",
+  "name": "瘟疫",
+  "icon": "bewitchment:demonic_contract",
+  "advancement": "bewitchment:hidden_unlocks/demon_horn",
+  "sortnum": 2,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "被瘟疫标记的人能够有效地给他们的敌人带来严重的疾病。"
+	}
+  ]
+}

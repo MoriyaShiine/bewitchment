@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "分离",
+  "icon": "minecraft:ender_pearl",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "分离目标，试图将其传送到一个小范围内。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "分离",
+	  "item": "minecraft:ender_pearl",
+	  "text": "强度越高，传送半径就越大。"
+	}
+  ]
+}

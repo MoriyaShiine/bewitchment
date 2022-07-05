@@ -1,0 +1,21 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "猫头鹰",
+  "icon": "bewitchment:owl_spawn_egg",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "猫头鹰通常在夜间活动，并通常在森林和针叶林生成。它们掉落羽毛，就像鸟一样$(br2)猫头鹰可以用生兔肉驯服，也可以用生鸡肉繁殖。"
+	},
+	{
+	  "type": "patchouli:text",
+	  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+	  "text": "作为一个可能的$(l:bewitchment:rituals/binding)宠物$()，猫头鹰会增加它们伙伴的飞行能力，即让$(l:bewitchment:tools/brooms)扫帚$()不需要花费$(l:bewitchment:introduction/altars#internalme)ME$()$(br2)万一它们以某种方式坠落，它们也不会受到摔落伤害。"
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "bewitchment:owl",
+	  "scale": 0.6
+	}
+  ]
+}

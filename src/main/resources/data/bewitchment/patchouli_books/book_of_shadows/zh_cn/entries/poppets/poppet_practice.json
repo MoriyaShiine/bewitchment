@@ -1,0 +1,20 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "巫毒娃娃练习册",
+  "icon": "bewitchment:voodoo_poppet",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
+  "priority": true,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "巫毒娃娃是携带方便的人偶，可用于恶意和保护目的。$(br2)巫毒娃娃总是绑定到一个实体。$(br2)要激活它们，它们需要在你的背包中——除非你有一个$(l:bewitchment:tools/poppet_shelves)搁架$()。"
+	},
+	{
+	  "type": "bewitchment:multi_showcase",
+	  "header": "Binding Poppets",
+	  "item2": "bewitchment:voodoo_poppet",
+	  "item3": "bewitchment:taglock{FromPlayer: 1b, OwnerUUID: [I; 1672005179, -1854323673, -2070260447, 778045631], OwnerName: \"MoriyaShiine\"}",
+	  "text": "要绑定巫毒娃娃，只需将其在工作台或背包中的合成网格中与$(l:bewitchment:tools/taglock)巫媒$()组合即可。$(br2)绑定的巫毒娃娃影响实体的方式很大程度上取决于巫毒娃娃本身，因此请务必检查相应的条目。"
+	}
+  ]
+}

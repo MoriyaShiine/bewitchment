@@ -1,0 +1,26 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "绑定",
+  "icon": "minecraft:lead",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "绑定$(l:bewitchment:rituals/rituals)仪式$()使用更强大的恶魔力量穿越施法者的灵魂和他们珍视的动物，使其成为魔宠。$(l:bewitchment:rituals/rituals)仪式$()应用到的动物是通过$(l:bewitchment:tools/taglock)巫媒$()定义的。$(br2)请注意，并非所有事物都可以绑定为魔宠；本书中通常会提到可能的魔宠。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/binding",
+	  "text": "绑定魔宠是一个更大的步骤，并且根据选择的动物有几个好处。$(br2)本书中所有可能魔宠的条目都已扩展。"
+	},
+	{
+	  "type": "patchouli:text",
+	  "text": "魔宠远比一般动物强悍，但无论如何你都应该尽量保证它们的安全。从它们身上散发出的微弱魔法粒子中，可以注意到这一点。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/severing",
+	  "text": "如果你想和你的魔宠分道扬镳，可以施放分离$(l:bewitchment:rituals/rituals)仪式$()。"
+	}
+  ]
+}

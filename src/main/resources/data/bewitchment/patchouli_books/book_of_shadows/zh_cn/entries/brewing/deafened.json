@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "失聪",
+  "icon": "minecraft:honeycomb",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "降低所有拥有此药水效果的人的声音。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "失聪",
+	  "item": "minecraft:honeycomb",
+	  "text": "药水的强度越高，减少的声音就越多。"
+	}
+  ]
+}

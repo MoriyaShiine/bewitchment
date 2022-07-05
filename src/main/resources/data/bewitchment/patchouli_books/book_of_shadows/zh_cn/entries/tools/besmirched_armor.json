@@ -1,0 +1,27 @@
+{
+  "category": "bewitchment:tools",
+  "name": "污渍法师盔甲",
+  "icon": "bewitchment:besmirched_robes",
+  "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这件异教服装完美地融入了哥特系列。任何种类的$(l:bewitchment:creatures/demon)恶魔$()都无法将穿戴者与它们的同类区分开来，从而使他们能够进行交易。$(br2)这种布的地毯非常适合$(l:bewitchment:introduction/altars)祭坛$()。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:besmirched_hat",
+	  "recipe2": "bewitchment:besmirched_hood"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:besmirched_robes",
+	  "recipe2": "bewitchment:besmirched_pants"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:besmirched_wool",
+	  "recipe2": "bewitchment:besmirched_carpet"
+	}
+  ]
+}

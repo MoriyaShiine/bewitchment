@@ -1,0 +1,21 @@
+{
+  "category": "bewitchment:tools",
+  "name": "烛台",
+  "icon": "bewitchment:iron_candelabra",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "烛台是一种奇特的照明光源。$(br2)它们可以用打火石点燃。点燃时，它们会驱散$(l:bewitchment:creatures/ghost)幽灵$()，防止它们靠近它，更好的材料会增加驱散效果。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:iron_candelabra",
+	  "recipe2": "bewitchment:golden_candelabra"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:silver_candelabra",
+	  "recipe2": "bewitchment:netherite_candelabra"
+	}
+  ]
+}

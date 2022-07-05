@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "疲劳",
+  "icon": "bewitchment:fatigue_poppet",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "当绑定到疲劳巫毒娃娃时，攻击你的敌人会在几秒钟内被严重削弱。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:fatigue_poppet"
+	}
+  ]
+}

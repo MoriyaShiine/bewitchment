@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "折跃",
+  "icon": "minecraft:ender_pearl",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这个强大的$(l:bewitchment:rituals/rituals)仪式$()可以将附近的任何东西传送到目标位置。$(br2)这与$(l:bewitchment:tools/waystone)道标石$()配合使用非常有效，因为它允许将实体传送到偏远的地方。$(br2)您可以使用$(l:bewitchment:tools/taglock)巫媒$()或$(l:bewitchment:tools/waystone)道标石$()进行此$(l:bewitchment:rituals/rituals)仪式$()。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/warp"
+	}
+  ]
+}

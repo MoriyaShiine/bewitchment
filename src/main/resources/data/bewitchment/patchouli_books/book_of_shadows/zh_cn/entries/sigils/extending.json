@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:sigils",
+  "name": "延拓",
+  "icon": "bewitchment:extending_sigil",
+  "advancement": "minecraft:nether/find_fortress",
+  "sortnum": 1,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "延拓$(l:bewitchment:sigils/using_sigils)被动符文$()会让附近周围的$(l:bewitchment:tools/brazier#incense)香$()的持续时间翻倍。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:extending_sigil"
+	}
+  ]
+}

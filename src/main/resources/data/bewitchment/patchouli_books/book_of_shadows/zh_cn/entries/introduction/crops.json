@@ -1,0 +1,30 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "作物",
+  "icon": "bewitchment:mandrake_root",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "巫术利用几种天然作物进行工艺。这些作物用于$(l:bewitchment:rituals/rituals)仪式$()、$(l:bewitchment:brewing/brewing_basics)酿造$()和许多其他事情。$(br2)这些作物的种子可以在野草中找到，就像其他种子一样。"
+	},
+	{
+	  "type": "bewitchment:multi_showcase",
+	  "item1": "bewitchment:aconite",
+	  "item2": "bewitchment:belladonna",
+	  "item3": "bewitchment:garlic",
+	  "item4": "bewitchment:mandrake_root",
+	  "header": "常规作物",
+	  "text": "四种常规作物是乌头、颠茄、大蒜和曼陀罗。$(br2)乌头主要用作神经毒素，而颠茄则以造成身体伤害而闻名。大蒜代表治疗，曼陀罗增强魔法。"
+	},
+	{
+	  "type": "patchouli:smelting",
+	  "recipe": "bewitchment:grilled_garlic",
+	  "text": "大蒜还可以烤成美味的烤大蒜。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:garlic_bread",
+	  "text": "烤大蒜进一步可以制作成更美味的大蒜面包。"
+	}
+  ]
+}

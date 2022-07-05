@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:tools",
+  "name": "水晶球",
+  "icon": "bewitchment:crystal_ball",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "水晶球是常见的占卜工具。$(br2)使用时，它们会给施法者带来一笔财富，代价是从附近的$(l:bewitchment:introduction/altars)祭坛$()中抽取一些 $(l:bewitchment:introduction/altars)ME$()。$(br2)此外，水晶球可用于占卜。 与$(l:bewitchment:tools/taglock)巫媒$()一起使用时，它将提供有关目标的精确信息。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:crystal_ball"
+	}
+  ]
+}

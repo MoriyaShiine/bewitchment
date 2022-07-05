@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:tools",
+  "name": "先驱者靴子",
+  "icon": "bewitchment:harbinger",
+  "advancement": "bewitchment:hidden_unlocks/harbinger",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "通过在战斗中击败$(l:bewitchment:creatures/lilith)吸血鬼女王$()获得，这双鞋具有与下界合金靴相媲美的保护。$(br2)由于它们的黑暗能量，不死生物对穿戴者来说是中立的。$(br2)先驱者靴子可以使用下界合金锭修复。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "item": "bewitchment:harbinger"
+	}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:poppets",
+  "name": "诅咒",
+  "icon": "bewitchment:curse_poppet",
+  "advancement": "bewitchment:hidden_unlocks/taglock",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "可笑的诅咒巫毒娃娃将保护它的主人免受$(l:bewitchment:curses/conducting_curses)诅咒$()。这个$(l:bewitchment:poppets/poppet_practice)巫毒娃娃$()通过像海绵一样吸收$(l:bewitchment:curses/conducting_curses)诅咒$()来做到这一点。$(br2)一旦此$(l:bewitchment:poppets/poppet_practice)巫毒娃娃$()成功吸收了一个$(l:bewitchment:curses/conducting_curses)诅咒$()，它就可以被用来将其吸收的$(l:bewitchment:curses/conducting_curses)诅咒$()反弹施加到目标身上。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:curse_poppet"
+	}
+  ]
+}

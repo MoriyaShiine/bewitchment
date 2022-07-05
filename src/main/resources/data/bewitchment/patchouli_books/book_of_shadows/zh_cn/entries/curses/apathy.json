@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:curses",
+  "name": "顽钝",
+  "icon": "minecraft:soul_lantern",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "顽钝使灵魂枯萎，让它无法使用$(l:bewitchment:introduction/altars)魔法能量$()。村民和$(l:bewitchment:creatures/demon)恶魔$()会拒绝交易，而且动物会逃离这个强大$(l:bewitchment:curses/conducting_curses)诅咒$()的受害者。"
+	},
+	{
+	  "type": "bewitchment:curse",
+	  "recipe": "bewitchment:curses/apathy",
+	  "text": "这是一个$(l:bewitchment:curses/conducting_curses)强力诅咒$()；摆脱它稍微困难一些。"
+	}
+  ]
+}

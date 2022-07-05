@@ -1,0 +1,62 @@
+{
+  "category": "bewitchment:introduction",
+  "name": "祭坛",
+  "icon": "bewitchment:stone_witch_altar",
+  "advancement": "bewitchment:hidden_unlocks/barks",
+  "priority": true,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "祭坛是任何女巫之家的基石。它们可用于收集能量——以下称为 ME （魔法能量）。这种能量对于大多数巫术来说都是必不可少的，并且是从附近的植物中收集的。您需要许多不同的植物来收集最大力量。"
+	},
+	{
+	  "type": "patchouli:text",
+	  "text": "你也可以在祭坛上放置剑、五芒星和魔杖来修改它。$(br2)剑将增加存储因数。头骨和宝石等五芒星将增加增益。$(l:bewitchment:tools/candelabras)烛台$()、灯笼和火把等魔杖将在容量上提供固定的加成。"
+	},
+	{
+	  "type": "patchouli:text",
+	  "text": "祭坛是通过在其基础方块上放置地毯来创建的。基础方块和地毯的选择仅具有装饰性，并与三个领域之一相关联。$(br2)附近的祭坛将填满玩家的内部 ME 缓冲区，用于制作饰品或$(l:bewitchment:tools/brooms)扫帚$()等所需的魔法。",
+	  "anchor": "internalme"
+	},
+	{
+	  "type": "patchouli:image",
+	  "images": [
+		"bewitchment:textures/gui/patchouli/altar.png"
+	  ],
+	  "border": true
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "title": "主世界",
+	  "recipe": "bewitchment:stone_witch_altar",
+	  "recipe2": "bewitchment:mossy_cobblestone_witch_altar"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "title": " ",
+	  "recipe": "bewitchment:prismarine_witch_altar"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "title": "下界",
+	  "recipe": "bewitchment:nether_brick_witch_altar",
+	  "recipe2": "bewitchment:blackstone_witch_altar"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "title": " ",
+	  "recipe": "bewitchment:golden_witch_altar"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "title": "末地",
+	  "recipe": "bewitchment:end_stone_witch_altar",
+	  "recipe2": "bewitchment:obsidian_witch_altar"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "title": " ",
+	  "recipe": "bewitchment:purpur_witch_altar"
+	}
+  ]
+}

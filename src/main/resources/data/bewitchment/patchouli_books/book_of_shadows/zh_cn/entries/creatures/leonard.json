@@ -1,0 +1,17 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "伦纳德",
+  "icon": "bewitchment:leonard_spawn_egg",
+  "advancement": "bewitchment:hidden_unlocks/demon_heart",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "伦纳德是女巫、$(l:bewitchment:brewing/brewing_basics)酿造$()等等东西的守护神。$(br2)伦纳德是一个$(l:bewitchment:creatures/demon)大恶魔$()；他可以被$(l:bewitchment:tools/grotesque_stew)宣誓$()于。$(l:bewitchment:tools/grotesque_stew)宣誓$()于伦纳德的巫师在$(l:bewitchment:brewing/brewing_basics)酿造$()时可以使用两个改性剂，而不是一个。对伦纳德的$(l:bewitchment:tools/grotesque_stew)宣誓$()也允许玩家使用$(l:bewitchment:tools/witch_cauldron)女巫釜锅$()进行$(l:bewitchment:tools/witch_cauldron#teleportation)扭曲$()，而无需使用任何$(l:bewitchment:introduction/altars)ME$()。"
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "bewitchment:leonard",
+	  "offset": 0.2
+	}
+  ]
+}

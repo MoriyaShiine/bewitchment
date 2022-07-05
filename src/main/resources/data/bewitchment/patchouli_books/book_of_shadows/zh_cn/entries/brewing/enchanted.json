@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "法伤",
+  "icon": "minecraft:lapis_block",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "使普通攻击具有魔力，让它们穿过盔甲。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "法伤",
+	  "item": "minecraft:lapis_block",
+	  "text": "所产生的伤害比原来的要低得多，但是根据药水的强度，会增加一个固定的伤害。"
+	}
+  ]
+}

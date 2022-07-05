@@ -1,0 +1,18 @@
+{
+  "category": "bewitchment:brewing",
+  "name": "抑制",
+  "icon": "bewitchment:silver_ingot",
+  "advancement": "bewitchment:hidden_unlocks/altars",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这个效果可以阻止喝下它的人使用他们的$(l:bewitchment:introduction/altars#internalme)内部ME缓冲区$()。这意味着他们不能使用需要$(l:bewitchment:introduction/altars)魔法能量$()的物品。"
+	},
+	{
+	  "type": "patchouli:spotlight",
+	  "title": "抑制",
+	  "item": "bewitchment:silver_ingot",
+	  "text": "强度不会影响这种效果。"
+	}
+  ]
+}

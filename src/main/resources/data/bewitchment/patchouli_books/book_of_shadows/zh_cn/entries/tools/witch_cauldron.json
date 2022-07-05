@@ -1,0 +1,27 @@
+{
+  "category": "bewitchment:tools",
+  "name": "女巫釜锅",
+  "icon": "bewitchment:witch_cauldron",
+  "priority": true,
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "通过用$(l:bewitchment:introduction/silver)银$()强化普通炼药锅，您可以创建一个女巫釜锅。$(br2)这个神奇的女巫釜锅用途广泛，可用于$(l:bewitchment:brewing/elemental_oils)制油$()、$(l:bewitchment:brewing/brewing_basics)酿造$()和传送。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:witch_cauldron"
+	},
+	{
+	  "type": "patchouli:text",
+	  "title": "Usage",
+	  "text": "一旦沸腾，物品就可以被扔进女巫釜锅。要使其沸腾，请在其下方放置热源放块，例如熔岩或岩浆块。$(br2)请注意，除了$(l:bewitchment:brewing/elemental_oils)炼油$()之外，女巫釜锅需要$(l:bewitchment:introduction/altars)祭坛能量$()。"
+	},
+	{
+	  "type": "patchouli:text",
+	  "title": "Teleportation",
+	  "anchor": "teleportation",
+	  "text": "要使用女巫釜锅进行传送，只需将末影珍珠扔进去，踩在上面，然后说出你的目的地。该目的地必须是另一个带有命名牌的女巫釜锅。$(br2)传送的成本是 距离/2 ，假设你没有$(l:bewitchment:creatures/leonard)别人$()来帮助你。"
+	}
+  ]
+}

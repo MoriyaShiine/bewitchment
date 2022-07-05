@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:creatures",
+  "name": "吸血鬼",
+  "icon": "bewitchment:vampire_spawn_egg",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "吸血鬼是黑夜的主宰，几乎没有弱点。他们出现在平原和针叶林生物群落中，在光线最少的新月出现。$(br2)众所周知，它们会攻击人类，所以你应该用火或猛击仪式装备自己来对付它们。"
+	},
+	{
+	  "type": "patchouli:entity",
+	  "entity": "bewitchment:vampire",
+	  "offset": 0.1
+	}
+  ]
+}

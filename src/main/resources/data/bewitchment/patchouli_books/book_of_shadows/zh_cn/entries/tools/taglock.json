@@ -1,0 +1,15 @@
+{
+  "category": "bewitchment:tools",
+  "name": "巫媒",
+  "icon": "bewitchment:taglock",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "巫媒是另一个必不可少的工具。它可以收集实体的头发、血液以及建立连接所需的所有东西。要从一个实体那里收集一个巫媒，要么从后面偷偷摸摸潜行接近，要么搜索他们的床。要从床上收集巫媒，请在潜行时使用它，以免意外入睡。"
+	},
+	{
+	  "type": "patchouli:crafting",
+	  "recipe": "bewitchment:taglock"
+	}
+  ]
+}

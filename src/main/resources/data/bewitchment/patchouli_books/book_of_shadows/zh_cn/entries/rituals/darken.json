@@ -1,0 +1,16 @@
+{
+  "category": "bewitchment:rituals",
+  "name": "黑化",
+  "icon": "minecraft:obsidian",
+  "advancement": "bewitchment:hidden_unlocks/chalk",
+  "pages": [
+	{
+	  "type": "patchouli:text",
+	  "text": "这个$(l:bewitchment:rituals/rituals)仪式$()释放出一波黑暗。它会破坏附近任何容易破碎的光源。"
+	},
+	{
+	  "type": "bewitchment:ritual",
+	  "recipe": "bewitchment:rituals/darken"
+	}
+  ]
+}
