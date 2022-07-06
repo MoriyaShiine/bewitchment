@@ -33,7 +33,7 @@
 	"appleskin": [
 	  "moriyashiine.bewitchment.client.integration.appleskin.BWAppleskinIntegration"
 	],
-	"rei_plugins": [
+	"rei_client": [
 	  "moriyashiine.bewitchment.client.integration.rei.BWREIPlugin"
 	]
   },

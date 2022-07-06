@@ -27,25 +27,18 @@ public class BWREIPlugin implements REIClientPlugin {
 	public void registerCategories(CategoryRegistry registry) {
 		registry.add(new AthameStrippingCategory());
 		registry.addWorkstations(ATHAME_STRIPPING, AthameStrippingCategory.ICON);
-		registry.removePlusButton(ATHAME_STRIPPING);
 		registry.add(new AthameDropCategory());
 		registry.addWorkstations(ATHAME_DROPS, AthameDropCategory.ICON);
-		registry.removePlusButton(ATHAME_DROPS);
 		registry.add(new RitualCategory());
 		registry.addWorkstations(RITUALS, RitualCategory.ICON);
-		registry.removePlusButton(RITUALS);
 		registry.add(new OilCraftingCategory());
 		registry.addWorkstations(OIL_CRAFTING, OilCraftingCategory.ICON);
-		registry.removePlusButton(OIL_CRAFTING);
 		registry.add(new CauldronBrewingCategory());
 		registry.addWorkstations(CAULDRON_BREWING, CauldronBrewingCategory.ICON);
-		registry.removePlusButton(CAULDRON_BREWING);
 		registry.add(new IncenseCategory());
 		registry.addWorkstations(INCENSES, IncenseCategory.ICON);
-		registry.removePlusButton(INCENSES);
 		registry.add(new CursesCategory());
 		registry.addWorkstations(CURSES, CursesCategory.ICON);
-		registry.removePlusButton(CURSES);
 	}
 
 	@Override
