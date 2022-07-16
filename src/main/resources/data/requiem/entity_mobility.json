@@ -9,4 +9,7 @@
 	"flightMode": "FORCED",
 	"phasesThroughWalls": true
   }
+  "bewitchment:toad": {
+	"walkMode": "JUMPY"
+  }
 }
