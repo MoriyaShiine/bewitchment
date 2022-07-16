@@ -35,15 +35,15 @@ public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<Wit
 		World world = entity.getWorld();
 		if (world != null) {
 			BlockPos pos = entity.getPos();
-			renderName(entity, pos, matrices, vertexConsumers, light);
+			renderName(entity.name, pos, matrices, vertexConsumers, light);
 			int level = entity.getCachedState().get(BWProperties.LEVEL);
 			if (level > 0) {
 				matrices.push();
 				matrices.translate(0, HEIGHT[level], 0);
 				if (entity.mode == WitchCauldronBlockEntity.Mode.TELEPORTATION) {
-					renderPortal(entity, pos, matrices, vertexConsumers);
+					renderPortal(matrices, vertexConsumers);
 				}
-				renderWater(entity, matrices, vertexConsumers.getBuffer(RenderLayer.getTranslucent()), light, overlay, SpriteIdentifiers.CAULDRON_WATER.getSprite());
+				renderWater(entity.color, matrices, vertexConsumers, light, overlay, SpriteIdentifiers.CAULDRON_WATER.getSprite());
 				matrices.pop();
 				if (entity.heatTimer >= 60 && !MinecraftClient.getInstance().isPaused()) {
 					float fluidHeight = 0;
@@ -73,26 +73,24 @@ public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<Wit
 		}
 	}
 
-	private void renderName(WitchCauldronBlockEntity entity, BlockPos pos, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
-		if (entity.name != null) {
-			if (pos.getSquaredDistance(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getPos()) <= 256) {
-				matrices.push();
-				matrices.translate(0.5, 1, 0.5);
-				matrices.multiply(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getRotation());
-				matrices.scale(-0.025f, -0.025f, 0.025f);
-				Matrix4f model = matrices.peek().getPositionMatrix();
-				int x = -MinecraftClient.getInstance().textRenderer.getWidth(entity.name) / 2;
-				MinecraftClient.getInstance().textRenderer.draw(entity.name, x, 0, 0x20ffff, false, model, vertexConsumers, true, (int) (MinecraftClient.getInstance().options.getTextBackgroundOpacity(0.25f) * 255f) << 24, light);
-				MinecraftClient.getInstance().textRenderer.draw(entity.name, x, 0, -1, false, model, vertexConsumers, false, 0, light);
-				matrices.pop();
-			}
+	private void renderName(String name, BlockPos pos, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+		if (name != null && pos.getSquaredDistance(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getPos()) <= 256) {
+			int x = -MinecraftClient.getInstance().textRenderer.getWidth(name) / 2;
+			matrices.push();
+			Matrix4f mat = matrices.peek().getPositionMatrix();
+			matrices.translate(0.5, 1, 0.5);
+			matrices.multiply(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getRotation());
+			matrices.scale(-0.025f, -0.025f, 0.025f);
+			MinecraftClient.getInstance().textRenderer.draw(name, x, 0, 0x20ffff, false, mat, vertexConsumers, true, (int) (MinecraftClient.getInstance().options.getTextBackgroundOpacity(0.25f) * 255f) << 24, light);
+			MinecraftClient.getInstance().textRenderer.draw(name, x, 0, -1, false, mat, vertexConsumers, false, 0, light);
+			matrices.pop();
 		}
 	}
 
-	private void renderPortal(WitchCauldronBlockEntity entity, BlockPos pos, MatrixStack matrices, VertexConsumerProvider vertexConsumers) {
+	private void renderPortal(MatrixStack matrices, VertexConsumerProvider vertexConsumers) {
 		matrices.push();
 		Matrix4f matrix4f = matrices.peek().getPositionMatrix();
-		VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEndPortal()); //todo maybe look at coloring this again
+		VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEndPortal());
 		vertexConsumer.vertex(matrix4f, 0.125f, 0, 0.875f).next();
 		vertexConsumer.vertex(matrix4f, 0.875f, 0, 0.875f).next();
 		vertexConsumer.vertex(matrix4f, 0.875f, 0, 0.125f).next();
@@ -100,19 +98,20 @@ public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<Wit
 		matrices.pop();
 	}
 
-	private void renderWater(WitchCauldronBlockEntity entity, MatrixStack matrices, VertexConsumer buffer, int light, int overlay, Sprite sprite) {
-		matrices.push();
-		Matrix4f mat = matrices.peek().getPositionMatrix();
-		float sizeFactor = 0.125f;
+	private void renderWater(int color, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Sprite sprite) {
+		float sizeFactor = 0.125F;
 		float maxV = (sprite.getMaxV() - sprite.getMinV()) * sizeFactor;
 		float minV = (sprite.getMaxV() - sprite.getMinV()) * (1 - sizeFactor);
-		int red = (entity.color >> 16) & 0xff;
-		int green = (entity.color >> 8) & 0xff;
-		int blue = entity.color & 0xff;
-		buffer.vertex(mat, sizeFactor, 0, 1 - sizeFactor).color(red, green, blue, 255).texture(sprite.getMinU(), sprite.getMinV() + maxV).light(light).overlay(overlay).normal(1, 1, 1).next();
-		buffer.vertex(mat, 1 - sizeFactor, 0, 1 - sizeFactor).color(red, green, blue, 255).texture(sprite.getMaxU(), sprite.getMinV() + maxV).light(light).overlay(overlay).normal(1, 1, 1).next();
-		buffer.vertex(mat, 1 - sizeFactor, 0, sizeFactor).color(red, green, blue, 255).texture(sprite.getMaxU(), sprite.getMinV() + minV).light(light).overlay(overlay).normal(1, 1, 1).next();
-		buffer.vertex(mat, sizeFactor, 0, sizeFactor).color(red, green, blue, 255).texture(sprite.getMinU(), sprite.getMinV() + minV).light(light).overlay(overlay).normal(1, 1, 1).next();
+		int red = (color >> 16) & 0xFF;
+		int green = (color >> 8) & 0xFF;
+		int blue = color & 0xFF;
+		matrices.push();
+		Matrix4f mat = matrices.peek().getPositionMatrix();
+		VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getTranslucent());
+		vertexConsumer.vertex(mat, sizeFactor, 0, 1 - sizeFactor).color(red, green, blue, 255).texture(sprite.getMinU(), sprite.getMinV() + maxV).light(light).overlay(overlay).normal(1, 1, 1).next();
+		vertexConsumer.vertex(mat, 1 - sizeFactor, 0, 1 - sizeFactor).color(red, green, blue, 255).texture(sprite.getMaxU(), sprite.getMinV() + maxV).light(light).overlay(overlay).normal(1, 1, 1).next();
+		vertexConsumer.vertex(mat, 1 - sizeFactor, 0, sizeFactor).color(red, green, blue, 255).texture(sprite.getMaxU(), sprite.getMinV() + minV).light(light).overlay(overlay).normal(1, 1, 1).next();
+		vertexConsumer.vertex(mat, sizeFactor, 0, sizeFactor).color(red, green, blue, 255).texture(sprite.getMinU(), sprite.getMinV() + minV).light(light).overlay(overlay).normal(1, 1, 1).next();
 		matrices.pop();
 	}
 }
