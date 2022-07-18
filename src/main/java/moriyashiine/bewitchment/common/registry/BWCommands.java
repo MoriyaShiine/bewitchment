@@ -207,7 +207,7 @@ public class BWCommands {
 			}
 			return 0;
 		}))));
-		dispatcher.register(CommandManager.literal("removefamiliar").then(CommandManager.argument("player", EntityArgumentType.player()).executes(context -> {
+		dispatcher.register(CommandManager.literal("removefamiliar").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)).then(CommandManager.argument("player", EntityArgumentType.player()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
 			if (player != null) {
 				BWUniversalWorldState universalWorldState = BWUniversalWorldState.get(player.world);
