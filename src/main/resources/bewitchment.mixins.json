@@ -26,6 +26,7 @@
 	"ServerWorldMixin",
 	"SimpleBlockStateProviderAccessor",
 	"SpawnHelperMixin",
+	"SpawnRestrictionAccessor",
 	"VillagerEntityMixin",
 	"brew.ArrowEntityMixin",
 	"brew.BrewingRecipeRegistryMixin",
