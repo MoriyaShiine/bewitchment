@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.12-SNAPSHOT'
+    id 'fabric-loom' version '1.0-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -96,6 +96,8 @@ dependencies {
         exclude(group: "io.github.onyxstudios.Cardinal-Components-API")
     }
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
+
+    modRuntimeOnly "com.terraformersmc:modmenu:${mod_menu_version}"
 }
 
 processResources {

@@ -43,12 +43,12 @@
   ],
   "accessWidener": "bewitchment.accesswidener",
   "depends": {
-	"fabricloader": ">=0.14.9",
+	"fabricloader": ">=0.14.10",
 	"minecraft": "~1.19.2",
 	"java": ">=17",
-	"fabric": ">=0.59.0",
-	"patchouli": ">=1.19.2-76",
-	"pehkui": ">=3.4.0",
+	"fabric": ">=0.64.0",
+	"patchouli": ">=1.19.2-77",
+	"pehkui": ">=3.5.0",
 	"trinkets": ">=3.4.0"
   },
   "breaks": {

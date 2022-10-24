@@ -17,17 +17,17 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class BWBoatTypes {
 	public static void init() {
-		registerBoat("juniper");
-		registerBoat("cypress");
-		registerBoat("elder");
-		registerBoat("dragons_blood");
+		registerBoat("juniper", BWObjects.JUNIPER_PLANKS.asItem());
+		registerBoat("cypress", BWObjects.CYPRESS_PLANKS.asItem());
+		registerBoat("elder", BWObjects.ELDER_PLANKS.asItem());
+		registerBoat("dragons_blood", BWObjects.DRAGONS_BLOOD_PLANKS.asItem());
 	}
 
-	private static void registerBoat(String name) {
+	private static void registerBoat(String name, Item planks) {
 		AtomicReference<TerraformBoatType> type = new AtomicReference<>();
 		Item boat = TerraformBoatItemHelper.registerBoatItem(new Identifier(Bewitchment.MODID, name + "_boat"), type::get, false, Bewitchment.BEWITCHMENT_GROUP);
 		Item chest_boat = TerraformBoatItemHelper.registerBoatItem(new Identifier(Bewitchment.MODID, name + "_chest_boat"), type::get, true, Bewitchment.BEWITCHMENT_GROUP);
-		type.set(new TerraformBoatTypeImpl(boat, chest_boat));
+		type.set(new TerraformBoatTypeImpl(boat, chest_boat, planks));
 		Registry.register(TerraformBoatTypeRegistry.INSTANCE, new Identifier(Bewitchment.MODID, name), type.get());
 	}
 }

@@ -565,7 +565,7 @@
   "bewitchment.midnightconfig.werewolfWeight": "Сила популяции оборотней",
   "bewitchment.midnightconfig.werewolfMinGroupCount": "Мин. кол-во оборотней в группе",
   "bewitchment.midnightconfig.werewolfMaxGroupCount": "Макс. кол-во оборотней в группе",
-  "bewitchment.midnightconfig.hellhoundWeight":  "Сила популяции адских псов",
+  "bewitchment.midnightconfig.hellhoundWeight": "Сила популяции адских псов",
   "bewitchment.midnightconfig.hellhoundMinGroupCount": "Мин. кол-во адских псов в группе",
   "bewitchment.midnightconfig.hellhoundMaxGroupCount": "Макс. кол-во адских псов в группе"
 }
