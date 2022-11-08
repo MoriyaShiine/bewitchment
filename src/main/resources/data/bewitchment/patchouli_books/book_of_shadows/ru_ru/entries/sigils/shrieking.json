@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:sigils",
-  "name": "[Сигил] Крика",
+  "name": "Пронзительный крик",
   "icon": "bewitchment:shrieking_sigil",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "$(l:bewitchment:sigils/using_sigils)Активация Сигила$() издаст ужасный звук при его активации."
+	  "text": "$(l:bewitchment:sigils/using_sigils)Активный сигил$() пронзительного крика бросит вселяющий ужас звук при активации."
 	},
 	{
 	  "type": "patchouli:crafting",

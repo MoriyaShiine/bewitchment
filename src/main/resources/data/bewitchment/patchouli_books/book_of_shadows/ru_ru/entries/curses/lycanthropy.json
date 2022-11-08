@@ -6,11 +6,11 @@
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Ликантропия - это свирепая болезнь, которая оставляет шрамы на разуме, теле и душе. При полной луне его жертвы превращаются в $(l:bewitchment:creatures/werewolf)Оборотней$() жаждая свежего мяса.$(br2)Будучи физически сильным в звериной форме, имеют слабость к $(l:bewitchment:introduction/silver)Серебру$(), оно нанесёт им большой вред, а так же растение $(l:bewitchment:introduction/crops)Борца$(). $(l:bewitchment:creatures/werewolf)Оборотни$() также питаются исключительно мясом, независимо от их формы."
+	  "text": "Ликантропия — это зверское заболевание, которое ранит разум, тело и душу. Под влиянием полнолуния жертвы превращаются в $(l:bewitchment:creatures/werewolf)Оборотней$(), страстно желающие свежее мясо.$(br2)Будучи физически сильным в форме зверя, ему навредит $(l:bewitchment:introduction/silver)Серебро$(), как и $(l:bewitchment:introduction/crops)Аконит$(). $(l:bewitchment:creatures/werewolf)Оборотни$() в свой черёд исключительно питаются мясом, не зависимо от их формы."
 	},
 	{
 	  "type": "patchouli:text",
-	  "text": "Их слабость к $(l:bewitchment:introduction/silver)Серебру$() также подразумевает неспособность удерживать такие инструменты, как $(l:bewitchment:tools/athame)Атамэ$() очень долго.$(br2)Ликантропией заражаются от другого $(l:bewitchment:creatures/werewolf)Оборотня$()."
+	  "text": "Их слабость к $(l:bewitchment:introduction/silver)Серебру$() также указывает на неспособность слишком долго держать инструменты, а именно $(l:bewitchment:tools/athame)Атам$().$(br2)Ликантропией заражаются от другого $(l:bewitchment:creatures/werewolf)Оборотня$() — в случае, если он не свежеинфицирован ликантропией — пока находится под $(l:bewitchment:curses/conducting_curses)Проклятием$(): $(l:bewitchment:curses/susceptibility)Подверженность$(); хотя тебе ещё нужно $(l:bewitchment:poppets/death_protection)как-то выжить$().$(br2)$(o)Это звучит как потрясающая идея!$()"
 	}
   ]
 }

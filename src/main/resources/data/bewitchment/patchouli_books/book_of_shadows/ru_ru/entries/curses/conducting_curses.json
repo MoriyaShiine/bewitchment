@@ -1,17 +1,17 @@
 {
   "category": "bewitchment:curses",
-  "name": "Проводящие Проклятия",
+  "name": "Осуществления проклятий",
   "priority": true,
   "icon": "bewitchment:brazier",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Проклятия - это вредоносная магия, применяемая с помощью $(l:bewitchment:tools/brazier)Жаровни$().$(br2)Чтобы выбрать эффективное проклятие, вам понадобится $(l:bewitchment:tools/taglock)Экстрактор ДНК$() вашей цели и поместите ее в $(l:bewitchment:tools/brazier)Жаровню$(), в дополнение к другим ингредиентам.$(br2)После добавления всех ингредиентов зажгите $(l:bewitchment:tools/brazier)Жаровню$() с помощью Огнива, чтобы наложить проклятие."
+	  "text": "Проклятия — это злобная магия, накладываются при помощи $(l:bewitchment:tools/brazier)Жаровни$().$(br2)Чтобы наложить эффективное проклятие, тебе понадобится $(l:bewitchment:tools/taglock)Тэглок$() своей цели и положить его в $(l:bewitchment:tools/brazier)Жаровню$(), вдобавок другие ингредиенты.$(br2)После вложения всех ингредиентов зажги $(l:bewitchment:tools/brazier)Жаровню$() с помощью Огнива, чтобы наложить проклятие."
 	},
 	{
 	  "type": "patchouli:text",
-	  "text": "Проклятия исчезнут через семь дней, но они также могут быть $(l:bewitchment:rituals/cleansing)Очищены$() используя соответствующий ритуал.$(br2)Обратите внимание, что для всех проклятий требуется не менее 400 доступной $(l:bewitchment:introduction/altars)ME$(); более мощные проклятия требуют 800 $(l:bewitchment:introduction/altars)ME$()."
+	  "text": "Проклятия ослабеют после семи дней, но они могут также быть $(l:bewitchment:rituals/cleansing)Очищенными$() с использованием специального ритуала.$(br2)Прими во внимание, что каждому проклятию нужно как минимум 400 имеющихся в наличии $(l:bewitchment:introduction/altars)МЭ$(); великие проклятия требуют 800 $(l:bewitchment:introduction/altars)МЭ$()."
 	}
   ]
 }

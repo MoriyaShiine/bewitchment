@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:tools",
-  "name": "Повязка Друида",
+  "name": "Поясок друида",
   "icon": "bewitchment:druid_band",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Повязка Друида - мощный аксессуар земли. $(br2)При ношении она увеличит вашу скорость передвижения и регенерацию, пока вы ходите по естественной почве, такой как трава.$(br2)Когда она активна, повязка Друида потребляет $(l:bewitchment:introduction/altars#internalme)ME$()"
+	  "text": "Поясок друида — это мощный брелок земли.$(br2)Когда надет, он увеличит твою скорость движения и регенерацию до тех пор, пока ты продолжаешь ходьбу по естественной почве, например, дёрн.$(br2)При активации Поясок друида потребляет $(l:bewitchment:introduction/altars#internalme)МЭ.$()"
 	},
 	{
 	  "type": "patchouli:crafting",

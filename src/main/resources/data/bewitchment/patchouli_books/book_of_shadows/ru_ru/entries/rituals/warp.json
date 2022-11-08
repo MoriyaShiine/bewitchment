@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:rituals",
-  "name": "[Ритуал] Телепортации",
+  "name": "Перемещение",
   "icon": "minecraft:ender_pearl",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Этот мощный $(l:bewitchment:rituals/rituals)Ритуал$() телепортирует все, что находится поблизости, в выбранное местоположение.$(br2)Это очень хорошо работает с $(l:bewitchment:tools/waystone)Путеводными камнями$(), поскольку это позволяет телепортировать объекты в отдаленные места.$(br2)Вы можете использовать $(l:bewitchment:tools/taglock)Экстрактор ДНК$() или $(l:bewitchment:tools/waystone)Путеводный камень$() для этого $(l:bewitchment:rituals/rituals)Ритуала$()."
+	  "text": "Этот мощный $(l:bewitchment:rituals/rituals)Ритуал$() перемещает что угодно в своей близости в указанное место.$(br2)Это работает весьма неплохо благодаря $(l:bewitchment:tools/waystone)Маршрутному камню$(), поскольку он позволяет перемещать существ в отдалённые места.$(br2)Ты можешь использовать либо $(l:bewitchment:tools/taglock)Набор для сбора генетического материала$(), либо $(l:bewitchment:tools/waystone)Маршрутный камень$() для этого $(l:bewitchment:rituals/rituals)Ритуала.$()"
 	},
 	{
 	  "type": "bewitchment:ritual",

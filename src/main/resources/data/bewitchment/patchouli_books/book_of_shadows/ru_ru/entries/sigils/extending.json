@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:sigils",
-  "name": "[Сигил] Расширения",
+  "name": "Расширение",
   "icon": "bewitchment:extending_sigil",
   "advancement": "minecraft:nether/find_fortress",
   "sortnum": 1,
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "$(l:bewitchment:sigils/using_sigils)Пассивный Сигил$() Расширения  удвоивает продолжительность любого ближайшего $(l:bewitchment:tools/brazier#incense)Благовония$() вокруг него."
+	  "text": "$(l:bewitchment:sigils/using_sigils)Пассивный сигил$() расширения удвоит продолжительность любого находящегося поблизости $(l:bewitchment:tools/brazier#incense)Фимиама$() вокруг него."
 	},
 	{
 	  "type": "patchouli:crafting",

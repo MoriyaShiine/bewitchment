@@ -6,13 +6,13 @@
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Этот эффект блокирует использование $(l:bewitchment:introduction/altars#internalme)ME$() Это означает, что они не могут использовать предметы, требующие $(l:bewitchment:introduction/altars)магическую энергию$()."
+	  "text": "Этот эффект блокирует использование своего $(l:bewitchment:introduction/altars#internalme)Внутреннего буфера МЭ$(), кто выпивает отвар. Это значит, что они не могут использовать предметы, которые требуют $(l:bewitchment:introduction/altars)Магической энергии$()."
 	},
 	{
 	  "type": "patchouli:spotlight",
 	  "title": "Подавление",
 	  "item": "bewitchment:silver_ingot",
-	  "text": "Эффект никак не усилить."
+	  "text": "Интенсивность не влияет на этот эффект."
 	}
   ]
 }

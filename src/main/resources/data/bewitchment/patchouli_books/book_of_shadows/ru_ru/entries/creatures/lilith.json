@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Лилит, Мать $(l:bewitchment:creatures/vampire)вампиров$().$(br2)$(l:bewitchment:tools/grotesque_stew)Клятва$() ей, позволит вам свободно перевоплощаться в летучую мышь, позволяя свободно перемещаться в воздухе. В качестве альтернативы ей можно предложить $(l:bewitchment:introduction/crops)чеснок$(), освобождая жертву от ее $(l:bewitchment:curses/conducting_curses)проклятия$()."
+	  "text": "Лилит, горная мать Вампиров, они же, как правило, обращаются для наделения жертвам $(l:bewitchment:curses/vampirism)Вампиризма$() высшие силы.$(br2)$(l:bewitchment:tools/grotesque_stew)Заверение ей Обетом$() позволяет им свободно изменять свою форму в летучую мышь, позволяя им открыто странствовать. В порядке альтернативы ей может быть предложен $(l:bewitchment:introduction/crops)Чеснок$(), освобождая жертву от её $(l:bewitchment:curses/conducting_curses)Проклятия$()."
 	},
 	{
 	  "type": "patchouli:entity",
@@ -15,12 +15,12 @@
 	},
 	{
 	  "type": "patchouli:text",
-	  "title": "Призыв Лилит",
-	  "text": "Чтобы вызвать Лилит, необходимо несколько вещей:$(li) $(l:bewitchment:tools/brazier#mortal_coil)Благовония Смертной спирали$()$(li) Курица $(li)Горный или ледяной биом$(br2)Во-первых, запустите $(l:bewitchment:tools/brazier#incense)Жаровню$() в правильном биоме, ночью. Затем вам нужно будет убить курицу с помощью $(l:bewitchment:tools/athame)Атамэ$(), не подалёку от места проведения ритуала."
+	  "title": "Вызов Лилит",
+	  "text": "Чтобы вызвать Лилит, необходимо несколько вещей:$(li) $(l:bewitchment:tools/brazier#mortal_coil)Благовония для Бренного тела$(), $(li)Курица $(li)горный или ледяной биом.$(br2)Для начала, зажги $(l:bewitchment:tools/brazier#incense)Благовонью$() в надлежащем биоме в ночное время суток. Затем тебе нужно убить Курицу при помощи $(l:bewitchment:tools/athame)Атама$(), не на очень большом расстоянии."
 	},
 	{
 	  "type": "patchouli:text",
-	  "text": "Ты захочешь оставить Лилит рядом, если захочешь дать ей$(l:bewitchment:tools/grotesque_stew)клятву$(), так что решайте, куда ее призвать, с умом.$(br2)Приняв $(l:bewitchment:tools/grotesque_stew)клятву$(), вы сможете переключать свою форму на летучую мышь, нажав [$(k:bewitchment.transformation_ability)]."
+	  "text": "Тебе захочется удержать Лилит рядом, если ты хочешь заверить ей $(l:bewitchment:tools/grotesque_stew)Обетом$(), так что решай, где вызывать её, с умом.$(br2)Как только $(l:bewitchment:tools/grotesque_stew)заверен Обетом$(), ты сможешь переключать свою форму летучей мыши нажатием [$(k:bewitchment.transformation_ability)]."
 	}
   ]
 }

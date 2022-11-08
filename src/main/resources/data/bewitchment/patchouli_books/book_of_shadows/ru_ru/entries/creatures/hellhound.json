@@ -1,6 +1,6 @@
 {
   "category": "bewitchment:creatures",
-  "name": "Адский пес",
+  "name": "Адская гончая",
   "icon": "bewitchment:hellhound_spawn_egg",
   "advancement": "minecraft:nether/root",
   "extra_recipe_mappings": {
@@ -9,7 +9,7 @@
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Адские псы появляются в аду.$(br2)Наполненные агрессией, они нападут на любого, кто окажется поблизости, хотя и будут уважать тех, кто носит $(l:bewitchment:tools/besmirched_armor)проклятую броню$().$(br2)Убив адского пса, с него выпадет демонический рог."
+	  "text": "Адские гончие появляются в Незере.$(br2)Полны агрессией, они будут атаковать любого поблизости, впрочем они уважают носящих $(l:bewitchment:tools/besmirched_armor)Очернённую броню$().$(br2)Адские гончие сбрасывают Рога демона."
 	},
 	{
 	  "type": "patchouli:entity",

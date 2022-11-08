@@ -8,12 +8,12 @@
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Змеи обычно появляются в саваннах, пустынях и равнинах, где они охотятся на других животных, убивая их своим ядом.$(br2) Если убить змею, с неё может упасть Змеиный Язык, так же как с $(l:bewitchment:creatures/hellhound)адского пса$().$(br2)Змей можно приручить Сырым кроликом и разводить Сырой курицей."
+	  "text": "Змеи, как правило, встречаются в саваннах, пустынях и равнинах, где они охотятся на других животных, убивая их своим ядом.$(br2)Змеи могут выбросить свой Змеиный язык, впрочем он также может быть получен за счёт $(l:bewitchment:creatures/hellhound)Адской гончей$().$(br2)Змеи могут быть приручены при помощи Сырой крольчатины, и выведена при помощи Сырой курицы."
 	},
 	{
 	  "type": "patchouli:text",
 	  "advancement": "bewitchment:hidden_unlocks/demon_heart",
-	  "text": "Змеи могут быть $(l:bewitchment:rituals/binding)фамильярами$(). Ведьмы со змеей $(l:bewitchment:rituals/binding)фамильяром$() способны создавать гораздо более долговечные $(l:bewitchment:sigils/using_sigils)сигилы$().$(br2)Кроме того, они получают пользу от яда; он не причиняет им вреда и наполняет их $(l:bewitchment:introduction/altars#internalme)ME$()."
+	  "text": "Змеи могут быть $(l:bewitchment:rituals/binding)Фамильарами$(). Ведьмы со Змеёй $(l:bewitchment:rituals/binding)Фамильаром$() способны создать $(l:bewitchment:sigils/using_sigils)Сигилы$() гораздо большей прочности.$(br2)Кроме того, они извлекают выгоду от яда; он не причинит им вред и пополняет их $(l:bewitchment:introduction/altars#internalme)Внутренний буфер МЭ$()."
 	},
 	{
 	  "type": "patchouli:entity",

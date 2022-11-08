@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:tools",
-  "name": "Кукольные Полки",
+  "name": "Полки для кукол",
   "icon": "bewitchment:oak_poppet_shelf",
   "advancement": "bewitchment:hidden_unlocks/taglock",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Кукольные полки создают красивую мебель. Они могут хранить до девяти $(l:bewitchment:poppets/poppet_practice)Кукол$(), которые будут активны.$(br2)Это делает полки с куклами удобными для освобождения места в инвентаре, сохраняя при этом все $(l:bewitchment:poppets/poppet_practice)Куклы$() активными."
+	  "text": "Полки для кукол представляют собой хорошую мебель. Они могут хранить до 9 $(l:bewitchment:poppets/poppet_practice)Кукол$(), при этом каждая будет активной.$(br2)Это делает Полки для кукол полезными для освобождения места для хранения, ещё будучи имея всех  $(l:bewitchment:poppets/poppet_practice)Кукол$() в готовности."
 	},
 	{
 	  "type": "patchouli:crafting",

@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:curses",
-  "name": "Невезучесть",
+  "name": "Невезение",
   "icon": "minecraft:textures/mob_effect/unluck.png",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "$(l:bewitchment:tools/crystal_ball)Удача$() не проявляет благосклонности к жертвам этого $(l:bewitchment:curses/conducting_curses)Проклятия$(); это также означает, что благотворный эффект статуса может не сработать."
+	  "text": "$(l:bewitchment:tools/crystal_ball)Удача$() не прислуживается жертвам подобного $(l:bewitchment:curses/conducting_curses)Проклятия$(); а ещё это означает, что доброжелательные статусные эффекты, возможно, не сработают."
 	},
 	{
 	  "type": "bewitchment:curse",

@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Леонард покровитель ведьм, $(l:bewitchment:brewing/brewing_basics)варки в котле$() и...$(br2)Леонард $(l:bewitchment:creatures/demon)Великий Демон$().$(br2)Ведьмы дают $(l:bewitchment:tools/grotesque_stew)клятву$() чтобы они могли использовать два модификатора могущества, используя $(l:bewitchment:brewing/brewing_basics)Котёл$(). $(l:bewitchment:tools/grotesque_stew)Клятва$() Леонарду также позволяет игрокам $(l:bewitchment:tools/witch_cauldron#teleportation)телепортироваться$() используя $(l:bewitchment:tools/witch_cauldron)ведьмин котёл$() без использования $(l:bewitchment:introduction/altars)ME$()."
+	  "text": "Леонард является покровителем ведьм, $(l:bewitchment:brewing/brewing_basics)Зельеварения$() и...$(br2)Леонард является $(l:bewitchment:creatures/demon)Великим Демоном$(); он может быть $(l:bewitchment:tools/grotesque_stew)заверенным Обетом$(). $(br2)Ведьмы, $(l:bewitchment:tools/grotesque_stew)заверенные Обетом$() Леонарду, способны использовать 2 модификаторы силы при $(l:bewitchment:brewing/brewing_basics)Зельеварении$() вместо одного. $(l:bewitchment:tools/grotesque_stew)Заверение обетом$() Леонарду также позволяет игрокам $(l:bewitchment:tools/witch_cauldron#teleportation)Перемещаться$() с использованием $(l:bewitchment:tools/witch_cauldron)Ведьминых котлов$() без использования какого-либо $(l:bewitchment:introduction/altars)МЭ$()."
 	},
 	{
 	  "type": "patchouli:entity",

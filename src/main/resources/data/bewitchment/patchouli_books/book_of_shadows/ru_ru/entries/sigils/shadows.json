@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:sigils",
-  "name": "[Сигил] Теней",
+  "name": "Полумрак",
   "icon": "bewitchment:shadows_sigil",
   "advancement": "minecraft:nether/find_fortress",
   "sortnum": 1,
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Этот $(l:bewitchment:sigils/using_sigils)Пассивный Сигил$() создает вокруг него магическую ауру тьмы, предотвращающую прорицание с помощью $(l:bewitchment:tools/crystal_ball)Хрустальных шаров$(), которые нацелены вокруг него."
+	  "text": "$(l:bewitchment:sigils/using_sigils)Пассивный сигил$() полумрака разбрасывает магическую ауру тьмы вокруг себя, предотвращающий гадание на $(l:bewitchment:tools/crystal_ball)Шаре предсказаний$() тому, кто намеревается это сделать вокруг него."
 	},
 	{
 	  "type": "patchouli:crafting",

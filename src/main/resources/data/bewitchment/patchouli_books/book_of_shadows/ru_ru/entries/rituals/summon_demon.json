@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:rituals",
-  "name": "[Ритуал] Призыва Демона",
+  "name": "Вызов демона",
   "icon": "bewitchment:demon_spawn_egg",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Этот $(l:bewitchment:rituals/rituals)Ритуал$() призывает $(l:bewitchment:creatures/demon)Демона$() из своего адского дома, принеся в жертву человека, используя $(l:bewitchment:tools/athame)Атамэ$().$(br2)$(l:bewitchment:creatures/demon)Демоны$() предлагают множество сделок, но обычно они нападают на тебя, если ты не наденешь $(l:bewitchment:tools/besmirched_armor)Проклятую броню$().$(br2)Если они нападут на вас, держите их подальше от чего-либо легковоспламеняющегося."
+	  "text": "Этот $(l:bewitchment:rituals/rituals)Ритуал$() разлучает $(l:bewitchment:creatures/demon)Демона$() из его дьявольского дома за счёт жертвоприношения человека с использованием $(l:bewitchment:tools/athame)Атама$().$(br2)$(l:bewitchment:creatures/demon)Демоны$() предлагают различные сделки, но они, как правило, нападут на тебя в случае, если ты не носишь $(l:bewitchment:tools/besmirched_armor)Очернённую броню$().$(br2)Если они нападают на тебя, держи их подальше от чего-то воспламеняющегося."
 	},
 	{
 	  "type": "bewitchment:ritual",

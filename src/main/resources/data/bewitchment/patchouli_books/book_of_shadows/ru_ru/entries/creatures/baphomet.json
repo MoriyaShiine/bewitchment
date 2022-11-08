@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Бафомет, древний $(l:bewitchment:creatures/demon)Великий Демон$() магии, первое имя огня, пламени и т.д. Обеспечивает $(l:bewitchment:contracts/concept_contracts)контрактами$() многих ведьм по всему миру.$(br2)Пока действует $(l:bewitchment:tools/grotesque_stew)клятва$(), с ним можно торговать гораздо дешевле.$(br2)Бафомет может быть $(l:bewitchment:rituals/summon_baphomet)призван$() любой достаточно сильной ведьмой."
+	  "text": "Бафомет, древний $(l:bewitchment:creatures/demon)Великий демон$() магии, первое имя огня, пламени и т.д. и т.д. предоставляет $(l:bewitchment:contracts/concept_contracts)Контракты$() для множество ведьм по всему миру.$(br2)Когда Бафомет $(l:bewitchment:tools/grotesque_stew)под клятвой$(), у него можно выторговать очень дешёвые $(l:bewitchment:contracts/concept_contracts)Контракты$(), а их много.$(br2)Бафомет может быть $(l:bewitchment:rituals/summon_baphomet)Вызван$() любой достаточной сильной ведьмой."
 	},
 	{
 	  "type": "patchouli:entity",

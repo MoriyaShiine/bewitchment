@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:sigils",
-  "name": "[Сигил] Вони",
+  "name": "Зловонность",
   "icon": "bewitchment:smelly_sigil",
   "advancement": "minecraft:nether/find_fortress",
   "sortnum": 1,
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Этот $(l:bewitchment:sigils/using_sigils)Пассивный Сигил$() воняет, заставляя близлежащие враждебные объекты двигаться к нему."
+	  "text": "$(l:bewitchment:sigils/using_sigils)Пассивный сигил$() зловонности воняет так, что заставляет враждебных существ находящихся поблизости уходить в сторону."
 	},
 	{
 	  "type": "patchouli:crafting",

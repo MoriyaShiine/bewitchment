@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:sigils",
-  "name": "[Сигил] Приговора",
+  "name": "Божья кара",
   "icon": "bewitchment:judgment_sigil",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "$(l:bewitchment:sigils/using_sigils)Активация Сигила$() Приговора наносит ущерб любой нечисти, которое активирует его."
+	  "text": "$(l:bewitchment:sigils/using_sigils)Активный сигил$() божьей кары повреждает любое нечестивое существо, которое активирует его."
 	},
 	{
 	  "type": "patchouli:crafting",

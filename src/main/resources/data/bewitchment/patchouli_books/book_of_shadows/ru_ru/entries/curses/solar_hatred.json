@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:curses",
-  "name": "Солнечная Болезнь",
+  "name": "Солнечное отвращение",
   "icon": "minecraft:sunflower",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Ослабляя кожу цели, это $(l:bewitchment:curses/conducting_curses) Проклятие$() делает их чрезвычайно восприимчивыми к солнечному свету. $(br2) На самом деле солнце буквально поджигает проклятую цель."
+	  "text": "Посредством ослабевания кожи цели, это $(l:bewitchment:curses/conducting_curses)Проклятие$() делает её весьма чувствительной к солнечному свету.$(br2)Это, по правде говоря, в буквальном смысле приводит к её загоранию."
 	},
 	{
 	  "type": "bewitchment:curse",

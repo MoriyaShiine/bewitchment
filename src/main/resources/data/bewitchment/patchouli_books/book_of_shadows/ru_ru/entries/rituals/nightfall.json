@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:rituals",
-  "name": "[Ритуал] Сумерки",
+  "name": "Сумерки",
   "icon": "bewitchment:silver_ingot",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Призывая луну, ведьмы могут сменить день на ночь."
+	  "text": "Вызывая луну, ведьмы могут поменять день на ночь."
 	},
 	{
 	  "type": "bewitchment:ritual",

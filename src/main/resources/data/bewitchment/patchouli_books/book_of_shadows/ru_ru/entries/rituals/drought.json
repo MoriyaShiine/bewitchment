@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:rituals",
-  "name": "[Ритуал] Засухи",
+  "name": "Засуха",
   "icon": "minecraft:dead_bush",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "$(l:bewitchment:rituals/rituals)Ритуал$() Засухи делает воздух сухим, останавливая все дожди.$(br2) Он имеет продолжительность, аналогичную его альтернативному ритуалу $(l:bewitchment:rituals/deluge)потопа$()."
+	  "text": "$(l:bewitchment:rituals/rituals)Ритуал$() засухи делает воздух сухим, останавливая весь дождь.$(br2)Он имеет такую же продолжительность, как его аналог — $(l:bewitchment:rituals/deluge)Потоп.$()"
 	},
 	{
 	  "type": "bewitchment:ritual",

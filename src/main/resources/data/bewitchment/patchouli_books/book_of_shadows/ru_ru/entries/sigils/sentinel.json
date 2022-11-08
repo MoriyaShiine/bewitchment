@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:sigils",
-  "name": "[Сигил] Стража",
+  "name": "Страж",
   "icon": "bewitchment:sentinel_sigil",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "$(l:bewitchment:sigils/using_sigils)Активация Сигила$() ловит духа-$(l:bewitchment:creatures/ghost)Призрака$(). При активации он применит случайный дебафф"
+	  "text": "$(l:bewitchment:sigils/using_sigils)Активный сигил$() стража ловит в ловушку духа $(l:bewitchment:creatures/ghost)Призрака$(). Когда активирован, он будет налаживать случайный негативный эффект."
 	},
 	{
 	  "type": "patchouli:crafting",

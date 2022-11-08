@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Этот $(l:bewitchment:contracts/concept_contracts)контракт$() увеличит твой урон при снижении здоровья.$(br2)Наконец-то ты отомстишь своим обидчикам!"
+	  "text": "Иногда получение урона делает тебя злым, а с $(l:bewitchment:contracts/concept_contracts)Контрактом$() Война ты, наконец, сможешь обнаружить, кто более или менее злой!$(br2)Подписание этого $(l:bewitchment:contracts/concept_contracts)Контракта$() увеличит твой выводимый урон при низком здоровье."
 	}
   ]
 }

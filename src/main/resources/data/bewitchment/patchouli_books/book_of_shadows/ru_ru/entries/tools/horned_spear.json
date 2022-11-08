@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:tools",
-  "name": "Рогатое Копье",
+  "name": "Копьё с рогом",
   "icon": "bewitchment:horned_spear",
   "advancement": "bewitchment:hidden_unlocks/horned_spear",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Это копье - охотничье копьё $(l:bewitchment:creatures/herne)Хэрнэ$().$(br2)Так же, как Трезубец, его можно бросить в цель, и он всегда вернется к тому, кто его бросил.$(br2)Рогатое Копье можно починить с помощью Незеритовых слитков"
+	  "text": "Это копьё является охотничьим оружием $(l:bewitchment:creatures/herne)Херна$().$(br2)Подобно Трезубцу, оно может быть брошено навстречу к цели и всегда возвращается тому, кто бросил это.$(br2)Копьё с рогом может быть починено при использовании Незеритовых слитков."
 	},
 	{
 	  "type": "patchouli:spotlight",

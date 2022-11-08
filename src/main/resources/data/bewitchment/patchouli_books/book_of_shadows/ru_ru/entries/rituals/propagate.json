@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:rituals",
-  "name": "[Ритуал] Размножения",
+  "name": "Размножение",
   "icon": "minecraft:bone_meal",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Этот $(l:bewitchment:rituals/rituals)Ритуал$() приводит к росту близлежащих культур, животных и людей.$(br2)Иногда лучше не подвергать сомнению магию."
+	  "text": "Этот $(l:bewitchment:rituals/rituals)Ритуал$() заставляет расти находящиеся неподалёку растительные культуры, животных и людей.$(br2)Порой лучше не сомневаться в магии."
 	},
 	{
 	  "type": "bewitchment:ritual",

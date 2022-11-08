@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:rituals",
-  "name": "[Ритуал] Кары",
+  "name": "Небесная кара",
   "icon": "minecraft:redstone",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "$(l:bewitchment:rituals/rituals)Ритуал$() кары вызывает молнию возле $(l:bewitchment:rituals/rituals)Ритуала$().$(br2)Это очень хорошо работает с $(l:bewitchment:tools/waystone)Путеводными камнями$()."
+	  "text": "Небесная кара вызывает молнию на фактическое местоположение $(l:bewitchment:rituals/rituals)Ритуала$().$(br2)Это работает весьма неплохо благодаря $(l:bewitchment:tools/waystone)Маршрутному камню.$()"
 	},
 	{
 	  "type": "bewitchment:ritual",

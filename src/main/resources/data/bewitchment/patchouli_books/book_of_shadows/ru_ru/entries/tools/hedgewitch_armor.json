@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:tools",
-  "name": "Броня Природы",
+  "name": "Броня ведуньи",
   "icon": "bewitchment:hedgewitch_robes",
   "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Эта старая классика зарекомендовала себя на протяжении веков колдовства. При ношении она увеличивает урожайность.$(br2)Ковры из той же ткани также можно разместить на $(l:bewitchment:introduction/altars)Алтари$()."
+	  "text": "Это старая классика зарекомендовала себя спустя столетий ведьмовства. Когда надета, она увеличивает урожайность культур.$(br2)Ковры из точно такой же ткани также могут быть размещены на $(l:bewitchment:introduction/altars)Алтарях.$()"
 	},
 	{
 	  "type": "patchouli:crafting",

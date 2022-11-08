@@ -1,17 +1,17 @@
 {
   "category": "bewitchment:curses",
-  "name": "Апатия",
+  "name": "Вялость",
   "icon": "minecraft:soul_lantern",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Апатия иссушает душу, делая ее неспособной восстановить  $(l:bewitchment:introduction/altars)ME$(). Жители и $(l:bewitchment:creatures/demon)Демоны$() откажутся от торговли, и животные убегут от жертвы этого мощного $(l:bewitchment:curses/conducting_curses)Проклятия$()."
+	  "text": "Вялость иссушает душу, делая её неспособной получать $(l:bewitchment:introduction/altars)Магическую энергию$(). Крестьяне и $(l:bewitchment:creatures/demon)Демоны$() откажутся от торговли, а животные убегут от жертвы до такого степени сильного $(l:bewitchment:curses/conducting_curses)Проклятия$()."
 	},
 	{
 	  "type": "bewitchment:curse",
 	  "recipe": "bewitchment:curses/apathy",
-	  "text": "Это $(l:bewitchment:curses/conducting_curses)Сильное Проклятие$(); избавиться от него немного сложнее."
+	  "text": "Это $(l:bewitchment:curses/conducting_curses)Высшее проклятие$(); от него почти трудно избавиться."
 	}
   ]
 }

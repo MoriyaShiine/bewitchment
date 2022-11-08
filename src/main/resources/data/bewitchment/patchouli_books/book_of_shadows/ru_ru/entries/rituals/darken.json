@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:rituals",
-  "name": "[Ритуал] Тьмы",
+  "name": "Затемнение",
   "icon": "minecraft:obsidian",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Этот $(l:bewitchment:rituals/rituals)Ритуал$() выпускает волну тьмы. Это уничтожит любые разрушаемые источники света поблизости."
+	  "text": "Этот $(l:bewitchment:rituals/rituals)Ритуал$() выпускает волну тьмы. Он уничтожит любые лёгколомаемые источники света поблизости."
 	},
 	{
 	  "type": "bewitchment:ritual",
