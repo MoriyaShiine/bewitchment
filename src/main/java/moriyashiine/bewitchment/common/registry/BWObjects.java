@@ -64,17 +64,17 @@ public class BWObjects {
 
 	//misc_no_item
 	public static final Block SALT_LINE = create("salt_line", new SaltLineBlock(copyOf(Blocks.REDSTONE_WIRE)), false);
-	public static final Block TEMPORARY_COBWEB = create("temporary_cobweb", new CobwebBlock(copyOf(Blocks.COBWEB).dropsNothing().ticksRandomly()) {
+	public static final Block TEMPORARY_COBWEB = create("temporary_cobweb", new CobwebBlock(copyOf(Blocks.COBWEB).ticksRandomly()) {
 		@Override
 		public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 			world.setBlockState(pos, Blocks.AIR.getDefaultState());
 		}
 	}, false);
-	public static final Block GOLDEN_GLYPH = create("golden_glyph", new GlyphBlock(FabricBlockSettings.of(Material.DECORATION).sounds(new BlockSoundGroup(1, 1, SoundEvents.BLOCK_STONE_BREAK, SoundEvents.BLOCK_STONE_STEP, BWSoundEvents.BLOCK_GLPYH_PLACE, SoundEvents.BLOCK_STONE_HIT, SoundEvents.BLOCK_STONE_FALL)).noCollision().dropsNothing().strength(1, 0)), false);
+	public static final Block GOLDEN_GLYPH = create("golden_glyph", new GlyphBlock(FabricBlockSettings.of(Material.DECORATION).sounds(new BlockSoundGroup(1, 1, SoundEvents.BLOCK_STONE_BREAK, SoundEvents.BLOCK_STONE_STEP, BWSoundEvents.BLOCK_GLPYH_PLACE, SoundEvents.BLOCK_STONE_HIT, SoundEvents.BLOCK_STONE_FALL)).noCollision().strength(1, 0)), false);
 	public static final Block GLYPH = create("glyph", new GlyphBlock(copyOf(GOLDEN_GLYPH)), false);
 	public static final Block FIERY_GLYPH = create("fiery_glyph", new GlyphBlock(copyOf(GOLDEN_GLYPH).luminance(4)), false);
 	public static final Block ELDRITCH_GLYPH = create("eldritch_glyph", new GlyphBlock(copyOf(GOLDEN_GLYPH).luminance(2)), false);
-	public static final Block SIGIL = create("sigil", new SigilBlock(FabricBlockSettings.of(Material.DECORATION).sounds(BlockSoundGroup.BAMBOO).noCollision().dropsNothing().breakInstantly()), false);
+	public static final Block SIGIL = create("sigil", new SigilBlock(FabricBlockSettings.of(Material.DECORATION).sounds(BlockSoundGroup.BAMBOO).noCollision().breakInstantly()), false);
 	//crop
 	public static final Block ACONITE_CROP = create("aconite", new BWCropBlock(copyOf(Blocks.WHEAT)), false);
 	public static final Block BELLADONNA_CROP = create("belladonna", new BWCropBlock(copyOf(ACONITE_CROP)), false);
@@ -217,7 +217,7 @@ public class BWObjects {
 	public static final Block SILVER_CANDELABRA = create("silver_candelabra", new CandelabraBlock(copyOf(SILVER_BLOCK).luminance(blockState -> blockState.get(Properties.LIT) ? 15 : 0), (byte) 32), true);
 	public static final Block NETHERITE_CANDELABRA = create("netherite_candelabra", new CandelabraBlock(copyOf(Blocks.NETHERITE_BLOCK).luminance(blockState -> blockState.get(Properties.LIT) ? 15 : 0), (byte) 64), false);
 	public static final Item NETHERITE_CANDELABRA_ITEM = create("netherite_candelabra", new BlockItem(NETHERITE_CANDELABRA, gen().fireproof()));
-	public static final Block BLESSED_STONE = create("blessed_stone", new Block(copyOf(Blocks.BEDROCK).dropsNothing()), true);
+	public static final Block BLESSED_STONE = create("blessed_stone", new Block(copyOf(Blocks.BEDROCK)), true);
 	//block_entity
 	public static final Block[] STONE_WITCH_ALTAR = createAltar("stone_witch_altar", copyOf(Blocks.STONE));
 	public static final Block[] MOSSY_COBBLESTONE_WITCH_ALTAR = createAltar("mossy_cobblestone_witch_altar", copyOf(Blocks.MOSSY_COBBLESTONE));
