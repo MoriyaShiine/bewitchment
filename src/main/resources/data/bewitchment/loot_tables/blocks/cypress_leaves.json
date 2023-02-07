@@ -1,128 +1,135 @@
 {
-  "type": "minecraft:block",
-  "pools": [
-	{
-	  "rolls": 1,
-	  "entries": [
+	"type": "minecraft:block",
+	"pools": [
 		{
-		  "type": "minecraft:alternatives",
-		  "children": [
-			{
-			  "type": "minecraft:item",
-			  "conditions": [
+			"bonus_rolls": 0.0,
+			"entries": [
 				{
-				  "condition": "alternative",
-				  "terms": [
-					{
-					  "condition": "match_tool",
-					  "predicate": {
-						"tag": "fabric:shears"
-					  }
-					},
-					{
-					  "condition": "match_tool",
-					  "predicate": {
-						"enchantments": [
-						  {
-							"enchantment": "silk_touch",
-							"levels": {
-							  "min": 1
+					"type": "minecraft:alternatives",
+					"children": [
+						{
+							"type": "minecraft:item",
+							"conditions": [
+								{
+									"condition": "minecraft:alternative",
+									"terms": [
+										{
+											"condition": "minecraft:match_tool",
+											"predicate": {
+												"items": [
+													"minecraft:shears"
+												]
+											}
+										},
+										{
+											"condition": "minecraft:match_tool",
+											"predicate": {
+												"enchantments": [
+													{
+														"enchantment": "minecraft:silk_touch",
+														"levels": {
+															"min": 1
+														}
+													}
+												]
+											}
+										}
+									]
+								}
+							],
+							"name": "bewitchment:cypress_leaves"
+						},
+						{
+							"type": "minecraft:item",
+							"conditions": [
+								{
+									"condition": "minecraft:survives_explosion"
+								},
+								{
+									"chances": [
+										0.05,
+										0.0625,
+										0.083333336,
+										0.1
+									],
+									"condition": "minecraft:table_bonus",
+									"enchantment": "minecraft:fortune"
+								}
+							],
+							"name": "bewitchment:cypress_sapling"
+						}
+					]
+				}
+			],
+			"rolls": 1.0
+		},
+		{
+			"bonus_rolls": 0.0,
+			"conditions": [
+				{
+					"condition": "minecraft:inverted",
+					"term": {
+						"condition": "minecraft:alternative",
+						"terms": [
+							{
+								"condition": "minecraft:match_tool",
+								"predicate": {
+									"items": [
+										"minecraft:shears"
+									]
+								}
+							},
+							{
+								"condition": "minecraft:match_tool",
+								"predicate": {
+									"enchantments": [
+										{
+											"enchantment": "minecraft:silk_touch",
+											"levels": {
+												"min": 1
+											}
+										}
+									]
+								}
 							}
-						  }
 						]
-					  }
 					}
-				  ]
 				}
-			  ],
-			  "name": "bewitchment:cypress_leaves"
-			},
-			{
-			  "type": "minecraft:item",
-			  "conditions": [
+			],
+			"entries": [
 				{
-				  "condition": "minecraft:survives_explosion"
-				},
-				{
-				  "condition": "table_bonus",
-				  "enchantment": "fortune",
-				  "chances": [
-					0.05,
-					0.0625,
-					0.083333336,
-					0.1
-				  ]
+					"type": "minecraft:item",
+					"conditions": [
+						{
+							"chances": [
+								0.02,
+								0.022222223,
+								0.025,
+								0.033333335,
+								0.1
+							],
+							"condition": "minecraft:table_bonus",
+							"enchantment": "minecraft:fortune"
+						}
+					],
+					"functions": [
+						{
+							"add": false,
+							"count": {
+								"type": "minecraft:uniform",
+								"max": 2.0,
+								"min": 1.0
+							},
+							"function": "minecraft:set_count"
+						},
+						{
+							"function": "minecraft:explosion_decay"
+						}
+					],
+					"name": "minecraft:stick"
 				}
-			  ],
-			  "name": "bewitchment:cypress_sapling"
-			}
-		  ]
+			],
+			"rolls": 1.0
 		}
-	  ]
-	},
-	{
-	  "rolls": 1,
-	  "entries": [
-		{
-		  "type": "minecraft:item",
-		  "conditions": [
-			{
-			  "condition": "table_bonus",
-			  "enchantment": "fortune",
-			  "chances": [
-				0.02,
-				0.022222223,
-				0.025,
-				0.033333335,
-				0.1
-			  ]
-			}
-		  ],
-		  "functions": [
-			{
-			  "function": "set_count",
-			  "count": {
-				"min": 1.0,
-				"max": 2.0,
-				"type": "uniform"
-			  }
-			},
-			{
-			  "function": "minecraft:explosion_decay"
-			}
-		  ],
-		  "name": "stick"
-		}
-	  ],
-	  "conditions": [
-		{
-		  "condition": "inverted",
-		  "term": {
-			"condition": "alternative",
-			"terms": [
-			  {
-				"condition": "match_tool",
-				"predicate": {
-				  "item": "shears"
-				}
-			  },
-			  {
-				"condition": "match_tool",
-				"predicate": {
-				  "enchantments": [
-					{
-					  "enchantment": "silk_touch",
-					  "levels": {
-						"min": 1
-					  }
-					}
-				  ]
-				}
-			  }
-			]
-		  }
-		}
-	  ]
-	}
-  ]
+	]
 }
