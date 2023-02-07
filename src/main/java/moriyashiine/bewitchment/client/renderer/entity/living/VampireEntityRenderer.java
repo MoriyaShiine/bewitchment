@@ -8,7 +8,6 @@ import moriyashiine.bewitchment.client.BewitchmentClient;
 import moriyashiine.bewitchment.client.model.entity.living.VampireEntityModel;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
-import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -32,6 +31,6 @@ public class VampireEntityRenderer extends MobEntityRenderer<VampireEntity, Vamp
 				TEXTURES[i] = new Identifier(Bewitchment.MODID, "textures/entity/living/vampire/" + i + ".png");
 			}
 		}
-		return TEXTURES[entity.getDataTracker().get(BWHostileEntity.VARIANT)];
+		return TEXTURES[entity.getVariant()];
 	}
 }

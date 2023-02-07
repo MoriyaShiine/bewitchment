@@ -47,6 +47,11 @@ public abstract class BWTameableEntity extends TameableEntity {
 
 	@Override
 	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityTag) {
+		initializeVariant();
+		return super.initialize(world, difficulty, spawnReason, entityData, entityTag);
+	}
+
+	public void initializeVariant() {
 		int variants = getVariants();
 		if (variants > 1) {
 			if (hasShiny()) {
@@ -59,7 +64,6 @@ public abstract class BWTameableEntity extends TameableEntity {
 				dataTracker.set(VARIANT, random.nextInt(variants));
 			}
 		}
-		return super.initialize(world, difficulty, spawnReason, entityData, entityTag);
 	}
 
 	@Override
@@ -142,6 +146,11 @@ public abstract class BWTameableEntity extends TameableEntity {
 	protected abstract boolean hasShiny();
 
 	public abstract int getVariants();
+
+	public int getVariant() {
+		if(this.getDataTracker().get(BWTameableEntity.VARIANT) < 0) initializeVariant();
+		return this.getDataTracker().get(BWTameableEntity.VARIANT);
+	}
 
 	protected abstract boolean isTamingItem(ItemStack stack);
 }
