@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:poppets",
-  "name": "Приговор",
+  "name": "Наказание",
   "icon": "bewitchment:judgment_poppet",
   "advancement": "bewitchment:hidden_unlocks/taglock",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Когда вы привязаны к Кукле Приговора, любая нечисть, которая нападет на вас, обнаружит, что её урон от атаки уменьшен в 4 раза."
+	  "text": "При привязке с Куклой наказания, какая-либо нечисть, которая атакует тебя обнаружит, что её урон от атаки разделён на 4 части."
 	},
 	{
 	  "type": "patchouli:crafting",

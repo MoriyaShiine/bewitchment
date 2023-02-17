@@ -6,11 +6,11 @@
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Вампиризм - это ужасное $(l:bewitchment:curses/conducting_curses)Проклятие$(), большинство считает его смертельным. $(br2)$(l:bewitchment:creatures/vampire)Вампиры$() - технически они бессмертны, хотя их бессмертие питается человеческой кровью; без нее они умирают.$(br2)Вампиры имеют небольшой бонус к скорости передвижения и урону от атаки. Кроме того, они имеют слабость к $(l:bewitchment:introduction/silver)Серебру$() и $(l:bewitchment:introduction/crops)Чесноку$()."
+	  "text": "Вампиризм — это ужасное $(l:bewitchment:curses/conducting_curses)Проклятие$(), большинство считают до такой степени неизлечимым. $(br2)$(l:bewitchment:creatures/vampire)Вампиры$(), строго говоря бессмертны, впрочем, их бессмертность питается кровью людей; без неё они умрут.$(br2)Вампиры имеют малый бонус к скорости движения и урону от атаки. Кроме того, они слабы к $(l:bewitchment:introduction/silver)Серебру$() и $(l:bewitchment:introduction/crops)Чесноку$()."
 	},
 	{
 	  "type": "patchouli:text",
-	  "text": "Проклятие Вампиризма не может быть применено с помощью $(l:bewitchment:tools/brazier)Жаровни$(); вместо этого он должен быть укушен другим $(l:bewitchment:creatures/vampire)Вампиром$().$(br2)Что бы заключить контракт-$(l:bewitchment:curses/conducting_curses)проклятие$(), цель должна быть под $(l:bewitchment:curses/conducting_curses)Проклятием$()  $(l:bewitchment:curses/susceptibility)Уязвимости$() и быть убитым одним из $(l:bewitchment:creatures/vampire)Вампиров$()... но, цель должна быть $(l:bewitchment:poppets/death_protection)Защищена От Смерти$().$(br2)$(o)Но зачем тебе это нужно?$()"
+	  "text": "На самом деле вампиризм не может быть наложен при помощи $(l:bewitchment:tools/brazier)Жаровни$(); пожалуй, можно заразиться от другого $(l:bewitchment:creatures/vampire)Вампира$().$(br2)Чтобы заразиться $(l:bewitchment:curses/conducting_curses)Проклятием$(), один должен быть под влиянием $(l:bewitchment:curses/conducting_curses)Проклятия:$() $(l:bewitchment:curses/susceptibility)Предрасположение$() и быть убитым $(l:bewitchment:creatures/vampire)Вампиром$()... но $(l:bewitchment:poppets/death_protection)всё равно выжить$().$(br2)$(o)Но зачем тебе это надо?$()"
 	}
   ]
 }

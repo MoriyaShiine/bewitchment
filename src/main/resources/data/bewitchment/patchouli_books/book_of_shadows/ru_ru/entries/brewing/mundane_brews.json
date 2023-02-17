@@ -1,37 +1,37 @@
 {
   "category": "bewitchment:brewing",
-  "name": "Обычные Зелья",
+  "name": "Обычные отвары",
   "icon": "bewitchment:witch_cauldron",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "priority": true,
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "В то время как $(l:bewitchment:tools/witch_cauldron)ведьмин котел$() может быть использован для создания гораздо более невероятных $(l:bewitchment:brewing/brewing_basics)зелий$(), некоторые ведьмы иногда предпочитают использовать более простые $(l:bewitchment:brewing/brewing_basics)зелья$().$(br)Все $(l:bewitchment:brewing/brewing_basics)зелья$() в этой записи можно получить с помощью других ингредиентов, через $(l:bewitchment:tools/witch_cauldron)ведьмин котел$(), он позволит вам сделать их сильнее.$(br)Для приготовления мирского $(l:bewitchment:brewing/brewing_basics)зелья$() в $(l:bewitchment:tools/witch_cauldron)ведьмином котеле$() используйте немного другие ингредиенты."
+	  "text": "Несмотря на то, что $(l:bewitchment:tools/witch_cauldron)Ведьмин котёл$(), может быть использован для создания в разы больше невероятных $(l:bewitchment:brewing/brewing_basics)Отваров$(), некоторые ведьмы временами могут отдавать преимущество в использовании более искусных $(l:bewitchment:brewing/brewing_basics)Отваров$().$(br)Все $(l:bewitchment:brewing/brewing_basics)Отвары$() в этой записи могут быть получены через другие средства, хотя $(l:bewitchment:tools/witch_cauldron)Ведьмин котёл$() может позволить тебе сделать их сильнее.$(br)Обычные$(l:bewitchment:brewing/brewing_basics)Отвары$(), изготовленные в $(l:bewitchment:tools/witch_cauldron)Ведьмином котле$(), используют немного отличающиеся ингредиенты."
 	},
 	{
 	  "type": "patchouli:spotlight",
 	  "title": "Поглощение",
 	  "item": "minecraft:honey_bottle",
-	  "text": "Временно увеличивает здоровье."
+	  "text": "Накладывает временное добавочное здоровье."
 	},
 	{
 	  "type": "patchouli:spotlight",
 	  "title": "Слепота",
 	  "item": "minecraft:ink_sac",
-	  "text": "Резко уменьшает поле зрения цели, затемняя все вокруг нее."
+	  "text": "Значительно понижает поле зрение цели, затемняя всё вокруг неё."
 	},
 	{
 	  "type": "patchouli:spotlight",
 	  "title": "Огнестойкость",
 	  "item": "minecraft:nether_wart",
-	  "text": "Дает иммунитет к огню."
+	  "text": "Даёт невосприимчивость к огню."
 	},
 	{
 	  "type": "patchouli:spotlight",
 	  "title": "Свечение",
 	  "item": "minecraft:glistering_melon_slice",
-	  "text": "Заставляет цель неприятно светиться."
+	  "text": "Делает цель противно светящимся."
 	},
 	{
 	  "type": "patchouli:spotlight",
@@ -43,19 +43,19 @@
 	  "type": "patchouli:spotlight",
 	  "title": "Голод",
 	  "item": "minecraft:rotten_flesh",
-	  "text": "Применяет эффект голода."
+	  "text": "Накладывает эффект голода."
 	},
 	{
 	  "type": "patchouli:spotlight",
-	  "title": "Мгновенное восстанавление здоровья",
+	  "title": "Исцеление",
 	  "item": "bewitchment:garlic",
-	  "text": "Мгновенно восстанавливает небольшое количество здоровья, используя целебные свойства $(l:bewitchment:introducton/crops)чеснока$()."
+	  "text": "Мгновенно исцеляет на фиксированную сумму здоровья, используя исцеляющие свойства $(l:bewitchment:introducton/crops)Чеснока$()."
 	},
 	{
 	  "type": "patchouli:spotlight",
-	  "title": "Мгновенный Урон",
+	  "title": "Моментальный урон",
 	  "item": "bewitchment:cypress_bark",
-	  "text": "Мгновенно наносит минимальный урон здоровью, используя смертоносную энергию $(l:bewitchment:introduction/cypress_trees)кипариса$()."
+	  "text": "Мгновенно наносит урон на фиксированную сумму здоровья, обуздывая смертоносные энергии $(l:bewitchment:introduction/cypress_trees)Кипариса$()."
 	},
 	{
 	  "type": "patchouli:spotlight",
@@ -65,96 +65,96 @@
 	},
 	{
 	  "type": "patchouli:spotlight",
-	  "title": "Увеличение прыжка",
+	  "title": "Прыгучесть",
 	  "item": "minecraft:rabbit_foot",
-	  "text": "Увеличение прыжка говорит само за себя."
+	  "text": "Прыгучесть с само-пояснением."
 	},
 	{
 	  "type": "patchouli:spotlight",
 	  "title": "Левитация",
 	  "item": "minecraft:chorus_fruit",
-	  "text": "Цель медленно поднимается в небо."
+	  "text": "Медленно поднимает цель в небо."
 	},
 	{
 	  "type": "patchouli:spotlight",
-	  "title": "Усталость от добычи",
+	  "title": "Утомление",
 	  "item": "minecraft:poppy",
-	  "text": "Скорость добычи значительно снижается."
+	  "text": "Утомление делает удар цели очень слабым."
 	},
 	{
 	  "type": "patchouli:spotlight",
 	  "title": "Тошнота",
 	  "item": "bewitchment:aconite",
-	  "text": "Вызывает болезнь, дезориентируя цель."
+	  "text": "Вызывает болезнь сбивающая цель с толку."
 	},
 	{
 	  "type": "patchouli:spotlight",
 	  "title": "Ночное зрение",
 	  "item": "minecraft:carrot",
-	  "text": "Морковь полезна для ваших глаз."
+	  "text": "Морковь полезная для твоих глаз."
 	},
 	{
 	  "type": "patchouli:spotlight",
-	  "title": "Яд",
+	  "title": "Отравление",
 	  "item": "bewitchment:belladonna",
-	  "text": "Наполняет кровь цели смертельным токсином."
+	  "text": "Заполняет кровь цели смертельным токсином."
 	},
 	{
 	  "type": "patchouli:spotlight",
 	  "title": "Регенерация",
 	  "item": "bewitchment:juniper_bark",
-	  "text": "Используя жизненную энергию $(l:bewitchment:introduction/juniper_trees)можжевельника$(), ускоряет процесс регенерации.",
+	  "text": "При помощи жизненных энергий из $(l:bewitchment:introduction/juniper_trees)Можжевельника$(), Регенерация усиливает процесс исцеления при налаживании.",
 	  "anchor": "regeneration"
 	},
 	{
 	  "type": "patchouli:spotlight",
 	  "title": "Сопротивление",
 	  "item": "bewitchment:spruce_bark",
-	  "text": "Уменьшает получаемый урон.",
+	  "text": "Снижает полученный урон.",
 	  "anchor": "resistance"
 	},
 	{
 	  "type": "patchouli:spotlight",
-	  "title": "Медленное Падение",
+	  "title": "Плавное падение",
 	  "item": "minecraft:feather",
-	  "text": "Заставляет цель падать мягко, как перышко."
+	  "text": "Заставляет цель медленно падать, как перо."
 	},
 	{
 	  "type": "patchouli:spotlight",
-	  "title": "Медлительность",
+	  "title": "Замедление",
 	  "item": "minecraft:slime_ball",
-	  "text": "Уменьшает скорость передвижения цели."
+	  "text": "Снижает скорость движения цели."
 	},
 	{
 	  "type": "patchouli:spotlight",
 	  "title": "Скорость",
 	  "item": "minecraft:sugar_cane",
-	  "text": "Увеличивает скорость передвижения."
+	  "text": "Увеличивает скорость движения, используя энергетические свойства Сахарного тростника."
 	},
 	{
 	  "type": "patchouli:spotlight",
 	  "title": "Сила",
 	  "item": "bewitchment:oak_bark",
-	  "text": "Используя силу Дуба, увеличивает наносимый урон.",
+	  "text": "Использование способностей Дуба, это увеличивает выводимый урон.",
 	  "anchor": "strength"
 	},
 	{
 	  "type": "patchouli:spotlight",
-	  "title": "Подводное дыхание",
+	  "title": "Водное дыхание",
 	  "item": "minecraft:kelp",
-	  "text": "Позволяет дышать под водой."
+	  "text": "Позволяет дышать в воде."
 	},
 	{
 	  "type": "patchouli:spotlight",
 	  "title": "Слабость",
 	  "item": "minecraft:red_mushroom",
-	  "text": "Уменьшает урон от атаки цели."
+	  "text": "Понижает урон от атаки цели.$(br2)Для этого ты можешь также использовать Коричневый гриб."
 	},
 	{
 	  "type": "patchouli:spotlight",
 	  "title": "Иссушение",
 	  "item": "minecraft:wither_rose",
-	  "text": "Постепенно уменьшает здоровье цели."
+	  "text": "Понемногу уменьшает здоровье цели."
 	}
   ]
 }

@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:tools",
-  "name": "Путеводный камень",
+  "name": "Маршрутный камень",
   "icon": "bewitchment:waystone",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Путевые камни наполнены энергией эндера, что позволяет им сохранять местоположения. $(br2)Это, в свою очередь, позволяет им перенаправлять $(l:bewitchment:rituals/rituals)ритуалы$(), помещая их в другое место.$(br2)Для перенаправления $(l:bewitchment:rituals/rituals)Ритуала$(), используйте Путевой камень на $(l:bewitchment:rituals/rituals#chalk)Золотом меле$() после того, как $(l:bewitchment:rituals/rituals)ритуал$() был запущен."
+	  "text": "Маршрутные камни наполнены эндер-энергии, делая их способными хранить местоположения.$(br2)Это, в свою очередь, позволяет ему перенаправлять по изменённому маршруту $(l:bewitchment:rituals/rituals)Ритуалы$(), распределяя их в разные места.$(br2)Чтобы перенаправить по изменённому маршруту $(l:bewitchment:rituals/rituals)Ритуал$(), используй $(l:bewitchment:rituals/rituals#chalk)Золотой мел$() по Маршрутному камню, после того, как $(l:bewitchment:rituals/rituals)Ритуал$() был запущен."
 	},
 	{
 	  "type": "patchouli:crafting",

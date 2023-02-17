@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:rituals",
-  "name": "[Ритуал] Призыва Леонарда",
+  "name": "Вызов Леонарда",
   "icon": "bewitchment:leonard_spawn_egg",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Этот $(l:bewitchment:rituals/rituals)Ритуал$() призывает Повелителя $(l:bewitchment:brewing/brewing_basics)Зельеварения$(), самого $(l:bewitchment:creatures/leonard)Леонарда$().$(br2)Убедитесь, что держите его подальше от вещей, которые вам дороги.$(br2)Подготовьте $(l:bewitchment:tools/grotesque_stew)Гротескное Рагу$(), если вы захотите дать ему $(l:bewitchment:tools/grotesque_stew)Клятву$().$(br2) $(l:bewitchment:rituals/rituals)Ритуал$() начинается с принесения в жертву овцы с помощью $(l:bewitchment:tools/athame)Атамэ$()."
+	  "text": "Этот $(l:bewitchment:rituals/rituals)Ритуал$() использует Господня $(l:bewitchment:brewing/brewing_basics)Зельеварения$(), вызывая самого $(l:bewitchment:creatures/leonard)Леонарда$().$(br2)Постарайся держать его подальше от вещей, которыми ты дорожишь.$(br2)Подготовь $(l:bewitchment:tools/grotesque_stew)Ужасающего рагу$(), если вдруг ты захочешь $(l:bewitchment:tools/grotesque_stew)заверить его обетом$().$(br2)Ритуал$() начнётся путём жертвоприношения Овцы при помощи $(l:bewitchment:tools/athame)Атама.$()"
 	},
 	{
 	  "type": "bewitchment:ritual",

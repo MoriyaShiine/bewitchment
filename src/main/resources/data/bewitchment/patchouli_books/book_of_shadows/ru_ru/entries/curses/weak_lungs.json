@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:curses",
-  "name": "Слабые Легкие",
+  "name": "Слабые лёгкие",
   "icon": "minecraft:gunpowder",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Жертвам этого $(l:bewitchment:curses/conducting_curses)Проклятия$() трудно дышать.$(br) Находясь под водой, они сразу же начнут тонуть."
+	  "text": "Жертвы этого $(l:bewitchment:curses/conducting_curses)Проклятия$() с трудом дышат.$(br)Находясь под водой, они сразу же начнут тонуть."
 	},
 	{
 	  "type": "bewitchment:curse",

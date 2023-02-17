@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "Бодрящий",
+  "name": "Бодрость",
   "icon": "bewitchment:elder_bark",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Этот эффект заполнит  $(l:bewitchment:introduction/altars#internalme)ME$(), на фиксированную сумму"
+	  "text": "Заполняет $(l:bewitchment:introduction/altars#internalme)Внутренний буфер МЭ$() на фиксированную сумму того, кто употребляет отвар."
 	},
 	{
 	  "type": "patchouli:spotlight",
-	  "title": "Бодрящий",
+	  "title": "Бодрость",
 	  "item": "bewitchment:elder_bark",
-	  "text": "Сила эффекта увеличит количество получаемой $(l:bewitchment:introduction/altars#internalme)ME$()."
+	  "text": "Интенсивность увеличит количество полученного $(l:bewitchment:introduction/altars#internalme)МЭ$()."
 	}
   ]
 }

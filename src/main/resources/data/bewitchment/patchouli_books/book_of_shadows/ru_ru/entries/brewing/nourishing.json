@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "Сытый",
+  "name": "Прикармливание",
   "icon": "minecraft:bamboo",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Эффект сытости повышает эффективность пищи."
+	  "text": "Эффект Прикармливания увеличивает эффективность еды, давая равномерное увеличение прироста при употреблении еды."
 	},
 	{
 	  "type": "patchouli:spotlight",
-	  "title": "Nourishing",
+	  "title": "Прикармливание",
 	  "item": "minecraft:bamboo",
-	  "text": "Увеличение эффективности пищи маштабируется силой самого эффекта."
+	  "text": "Интенсивность масштабирует увеличение прироста."
 	}
   ]
 }

@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:rituals",
-  "name": "[Ритуал] Призыва Бафомета",
+  "name": "Вызов Бафомета",
   "icon": "bewitchment:baphomet_spawn_egg",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Этот $(l:bewitchment:rituals/rituals)Ритуал$() призывает $(l:bewitchment:creatures/baphomet)Бафомета$(); держите подальше живых существ от места для призыва Бафомета.$(br2)Подготовьте $(l:bewitchment:tools/grotesque_stew)Гротескное Рагу$(), если вы захотите дать Бафомету $(l:bewitchment:tools/grotesque_stew)клятву$().$(br2) $(l:bewitchment:rituals/rituals)Ритуал$() начинается с принесения в жертву овцы с помощью $(l:bewitchment:tools/athame)Атамэ$()."
+	  "text": "Через сатанинского посыльного этот $(l:bewitchment:rituals/rituals)Ритуал$() вызывает $(l:bewitchment:creatures/baphomet)Бафомета$(); тебе понадобится держать его подальше от других существ.$(br2)Подготовь $(l:bewitchment:tools/grotesque_stew)Ужасающего рагу$(), если вдруг ты захочешь $(l:bewitchment:tools/grotesque_stew)заверить обет$() с ним.$(br2) $(l:bewitchment:rituals/rituals)Ритуал$() начнётся путём жертвоприношения Овцы при помощи $(l:bewitchment:tools/athame)Атама.$()"
 	},
 	{
 	  "type": "bewitchment:ritual",

@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:sigils",
-  "name": "[Сигил] Разрушения",
+  "name": "Пагубное влияние",
   "icon": "bewitchment:ruin_sigil",
   "advancement": "minecraft:nether/find_fortress",
   "sortnum": 1,
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "$(l:bewitchment:sigils/using_sigils)Пассивный Сигил$() Разрушения предотвращает закрепление вокруг него любого положительного эффекта зелья."
+	  "text": "$(l:bewitchment:sigils/using_sigils)Пассивный сигил$() пагубного влияния не даёт воспользоваться каким-либо положительным эффектом зелья вокруг него."
 	},
 	{
 	  "type": "patchouli:crafting",

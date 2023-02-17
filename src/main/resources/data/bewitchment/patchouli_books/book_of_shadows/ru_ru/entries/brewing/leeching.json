@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "Пиявка",
+  "name": "Кровопийца",
   "icon": "bewitchment:bottle_of_blood",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Исцеляет цель в зависимости от нанесенного урона."
+	  "text": "Лечит цель в зависимости от наносимого урона."
 	},
 	{
 	  "type": "patchouli:spotlight",
-	  "title": "Пиявка",
+	  "title": "Кровопийца",
 	  "item": "bewitchment:bottle_of_blood",
-	  "text": "Чем выше сила эффекта, тем больше здоровья восстанавливается.$(br2)Этот эффект не сработает, если у вас есть $(l:bewitchment:brewing//mundane_brews#strength)Сила$(), $(l:bewitchment:brewing/mundane_brews#regeneration)Регенерация$(), или $(l:bewitchment:brewing/mundane_brews#resistance)Сопротивление.$()"
+	  "text": "Чем выше интенсивность, тем больше лечится здоровья.$(br2)Этот эффект не сработает в том случае, если у тебя $(l:bewitchment:brewing/mundane_brews#strength)Сила$(), $(l:bewitchment:brewing/mundane_brews#regeneration)Регенерация$() или $(l:bewitchment:brewing/mundane_brews#resistance)Сопротивление$()."
 	}
   ]
 }

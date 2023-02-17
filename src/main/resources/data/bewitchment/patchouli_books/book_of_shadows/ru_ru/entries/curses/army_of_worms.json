@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Это $(l:bewitchment:curses/conducting_curses)Проклятие$() вызывает раздражение, вызывая червей. Любые посевы рядом с проклятой целью, будут уничтожены."
+	  "text": "Это $(l:bewitchment:curses/conducting_curses)Проклятие$() представляет собой беспокойство, вызывая червей. Любые растения рядом с проклятой личностью пострадают при росте."
 	},
 	{
 	  "type": "bewitchment:curse",

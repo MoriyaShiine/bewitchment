@@ -1,17 +1,17 @@
 {
   "category": "bewitchment:rituals",
-  "name": "[Ритуал] Очищения",
+  "name": "Очищение",
   "icon": "minecraft:golden_apple",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "$(l:bewitchment:rituals/rituals)Ритуал$() очищения призывает свет очистить свою цель от $(l:bewitchment:curses/conducting_curses)проклятия$(). Цель указывается с помощью $(l:bewitchment:tools/taglock)Экстрактора ДНК$().$(br2)$(l:bewitchment:rituals/rituals)Ритуал$() также применим к зомби-жителям. Это превратит их в обычных жителей."
+	  "text": "$(l:bewitchment:rituals/rituals)Ритуал$() очищения использует свет ради того, чтобы очистить свою цель от $(l:bewitchment:curses/conducting_curses)Проклятий$(). Цель определяется при помощи $(l:bewitchment:tools/taglock)Набора для сбора генетического материала$().$(br2) $(l:bewitchment:rituals/rituals)Ритуал$() также применяем для Крестьянин-зомби. Совершение ритуала вернёт его в обычного Крестьянина."
 	},
 	{
 	  "type": "bewitchment:ritual",
 	  "recipe": "bewitchment:rituals/cleansing",
-	  "text": "Обратите внимание, что этот  $(l:bewitchment:rituals/rituals)Ритуал$() не гарантирует успеха. От некоторых $(l:bewitchment:curses/conducting_curses)проклятий$() может быть сложнее избавиться, но - как и в случае со стиркой - достаточно сильное трение все отмоет.."
+	  "text": "Следует отметить, что этот $(l:bewitchment:rituals/rituals)Ритуал$() не гарантирует успех. От некоторых $(l:bewitchment:curses/conducting_curses)Проклятий$() трудно избавиться, но -как и в случае со стиркой- довольно сильное натирание всё что угодно уберёт."
 	}
   ]
 }

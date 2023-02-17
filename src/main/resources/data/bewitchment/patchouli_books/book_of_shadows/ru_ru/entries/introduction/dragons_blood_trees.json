@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:introduction",
-  "name": "Деревья драконьей крови",
+  "name": "Деревья крови дракона",
   "icon": "bewitchment:dragons_blood_sapling",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Саженцы Крови Дракона можно найти в Крепостях Незера.$(br2)Разрезая кору с помощью $(l:bewitchment:tools/athame)атамэ$() заставит дерево кровоточить, образуя Смолу Драконьей Крови.$(br2)Блоки, изготовленные из этого дерева, излучают ауру силы и могут быть использованы в $(l:bewitchment:sigils/using_sigils)Сигилах$()."
+	  "text": "Саженцы древесины крови дракона находятся в Крепостях Незера.$(br2)Методом прорезания коры при помощи $(l:bewitchment:tools/athame)Атаме$() заставит её кровоточить, извлекая Смолу из крови дракона.$(br2)Блоки, сделанные из этого дерева, испускают ауру силы и могут быть $(l:bewitchment:sigils/using_sigils)Активированы сигилами$() при наличии."
 	},
 	{
 	  "type": "patchouli:image",

@@ -6,27 +6,27 @@
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Мётлы - это магические приспособления, обычно используемые ведьмами. За счет использования $(l:bewitchment:introduction/altars#internalme)ME$(), они позволяют пользователю летать по небу.$(br2)Мётлы бывают четырех вариантов, каждый из которых обладает уникальными свойствами."
+	  "text": "Мётлы — магические устройства, широко используемые ведьмами. Благодаря использованию $(l:bewitchment:introduction/altars#internalme)МЭ$() они обеспечивают возможность пользователю летать по небесам.$(br2)Мётлы поступают в 4х вариантах, каждый с уникальными свойствами."
 	},
 	{
 	  "type": "patchouli:crafting",
 	  "recipe": "bewitchment:juniper_broom",
-	  "text": "$(l:bewitchment:introduction/juniper_trees)Можжевеловые$() Мётлы - самые быстрые из всех Мётл, без каких-либо других особых свойств."
+	  "text": "Мётлы из $(l:bewitchment:introduction/juniper_trees)Можжевельника$() — самые быстрые из всех мётел, без каких-либо прочих особых свойств."
 	},
 	{
 	  "type": "patchouli:crafting",
 	  "recipe": "bewitchment:cypress_broom",
-	  "text": "$(l:bewitchment:introduction/cypress_trees)Кипарисовые$() Брукс защищает пользователя, уменьшая, как получение, так и нанесение урона."
+	  "text": "Мётлы из $(l:bewitchment:introduction/cypress_trees)Кипариса$() защищают пользователя, снижая как входящий урон, так и выходящий."
 	},
 	{
 	  "type": "patchouli:crafting",
 	  "recipe": "bewitchment:elder_broom",
-	  "text": "$(l:bewitchment:introduction/elder_trees)Бузинная$() метла вернет пользователя туда, где он садился, после спешивания."
+	  "text": "Метла из $(l:bewitchment:introduction/elder_trees)Бузины$() вернут пользователя туда, где он установил её после спешивания."
 	},
 	{
 	  "type": "patchouli:crafting",
 	  "recipe": "bewitchment:dragons_blood_broom",
-	  "text": "Мётлы из $(l:bewitchment:introduction/dragons_blood_trees)Крови дракона $() могут иметь $(l:bewitchment:sigils/using_sigils)Сигилы$(), применяемые к ним, так же, как и к любым другим $(l:bewitchment:introduction/dragons_blood_trees)Блокам Драконьей Крови$()."
+	  "text": "Мётлы из древесины $(l:bewitchment:introduction/dragons_blood_trees)Крови дракона$() могут иметь применительные к ним $(l:bewitchment:sigils/using_sigils)Активные сигилы$(), подобно любым другим блокам из древесины $(l:bewitchment:introduction/dragons_blood_trees)Крови дракона.$()"
 	}
   ]
 }

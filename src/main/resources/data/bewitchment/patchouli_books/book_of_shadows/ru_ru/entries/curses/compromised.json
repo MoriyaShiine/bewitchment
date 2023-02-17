@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:curses",
-  "name": "Повреждение",
+  "name": "Ослабление",
   "icon": "minecraft:textures/mob_effect/weakness.png",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Это $(l:bewitchment:curses/conducting_curses)Проклятие$() повреждает кровоток цели. Это приведет к усилению негативных последствий."
+	  "text": "Это $(l:bewitchment:curses/conducting_curses)Проклятие$() преуменьшает кровь цели. Это заставит пагубным эффектам быть сильнее."
 	},
 	{
 	  "type": "bewitchment:curse",

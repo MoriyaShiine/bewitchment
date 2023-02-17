@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:rituals",
-  "name": "[Ритуал] Потопа",
+  "name": "Потоп",
   "icon": "minecraft:water_bucket",
   "advancement": "bewitchment:hidden_unlocks/chalk",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Слабый $(l:bewitchment:rituals/rituals)Ритуал$(), который призывает духов воды вызвать дождь.$(br2)Сам дождь сверхъестественный, с приблизительным промежутком времени до половины дня - это при условии, что $(l:bewitchment:rituals/rituals)Ритуал$() не был $(l:bewitchment:creatures/cat)каким-то образом усилен$()."
+	  "text": "Менее важный $(l:bewitchment:rituals/rituals)Ритуал$(), который использует водных духов, чтобы заставить пойти дождь.$(br2)Сам дождь является сверхъестественным, с примерным временным диапазоном до половины дня — это при том условии, что $(l:bewitchment:rituals/rituals)Ритуал$() не $(l:bewitchment:creatures/cat)Усилен$() по тем или иным причинам."
 	},
 	{
 	  "type": "bewitchment:ritual",

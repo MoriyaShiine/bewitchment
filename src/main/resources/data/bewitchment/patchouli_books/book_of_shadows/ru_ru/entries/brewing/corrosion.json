@@ -6,13 +6,13 @@
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Аналог $(l:bewitchment:brewing/hardening)Упрочнения$() уменьшит броню на фиксированную величину."
+	  "text": "Аналог $(l:bewitchment:brewing/hardening)Отвердение$(), который понижает количество очков брони на фиксированную сумму."
 	},
 	{
 	  "type": "patchouli:spotlight",
 	  "title": "Коррозия",
 	  "item": "minecraft:dragon_breath",
-	  "text": "Уменьшение брони пропорционально силе зелья."
+	  "text": "Убывание брони соразмерно силе зелья."
 	}
   ]
 }

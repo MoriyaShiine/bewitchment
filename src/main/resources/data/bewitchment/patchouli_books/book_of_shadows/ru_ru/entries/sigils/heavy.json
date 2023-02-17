@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:sigils",
-  "name": "[Сигил] Тяжести",
+  "name": "Тяжесть",
   "icon": "bewitchment:heavy_sigil",
   "advancement": "minecraft:nether/find_fortress",
   "sortnum": 1,
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "$(l:bewitchment:sigils/using_sigils)Пассивный Сигил$() Тяжести, волшебным образом увеличивает урон от падения у всего вокруг него."
+	  "text": "$(l:bewitchment:sigils/using_sigils)Пассивный сигил$() тяжести магическим образом всё вокруг него увеличит урон от падения."
 	},
 	{
 	  "type": "patchouli:crafting",

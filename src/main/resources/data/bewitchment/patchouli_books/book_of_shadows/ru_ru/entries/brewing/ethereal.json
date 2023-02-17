@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "Эфирный",
+  "name": "Призрачность",
   "icon": "bewitchment:ectoplasm",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Сущности под эффектом 'эфирный' не могут получать и наносить урон."
+	  "text": "Призрачные существа не могут получать какой-либо урон, но также не могут наносить какой-либо урон."
 	},
 	{
 	  "type": "patchouli:spotlight",
-	  "title": "Эфирный",
+	  "title": "Призрачность",
 	  "item": "bewitchment:ectoplasm",
-	  "text": "Увеличение силы эффекта невозможна."
+	  "text": "Интенсивность не влияет на этот эффект."
 	}
   ]
 }

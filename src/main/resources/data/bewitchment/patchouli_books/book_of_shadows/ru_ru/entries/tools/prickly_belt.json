@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:tools",
-  "name": "Колючий Пояс",
+  "name": "Ремень с колючками",
   "icon": "bewitchment:prickly_belt",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Колючий пояс - удобная безделушка, способная сохранять статусные эффекты. $(br2) При нападении владелец получит положительные эффекты, а атакующий - отрицательные, стоимостью $(l:bewitchment:introduction/altars#internalme)ME$().$(br2)Чтобы добавить эффект статуса, просто объедините пояс с зельем."
+	  "text": "Ремень с колючками — это удобный брелок, способный хранить статусные эффекты.$(br2)При атаке владелец получит положительные эффекты, и вот нападающий — пагубные ценой $(l:bewitchment:introduction/altars#internalme)МЭ$().$(br2)Чтобы добавить статусные эффекты, просто объедини ремень с Зельем."
 	},
 	{
 	  "type": "patchouli:crafting",

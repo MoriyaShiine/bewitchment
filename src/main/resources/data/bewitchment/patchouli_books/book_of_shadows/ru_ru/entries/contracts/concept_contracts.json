@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:contracts",
-  "name": "Контракты",
+  "name": "Концепт: Контракты",
   "icon": "bewitchment:demonic_contract",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "priority": true,
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Контракты - это потусторонние договоры, купленные у $(l:bewitchment:creatures/demon)демонов$() ценой здоровья.$(br2) Контракты обычно длятся семь дней и не могут быть разорваны."
+	  "text": "Контракты — это таинственные договора, купленные у $(l:bewitchment:creatures/demon)Демонов$() ценой здоровья.$(br2)Контракты обычно длятся 7 дней и не могут быть разорваны."
 	}
   ]
 }

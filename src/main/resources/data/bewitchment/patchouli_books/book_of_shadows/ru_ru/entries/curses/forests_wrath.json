@@ -6,7 +6,7 @@
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Это $(l:bewitchment:curses/conducting_curses)Проклятие$() отбрасывает страдания природы обратно на человечество, заставляя любого $(l:bewitchment:curses/conducting_curses)Проклятого$() страдать так же, как и природа. Это удваивает урон от огня, а также от топоров."
+	  "text": "Это $(l:bewitchment:curses/conducting_curses)Проклятие$() возвращает сильное страдание природы на людской род, заставляя каждому $(l:bewitchment:curses/conducting_curses)Проклятому$() ею, испытывать страдание таким же образом. Это удваивает урон от огня, как и от топоров."
 	},
 	{
 	  "type": "bewitchment:curse",

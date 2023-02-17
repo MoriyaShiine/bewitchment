@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:contracts",
-  "name": "Жадность",
+  "name": "Алчность",
   "icon": "bewitchment:demonic_contract",
   "advancement": "bewitchment:hidden_unlocks/demon_horn",
   "sortnum": 1,
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Когда игрок заключает $(l:bewitchment:contracts/concept_contracts)контракт$() жадности, руды автоматически плавятся, а ресурсов выпадает в два раза больше."
+	  "text": "Находясь под действием $(l:bewitchment:contracts/concept_contracts)Контракта$(): Алчность, руды автоматически переплавляются и выпадают в 2 раза больше, как они обычно выпадают."
 	}
   ]
 }

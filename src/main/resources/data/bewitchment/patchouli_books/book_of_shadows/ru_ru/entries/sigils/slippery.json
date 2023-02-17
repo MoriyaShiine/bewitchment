@@ -1,13 +1,13 @@
 {
   "category": "bewitchment:sigils",
-  "name": "[Сигил] Скользкости",
+  "name": "Скользкость",
   "icon": "bewitchment:slippery_sigil",
   "advancement": "minecraft:nether/find_fortress",
   "sortnum": 1,
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "$(l:bewitchment:sigils/using_sigils)Пассивный Сигил$() Скользкости сделает невозможным для любого пострадавшего должным образом использовать мелкие предметы, такие как $(l:bewitchment:tools/taglock)Экстрактор ДНК$(), что делает его жизнеспособным защитным методом."
+	  "text": "$(l:bewitchment:sigils/using_sigils)Пассивный сигил$() скользкости сделает невозможность нормально держать предметы для кого-либо подвергшегося, в частности $(l:bewitchment:tools/taglock)Наборы для сбора генетического материала$(), делая его пригодным защитным методом."
 	},
 	{
 	  "type": "patchouli:crafting",

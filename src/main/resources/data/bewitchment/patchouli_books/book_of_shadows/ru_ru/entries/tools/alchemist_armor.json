@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:tools",
-  "name": "Доспехи Алхимика",
+  "name": "Алхимическая броня",
   "icon": "bewitchment:alchemist_robes",
   "advancement": "bewitchment:hidden_unlocks/witch_cauldron",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Эта высококлассные доспехи позволяют владельцу овладеть $(l:bewitchment:brewing/brewing_basics)Зельеварением$().(br2)Ковры, изготовленные из той же ткани, могут быть размещены на $(l:bewitchment:introduction/altars)Алтарях$()."
+	  "text": "Этот элитный последний писк моды позволяет владельцу обуздывать $(l:bewitchment:brewing/brewing_basics)Варку зелья$(), удваивая продолжительность $(l:bewitchment:brewing/brewing_basics)Отваров$().$(br2)Ковры, сделанные из точно такой же ткани могут быть размещены на $(l:bewitchment:introduction/altars)Алтари.$()"
 	},
 	{
 	  "type": "patchouli:crafting",

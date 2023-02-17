@@ -1,6 +1,6 @@
 {
   "name": "Контракты",
-  "description": "Дьявольские контракты, проданные демонами.",
+  "description": "Дьявольские контракты, продаваемые демонами.",
   "icon": "bewitchment:demonic_contract",
   "sortnum": 10
 }

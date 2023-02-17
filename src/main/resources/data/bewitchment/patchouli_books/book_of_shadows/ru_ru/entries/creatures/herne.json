@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:creatures",
-  "name": "Хэрнэ",
+  "name": "Херне",
   "icon": "bewitchment:herne_spawn_egg",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Хэрнэ - повелитель Дикой охоты. Он может предоставить почти полный контроль над $(l:bewitchment:curses/conducting_curses)проклятиями$(), позволяя жертвам трансформироваться по своему желанию. В качестве альтернативы ему можно предложить $(l:bewitchment:introduction/crops)Борец$(), удаляя $(l:bewitchment:curses/conducting_curses)проклятие$() полностью.$(br2)Вызов его довольно сложен и будет описан в этой записи."
+	  "text": "Херне — Владыка Дикой Охоты, страдающие $(l:bewitchment:curses/lycanthropy)Ликантропией$(), как правило, $(l:bewitchment:tools/grotesque_stew)заверены Обетом$(). Он может предоставить чуть ли не полный контроль над $(l:bewitchment:curses/conducting_curses)Проклятием$(), позволяя превращать жертв как заблагорассудится. В порядке альтернативы ему может быть предложен $(l:bewitchment:introduction/crops)Аконит$(), снимающий начисто $(l:bewitchment:curses/conducting_curses)Проклятие$().$(br2)Вызов его довольно таки сложен и будет прописано в этой записи."
 	},
 	{
 	  "type": "patchouli:entity",
@@ -15,12 +15,12 @@
 	},
 	{
 	  "type": "patchouli:text",
-	  "title": "Призыв Хэрнэ",
-	  "text": "Чтобы вызвать Хэрнэ, необходимо несколько вещей:$(li)$(l:bewitchment:tools/brazier#mortal_coil)жаровня$()$(li)волк$(li)лесной или таежный биом.$(br2)Во-первых, запустите $(l:bewitchment:tools/brazier#incense)жаровню$() ночью, в правильном биоме. Затем вам нужно будет убить Волка с помощью $(l:bewitchment:tools/athame)атамэ$(), не слишком далеко от проведения ритуала призыва."
+	  "title": "Вызов Херне",
+	  "text": "Чтобы вызвать Херне, необходимо несколько вещей:$(li) $(l:bewitchment:tools/brazier#mortal_coil)Благовония для Бренного тела$(), $(li)Волк$(li) лесной или таёжный биом.$(br2)Для начала зажги $(l:bewitchment:tools/brazier#incense)Благовонью$() в надлежащем биоме в ночное время суток. Затем тебе нужно убить Волка при помощи $(l:bewitchment:tools/athame)Атама$(), не на очень большом расстоянии."
 	},
 	{
 	  "type": "patchouli:text",
-	  "text": "Выбирайте место для этого с умом; вам нужно будет держать Хэрнэ поблизости, если вы хотите принести ему $(l:bewitchment:tools/grotesque_stew)клятву$().$(br2)Однажды после принятия $(l:bewitchment:tools/grotesque_stew)клятвы$(), вы сможете изменить свою человеческую форму на оборотня, нажав [$(k:bewitchment.transformation_ability)]."
+	  "text": "Выбирай место с этой целью благоразумно; тебе нужно держать Херне поблизости, если ты хочешь заверить ему $(l:bewitchment:tools/grotesque_stew)Обет$().$(br2)Как только $(l:bewitchment:tools/grotesque_stew)заверен Обетом$(), ты сможешь переключать свою волчью форму нажатием [$(k:bewitchment.transformation_ability)]."
 	}
   ]
 }

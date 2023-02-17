@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:sigils",
-  "name": "[Сигил] Распада",
+  "name": "Разложение",
   "icon": "bewitchment:decay_sigil",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "$(l:bewitchment:sigils/using_sigils)Активация сигила$() распада будет применять сильный эффект иссушения."
+	  "text": "Разложение — это $(l:bewitchment:sigils/using_sigils)Активный сигил$(), который, когда активирован, наложит сильный эффект Иссушения."
 	},
 	{
 	  "type": "patchouli:crafting",

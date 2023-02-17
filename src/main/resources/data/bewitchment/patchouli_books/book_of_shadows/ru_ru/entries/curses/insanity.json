@@ -1,17 +1,17 @@
 {
   "category": "bewitchment:curses",
-  "name": "Невменяемость",
+  "name": "Сумасшествие",
   "icon": "minecraft:red_mushroom",
   "advancement": "bewitchment:hidden_unlocks/demon_heart",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Это $(l:bewitchment:curses/conducting_curses)Проклятие$() разлагает разум...  Это приведет к тому, что пораженная цель увидит монстров, которых не существует.$(br2)Он не сможет атаковать их; однако это не относится к видениям."
+	  "text": "Это $(l:bewitchment:curses/conducting_curses)Проклятие$() разрушает разум... оно заставит страдающую цель видеть монстров, которых не существует.$(br2)Он не сможет атаковать их; впрочем это не распространяется на мысленные образы."
 	},
 	{
 	  "type": "bewitchment:curse",
 	  "recipe": "bewitchment:curses/insanity",
-	  "text": "Это $(l:bewitchment:curses/conducting_curses)Сильное Проклятие$(); избавиться от него немного сложнее."
+	  "text": "Это $(l:bewitchment:curses/conducting_curses)Высшее проклятие$(); от него почти трудно избавиться."
 	}
   ]
 }

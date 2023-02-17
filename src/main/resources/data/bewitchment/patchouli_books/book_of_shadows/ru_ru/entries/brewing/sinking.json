@@ -1,18 +1,18 @@
 {
   "category": "bewitchment:brewing",
-  "name": "Тонущий",
+  "name": "Погружение",
   "icon": "minecraft:iron_ingot",
   "advancement": "bewitchment:hidden_unlocks/altars",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Заставляет цель быстрее погружаться/опускаться, в воде или при полете."
+	  "text": "Заставляет цель погружаться быстрее, в частности в воде или при полёте."
 	},
 	{
 	  "type": "patchouli:spotlight",
-	  "title": "Тонущий",
+	  "title": "Погружение",
 	  "item": "minecraft:iron_ingot",
-	  "text": "Более высокий эффект заставляет цель опускаться быстрее."
+	  "text": "Более высокая интенсивность заставляет цель погружаться быстрее."
 	}
   ]
 }

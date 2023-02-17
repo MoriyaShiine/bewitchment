@@ -7,7 +7,7 @@
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "$(l:bewitchment:contracts/concept_contracts)Контракт$() вызывает агрессию среди ближайших сущностей, заставляя их атаковать друг друга, если они стоят рядом с тем, кто имеет данный $(l:bewitchment:contracts/concept_contracts)контракт$()."
+	  "text": "Существа под действием $(l:bewitchment:contracts/concept_contracts)Контракта$(): Война, вызывают агрессию среди ближайших существ, заставляя их сразу атаковать друг друга."
 	}
   ]
 }

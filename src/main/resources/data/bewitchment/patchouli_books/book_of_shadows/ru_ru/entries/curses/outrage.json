@@ -1,12 +1,12 @@
 {
   "category": "bewitchment:curses",
-  "name": "Ярость",
+  "name": "Беспредел",
   "icon": "minecraft:sweet_berries",
   "advancement": "minecraft:nether/find_fortress",
   "pages": [
 	{
 	  "type": "patchouli:text",
-	  "text": "Это $(l:bewitchment:curses/conducting_curses)Проклятие$() сделает обычно нейтральных мобов, таких как Эндермены или Зомбифицированные Пиглины, агрессивными по отношению к цели."
+	  "text": "Это $(l:bewitchment:curses/conducting_curses)Проклятие$() сделает обычных нейтральных мобов, таких как Эндермен или Зомбифицированные пиглины агрессивными по отношению к цели."
 	},
 	{
 	  "type": "bewitchment:curse",
