@@ -27,17 +27,19 @@ public class TogglePressingForwardPacket {
 	}
 
 	public static void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
-		boolean pressingForward = buf.readBoolean();
-		server.execute(() -> {
-			if (pressingForward && BewitchmentAPI.getFamiliar(player) != BWEntityTypes.OWL) {
-				if (!BewitchmentAPI.drainMagic(player, 1, true)) {
-					return;
+		try {
+			boolean pressingForward = buf.readBoolean();
+			server.execute(() -> {
+				if (pressingForward && BewitchmentAPI.getFamiliar(player) != BWEntityTypes.OWL) {
+					if (!BewitchmentAPI.drainMagic(player, 1, true)) {
+						return;
+					}
+					if (player.age % 60 == 0) {
+						BewitchmentAPI.drainMagic(player, 1, false);
+					}
 				}
-				if (player.age % 60 == 0) {
-					BewitchmentAPI.drainMagic(player, 1, false);
-				}
-			}
-			BWComponents.BROOM_USER_COMPONENT.get(player).setPressingForward(pressingForward);
-		});
+				BWComponents.BROOM_USER_COMPONENT.get(player).setPressingForward(pressingForward);
+			});
+		} catch (IndexOutOfBoundsException ignored) {}
 	}
 }
