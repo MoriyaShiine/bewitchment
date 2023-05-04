@@ -16,10 +16,8 @@ import moriyashiine.bewitchment.api.registry.Transformation;
 import moriyashiine.bewitchment.common.component.entity.AdditionalWerewolfDataComponent;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
-import moriyashiine.bewitchment.common.registry.BWComponents;
-import moriyashiine.bewitchment.common.registry.BWPledges;
-import moriyashiine.bewitchment.common.registry.BWRegistries;
-import moriyashiine.bewitchment.common.registry.BWTransformations;
+import moriyashiine.bewitchment.common.registry.*;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -83,7 +81,11 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 		boolean vampire = BewitchmentAPI.isVampire(obj, true);
 		if (vampire) {
 			boolean pledgedToLilith = BewitchmentAPI.isPledged(obj, BWPledges.LILITH);
-			obj.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
+			if (obj.getEquippedStack(EquipmentSlot.HEAD).isIn(BWTags.SUN_GLASSES)) {
+				obj.removeStatusEffect(StatusEffects.NIGHT_VISION);
+			} else {
+				obj.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
+			}
 			if (BWComponents.RESPAWN_TIMER_COMPONENT.get(obj).getRespawnTimer() <= 0 && obj.world.isDay() && !obj.world.isRaining() && obj.world.isSkyVisible(obj.getBlockPos()) && AllowVampireBurn.EVENT.invoker().allowBurn(obj)) {
 				obj.setOnFireFor(8);
 			}

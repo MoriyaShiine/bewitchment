@@ -47,4 +47,6 @@ public class BWTags {
 	public static final TagKey<Item> WEAK_WANDS = TagKey.of(Registry.ITEM_KEY, new Identifier(Bewitchment.MODID, "weak_wands"));
 	public static final TagKey<Item> AVERAGE_WANDS = TagKey.of(Registry.ITEM_KEY, new Identifier(Bewitchment.MODID, "average_wands"));
 	public static final TagKey<Item> STRONG_WANDS = TagKey.of(Registry.ITEM_KEY, new Identifier(Bewitchment.MODID, "strong_wands"));
+
+	public static final TagKey<Item> SUN_GLASSES = TagKey.of(Registry.ITEM_KEY, new Identifier(Bewitchment.MODID, "sun_glasses"));
 }
