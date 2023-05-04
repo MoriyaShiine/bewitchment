@@ -47,13 +47,13 @@ public class WerewolfVillagerComponent implements ServerTickingComponent {
 	@Override
 	public void serverTick() {
 		if (getStoredWerewolf() != null) {
-			if (getDespawnTimer() > 0) {
+			if (!obj.hasCustomName() && getDespawnTimer() > 0) {
 				setDespawnTimer(getDespawnTimer() - 1);
 				if (getDespawnTimer() == 0) {
 					obj.remove(Entity.RemovalReason.DISCARDED);
 				}
 			}
-			if (obj.age % 20 == 0 && obj.world.isNight() && BewitchmentAPI.getMoonPhase(obj.world) == 0 && obj.world.isSkyVisible(obj.getBlockPos())) {
+			if (obj.age % 20 == 0 && obj.world.isNight() && BewitchmentAPI.getMoonPhase(obj.world) == 0 && (obj.hasCustomName() || obj.world.isSkyVisible(obj.getBlockPos()))) {
 				WerewolfEntity entity = BWEntityTypes.WEREWOLF.create(obj.world);
 				if (entity != null) {
 					PlayerLookup.tracking(obj).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, obj));
@@ -68,7 +68,7 @@ public class WerewolfVillagerComponent implements ServerTickingComponent {
 						entityCursesComponent.getCurses().clear();
 						thisCursesComponent.getCurses().forEach(entityCursesComponent::addCurse);
 					}));
-					if (getDespawnTimer() >= 0) {
+					if (!obj.hasCustomName() && getDespawnTimer() >= 0) {
 						setDespawnTimer(2400);
 					}
 					entity.storedVillager = obj.writeNbt(new NbtCompound());

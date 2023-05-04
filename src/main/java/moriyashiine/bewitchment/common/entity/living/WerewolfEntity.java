@@ -133,7 +133,7 @@ public class WerewolfEntity extends BWHostileEntity {
 				dataTracker.set(VARIANT, random.nextInt(getVariants() - 1) + 1);
 			}
 		}
-		if (spawnReason == SpawnReason.NATURAL) {
+		if (spawnReason == SpawnReason.NATURAL || spawnReason == SpawnReason.SPAWN_EGG) {
 			storedVillager = EntityType.VILLAGER.create((World) world).writeNbt(new NbtCompound());
 		}
 		return data;
