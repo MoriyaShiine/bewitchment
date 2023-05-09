@@ -138,11 +138,13 @@ public class GhostEntity extends BWHostileEntity {
 
 	@Override
 	public void setTarget(@Nullable LivingEntity target) {
-		if (findPos((ServerWorldAccess) world, getBlockPos()) != null) {
+		if (world instanceof ServerWorldAccess serverWorldAccess && findPos(serverWorldAccess, getBlockPos()) != null) {
 			target = null;
 		}
 		super.setTarget(target);
-		dataTracker.set(HAS_TARGET, target != null);
+		if (!world.isClient) {
+			dataTracker.set(HAS_TARGET, target != null);
+		}
 	}
 
 	@Override
