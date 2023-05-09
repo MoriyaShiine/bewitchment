@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.0-SNAPSHOT'
+    id 'fabric-loom' version '1.2-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -16,8 +16,12 @@ loom {
 
 repositories {
     maven {
-        name "cardinal components, impersonate, player ability lib, trinkets"
+        name "cardinal components, trinkets"
         url "https://ladysnake.jfrog.io/artifactory/mods"
+    }
+    maven {
+        name "impersonate, playerabilitylib"
+        url "https://dl.bintray.com/ladysnake/libs"
     }
     maven {
         name "impersonate"
@@ -28,12 +32,8 @@ repositories {
         url "https://maven.jamieswhiteshirt.com/libs-release"
     }
     maven {
-        name "terraform wood api, trinkets"
-        url "https://maven.terraformersmc.com"
-    }
-    maven {
-        name "cloth config, rei"
-        url "https://maven.shedaniel.me"
+      	name "terraform, trinkets"
+      	url "https://maven.terraformersmc.com"
     }
     maven {
         name "patchouli"
@@ -41,11 +41,11 @@ repositories {
     }
     maven {
         name "appleskin"
-        url "https://maven.ryanliptak.com/"
+        url "https://maven.ryanliptak.com"
     }
     maven {
-        name "mod menu"
-        url "https://api.modrinth.com/maven"
+        name "rei"
+        url "https://maven.shedaniel.me"
     }
     maven {
         name "modrinth"
@@ -65,11 +65,8 @@ dependencies {
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
     //^ don't include because trinkets already does
-    modImplementation "me.lucko:fabric-permissions-api:${fabric_permissions_api_version}"
     include "me.lucko:fabric-permissions-api:${fabric_permissions_api_version}"
-    modImplementation("io.github.ladysnake:impersonate:${impersonate_version}") {
-        transitive = false
-    }
+    modImplementation "io.github.ladysnake:impersonate:${impersonate_version}"
     include "io.github.ladysnake:impersonate:${impersonate_version}"
     modImplementation "maven.modrinth:midnightlib:${midnightlib_version}"
     include "maven.modrinth:midnightlib:${midnightlib_version}"
@@ -84,20 +81,18 @@ dependencies {
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
     modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}"
-    modImplementation("com.github.virtuoel:pehkui:${pehkui_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
+    modImplementation("com.github.Virtuoel:Pehkui:${pehkui_version}") {
+        exclude group: "net.fabricmc.fabric-api"
     }
-    modImplementation "com.github.emilyalexandra:trinkets:${trinkets_version}"
+    modImplementation "dev.emi:trinkets:${trinkets_version}"
 
-    modCompileOnly("squeek.appleskin:appleskin-fabric:${appleskin_version}:api") {
-        transitive = false
+    modCompileOnly("com.github.apace100:apoli:${apoli_version}") {
+        exclude(group: "*")
     }
-    modCompileOnly("com.github.apace100:origins-fabric:${origins_version}") {
-        exclude(group: "io.github.onyxstudios.Cardinal-Components-API")
-    }
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
+    modCompileOnly "squeek.appleskin:appleskin-fabric:${appleskin_version}"
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
 
-    modRuntimeOnly "com.terraformersmc:modmenu:${mod_menu_version}"
+    modRuntimeOnly "maven.modrinth:modmenu:${mod_menu_version}"
 }
 
 processResources {
