@@ -68,7 +68,7 @@ public class BindFamiliarRitualFunction extends RitualFunction {
 						BWComponents.FAMILIAR_COMPONENT.get(livingEntity).setFamiliar(true);
 						BWUniversalWorldState universalWorldState = BWUniversalWorldState.get(world);
 						NbtCompound familiarCompound = new NbtCompound();
-						familiarCompound.putUuid("UUID", entityCompound.getUuid("UUID"));
+						familiarCompound.putUuid("UUID", livingEntity.getUuid());
 						familiarCompound.putString("id", Registry.ENTITY_TYPE.getId(livingEntity.getType()).toString());
 						universalWorldState.familiars.add(new Pair<>(closestPlayer.getUuid(), familiarCompound));
 						universalWorldState.markDirty();
