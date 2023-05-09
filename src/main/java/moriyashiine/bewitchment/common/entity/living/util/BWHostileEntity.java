@@ -74,7 +74,7 @@ public abstract class BWHostileEntity extends HostileEntity {
 	public abstract int getVariants();
 
 	public int getVariant() {
-		if(this.getDataTracker().get(BWHostileEntity.VARIANT) < 0) initializeVariant();
+		if (this.getDataTracker().get(BWHostileEntity.VARIANT) < 0) initializeVariant();
 		return this.getDataTracker().get(BWHostileEntity.VARIANT);
 	}
 }

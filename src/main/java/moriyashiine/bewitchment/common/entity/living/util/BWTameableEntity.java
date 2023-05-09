@@ -148,7 +148,7 @@ public abstract class BWTameableEntity extends TameableEntity {
 	public abstract int getVariants();
 
 	public int getVariant() {
-		if(this.getDataTracker().get(BWTameableEntity.VARIANT) < 0) initializeVariant();
+		if (this.getDataTracker().get(BWTameableEntity.VARIANT) < 0) initializeVariant();
 		return this.getDataTracker().get(BWTameableEntity.VARIANT);
 	}
 

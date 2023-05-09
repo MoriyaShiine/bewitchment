@@ -40,7 +40,8 @@ public class TogglePressingForwardPacket {
 				}
 				BWComponents.BROOM_USER_COMPONENT.get(player).setPressingForward(pressingForward);
 			});
-		} catch (IndexOutOfBoundsException ignored) {} // Supress client crash when attempting to fly with 0 ME
+		} catch (IndexOutOfBoundsException ignored) {
+		} // Supress client crash when attempting to fly with 0 ME
 		// TODO 2/28/2023 : This is only intended as a temporary fix! A better fix would be to change the way ME works so that instead of crashing on values below 0, it simply denies the action, allows ME to go negative, then resets ME to 0 since the action was not allowed // end TODO
 	}
 }

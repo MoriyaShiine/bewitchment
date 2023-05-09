@@ -32,8 +32,8 @@ repositories {
         url "https://maven.jamieswhiteshirt.com/libs-release"
     }
     maven {
-      	name "terraform, trinkets"
-      	url "https://maven.terraformersmc.com"
+        name "terraform, trinkets"
+        url "https://maven.terraformersmc.com"
     }
     maven {
         name "patchouli"
