@@ -8,7 +8,6 @@ import moriyashiine.bewitchment.client.BewitchmentClient;
 import moriyashiine.bewitchment.client.model.entity.living.WerewolfEntityModel;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.WerewolfEntity;
-import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -34,6 +33,6 @@ public class WerewolfEntityRenderer extends MobEntityRenderer<WerewolfEntity, We
 				TEXTURES[i] = new Identifier(Bewitchment.MODID, "textures/entity/living/werewolf/" + i + ".png");
 			}
 		}
-		return TEXTURES[entity.getDataTracker().get(BWHostileEntity.VARIANT)];
+		return TEXTURES[entity.getVariant()];
 	}
 }

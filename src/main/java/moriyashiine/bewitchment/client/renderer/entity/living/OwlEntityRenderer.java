@@ -8,7 +8,6 @@ import moriyashiine.bewitchment.client.BewitchmentClient;
 import moriyashiine.bewitchment.client.model.entity.living.OwlEntityModel;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.OwlEntity;
-import moriyashiine.bewitchment.common.entity.living.util.BWTameableEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -32,6 +31,6 @@ public class OwlEntityRenderer extends MobEntityRenderer<OwlEntity, OwlEntityMod
 				TEXTURES[i] = new Identifier(Bewitchment.MODID, "textures/entity/living/owl/" + i + ".png");
 			}
 		}
-		return TEXTURES[entity.getDataTracker().get(BWTameableEntity.VARIANT)];
+		return TEXTURES[entity.getVariant()];
 	}
 }

@@ -8,7 +8,6 @@ import moriyashiine.bewitchment.client.BewitchmentClient;
 import moriyashiine.bewitchment.client.model.entity.living.RavenEntityModel;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.RavenEntity;
-import moriyashiine.bewitchment.common.entity.living.util.BWTameableEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -32,6 +31,6 @@ public class RavenEntityRenderer extends MobEntityRenderer<RavenEntity, RavenEnt
 				TEXTURES[i] = new Identifier(Bewitchment.MODID, "textures/entity/living/raven/" + i + ".png");
 			}
 		}
-		return TEXTURES[entity.getDataTracker().get(BWTameableEntity.VARIANT)];
+		return TEXTURES[entity.getVariant()];
 	}
 }

@@ -8,7 +8,6 @@ import moriyashiine.bewitchment.client.BewitchmentClient;
 import moriyashiine.bewitchment.client.model.entity.living.GhostEntityModel;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.GhostEntity;
-import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;
@@ -41,7 +40,7 @@ public class GhostEntityRenderer extends MobEntityRenderer<GhostEntity, GhostEnt
 						TEXTURES[i] = new Identifier(Bewitchment.MODID, "textures/entity/living/ghost/" + i + ".png");
 					}
 				}
-				VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(TEXTURES[entity.getDataTracker().get(BWHostileEntity.VARIANT)]));
+				VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(TEXTURES[entity.getVariant()]));
 				getContextModel().render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
 			}
 		});

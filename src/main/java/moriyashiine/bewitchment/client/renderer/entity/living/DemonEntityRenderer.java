@@ -8,7 +8,6 @@ import moriyashiine.bewitchment.client.BewitchmentClient;
 import moriyashiine.bewitchment.client.model.entity.living.DemonEntityModel;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.DemonEntity;
-import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -42,7 +41,7 @@ public class DemonEntityRenderer extends MobEntityRenderer<DemonEntity, DemonEnt
 				FEMALE_TEXTURES[i] = new Identifier(Bewitchment.MODID, "textures/entity/living/demon/female_" + i + ".png");
 			}
 		}
-		int variant = entity.getDataTracker().get(BWHostileEntity.VARIANT);
+		int variant = entity.getVariant();
 		return entity.getDataTracker().get(DemonEntity.MALE) ? MALE_TEXTURES[variant] : FEMALE_TEXTURES[variant];
 	}
 
