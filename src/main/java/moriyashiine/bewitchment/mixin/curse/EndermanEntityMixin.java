@@ -21,10 +21,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EndermanEntity.class)
-public abstract class EndermanEntityMixin extends HostileEntity {
-	@Shadow
-	public abstract void setTarget(@Nullable LivingEntity target);
-
+public class EndermanEntityMixin extends HostileEntity {
 	protected EndermanEntityMixin(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 	}
@@ -32,7 +29,6 @@ public abstract class EndermanEntityMixin extends HostileEntity {
 	@Inject(method = "isPlayerStaring", at = @At("RETURN"), cancellable = true)
 	private void isPlayerStaring(PlayerEntity player, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (!callbackInfo.getReturnValueZ() && !player.isCreative() && getTarget() == null && BWComponents.CURSES_COMPONENT.get(player).hasCurse(BWCurses.OUTRAGE) && distanceTo(player) <= getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE) / 4 && canSee(player)) {
-			setTarget(player);
 			callbackInfo.setReturnValue(true);
 		}
 	}
