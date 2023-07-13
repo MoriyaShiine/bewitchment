@@ -11,6 +11,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.*;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
@@ -35,7 +36,7 @@ public class OilRecipe implements Recipe<Inventory> {
 	}
 
 	@Override
-	public ItemStack craft(Inventory inv) {
+	public ItemStack craft(Inventory inventory, DynamicRegistryManager registryManager) {
 		return output;
 	}
 
@@ -45,7 +46,7 @@ public class OilRecipe implements Recipe<Inventory> {
 	}
 
 	@Override
-	public ItemStack getOutput() {
+	public ItemStack getOutput(DynamicRegistryManager registryManager) {
 		return output;
 	}
 
@@ -79,9 +80,7 @@ public class OilRecipe implements Recipe<Inventory> {
 		@Override
 		public OilRecipe read(Identifier id, PacketByteBuf buf) {
 			DefaultedList<Ingredient> defaultedList = DefaultedList.ofSize(buf.readVarInt(), Ingredient.EMPTY);
-			for (int i = 0; i < defaultedList.size(); i++) {
-				defaultedList.set(i, Ingredient.fromPacket(buf));
-			}
+			defaultedList.replaceAll(ignored -> Ingredient.fromPacket(buf));
 			return new OilRecipe(id, defaultedList, buf.readItemStack(), buf.readInt());
 		}
 
@@ -91,7 +90,7 @@ public class OilRecipe implements Recipe<Inventory> {
 			for (Ingredient ingredient : recipe.input) {
 				ingredient.write(buf);
 			}
-			buf.writeItemStack(recipe.getOutput());
+			buf.writeItemStack(recipe.getOutput(null));
 			buf.writeInt(recipe.color);
 		}
 	}

@@ -69,7 +69,7 @@ public class HerneEntity extends BWHostileEntity implements Pledgeable {
 	@Override
 	public void tick() {
 		super.tick();
-		if (!world.isClient) {
+		if (!getWorld().isClient) {
 			bossBar.setPercent(getHealth() / getMaxHealth());
 			LivingEntity target = getTarget();
 			int timer = age + getId();
@@ -84,7 +84,7 @@ public class HerneEntity extends BWHostileEntity implements Pledgeable {
 				}
 				lookAtEntity(target, 360, 360);
 				if (timer % 80 == 0) {
-					HornedSpearItem.spawnEntity(world, this, new ItemStack(BWObjects.HORNED_SPEAR));
+					HornedSpearItem.spawnEntity(getWorld(), this, new ItemStack(BWObjects.HORNED_SPEAR));
 					swingHand(Hand.MAIN_HAND);
 				}
 				if (timer % 600 == 0) {
@@ -165,14 +165,14 @@ public class HerneEntity extends BWHostileEntity implements Pledgeable {
 		if (isAlive() && getTarget() == null && BewitchmentAPI.isWerewolf(player, true)) {
 			ItemStack stack = player.getStackInHand(hand);
 			if (stack.getItem() == BWObjects.ACONITE) {
-				boolean client = world.isClient;
+				boolean client = getWorld().isClient;
 				if (!client) {
 					if (!player.isCreative()) {
 						stack.decrement(1);
 					}
 					PlayerLookup.tracking(player).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, player));
 					SpawnSmokeParticlesPacket.send(player, player);
-					world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_PLING, player.getSoundCategory(), 1, 1);
+					getWorld().playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_PLING, player.getSoundCategory(), 1, 1);
 					BWComponents.TRANSFORMATION_COMPONENT.maybeGet(player).ifPresent(transformationComponent -> {
 						if (transformationComponent.isAlternateForm()) {
 							TransformationAbilityPacket.useAbility(player, true);
@@ -236,7 +236,7 @@ public class HerneEntity extends BWHostileEntity implements Pledgeable {
 
 	@Override
 	public void setTarget(@Nullable LivingEntity target) {
-		if (world.isDay()) {
+		if (getWorld().isDay()) {
 			target = null;
 		}
 		super.setTarget(target);

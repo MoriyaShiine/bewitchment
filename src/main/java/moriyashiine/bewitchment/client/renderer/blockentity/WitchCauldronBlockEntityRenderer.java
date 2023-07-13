@@ -11,6 +11,7 @@ import moriyashiine.bewitchment.common.registry.BWProperties;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -22,9 +23,9 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Matrix4f;
-import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.World;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 
 @Environment(EnvType.CLIENT)
 public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<WitchCauldronBlockEntity> {
@@ -58,7 +59,7 @@ public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<Wit
 					}
 					if (fluidHeight > 0) {
 						if (entity.mode == WitchCauldronBlockEntity.Mode.TELEPORTATION) {
-							world.addParticle(new DustParticleEffect(new Vec3f(((entity.color >> 16) & 0xff) / 255f, ((entity.color >> 8) & 0xff) / 255f, (entity.color & 0xff) / 255f), 1), pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + fluidHeight, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), 0, 0, 0);
+							world.addParticle(new DustParticleEffect(new Vector3f(((entity.color >> 16) & 0xff) / 255f, ((entity.color >> 8) & 0xff) / 255f, (entity.color & 0xff) / 255f), 1), pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + fluidHeight, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), 0, 0, 0);
 						}
 						if (entity.mode == WitchCauldronBlockEntity.Mode.OIL_CRAFTING && entity.color != 0xfc00fc) {
 							world.addParticle(ParticleTypes.ENCHANTED_HIT, pos.getX() + 0.5 + MathHelper.nextDouble(world.random, -width, width), pos.getY() + fluidHeight, pos.getZ() + 0.5 + MathHelper.nextDouble(world.random, -width, width), 0, 0, 0);
@@ -81,8 +82,8 @@ public class WitchCauldronBlockEntityRenderer implements BlockEntityRenderer<Wit
 			matrices.translate(0.5, 1, 0.5);
 			matrices.multiply(MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getRotation());
 			matrices.scale(-0.025f, -0.025f, 0.025f);
-			MinecraftClient.getInstance().textRenderer.draw(name, x, 0, 0x20ffff, false, mat, vertexConsumers, true, (int) (MinecraftClient.getInstance().options.getTextBackgroundOpacity(0.25f) * 255f) << 24, light);
-			MinecraftClient.getInstance().textRenderer.draw(name, x, 0, -1, false, mat, vertexConsumers, false, 0, light);
+			MinecraftClient.getInstance().textRenderer.draw(name, x, 0, 0x20FFFFFF, false, mat, vertexConsumers, TextRenderer.TextLayerType.SEE_THROUGH, (int) (MinecraftClient.getInstance().options.getTextBackgroundOpacity(0.25f) * 255f) << 24, light);
+			MinecraftClient.getInstance().textRenderer.draw(name, x, 0, -1, false, mat, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, light);
 			matrices.pop();
 		}
 	}

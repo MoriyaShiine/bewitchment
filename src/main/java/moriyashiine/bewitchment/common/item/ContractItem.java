@@ -15,13 +15,11 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -62,18 +60,6 @@ public class ContractItem extends Item {
 	@Override
 	public int getMaxUseTime(ItemStack stack) {
 		return 32;
-	}
-
-	@Override
-	public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
-		if (isIn(group)) {
-			BWRegistries.CONTRACTS.forEach(contract -> {
-				ItemStack stack = new ItemStack(this);
-				stack.getOrCreateNbt().putString("Contract", BWRegistries.CONTRACTS.getId(contract).toString());
-				stack.getOrCreateNbt().putInt("Duration", 168000);
-				stacks.add(stack);
-			});
-		}
 	}
 
 	@Environment(EnvType.CLIENT)

@@ -48,7 +48,7 @@ public class ToadEntity extends BWTameableEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		if (isNavigating() && onGround) {
+		if (isNavigating() && isOnGround()) {
 			jump();
 		}
 	}

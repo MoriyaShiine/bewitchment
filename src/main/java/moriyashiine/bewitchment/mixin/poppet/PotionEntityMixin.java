@@ -36,10 +36,10 @@ public abstract class PotionEntityMixin extends ThrownItemEntity {
 		if (BWConfig.disabledPoppets.contains("bewitchment:voodoo_poppet")) {
 			return;
 		}
-		List<ItemEntity> itemEntities = world.getNonSpectatingEntities(ItemEntity.class, box);
+		List<ItemEntity> itemEntities = getWorld().getNonSpectatingEntities(ItemEntity.class, box);
 		for (ItemEntity itemEntity : itemEntities) {
 			if (itemEntity.getStack().getItem() == BWObjects.VOODOO_POPPET) {
-				LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, itemEntity.getStack());
+				LivingEntity owner = BewitchmentAPI.getTaglockOwner(getWorld(), itemEntity.getStack());
 				if (owner != null && owner.isAffectedBySplashPotions()) {
 					for (StatusEffectInstance effect : statusEffects) {
 						if (itemEntity.getStack().damage(8, random, null) && itemEntity.getStack().getDamage() >= itemEntity.getStack().getMaxDamage()) {

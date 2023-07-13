@@ -207,12 +207,12 @@ public class TaglockItem extends Item {
 		ItemStack stack = user.getStackInHand(hand);
 		if (entity.isAlive() && !entity.getType().isIn(BWTags.TAGLOCK_BLACKLIST) && !hasTaglock(stack)) {
 			boolean failed = false;
-			BlockPos sigilPos = BWUtil.getClosestBlockPos(entity.getBlockPos(), 16, currentPos -> user.world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) user.world.getBlockEntity(currentPos)).getSigil() == BWSigils.SLIPPERY);
+			BlockPos sigilPos = BWUtil.getClosestBlockPos(entity.getBlockPos(), 16, currentPos -> user.getWorld().getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) user.getWorld().getBlockEntity(currentPos)).getSigil() == BWSigils.SLIPPERY);
 			if (sigilPos == null && bed) {
-				sigilPos = BWUtil.getClosestBlockPos(user.getBlockPos(), 16, currentPos -> user.world.getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) user.world.getBlockEntity(currentPos)).getSigil() == BWSigils.SLIPPERY);
+				sigilPos = BWUtil.getClosestBlockPos(user.getBlockPos(), 16, currentPos -> user.getWorld().getBlockEntity(currentPos) instanceof SigilHolder && ((SigilHolder) user.getWorld().getBlockEntity(currentPos)).getSigil() == BWSigils.SLIPPERY);
 			}
 			if (sigilPos != null) {
-				BlockEntity blockEntity = user.world.getBlockEntity(sigilPos);
+				BlockEntity blockEntity = user.getWorld().getBlockEntity(sigilPos);
 				SigilHolder sigil = (SigilHolder) blockEntity;
 				if (sigil.test(entity)) {
 					sigil.setUses(sigil.getUses() - 1);
@@ -234,20 +234,20 @@ public class TaglockItem extends Item {
 			if (failed) {
 				if (entity instanceof PlayerEntity player) {
 					player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.taglock_fail", user.getDisplayName().getString()), false);
-					if (entity.world.isClient) {
-						entity.world.playSoundFromEntity(player, user, BWSoundEvents.ENTITY_GENERIC_PLING, SoundCategory.PLAYERS, 1, 1);
+					if (entity.getWorld().isClient) {
+						entity.getWorld().playSoundFromEntity(player, user, BWSoundEvents.ENTITY_GENERIC_PLING, SoundCategory.PLAYERS, 1, 1);
 					}
 				}
 				return ActionResult.FAIL;
 			}
-			boolean client = user.world.isClient;
+			boolean client = user.getWorld().isClient;
 			if (!client) {
 				if (entity instanceof MobEntity mob) {
 					mob.setPersistent();
 				}
 				BWUtil.addItemToInventoryAndConsume(user, hand, putTaglock(new ItemStack(BWObjects.TAGLOCK), entity));
 			} else {
-				user.world.playSoundFromEntity(user, entity, BWSoundEvents.ENTITY_GENERIC_PLING, SoundCategory.PLAYERS, 1, 1);
+				user.getWorld().playSoundFromEntity(user, entity, BWSoundEvents.ENTITY_GENERIC_PLING, SoundCategory.PLAYERS, 1, 1);
 			}
 			return ActionResult.success(client);
 		}

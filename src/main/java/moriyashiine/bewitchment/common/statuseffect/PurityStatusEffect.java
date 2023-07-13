@@ -8,7 +8,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
 
 @SuppressWarnings("ConstantConditions")
 public class PurityStatusEffect extends StatusEffect {
@@ -23,8 +23,8 @@ public class PurityStatusEffect extends StatusEffect {
 
 	@Override
 	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-		if (!entity.world.isClient && entity.age % 20 == 0) {
-			Registry.STATUS_EFFECT.stream().forEach(effect -> {
+		if (!entity.getWorld().isClient && entity.age % 20 == 0) {
+			Registries.STATUS_EFFECT.stream().forEach(effect -> {
 				if (effect.getCategory() == StatusEffectCategory.HARMFUL && entity.hasStatusEffect(effect)) {
 					StatusEffectInstance currentPurity = entity.getStatusEffect(this);
 					if (currentPurity != null) {

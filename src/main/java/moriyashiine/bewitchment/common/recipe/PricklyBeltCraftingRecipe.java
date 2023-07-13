@@ -7,12 +7,14 @@ package moriyashiine.bewitchment.common.recipe;
 import moriyashiine.bewitchment.common.item.PricklyBeltItem;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
+import net.minecraft.recipe.book.CraftingRecipeCategory;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
@@ -21,15 +23,15 @@ import java.util.List;
 @SuppressWarnings("ConstantConditions")
 public class PricklyBeltCraftingRecipe extends SpecialCraftingRecipe {
 	public PricklyBeltCraftingRecipe(Identifier id) {
-		super(id);
+		super(id, CraftingRecipeCategory.EQUIPMENT);
 	}
 
 	@Override
-	public boolean matches(CraftingInventory inv, World world) {
+	public boolean matches(RecipeInputInventory inventory, World world) {
 		boolean foundPricklyBelt = false, foundPotion = false;
 		int foundItems = 0;
-		for (int i = 0; i < inv.size(); i++) {
-			ItemStack stack = inv.getStack(i);
+		for (int i = 0; i < inventory.size(); i++) {
+			ItemStack stack = inventory.getStack(i);
 			if (stack.getItem() instanceof PricklyBeltItem) {
 				if (!foundPricklyBelt) {
 					foundPricklyBelt = true;
@@ -46,10 +48,10 @@ public class PricklyBeltCraftingRecipe extends SpecialCraftingRecipe {
 	}
 
 	@Override
-	public ItemStack craft(CraftingInventory inv) {
+	public ItemStack craft(RecipeInputInventory inventory, DynamicRegistryManager registryManager) {
 		ItemStack pricklyBelt = null, potion = null;
-		for (int i = 0; i < inv.size(); i++) {
-			ItemStack stack = inv.getStack(i);
+		for (int i = 0; i < inventory.size(); i++) {
+			ItemStack stack = inventory.getStack(i);
 			if (stack.getItem() instanceof PricklyBeltItem) {
 				pricklyBelt = stack.copy();
 			} else if (stack.getItem() == Items.POTION) {

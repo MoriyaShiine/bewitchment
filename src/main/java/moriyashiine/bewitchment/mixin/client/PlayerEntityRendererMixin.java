@@ -46,7 +46,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 	@Inject(method = "render(Lnet/minecraft/client/network/AbstractClientPlayerEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At("HEAD"), cancellable = true)
 	private void render(AbstractClientPlayerEntity player, float yaw, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, CallbackInfo callbackInfo) {
 		Optional<BlockPos> pos = player.getSleepingPosition();
-		if (pos.isPresent() && player.world.getBlockState(pos.get()).getBlock() instanceof CoffinBlock) {
+		if (pos.isPresent() && player.getWorld().getBlockState(pos.get()).getBlock() instanceof CoffinBlock) {
 			callbackInfo.cancel();
 			return;
 		}
@@ -62,9 +62,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 			entity.age = player.age;
 			entity.hurtTime = player.hurtTime;
 			entity.maxHurtTime = Integer.MAX_VALUE;
-			entity.limbDistance = player.limbDistance;
-			entity.lastLimbDistance = player.lastLimbDistance;
-			entity.limbAngle = player.limbAngle;
+			entity.limbAnimator = player.limbAnimator;
 			entity.headYaw = player.headYaw;
 			entity.prevHeadYaw = player.prevHeadYaw;
 			entity.bodyYaw = player.bodyYaw;

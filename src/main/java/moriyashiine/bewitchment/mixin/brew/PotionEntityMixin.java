@@ -50,7 +50,7 @@ public abstract class PotionEntityMixin extends ThrownItemEntity {
 		if (getItem().hasNbt() && getItem().getNbt().contains("PolymorphUUID")) {
 			UUID uuid = getItem().getNbt().getUuid("PolymorphUUID");
 			String name = getItem().getNbt().getString("PolymorphName");
-			for (LivingEntity livingEntity : world.getNonSpectatingEntities(LivingEntity.class, getBoundingBox().expand(4, 2, 4))) {
+			for (LivingEntity livingEntity : getWorld().getNonSpectatingEntities(LivingEntity.class, getBoundingBox().expand(4, 2, 4))) {
 				BWComponents.POLYMORPH_COMPONENT.maybeGet(livingEntity).ifPresent(polymorphComponent -> {
 					polymorphComponent.setUuid(uuid);
 					polymorphComponent.setName(name);

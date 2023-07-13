@@ -14,9 +14,10 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.ShapedRecipe;
+import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public class AthameStrippingRecipe implements Recipe<Inventory> {
@@ -37,7 +38,7 @@ public class AthameStrippingRecipe implements Recipe<Inventory> {
 	}
 
 	@Override
-	public ItemStack craft(Inventory inv) {
+	public ItemStack craft(Inventory inventory, DynamicRegistryManager registryManager) {
 		return output;
 	}
 
@@ -47,7 +48,7 @@ public class AthameStrippingRecipe implements Recipe<Inventory> {
 	}
 
 	@Override
-	public ItemStack getOutput() {
+	public ItemStack getOutput(DynamicRegistryManager registryManager) {
 		return output;
 	}
 
@@ -69,19 +70,19 @@ public class AthameStrippingRecipe implements Recipe<Inventory> {
 	public static class Serializer implements RecipeSerializer<AthameStrippingRecipe> {
 		@Override
 		public AthameStrippingRecipe read(Identifier id, JsonObject json) {
-			return new AthameStrippingRecipe(id, Registry.BLOCK.get(new Identifier(JsonHelper.getString(json, "log"))), Registry.BLOCK.get(new Identifier(JsonHelper.getString(json, "stripped_log"))), ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result")));
+			return new AthameStrippingRecipe(id, Registries.BLOCK.get(new Identifier(JsonHelper.getString(json, "log"))), Registries.BLOCK.get(new Identifier(JsonHelper.getString(json, "stripped_log"))), ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result")));
 		}
 
 		@Override
 		public AthameStrippingRecipe read(Identifier id, PacketByteBuf buf) {
-			return new AthameStrippingRecipe(id, Registry.BLOCK.get(new Identifier(buf.readString())), Registry.BLOCK.get(new Identifier(buf.readString())), buf.readItemStack());
+			return new AthameStrippingRecipe(id, Registries.BLOCK.get(new Identifier(buf.readString())), Registries.BLOCK.get(new Identifier(buf.readString())), buf.readItemStack());
 		}
 
 		@Override
 		public void write(PacketByteBuf buf, AthameStrippingRecipe recipe) {
-			buf.writeString(Registry.BLOCK.getId(recipe.log).toString());
-			buf.writeString(Registry.BLOCK.getId(recipe.strippedLog).toString());
-			buf.writeItemStack(recipe.getOutput());
+			buf.writeString(Registries.BLOCK.getId(recipe.log).toString());
+			buf.writeString(Registries.BLOCK.getId(recipe.strippedLog).toString());
+			buf.writeItemStack(recipe.getOutput(null));
 		}
 	}
 }

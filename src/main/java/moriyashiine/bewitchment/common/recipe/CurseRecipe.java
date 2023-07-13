@@ -17,6 +17,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
@@ -41,7 +42,7 @@ public class CurseRecipe implements Recipe<Inventory> {
 	}
 
 	@Override
-	public ItemStack craft(Inventory inv) {
+	public ItemStack craft(Inventory inventory, DynamicRegistryManager registryManager) {
 		return ItemStack.EMPTY;
 	}
 
@@ -51,7 +52,7 @@ public class CurseRecipe implements Recipe<Inventory> {
 	}
 
 	@Override
-	public ItemStack getOutput() {
+	public ItemStack getOutput(DynamicRegistryManager registryManager) {
 		return ItemStack.EMPTY;
 	}
 
@@ -98,9 +99,7 @@ public class CurseRecipe implements Recipe<Inventory> {
 		@Override
 		public CurseRecipe read(Identifier id, PacketByteBuf buf) {
 			DefaultedList<Ingredient> defaultedList = DefaultedList.ofSize(buf.readVarInt(), Ingredient.EMPTY);
-			for (int i = 0; i < defaultedList.size(); i++) {
-				defaultedList.set(i, Ingredient.fromPacket(buf));
-			}
+			defaultedList.replaceAll(ignored -> Ingredient.fromPacket(buf));
 			return new CurseRecipe(id, defaultedList, BWRegistries.CURSES.get(new Identifier(buf.readString())), buf.readInt());
 		}
 

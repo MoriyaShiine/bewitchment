@@ -6,7 +6,10 @@ package moriyashiine.bewitchment.client.particle;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.particle.*;
+import net.minecraft.client.particle.LargeFireSmokeParticle;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleFactory;
+import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
 
@@ -17,11 +20,6 @@ public class IncenseSmokeParticle extends LargeFireSmokeParticle {
 		red = ((float) (Math.random() * 0.2) + 0.8f);
 		green = ((float) (Math.random() * 0.2) + 0.8f);
 		blue = ((float) (Math.random() * 0.2) + 0.8f);
-	}
-
-	@Override
-	public ParticleTextureSheet getType() {
-		return ParticleTextureSheet.PARTICLE_SHEET_OPAQUE;
 	}
 
 	@Environment(EnvType.CLIENT)

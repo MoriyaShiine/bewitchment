@@ -13,7 +13,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
@@ -61,7 +60,7 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 			damage *= 3;
 		}
 		dealtDamage = true;
-		if (entity.damage(DamageSource.trident(this, owner == null ? this : owner), damage)) {
+		if (entity.damage(entity.getWorld().getDamageSources().trident(owner == null ? this : owner, owner == null ? this : owner), damage)) {
 			if (entity.getType() == EntityType.ENDERMAN) {
 				return;
 			}
@@ -80,7 +79,7 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 	@Override
 	protected EntityHitResult getEntityCollision(Vec3d currentPosition, Vec3d nextPosition) {
 		if (isOwnerAlive()) {
-			EntityHitResult collision = ProjectileUtil.getEntityCollision(this.world, this, currentPosition, nextPosition, getBoundingBox().stretch(getVelocity()).expand(1), this::canHit);
+			EntityHitResult collision = ProjectileUtil.getEntityCollision(getWorld(), this, currentPosition, nextPosition, getBoundingBox().stretch(getVelocity()).expand(1), this::canHit);
 			if (collision != null && collision.getEntity() instanceof MobEntity mob && getOwner().getUuid().equals(BWComponents.MINION_COMPONENT.get(mob).getMaster())) {
 				return null;
 			}
@@ -102,9 +101,9 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 			dealtDamage = true;
 		}
 		Entity entity = getOwner();
-		if (entity instanceof PlayerEntity && (dealtDamage || isNoClip() || getY() <= world.getBottomY())) {
+		if (entity instanceof PlayerEntity && (dealtDamage || isNoClip() || getY() <= getWorld().getBottomY())) {
 			if (!isOwnerAlive()) {
-				if (!world.isClient && pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED) {
+				if (!getWorld().isClient && pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED) {
 					dropStack(asItemStack(), 0.1f);
 				}
 				remove(RemovalReason.DISCARDED);
@@ -112,7 +111,7 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 				setNoClip(true);
 				Vec3d vec3d = new Vec3d(entity.getX() - getX(), entity.getEyeY() - getY(), entity.getZ() - getZ());
 				setPos(getX(), getY() + vec3d.y * 0.1, getZ());
-				if (world.isClient) {
+				if (getWorld().isClient) {
 					lastRenderY = getY();
 				}
 				setVelocity(getVelocity().multiply(0.95d).add(vec3d.normalize().multiply(0.3)));

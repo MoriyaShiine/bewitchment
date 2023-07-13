@@ -14,9 +14,10 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.ShapedRecipe;
+import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public class AthameDropRecipe implements Recipe<Inventory> {
@@ -38,7 +39,7 @@ public class AthameDropRecipe implements Recipe<Inventory> {
 	}
 
 	@Override
-	public ItemStack craft(Inventory inv) {
+	public ItemStack craft(Inventory inventory, DynamicRegistryManager registryManager) {
 		return output;
 	}
 
@@ -48,7 +49,7 @@ public class AthameDropRecipe implements Recipe<Inventory> {
 	}
 
 	@Override
-	public ItemStack getOutput() {
+	public ItemStack getOutput(DynamicRegistryManager registryManager) {
 		return output;
 	}
 
@@ -70,18 +71,18 @@ public class AthameDropRecipe implements Recipe<Inventory> {
 	public static class Serializer implements RecipeSerializer<AthameDropRecipe> {
 		@Override
 		public AthameDropRecipe read(Identifier id, JsonObject json) {
-			return new AthameDropRecipe(id, Registry.ENTITY_TYPE.get(new Identifier(JsonHelper.getString(json, "entity_type"))), ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result")), JsonHelper.getFloat(json, "chance"));
+			return new AthameDropRecipe(id, Registries.ENTITY_TYPE.get(new Identifier(JsonHelper.getString(json, "entity_type"))), ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result")), JsonHelper.getFloat(json, "chance"));
 		}
 
 		@Override
 		public AthameDropRecipe read(Identifier id, PacketByteBuf buf) {
-			return new AthameDropRecipe(id, Registry.ENTITY_TYPE.get(new Identifier(buf.readString())), buf.readItemStack(), buf.readFloat());
+			return new AthameDropRecipe(id, Registries.ENTITY_TYPE.get(new Identifier(buf.readString())), buf.readItemStack(), buf.readFloat());
 		}
 
 		@Override
 		public void write(PacketByteBuf buf, AthameDropRecipe recipe) {
-			buf.writeString(Registry.ENTITY_TYPE.getId(recipe.entity_type).toString());
-			buf.writeItemStack(recipe.getOutput());
+			buf.writeString(Registries.ENTITY_TYPE.getId(recipe.entity_type).toString());
+			buf.writeItemStack(recipe.getOutput(null));
 			buf.writeFloat(recipe.chance);
 		}
 	}

@@ -70,7 +70,7 @@ public class LilithEntity extends BWHostileEntity implements Pledgeable {
 	@Override
 	public void tick() {
 		super.tick();
-		if (!world.isClient) {
+		if (!getWorld().isClient) {
 			bossBar.setPercent(getHealth() / getMaxHealth());
 			LivingEntity target = getTarget();
 			int timer = age + getId();
@@ -86,11 +86,11 @@ public class LilithEntity extends BWHostileEntity implements Pledgeable {
 				lookAtEntity(target, 360, 360);
 				if (timer % 40 == 0) {
 					for (int i = -1; i <= 1; i++) {
-						WitherSkullEntity witherSkull = new WitherSkullEntity(world, this, target.getX() - getX() + (i * 2), target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ() + (i * 2));
+						WitherSkullEntity witherSkull = new WitherSkullEntity(getWorld(), this, target.getX() - getX() + (i * 2), target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ() + (i * 2));
 						witherSkull.updatePosition(witherSkull.getX(), getBodyY(0.5), witherSkull.getZ());
 						witherSkull.setOwner(this);
-						world.playSound(null, getBlockPos(), SoundEvents.ENTITY_WITHER_SHOOT, getSoundCategory(), getSoundVolume(), getSoundPitch());
-						world.spawnEntity(witherSkull);
+						getWorld().playSound(null, getBlockPos(), SoundEvents.ENTITY_WITHER_SHOOT, getSoundCategory(), getSoundVolume(), getSoundPitch());
+						getWorld().spawnEntity(witherSkull);
 					}
 					swingHand(Hand.MAIN_HAND);
 				}
@@ -172,14 +172,14 @@ public class LilithEntity extends BWHostileEntity implements Pledgeable {
 		if (isAlive() && getTarget() == null && BewitchmentAPI.isVampire(player, true)) {
 			ItemStack stack = player.getStackInHand(hand);
 			if (stack.getItem() == BWObjects.GARLIC) {
-				boolean client = world.isClient;
+				boolean client = getWorld().isClient;
 				if (!client) {
 					if (!player.isCreative()) {
 						stack.decrement(1);
 					}
 					PlayerLookup.tracking(player).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, player));
 					SpawnSmokeParticlesPacket.send(player, player);
-					world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_PLING, player.getSoundCategory(), 1, 1);
+					getWorld().playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_PLING, player.getSoundCategory(), 1, 1);
 					BWComponents.TRANSFORMATION_COMPONENT.maybeGet(player).ifPresent(transformationComponent -> {
 						if (transformationComponent.isAlternateForm()) {
 							TransformationAbilityPacket.useAbility(player, true);
@@ -243,7 +243,7 @@ public class LilithEntity extends BWHostileEntity implements Pledgeable {
 
 	@Override
 	public void setTarget(@Nullable LivingEntity target) {
-		if (world.isDay()) {
+		if (getWorld().isDay()) {
 			target = null;
 		}
 		super.setTarget(target);

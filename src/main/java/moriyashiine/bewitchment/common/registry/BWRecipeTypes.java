@@ -10,8 +10,9 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.SpecialRecipeSerializer;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -41,9 +42,9 @@ public class BWRecipeTypes {
 	public static final RecipeSerializer<CurseRecipe> CURSE_RECIPE_SERIALIZER = create("curse_recipe", new CurseRecipe.Serializer());
 	public static final RecipeType<CurseRecipe> CURSE_RECIPE_TYPE = create("curse_recipe");
 
-	public static final RecipeSerializer<TaglockCraftingRecipe> TAGLOCK_CRAFTING_SERIALIZER = create("taglock_crafting", new SpecialRecipeSerializer<>(TaglockCraftingRecipe::new));
-	public static final RecipeSerializer<ScepterCraftingRecipe> SCEPTER_CRAFTING_SERIALIZER = create("scepter_crafting", new SpecialRecipeSerializer<>(ScepterCraftingRecipe::new));
-	public static final RecipeSerializer<PricklyBeltCraftingRecipe> PRICKLY_BELT_CRAFTING_SERIALIZER = create("prickly_belt_crafting", new SpecialRecipeSerializer<>(PricklyBeltCraftingRecipe::new));
+	public static final RecipeSerializer<TaglockCraftingRecipe> TAGLOCK_CRAFTING_SERIALIZER = create("taglock_crafting", new SpecialRecipeSerializer<>((id, category) -> new TaglockCraftingRecipe(id)));
+	public static final RecipeSerializer<ScepterCraftingRecipe> SCEPTER_CRAFTING_SERIALIZER = create("scepter_crafting", new SpecialRecipeSerializer<>((id, category) -> new ScepterCraftingRecipe(id)));
+	public static final RecipeSerializer<PricklyBeltCraftingRecipe> PRICKLY_BELT_CRAFTING_SERIALIZER = create("prickly_belt_crafting", new SpecialRecipeSerializer<>((id, category) -> new PricklyBeltCraftingRecipe(id)));
 
 	private static <T extends Recipe<?>> RecipeSerializer<T> create(String name, RecipeSerializer<T> serializer) {
 		RECIPE_SERIALIZERS.put(serializer, new Identifier(Bewitchment.MODID, name));
@@ -62,7 +63,7 @@ public class BWRecipeTypes {
 	}
 
 	public static void init() {
-		RECIPE_SERIALIZERS.keySet().forEach(recipeSerializer -> Registry.register(Registry.RECIPE_SERIALIZER, RECIPE_SERIALIZERS.get(recipeSerializer), recipeSerializer));
-		RECIPE_TYPES.keySet().forEach(recipeType -> Registry.register(Registry.RECIPE_TYPE, RECIPE_TYPES.get(recipeType), recipeType));
+		RECIPE_SERIALIZERS.keySet().forEach(recipeSerializer -> Registry.register(Registries.RECIPE_SERIALIZER, RECIPE_SERIALIZERS.get(recipeSerializer), recipeSerializer));
+		RECIPE_TYPES.keySet().forEach(recipeType -> Registry.register(Registries.RECIPE_TYPE, RECIPE_TYPES.get(recipeType), recipeType));
 	}
 }

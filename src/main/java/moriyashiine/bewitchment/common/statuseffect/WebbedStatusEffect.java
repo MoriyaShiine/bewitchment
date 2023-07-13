@@ -28,9 +28,9 @@ public class WebbedStatusEffect extends StatusEffect {
 
 	@Override
 	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-		if (!entity.world.isClient) {
-			for (BlockPos foundPos : BWUtil.getBlockPoses(entity.getBlockPos(), Math.min(3, amplifier + 1), currentPos -> entity.world.getBlockState(currentPos).isAir())) {
-				entity.world.setBlockState(foundPos, BWObjects.TEMPORARY_COBWEB.getDefaultState());
+		if (!entity.getWorld().isClient) {
+			for (BlockPos foundPos : BWUtil.getBlockPoses(entity.getBlockPos(), Math.min(3, amplifier + 1), currentPos -> entity.getWorld().getBlockState(currentPos).isAir())) {
+				entity.getWorld().setBlockState(foundPos, BWObjects.TEMPORARY_COBWEB.getDefaultState());
 			}
 		}
 	}

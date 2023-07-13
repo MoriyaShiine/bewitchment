@@ -7,10 +7,7 @@ package moriyashiine.bewitchment.common.block.elder;
 import moriyashiine.bewitchment.common.block.entity.LockableBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.Lockable;
 import moriyashiine.bewitchment.common.block.util.interfaces.SpecialDoor;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.DoorBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.LivingEntity;
@@ -26,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 @SuppressWarnings("ConstantConditions")
 public class ElderDoorBlock extends DoorBlock implements BlockEntityProvider, SpecialDoor {
 	public ElderDoorBlock(Settings settings) {
-		super(settings);
+		super(settings, BlockSetType.OAK);
 	}
 
 	@Nullable

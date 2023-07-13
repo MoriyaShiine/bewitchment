@@ -14,9 +14,10 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public class CauldronBrewingRecipe implements Recipe<Inventory> {
@@ -38,7 +39,7 @@ public class CauldronBrewingRecipe implements Recipe<Inventory> {
 	}
 
 	@Override
-	public ItemStack craft(Inventory inv) {
+	public ItemStack craft(Inventory inventory, DynamicRegistryManager registryManager) {
 		return ItemStack.EMPTY;
 	}
 
@@ -48,7 +49,7 @@ public class CauldronBrewingRecipe implements Recipe<Inventory> {
 	}
 
 	@Override
-	public ItemStack getOutput() {
+	public ItemStack getOutput(DynamicRegistryManager registryManager) {
 		return ItemStack.EMPTY;
 	}
 
@@ -71,18 +72,18 @@ public class CauldronBrewingRecipe implements Recipe<Inventory> {
 	public static class Serializer implements RecipeSerializer<CauldronBrewingRecipe> {
 		@Override
 		public CauldronBrewingRecipe read(Identifier id, JsonObject json) {
-			return new CauldronBrewingRecipe(id, Ingredient.fromJson(JsonHelper.getObject(json, "ingredient")), Registry.STATUS_EFFECT.get(new Identifier(JsonHelper.getString(json, "effect"))), JsonHelper.getInt(json, "time"));
+			return new CauldronBrewingRecipe(id, Ingredient.fromJson(JsonHelper.getObject(json, "ingredient")), Registries.STATUS_EFFECT.get(new Identifier(JsonHelper.getString(json, "effect"))), JsonHelper.getInt(json, "time"));
 		}
 
 		@Override
 		public CauldronBrewingRecipe read(Identifier id, PacketByteBuf buf) {
-			return new CauldronBrewingRecipe(id, Ingredient.fromPacket(buf), Registry.STATUS_EFFECT.get(new Identifier(buf.readString())), buf.readInt());
+			return new CauldronBrewingRecipe(id, Ingredient.fromPacket(buf), Registries.STATUS_EFFECT.get(new Identifier(buf.readString())), buf.readInt());
 		}
 
 		@Override
 		public void write(PacketByteBuf buf, CauldronBrewingRecipe recipe) {
 			recipe.input.write(buf);
-			buf.writeString(Registry.STATUS_EFFECT.getId(recipe.output).toString());
+			buf.writeString(Registries.STATUS_EFFECT.getId(recipe.output).toString());
 			buf.writeInt(recipe.time);
 		}
 	}

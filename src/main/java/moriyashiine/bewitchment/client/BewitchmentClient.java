@@ -33,8 +33,10 @@ import moriyashiine.bewitchment.client.screen.DemonScreen;
 import moriyashiine.bewitchment.client.screen.DemonScreenHandler;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.BWChestBlockEntity;
+import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
 import moriyashiine.bewitchment.common.entity.living.DemonEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
+import moriyashiine.bewitchment.common.network.packet.CauldronTeleportPacket;
 import moriyashiine.bewitchment.common.network.packet.TogglePressingForwardPacket;
 import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
 import moriyashiine.bewitchment.common.registry.*;
@@ -44,6 +46,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.message.v1.ClientSendMessageEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
@@ -64,7 +67,7 @@ import net.minecraft.client.render.block.entity.ChestBlockEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
-import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
@@ -75,7 +78,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
@@ -158,10 +161,10 @@ public class BewitchmentClient implements ClientModInitializer {
 		BlockEntityRendererRegistry.register(BWBlockEntityTypes.JUNIPER_CHEST, ChestBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.register(BWBlockEntityTypes.ELDER_CHEST, ChestBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.register(BWBlockEntityTypes.DRAGONS_BLOOD_CHEST, ChestBlockEntityRenderer::new);
-		TerraformBoatClientHelper.registerModelLayers(new Identifier(Bewitchment.MODID, "juniper"));
-		TerraformBoatClientHelper.registerModelLayers(new Identifier(Bewitchment.MODID, "cypress"));
-		TerraformBoatClientHelper.registerModelLayers(new Identifier(Bewitchment.MODID, "elder"));
-		TerraformBoatClientHelper.registerModelLayers(new Identifier(Bewitchment.MODID, "dragons_blood"));
+		TerraformBoatClientHelper.registerModelLayers(new Identifier(Bewitchment.MODID, "juniper_boat"), false);
+		TerraformBoatClientHelper.registerModelLayers(new Identifier(Bewitchment.MODID, "cypress_boat"), false);
+		TerraformBoatClientHelper.registerModelLayers(new Identifier(Bewitchment.MODID, "elder_boat"), false);
+		TerraformBoatClientHelper.registerModelLayers(new Identifier(Bewitchment.MODID, "dragons_blood_boat"), false);
 		EntityModelLayerRegistry.registerModelLayer(CONTRIBUTOR_HORNS_MODEL_LAYER, ContributorHornsModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(WITCH_ARMOR_MODEL_LAYER, WitchArmorModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(SPECTER_BANGLE_MODEL_LAYER, SpecterBangleModel::getTexturedModelData);
@@ -268,8 +271,8 @@ public class BewitchmentClient implements ClientModInitializer {
 			TrinketRenderer.translateToChest(matrices, (PlayerEntityModel<AbstractClientPlayerEntity>) contextModel, (AbstractClientPlayerEntity) entity);
 			matrices.translate(0, -1 / 4.25f, 1 / 48f);
 			matrices.scale(1 / 3f, 1 / 3f, 1 / 3f);
-			matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180));
-			MinecraftClient.getInstance().getItemRenderer().renderItem(copy, ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
+			matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(180));
+			MinecraftClient.getInstance().getItemRenderer().renderItem(copy, ModelTransformationMode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, entity.getWorld(), 0);
 		});
 		TrinketRendererRegistry.registerRenderer(BWObjects.SPECTER_BANGLE, new TrinketRenderer() {
 			private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/trinket/specter_bangle.png");
@@ -301,8 +304,8 @@ public class BewitchmentClient implements ClientModInitializer {
 			TrinketRenderer.translateToChest(matrices, (PlayerEntityModel<AbstractClientPlayerEntity>) contextModel, (AbstractClientPlayerEntity) entity);
 			matrices.translate(0, -1 / 4.25f, 1 / 48f);
 			matrices.scale(1 / 3f, 1 / 3f, 1 / 3f);
-			matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180));
-			MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
+			matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(180));
+			MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformationMode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, entity.getWorld(), 0);
 		});
 		TrinketRendererRegistry.registerRenderer(BWObjects.DRUID_BAND, new TrinketRenderer() {
 			private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/trinket/druid_band.png");
@@ -351,6 +354,18 @@ public class BewitchmentClient implements ClientModInitializer {
 					}
 				}
 			}
+		});
+		ClientSendMessageEvents.ALLOW_CHAT.register(message -> {
+			if (!message.startsWith("/")) {
+				PlayerEntity player = MinecraftClient.getInstance().player;
+				for (int i = 0; i < 1; i++) {
+					if (player.getWorld().getBlockEntity(player.getBlockPos().down(i)) instanceof WitchCauldronBlockEntity witchCauldron && witchCauldron.mode == WitchCauldronBlockEntity.Mode.TELEPORTATION) {
+						CauldronTeleportPacket.send(witchCauldron.getPos(), message);
+						return false;
+					}
+				}
+			}
+			return true;
 		});
 	}
 

@@ -18,7 +18,6 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -74,16 +73,11 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 	}
 
 	@Override
-	public PistonBehavior getPistonBehavior(BlockState state) {
-		return PistonBehavior.BLOCK;
-	}
-
-	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		boolean client = world.isClient;
 		ItemStack stack = player.getStackInHand(hand);
 		if (!formed) {
-			AltarMapEntry entry = BewitchmentAPI.ALTAR_MAP_ENTRIES.stream().filter(e -> e.unformed == this && e.carpet == stack.getItem()).findFirst().orElse(null);
+			AltarMapEntry entry = BewitchmentAPI.ALTAR_MAP_ENTRIES.stream().filter(e -> e.unformed() == this && e.carpet() == stack.getItem()).findFirst().orElse(null);
 			if (entry != null) {
 				if (!client) {
 					if (!player.isCreative()) {
@@ -91,7 +85,7 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 					}
 					Direction facing = world.getBlockState(pos).get(FACING);
 					world.breakBlock(pos, false);
-					world.setBlockState(pos, entry.formed.getPlacementState(new ItemPlacementContext(player, hand, stack, hit)).with(FACING, facing));
+					world.setBlockState(pos, entry.formed().getPlacementState(new ItemPlacementContext(player, hand, stack, hit)).with(FACING, facing));
 				}
 				return ActionResult.success(client);
 			}
@@ -142,13 +136,13 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 	@Nullable
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		return super.getPlacementState(ctx).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER).with(FACING, ctx.getPlayerFacing());
+		return super.getPlacementState(ctx).with(Properties.WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER).with(FACING, ctx.getHorizontalPlayerFacing());
 	}
 
 	@Override
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
 		if (state.get(Properties.WATERLOGGED)) {
-			world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+			world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
 		}
 		return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
 	}

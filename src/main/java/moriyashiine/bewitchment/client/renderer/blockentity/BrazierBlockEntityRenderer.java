@@ -10,10 +10,10 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 
 @Environment(EnvType.CLIENT)
 public class BrazierBlockEntityRenderer implements BlockEntityRenderer<BrazierBlockEntity> {
@@ -25,9 +25,9 @@ public class BrazierBlockEntityRenderer implements BlockEntityRenderer<BrazierBl
 		for (int i = 0; i < 4; i++) {
 			matrices.translate(0, 0.06, 0);
 			matrices.push();
-			matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion((90 + (180 * i)) % 360));
-			matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(90 * i));
-			MinecraftClient.getInstance().getItemRenderer().renderItem(entity.getStack(i), ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers, 0);
+			matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees((90 + (180 * i)) % 360));
+			matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(90 * i));
+			MinecraftClient.getInstance().getItemRenderer().renderItem(entity.getStack(i), ModelTransformationMode.FIXED, light, overlay, matrices, vertexConsumers, entity.getWorld(), 0);
 			matrices.pop();
 		}
 	}

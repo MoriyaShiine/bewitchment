@@ -8,8 +8,8 @@ import moriyashiine.bewitchment.api.registry.Transformation;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.transformation.VampireTransformation;
 import moriyashiine.bewitchment.common.transformation.WerewolfTransformation;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

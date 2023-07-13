@@ -73,7 +73,7 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 	@Override
 	public void tick() {
 		super.tick();
-		if (!world.isClient) {
+		if (!getWorld().isClient) {
 			bossBar.setPercent(getHealth() / getMaxHealth());
 			LivingEntity target = getTarget();
 			int timer = age + getId();
@@ -254,15 +254,15 @@ public class LeonardEntity extends BWHostileEntity implements Pledgeable {
 	}
 
 	private void spawnPotion(BlockPos target, Potion potionType) {
-		PotionEntity potion = new PotionEntity(world, this);
+		PotionEntity potion = new PotionEntity(getWorld(), this);
 		potion.setItem(PotionUtil.setPotion(new ItemStack(Items.SPLASH_POTION), potionType));
 		potion.updatePosition(potion.getX(), getBodyY(0.5), potion.getZ());
 		double targetX = target.getX() - getX();
 		double targetY = target.getY() - 1 - getY();
 		double targetZ = target.getZ() - getZ();
 		potion.setVelocity(targetX, targetY + (MathHelper.sqrt((float) (targetX * targetX + targetZ * targetZ)) * 0.4), targetZ, 1, 0);
-		world.playSound(null, getBlockPos(), SoundEvents.ENTITY_SPLASH_POTION_THROW, getSoundCategory(), getSoundVolume(), getSoundPitch());
-		world.spawnEntity(potion);
+		getWorld().playSound(null, getBlockPos(), SoundEvents.ENTITY_SPLASH_POTION_THROW, getSoundCategory(), getSoundVolume(), getSoundPitch());
+		getWorld().spawnEntity(potion);
 		swingHand(Hand.MAIN_HAND);
 	}
 }

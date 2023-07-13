@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(ProtectionEnchantment.class)
+@Mixin(value = ProtectionEnchantment.class, priority = 1)
 public class ProtectionEnchantmentMixin {
 	@Inject(method = "transformFireDuration", at = @At("HEAD"), cancellable = true)
 	private static void bewitchment$makeFireProtectionUselessForVampires(LivingEntity entity, int duration, CallbackInfoReturnable<Integer> callbackInfo) {

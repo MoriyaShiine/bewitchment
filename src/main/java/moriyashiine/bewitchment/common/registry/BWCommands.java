@@ -42,7 +42,7 @@ public class BWCommands {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
 			Fortune.Instance fortune = BWComponents.FORTUNE_COMPONENT.get(player).getFortune();
 			if (fortune != null) {
-				context.getSource().sendFeedback(Text.translatable("commands.fortune.get", player.getEntityName(), BWRegistries.FORTUNES.getId(fortune.fortune)), false);
+				context.getSource().sendFeedback(() -> Text.translatable("commands.fortune.get", player.getEntityName(), BWRegistries.FORTUNES.getId(fortune.fortune)), false);
 				return Command.SINGLE_SUCCESS;
 			}
 			throw FortuneArgumentType.GET_NO_FORTUNE_EXCEPTION.create(player.getEntityName());
@@ -50,20 +50,20 @@ public class BWCommands {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
 			Fortune fortune = FortuneArgumentType.getFortune(context, "fortune");
 			BWComponents.FORTUNE_COMPONENT.get(player).setFortune(new Fortune.Instance(fortune, player.getRandom().nextInt(120000)));
-			context.getSource().sendFeedback(Text.translatable("commands.fortune.set", player.getEntityName(), BWRegistries.FORTUNES.getId(fortune)), true);
+			context.getSource().sendFeedback(() -> Text.translatable("commands.fortune.set", player.getEntityName(), BWRegistries.FORTUNES.getId(fortune)), true);
 			return Command.SINGLE_SUCCESS;
 		})))).then(CommandManager.literal("remove").then(CommandManager.argument("player", EntityArgumentType.player()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
 			if (BWComponents.FORTUNE_COMPONENT.get(player).getFortune() != null) {
 				BWComponents.FORTUNE_COMPONENT.get(player).setFortune(null);
-				context.getSource().sendFeedback(Text.translatable("commands.fortune.remove", player.getEntityName()), true);
+				context.getSource().sendFeedback(() -> Text.translatable("commands.fortune.remove", player.getEntityName()), true);
 				return Command.SINGLE_SUCCESS;
 			}
 			throw FortuneArgumentType.REMOVE_NO_FORTUNE_EXCEPTION.create(player.getEntityName());
 		}))));
 		dispatcher.register(CommandManager.literal("transformation").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)).then(CommandManager.literal("get").then(CommandManager.argument("player", EntityArgumentType.player()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
-			context.getSource().sendFeedback(Text.translatable("commands.transformation.get", player.getEntityName(), BWRegistries.TRANSFORMATIONS.getId(BWComponents.TRANSFORMATION_COMPONENT.get(player).getTransformation())), false);
+			context.getSource().sendFeedback(() -> Text.translatable("commands.transformation.get", player.getEntityName(), BWRegistries.TRANSFORMATIONS.getId(BWComponents.TRANSFORMATION_COMPONENT.get(player).getTransformation())), false);
 			return Command.SINGLE_SUCCESS;
 		}))).then(CommandManager.literal("set").then(CommandManager.argument("player", EntityArgumentType.player()).then(CommandManager.argument("transformation", TransformationArgumentType.transformation()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
@@ -75,7 +75,7 @@ public class BWCommands {
 				transformationComponent.getTransformation().onRemoved(player);
 				transformationComponent.setTransformation(transformation);
 				transformationComponent.getTransformation().onAdded(player);
-				context.getSource().sendFeedback(Text.translatable("commands.transformation.set", player.getEntityName(), BWRegistries.TRANSFORMATIONS.getId(transformation)), true);
+				context.getSource().sendFeedback(() -> Text.translatable("commands.transformation.set", player.getEntityName(), BWRegistries.TRANSFORMATIONS.getId(transformation)), true);
 			});
 			return Command.SINGLE_SUCCESS;
 		})))));
@@ -87,7 +87,7 @@ public class BWCommands {
 				for (Contract.Instance instance : contractsComponent.getContracts()) {
 					contracts.append(BWRegistries.CONTRACTS.getId(instance.contract).toString()).append(", ");
 				}
-				context.getSource().sendFeedback(Text.translatable("commands.contract.get.multiple", player.getEntityName(), contracts.delete(contracts.lastIndexOf(","), contracts.capacity())), false);
+				context.getSource().sendFeedback(() -> Text.translatable("commands.contract.get.multiple", player.getEntityName(), contracts.delete(contracts.lastIndexOf(","), contracts.capacity())), false);
 				return Command.SINGLE_SUCCESS;
 			}
 			throw ContractArgumentType.GET_NO_CONTRACTS_EXCEPTION.create(player.getEntityName());
@@ -97,7 +97,7 @@ public class BWCommands {
 			Contract contract = ContractArgumentType.getContract(context, "contract");
 			if (contractsComponent.hasContract(contract)) {
 				int days = Math.round(contractsComponent.getContracts().stream().filter(instance -> instance.contract == contract).findFirst().orElse(null).duration / 24000f);
-				context.getSource().sendFeedback(Text.translatable("commands.contract.get.single", player.getEntityName(), days, BWRegistries.CONTRACTS.getId(contract)), false);
+				context.getSource().sendFeedback(() -> Text.translatable("commands.contract.get.single", player.getEntityName(), days, BWRegistries.CONTRACTS.getId(contract)), false);
 				return Command.SINGLE_SUCCESS;
 			}
 			throw ContractArgumentType.GET_NO_CONTRACT_EXCEPTION.create(player.getEntityName());
@@ -105,14 +105,14 @@ public class BWCommands {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
 			Contract contract = ContractArgumentType.getContract(context, "contract");
 			BWComponents.CONTRACTS_COMPONENT.get(player).addContract(new Contract.Instance(contract, 168000, 0));
-			context.getSource().sendFeedback(Text.translatable("commands.contract.add", player.getEntityName(), 7, BWRegistries.CONTRACTS.getId(contract)), true);
+			context.getSource().sendFeedback(() -> Text.translatable("commands.contract.add", player.getEntityName(), 7, BWRegistries.CONTRACTS.getId(contract)), true);
 			return Command.SINGLE_SUCCESS;
 		}).then(CommandManager.argument("days", IntegerArgumentType.integer(1, 365)).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
 			Contract contract = ContractArgumentType.getContract(context, "contract");
 			int days = IntegerArgumentType.getInteger(context, "days");
 			BWComponents.CONTRACTS_COMPONENT.get(player).addContract(new Contract.Instance(contract, days * 24000, 0));
-			context.getSource().sendFeedback(Text.translatable("commands.contract.add", player.getEntityName(), days, BWRegistries.CONTRACTS.getId(contract)), true);
+			context.getSource().sendFeedback(() -> Text.translatable("commands.contract.add", player.getEntityName(), days, BWRegistries.CONTRACTS.getId(contract)), true);
 			return Command.SINGLE_SUCCESS;
 		}))))).then(CommandManager.literal("remove").then(CommandManager.argument("player", EntityArgumentType.player()).then(CommandManager.argument("contract", ContractArgumentType.contract()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
@@ -120,7 +120,7 @@ public class BWCommands {
 			Contract contract = ContractArgumentType.getContract(context, "contract");
 			if (contractsComponent.hasContract(contract)) {
 				contractsComponent.removeContract(contract);
-				context.getSource().sendFeedback(Text.translatable("commands.contract.remove", player.getEntityName(), BWRegistries.CONTRACTS.getId(contract)), true);
+				context.getSource().sendFeedback(() -> Text.translatable("commands.contract.remove", player.getEntityName(), BWRegistries.CONTRACTS.getId(contract)), true);
 				return Command.SINGLE_SUCCESS;
 			}
 			throw ContractArgumentType.REMOVE_NO_CONTRACT_EXCEPTION.create(player.getEntityName());
@@ -129,7 +129,7 @@ public class BWCommands {
 			ContractsComponent contractsComponent = BWComponents.CONTRACTS_COMPONENT.get(player);
 			if (!contractsComponent.getContracts().isEmpty()) {
 				contractsComponent.getContracts().clear();
-				context.getSource().sendFeedback(Text.translatable("commands.contract.clear", player.getEntityName()), true);
+				context.getSource().sendFeedback(() -> Text.translatable("commands.contract.clear", player.getEntityName()), true);
 				return Command.SINGLE_SUCCESS;
 			}
 			throw ContractArgumentType.CLEAR_NO_CONTRACTS_EXCPETION.create(player.getEntityName());
@@ -143,7 +143,7 @@ public class BWCommands {
 					for (Curse.Instance instance : cursesComponent.getCurses()) {
 						curses.append(BWRegistries.CURSES.getId(instance.curse).toString()).append(", ");
 					}
-					context.getSource().sendFeedback(Text.translatable("commands.curse.get.multiple", entity.getEntityName(), curses.delete(curses.lastIndexOf(","), curses.capacity())), false);
+					context.getSource().sendFeedback(() -> Text.translatable("commands.curse.get.multiple", entity.getEntityName(), curses.delete(curses.lastIndexOf(","), curses.capacity())), false);
 					return Command.SINGLE_SUCCESS;
 				}
 				throw CurseArgumentType.GET_NO_CURSES_EXCEPTION.create(entity.getEntityName());
@@ -156,7 +156,7 @@ public class BWCommands {
 				Curse curse = CurseArgumentType.getCurse(context, "curse");
 				if (cursesComponent.hasCurse(curse)) {
 					int days = Math.round(cursesComponent.getCurses().stream().filter(instance -> instance.curse == curse).findFirst().orElse(null).duration / 24000f);
-					context.getSource().sendFeedback(Text.translatable("commands.curse.get.single", entity.getEntityName(), days, BWRegistries.CURSES.getId(curse)), false);
+					context.getSource().sendFeedback(() -> Text.translatable("commands.curse.get.single", entity.getEntityName(), days, BWRegistries.CURSES.getId(curse)), false);
 					return Command.SINGLE_SUCCESS;
 				}
 				throw CurseArgumentType.GET_NO_CURSE_EXCEPTION.create(entity.getEntityName());
@@ -167,7 +167,7 @@ public class BWCommands {
 			if (entity instanceof LivingEntity livingEntity) {
 				Curse curse = CurseArgumentType.getCurse(context, "curse");
 				BWComponents.CURSES_COMPONENT.get(livingEntity).addCurse(new Curse.Instance(curse, 168000));
-				context.getSource().sendFeedback(Text.translatable("commands.curse.add", entity.getEntityName(), 7, BWRegistries.CURSES.getId(curse)), true);
+				context.getSource().sendFeedback(() -> Text.translatable("commands.curse.add", entity.getEntityName(), 7, BWRegistries.CURSES.getId(curse)), true);
 				return Command.SINGLE_SUCCESS;
 			}
 			return 0;
@@ -177,7 +177,7 @@ public class BWCommands {
 				Curse curse = CurseArgumentType.getCurse(context, "curse");
 				int days = IntegerArgumentType.getInteger(context, "days");
 				BWComponents.CURSES_COMPONENT.get(livingEntity).addCurse(new Curse.Instance(curse, days * 24000));
-				context.getSource().sendFeedback(Text.translatable("commands.curse.add", entity.getEntityName(), days, BWRegistries.CURSES.getId(curse)), true);
+				context.getSource().sendFeedback(() -> Text.translatable("commands.curse.add", entity.getEntityName(), days, BWRegistries.CURSES.getId(curse)), true);
 				return Command.SINGLE_SUCCESS;
 			}
 			return 0;
@@ -188,7 +188,7 @@ public class BWCommands {
 				Curse curse = CurseArgumentType.getCurse(context, "curse");
 				if (cursesComponent.hasCurse(curse)) {
 					cursesComponent.removeCurse(curse);
-					context.getSource().sendFeedback(Text.translatable("commands.curse.remove", entity.getEntityName(), BWRegistries.CURSES.getId(curse)), true);
+					context.getSource().sendFeedback(() -> Text.translatable("commands.curse.remove", entity.getEntityName(), BWRegistries.CURSES.getId(curse)), true);
 					return Command.SINGLE_SUCCESS;
 				}
 				throw CurseArgumentType.REMOVE_NO_CURSE_EXCEPTION.create(entity.getEntityName());
@@ -200,7 +200,7 @@ public class BWCommands {
 				CursesComponent cursesComponent = BWComponents.CURSES_COMPONENT.get(livingEntity);
 				if (!cursesComponent.getCurses().isEmpty()) {
 					cursesComponent.getCurses().clear();
-					context.getSource().sendFeedback(Text.translatable("commands.curse.clear", entity.getEntityName()), true);
+					context.getSource().sendFeedback(() -> Text.translatable("commands.curse.clear", entity.getEntityName()), true);
 					return Command.SINGLE_SUCCESS;
 				}
 				throw CurseArgumentType.CLEAR_NO_CURSES_EXCPETION.create(entity.getEntityName());
@@ -210,16 +210,16 @@ public class BWCommands {
 		dispatcher.register(CommandManager.literal("removefamiliar").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)).then(CommandManager.argument("player", EntityArgumentType.player()).executes(context -> {
 			PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
 			if (player != null) {
-				BWUniversalWorldState universalWorldState = BWUniversalWorldState.get(player.world);
+				BWUniversalWorldState universalWorldState = BWUniversalWorldState.get(player.getWorld());
 				for (int i = universalWorldState.familiars.size() - 1; i >= 0; i--) {
 					if (player.getUuid().equals(universalWorldState.familiars.get(i).getLeft())) {
 						universalWorldState.familiars.remove(i);
 						universalWorldState.markDirty();
-						context.getSource().sendFeedback(Text.translatable("commands.removefamiliar.success", player.getName()), true);
+						context.getSource().sendFeedback(() -> Text.translatable("commands.removefamiliar.success", player.getName()), true);
 						return Command.SINGLE_SUCCESS;
 					}
 				}
-				context.getSource().sendFeedback(Text.translatable("commands.removefamiliar.no_familiar", player.getName()), true);
+				context.getSource().sendFeedback(() -> Text.translatable("commands.removefamiliar.no_familiar", player.getName()), true);
 			}
 			return 0;
 		})));

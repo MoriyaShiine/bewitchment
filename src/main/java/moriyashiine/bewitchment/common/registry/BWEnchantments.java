@@ -9,13 +9,14 @@ import moriyashiine.bewitchment.common.enchantment.MagicProtectionEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.ProtectionEnchantment;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class BWEnchantments {
 	public static final Enchantment MAGIC_PROTECTION = new MagicProtectionEnchantment(Enchantment.Rarity.UNCOMMON, ProtectionEnchantment.Type.FIRE, EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET);
 
 	public static void init() {
-		Registry.register(Registry.ENCHANTMENT, new Identifier(Bewitchment.MODID, "magic_protection"), MAGIC_PROTECTION);
+		Registry.register(Registries.ENCHANTMENT, new Identifier(Bewitchment.MODID, "magic_protection"), MAGIC_PROTECTION);
 	}
 }

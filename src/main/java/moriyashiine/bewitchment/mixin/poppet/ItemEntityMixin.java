@@ -14,7 +14,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -36,7 +38,7 @@ public abstract class ItemEntityMixin extends Entity {
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo callbackInfo) {
 		if (getStack().getItem() == BWObjects.VOODOO_POPPET && !BWConfig.disabledPoppets.contains("bewitchment:voodoo_poppet")) {
-			LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, getStack());
+			LivingEntity owner = BewitchmentAPI.getTaglockOwner(getWorld(), getStack());
 			if (owner != null) {
 				if (getVelocity().length() > 1 / 8f) {
 					int damage = random.nextFloat() < 1 / 4f ? 1 : 0;
@@ -64,26 +66,26 @@ public abstract class ItemEntityMixin extends Entity {
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (getStack().getItem() == BWObjects.VOODOO_POPPET && !BWConfig.disabledPoppets.contains("bewitchment:voodoo_poppet")) {
-			if (!world.isClient) {
-				LivingEntity owner = BewitchmentAPI.getTaglockOwner(world, getStack());
+			if (!getWorld().isClient) {
+				LivingEntity owner = BewitchmentAPI.getTaglockOwner(getWorld(), getStack());
 				if (owner != null) {
-					if (source.isFire() || source == DamageSource.LIGHTNING_BOLT) {
+					if (source.isIn(DamageTypeTags.IS_FIRE) || source.isOf(DamageTypes.LIGHTNING_BOLT)) {
 						remove(RemovalReason.DISCARDED);
 						if (!BewitchmentAPI.hasVoodooProtection(owner, getStack().getMaxDamage() / 4)) {
 							owner.setFireTicks(Integer.MAX_VALUE);
 						}
 					}
-					if (source == DamageSource.CACTUS && owner.hurtTime == 0) {
+					if (source.isOf(DamageTypes.CACTUS) && owner.hurtTime == 0) {
 						if (getStack().damage(1, random, null) && getStack().getDamage() >= getStack().getMaxDamage()) {
 							getStack().decrement(1);
 						}
 						if (!BewitchmentAPI.hasVoodooProtection(owner, 1)) {
-							owner.damage(DamageSource.CACTUS, 1);
+							owner.damage(getWorld().getDamageSources().cactus(), 1);
 						}
 					}
 				}
 			}
-			if (source.isFire() || source == DamageSource.LIGHTNING_BOLT || source == DamageSource.CACTUS) {
+			if (source.isIn(DamageTypeTags.IS_FIRE) || source.isOf(DamageTypes.LIGHTNING_BOLT) || source.isOf(DamageTypes.CACTUS)) {
 				callbackInfo.setReturnValue(false);
 			}
 		}

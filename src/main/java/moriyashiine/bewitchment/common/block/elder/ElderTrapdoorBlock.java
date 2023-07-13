@@ -6,10 +6,7 @@ package moriyashiine.bewitchment.common.block.elder;
 
 import moriyashiine.bewitchment.common.block.entity.LockableBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.Lockable;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.TrapdoorBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 @SuppressWarnings("ConstantConditions")
 public class ElderTrapdoorBlock extends TrapdoorBlock implements BlockEntityProvider {
 	public ElderTrapdoorBlock(Settings settings) {
-		super(settings);
+		super(settings, BlockSetType.OAK);
 	}
 
 	@Nullable

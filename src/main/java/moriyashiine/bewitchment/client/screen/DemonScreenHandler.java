@@ -46,13 +46,13 @@ public class DemonScreenHandler extends ScreenHandler {
 	}
 
 	@Override
-	public void close(PlayerEntity player) {
-		super.close(player);
+	public void onClosed(PlayerEntity player) {
+		super.onClosed(player);
 		demonMerchant.setCurrentCustomer(null);
 	}
 
 	@Override
-	public ItemStack transferSlot(PlayerEntity player, int index) {
+	public ItemStack quickMove(PlayerEntity player, int slot) {
 		return ItemStack.EMPTY;
 	}
 
@@ -68,12 +68,12 @@ public class DemonScreenHandler extends ScreenHandler {
 				if (!contractsComponent.hasContract(offer.getContract())) {
 					demonMerchant.onSell(offer);
 					demonMerchant.trade(offer);
-					if (!demonMerchant.getDemonTrader().world.isClient) {
+					if (!demonMerchant.getDemonTrader().getWorld().isClient) {
 						SyncContractsPacket.send(player);
 						SyncDemonTradesPacket.send(player, demonMerchant, syncId);
 						if (player.getMaxHealth() - offer.getCost(demonMerchant) <= 0) {
 							contractsComponent.getContracts().clear();
-							player.damage(BWDamageSources.DEATH, Float.MAX_VALUE);
+							player.damage(BWDamageSources.create(demonMerchant.getDemonTrader().getWorld(), BWDamageSources.DEATH), Float.MAX_VALUE);
 						}
 					}
 				}

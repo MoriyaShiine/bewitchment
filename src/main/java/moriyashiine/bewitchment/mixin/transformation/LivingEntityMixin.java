@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -27,10 +28,18 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage(float amount, DamageSource source) {
-		if (!world.isClient && source.getAttacker() instanceof PlayerEntity player && BewitchmentAPI.isVampire(player, false)) {
+		if (!getWorld().isClient && source.getAttacker() instanceof PlayerEntity player && BewitchmentAPI.isVampire(player, false)) {
 			amount /= 8;
 		}
 		return amount;
+	}
+
+	@ModifyArg(method = "applyMovementInput", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;updateVelocity(FLnet/minecraft/util/math/Vec3d;)V"))
+	private float bewitchment$werewolfAirSpeed(float value) {
+		if (!isOnGround() && BewitchmentAPI.isWerewolf(this, false)) {
+			return value * 1.5F;
+		}
+		return value;
 	}
 
 	@Inject(method = "getJumpVelocity", at = @At("RETURN"), cancellable = true)

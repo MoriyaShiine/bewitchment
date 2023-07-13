@@ -7,6 +7,7 @@ package moriyashiine.bewitchment.common.block.dragonsblood;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import net.minecraft.block.BlockEntityProvider;
+import net.minecraft.block.BlockSetType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.block.entity.BlockEntity;
@@ -21,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class DragonsBloodPressurePlateBlock extends PressurePlateBlock implements BlockEntityProvider {
 	public DragonsBloodPressurePlateBlock(Settings settings) {
-		super(ActivationRule.EVERYTHING, settings);
+		super(ActivationRule.EVERYTHING, settings, BlockSetType.OAK);
 	}
 
 	@Nullable

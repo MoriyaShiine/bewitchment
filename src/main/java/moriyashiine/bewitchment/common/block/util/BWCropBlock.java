@@ -83,7 +83,7 @@ public class BWCropBlock extends CropBlock {
 				damage = true;
 			}
 			if (damage) {
-				entity.damage(BWDamageSources.MAGIC_COPY, livingEntity.getMaxHealth() * 1 / 4f);
+				entity.damage(BWDamageSources.create(world, BWDamageSources.MAGIC_COPY), livingEntity.getMaxHealth() * 1 / 4f);
 			}
 		}
 	}

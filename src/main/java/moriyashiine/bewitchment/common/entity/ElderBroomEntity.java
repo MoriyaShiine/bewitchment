@@ -44,13 +44,13 @@ public class ElderBroomEntity extends BroomEntity {
 	protected void addPassenger(Entity passenger) {
 		super.addPassenger(passenger);
 		originalPos = getBlockPos();
-		originalWorld = world.getRegistryKey().toString();
+		originalWorld = getWorld().getRegistryKey().toString();
 	}
 
 	@Override
 	public Vec3d updatePassengerForDismount(LivingEntity passenger) {
 		Vec3d value = super.updatePassengerForDismount(passenger);
-		if (originalPos != null && world.getRegistryKey().toString().equals(originalWorld)) {
+		if (originalPos != null && getWorld().getRegistryKey().toString().equals(originalWorld)) {
 			double x = originalPos.getX() + 0.5;
 			double y = originalPos.getY();
 			double z = originalPos.getZ() + 0.5;

@@ -46,9 +46,9 @@ public abstract class LivingEntityMixin extends Entity {
 		super(type, world);
 	}
 
-	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "damage", at = @At("HEAD"))
 	private void damageHead(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!world.isClient) {
+		if (!getWorld().isClient) {
 			if (amount > 0 && hurtTime == 0) {
 				if ((Object) this instanceof PlayerEntity player && source.getSource() instanceof LivingEntity livingSource) {
 					List<Pair<SlotReference, ItemStack>> component = TrinketsApi.getTrinketComponent(player).get().getEquipped(BWObjects.PRICKLY_BELT);
@@ -91,7 +91,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Inject(method = "damage", at = @At("RETURN"))
 	private void damageReturn(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (callbackInfo.getReturnValueZ() && !world.isClient && source.getSource() instanceof PlayerEntity player && player.getMainHandStack().isEmpty() && TrinketsApi.getTrinketComponent(player).get().isEquipped(BWObjects.ZEPHYR_HARNESS) && BewitchmentAPI.drainMagic(player, 1, false)) {
+		if (callbackInfo.getReturnValueZ() && !getWorld().isClient && source.getSource() instanceof PlayerEntity player && player.getMainHandStack().isEmpty() && TrinketsApi.getTrinketComponent(player).get().isEquipped(BWObjects.ZEPHYR_HARNESS) && BewitchmentAPI.drainMagic(player, 1, false)) {
 			addVelocity(0, 2 / 3f, 0);
 		}
 	}

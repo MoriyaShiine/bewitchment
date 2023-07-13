@@ -37,7 +37,7 @@ public class FakeMobComponent implements AutoSyncedComponent, ServerTickingCompo
 	@Override
 	public void serverTick() {
 		if (getTarget() != null) {
-			LivingEntity entity = (LivingEntity) ((ServerWorld) obj.world).getEntity(getTarget());
+			LivingEntity entity = (LivingEntity) ((ServerWorld) obj.getWorld()).getEntity(getTarget());
 			if (entity == null || (obj.age % 20 == 0 && (obj.getRandom().nextFloat() < 1 / 100f || !BWComponents.CURSES_COMPONENT.get(entity).hasCurse(BWCurses.INSANITY)))) {
 				obj.remove(Entity.RemovalReason.DISCARDED);
 			} else if (obj.getTarget() == null || !obj.getTarget().getUuid().equals(getTarget())) {

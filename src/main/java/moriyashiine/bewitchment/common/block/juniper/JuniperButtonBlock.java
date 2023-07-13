@@ -7,8 +7,9 @@ package moriyashiine.bewitchment.common.block.juniper;
 import moriyashiine.bewitchment.common.block.entity.TaglockHolderBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
 import net.minecraft.block.BlockEntityProvider;
+import net.minecraft.block.BlockSetType;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.WoodenButtonBlock;
+import net.minecraft.block.ButtonBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,9 +23,9 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("ConstantConditions")
-public class JuniperButtonBlock extends WoodenButtonBlock implements BlockEntityProvider {
+public class JuniperButtonBlock extends ButtonBlock implements BlockEntityProvider {
 	public JuniperButtonBlock(Settings settings) {
-		super(settings);
+		super(settings, BlockSetType.OAK, 30, true);
 	}
 
 	@Nullable

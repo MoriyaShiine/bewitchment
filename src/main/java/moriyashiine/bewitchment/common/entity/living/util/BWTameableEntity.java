@@ -19,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.world.EntityView;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -29,6 +30,11 @@ public abstract class BWTameableEntity extends TameableEntity {
 
 	protected BWTameableEntity(EntityType<? extends TameableEntity> type, World world) {
 		super(type, world);
+	}
+
+	@Override
+	public EntityView method_48926() {
+		return getWorld();
 	}
 
 	@Override
@@ -68,7 +74,7 @@ public abstract class BWTameableEntity extends TameableEntity {
 
 	@Override
 	public ActionResult interactMob(PlayerEntity player, Hand hand) {
-		boolean client = world.isClient;
+		boolean client = getWorld().isClient;
 		ItemStack stack = player.getStackInHand(hand);
 		if (isBreedingItem(stack)) {
 			if (getHealth() < getMaxHealth()) {
@@ -88,9 +94,9 @@ public abstract class BWTameableEntity extends TameableEntity {
 							setSitting(true);
 							setTarget(null);
 							navigation.stop();
-							world.sendEntityStatus(this, (byte) 7);
+							getWorld().sendEntityStatus(this, (byte) 7);
 						} else {
-							world.sendEntityStatus(this, (byte) 6);
+							getWorld().sendEntityStatus(this, (byte) 6);
 						}
 					}
 					return ActionResult.success(client);

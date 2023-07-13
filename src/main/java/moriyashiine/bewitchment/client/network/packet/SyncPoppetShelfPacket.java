@@ -30,7 +30,7 @@ public class SyncPoppetShelfPacket {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		buf.writeLong(pos.asLong());
 		NbtCompound nbt = new NbtCompound();
-		DefaultedList<ItemStack> inventory = BWWorldState.get(player.world).poppetShelves.get(pos.asLong());
+		DefaultedList<ItemStack> inventory = BWWorldState.get(player.getWorld()).poppetShelves.get(pos.asLong());
 		if (inventory != null) {
 			Inventories.writeNbt(nbt, inventory);
 		}

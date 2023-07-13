@@ -32,14 +32,10 @@
 	],
 	"appleskin": [
 	  "moriyashiine.bewitchment.client.integration.appleskin.BWAppleskinIntegration"
-	],
-	"rei_client": [
-	  "moriyashiine.bewitchment.client.integration.rei.BWREIPlugin"
 	]
   },
   "mixins": [
-	"bewitchment.mixins.json",
-	"bewitchment.vampirehacks.mixins.json"
+	"bewitchment.mixins.json"
   ],
   "accessWidener": "bewitchment.accesswidener",
   "depends": {

@@ -20,7 +20,7 @@ public class HellishBaubleItem extends TrinketItem {
 
 	@Override
 	public void tick(ItemStack stack, SlotReference slot, LivingEntity entity) {
-		if (entity instanceof PlayerEntity player && !entity.world.isClient && entity.age % 10 == 0 && entity.isOnFire()) {
+		if (entity instanceof PlayerEntity player && !entity.getWorld().isClient && entity.age % 10 == 0 && entity.isOnFire()) {
 			StatusEffectInstance fireResistance = new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 300, 0, true, false);
 			if (entity.canHaveStatusEffect(fireResistance) && !entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE) && BewitchmentAPI.drainMagic(player, 1, false)) {
 				entity.addStatusEffect(fireResistance);

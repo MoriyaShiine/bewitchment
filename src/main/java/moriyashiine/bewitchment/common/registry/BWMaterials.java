@@ -4,24 +4,20 @@
 
 package moriyashiine.bewitchment.common.registry;
 
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.ArmorMaterials;
-import net.minecraft.item.ToolMaterial;
-import net.minecraft.item.ToolMaterials;
+import net.minecraft.item.*;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 
 public class BWMaterials {
 	public static final ArmorMaterial HEDGEWITCH_ARMOR = new ArmorMaterial() {
 		@Override
-		public int getDurability(EquipmentSlot slot) {
-			return ArmorMaterials.CHAIN.getDurability(slot);
+		public int getDurability(ArmorItem.Type type) {
+			return ArmorMaterials.CHAIN.getDurability(type);
 		}
 
 		@Override
-		public int getProtectionAmount(EquipmentSlot slot) {
-			return ArmorMaterials.CHAIN.getProtectionAmount(slot);
+		public int getProtection(ArmorItem.Type type) {
+			return ArmorMaterials.CHAIN.getProtection(type);
 		}
 
 		@Override
@@ -57,13 +53,13 @@ public class BWMaterials {
 
 	public static final ArmorMaterial ALCHEMIST_ARMOR = new ArmorMaterial() {
 		@Override
-		public int getDurability(EquipmentSlot slot) {
-			return HEDGEWITCH_ARMOR.getDurability(slot);
+		public int getDurability(ArmorItem.Type type) {
+			return HEDGEWITCH_ARMOR.getDurability(type);
 		}
 
 		@Override
-		public int getProtectionAmount(EquipmentSlot slot) {
-			return HEDGEWITCH_ARMOR.getProtectionAmount(slot);
+		public int getProtection(ArmorItem.Type type) {
+			return HEDGEWITCH_ARMOR.getProtection(type);
 		}
 
 		@Override
@@ -99,13 +95,13 @@ public class BWMaterials {
 
 	public static final ArmorMaterial BESMIRCHED_ARMOR = new ArmorMaterial() {
 		@Override
-		public int getDurability(EquipmentSlot slot) {
-			return HEDGEWITCH_ARMOR.getDurability(slot);
+		public int getDurability(ArmorItem.Type type) {
+			return HEDGEWITCH_ARMOR.getDurability(type);
 		}
 
 		@Override
-		public int getProtectionAmount(EquipmentSlot slot) {
-			return HEDGEWITCH_ARMOR.getProtectionAmount(slot);
+		public int getProtection(ArmorItem.Type type) {
+			return HEDGEWITCH_ARMOR.getProtection(type);
 		}
 
 		@Override
@@ -141,13 +137,13 @@ public class BWMaterials {
 
 	public static final ArmorMaterial HARBINGER_ARMOR = new ArmorMaterial() {
 		@Override
-		public int getDurability(EquipmentSlot slot) {
-			return ArmorMaterials.NETHERITE.getDurability(slot);
+		public int getDurability(ArmorItem.Type type) {
+			return HEDGEWITCH_ARMOR.getDurability(type);
 		}
 
 		@Override
-		public int getProtectionAmount(EquipmentSlot slot) {
-			return ArmorMaterials.NETHERITE.getProtectionAmount(slot);
+		public int getProtection(ArmorItem.Type type) {
+			return HEDGEWITCH_ARMOR.getProtection(type);
 		}
 
 		@Override

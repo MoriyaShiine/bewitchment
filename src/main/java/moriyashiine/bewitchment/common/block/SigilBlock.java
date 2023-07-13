@@ -16,13 +16,12 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.state.StateManager;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -54,22 +53,17 @@ public class SigilBlock extends HorizontalFacingBlock implements BlockEntityProv
 		return SHAPE;
 	}
 
-	@Override
-	public PistonBehavior getPistonBehavior(BlockState state) {
-		return PistonBehavior.DESTROY;
-	}
-
 	@Nullable
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		return super.getPlacementState(ctx).with(FACING, ctx.getPlayerFacing()).with(BWProperties.TYPE, ctx.getWorld().random.nextInt(10));
+		return super.getPlacementState(ctx).with(FACING, ctx.getHorizontalPlayerFacing()).with(BWProperties.TYPE, ctx.getWorld().random.nextInt(10));
 	}
 
 	@Environment(EnvType.CLIENT)
 	@Override
 	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
 		if (world.getBlockEntity(pos) instanceof SigilHolder sigilHolder) {
-			for (Item sigil : Registry.ITEM) {
+			for (Item sigil : Registries.ITEM) {
 				if (sigil instanceof SigilItem sigilItem) {
 					if (sigilHolder.getSigil() == sigilItem.sigil) {
 						return new ItemStack(sigil);

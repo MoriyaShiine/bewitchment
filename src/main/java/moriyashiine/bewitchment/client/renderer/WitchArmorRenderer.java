@@ -42,14 +42,14 @@ public class WitchArmorRenderer implements ArmorRenderer {
 			bootsModel = new WitchArmorModel<>(MinecraftClient.getInstance().getEntityModelLoader().getModelPart(BewitchmentClient.WITCH_ARMOR_MODEL_LAYER));
 		}
 		if (slot == EquipmentSlot.FEET) {
-			contextModel.setAttributes(bootsModel);
+			contextModel.copyBipedStateTo(bootsModel);
 			bootsModel.setVisible(false);
 			bootsModel.leftLeg.visible = true;
 			bootsModel.rightLeg.visible = true;
 			ArmorRenderer.renderPart(matrices, vertexConsumers, light, stack, bootsModel, texture);
 		} else {
 			boolean hat = stack.getItem() == hatItem;
-			contextModel.setAttributes(armorModel);
+			contextModel.copyBipedStateTo(armorModel);
 			armorModel.setVisible(false);
 			armorModel.hood01.visible = !hat;
 			armorModel.hat1.visible = hat;

@@ -8,10 +8,10 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.living.DemonEntity;
 import moriyashiine.bewitchment.common.registry.BWComponents;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.util.Window;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
@@ -26,26 +26,25 @@ public class DemonScreen extends HandledScreen<DemonScreenHandler> {
 	}
 
 	@Override
-	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-		renderBackground(matrices);
-		super.render(matrices, mouseX, mouseY, delta);
+	public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+		renderBackground(context);
+		super.render(context, mouseX, mouseY, delta);
 		for (Slot slot : getScreenHandler().slots) {
 			if (slot instanceof DemonScreenHandler.DemonTradeSlot tradeSlot) {
 				DemonEntity.DemonTradeOffer offer = tradeSlot.getOffer();
 				if (offer != null) {
-					drawHearts(matrices, slot.x, slot.y, offer);
+					drawHearts(context, slot.x, slot.y, offer);
 				}
 			}
 		}
-		drawPortrait(matrices, mouseX, mouseY);
-		drawMouseoverTooltip(matrices, mouseX, mouseY);
+		drawPortrait(context, mouseX, mouseY);
+		drawMouseoverTooltip(context, mouseX, mouseY);
 	}
 
-	private void drawPortrait(MatrixStack matrices, int mouseX, int mouseY) {
+	private void drawPortrait(DrawContext context, int mouseX, int mouseY) {
 		if (handler.demonMerchant.getDemonTrader() == null) {
 			return;
 		}
-		RenderSystem.setShaderTexture(0, getBackground());
 		int x = (width - backgroundWidth) / 2 + 56;
 		int y = (height - backgroundHeight) / 2 + 16;
 		Window window = client.getWindow();
@@ -54,9 +53,9 @@ public class DemonScreen extends HandledScreen<DemonScreenHandler> {
 		int scissorWidth = unscale(64, window.getScaledWidth(), window.getWidth());
 		int scissorHeight = unscale(64, window.getScaledHeight(), window.getHeight());
 		RenderSystem.enableScissor(scissorX, scissorY, scissorWidth, scissorHeight);
-		drawTexture(matrices, x, y, 176, 16, 64, 72);
+		context.drawTexture(getBackground(), x, y, 176, 16, 64, 72);
 		int height = (int) (handler.demonMerchant.getDemonTrader().getHeight() * 55);
-		InventoryScreen.drawEntity(x + 32, y + height, 50, (float) (x + 32) - mouseX, (float) (y + 105 - 50) - mouseY, handler.demonMerchant.getDemonTrader());
+		InventoryScreen.drawEntity(context, x + 32, y + height, 50, (float) (x + 32) - mouseX, (float) (y + 105 - 50) - mouseY, handler.demonMerchant.getDemonTrader());
 		RenderSystem.disableScissor();
 	}
 
@@ -64,43 +63,41 @@ public class DemonScreen extends HandledScreen<DemonScreenHandler> {
 		return (int) ((scaled / windowScaled) * windowReal);
 	}
 
-	protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
-		RenderSystem.setShaderColor(1, 1, 1, 1);
-		RenderSystem.setShaderTexture(0, getBackground());
+	@Override
+	protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
 		int x = (width - backgroundWidth) / 2;
 		int y = (height - backgroundHeight) / 2;
-		drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
+		context.drawTexture(getBackground(), x, y, 0, 0, backgroundWidth, backgroundHeight);
 	}
 
 	@Override
-	protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY) {
-		this.textRenderer.draw(matrices, this.title, (float) this.titleX, (float) this.titleY, 4210752);
+	protected void drawForeground(DrawContext context, int mouseX, int mouseY) {
+		context.drawText(textRenderer, this.title, this.titleX, this.titleY, 4210752, false);
 	}
 
-	private void drawHearts(MatrixStack matrices, int x, int y, DemonEntity.DemonTradeOffer offer) {
+	private void drawHearts(DrawContext context, int x, int y, DemonEntity.DemonTradeOffer offer) {
 		int cost = offer.getCost(handler.demonMerchant);
 		int fullGroups = cost / 2;
-		RenderSystem.setShaderTexture(0, HEARTS);
 		int heartX = (this.x + x - 6 - ((cost - 1) / 2 * 4));
 		int heartY = this.y + y + 18;
-		matrices.push();
+		context.getMatrices().push();
 		for (int i = 0; i < cost; i++) {
 			heartX += 9;
-			drawTexture(matrices, heartX, heartY, 16, 0, 9, 9);
+			context.drawTexture(HEARTS, heartX, heartY, 16, 0, 9, 9);
 			if (!BWComponents.CONTRACTS_COMPONENT.get(client.player).hasContract(offer.getContract())) {
 				if (fullGroups > 0) {
 					fullGroups--;
 					i++;
-					drawTexture(matrices, heartX, heartY, 52, 0, 9, 9);
+					context.drawTexture(HEARTS, heartX, heartY, 52, 0, 9, 9);
 				} else {
-					drawTexture(matrices, heartX, heartY, 61, 0, 9, 9);
+					context.drawTexture(HEARTS, heartX, heartY, 61, 0, 9, 9);
 				}
 			} else if (fullGroups > 0) {
 				fullGroups--;
 				i++;
 			}
 		}
-		matrices.pop();
+		context.getMatrices().pop();
 	}
 
 	@Override

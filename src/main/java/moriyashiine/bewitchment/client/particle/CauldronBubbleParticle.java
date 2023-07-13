@@ -44,7 +44,7 @@ public class CauldronBubbleParticle extends SpriteBillboardParticle {
 			velocityX *= 0.7;
 			velocityY *= 0.7;
 			velocityZ *= 0.7;
-			if (!(world.getBlockState(new BlockPos(x, y, z)).getBlock() instanceof WitchCauldronBlock)) {
+			if (!(world.getBlockState(new BlockPos((int) x, (int) y, (int) z)).getBlock() instanceof WitchCauldronBlock)) {
 				markDead();
 			}
 		}

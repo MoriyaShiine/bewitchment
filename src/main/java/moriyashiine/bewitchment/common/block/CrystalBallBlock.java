@@ -37,13 +37,13 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3f;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 @SuppressWarnings("ConstantConditions")
 public class CrystalBallBlock extends Block implements Waterloggable {
@@ -63,7 +63,7 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 		boolean client = world.isClient;
 		if (client) {
 			for (int i = 0; i < 10; i++) {
-				world.addParticle(new DustParticleEffect(new Vec3f(1, 1, 1), 1), pos.getX() + world.random.nextFloat(), pos.getY() + world.random.nextFloat(), pos.getZ() + world.random.nextFloat(), 0, 0, 0);
+				world.addParticle(new DustParticleEffect(new Vector3f(1, 1, 1), 1), pos.getX() + world.random.nextFloat(), pos.getY() + world.random.nextFloat(), pos.getZ() + world.random.nextFloat(), 0, 0, 0);
 			}
 		} else {
 			SoundEvent sound = BWSoundEvents.BLOCK_CRYSTAL_BALL_FAIL;
@@ -150,7 +150,7 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 	@Override
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
 		if (state.get(Properties.WATERLOGGED)) {
-			world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+			world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
 		}
 		return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
 	}

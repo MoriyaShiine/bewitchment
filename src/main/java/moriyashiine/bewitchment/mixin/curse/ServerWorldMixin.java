@@ -22,13 +22,13 @@ public abstract class ServerWorldMixin {
 	private void spawnEntity(Entity entity, CallbackInfoReturnable<Boolean> callbackInfo) {
 		if (entity instanceof LightningEntity) {
 			LivingEntity closest = null;
-			for (LivingEntity foundLiving : entity.world.getEntitiesByClass(LivingEntity.class, new Box(entity.getBlockPos()).expand(256), currentLiving -> currentLiving.isAlive() && BWComponents.CURSES_COMPONENT.get(currentLiving).hasCurse(BWCurses.LIGHTNING_ROD))) {
+			for (LivingEntity foundLiving : entity.getWorld().getEntitiesByClass(LivingEntity.class, new Box(entity.getBlockPos()).expand(256), currentLiving -> currentLiving.isAlive() && BWComponents.CURSES_COMPONENT.get(currentLiving).hasCurse(BWCurses.LIGHTNING_ROD))) {
 				if (closest == null || foundLiving.distanceTo(entity) < closest.distanceTo(entity)) {
 					closest = foundLiving;
 				}
 			}
 			if (closest != null) {
-				entity.updatePositionAndAngles(closest.getX(), closest.getY(), closest.getZ(), entity.world.random.nextFloat() * 360, 0);
+				entity.updatePositionAndAngles(closest.getX(), closest.getY(), closest.getZ(), entity.getWorld().random.nextFloat() * 360, 0);
 			}
 		}
 	}

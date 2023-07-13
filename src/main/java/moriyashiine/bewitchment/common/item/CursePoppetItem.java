@@ -54,10 +54,10 @@ public class CursePoppetItem extends PoppetItem {
 						boolean failed = false;
 						Curse curse = BWRegistries.CURSES.get(new Identifier(stack.getOrCreateNbt().getString("Curse")));
 						PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, entity);
-						if (!poppetData.stack.isEmpty() && poppetData.stack.hasNbt() && !poppetData.stack.getNbt().getBoolean("Cursed")) {
-							poppetData.stack.getNbt().putString("Curse", BWRegistries.CURSES.getId(curse).toString());
-							poppetData.stack.getNbt().putBoolean("Cursed", true);
-							TaglockItem.removeTaglock(poppetData.stack);
+						if (!poppetData.stack().isEmpty() && poppetData.stack().hasNbt() && !poppetData.stack().getNbt().getBoolean("Cursed")) {
+							poppetData.stack().getNbt().putString("Curse", BWRegistries.CURSES.getId(curse).toString());
+							poppetData.stack().getNbt().putBoolean("Cursed", true);
+							TaglockItem.removeTaglock(poppetData.stack());
 							poppetData.update(world, true);
 							failed = true;
 						}

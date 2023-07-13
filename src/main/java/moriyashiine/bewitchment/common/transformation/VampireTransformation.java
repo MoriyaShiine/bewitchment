@@ -8,12 +8,12 @@ import moriyashiine.bewitchment.api.registry.Transformation;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
 
 public class VampireTransformation extends Transformation {
 	@Override
 	public void onAdded(PlayerEntity player) {
-		Registry.STATUS_EFFECT.stream().forEach(effect -> {
+		Registries.STATUS_EFFECT.stream().forEach(effect -> {
 			StatusEffectInstance effectInstance = player.getStatusEffect(effect);
 			if (effectInstance != null && !player.canHaveStatusEffect(effectInstance)) {
 				player.removeStatusEffect(effect);

@@ -36,7 +36,7 @@ public class MinionComponent implements ServerTickingComponent {
 	@Override
 	public void serverTick() {
 		if (getMaster() != null) {
-			Entity master = ((ServerWorld) obj.world).getEntity(getMaster());
+			Entity master = ((ServerWorld) obj.getWorld()).getEntity(getMaster());
 			if (master instanceof MobEntity mob && !mob.isDead() && mob.getTarget() != null) {
 				obj.setTarget(mob.getTarget());
 			} else {

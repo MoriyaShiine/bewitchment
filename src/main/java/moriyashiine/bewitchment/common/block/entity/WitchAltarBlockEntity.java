@@ -14,15 +14,15 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -183,7 +183,7 @@ public class WitchAltarBlockEntity extends BlockEntity implements Inventory {
 				int z = (counter >> 10) & 31;
 				BlockState checkedState = world.getBlockState(checking.set(pos.getX() + x - 15, pos.getY() + y - 15, pos.getZ() + z - 15));
 				Block checkedBlock = checkedState.getBlock();
-				if (givesAltarPower(checkedState) && !(checkedState.isIn(BlockTags.LOGS) && Registry.BLOCK.getId(checkedBlock).getPath().contains("stripped"))) {
+				if (givesAltarPower(checkedState) && !(checkedState.isIn(BlockTags.LOGS) && Registries.BLOCK.getId(checkedBlock).getPath().contains("stripped"))) {
 					checked.put(checkedBlock, Math.min(checked.getOrDefault(checkedBlock, 0) + 1, 256));
 				}
 				if (counter == Short.MAX_VALUE - 1) {

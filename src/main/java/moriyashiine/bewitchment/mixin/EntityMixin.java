@@ -25,7 +25,7 @@ public abstract class EntityMixin {
 	public abstract UUID getUuid();
 
 	@Shadow
-	public World world;
+	private World world;
 
 	@Inject(method = "isInvulnerableTo", at = @At("RETURN"), cancellable = true)
 	private void isInvulnerableTo(DamageSource source, CallbackInfoReturnable<Boolean> callbackInfo) {

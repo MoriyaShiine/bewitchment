@@ -23,7 +23,7 @@ public class MortalCoilStatusEffect extends StatusEffect {
 	@Override
 	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
 		if (entity.getStatusEffect(this).getDuration() == 1) {
-			entity.damage(BWDamageSources.DEATH, Float.MAX_VALUE);
+			entity.damage(BWDamageSources.create(entity.getWorld(), BWDamageSources.DEATH), Float.MAX_VALUE);
 		}
 	}
 }

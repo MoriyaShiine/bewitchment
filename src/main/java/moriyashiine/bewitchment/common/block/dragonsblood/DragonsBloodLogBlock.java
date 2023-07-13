@@ -4,14 +4,13 @@
 
 package moriyashiine.bewitchment.common.block.dragonsblood;
 
-import com.terraformersmc.terraform.wood.block.StrippableLogBlock;
 import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWProperties;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.MapColor;
+import net.minecraft.block.PillarBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
@@ -27,11 +26,9 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
-import java.util.function.Supplier;
-
-public class DragonsBloodLogBlock extends StrippableLogBlock {
-	public DragonsBloodLogBlock(Supplier<Block> stripped, MapColor top, Settings settings) {
-		super(stripped, top, settings);
+public class DragonsBloodLogBlock extends PillarBlock {
+	public DragonsBloodLogBlock(Settings settings) {
+		super(settings);
 		setDefaultState(getDefaultState().with(BWProperties.NATURAL, false).with(BWProperties.CUT, false));
 	}
 

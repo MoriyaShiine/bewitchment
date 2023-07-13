@@ -22,7 +22,6 @@ import moriyashiine.bewitchment.common.recipe.AthameDropRecipe;
 import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
@@ -46,22 +45,21 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.explosion.Explosion;
 
 public class Bewitchment implements ModInitializer {
 	public static final String MODID = "bewitchment";
 
-	public static final ItemGroup BEWITCHMENT_GROUP = FabricItemGroupBuilder.build(new Identifier(MODID, MODID), () -> new ItemStack(BWObjects.ATHAME));
+	public static ItemGroup GROUP;
 
 	@SuppressWarnings("ConstantConditions")
 	@Override
@@ -113,7 +111,7 @@ public class Bewitchment implements ModInitializer {
 								BlockPos brazierPos = BWUtil.getClosestBlockPos(killedEntity.getBlockPos(), 8, currentPos -> world.getBlockEntity(currentPos) instanceof BrazierBlockEntity brazier && brazier.incenseRecipe.effect == BWStatusEffects.MORTAL_COIL);
 								if (brazierPos != null) {
 									world.breakBlock(brazierPos, false);
-									world.createExplosion(null, brazierPos.getX() + 0.5, brazierPos.getY() + 0.5, brazierPos.getZ() + 0.5, 3, Explosion.DestructionType.BREAK);
+									world.createExplosion(null, brazierPos.getX() + 0.5, brazierPos.getY() + 0.5, brazierPos.getZ() + 0.5, 3, World.ExplosionSourceType.TNT);
 									boss.initialize(world, world.getLocalDifficulty(brazierPos), SpawnReason.EVENT, null, null);
 									boss.updatePositionAndAngles(brazierPos.getX() + 0.5, brazierPos.getY(), brazierPos.getZ() + 0.5, world.random.nextFloat() * 360, 0);
 									world.spawnEntity(boss);
@@ -123,7 +121,7 @@ public class Bewitchment implements ModInitializer {
 					}
 					for (AthameDropRecipe recipe : world.getRecipeManager().listAllOfType(BWRecipeTypes.ATHAME_DROP_RECIPE_TYPE)) {
 						if (recipe.entity_type.equals(killedEntity.getType()) && world.random.nextFloat() < recipe.chance * (EnchantmentHelper.getLooting(livingEntity) + 1)) {
-							ItemStack drop = recipe.getOutput().copy();
+							ItemStack drop = recipe.getOutput(entity.getWorld().getRegistryManager()).copy();
 							if (recipe.entity_type == EntityType.PLAYER) {
 								drop.getOrCreateNbt().putString("SkullOwner", killedEntity.getName().getString());
 							}
@@ -149,7 +147,7 @@ public class Bewitchment implements ModInitializer {
 							BloodSuckEvents.ON_BLOOD_SUCK.invoker().onBloodSuck(player, livingEntity, toGive);
 							world.playSound(null, player.getBlockPos(), SoundEvents.ITEM_HONEY_BOTTLE_DRINK, player.getSoundCategory(), 1, 0.5f);
 							if (!livingEntity.isSleeping() || entityBloodComponent.getBlood() < BloodComponent.MAX_BLOOD / 2) {
-								entity.damage(BWDamageSources.VAMPIRE, 2);
+								entity.damage(BWDamageSources.create(entity.getWorld(), BWDamageSources.VAMPIRE), 2);
 							}
 							playerBloodComponent.fillBlood(toGive, false);
 							entityBloodComponent.drainBlood(10, false);
@@ -160,14 +158,14 @@ public class Bewitchment implements ModInitializer {
 			}
 			return ActionResult.PASS;
 		});
-		EntitySleepEvents.ALLOW_SLEEP_TIME.register((player, sleepingPos, vanillaResult) -> player.world.getBlockState(sleepingPos).getBlock() instanceof CoffinBlock && player.world.isDay() ? ActionResult.success(player.world.isClient) : ActionResult.PASS);
+		EntitySleepEvents.ALLOW_SLEEP_TIME.register((player, sleepingPos, vanillaResult) -> player.getWorld().getBlockState(sleepingPos).getBlock() instanceof CoffinBlock && player.getWorld().isDay() ? ActionResult.success(player.getWorld().isClient) : ActionResult.PASS);
 		EntitySleepEvents.ALLOW_SLEEPING.register((player, sleepingPos) -> {
 			if (BWComponents.TRANSFORMATION_COMPONENT.get(player).isAlternateForm()) {
 				player.sendMessage(Text.translatable("block.minecraft.bed.transformation"), true);
 				return PlayerEntity.SleepFailureReason.OTHER_PROBLEM;
 			}
-			if (player.world.getBlockState(sleepingPos).getBlock() instanceof CoffinBlock) {
-				if (player.world.isNight()) {
+			if (player.getWorld().getBlockState(sleepingPos).getBlock() instanceof CoffinBlock) {
+				if (player.getWorld().isNight()) {
 					player.sendMessage(Text.translatable("block.minecraft.bed.coffin"), true);
 					return PlayerEntity.SleepFailureReason.OTHER_PROBLEM;
 				}
@@ -176,13 +174,13 @@ public class Bewitchment implements ModInitializer {
 			return null;
 		});
 		EntitySleepEvents.STOP_SLEEPING.register((entity, sleepingPos) -> {
-			if (!entity.world.isClient) {
-				BWUtil.getBlockPoses(entity.getBlockPos(), 12, currentPos -> entity.world.getBlockEntity(currentPos) instanceof BrazierBlockEntity brazier && brazier.incenseRecipe != null).forEach(foundPos -> {
-					IncenseRecipe recipe = ((BrazierBlockEntity) entity.world.getBlockEntity(foundPos)).incenseRecipe;
+			if (!entity.getWorld().isClient) {
+				BWUtil.getBlockPoses(entity.getBlockPos(), 12, currentPos -> entity.getWorld().getBlockEntity(currentPos) instanceof BrazierBlockEntity brazier && brazier.incenseRecipe != null).forEach(foundPos -> {
+					IncenseRecipe recipe = ((BrazierBlockEntity) entity.getWorld().getBlockEntity(foundPos)).incenseRecipe;
 					int durationMultiplier = 1;
-					BlockPos nearestSigil = BWUtil.getClosestBlockPos(entity.getBlockPos(), 16, currentPos -> entity.world.getBlockEntity(currentPos) instanceof SigilBlockEntity sigil && sigil.getSigil() == BWSigils.EXTENDING);
+					BlockPos nearestSigil = BWUtil.getClosestBlockPos(entity.getBlockPos(), 16, currentPos -> entity.getWorld().getBlockEntity(currentPos) instanceof SigilBlockEntity sigil && sigil.getSigil() == BWSigils.EXTENDING);
 					if (nearestSigil != null) {
-						BlockEntity blockEntity = entity.world.getBlockEntity(nearestSigil);
+						BlockEntity blockEntity = entity.getWorld().getBlockEntity(nearestSigil);
 						SigilHolder sigilHolder = ((SigilHolder) blockEntity);
 						if (sigilHolder.test(entity)) {
 							sigilHolder.setUses(sigilHolder.getUses() - 1);

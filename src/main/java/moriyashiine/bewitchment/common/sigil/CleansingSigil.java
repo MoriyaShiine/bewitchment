@@ -9,10 +9,10 @@ import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public class CleansingSigil extends Sigil {
@@ -28,7 +28,7 @@ public class CleansingSigil extends Sigil {
 		}
 		if (flag) {
 			flag = false;
-			for (StatusEffect effect : Registry.STATUS_EFFECT) {
+			for (StatusEffect effect : Registries.STATUS_EFFECT) {
 				if (user.hasStatusEffect(effect) && effect.getCategory() == StatusEffectCategory.HARMFUL) {
 					if (!world.isClient) {
 						user.removeStatusEffect(effect);

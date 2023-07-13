@@ -10,7 +10,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,8 +50,8 @@ public class CorruptionStatusEffect extends StatusEffect {
 
 	@Override
 	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-		if (!entity.world.isClient) {
-			Registry.STATUS_EFFECT.stream().forEach(effect -> {
+		if (!entity.getWorld().isClient) {
+			Registries.STATUS_EFFECT.stream().forEach(effect -> {
 				if (effect.getCategory() == StatusEffectCategory.BENEFICIAL && entity.hasStatusEffect(effect) && !entity.getStatusEffect(effect).isAmbient()) {
 					StatusEffect inverse = INVERSE_EFFECTS.get(effect);
 					StatusEffectInstance inverseEffect = null;

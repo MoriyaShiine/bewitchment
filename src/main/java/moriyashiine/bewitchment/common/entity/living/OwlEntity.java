@@ -117,7 +117,7 @@ public class OwlEntity extends BWTameableEntity {
 	}
 
 	@Override
-	protected boolean hasWings() {
+	protected boolean isFlappingWings() {
 		return true;
 	}
 

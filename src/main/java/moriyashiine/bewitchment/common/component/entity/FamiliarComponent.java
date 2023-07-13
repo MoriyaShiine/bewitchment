@@ -33,12 +33,12 @@ public class FamiliarComponent implements AutoSyncedComponent, CommonTickingComp
 	@Override
 	public void tick() {
 		if (isFamiliar()) {
-			if (!obj.world.isClient) {
+			if (!obj.getWorld().isClient) {
 				if (obj.age % 100 == 0) {
 					obj.heal(1);
 				}
 			} else if (obj.getRandom().nextFloat() < 0.25f) {
-				obj.world.addParticle(ParticleTypes.ENCHANT, obj.getParticleX(obj.getWidth()), obj.getY() + MathHelper.nextFloat(obj.getRandom(), 0, obj.getHeight()), obj.getParticleZ(obj.getWidth()), 0, 0, 0);
+				obj.getWorld().addParticle(ParticleTypes.ENCHANT, obj.getParticleX(obj.getWidth()), obj.getY() + MathHelper.nextFloat(obj.getRandom(), 0, obj.getHeight()), obj.getParticleZ(obj.getWidth()), 0, 0, 0);
 			}
 		}
 	}

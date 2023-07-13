@@ -9,6 +9,7 @@ import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FenceGateBlock;
+import net.minecraft.block.WoodType;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 @SuppressWarnings("ConstantConditions")
 public class JuniperFenceGateBlock extends FenceGateBlock implements BlockEntityProvider {
 	public JuniperFenceGateBlock(Settings settings) {
-		super(settings);
+		super(settings, WoodType.OAK);
 	}
 
 	@Nullable

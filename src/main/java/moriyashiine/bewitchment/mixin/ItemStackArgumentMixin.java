@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @SuppressWarnings("ConstantConditions")
 @Mixin(ItemStackArgument.class)
 public class ItemStackArgumentMixin {
-	@Inject(method = "createStack", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
+	@Inject(method = "createStack", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILSOFT)
 	private void createStack(int amount, boolean checkOverstack, CallbackInfoReturnable<ItemStack> callbackInfo, ItemStack stack) {
 		if (stack.getItem() instanceof TaglockItem && stack.hasNbt() && stack.getNbt().contains("OwnerName") && !stack.getNbt().contains("OwnerUUID")) {
 			SkullBlockEntity.loadProperties(new GameProfile(null, stack.getNbt().getString("OwnerName")), gameProfile -> {

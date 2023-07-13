@@ -13,7 +13,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -22,7 +21,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(MobEntity.class)
 public abstract class MobEntityMixin extends LivingEntity {
@@ -32,23 +30,23 @@ public abstract class MobEntityMixin extends LivingEntity {
 
 	@ModifyVariable(method = "setTarget", at = @At("HEAD"), argsOnly = true)
 	private LivingEntity modifyTarget(LivingEntity target) {
-		if (!world.isClient && target != null) {
+		if (!getWorld().isClient && target != null) {
 			if (target instanceof GhostEntity) {
 				return null;
 			}
 			if (target instanceof MobEntity mob && getUuid().equals(BWComponents.MINION_COMPONENT.get(mob).getMaster())) {
 				return null;
 			}
-			if (isUndead() && !BWUtil.getBlockPoses(target.getBlockPos(), 2, foundPos -> world.getBlockState(foundPos).isIn(BWTags.UNDEAD_MASK)).isEmpty()) {
+			if (isUndead() && !BWUtil.getBlockPoses(target.getBlockPos(), 2, foundPos -> getWorld().getBlockState(foundPos).isIn(BWTags.UNDEAD_MASK)).isEmpty()) {
 				return null;
 			}
 		}
 		return target;
 	}
 
-	@Inject(method = "interactWithItem", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;"), cancellable = true, locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-	private void interactWithItem(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir, ItemStack heldStack) {
-		if (heldStack.getItem() instanceof TaglockItem) {
+	@Inject(method = "interactWithItem", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;"), cancellable = true)
+	private void interactWithItem(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
+		if (player.getStackInHand(hand).getItem() instanceof TaglockItem) {
 			cir.setReturnValue(TaglockItem.useTaglock(player, this, hand, true, false));
 		}
 	}

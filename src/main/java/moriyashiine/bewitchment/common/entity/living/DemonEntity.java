@@ -73,7 +73,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 	@Override
 	public void tick() {
 		super.tick();
-		if (!world.isClient) {
+		if (!getWorld().isClient) {
 			tradeResetTimer++;
 			if (tradeResetTimer >= 168000) {
 				tradeResetTimer = 0;
@@ -83,10 +83,10 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 			if (target != null) {
 				lookAtEntity(target, 360, 360);
 				if ((age + getId()) % 40 == 0) {
-					SmallFireballEntity fireball = new SmallFireballEntity(world, this, target.getX() - getX(), target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ());
+					SmallFireballEntity fireball = new SmallFireballEntity(getWorld(), this, target.getX() - getX(), target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ());
 					fireball.updatePosition(fireball.getX(), getBodyY(0.5), fireball.getZ());
-					world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_SHOOT, getSoundCategory(), getSoundVolume(), getSoundPitch());
-					world.spawnEntity(fireball);
+					getWorld().playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_SHOOT, getSoundCategory(), getSoundVolume(), getSoundPitch());
+					getWorld().spawnEntity(fireball);
 					swingHand(Hand.MAIN_HAND);
 				}
 			}
@@ -126,7 +126,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 
 	@Override
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
-		if (!world.isClient && isAlive() && getTarget() == null) {
+		if (!getWorld().isClient && isAlive() && getTarget() == null) {
 			if (BWUtil.rejectTrades(this)) {
 				return ActionResult.FAIL;
 			}
@@ -140,7 +140,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 				setCurrentCustomer(null);
 			}
 		}
-		return ActionResult.success(world.isClient);
+		return ActionResult.success(getWorld().isClient);
 	}
 
 	@Override
@@ -250,9 +250,9 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 
 	@Override
 	public void onSell(DemonEntity.DemonTradeOffer offer) {
-		if (!world.isClient) {
-			world.playSound(null, getBlockPos(), BWSoundEvents.ITEM_CONTRACT_USE, getSoundCategory(), getSoundVolume(), getSoundPitch());
-			world.playSound(null, getBlockPos(), getAmbientSound(), getSoundCategory(), getSoundVolume(), getSoundPitch());
+		if (!getWorld().isClient) {
+			getWorld().playSound(null, getBlockPos(), BWSoundEvents.ITEM_CONTRACT_USE, getSoundCategory(), getSoundVolume(), getSoundPitch());
+			getWorld().playSound(null, getBlockPos(), getAmbientSound(), getSoundCategory(), getSoundVolume(), getSoundPitch());
 		}
 	}
 

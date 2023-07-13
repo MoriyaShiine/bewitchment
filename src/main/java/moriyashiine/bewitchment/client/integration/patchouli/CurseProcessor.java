@@ -7,11 +7,10 @@ package moriyashiine.bewitchment.client.integration.patchouli;
 import moriyashiine.bewitchment.common.recipe.CurseRecipe;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.RecipeManager;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
 import vazkii.patchouli.api.IVariableProvider;
@@ -21,14 +20,12 @@ public class CurseProcessor implements IComponentProcessor {
 	protected CurseRecipe recipe;
 
 	@Override
-	public void setup(IVariableProvider variables) {
-		String recipeId = variables.get("recipe").asString();
-		RecipeManager manager = MinecraftClient.getInstance().world.getRecipeManager();
-		recipe = (CurseRecipe) manager.get(new Identifier(recipeId)).filter(recipe -> recipe.getType().equals(BWRecipeTypes.CURSE_RECIPE_TYPE)).orElseThrow(IllegalArgumentException::new);
+	public void setup(World level, IVariableProvider variables) {
+		recipe = (CurseRecipe) level.getRecipeManager().get(new Identifier(variables.get("recipe").asString())).filter(recipe -> recipe.getType().equals(BWRecipeTypes.CURSE_RECIPE_TYPE)).orElseThrow(IllegalArgumentException::new);
 	}
 
 	@Override
-	public IVariable process(String key) {
+	public IVariable process(World level, String key) {
 		if (key.equals("header")) {
 			return IVariable.from(Text.translatable("curse." + BWRegistries.CURSES.getId(recipe.curse).toString().replace(":", ".")));
 		}

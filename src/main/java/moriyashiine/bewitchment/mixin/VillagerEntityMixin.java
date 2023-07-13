@@ -29,7 +29,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
 
 	@Inject(method = "interactMob", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/entity/passive/VillagerEntity;getOffers()Lnet/minecraft/village/TradeOfferList;"), cancellable = true)
 	private void interactMob(PlayerEntity player, Hand hand, CallbackInfoReturnable<TradeOfferList> callbackInfo) {
-		if (!world.isClient && BWUtil.rejectTrades(this)) {
+		if (!getWorld().isClient && BWUtil.rejectTrades(this)) {
 			sayNo();
 			callbackInfo.setReturnValue(BWUtil.EMPTY_TRADES);
 		}

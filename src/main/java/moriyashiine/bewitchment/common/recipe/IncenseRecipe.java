@@ -15,10 +15,11 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public class IncenseRecipe implements Recipe<Inventory> {
@@ -40,7 +41,7 @@ public class IncenseRecipe implements Recipe<Inventory> {
 	}
 
 	@Override
-	public ItemStack craft(Inventory inv) {
+	public ItemStack craft(Inventory inventory, DynamicRegistryManager registryManager) {
 		return ItemStack.EMPTY;
 	}
 
@@ -50,7 +51,7 @@ public class IncenseRecipe implements Recipe<Inventory> {
 	}
 
 	@Override
-	public ItemStack getOutput() {
+	public ItemStack getOutput(DynamicRegistryManager registryManager) {
 		return ItemStack.EMPTY;
 	}
 
@@ -79,16 +80,14 @@ public class IncenseRecipe implements Recipe<Inventory> {
 			} else if (ingredients.size() > 4) {
 				throw new JsonParseException("Too many ingredients for incense recipe");
 			}
-			return new IncenseRecipe(id, ingredients, Registry.STATUS_EFFECT.get(new Identifier(JsonHelper.getString(json, "effect"))), JsonHelper.getInt(json, "amplifier", 0));
+			return new IncenseRecipe(id, ingredients, Registries.STATUS_EFFECT.get(new Identifier(JsonHelper.getString(json, "effect"))), JsonHelper.getInt(json, "amplifier", 0));
 		}
 
 		@Override
 		public IncenseRecipe read(Identifier id, PacketByteBuf buf) {
 			DefaultedList<Ingredient> defaultedList = DefaultedList.ofSize(buf.readVarInt(), Ingredient.EMPTY);
-			for (int i = 0; i < defaultedList.size(); i++) {
-				defaultedList.set(i, Ingredient.fromPacket(buf));
-			}
-			return new IncenseRecipe(id, defaultedList, Registry.STATUS_EFFECT.get(new Identifier(buf.readString())), buf.readInt());
+			defaultedList.replaceAll(ignored -> Ingredient.fromPacket(buf));
+			return new IncenseRecipe(id, defaultedList, Registries.STATUS_EFFECT.get(new Identifier(buf.readString())), buf.readInt());
 		}
 
 		@Override
@@ -97,7 +96,7 @@ public class IncenseRecipe implements Recipe<Inventory> {
 			for (Ingredient ingredient : recipe.input) {
 				ingredient.write(buf);
 			}
-			buf.writeString(Registry.STATUS_EFFECT.getId(recipe.effect).toString());
+			buf.writeString(Registries.STATUS_EFFECT.getId(recipe.effect).toString());
 			buf.writeInt(recipe.amplifier);
 		}
 	}

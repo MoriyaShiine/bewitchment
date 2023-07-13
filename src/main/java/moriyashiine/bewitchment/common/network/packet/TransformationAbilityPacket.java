@@ -64,7 +64,7 @@ public class TransformationAbilityPacket {
 
 	public static void useAbility(PlayerEntity player, boolean forced) {
 		BWComponents.TRANSFORMATION_COMPONENT.maybeGet(player).ifPresent(transformationComponent -> {
-			World world = player.world;
+			World world = player.getWorld();
 			boolean isAlternateForm = transformationComponent.isAlternateForm();
 			ScaleData width = BWScaleTypes.MODIFY_WIDTH_TYPE.getScaleData(player);
 			ScaleData height = BWScaleTypes.MODIFY_HEIGHT_TYPE.getScaleData(player);

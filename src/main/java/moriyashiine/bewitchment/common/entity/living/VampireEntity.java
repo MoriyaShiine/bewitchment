@@ -45,13 +45,13 @@ public class VampireEntity extends BWHostileEntity {
 	}
 
 	public static boolean canSpawn(EntityType<VampireEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-		return world.toServerWorld().isNight() && BewitchmentAPI.getMoonPhase(world.toServerWorld().toServerWorld()) == 4 && HostileEntity.canSpawnInDark(type, world, spawnReason, pos, random);
+		return world.toServerWorld().isNight() && BewitchmentAPI.getMoonPhase(world.toServerWorld()) == 4 && HostileEntity.canSpawnInDark(type, world, spawnReason, pos, random);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
-		if (!world.isClient) {
+		if (!getWorld().isClient) {
 			BWComponents.BLOOD_COMPONENT.maybeGet(this).ifPresent(bloodComponent -> {
 				if (getHealth() < getMaxHealth() && (age + getId()) % 40 == 0 && bloodComponent.getBlood() > 0) {
 					heal(1);
@@ -60,7 +60,7 @@ public class VampireEntity extends BWHostileEntity {
 					}
 				}
 			});
-			if (!hasCustomName() && world.isDay() && !world.isRaining() && world.isSkyVisible(getBlockPos())) {
+			if (!hasCustomName() && getWorld().isDay() && !getWorld().isRaining() && getWorld().isSkyVisible(getBlockPos())) {
 				setOnFireFor(8);
 				onFireFromSun = true;
 			}

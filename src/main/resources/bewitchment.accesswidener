@@ -1,2 +1,3 @@
-accessWidener v1 named
+accessWidener v2 named
 accessible class net/minecraft/entity/mob/PhantomEntity$SwoopMovementGoal
+mutable field net/minecraft/entity/LivingEntity limbAnimator Lnet/minecraft/entity/LimbAnimator;

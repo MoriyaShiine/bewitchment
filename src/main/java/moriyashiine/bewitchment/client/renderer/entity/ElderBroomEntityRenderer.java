@@ -11,7 +11,7 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.util.Identifier;
 
 public class ElderBroomEntityRenderer extends BroomEntityRenderer<BroomEntity> {
-	private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/broom/elder.png");
+	private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/broom/elder_boat.png");
 
 	public ElderBroomEntityRenderer(EntityRendererFactory.Context context) {
 		super(context);

@@ -22,7 +22,7 @@ public interface DemonMerchant {
 	LivingEntity getDemonTrader();
 
 	default void trade(DemonEntity.DemonTradeOffer offer) {
-		if (!getDemonTrader().world.isClient) {
+		if (!getDemonTrader().getWorld().isClient) {
 			offer.apply(this);
 		}
 	}

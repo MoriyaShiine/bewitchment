@@ -9,6 +9,7 @@ import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FenceGateBlock;
+import net.minecraft.block.WoodType;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -22,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class DragonsBloodFenceGateBlock extends FenceGateBlock implements BlockEntityProvider {
 	public DragonsBloodFenceGateBlock(Settings settings) {
-		super(settings);
+		super(settings, WoodType.OAK);
 	}
 
 	@Nullable

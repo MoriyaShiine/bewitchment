@@ -26,8 +26,8 @@ public class BWChestBlockEntity extends ChestBlockEntity {
 	}
 
 	@Override
-	protected void onInvOpenOrClose(World world, BlockPos pos, BlockState state, int oldViewerCount, int newViewerCount) {
-		super.onInvOpenOrClose(world, pos, state, oldViewerCount, newViewerCount);
+	protected void onViewerCountUpdate(World world, BlockPos pos, BlockState state, int oldViewerCount, int newViewerCount) {
+		super.onViewerCountUpdate(world, pos, state, oldViewerCount, newViewerCount);
 		if (trapped && world != null) {
 			world.updateNeighborsAlways(pos.down(), getCachedState().getBlock());
 		}

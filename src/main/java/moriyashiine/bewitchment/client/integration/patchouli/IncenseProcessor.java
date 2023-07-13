@@ -6,10 +6,9 @@ package moriyashiine.bewitchment.client.integration.patchouli;
 
 import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.RecipeManager;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
 import vazkii.patchouli.api.IVariableProvider;
@@ -19,14 +18,12 @@ public class IncenseProcessor implements IComponentProcessor {
 	protected IncenseRecipe recipe;
 
 	@Override
-	public void setup(IVariableProvider variables) {
-		String recipeId = variables.get("recipe").asString();
-		RecipeManager manager = MinecraftClient.getInstance().world.getRecipeManager();
-		recipe = (IncenseRecipe) manager.get(new Identifier(recipeId)).filter(recipe -> recipe.getType().equals(BWRecipeTypes.INCENSE_RECIPE_TYPE)).orElseThrow(IllegalArgumentException::new);
+	public void setup(World level, IVariableProvider variables) {
+		recipe = (IncenseRecipe) level.getRecipeManager().get(new Identifier(variables.get("recipe").asString())).filter(recipe -> recipe.getType().equals(BWRecipeTypes.INCENSE_RECIPE_TYPE)).orElseThrow(IllegalArgumentException::new);
 	}
 
 	@Override
-	public IVariable process(String key) {
+	public IVariable process(World level, String key) {
 		if (key.equals("header")) {
 			return IVariable.from(recipe.effect.getName());
 		}

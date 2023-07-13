@@ -119,7 +119,7 @@ public class RavenEntity extends BWTameableEntity {
 	}
 
 	@Override
-	protected boolean hasWings() {
+	protected boolean isFlappingWings() {
 		return true;
 	}
 

@@ -7,6 +7,7 @@ package moriyashiine.bewitchment.common.block.elder;
 import moriyashiine.bewitchment.common.block.entity.LockableBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.Lockable;
 import net.minecraft.block.BlockEntityProvider;
+import net.minecraft.block.BlockSetType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.block.entity.BlockEntity;
@@ -24,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 @SuppressWarnings("ConstantConditions")
 public class ElderPressurePlateBlock extends PressurePlateBlock implements BlockEntityProvider {
 	public ElderPressurePlateBlock(Settings settings) {
-		super(ActivationRule.EVERYTHING, settings);
+		super(ActivationRule.EVERYTHING, settings, BlockSetType.OAK);
 	}
 
 	@Nullable

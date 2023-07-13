@@ -42,7 +42,7 @@ public abstract class MobEntityMixin extends LivingEntity {
 
 	@ModifyVariable(method = "setTarget", at = @At("HEAD"), argsOnly = true)
 	private LivingEntity modifyTarget(LivingEntity target) {
-		if (!world.isClient && target != null) {
+		if (!getWorld().isClient && target != null) {
 			UUID insanityTargetUUID = BWComponents.FAKE_MOB_COMPONENT.get(this).getTarget();
 			if (insanityTargetUUID != null && !target.getUuid().equals(insanityTargetUUID)) {
 				return null;
@@ -53,20 +53,20 @@ public abstract class MobEntityMixin extends LivingEntity {
 
 	@Inject(method = "dropLoot", at = @At("HEAD"))
 	private void dropLoot(DamageSource source, boolean causedByPlayer, CallbackInfo callbackInfo) {
-		if (!world.isClient && (Object) this instanceof SpiderEntity && !spawnedByArachnophobia && source.getAttacker() instanceof LivingEntity livingAttacker && BWComponents.CURSES_COMPONENT.get(livingAttacker).hasCurse(BWCurses.ARACHNOPHOBIA)) {
+		if (!getWorld().isClient && (Object) this instanceof SpiderEntity && !spawnedByArachnophobia && source.getAttacker() instanceof LivingEntity livingAttacker && BWComponents.CURSES_COMPONENT.get(livingAttacker).hasCurse(BWCurses.ARACHNOPHOBIA)) {
 			for (int i = 0; i < random.nextInt(3) + 3; i++) {
 				SpiderEntity spider;
 				if (random.nextFloat() < 1 / 8192f) {
-					spider = EntityType.SPIDER.create(world);
+					spider = EntityType.SPIDER.create(getWorld());
 				} else {
-					spider = EntityType.CAVE_SPIDER.create(world);
+					spider = EntityType.CAVE_SPIDER.create(getWorld());
 					((MobEntityMixin) (Object) spider).spawnedByArachnophobia = true;
 				}
 				if (spider != null) {
 					spider.updatePositionAndAngles(getX(), getY(), getZ(), random.nextFloat() * 360, 0);
-					spider.initialize((ServerWorldAccess) world, world.getLocalDifficulty(getBlockPos()), SpawnReason.EVENT, null, null);
+					spider.initialize((ServerWorldAccess) getWorld(), getWorld().getLocalDifficulty(getBlockPos()), SpawnReason.EVENT, null, null);
 					spider.setTarget(livingAttacker);
-					world.spawnEntity(spider);
+					getWorld().spawnEntity(spider);
 				}
 			}
 		}

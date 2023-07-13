@@ -20,6 +20,10 @@ repositories {
         url "https://ladysnake.jfrog.io/artifactory/mods"
     }
     maven {
+        name "impersonate"
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+    maven {
         name "reach entity attributes"
         url "https://maven.jamieswhiteshirt.com/libs-release"
     }
@@ -57,7 +61,7 @@ dependencies {
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
     //^ don't include because trinkets already does
-    include "me.lucko:fabric-permissions-api:${fabric_permissions_api_version}"
+    modImplementation include("me.lucko:fabric-permissions-api:${fabric_permissions_api_version}")
     modImplementation include("maven.modrinth:impersonate:${impersonate_version}")
     modImplementation include("maven.modrinth:midnightlib:${midnightlib_version}")
     modImplementation include("io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}")

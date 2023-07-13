@@ -18,7 +18,6 @@ import moriyashiine.bewitchment.common.registry.BWPledges;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
-import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
@@ -81,7 +80,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 	public void tick() {
 		super.tick();
 		flameIndex = ++flameIndex % 8;
-		if (!world.isClient) {
+		if (!getWorld().isClient) {
 			bossBar.setPercent(getHealth() / getMaxHealth());
 			tradeResetTimer++;
 			if (tradeResetTimer >= 168000) {
@@ -102,11 +101,11 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 				lookAtEntity(target, 360, 360);
 				if (timer % 60 == 0) {
 					for (int i = -1; i <= 1; i++) {
-						FireballEntity fireball = new FireballEntity(world, this, target.getX() - getX() + (i * 2), target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ() + (i * 2), 1);
+						FireballEntity fireball = new FireballEntity(getWorld(), this, target.getX() - getX() + (i * 2), target.getBodyY(0.5) - getBodyY(0.5), target.getZ() - getZ() + (i * 2), 1);
 						fireball.updatePosition(fireball.getX(), getBodyY(0.5), fireball.getZ());
 						fireball.setOwner(this);
-						world.playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_SHOOT, getSoundCategory(), getSoundVolume(), getSoundPitch());
-						world.spawnEntity(fireball);
+						getWorld().playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_SHOOT, getSoundCategory(), getSoundVolume(), getSoundPitch());
+						getWorld().spawnEntity(fireball);
 					}
 					swingHand(Hand.MAIN_HAND);
 				}
@@ -185,7 +184,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 
 	@Override
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
-		if (!world.isClient && isAlive() && getTarget() == null && BewitchmentAPI.isPledged(player, getPledgeID())) {
+		if (!getWorld().isClient && isAlive() && getTarget() == null && BewitchmentAPI.isPledged(player, getPledgeID())) {
 			if (BWUtil.rejectTrades(this)) {
 				return ActionResult.FAIL;
 			}
@@ -199,7 +198,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 				setCurrentCustomer(null);
 			}
 		}
-		return ActionResult.success(world.isClient);
+		return ActionResult.success(getWorld().isClient);
 	}
 
 	@Override
@@ -288,7 +287,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 		fromNbtPledgeable(nbt);
 		if (nbt.contains("Offers")) {
 			offers.clear();
-			NbtList offersList = nbt.getList("Offers", NbtType.COMPOUND);
+			NbtList offersList = nbt.getList("Offers", NbtElement.COMPOUND_TYPE);
 			for (NbtElement offerTag : offersList) {
 				offers.add(new DemonEntity.DemonTradeOffer((NbtCompound) offerTag));
 			}
@@ -342,9 +341,9 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 
 	@Override
 	public void onSell(DemonEntity.DemonTradeOffer offer) {
-		if (!world.isClient) {
-			world.playSound(null, getBlockPos(), BWSoundEvents.ITEM_CONTRACT_USE, getSoundCategory(), getSoundVolume(), getSoundPitch());
-			world.playSound(null, getBlockPos(), getAmbientSound(), getSoundCategory(), getSoundVolume(), getSoundPitch());
+		if (!getWorld().isClient) {
+			getWorld().playSound(null, getBlockPos(), BWSoundEvents.ITEM_CONTRACT_USE, getSoundCategory(), getSoundVolume(), getSoundPitch());
+			getWorld().playSound(null, getBlockPos(), getAmbientSound(), getSoundCategory(), getSoundVolume(), getSoundPitch());
 		}
 	}
 

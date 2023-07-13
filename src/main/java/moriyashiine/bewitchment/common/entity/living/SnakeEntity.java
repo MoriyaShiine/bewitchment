@@ -188,10 +188,10 @@ public class SnakeEntity extends BWTameableEntity {
 	public void toggleAttack(boolean attacking) {
 		if (attacking) {
 			attackTick = 11;
-			world.sendEntityStatus(this, (byte) 4);
+			getWorld().sendEntityStatus(this, (byte) 4);
 		} else {
 			attackTick = 2;
-			world.sendEntityStatus(this, (byte) 5);
+			getWorld().sendEntityStatus(this, (byte) 5);
 		}
 	}
 }

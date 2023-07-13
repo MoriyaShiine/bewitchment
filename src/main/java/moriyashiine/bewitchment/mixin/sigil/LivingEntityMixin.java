@@ -15,6 +15,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,11 +33,11 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage(float amount, DamageSource source) {
-		if (!world.isClient && source.isFromFalling()) {
-			BWWorldState worldState = BWWorldState.get(world);
-			BlockPos sigilPos = BWUtil.getClosestBlockPos(getBlockPos(), 16, currentPos -> worldState.potentialSigils.contains(currentPos.asLong()) && world.getBlockEntity(currentPos) instanceof SigilHolder sigilHolder && sigilHolder.getSigil() == BWSigils.HEAVY);
+		if (!getWorld().isClient && source.isIn(DamageTypeTags.IS_FALL)) {
+			BWWorldState worldState = BWWorldState.get(getWorld());
+			BlockPos sigilPos = BWUtil.getClosestBlockPos(getBlockPos(), 16, currentPos -> worldState.potentialSigils.contains(currentPos.asLong()) && getWorld().getBlockEntity(currentPos) instanceof SigilHolder sigilHolder && sigilHolder.getSigil() == BWSigils.HEAVY);
 			if (sigilPos != null) {
-				BlockEntity blockEntity = world.getBlockEntity(sigilPos);
+				BlockEntity blockEntity = getWorld().getBlockEntity(sigilPos);
 				SigilHolder sigilHolder = (SigilHolder) blockEntity;
 				if (sigilHolder.test(this)) {
 					sigilHolder.setUses(sigilHolder.getUses() - 1);
@@ -50,11 +51,11 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Inject(method = "canHaveStatusEffect", at = @At("RETURN"), cancellable = true)
 	private void canHaveStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (callbackInfo.getReturnValueZ() && !world.isClient && !effect.isAmbient() && effect.getEffectType().getCategory() != StatusEffectCategory.HARMFUL) {
-			BWWorldState worldState = BWWorldState.get(world);
-			BlockPos sigilPos = BWUtil.getClosestBlockPos(getBlockPos(), 16, currentPos -> worldState.potentialSigils.contains(currentPos.asLong()) && world.getBlockEntity(currentPos) instanceof SigilHolder sigilHolder && sigilHolder.getSigil() == BWSigils.RUIN);
+		if (callbackInfo.getReturnValueZ() && !getWorld().isClient && !effect.isAmbient() && effect.getEffectType().getCategory() != StatusEffectCategory.HARMFUL) {
+			BWWorldState worldState = BWWorldState.get(getWorld());
+			BlockPos sigilPos = BWUtil.getClosestBlockPos(getBlockPos(), 16, currentPos -> worldState.potentialSigils.contains(currentPos.asLong()) && getWorld().getBlockEntity(currentPos) instanceof SigilHolder sigilHolder && sigilHolder.getSigil() == BWSigils.RUIN);
 			if (sigilPos != null) {
-				BlockEntity blockEntity = world.getBlockEntity(sigilPos);
+				BlockEntity blockEntity = getWorld().getBlockEntity(sigilPos);
 				SigilHolder sigilHolder = (SigilHolder) blockEntity;
 				if (sigilHolder.test(this)) {
 					sigilHolder.setUses(sigilHolder.getUses() - 1);

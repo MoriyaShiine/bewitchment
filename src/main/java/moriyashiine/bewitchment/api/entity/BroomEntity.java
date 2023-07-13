@@ -17,7 +17,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -62,7 +63,7 @@ public class BroomEntity extends Entity {
 	}
 
 	@Override
-	public Packet<?> createSpawnPacket() {
+	public Packet<ClientPlayPacketListener> createSpawnPacket() {
 		return new EntitySpawnS2CPacket(this, 0);
 	}
 
@@ -80,7 +81,7 @@ public class BroomEntity extends Entity {
 		}
 		if (isLogicalSideForUpdatingMovement()) {
 			updateTrackedPosition(getX(), getY(), getZ());
-			Entity passenger = getPrimaryPassenger();
+			Entity passenger = getFirstPassenger();
 			if (passenger instanceof PlayerEntity player) {
 				setRotation(passenger.getYaw(), passenger.getPitch());
 				if (BWComponents.BROOM_USER_COMPONENT.get(player).isPressingForward()) {
@@ -93,7 +94,7 @@ public class BroomEntity extends Entity {
 		} else {
 			setVelocity(Vec3d.ZERO);
 		}
-		if (!world.isClient && damage > 0) {
+		if (!getWorld().isClient && damage > 0) {
 			damage -= 1 / 20f;
 			damage = Math.max(damage, 0);
 		}
@@ -103,7 +104,7 @@ public class BroomEntity extends Entity {
 	public ActionResult interact(PlayerEntity player, Hand hand) {
 		if (player.shouldCancelInteraction()) {
 			return ActionResult.PASS;
-		} else if (!world.isClient) {
+		} else if (!getWorld().isClient) {
 			return player.startRiding(this) ? ActionResult.CONSUME : ActionResult.PASS;
 		}
 		return super.interact(player, hand);
@@ -114,7 +115,7 @@ public class BroomEntity extends Entity {
 		if (isInvulnerableTo(source)) {
 			return false;
 		}
-		if (!world.isClient && !isRemoved()) {
+		if (!getWorld().isClient && !isRemoved()) {
 			damage += amount;
 			if (damage > 4) {
 				dropStack(getDroppedStack());
@@ -126,13 +127,13 @@ public class BroomEntity extends Entity {
 
 	@Nullable
 	@Override
-	public Entity getPrimaryPassenger() {
+	public Entity getFirstPassenger() {
 		return getPassengerList().isEmpty() ? null : getPassengerList().get(0);
 	}
 
 	@Override
 	protected boolean canAddPassenger(Entity passenger) {
-		return getPrimaryPassenger() == null;
+		return getFirstPassenger() == null;
 	}
 
 	@Override
@@ -143,11 +144,6 @@ public class BroomEntity extends Entity {
 	@Override
 	public boolean canHit() {
 		return !isRemoved();
-	}
-
-	@Override
-	public boolean isPushable() {
-		return false;
 	}
 
 	@Override

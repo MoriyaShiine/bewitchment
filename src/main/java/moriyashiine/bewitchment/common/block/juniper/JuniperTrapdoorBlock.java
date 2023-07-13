@@ -7,6 +7,7 @@ package moriyashiine.bewitchment.common.block.juniper;
 import moriyashiine.bewitchment.common.block.entity.TaglockHolderBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
 import net.minecraft.block.BlockEntityProvider;
+import net.minecraft.block.BlockSetType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.TrapdoorBlock;
 import net.minecraft.block.entity.BlockEntity;
@@ -24,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 @SuppressWarnings("ConstantConditions")
 public class JuniperTrapdoorBlock extends TrapdoorBlock implements BlockEntityProvider {
 	public JuniperTrapdoorBlock(Settings settings) {
-		super(settings);
+		super(settings, BlockSetType.OAK);
 	}
 
 	@Nullable

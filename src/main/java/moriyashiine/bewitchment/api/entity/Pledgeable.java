@@ -35,18 +35,18 @@ public interface Pledgeable {
 	void setTimeSinceLastAttack(int timeSinceLastAttack);
 
 	default void summonMinions(MobEntity pledgeable) {
-		if (!pledgeable.world.isClient && pledgeable.world.getEntitiesByType(getMinionType(), new Box(pledgeable.getBlockPos()).expand(32), entity -> entity instanceof MobEntity mobEntity && !entity.isRemoved() && pledgeable.getUuid().equals(BWComponents.MINION_COMPONENT.get(mobEntity).getMaster())).size() < 3) {
+		if (!pledgeable.getWorld().isClient && pledgeable.getWorld().getEntitiesByType(getMinionType(), new Box(pledgeable.getBlockPos()).expand(32), entity -> entity instanceof MobEntity mobEntity && !entity.isRemoved() && pledgeable.getUuid().equals(BWComponents.MINION_COMPONENT.get(mobEntity).getMaster())).size() < 3) {
 			for (int i = 0; i < MathHelper.nextInt(pledgeable.getRandom(), 2, 3); i++) {
-				Entity entity = getMinionType().create(pledgeable.world);
+				Entity entity = getMinionType().create(pledgeable.getWorld());
 				if (entity instanceof MobEntity mobEntity) {
 					BWUtil.attemptTeleport(entity, pledgeable.getBlockPos().up(), 3, true);
-					mobEntity.initialize((ServerWorldAccess) pledgeable.world, pledgeable.world.getLocalDifficulty(pledgeable.getBlockPos()), SpawnReason.EVENT, null, null);
+					mobEntity.initialize((ServerWorldAccess) pledgeable.getWorld(), pledgeable.getWorld().getLocalDifficulty(pledgeable.getBlockPos()), SpawnReason.EVENT, null, null);
 					entity.setPitch(pledgeable.getRandom().nextFloat() * 360);
 					mobEntity.setTarget(pledgeable.getTarget());
 					BWComponents.MINION_COMPONENT.get(mobEntity).setMaster(pledgeable.getUuid());
 					mobEntity.setPersistent();
 					getMinionBuffs().forEach(mobEntity::addStatusEffect);
-					pledgeable.world.spawnEntity(entity);
+					pledgeable.getWorld().spawnEntity(entity);
 				}
 			}
 		}

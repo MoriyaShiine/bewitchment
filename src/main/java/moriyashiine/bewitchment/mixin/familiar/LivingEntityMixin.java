@@ -34,7 +34,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@ModifyVariable(method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)Z", at = @At("HEAD"), argsOnly = true)
 	private StatusEffectInstance modifyStatusEffect(StatusEffectInstance effect) {
-		if (!world.isClient && !effect.isAmbient() && effect.getEffectType().getCategory() == StatusEffectCategory.BENEFICIAL && (Object) this instanceof PlayerEntity player && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.TOAD) {
+		if (!getWorld().isClient && !effect.isAmbient() && effect.getEffectType().getCategory() == StatusEffectCategory.BENEFICIAL && (Object) this instanceof PlayerEntity player && BewitchmentAPI.getFamiliar(player) == BWEntityTypes.TOAD) {
 			return new StatusEffectInstance(effect.getEffectType(), (int) (effect.getDuration() * (effect.getEffectType().isInstant() ? 1 : 1.5f)), effect.getAmplifier() + (effect.getEffectType().isInstant() ? 1 : 0), false, effect.shouldShowParticles(), effect.shouldShowIcon());
 		}
 		return effect;
@@ -42,7 +42,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage(float amount, DamageSource source) {
-		if (!world.isClient && BWComponents.FAMILIAR_COMPONENT.get(this).isFamiliar()) {
+		if (!getWorld().isClient && BWComponents.FAMILIAR_COMPONENT.get(this).isFamiliar()) {
 			amount /= 8;
 		}
 		return amount;
@@ -50,8 +50,8 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Inject(method = "onDeath", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getDamageTracker()Lnet/minecraft/entity/damage/DamageTracker;", ordinal = 1))
 	private void removeFamiliar(DamageSource source, CallbackInfo ci) {
-		if (!world.isClient) {
-			BWUniversalWorldState universalWorldState = BWUniversalWorldState.get(world);
+		if (!getWorld().isClient) {
+			BWUniversalWorldState universalWorldState = BWUniversalWorldState.get(getWorld());
 			for (int i = universalWorldState.familiars.size() - 1; i >= 0; i--) {
 				if (getUuid().equals(universalWorldState.familiars.get(i).getRight().getUuid("UUID"))) {
 					universalWorldState.familiars.remove(i);

@@ -53,11 +53,11 @@ public class WerewolfVillagerComponent implements ServerTickingComponent {
 					obj.remove(Entity.RemovalReason.DISCARDED);
 				}
 			}
-			if (obj.age % 20 == 0 && obj.world.isNight() && BewitchmentAPI.getMoonPhase(obj.world) == 0 && (obj.hasCustomName() || obj.world.isSkyVisible(obj.getBlockPos()))) {
-				WerewolfEntity entity = BWEntityTypes.WEREWOLF.create(obj.world);
+			if (obj.age % 20 == 0 && obj.getWorld().isNight() && BewitchmentAPI.getMoonPhase(obj.getWorld()) == 0 && (obj.hasCustomName() || obj.getWorld().isSkyVisible(obj.getBlockPos()))) {
+				WerewolfEntity entity = BWEntityTypes.WEREWOLF.create(obj.getWorld());
 				if (entity != null) {
 					PlayerLookup.tracking(obj).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, obj));
-					obj.world.playSound(null, obj.getX(), obj.getY(), obj.getZ(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, obj.getSoundCategory(), 1, obj.getSoundPitch());
+					obj.getWorld().playSound(null, obj.getX(), obj.getY(), obj.getZ(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, obj.getSoundCategory(), 1, obj.getSoundPitch());
 					entity.readNbt(getStoredWerewolf());
 					entity.updatePositionAndAngles(obj.getX(), obj.getY(), obj.getZ(), obj.getRandom().nextFloat() * 360, 0);
 					entity.setHealth(entity.getMaxHealth() * (obj.getHealth() / obj.getMaxHealth()));
@@ -72,7 +72,7 @@ public class WerewolfVillagerComponent implements ServerTickingComponent {
 						setDespawnTimer(2400);
 					}
 					entity.storedVillager = obj.writeNbt(new NbtCompound());
-					obj.world.spawnEntity(entity);
+					obj.getWorld().spawnEntity(entity);
 					obj.remove(Entity.RemovalReason.DISCARDED);
 				}
 			}

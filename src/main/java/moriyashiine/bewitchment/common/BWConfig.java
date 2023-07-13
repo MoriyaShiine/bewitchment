@@ -19,9 +19,9 @@ public class BWConfig extends MidnightConfig {
 	public static int altarDistributionRadius = 24;
 
 	@Entry
-	public static boolean generateSilver = true;
-	@Entry
 	public static boolean generateSalt = true;
+	@Entry
+	public static boolean generateSilver = true;
 
 	@Entry
 	public static int owlWeight = 10;

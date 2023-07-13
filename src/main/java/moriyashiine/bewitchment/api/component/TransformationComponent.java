@@ -86,7 +86,7 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 			} else {
 				obj.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
 			}
-			if (BWComponents.RESPAWN_TIMER_COMPONENT.get(obj).getRespawnTimer() <= 0 && obj.world.isDay() && !obj.world.isRaining() && obj.world.isSkyVisible(obj.getBlockPos()) && AllowVampireBurn.EVENT.invoker().allowBurn(obj)) {
+			if (BWComponents.RESPAWN_TIMER_COMPONENT.get(obj).getRespawnTimer() <= 0 && obj.getWorld().isDay() && !obj.getWorld().isRaining() && obj.getWorld().isSkyVisible(obj.getBlockPos()) && AllowVampireBurn.EVENT.invoker().allowBurn(obj)) {
 				obj.setOnFireFor(8);
 			}
 			HungerManager hungerManager = obj.getHungerManager();
@@ -118,10 +118,10 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 		if (BewitchmentAPI.isWerewolf(obj, true)) {
 			AdditionalWerewolfDataComponent additionalWerewolfDataComponent = BWComponents.ADDITIONAL_WEREWOLF_DATA_COMPONENT.get(obj);
 			boolean forced = additionalWerewolfDataComponent.isForcedTransformation();
-			if (!obj.isCreative() && !obj.isSpectator() && !isAlternateForm() && obj.world.isNight() && BewitchmentAPI.getMoonPhase(obj.world) == 0 && obj.world.isSkyVisible(obj.getBlockPos())) {
+			if (!obj.isCreative() && !obj.isSpectator() && !isAlternateForm() && obj.getWorld().isNight() && BewitchmentAPI.getMoonPhase(obj.getWorld()) == 0 && obj.getWorld().isSkyVisible(obj.getBlockPos())) {
 				TransformationAbilityPacket.useAbility(obj, true);
 				additionalWerewolfDataComponent.setForcedTransformation(true);
-			} else if (isAlternateForm() && forced && (obj.world.isDay() || BewitchmentAPI.getMoonPhase(obj.world) != 0)) {
+			} else if (isAlternateForm() && forced && (obj.getWorld().isDay() || BewitchmentAPI.getMoonPhase(obj.getWorld()) != 0)) {
 				TransformationAbilityPacket.useAbility(obj, true);
 				additionalWerewolfDataComponent.setForcedTransformation(false);
 			}

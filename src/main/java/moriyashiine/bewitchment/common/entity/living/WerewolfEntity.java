@@ -26,10 +26,10 @@ import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -55,7 +55,7 @@ public class WerewolfEntity extends BWHostileEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		if (!world.isClient) {
+		if (!getWorld().isClient) {
 			getArmorItems().forEach(stack -> dropStack(stack.split(1)));
 			if (BWUtil.isTool(getMainHandStack())) {
 				dropStack(getMainHandStack().split(1));
@@ -63,11 +63,11 @@ public class WerewolfEntity extends BWHostileEntity {
 			if (BWUtil.isTool(getOffHandStack())) {
 				dropStack(getOffHandStack().split(1));
 			}
-			if (storedVillager != null && age % 20 == 0 && (world.isDay() || BewitchmentAPI.getMoonPhase(world) != 0)) {
-				VillagerEntity entity = EntityType.VILLAGER.create(world);
+			if (storedVillager != null && age % 20 == 0 && (getWorld().isDay() || BewitchmentAPI.getMoonPhase(getWorld()) != 0)) {
+				VillagerEntity entity = EntityType.VILLAGER.create(getWorld());
 				if (entity != null) {
 					PlayerLookup.tracking(this).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, this));
-					world.playSound(null, getX(), getY(), getZ(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, getSoundCategory(), getSoundVolume(), getSoundPitch());
+					getWorld().playSound(null, getX(), getY(), getZ(), BWSoundEvents.ENTITY_GENERIC_TRANSFORM, getSoundCategory(), getSoundVolume(), getSoundPitch());
 					entity.readNbt(storedVillager);
 					entity.updatePositionAndAngles(getX(), getY(), getZ(), random.nextFloat() * 360, 0);
 					entity.setHealth(entity.getMaxHealth() * (getHealth() / getMaxHealth()));
@@ -79,7 +79,7 @@ public class WerewolfEntity extends BWHostileEntity {
 						thisCursesComponent.getCurses().forEach(entityCursesComponent::addCurse);
 					}));
 					BWComponents.WEREWOLF_VILLAGER_COMPONENT.get(entity).setStoredWerewolf(writeNbt(new NbtCompound()));
-					world.spawnEntity(entity);
+					getWorld().spawnEntity(entity);
 					remove(RemovalReason.DISCARDED);
 				}
 			}

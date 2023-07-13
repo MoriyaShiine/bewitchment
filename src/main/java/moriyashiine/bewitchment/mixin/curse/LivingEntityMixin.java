@@ -15,6 +15,7 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.AxeItem;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,7 +32,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@ModifyVariable(method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)Z", at = @At("HEAD"), argsOnly = true)
 	private StatusEffectInstance modifyStatusEffect(StatusEffectInstance effect) {
-		if (!world.isClient && !effect.isAmbient() && effect.getEffectType().getCategory() == StatusEffectCategory.HARMFUL && BWComponents.CURSES_COMPONENT.get((LivingEntity) (Object) this).hasCurse(BWCurses.COMPROMISED)) {
+		if (!getWorld().isClient && !effect.isAmbient() && effect.getEffectType().getCategory() == StatusEffectCategory.HARMFUL && BWComponents.CURSES_COMPONENT.get(this).hasCurse(BWCurses.COMPROMISED)) {
 			return new StatusEffectInstance(effect.getEffectType(), effect.getDuration(), effect.getAmplifier() + 1, false, effect.shouldShowParticles(), effect.shouldShowIcon());
 		}
 		return effect;
@@ -39,12 +40,12 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage(float amount, DamageSource source) {
-		if (!world.isClient) {
-			CursesComponent cursesComponent = BWComponents.CURSES_COMPONENT.get((LivingEntity) (Object) this);
-			if (cursesComponent.hasCurse(BWCurses.FORESTS_WRATH) && (source.isFire() || ((source.getSource() instanceof LivingEntity livingSource && livingSource.getMainHandStack().getItem() instanceof AxeItem)))) {
+		if (!getWorld().isClient) {
+			CursesComponent cursesComponent = BWComponents.CURSES_COMPONENT.get(this);
+			if (cursesComponent.hasCurse(BWCurses.FORESTS_WRATH) && (source.isIn(DamageTypeTags.IS_FIRE) || ((source.getSource() instanceof LivingEntity livingSource && livingSource.getMainHandStack().getItem() instanceof AxeItem)))) {
 				amount *= 2;
 			}
-			if (cursesComponent.hasCurse(BWCurses.SUSCEPTIBILITY) && source.isMagic()) {
+			if (cursesComponent.hasCurse(BWCurses.SUSCEPTIBILITY) && source.isIn(DamageTypeTags.WITCH_RESISTANT_TO)) {
 				amount *= 2;
 			}
 		}
@@ -53,14 +54,14 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!world.isClient && (Object) this instanceof MobEntity mob && BWComponents.FAKE_MOB_COMPONENT.get(mob).getTarget() != null) {
+		if (!getWorld().isClient && (Object) this instanceof MobEntity mob && BWComponents.FAKE_MOB_COMPONENT.get(mob).getTarget() != null) {
 			callbackInfo.setReturnValue(false);
 		}
 	}
 
 	@Inject(method = "canHaveStatusEffect", at = @At("RETURN"), cancellable = true)
 	private void canHaveStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (callbackInfo.getReturnValueZ() && !world.isClient && !effect.isAmbient() && effect.getEffectType().getCategory() == StatusEffectCategory.BENEFICIAL && BWComponents.CURSES_COMPONENT.get((LivingEntity) (Object) this).hasCurse(BWCurses.UNLUCKY) && random.nextBoolean()) {
+		if (callbackInfo.getReturnValueZ() && !getWorld().isClient && !effect.isAmbient() && effect.getEffectType().getCategory() == StatusEffectCategory.BENEFICIAL && BWComponents.CURSES_COMPONENT.get(this).hasCurse(BWCurses.UNLUCKY) && random.nextBoolean()) {
 			callbackInfo.setReturnValue(false);
 		}
 	}

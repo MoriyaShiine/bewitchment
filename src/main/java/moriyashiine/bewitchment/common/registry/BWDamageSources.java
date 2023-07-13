@@ -6,22 +6,39 @@ package moriyashiine.bewitchment.common.registry;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.component.BloodComponent;
+import moriyashiine.bewitchment.common.Bewitchment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.EntityDamageSource;
-import net.minecraft.text.Text;
+import net.minecraft.entity.damage.DamageType;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class BWDamageSources {
-	public static final DamageSource MAGIC_COPY = new ArmorPiercingDamageSource("magic");
-	public static final DamageSource WEDNESDAY = new UnblockableDamageSource("wednesday");
-	public static final DamageSource DEATH = new UnblockableDamageSource("death");
-	public static final DamageSource VAMPIRE = new EmptyDamageSource("vampire");
-	public static final DamageSource SUN = new SunDamageSource("sun");
+	public static final RegistryKey<DamageType> MAGIC_COPY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(Bewitchment.MODID, "magic_copy"));
+	public static final RegistryKey<DamageType> WEDNESDAY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(Bewitchment.MODID, "wednesday"));
+	public static final RegistryKey<DamageType> DEATH = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(Bewitchment.MODID, "death"));
+	public static final RegistryKey<DamageType> VAMPIRE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(Bewitchment.MODID, "vampire"));
+	public static final RegistryKey<DamageType> SUN = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(Bewitchment.MODID, "sun"));
+
+	public static DamageSource create(World world, RegistryKey<DamageType> key, @Nullable Entity source, @Nullable Entity attacker) {
+		return new DamageSource(world.getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).entryOf(key), source, attacker);
+	}
+
+	public static DamageSource create(World world, RegistryKey<DamageType> key, @Nullable Entity attacker) {
+		return new DamageSource(world.getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).entryOf(key), attacker);
+	}
+
+	public static DamageSource create(World world, RegistryKey<DamageType> key) {
+		return new DamageSource(world.getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).entryOf(key));
+	}
 
 	public static float handleDamage(LivingEntity entity, DamageSource source, float amount) {
 		if (BewitchmentAPI.isWeakToSilver(entity) && BewitchmentAPI.isSourceFromSilver(source)) {
@@ -35,7 +52,7 @@ public class BWDamageSources {
 	}
 
 	public static boolean isEffective(DamageSource source, boolean vampire) {
-		if (source.isOutOfWorld() || (vampire && (source == MAGIC_COPY || source == SUN))) {
+		if (source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY) || (vampire && (source.isOf(MAGIC_COPY) || source.isOf(SUN)))) {
 			return true;
 		}
 		Entity attacker = source.getSource();
@@ -60,55 +77,5 @@ public class BWDamageSources {
 			}
 		}
 		return amount;
-	}
-
-	private static class EmptyDamageSource extends DamageSource {
-		public EmptyDamageSource(String name) {
-			super(name);
-		}
-	}
-
-	private static class UnblockableDamageSource extends DamageSource {
-		protected UnblockableDamageSource(String name) {
-			super(name);
-			setBypassesArmor();
-			setUnblockable();
-			setOutOfWorld();
-		}
-	}
-
-	private static class ArmorPiercingDamageSource extends DamageSource {
-		protected ArmorPiercingDamageSource(String name) {
-			super(name);
-			setBypassesArmor();
-			setUnblockable();
-		}
-	}
-
-	public static class MagicMob extends EntityDamageSource {
-		public MagicMob(@Nullable Entity source) {
-			super("mob", source);
-			setUsesMagic();
-			setBypassesArmor();
-		}
-	}
-
-	public static class MagicPlayer extends EntityDamageSource {
-		public MagicPlayer(@Nullable Entity source) {
-			super("player", source);
-			setUsesMagic();
-			setBypassesArmor();
-		}
-	}
-
-	public static class SunDamageSource extends ArmorPiercingDamageSource {
-		public SunDamageSource(String name) {
-			super(name);
-		}
-
-		@Override
-		public Text getDeathMessage(LivingEntity entity) {
-			return DamageSource.ON_FIRE.getDeathMessage(entity);
-		}
 	}
 }

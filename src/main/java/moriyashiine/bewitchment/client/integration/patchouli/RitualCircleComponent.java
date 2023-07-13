@@ -4,12 +4,9 @@
 
 package moriyashiine.bewitchment.client.integration.patchouli;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import moriyashiine.bewitchment.common.Bewitchment;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.NotNull;
 import vazkii.patchouli.api.IComponentRenderContext;
 import vazkii.patchouli.api.ICustomComponent;
 import vazkii.patchouli.api.IVariable;
@@ -29,18 +26,16 @@ public class RitualCircleComponent implements ICustomComponent {
 	}
 
 	@Override
-	public void render(MatrixStack ms, @NotNull IComponentRenderContext context, float pticks, int mouseX, int mouseY) {
-		ms.push();
-		ms.translate(x, y, -1);
-		ms.scale(4, 4, 1);
+	public void render(DrawContext graphics, IComponentRenderContext context, float pticks, int mouseX, int mouseY) {
+		graphics.getMatrices().push();
+		graphics.getMatrices().translate(x, y, -1);
+		graphics.getMatrices().scale(4, 4, 1);
 		if (circles[1] != null) {
-			RenderSystem.setShaderTexture(0, circles[1]);
-			DrawableHelper.drawTexture(ms, 0, 0, 0, 0, 16, 16, 16, 16);
+			graphics.drawTexture(circles[1], 0, 0, 0, 0, 16, 16, 16, 16);
 		}
-		ms.translate(4, 4, 1);
-		RenderSystem.setShaderTexture(0, circles[0]);
-		DrawableHelper.drawTexture(ms, 0, 0, 4, 4, 7, 7, 16, 16);
-		ms.pop();
+		graphics.getMatrices().translate(4, 4, 1);
+		graphics.drawTexture(circles[0], 0, 0, 4, 4, 7, 7, 16, 16);
+		graphics.getMatrices().pop();
 	}
 
 	@Override

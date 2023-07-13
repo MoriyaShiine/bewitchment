@@ -8,6 +8,7 @@ import moriyashiine.bewitchment.common.block.entity.TaglockHolderBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.TaglockHolder;
 import moriyashiine.bewitchment.common.block.util.interfaces.SpecialDoor;
 import net.minecraft.block.BlockEntityProvider;
+import net.minecraft.block.BlockSetType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.entity.BlockEntity;
@@ -26,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
 @SuppressWarnings("ConstantConditions")
 public class JuniperDoorBlock extends DoorBlock implements BlockEntityProvider, SpecialDoor {
 	public JuniperDoorBlock(Settings settings) {
-		super(settings);
+		super(settings, BlockSetType.OAK);
 	}
 
 	@Nullable

@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,7 +26,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage(float amount, DamageSource source) {
-		if (!world.isClient && amount > 0 && source.isProjectile() && source.getAttacker() instanceof PlayerEntity player) {
+		if (!getWorld().isClient && amount > 0 && source.isIn(DamageTypeTags.IS_PROJECTILE) && source.getAttacker() instanceof PlayerEntity player) {
 			FortuneComponent fortuneComponent = BWComponents.FORTUNE_COMPONENT.get(player);
 			if (fortuneComponent.getFortune() != null && fortuneComponent.getFortune().fortune == BWFortunes.HAWKEYE) {
 				fortuneComponent.getFortune().duration = 0;

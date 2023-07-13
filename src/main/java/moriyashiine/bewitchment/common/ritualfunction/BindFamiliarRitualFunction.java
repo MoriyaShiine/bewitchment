@@ -15,11 +15,11 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleType;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
 
 import java.util.function.Predicate;
 
@@ -69,7 +69,7 @@ public class BindFamiliarRitualFunction extends RitualFunction {
 						BWUniversalWorldState universalWorldState = BWUniversalWorldState.get(world);
 						NbtCompound familiarCompound = new NbtCompound();
 						familiarCompound.putUuid("UUID", livingEntity.getUuid());
-						familiarCompound.putString("id", Registry.ENTITY_TYPE.getId(livingEntity.getType()).toString());
+						familiarCompound.putString("id", Registries.ENTITY_TYPE.getId(livingEntity.getType()).toString());
 						universalWorldState.familiars.add(new Pair<>(closestPlayer.getUuid(), familiarCompound));
 						universalWorldState.markDirty();
 						succeeded = true;

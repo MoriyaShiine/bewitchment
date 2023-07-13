@@ -9,8 +9,10 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
@@ -20,7 +22,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class PoppetItem extends Item {
-	public static final Predicate<DamageSource> PROTECTION_POPPET_SOURCES = source -> source.isFire() || source.isFallingBlock() || source.isFromFalling() || source == DamageSource.CACTUS || source == DamageSource.CRAMMING || source == DamageSource.DROWN || source == DamageSource.DRYOUT || source == DamageSource.FLY_INTO_WALL || source == DamageSource.FREEZE || source == DamageSource.IN_WALL || source == DamageSource.LIGHTNING_BOLT || source == DamageSource.SWEET_BERRY_BUSH || source == DamageSource.STARVE;
+	public static final Predicate<DamageSource> PROTECTION_POPPET_SOURCES = source -> source.isIn(DamageTypeTags.IS_FIRE) || source.isOf(DamageTypes.FALLING_BLOCK) || source.isOf(DamageTypes.FALLING_STALACTITE) || source.isOf(DamageTypes.FALLING_ANVIL) || source.isIn(DamageTypeTags.IS_FALL) || source.isOf(DamageTypes.CACTUS) || source.isOf(DamageTypes.CRAMMING) || source.isOf(DamageTypes.DROWN) || source.isOf(DamageTypes.DRY_OUT) || source.isOf(DamageTypes.FLY_INTO_WALL) || source.isOf(DamageTypes.FREEZE) || source.isOf(DamageTypes.IN_WALL) || source.isOf(DamageTypes.LIGHTNING_BOLT) || source.isOf(DamageTypes.SWEET_BERRY_BUSH) || source.isOf(DamageTypes.STARVE);
 
 	public final boolean worksInShelf;
 

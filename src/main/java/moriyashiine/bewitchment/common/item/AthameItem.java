@@ -87,7 +87,7 @@ public class AthameItem extends SwordItem {
 				if (player != null) {
 					context.getStack().damage(1, player, stackUser -> stackUser.sendToolBreakStatus(context.getHand()));
 					if (world.random.nextFloat() < 2 / 3f) {
-						ItemStack bark = entry.getOutput().copy();
+						ItemStack bark = entry.getOutput(world.getRegistryManager()).copy();
 						if (!player.getInventory().insertStack(bark)) {
 							player.dropStack(bark);
 						}

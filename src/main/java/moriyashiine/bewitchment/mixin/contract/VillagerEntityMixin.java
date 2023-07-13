@@ -25,11 +25,11 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
 
 	@Inject(method = "onDeath", at = @At("HEAD"))
 	private void onDeath(CallbackInfo callbackInfo) {
-		if (!world.isClient && attackingPlayer != null) {
+		if (!getWorld().isClient && attackingPlayer != null) {
 			if (BWComponents.CONTRACTS_COMPONENT.get(attackingPlayer).hasContract(BWContracts.ENVY) && !getOffers().isEmpty()) {
 				for (TradeOffer offer : getOffers()) {
 					if (!offer.isDisabled()) {
-						ItemScatterer.spawn(world, getX() + 0.5, getY() + 0.5, getZ() + 0.5, offer.getSellItem());
+						ItemScatterer.spawn(getWorld(), getX() + 0.5, getY() + 0.5, getZ() + 0.5, offer.getSellItem());
 					}
 				}
 			}

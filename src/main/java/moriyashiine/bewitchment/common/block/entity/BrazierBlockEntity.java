@@ -27,8 +27,8 @@ import net.minecraft.item.FlintAndSteelItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
@@ -144,10 +144,10 @@ public class BrazierBlockEntity extends BlockEntity implements Inventory, UsesAl
 								}
 								if (target instanceof LivingEntity livingEntity) {
 									PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, target);
-									if (!poppetData.stack.isEmpty() && poppetData.stack.hasNbt() && !poppetData.stack.getNbt().getBoolean("Cursed")) {
-										poppetData.stack.getNbt().putString("Curse", BWRegistries.CURSES.getId(blockEntity.curseRecipe.curse).toString());
-										poppetData.stack.getNbt().putBoolean("Cursed", true);
-										TaglockItem.removeTaglock(poppetData.stack);
+									if (!poppetData.stack().isEmpty() && poppetData.stack().hasNbt() && !poppetData.stack().getNbt().getBoolean("Cursed")) {
+										poppetData.stack().getNbt().putString("Curse", BWRegistries.CURSES.getId(blockEntity.curseRecipe.curse).toString());
+										poppetData.stack().getNbt().putBoolean("Cursed", true);
+										TaglockItem.removeTaglock(poppetData.stack());
 										poppetData.update(world, true);
 									} else {
 										int duration = 168000;

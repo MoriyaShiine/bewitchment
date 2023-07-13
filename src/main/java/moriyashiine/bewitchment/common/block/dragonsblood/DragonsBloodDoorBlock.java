@@ -8,6 +8,7 @@ import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.block.util.interfaces.SpecialDoor;
 import net.minecraft.block.BlockEntityProvider;
+import net.minecraft.block.BlockSetType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.entity.BlockEntity;
@@ -25,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class DragonsBloodDoorBlock extends DoorBlock implements BlockEntityProvider, SpecialDoor {
 	public DragonsBloodDoorBlock(Settings settings) {
-		super(settings);
+		super(settings, BlockSetType.OAK);
 	}
 
 	@Nullable

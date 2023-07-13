@@ -136,7 +136,7 @@ public class SaltLineBlock extends Block {
 	@Override
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 		if (!moved && !state.isOf(newState.getBlock())) {
-			super.onStateReplaced(state, world, pos, newState, moved);
+			super.onStateReplaced(state, world, pos, newState, false);
 			if (!world.isClient) {
 				for (Direction direction : Direction.values()) {
 					world.updateNeighborsAlways(pos.offset(direction), this);

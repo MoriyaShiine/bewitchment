@@ -14,7 +14,6 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemPlacementContext;
@@ -65,11 +64,6 @@ public class GlyphBlock extends HorizontalFacingBlock implements BlockEntityProv
 	}
 
 	@Override
-	public PistonBehavior getPistonBehavior(BlockState state) {
-		return PistonBehavior.DESTROY;
-	}
-
-	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		if (this == BWObjects.GOLDEN_GLYPH) {
 			boolean client = world.isClient;
@@ -84,7 +78,7 @@ public class GlyphBlock extends HorizontalFacingBlock implements BlockEntityProv
 	@Nullable
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		return super.getPlacementState(ctx).with(FACING, ctx.getPlayerFacing()).with(Properties.AGE_5, ctx.getWorld().random.nextInt(6));
+		return super.getPlacementState(ctx).with(FACING, ctx.getHorizontalPlayerFacing()).with(Properties.AGE_5, ctx.getWorld().random.nextInt(6));
 	}
 
 	@Override

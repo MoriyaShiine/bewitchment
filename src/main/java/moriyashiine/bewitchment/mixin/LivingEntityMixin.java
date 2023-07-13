@@ -28,6 +28,7 @@ import net.minecraft.entity.projectile.WitherSkullEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -55,7 +56,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo callbackInfo) {
-		if (!world.isClient) {
+		if (!getWorld().isClient) {
 			LivingEntity living = (LivingEntity) (Object) this;
 			int damage = 0;
 			if (living.getMainHandStack().getItem() == BWObjects.GARLIC && BewitchmentAPI.isVampire(this, true)) {
@@ -71,14 +72,14 @@ public abstract class LivingEntityMixin extends Entity {
 				damage++;
 			}
 			if (damage > 0) {
-				damage(BWDamageSources.MAGIC_COPY, damage);
+				damage(BWDamageSources.create(getWorld(), BWDamageSources.MAGIC_COPY), damage);
 			}
 		}
 	}
 
 	@ModifyVariable(method = "addStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)Z", at = @At("HEAD"), argsOnly = true)
 	private StatusEffectInstance modifyStatusEffect(StatusEffectInstance effect) {
-		if (!world.isClient && !effect.isAmbient() && !effect.getEffectType().isInstant() && effect.getEffectType().getCategory() == StatusEffectCategory.HARMFUL) {
+		if (!getWorld().isClient && !effect.isAmbient() && !effect.getEffectType().isInstant() && effect.getEffectType().getCategory() == StatusEffectCategory.HARMFUL) {
 			float durationMultiplier = 1;
 			for (ItemStack stack : getArmorItems()) {
 				durationMultiplier -= EnchantmentHelper.getLevel(BWEnchantments.MAGIC_PROTECTION, stack) / 32f;
@@ -92,7 +93,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getHealth()F"), ordinal = 0, argsOnly = true)
 	private float modifyDamage0(float amount, DamageSource source) {
-		if (!world.isClient) {
+		if (!getWorld().isClient) {
 			amount = BWDamageSources.handleDamage((LivingEntity) (Object) this, source, amount);
 		}
 		return amount;
@@ -100,7 +101,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage1(float amount, DamageSource source) {
-		if (!world.isClient) {
+		if (!getWorld().isClient) {
 			Entity attacker = source.getAttacker();
 			Entity directSource = source.getSource();
 			if (directSource instanceof FireballEntity fireball) {
@@ -114,7 +115,7 @@ public abstract class LivingEntityMixin extends Entity {
 			if (directSource instanceof WitherSkullEntity && attacker instanceof LilithEntity) {
 				amount *= 3;
 			}
-			if (source.isMagic() && (Object) this instanceof LivingEntity living) {
+			if (source.isIn(DamageTypeTags.WITCH_RESISTANT_TO) && (Object) this instanceof LivingEntity living) {
 				int armorPieces = BWUtil.getArmorPieces(living, stack -> {
 					if (stack.getItem() instanceof ArmorItem armorItem) {
 						ArmorMaterial material = armorItem.getMaterial();
@@ -133,9 +134,9 @@ public abstract class LivingEntityMixin extends Entity {
 		return amount;
 	}
 
-	@Inject(method = "damage", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "damage", at = @At("HEAD"))
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!world.isClient) {
+		if (!getWorld().isClient) {
 			Entity attacker = source.getAttacker();
 			if (attacker instanceof LeonardEntity) {
 				removeStatusEffect(BWStatusEffects.MAGIC_SPONGE);

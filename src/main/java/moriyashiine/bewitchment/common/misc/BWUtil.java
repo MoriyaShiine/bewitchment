@@ -82,7 +82,7 @@ public class BWUtil {
 	}
 
 	public static boolean rejectTrades(LivingEntity merchant) {
-		return !merchant.world.getEntitiesByClass(PlayerEntity.class, new Box(merchant.getBlockPos()).expand(8), foundEntity -> merchant.canSee(foundEntity) && foundEntity.isAlive() && BWComponents.CURSES_COMPONENT.get(foundEntity).hasCurse(BWCurses.APATHY)).isEmpty();
+		return !merchant.getWorld().getEntitiesByClass(PlayerEntity.class, new Box(merchant.getBlockPos()).expand(8), foundEntity -> merchant.canSee(foundEntity) && foundEntity.isAlive() && BWComponents.CURSES_COMPONENT.get(foundEntity).hasCurse(BWCurses.APATHY)).isEmpty();
 	}
 
 	public static int getArmorPieces(LivingEntity livingEntity, Predicate<ItemStack> predicate) {
@@ -117,12 +117,12 @@ public class BWUtil {
 
 	public static void attemptTeleport(Entity entity, BlockPos origin, int distance, boolean hasEffects) {
 		for (int i = 0; i < 32; i++) {
-			BlockPos.Mutable mutable = new BlockPos.Mutable(origin.getX() + MathHelper.nextDouble(entity.world.random, -distance, distance), origin.getY() + MathHelper.nextDouble(entity.world.random, -distance / 2f, distance / 2f), origin.getZ() + MathHelper.nextDouble(entity.world.random, -distance, distance));
-			if (!entity.world.getBlockState(mutable).getMaterial().isSolid()) {
-				while (mutable.getY() > 0 && !entity.world.getBlockState(mutable).getMaterial().isSolid()) {
+			BlockPos.Mutable mutable = new BlockPos.Mutable(origin.getX() + MathHelper.nextDouble(entity.getWorld().random, -distance, distance), origin.getY() + MathHelper.nextDouble(entity.getWorld().random, -distance / 2f, distance / 2f), origin.getZ() + MathHelper.nextDouble(entity.getWorld().random, -distance, distance));
+			if (!entity.getWorld().getBlockState(mutable).isSolid()) {
+				while (mutable.getY() > 0 && !entity.getWorld().getBlockState(mutable).isSolid()) {
 					mutable.move(Direction.DOWN);
 				}
-				if (entity.world.getBlockState(mutable).getMaterial().blocksMovement()) {
+				if (entity.getWorld().getBlockState(mutable).blocksMovement()) {
 					teleport(entity, mutable.getX() + 0.5, mutable.getY() + 0.5, mutable.getZ() + 0.5, hasEffects);
 					break;
 				}
@@ -133,7 +133,7 @@ public class BWUtil {
 	public static void teleport(Entity entity, double x, double y, double z, boolean hasEffects) {
 		if (hasEffects) {
 			if (!entity.isSilent()) {
-				entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, entity.getSoundCategory(), 1, 1);
+				entity.getWorld().playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, entity.getSoundCategory(), 1, 1);
 			}
 			PlayerLookup.tracking(entity).forEach(trackingPlayer -> SpawnPortalParticlesPacket.send(trackingPlayer, entity));
 			if (entity instanceof PlayerEntity player) {
@@ -150,7 +150,7 @@ public class BWUtil {
 		entity.teleport(x, y + 0.5, z);
 		if (hasEffects) {
 			if (!entity.isSilent()) {
-				entity.world.playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, entity.getSoundCategory(), 1, 1);
+				entity.getWorld().playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, entity.getSoundCategory(), 1, 1);
 			}
 			PlayerLookup.tracking(entity).forEach(trackingPlayer -> SpawnPortalParticlesPacket.send(trackingPlayer, entity));
 			if (entity instanceof PlayerEntity player) {

@@ -17,10 +17,8 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -72,11 +70,6 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 		return SHAPE;
 	}
 
-	@Override
-	public PistonBehavior getPistonBehavior(BlockState state) {
-		return PistonBehavior.BLOCK;
-	}
-
 	@Nullable
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
@@ -86,7 +79,7 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 	@Override
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
 		if (state.get(Properties.WATERLOGGED)) {
-			world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+			world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
 			state = state.with(BWProperties.LEVEL, 0);
 			state = state.with(Properties.LIT, false);
 		} else {
@@ -131,7 +124,7 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 								} else if (cauldron.mode == WitchCauldronBlockEntity.Mode.OIL_CRAFTING) {
 									OilRecipe recipe = cauldron.oilRecipe;
 									if (recipe != null) {
-										bottle = recipe.getOutput().copy();
+										bottle = recipe.getOutput(world.getRegistryManager()).copy();
 									}
 								} else {
 									bottle = cauldron.getPotion(player);
@@ -204,7 +197,7 @@ public class WitchCauldronBlock extends Block implements BlockEntityProvider, Wa
 		if (world.getBlockState(pos).get(BWProperties.LEVEL) > 0 && entity instanceof LivingEntity) {
 			WitchCauldronBlockEntity blockEntity = (WitchCauldronBlockEntity) world.getBlockEntity(pos);
 			if (blockEntity.heatTimer >= 60 && blockEntity.mode != WitchCauldronBlockEntity.Mode.TELEPORTATION) {
-				entity.damage(DamageSource.HOT_FLOOR, 1);
+				entity.damage(world.getDamageSources().hotFloor(), 1);
 			}
 		}
 	}

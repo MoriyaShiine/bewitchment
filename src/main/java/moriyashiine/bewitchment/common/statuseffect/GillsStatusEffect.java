@@ -6,7 +6,6 @@ package moriyashiine.bewitchment.common.statuseffect;
 
 import moriyashiine.bewitchment.mixin.brew.LivingEntityAccessor;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 
@@ -23,7 +22,7 @@ public class GillsStatusEffect extends StatusEffect {
 	@Override
 	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
 		boolean damage = false;
-		if (!entity.isSubmergedInWater() && !entity.world.hasRain(entity.getBlockPos().up())) {
+		if (!entity.isSubmergedInWater() && !entity.getWorld().hasRain(entity.getBlockPos().up())) {
 			entity.setAir(((LivingEntityAccessor) entity).bw_getNextAirUnderwater(entity.getAir() - ((LivingEntityAccessor) entity).bw_getNextAirOnLand(0)));
 			if (entity.getAir() == -20) {
 				damage = true;
@@ -36,7 +35,7 @@ public class GillsStatusEffect extends StatusEffect {
 			damage = entity.getAir() < -20;
 		}
 		if (damage) {
-			entity.damage(DamageSource.GENERIC, 2);
+			entity.damage(entity.getWorld().getDamageSources().generic(), 2);
 			entity.setAir(0);
 		}
 	}

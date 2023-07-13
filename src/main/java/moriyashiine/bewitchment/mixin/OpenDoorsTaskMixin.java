@@ -4,52 +4,89 @@
 
 package moriyashiine.bewitchment.mixin;
 
+import com.mojang.datafixers.kinds.OptionalBox;
 import moriyashiine.bewitchment.common.block.util.interfaces.SpecialDoor;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.brain.MemoryModuleType;
+import net.minecraft.entity.ai.brain.MemoryQueryResult;
 import net.minecraft.entity.ai.brain.task.OpenDoorsTask;
+import net.minecraft.entity.ai.brain.task.Task;
+import net.minecraft.entity.ai.brain.task.TaskTriggerer;
 import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.ai.pathing.PathNode;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.GlobalPos;
+import net.minecraft.world.World;
+import org.apache.commons.lang3.mutable.MutableInt;
+import org.apache.commons.lang3.mutable.MutableObject;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+import org.spongepowered.asm.mixin.Unique;
+
+import java.util.Optional;
+import java.util.Set;
 
 @Mixin(OpenDoorsTask.class)
 public abstract class OpenDoorsTaskMixin {
 	@Shadow
-	protected abstract void rememberToCloseDoor(ServerWorld world, LivingEntity entity, BlockPos pos);
+	private static Optional<Set<GlobalPos>> storePos(MemoryQueryResult<OptionalBox.Mu, Set<GlobalPos>> queryResult, Optional<Set<GlobalPos>> doors, ServerWorld world, BlockPos pos) {
+		throw new UnsupportedOperationException();
+	}
 
-	@Inject(method = "run", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/server/world/ServerWorld;getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;", ordinal = 1), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
-	private void run(ServerWorld world, LivingEntity entity, long time, CallbackInfo ci, Path path, PathNode pathNode, PathNode pathNode2, BlockPos pos, BlockState state) {
-		if (state.getBlock() instanceof SpecialDoor specialDoor) {
-			ActionResult result = specialDoor.onSpecialUse(state, world, pos, entity, Hand.MAIN_HAND);
-			if (state.isIn(BlockTags.WOODEN_DOORS)) {
-				DoorBlock doorBlock = (DoorBlock) state.getBlock();
-				if (!doorBlock.isOpen(state) && result != ActionResult.FAIL) {
-					doorBlock.setOpen(entity, world, state, pos, true);
-				}
-				rememberToCloseDoor(world, entity, pos);
+	/**
+	 * @author MoriyaShiine
+	 * @reason help
+	 */
+	@Overwrite
+	public static Task<LivingEntity> create() {
+		MutableObject<PathNode> mutableNode = new MutableObject<>(null);
+		MutableInt mutableInt = new MutableInt(0);
+		return TaskTriggerer.task(context -> context.group(context.queryMemoryValue(MemoryModuleType.PATH), context.queryMemoryOptional(MemoryModuleType.DOORS_TO_CLOSE), context.queryMemoryOptional(MemoryModuleType.MOBS)).apply(context, (path, doorsToClose, mobs) -> (world, entity, time) -> {
+			Optional<Set<GlobalPos>> optional = context.getOptionalValue(doorsToClose);
+			Path newPath = context.getValue(path);
+			if (newPath.isStart() || newPath.isFinished()) {
+				return false;
 			}
-			BlockPos blockPos2 = new BlockPos(pathNode2.getPos());
-			BlockState blockState2 = world.getBlockState(blockPos2);
-			if (blockState2.isIn(BlockTags.WOODEN_DOORS)) {
-				DoorBlock doorBlock2 = (DoorBlock) blockState2.getBlock();
-				if (!doorBlock2.isOpen(blockState2) && result != ActionResult.FAIL) {
-					doorBlock2.setOpen(entity, world, blockState2, blockPos2, true);
-					rememberToCloseDoor(world, entity, blockPos2);
+			if (mutableNode.getValue() == newPath.getCurrentNode()) {
+				mutableInt.setValue(20);
+			} else if (mutableInt.decrementAndGet() > 0) {
+				return false;
+			}
+			PathNode lastNode = newPath.getLastNode();
+			PathNode currentNode = newPath.getCurrentNode();
+			mutableNode.setValue(currentNode);
+			BlockPos blockPos = lastNode.getBlockPos();
+			BlockState blockState = world.getBlockState(blockPos);
+			boolean failed = failed(world, entity, blockState, blockPos);
+			if (blockState.isIn(BlockTags.WOODEN_DOORS, foundState -> foundState.getBlock() instanceof DoorBlock)) {
+				DoorBlock doorBlock = (DoorBlock) blockState.getBlock();
+				if (!doorBlock.isOpen(blockState) && !failed) {
+					doorBlock.setOpen(entity, world, blockState, blockPos, true);
+				}
+				optional = storePos(doorsToClose, optional, world, blockPos);
+			}
+			blockPos = currentNode.getBlockPos();
+			blockState = world.getBlockState(blockPos);
+			if (blockState.isIn(BlockTags.WOODEN_DOORS, foundState -> foundState.getBlock() instanceof DoorBlock) && blockState.getBlock() instanceof DoorBlock doorBlock && !doorBlock.isOpen(blockState)) {
+				if (!failed) {
+					doorBlock.setOpen(entity, world, blockState, blockPos, true);
+					optional = storePos(doorsToClose, optional, world, blockPos);
 				}
 			}
-			OpenDoorsTask.pathToDoor(world, entity, pathNode, pathNode2);
-			ci.cancel();
-		}
+			optional.ifPresent(doors -> OpenDoorsTask.pathToDoor(world, entity, lastNode, currentNode, doors, context.getOptionalValue(mobs)));
+			return true;
+		}));
+	}
+
+	@Unique
+	private static boolean failed(World world, LivingEntity entity, BlockState blockState, BlockPos blockPos) {
+		return blockState.getBlock() instanceof SpecialDoor specialDoor && specialDoor.onSpecialUse(blockState, world, blockPos, entity, Hand.MAIN_HAND) == ActionResult.FAIL;
 	}
 }

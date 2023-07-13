@@ -13,11 +13,11 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.World;
 
 public class EncounterFortune extends Fortune {
@@ -30,7 +30,7 @@ public class EncounterFortune extends Fortune {
 		Entity entity = getRandomEntity(world);
 		for (int i = 0; i < 8; i++) {
 			BlockPos pos = target.getBlockPos().add(MathHelper.nextInt(world.random, -3, 3), 0, MathHelper.nextInt(world.random, -3, 3));
-			if (!world.getBlockState(pos).getMaterial().blocksMovement()) {
+			if (!world.getBlockState(pos).blocksMovement()) {
 				if (entity instanceof MobEntity mob) {
 					mob.initialize(world, world.getLocalDifficulty(pos), SpawnReason.EVENT, null, null);
 					mob.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, Integer.MAX_VALUE, 1));
@@ -49,7 +49,7 @@ public class EncounterFortune extends Fortune {
 	private static Entity getRandomEntity(World world) {
 		RegistryEntry<EntityType<?>> entity = null;
 		while (entity == null || !entity.isIn(BWTags.ENCOUNTER_FORTUNE)) {
-			entity = Registry.ENTITY_TYPE.getRandom(world.random).orElse(null);
+			entity = Registries.ENTITY_TYPE.getRandom(world.random).orElse(null);
 		}
 		return entity.value().create(world);
 	}

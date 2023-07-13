@@ -11,7 +11,7 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.util.Identifier;
 
 public class DragonsBloodBroomEntityRenderer extends BroomEntityRenderer<BroomEntity> {
-	private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/broom/dragons_blood.png");
+	private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/broom/dragons_blood_boat.png");
 
 	public DragonsBloodBroomEntityRenderer(EntityRendererFactory.Context context) {
 		super(context);

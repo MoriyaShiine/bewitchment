@@ -39,13 +39,13 @@ public class FortuneComponent implements ServerTickingComponent {
 	@Override
 	public void serverTick() {
 		if (getFortune() != null) {
-			if (getFortune().fortune.tick((ServerWorld) obj.world, obj)) {
+			if (getFortune().fortune.tick((ServerWorld) obj.getWorld(), obj)) {
 				getFortune().duration = 0;
 			} else {
 				getFortune().duration--;
 			}
 			if (getFortune().duration <= 0) {
-				if (getFortune().fortune.finish((ServerWorld) obj.world, obj)) {
+				if (getFortune().fortune.finish((ServerWorld) obj.getWorld(), obj)) {
 					setFortune(null);
 				} else {
 					getFortune().duration = obj.getRandom().nextInt(120000);

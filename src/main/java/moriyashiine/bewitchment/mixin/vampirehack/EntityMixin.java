@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(Entity.class)
+@Mixin(value = Entity.class, priority = 1)
 public class EntityMixin {
 	@Inject(method = "isFireImmune", at = @At("HEAD"), cancellable = true)
 	private void bewitchment$makeVampiresNotImmuneToFire(CallbackInfoReturnable<Boolean> callbackInfo) {

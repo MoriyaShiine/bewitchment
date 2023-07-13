@@ -31,7 +31,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage(float amount, DamageSource source) {
-		if (!world.isClient) {
+		if (!getWorld().isClient) {
 			Entity directSource = source.getSource();
 			if ((Object) this instanceof PlayerEntity player && BWComponents.CONTRACTS_COMPONENT.get(player).hasContract(BWContracts.FAMINE)) {
 				amount /= (2 - (player.getHungerManager().getFoodLevel() / 20f));

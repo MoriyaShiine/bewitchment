@@ -1,5 +1,6 @@
 {
   "name": "item.bewitchment.book_of_shadows",
+  "use_resource_pack": true,
   "landing_text": "item.bewitchment.book_of_shadows.landing_text",
   "custom_book_item": "bewitchment:book_of_shadows",
   "book_texture": "bewitchment:textures/gui/patchouli/book.png",

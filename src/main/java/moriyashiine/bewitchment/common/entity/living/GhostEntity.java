@@ -65,7 +65,7 @@ public class GhostEntity extends BWHostileEntity {
 		super.tick();
 		noClip = false;
 		setNoGravity(true);
-		if (!world.isClient) {
+		if (!getWorld().isClient) {
 			if (age % 20 == 0 && getTarget() != null) {
 				int type = dataTracker.get(VARIANT);
 				if (type == 0) {
@@ -73,7 +73,7 @@ public class GhostEntity extends BWHostileEntity {
 				}
 				getTarget().addStatusEffect(getEffect(type, 100));
 			}
-			if (!hasCustomName() && world.isDay() && !world.isRaining() && world.isSkyVisibleAllowingSea(getBlockPos())) {
+			if (!hasCustomName() && getWorld().isDay() && !getWorld().isRaining() && getWorld().isSkyVisibleAllowingSea(getBlockPos())) {
 				PlayerLookup.tracking(this).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, this));
 				remove(RemovalReason.DISCARDED);
 			}
@@ -138,11 +138,11 @@ public class GhostEntity extends BWHostileEntity {
 
 	@Override
 	public void setTarget(@Nullable LivingEntity target) {
-		if (world instanceof ServerWorldAccess serverWorldAccess && findPos(serverWorldAccess, getBlockPos()) != null) {
+		if (getWorld() instanceof ServerWorldAccess serverWorldAccess && findPos(serverWorldAccess, getBlockPos()) != null) {
 			target = null;
 		}
 		super.setTarget(target);
-		if (!world.isClient) {
+		if (!getWorld().isClient) {
 			dataTracker.set(HAS_TARGET, target != null);
 		}
 	}
@@ -233,14 +233,14 @@ public class GhostEntity extends BWHostileEntity {
 
 		private BlockPos findTarget(BlockPos.Mutable target, int tries) {
 			if (tries <= 8) {
-				while (isInsideBuildLimit(world, target) && world.getBlockState(target).getMaterial().isSolid()) {
+				while (isInsideBuildLimit(getWorld(), target) && getWorld().getBlockState(target).isSolid()) {
 					target.set(target.getX(), target.getY() + 1, target.getZ());
 				}
-				while (isInsideBuildLimit(world, target) && !world.getBlockState(target).getMaterial().isSolid()) {
+				while (isInsideBuildLimit(getWorld(), target) && !getWorld().getBlockState(target).isSolid()) {
 					target.set(target.getX(), target.getY() - 1, target.getZ());
 				}
 				target.set(target.getX(), target.getY() + random.nextInt(8), target.getZ());
-				Pair<BlockPos, Integer> validSpot = findPos((ServerWorldAccess) world, target);
+				Pair<BlockPos, Integer> validSpot = findPos((ServerWorldAccess) getWorld(), target);
 				if (validSpot != null) {
 					int radius = validSpot.getRight();
 					return findTarget(target.set(validSpot.getLeft().getX() + MathHelper.nextDouble(random, -radius, radius), validSpot.getLeft().getY() + MathHelper.nextDouble(random, -radius, radius), validSpot.getLeft().getZ() + MathHelper.nextDouble(random, -radius, radius)), ++tries);
