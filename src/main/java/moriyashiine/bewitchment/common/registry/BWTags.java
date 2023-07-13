@@ -11,8 +11,11 @@ import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.biome.Biome;
 
 public class BWTags {
+	public static final TagKey<Biome> SPAWNS_HELLHOUNDS = TagKey.of(RegistryKeys.BIOME, new Identifier(Bewitchment.MODID, "spawns_hellhounds"));
+
 	public static final TagKey<EntityType<?>> VULNERABLE_TO_SILVER = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier(Bewitchment.MODID, "vulnerable_to_silver"));
 	public static final TagKey<EntityType<?>> IMMUNE_TO_SILVER = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier(Bewitchment.MODID, "immune_to_silver"));
 	public static final TagKey<EntityType<?>> HAS_BLOOD = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier(Bewitchment.MODID, "has_blood"));

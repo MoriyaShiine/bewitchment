@@ -10,6 +10,7 @@ import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWMaterials;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
+import moriyashiine.bewitchment.common.registry.BWTags;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
@@ -39,7 +40,7 @@ public class HellhoundEntity extends BWHostileEntity {
 	}
 
 	public static boolean canSpawn(EntityType<HellhoundEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-		return !world.getBlockState(pos.down()).isOf(Blocks.NETHER_WART_BLOCK);
+		return !world.getBlockState(pos.down()).isOf(Blocks.NETHER_WART_BLOCK) && world.getBiome(pos).isIn(BWTags.SPAWNS_HELLHOUNDS);
 	}
 
 	@Override
