@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) MoriyaShiine
+ */
+
 package moriyashiine.bewitchment.client.integration.emi;
 
 import dev.emi.emi.EmiRenderHelper;

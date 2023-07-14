@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) MoriyaShiine
+ */
+
 package moriyashiine.bewitchment.mixin;
 
 import com.mojang.brigadier.arguments.ArgumentType;
