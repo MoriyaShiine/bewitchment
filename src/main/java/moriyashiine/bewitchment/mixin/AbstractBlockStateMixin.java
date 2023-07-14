@@ -5,10 +5,7 @@
 package moriyashiine.bewitchment.mixin;
 
 import moriyashiine.bewitchment.common.registry.BWObjects;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
@@ -26,7 +23,7 @@ public abstract class AbstractBlockStateMixin {
 
 	@Inject(method = "getCollisionShape(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/ShapeContext;)Lnet/minecraft/util/shape/VoxelShape;", at = @At("HEAD"), cancellable = true)
 	private void getCollisionShape(BlockView world, BlockPos pos, ShapeContext context, CallbackInfoReturnable<VoxelShape> callbackInfo) {
-		if (getBlock() != BWObjects.SALT_LINE) {
+		if (context instanceof EntityShapeContext entityShapeContext && entityShapeContext.getEntity() != null && getBlock() != BWObjects.SALT_LINE) {
 			BlockState down = world.getBlockState(pos.down());
 			if (down != null && down.isOf(BWObjects.SALT_LINE) && down.getCollisionShape(world, pos, context) == VoxelShapes.fullCube()) {
 				callbackInfo.setReturnValue(VoxelShapes.fullCube());
