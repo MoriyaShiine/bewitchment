@@ -32,6 +32,9 @@
 	],
 	"appleskin": [
 	  "moriyashiine.bewitchment.client.integration.appleskin.BWAppleskinIntegration"
+	],
+	"emi": [
+	  "moriyashiine.bewitchment.client.integration.emi.BWEmiIntegration"
 	]
   },
   "mixins": [
