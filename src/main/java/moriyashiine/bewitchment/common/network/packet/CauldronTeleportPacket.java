@@ -28,7 +28,7 @@ import java.util.Map;
 
 @SuppressWarnings("ConstantConditions")
 public class CauldronTeleportPacket {
-	public static final Identifier ID = new Identifier(Bewitchment.MODID, "cauldron_teleport");
+	public static final Identifier ID = new Identifier(Bewitchment.MOD_ID, "cauldron_teleport");
 
 	public static void send(BlockPos cauldronPos, String message) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
@@ -66,10 +66,10 @@ public class CauldronTeleportPacket {
 				if (hasPower) {
 					BWUtil.teleport(player, closest.getX() + 0.5, closest.getY() - 0.4375, closest.getZ() + 0.5, true);
 				} else {
-					player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.insufficent_altar_power", message), true);
+					player.sendMessage(Text.translatable(Bewitchment.MOD_ID + ".message.insufficent_altar_power", message), true);
 				}
 			} else {
-				player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.invalid_cauldron", message), true);
+				player.sendMessage(Text.translatable(Bewitchment.MOD_ID + ".message.invalid_cauldron", message), true);
 			}
 		});
 	}

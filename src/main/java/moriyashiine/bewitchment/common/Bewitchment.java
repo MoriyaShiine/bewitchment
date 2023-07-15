@@ -56,12 +56,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
 public class Bewitchment implements ModInitializer {
-	public static final String MODID = "bewitchment";
+	public static final String MOD_ID = "bewitchment";
 
 	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void onInitialize() {
-		MidnightConfig.init(MODID, BWConfig.class);
+		MidnightConfig.init(MOD_ID, BWConfig.class);
 		ServerPlayNetworking.registerGlobalReceiver(CauldronTeleportPacket.ID, CauldronTeleportPacket::handle);
 		ServerPlayNetworking.registerGlobalReceiver(TransformationAbilityPacket.ID, TransformationAbilityPacket::handle);
 		ServerPlayNetworking.registerGlobalReceiver(TogglePressingForwardPacket.ID, TogglePressingForwardPacket::handle);

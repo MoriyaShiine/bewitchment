@@ -26,37 +26,37 @@ public class BWEmiIntegration implements EmiPlugin {
 	private static final EmiStack WITCH_CAULDRON_WORKSTATION = EmiStack.of(BWObjects.WITCH_CAULDRON);
 	private static final EmiStack BRAZIER_WORKSTATION = EmiStack.of(BWObjects.BRAZIER);
 
-	public static final EmiRecipeCategory ATHAME_STRIPPING_CATEGORY = new EmiRecipeCategory(new Identifier(Bewitchment.MODID, "athame_stripping"), ATHAME_WORKSTATION, (draw, x, y, delta) -> {
+	public static final EmiRecipeCategory ATHAME_STRIPPING_CATEGORY = new EmiRecipeCategory(new Identifier(Bewitchment.MOD_ID, "athame_stripping"), ATHAME_WORKSTATION, (draw, x, y, delta) -> {
 		EmiDrawContext context = EmiDrawContext.wrap(draw);
 		context.drawTexture(EmiRenderHelper.WIDGETS, x, y, 160, 240, 16, 16);
 	}, EmiRecipeSorting.compareInputThenOutput());
 
-	public static final EmiRecipeCategory ATHAME_DROPS_CATEGORY = new EmiRecipeCategory(new Identifier(Bewitchment.MODID, "athame_drops"), ATHAME_WORKSTATION, (draw, x, y, delta) -> {
+	public static final EmiRecipeCategory ATHAME_DROPS_CATEGORY = new EmiRecipeCategory(new Identifier(Bewitchment.MOD_ID, "athame_drops"), ATHAME_WORKSTATION, (draw, x, y, delta) -> {
 		EmiDrawContext context = EmiDrawContext.wrap(draw);
 		context.drawTexture(EmiRenderHelper.WIDGETS, x, y, 160, 240, 16, 16);
 	}, EmiRecipeSorting.compareInputThenOutput());
 
-	public static final EmiRecipeCategory RITUALS_CATGORY = new EmiRecipeCategory(new Identifier(Bewitchment.MODID, "rituals"), GOLDEN_CHALK_WORKSTATION, (draw, x, y, delta) -> {
+	public static final EmiRecipeCategory RITUALS_CATGORY = new EmiRecipeCategory(new Identifier(Bewitchment.MOD_ID, "rituals"), GOLDEN_CHALK_WORKSTATION, (draw, x, y, delta) -> {
 		EmiDrawContext context = EmiDrawContext.wrap(draw);
 		context.drawTexture(EmiRenderHelper.WIDGETS, x, y, 160, 240, 16, 16);
 	}, EmiRecipeSorting.compareInputThenOutput());
 
-	public static final EmiRecipeCategory OIL_CRAFTING_CATEGORY = new EmiRecipeCategory(new Identifier(Bewitchment.MODID, "oil_crafting"), WITCH_CAULDRON_WORKSTATION, (draw, x, y, delta) -> {
+	public static final EmiRecipeCategory OIL_CRAFTING_CATEGORY = new EmiRecipeCategory(new Identifier(Bewitchment.MOD_ID, "oil_crafting"), WITCH_CAULDRON_WORKSTATION, (draw, x, y, delta) -> {
 		EmiDrawContext context = EmiDrawContext.wrap(draw);
 		context.drawTexture(EmiRenderHelper.WIDGETS, x, y, 160, 240, 16, 16);
 	}, EmiRecipeSorting.compareInputThenOutput());
 
-	public static final EmiRecipeCategory CAULDRON_BREWING_CATEGORY = new EmiRecipeCategory(new Identifier(Bewitchment.MODID, "cauldron_brewing"), WITCH_CAULDRON_WORKSTATION, (draw, x, y, delta) -> {
+	public static final EmiRecipeCategory CAULDRON_BREWING_CATEGORY = new EmiRecipeCategory(new Identifier(Bewitchment.MOD_ID, "cauldron_brewing"), WITCH_CAULDRON_WORKSTATION, (draw, x, y, delta) -> {
 		EmiDrawContext context = EmiDrawContext.wrap(draw);
 		context.drawTexture(EmiRenderHelper.WIDGETS, x, y, 160, 240, 16, 16);
 	}, EmiRecipeSorting.compareInputThenOutput());
 
-	public static final EmiRecipeCategory INCENSE_CATEGORY = new EmiRecipeCategory(new Identifier(Bewitchment.MODID, "incenses"), BRAZIER_WORKSTATION, (draw, x, y, delta) -> {
+	public static final EmiRecipeCategory INCENSE_CATEGORY = new EmiRecipeCategory(new Identifier(Bewitchment.MOD_ID, "incenses"), BRAZIER_WORKSTATION, (draw, x, y, delta) -> {
 		EmiDrawContext context = EmiDrawContext.wrap(draw);
 		context.drawTexture(EmiRenderHelper.WIDGETS, x, y, 160, 240, 16, 16);
 	}, EmiRecipeSorting.compareInputThenOutput());
 
-	public static final EmiRecipeCategory CURSE_CATEGORY = new EmiRecipeCategory(new Identifier(Bewitchment.MODID, "curses"), BRAZIER_WORKSTATION, (draw, x, y, delta) -> {
+	public static final EmiRecipeCategory CURSE_CATEGORY = new EmiRecipeCategory(new Identifier(Bewitchment.MOD_ID, "curses"), BRAZIER_WORKSTATION, (draw, x, y, delta) -> {
 		EmiDrawContext context = EmiDrawContext.wrap(draw);
 		context.drawTexture(EmiRenderHelper.WIDGETS, x, y, 160, 240, 16, 16);
 	}, EmiRecipeSorting.compareInputThenOutput());

@@ -29,7 +29,7 @@ public class DragonsBloodBroomItem extends BroomItem {
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		if (stack.hasNbt() && stack.getNbt().contains("Sigil")) {
 			tooltip.add(Text.translatable("sigil." + stack.getNbt().getString("Sigil").replace(":", ".")).formatted(Formatting.GRAY));
-			tooltip.add(Text.translatable(Bewitchment.MODID + ".tooltip.uses_left", stack.getNbt().getInt("Uses")).formatted(Formatting.GRAY));
+			tooltip.add(Text.translatable(Bewitchment.MOD_ID + ".tooltip.uses_left", stack.getNbt().getInt("Uses")).formatted(Formatting.GRAY));
 		}
 	}
 }

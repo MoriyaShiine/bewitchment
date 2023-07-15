@@ -28,7 +28,7 @@ public class RavenEntityRenderer extends MobEntityRenderer<RavenEntity, RavenEnt
 			int variants = entity.getVariants();
 			TEXTURES = new Identifier[variants];
 			for (int i = 0; i < variants; i++) {
-				TEXTURES[i] = new Identifier(Bewitchment.MODID, "textures/entity/living/raven/" + i + ".png");
+				TEXTURES[i] = new Identifier(Bewitchment.MOD_ID, "textures/entity/living/raven/" + i + ".png");
 			}
 		}
 		return TEXTURES[entity.getVariant()];

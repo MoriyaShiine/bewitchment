@@ -29,7 +29,7 @@ public class SearchBlocksRitualFunction extends RitualFunction {
 		if (closestPlayer != null) {
 			Block block = world.getBlockState(glyphPos.down(2)).getBlock();
 			int blocks = BWUtil.getBlockPoses(effectivePos, catFamiliar ? 48 : 16, currentPos -> world.getBlockState(currentPos).getBlock() == block).size();
-			closestPlayer.sendMessage(Text.translatable(Bewitchment.MODID + ".message.found_block" + (blocks == 1 ? "" : "s"), blocks, block.getName()), true);
+			closestPlayer.sendMessage(Text.translatable(Bewitchment.MOD_ID + ".message.found_block" + (blocks == 1 ? "" : "s"), blocks, block.getName()), true);
 		}
 		super.start(world, glyphPos, effectivePos, inventory, catFamiliar);
 	}

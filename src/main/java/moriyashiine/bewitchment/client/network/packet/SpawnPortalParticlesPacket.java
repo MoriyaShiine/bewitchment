@@ -19,7 +19,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 public class SpawnPortalParticlesPacket {
-	public static final Identifier ID = new Identifier(Bewitchment.MODID, "spawn_portal_particles");
+	public static final Identifier ID = new Identifier(Bewitchment.MOD_ID, "spawn_portal_particles");
 
 	public static void send(PlayerEntity player, Entity entity) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());

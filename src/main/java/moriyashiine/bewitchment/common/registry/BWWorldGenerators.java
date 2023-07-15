@@ -34,19 +34,19 @@ import net.minecraft.world.gen.feature.PlacedFeatures;
 import java.util.function.Predicate;
 
 public class BWWorldGenerators {
-	public static final RegistryKey<ConfiguredFeature<?, ?>> JUNIPER = ConfiguredFeatures.of(Bewitchment.MODID + ":juniper");
-	public static final RegistryKey<ConfiguredFeature<?, ?>> CYPRESS = ConfiguredFeatures.of(Bewitchment.MODID + ":cypress");
-	public static final RegistryKey<ConfiguredFeature<?, ?>> ELDER = ConfiguredFeatures.of(Bewitchment.MODID + ":elder");
-	public static final RegistryKey<ConfiguredFeature<?, ?>> DRAGONS_BLOOD = ConfiguredFeatures.of(Bewitchment.MODID + ":dragons_blood");
+	public static final RegistryKey<ConfiguredFeature<?, ?>> JUNIPER = ConfiguredFeatures.of(Bewitchment.MOD_ID + ":juniper");
+	public static final RegistryKey<ConfiguredFeature<?, ?>> CYPRESS = ConfiguredFeatures.of(Bewitchment.MOD_ID + ":cypress");
+	public static final RegistryKey<ConfiguredFeature<?, ?>> ELDER = ConfiguredFeatures.of(Bewitchment.MOD_ID + ":elder");
+	public static final RegistryKey<ConfiguredFeature<?, ?>> DRAGONS_BLOOD = ConfiguredFeatures.of(Bewitchment.MOD_ID + ":dragons_blood");
 
-	public static final RegistryKey<PlacedFeature> TREE_JUNIPER = PlacedFeatures.of(Bewitchment.MODID + ":tree_juniper");
-	public static final RegistryKey<PlacedFeature> TREE_CYPRESS = PlacedFeatures.of(Bewitchment.MODID + ":tree_cypress");
-	public static final RegistryKey<PlacedFeature> TREE_ELDER = PlacedFeatures.of(Bewitchment.MODID + ":tree_elder");
+	public static final RegistryKey<PlacedFeature> TREE_JUNIPER = PlacedFeatures.of(Bewitchment.MOD_ID + ":tree_juniper");
+	public static final RegistryKey<PlacedFeature> TREE_CYPRESS = PlacedFeatures.of(Bewitchment.MOD_ID + ":tree_cypress");
+	public static final RegistryKey<PlacedFeature> TREE_ELDER = PlacedFeatures.of(Bewitchment.MOD_ID + ":tree_elder");
 
-	public static final RegistryKey<PlacedFeature> ORE_SALT_UPPER = PlacedFeatures.of(Bewitchment.MODID + ":ore_salt_lower");
-	public static final RegistryKey<PlacedFeature> ORE_SALT_LOWER = PlacedFeatures.of(Bewitchment.MODID + ":ore_salt_upper");
-	public static final RegistryKey<PlacedFeature> ORE_SILVER = PlacedFeatures.of(Bewitchment.MODID + ":ore_silver");
-	public static final RegistryKey<PlacedFeature> ORE_SILVER_LOWER = PlacedFeatures.of(Bewitchment.MODID + ":ore_silver_lower");
+	public static final RegistryKey<PlacedFeature> ORE_SALT_UPPER = PlacedFeatures.of(Bewitchment.MOD_ID + ":ore_salt_lower");
+	public static final RegistryKey<PlacedFeature> ORE_SALT_LOWER = PlacedFeatures.of(Bewitchment.MOD_ID + ":ore_salt_upper");
+	public static final RegistryKey<PlacedFeature> ORE_SILVER = PlacedFeatures.of(Bewitchment.MOD_ID + ":ore_silver");
+	public static final RegistryKey<PlacedFeature> ORE_SILVER_LOWER = PlacedFeatures.of(Bewitchment.MOD_ID + ":ore_silver_lower");
 
 	public static void init() {
 		BiomeModifications.addFeature(BiomeSelectors.tag(ConventionalBiomeTags.SAVANNA), GenerationStep.Feature.VEGETAL_DECORATION, TREE_JUNIPER);
@@ -85,8 +85,8 @@ public class BWWorldGenerators {
 			SpawnRestriction.register(BWEntityTypes.HELLHOUND, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HellhoundEntity::canSpawn);
 		}
 		LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
-			Identifier seeds = new Identifier(Bewitchment.MODID, "inject/seeds");
-			Identifier nether_fortress = new Identifier(Bewitchment.MODID, "inject/nether_fortress");
+			Identifier seeds = new Identifier(Bewitchment.MOD_ID, "inject/seeds");
+			Identifier nether_fortress = new Identifier(Bewitchment.MOD_ID, "inject/nether_fortress");
 			if (Blocks.GRASS.getLootTableId().equals(id) || Blocks.FERN.getLootTableId().equals(id) || Blocks.TALL_GRASS.getLootTableId().equals(id) || Blocks.LARGE_FERN.getLootTableId().equals(id)) {
 				tableBuilder.pool(LootPool.builder().with(LootTableEntry.builder(seeds).weight(1)).build());
 			}

@@ -47,7 +47,7 @@ public class BWRitualFunctions {
 	public static final RitualFunction WEDNESDAY = create("wednesday", new WednesdayRitualFunction(ParticleTypes.ITEM_SLIME, null));
 
 	private static <T extends RitualFunction> T create(String name, T ritualFunction) {
-		RITUAL_FUNCTIONS.put(ritualFunction, new Identifier(Bewitchment.MODID, name));
+		RITUAL_FUNCTIONS.put(ritualFunction, new Identifier(Bewitchment.MOD_ID, name));
 		return ritualFunction;
 	}
 

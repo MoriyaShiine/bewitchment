@@ -28,7 +28,7 @@ public class OwlEntityRenderer extends MobEntityRenderer<OwlEntity, OwlEntityMod
 			int variants = entity.getVariants();
 			TEXTURES = new Identifier[variants];
 			for (int i = 0; i < variants; i++) {
-				TEXTURES[i] = new Identifier(Bewitchment.MODID, "textures/entity/living/owl/" + i + ".png");
+				TEXTURES[i] = new Identifier(Bewitchment.MOD_ID, "textures/entity/living/owl/" + i + ".png");
 			}
 		}
 		return TEXTURES[entity.getVariant()];

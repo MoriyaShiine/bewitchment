@@ -31,7 +31,7 @@ public class BWFortunes {
 	public static final Fortune EXHAUSTED = create("exhausted", new ExhaustedFortune(false));
 
 	private static <T extends Fortune> T create(String name, T fortune) {
-		FORTUNES.put(fortune, new Identifier(Bewitchment.MODID, name));
+		FORTUNES.put(fortune, new Identifier(Bewitchment.MOD_ID, name));
 		return fortune;
 	}
 

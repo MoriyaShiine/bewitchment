@@ -29,9 +29,9 @@ import virtuoel.pehkui.api.ScaleData;
 
 @SuppressWarnings("ConstantConditions")
 public class TransformationAbilityPacket {
-	public static final Identifier ID = new Identifier(Bewitchment.MODID, "transformation_ability");
+	public static final Identifier ID = new Identifier(Bewitchment.MOD_ID, "transformation_ability");
 
-	public static final AbilitySource VAMPIRE_FLIGHT_SOURCE = Pal.getAbilitySource(new Identifier(Bewitchment.MODID, "vampire_flight"));
+	public static final AbilitySource VAMPIRE_FLIGHT_SOURCE = Pal.getAbilitySource(new Identifier(Bewitchment.MOD_ID, "vampire_flight"));
 
 	private static final float VAMPIRE_WIDTH = EntityType.BAT.getWidth() / EntityType.PLAYER.getWidth();
 	private static final float VAMPIRE_HEIGHT = EntityType.BAT.getHeight() / EntityType.PLAYER.getHeight();

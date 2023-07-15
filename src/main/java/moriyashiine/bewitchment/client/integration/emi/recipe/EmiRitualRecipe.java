@@ -38,9 +38,9 @@ public class EmiRitualRecipe extends BasicEmiRecipe {
 		}
 		width += 58;
 		ItemStack chalk = new ItemStack(BWObjects.GOLDEN_CHALK).setCustomName(Text.translatable("ritual." + recipe.getId().toString().replaceAll(":", ".").replaceAll("/", ".")));
-		chalk.getOrCreateNbt().putString("InnerCircle", "chalk." + Bewitchment.MODID + "." + recipe.inner);
+		chalk.getOrCreateNbt().putString("InnerCircle", "chalk." + Bewitchment.MOD_ID + "." + recipe.inner);
 		if (!recipe.outer.isEmpty()) {
-			chalk.getNbt().putString("OuterCircle", "chalk." + Bewitchment.MODID + "." + recipe.outer);
+			chalk.getNbt().putString("OuterCircle", "chalk." + Bewitchment.MOD_ID + "." + recipe.outer);
 		}
 		chalk.getNbt().putInt("Cost", recipe.cost);
 		if (recipe.runningTime > 0) {

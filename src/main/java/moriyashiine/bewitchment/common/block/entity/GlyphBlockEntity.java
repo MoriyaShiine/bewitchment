@@ -275,7 +275,7 @@ public class GlyphBlockEntity extends BlockEntity implements SidedInventory, Use
 						}
 						world.playSound(null, pos, BWSoundEvents.BLOCK_GLYPH_FAIL, SoundCategory.BLOCKS, 1, 1);
 						if (user instanceof PlayerEntity player) {
-							player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.insufficent_altar_power"), true);
+							player.sendMessage(Text.translatable(Bewitchment.MOD_ID + ".message.insufficent_altar_power"), true);
 						}
 						return;
 					}

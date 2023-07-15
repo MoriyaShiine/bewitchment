@@ -107,6 +107,6 @@ public class DemonScreen extends HandledScreen<DemonScreenHandler> {
 	}
 
 	private Identifier getBackground() {
-		return new Identifier(Bewitchment.MODID, String.format("textures/gui/demon_trade_%d.png", handler.getOfferCount()));
+		return new Identifier(Bewitchment.MOD_ID, String.format("textures/gui/demon_trade_%d.png", handler.getOfferCount()));
 	}
 }

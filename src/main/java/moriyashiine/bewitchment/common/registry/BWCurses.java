@@ -32,7 +32,7 @@ public class BWCurses {
 	public static final Curse APATHY = create("apathy", new ApathyCurse(Curse.Type.GREATER));
 
 	private static <T extends Curse> T create(String name, T curse) {
-		CURSES.put(curse, new Identifier(Bewitchment.MODID, name));
+		CURSES.put(curse, new Identifier(Bewitchment.MOD_ID, name));
 		return curse;
 	}
 

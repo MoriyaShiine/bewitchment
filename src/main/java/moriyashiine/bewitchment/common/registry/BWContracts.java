@@ -30,7 +30,7 @@ public class BWContracts {
 	public static final Contract DEATH = create("death", new Contract());
 
 	private static <T extends Contract> T create(String name, T contract) {
-		CONTRACTS.put(contract, new Identifier(Bewitchment.MODID, name));
+		CONTRACTS.put(contract, new Identifier(Bewitchment.MOD_ID, name));
 		return contract;
 	}
 

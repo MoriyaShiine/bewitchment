@@ -56,6 +56,6 @@ public class BWUniversalWorldState extends PersistentState {
 
 	@SuppressWarnings("ConstantConditions")
 	public static BWUniversalWorldState get(World world) {
-		return world.getServer().getOverworld().getPersistentStateManager().getOrCreate(BWUniversalWorldState::readNbt, BWUniversalWorldState::new, Bewitchment.MODID);
+		return world.getServer().getOverworld().getPersistentStateManager().getOrCreate(BWUniversalWorldState::readNbt, BWUniversalWorldState::new, Bewitchment.MOD_ID);
 	}
 }

@@ -102,7 +102,7 @@ public class AthameItem extends SwordItem {
 				if (!client && !sigilHolder.getEntities().isEmpty()) {
 					boolean whitelist = sigilHolder.getModeOnWhitelist();
 					world.playSound(null, pos, BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.BLOCKS, 1, whitelist ? 0.5f : 1);
-					player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.toggle_" + (!whitelist ? "whitelist" : "blacklist")), true);
+					player.sendMessage(Text.translatable(Bewitchment.MOD_ID + ".message.toggle_" + (!whitelist ? "whitelist" : "blacklist")), true);
 					sigilHolder.setModeOnWhitelist(!whitelist);
 					blockEntity.markDirty();
 				}
@@ -122,7 +122,7 @@ public class AthameItem extends SwordItem {
 				if (!client) {
 					boolean whitelist = lockable.getModeOnWhitelist();
 					world.playSound(null, pos, BWSoundEvents.BLOCK_SIGIL_PLING, SoundCategory.BLOCKS, 1, whitelist ? 0.5f : 1);
-					player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.toggle_" + (!whitelist ? "whitelist" : "blacklist")), true);
+					player.sendMessage(Text.translatable(Bewitchment.MOD_ID + ".message.toggle_" + (!whitelist ? "whitelist" : "blacklist")), true);
 					lockable.setModeOnWhitelist(!whitelist);
 					blockEntity.markDirty();
 				}

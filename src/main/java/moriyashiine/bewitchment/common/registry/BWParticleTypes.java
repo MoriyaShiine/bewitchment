@@ -23,7 +23,7 @@ public class BWParticleTypes {
 	public static final ParticleType<DefaultParticleType> INCENSE_SMOKE = create("incense_smoke", FabricParticleTypes.simple());
 
 	private static <T extends ParticleEffect> ParticleType<T> create(String name, ParticleType<T> type) {
-		PARTICLE_TYPES.put(type, new Identifier(Bewitchment.MODID, name));
+		PARTICLE_TYPES.put(type, new Identifier(Bewitchment.MOD_ID, name));
 		return type;
 	}
 

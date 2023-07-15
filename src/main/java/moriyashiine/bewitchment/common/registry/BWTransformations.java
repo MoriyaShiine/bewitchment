@@ -22,7 +22,7 @@ public class BWTransformations {
 	public static final Transformation WEREWOLF = create("werewolf", new WerewolfTransformation());
 
 	private static <T extends Transformation> T create(String name, T transformation) {
-		TRANSFORMATIONS.put(transformation, new Identifier(Bewitchment.MODID, name));
+		TRANSFORMATIONS.put(transformation, new Identifier(Bewitchment.MOD_ID, name));
 		return transformation;
 	}
 

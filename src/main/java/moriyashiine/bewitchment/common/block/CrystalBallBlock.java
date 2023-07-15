@@ -109,11 +109,11 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 							sound = BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE;
 						} else {
 							taglockCompound.putBoolean("Failed", true);
-							player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.blocked_by_shadows"), true);
+							player.sendMessage(Text.translatable(Bewitchment.MOD_ID + ".message.blocked_by_shadows"), true);
 						}
 						BWUtil.addItemToInventoryAndConsume(player, hand, newTaglock);
 					} else {
-						player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.invalid_entity"), true);
+						player.sendMessage(Text.translatable(Bewitchment.MOD_ID + ".message.invalid_entity"), true);
 					}
 				} else {
 					FortuneComponent fortuneComponent = BWComponents.FORTUNE_COMPONENT.get(player);
@@ -129,11 +129,11 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 						player.sendMessage(Text.translatable("fortune." + BWRegistries.FORTUNES.getId(fortune).toString().replace(":", ".")), true);
 
 					} else {
-						player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.has_fortune"), true);
+						player.sendMessage(Text.translatable(Bewitchment.MOD_ID + ".message.has_fortune"), true);
 					}
 				}
 			} else {
-				player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.insufficent_altar_power"), true);
+				player.sendMessage(Text.translatable(Bewitchment.MOD_ID + ".message.insufficent_altar_power"), true);
 			}
 			world.playSound(null, pos, sound, SoundCategory.BLOCKS, 1, 1);
 		}

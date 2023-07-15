@@ -37,7 +37,7 @@ public class BWBlockEntityTypes {
 	public static final BlockEntityType<DragonsBloodChestBlockEntity> DRAGONS_BLOOD_CHEST = create("dragons_blood_chest", FabricBlockEntityTypeBuilder.create(DragonsBloodChestBlockEntity::new, BWObjects.DRAGONS_BLOOD_CHEST, BWObjects.TRAPPED_DRAGONS_BLOOD_CHEST).build(null));
 
 	private static <T extends BlockEntity> BlockEntityType<T> create(String name, BlockEntityType<T> type) {
-		BLOCK_ENTITY_TYPES.put(type, new Identifier(Bewitchment.MODID, name));
+		BLOCK_ENTITY_TYPES.put(type, new Identifier(Bewitchment.MOD_ID, name));
 		return type;
 	}
 

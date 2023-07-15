@@ -173,13 +173,13 @@ public class BrazierBlockEntity extends BlockEntity implements Inventory, UsesAl
 											break;
 										}
 									}
-									closestPlayer.sendMessage(Text.translatable(Bewitchment.MODID + ".message.invalid_entity", entityName), true);
+									closestPlayer.sendMessage(Text.translatable(Bewitchment.MOD_ID + ".message.invalid_entity", entityName), true);
 								}
 							}
 						} else {
 							if (closestPlayer != null) {
 								world.playSound(null, pos, BWSoundEvents.BLOCK_BRAZIER_FAIL, SoundCategory.BLOCKS, 1, 1);
-								closestPlayer.sendMessage(Text.translatable(Bewitchment.MODID + ".message.insufficent_altar_power"), true);
+								closestPlayer.sendMessage(Text.translatable(Bewitchment.MOD_ID + ".message.insufficent_altar_power"), true);
 							}
 						}
 					}

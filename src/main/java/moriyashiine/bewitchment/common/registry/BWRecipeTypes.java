@@ -47,7 +47,7 @@ public class BWRecipeTypes {
 	public static final RecipeSerializer<PricklyBeltCraftingRecipe> PRICKLY_BELT_CRAFTING_SERIALIZER = create("prickly_belt_crafting", new SpecialRecipeSerializer<>((id, category) -> new PricklyBeltCraftingRecipe(id)));
 
 	private static <T extends Recipe<?>> RecipeSerializer<T> create(String name, RecipeSerializer<T> serializer) {
-		RECIPE_SERIALIZERS.put(serializer, new Identifier(Bewitchment.MODID, name));
+		RECIPE_SERIALIZERS.put(serializer, new Identifier(Bewitchment.MOD_ID, name));
 		return serializer;
 	}
 
@@ -58,7 +58,7 @@ public class BWRecipeTypes {
 				return name;
 			}
 		};
-		RECIPE_TYPES.put(type, new Identifier(Bewitchment.MODID, name));
+		RECIPE_TYPES.put(type, new Identifier(Bewitchment.MOD_ID, name));
 		return type;
 	}
 

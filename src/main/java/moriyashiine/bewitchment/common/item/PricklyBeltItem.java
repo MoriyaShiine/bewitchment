@@ -31,7 +31,7 @@ public class PricklyBeltItem extends TrinketItem {
 		if (stack.hasNbt()) {
 			uses = stack.getNbt().getInt("PotionUses");
 		}
-		tooltip.add(Text.translatable(Bewitchment.MODID + ".tooltip.uses_left", uses).formatted(Formatting.GRAY));
+		tooltip.add(Text.translatable(Bewitchment.MOD_ID + ".tooltip.uses_left", uses).formatted(Formatting.GRAY));
 		PotionUtil.buildTooltip(stack, tooltip, 1);
 	}
 }

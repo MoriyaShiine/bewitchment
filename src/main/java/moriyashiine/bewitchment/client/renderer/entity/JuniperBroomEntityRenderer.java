@@ -11,7 +11,7 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.util.Identifier;
 
 public class JuniperBroomEntityRenderer extends BroomEntityRenderer<BroomEntity> {
-	private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/broom/juniper_boat.png");
+	private static final Identifier TEXTURE = new Identifier(Bewitchment.MOD_ID, "textures/entity/broom/juniper_boat.png");
 
 	public JuniperBroomEntityRenderer(EntityRendererFactory.Context context) {
 		super(context);

@@ -67,7 +67,7 @@ public class ContractItem extends Item {
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		if (stack.hasNbt() && stack.getOrCreateNbt().contains("Contract")) {
 			tooltip.add(Text.translatable("contract." + stack.getOrCreateNbt().getString("Contract").replace(":", ".")).formatted(Formatting.DARK_RED));
-			tooltip.add(Text.translatable(Bewitchment.MODID + ".tooltip.days", stack.getOrCreateNbt().getInt("Duration") / 24000).formatted(Formatting.DARK_RED));
+			tooltip.add(Text.translatable(Bewitchment.MOD_ID + ".tooltip.days", stack.getOrCreateNbt().getInt("Duration") / 24000).formatted(Formatting.DARK_RED));
 		}
 	}
 }

@@ -29,7 +29,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public final class ContributorHornsFeatureRenderer extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
-	private static final Identifier TEXTURE = new Identifier(Bewitchment.MODID, "textures/entity/armor/contributor_horns.png");
+	private static final Identifier TEXTURE = new Identifier(Bewitchment.MOD_ID, "textures/entity/armor/contributor_horns.png");
 	private static final Set<UUID> CONTRIBUTORS = new HashSet<>();
 	private static final String CONTRIBUTORS_URL = "https://raw.githubusercontent.com/MoriyaShiine/bewitchment/master/contributors.properties";
 	private static ContributorHornsModel MODEL;

@@ -37,7 +37,7 @@ public class GhostEntityRenderer extends MobEntityRenderer<GhostEntity, GhostEnt
 					int variants = entity.getVariants();
 					TEXTURES = new Identifier[variants];
 					for (int i = 0; i < variants; i++) {
-						TEXTURES[i] = new Identifier(Bewitchment.MODID, "textures/entity/living/ghost/" + i + ".png");
+						TEXTURES[i] = new Identifier(Bewitchment.MOD_ID, "textures/entity/living/ghost/" + i + ".png");
 					}
 				}
 				VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(TEXTURES[entity.getVariant()]));

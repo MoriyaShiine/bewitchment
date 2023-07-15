@@ -18,7 +18,7 @@ public class BWScreenHandlerTypes {
 	public static final ScreenHandlerType<BaphometScreenHandler> BAPHOMET_SCREEN_HANDLER = new ScreenHandlerType<>((syncId, playerInventory) -> new BaphometScreenHandler(syncId, new DemonScreenHandler.DemonMerchantImpl()), FeatureFlags.VANILLA_FEATURES);
 
 	public static void init() {
-		Registry.register(Registries.SCREEN_HANDLER, new Identifier(Bewitchment.MODID, "demon_screen"), DEMON_SCREEN_HANDLER);
-		Registry.register(Registries.SCREEN_HANDLER, new Identifier(Bewitchment.MODID, "baphomet_screen"), BAPHOMET_SCREEN_HANDLER);
+		Registry.register(Registries.SCREEN_HANDLER, new Identifier(Bewitchment.MOD_ID, "demon_screen"), DEMON_SCREEN_HANDLER);
+		Registry.register(Registries.SCREEN_HANDLER, new Identifier(Bewitchment.MOD_ID, "baphomet_screen"), BAPHOMET_SCREEN_HANDLER);
 	}
 }

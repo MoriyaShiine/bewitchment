@@ -74,7 +74,7 @@ public class CursePoppetItem extends PoppetItem {
 					}
 				}
 				if (user instanceof PlayerEntity player) {
-					player.sendMessage(Text.translatable(Bewitchment.MODID + ".message.invalid_entity", stack.getOrCreateNbt().getString("OwnerName")), true);
+					player.sendMessage(Text.translatable(Bewitchment.MOD_ID + ".message.invalid_entity", stack.getOrCreateNbt().getString("OwnerName")), true);
 				}
 			}
 		}

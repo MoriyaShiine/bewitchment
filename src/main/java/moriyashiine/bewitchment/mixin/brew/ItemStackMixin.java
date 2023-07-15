@@ -22,13 +22,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
 	@Unique
-	private static final MutableText POTION = Text.translatable("item." + Bewitchment.MODID + ".potion");
+	private static final MutableText POTION = Text.translatable("item." + Bewitchment.MOD_ID + ".potion");
 	@Unique
-	private static final MutableText SPLASH_POTION = Text.translatable("item." + Bewitchment.MODID + ".splash_potion");
+	private static final MutableText SPLASH_POTION = Text.translatable("item." + Bewitchment.MOD_ID + ".splash_potion");
 	@Unique
-	private static final MutableText LINGERING_POTION = Text.translatable("item." + Bewitchment.MODID + ".lingering_potion");
+	private static final MutableText LINGERING_POTION = Text.translatable("item." + Bewitchment.MOD_ID + ".lingering_potion");
 	@Unique
-	private static final MutableText TIPPED_ARROW = Text.translatable("item." + Bewitchment.MODID + ".tipped_arrow");
+	private static final MutableText TIPPED_ARROW = Text.translatable("item." + Bewitchment.MOD_ID + ".tipped_arrow");
 
 	@Shadow
 	@Nullable

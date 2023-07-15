@@ -32,9 +32,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin {
 	@Unique
-	private static final Identifier BEWITCHMENT_GUI_ICONS_TEXTURE = new Identifier(Bewitchment.MODID, "textures/gui/icons.png");
+	private static final Identifier BEWITCHMENT_GUI_ICONS_TEXTURE = new Identifier(Bewitchment.MOD_ID, "textures/gui/icons.png");
 	@Unique
-	private static final Identifier EMPTY_TEXTURE = new Identifier(Bewitchment.MODID, "textures/gui/empty.png");
+	private static final Identifier EMPTY_TEXTURE = new Identifier(Bewitchment.MOD_ID, "textures/gui/empty.png");
 
 	@Unique
 	private static boolean hidden = false;
