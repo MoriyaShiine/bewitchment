@@ -5,7 +5,7 @@
 package moriyashiine.bewitchment.common.block.entity;
 
 import moriyashiine.bewitchment.api.item.PoppetItem;
-import moriyashiine.bewitchment.client.network.packet.SyncPoppetShelfPacket;
+import moriyashiine.bewitchment.client.packet.SyncPoppetShelfPacket;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.api.EnvType;

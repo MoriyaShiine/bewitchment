@@ -7,7 +7,7 @@ package moriyashiine.bewitchment.common.item;
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketItem;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.client.network.packet.SpawnSpecterBangleParticlesPacket;
+import moriyashiine.bewitchment.client.packet.SpawnSpecterBangleParticlesPacket;
 import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.LivingEntity;

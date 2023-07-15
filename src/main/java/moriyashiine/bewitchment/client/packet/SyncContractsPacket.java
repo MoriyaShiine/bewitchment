@@ -2,7 +2,7 @@
  * All Rights Reserved (c) MoriyaShiine
  */
 
-package moriyashiine.bewitchment.client.network.packet;
+package moriyashiine.bewitchment.client.packet;
 
 import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.api.registry.Contract;

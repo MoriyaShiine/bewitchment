@@ -6,8 +6,8 @@ package moriyashiine.bewitchment.common.entity.living;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.registry.Contract;
-import moriyashiine.bewitchment.client.network.packet.SyncContractsPacket;
-import moriyashiine.bewitchment.client.network.packet.SyncDemonTradesPacket;
+import moriyashiine.bewitchment.client.packet.SyncContractsPacket;
+import moriyashiine.bewitchment.client.packet.SyncDemonTradesPacket;
 import moriyashiine.bewitchment.client.screen.DemonScreenHandler;
 import moriyashiine.bewitchment.common.entity.DemonMerchant;
 import moriyashiine.bewitchment.common.entity.living.util.BWHostileEntity;

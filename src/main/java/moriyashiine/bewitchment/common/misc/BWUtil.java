@@ -6,7 +6,7 @@ package moriyashiine.bewitchment.common.misc;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.entity.Pledgeable;
-import moriyashiine.bewitchment.client.network.packet.SpawnPortalParticlesPacket;
+import moriyashiine.bewitchment.client.packet.SpawnPortalParticlesPacket;
 import moriyashiine.bewitchment.common.item.ScepterItem;
 import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWCurses;

@@ -2,7 +2,7 @@
  * All Rights Reserved (c) MoriyaShiine
  */
 
-package moriyashiine.bewitchment.client.network.packet;
+package moriyashiine.bewitchment.client.packet;
 
 import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.common.Bewitchment;
@@ -19,8 +19,8 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
-public class SpawnExplosionParticlesPacket implements ClientPlayNetworking.PlayChannelHandler {
-	public static final Identifier ID = Bewitchment.id("spawn_explosion_particles");
+public class SpawnSpecterBangleParticlesPacket implements ClientPlayNetworking.PlayChannelHandler {
+	public static final Identifier ID = Bewitchment.id("spawn_specter_bangle_particles");
 
 	public static void send(PlayerEntity player, Entity entity) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
@@ -36,9 +36,7 @@ public class SpawnExplosionParticlesPacket implements ClientPlayNetworking.PlayC
 			if (world != null) {
 				Entity entity = world.getEntityById(id);
 				if (entity != null) {
-					for (int i = 0; i < 8; i++) {
-						world.addParticle(ParticleTypes.EXPLOSION, entity.getParticleX(1), entity.getRandomBodyY(), entity.getParticleZ(1), 0, 0, 0);
-					}
+					world.addParticle(ParticleTypes.SMOKE, entity.getParticleX(1), entity.getY(), entity.getParticleZ(1), 0, 0, 0);
 				}
 			}
 		});

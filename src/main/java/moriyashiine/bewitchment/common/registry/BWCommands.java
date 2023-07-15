@@ -20,7 +20,7 @@ import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.api.registry.Fortune;
 import moriyashiine.bewitchment.api.registry.Transformation;
-import moriyashiine.bewitchment.common.network.packet.TransformationAbilityPacket;
+import moriyashiine.bewitchment.common.packet.TransformationAbilityPacket;
 import moriyashiine.bewitchment.common.world.BWUniversalWorldState;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.CommandSource;

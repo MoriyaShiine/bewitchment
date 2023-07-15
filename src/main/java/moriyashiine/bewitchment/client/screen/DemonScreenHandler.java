@@ -4,8 +4,8 @@
 
 package moriyashiine.bewitchment.client.screen;
 
-import moriyashiine.bewitchment.client.network.packet.SyncContractsPacket;
-import moriyashiine.bewitchment.client.network.packet.SyncDemonTradesPacket;
+import moriyashiine.bewitchment.client.packet.SyncContractsPacket;
+import moriyashiine.bewitchment.client.packet.SyncDemonTradesPacket;
 import moriyashiine.bewitchment.common.entity.DemonMerchant;
 import moriyashiine.bewitchment.common.entity.living.DemonEntity;
 import moriyashiine.bewitchment.common.registry.*;

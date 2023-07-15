@@ -7,7 +7,7 @@ package moriyashiine.bewitchment.common.block.entity;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.api.registry.RitualFunction;
-import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
+import moriyashiine.bewitchment.client.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.GlyphBlock;
 import moriyashiine.bewitchment.common.item.WaystoneItem;

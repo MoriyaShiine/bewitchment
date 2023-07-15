@@ -5,7 +5,7 @@
 package moriyashiine.bewitchment.mixin.brew;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
-import moriyashiine.bewitchment.client.network.packet.SpawnExplosionParticlesPacket;
+import moriyashiine.bewitchment.client.packet.SpawnExplosionParticlesPacket;
 import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;

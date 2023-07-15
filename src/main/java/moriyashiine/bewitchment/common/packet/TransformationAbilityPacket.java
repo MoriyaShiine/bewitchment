@@ -2,7 +2,7 @@
  * All Rights Reserved (c) MoriyaShiine
  */
 
-package moriyashiine.bewitchment.common.network.packet;
+package moriyashiine.bewitchment.common.packet;
 
 import io.github.ladysnake.pal.AbilitySource;
 import io.github.ladysnake.pal.Pal;
@@ -10,7 +10,7 @@ import io.github.ladysnake.pal.VanillaAbilities;
 import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.component.TransformationComponent;
-import moriyashiine.bewitchment.client.network.packet.SpawnSmokeParticlesPacket;
+import moriyashiine.bewitchment.client.packet.SpawnSmokeParticlesPacket;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;

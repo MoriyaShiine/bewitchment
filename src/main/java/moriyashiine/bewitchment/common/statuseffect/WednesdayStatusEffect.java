@@ -4,7 +4,7 @@
 
 package moriyashiine.bewitchment.common.statuseffect;
 
-import moriyashiine.bewitchment.client.network.packet.SpawnExplosionParticlesPacket;
+import moriyashiine.bewitchment.client.packet.SpawnExplosionParticlesPacket;
 import moriyashiine.bewitchment.common.entity.living.ToadEntity;
 import moriyashiine.bewitchment.common.registry.BWDamageSources;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
