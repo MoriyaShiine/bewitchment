@@ -6,7 +6,7 @@ package moriyashiine.bewitchment.mixin.client;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.entity.BroomEntity;
-import moriyashiine.bewitchment.client.renderer.ContributorHornsFeatureRenderer;
+import moriyashiine.bewitchment.client.render.ContributorHornsFeatureRenderer;
 import moriyashiine.bewitchment.common.block.CoffinBlock;
 import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.fabricmc.api.EnvType;

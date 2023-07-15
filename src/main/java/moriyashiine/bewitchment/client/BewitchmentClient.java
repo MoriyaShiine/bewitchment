@@ -6,11 +6,10 @@ package moriyashiine.bewitchment.client;
 
 import com.terraformersmc.terraform.boat.api.client.TerraformBoatClientHelper;
 import com.terraformersmc.terraform.sign.SpriteIdentifierRegistry;
-import dev.emi.trinkets.api.SlotReference;
-import dev.emi.trinkets.api.client.TrinketRenderer;
 import dev.emi.trinkets.api.client.TrinketRendererRegistry;
 import moriyashiine.bewitchment.api.client.model.BroomEntityModel;
-import moriyashiine.bewitchment.api.entity.BroomEntity;
+import moriyashiine.bewitchment.client.event.CauldronTeleportEvent;
+import moriyashiine.bewitchment.client.event.TransformationAbilityEvent;
 import moriyashiine.bewitchment.client.misc.SpriteIdentifiers;
 import moriyashiine.bewitchment.client.model.ContributorHornsModel;
 import moriyashiine.bewitchment.client.model.entity.living.*;
@@ -22,21 +21,18 @@ import moriyashiine.bewitchment.client.model.equipment.trinket.ZephyrHarnessMode
 import moriyashiine.bewitchment.client.packet.*;
 import moriyashiine.bewitchment.client.particle.CauldronBubbleParticle;
 import moriyashiine.bewitchment.client.particle.IncenseSmokeParticle;
-import moriyashiine.bewitchment.client.renderer.WitchArmorRenderer;
-import moriyashiine.bewitchment.client.renderer.blockentity.BrazierBlockEntityRenderer;
-import moriyashiine.bewitchment.client.renderer.blockentity.PoppetShelfBlockEntityRenderer;
-import moriyashiine.bewitchment.client.renderer.blockentity.WitchAltarBlockEntityRenderer;
-import moriyashiine.bewitchment.client.renderer.blockentity.WitchCauldronBlockEntityRenderer;
-import moriyashiine.bewitchment.client.renderer.entity.*;
-import moriyashiine.bewitchment.client.renderer.entity.living.*;
+import moriyashiine.bewitchment.client.render.WitchArmorRenderer;
+import moriyashiine.bewitchment.client.render.blockentity.BrazierBlockEntityRenderer;
+import moriyashiine.bewitchment.client.render.blockentity.PoppetShelfBlockEntityRenderer;
+import moriyashiine.bewitchment.client.render.blockentity.WitchAltarBlockEntityRenderer;
+import moriyashiine.bewitchment.client.render.blockentity.WitchCauldronBlockEntityRenderer;
+import moriyashiine.bewitchment.client.render.entity.*;
+import moriyashiine.bewitchment.client.render.entity.living.*;
+import moriyashiine.bewitchment.client.render.trinket.*;
 import moriyashiine.bewitchment.client.screen.DemonScreen;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.BWChestBlockEntity;
-import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
-import moriyashiine.bewitchment.common.packet.CauldronTeleportPacket;
-import moriyashiine.bewitchment.common.packet.TogglePressingForwardPacket;
-import moriyashiine.bewitchment.common.packet.TransformationAbilityPacket;
 import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -53,29 +49,16 @@ import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
-import net.minecraft.client.model.Model;
 import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.TexturedRenderLayers;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.render.block.entity.ChestBlockEntityRenderer;
-import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.render.entity.model.PlayerEntityModel;
-import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RotationAxis;
 import org.lwjgl.glfw.GLFW;
 
 @SuppressWarnings({"unchecked", "ConstantConditions"})
@@ -116,6 +99,8 @@ public class BewitchmentClient implements ClientModInitializer {
 		ClientPlayNetworking.registerGlobalReceiver(SpawnPortalParticlesPacket.ID, new SpawnPortalParticlesPacket());
 		ClientPlayNetworking.registerGlobalReceiver(SpawnExplosionParticlesPacket.ID, new SpawnExplosionParticlesPacket());
 		ClientPlayNetworking.registerGlobalReceiver(SpawnSpecterBangleParticlesPacket.ID, new SpawnSpecterBangleParticlesPacket());
+		ClientTickEvents.END_WORLD_TICK.register(new TransformationAbilityEvent());
+		ClientSendMessageEvents.ALLOW_CHAT.register(new CauldronTeleportEvent());
 		ParticleFactoryRegistry.getInstance().register(BWParticleTypes.CAULDRON_BUBBLE, CauldronBubbleParticle.Factory::new);
 		ParticleFactoryRegistry.getInstance().register(BWParticleTypes.INCENSE_SMOKE, IncenseSmokeParticle.Factory::new);
 		ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> 0xffff00, BWObjects.GOLDEN_GLYPH);
@@ -132,14 +117,14 @@ public class BewitchmentClient implements ClientModInitializer {
 		ModelPredicateProviderRegistry.register(BWObjects.HORNED_SPEAR, Bewitchment.id("variant"), (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1 : 0);
 		ModelPredicateProviderRegistry.register(BWObjects.TAGLOCK, Bewitchment.id("variant"), (stack, world, entity, seed) -> TaglockItem.hasTaglock(stack) ? 1 : 0);
 		ModelPredicateProviderRegistry.register(BWObjects.WAYSTONE, Bewitchment.id("variant"), (stack, world, entity, seed) -> stack.hasNbt() && stack.getOrCreateNbt().contains("LocationPos") ? 1 : 0);
-		BlockEntityRendererRegistry.register(BWBlockEntityTypes.BW_CHEST, ChestBlockEntityRenderer::new);
-		BlockEntityRendererRegistry.register(BWBlockEntityTypes.WITCH_ALTAR, ctx -> new WitchAltarBlockEntityRenderer());
-		BlockEntityRendererRegistry.register(BWBlockEntityTypes.WITCH_CAULDRON, ctx -> new WitchCauldronBlockEntityRenderer());
-		BlockEntityRendererRegistry.register(BWBlockEntityTypes.BRAZIER, ctx -> new BrazierBlockEntityRenderer());
-		BlockEntityRendererRegistry.register(BWBlockEntityTypes.POPPET_SHELF, ctx -> new PoppetShelfBlockEntityRenderer());
-		BlockEntityRendererRegistry.register(BWBlockEntityTypes.JUNIPER_CHEST, ChestBlockEntityRenderer::new);
-		BlockEntityRendererRegistry.register(BWBlockEntityTypes.ELDER_CHEST, ChestBlockEntityRenderer::new);
-		BlockEntityRendererRegistry.register(BWBlockEntityTypes.DRAGONS_BLOOD_CHEST, ChestBlockEntityRenderer::new);
+		BlockEntityRendererFactories.register(BWBlockEntityTypes.BW_CHEST, ChestBlockEntityRenderer::new);
+		BlockEntityRendererFactories.register(BWBlockEntityTypes.WITCH_ALTAR, ctx -> new WitchAltarBlockEntityRenderer());
+		BlockEntityRendererFactories.register(BWBlockEntityTypes.WITCH_CAULDRON, ctx -> new WitchCauldronBlockEntityRenderer());
+		BlockEntityRendererFactories.register(BWBlockEntityTypes.BRAZIER, ctx -> new BrazierBlockEntityRenderer());
+		BlockEntityRendererFactories.register(BWBlockEntityTypes.POPPET_SHELF, ctx -> new PoppetShelfBlockEntityRenderer());
+		BlockEntityRendererFactories.register(BWBlockEntityTypes.JUNIPER_CHEST, ChestBlockEntityRenderer::new);
+		BlockEntityRendererFactories.register(BWBlockEntityTypes.ELDER_CHEST, ChestBlockEntityRenderer::new);
+		BlockEntityRendererFactories.register(BWBlockEntityTypes.DRAGONS_BLOOD_CHEST, ChestBlockEntityRenderer::new);
 		TerraformBoatClientHelper.registerModelLayers(Bewitchment.id("juniper_boat"), false);
 		TerraformBoatClientHelper.registerModelLayers(Bewitchment.id("cypress_boat"), false);
 		TerraformBoatClientHelper.registerModelLayers(Bewitchment.id("elder_boat"), false);
@@ -244,111 +229,15 @@ public class BewitchmentClient implements ClientModInitializer {
 		ArmorRenderer.register(new WitchArmorRenderer(Bewitchment.id("textures/entity/armor/alchemist.png"), BWObjects.ALCHEMIST_HAT), BWObjects.ALCHEMIST_HOOD, BWObjects.ALCHEMIST_HAT, BWObjects.ALCHEMIST_ROBES, BWObjects.ALCHEMIST_PANTS);
 		ArmorRenderer.register(new WitchArmorRenderer(Bewitchment.id("textures/entity/armor/besmirched.png"), BWObjects.BESMIRCHED_HAT), BWObjects.BESMIRCHED_HOOD, BWObjects.BESMIRCHED_HAT, BWObjects.BESMIRCHED_ROBES, BWObjects.BESMIRCHED_PANTS);
 		ArmorRenderer.register(new WitchArmorRenderer(Bewitchment.id("textures/entity/armor/harbinger.png"), null), BWObjects.HARBINGER);
-		TrinketRendererRegistry.registerRenderer(BWObjects.NAZAR, (stack, slotReference, contextModel, matrices, vertexConsumers, light, entity, limbAngle, limbDistance, tickDelta, animationProgress, headYaw, headPitch) -> {
-			ItemStack copy = stack.copy();
-			copy.getOrCreateNbt().putBoolean("Worn", true);
-			TrinketRenderer.translateToChest(matrices, (PlayerEntityModel<AbstractClientPlayerEntity>) contextModel, (AbstractClientPlayerEntity) entity);
-			matrices.translate(0, -1 / 4.25f, 1 / 48f);
-			matrices.scale(1 / 3f, 1 / 3f, 1 / 3f);
-			matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(180));
-			MinecraftClient.getInstance().getItemRenderer().renderItem(copy, ModelTransformationMode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, entity.getWorld(), 0);
-		});
-		TrinketRendererRegistry.registerRenderer(BWObjects.SPECTER_BANGLE, new TrinketRenderer() {
-			private static final Identifier TEXTURE = Bewitchment.id("textures/entity/trinket/specter_bangle.png");
-			private static Model model;
-
-			@Override
-			public void render(ItemStack stack, SlotReference slotReference, EntityModel<? extends LivingEntity> contextModel, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, LivingEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
-				if (model == null) {
-					model = new SpecterBangleModel(getPart(SPECTER_BANGLE_MODEL_LAYER));
-				}
-				TrinketRenderer.translateToRightLeg(matrices, (PlayerEntityModel<AbstractClientPlayerEntity>) contextModel, (AbstractClientPlayerEntity) entity);
-				model.render(matrices, vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(TEXTURE)), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
-			}
-		});
-		TrinketRendererRegistry.registerRenderer(BWObjects.PRICKLY_BELT, new TrinketRenderer() {
-			private static final Identifier TEXTURE = Bewitchment.id("textures/entity/trinket/prickly_belt.png");
-			private static Model model;
-
-			@Override
-			public void render(ItemStack stack, SlotReference slotReference, EntityModel<? extends LivingEntity> contextModel, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, LivingEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
-				if (model == null) {
-					model = new PricklyBeltModel(getPart(PRICKLY_BELT_MODEL_LAYER));
-				}
-				TrinketRenderer.translateToChest(matrices, (PlayerEntityModel<AbstractClientPlayerEntity>) contextModel, (AbstractClientPlayerEntity) entity);
-				model.render(matrices, vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(TEXTURE)), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
-			}
-		});
-		TrinketRendererRegistry.registerRenderer(BWObjects.HELLISH_BAUBLE, (stack, slotReference, contextModel, matrices, vertexConsumers, light, entity, limbAngle, limbDistance, tickDelta, animationProgress, headYaw, headPitch) -> {
-			TrinketRenderer.translateToChest(matrices, (PlayerEntityModel<AbstractClientPlayerEntity>) contextModel, (AbstractClientPlayerEntity) entity);
-			matrices.translate(0, -1 / 4.25f, 1 / 48f);
-			matrices.scale(1 / 3f, 1 / 3f, 1 / 3f);
-			matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(180));
-			MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformationMode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, entity.getWorld(), 0);
-		});
-		TrinketRendererRegistry.registerRenderer(BWObjects.DRUID_BAND, new TrinketRenderer() {
-			private static final Identifier TEXTURE = Bewitchment.id("textures/entity/trinket/druid_band.png");
-			private static Model model;
-
-			@Override
-			public void render(ItemStack stack, SlotReference slotReference, EntityModel<? extends LivingEntity> contextModel, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, LivingEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
-				if (model == null) {
-					model = new DruidBandModel(getPart(DRUID_BAND_MODEL_LAYER));
-				}
-				TrinketRenderer.translateToLeftLeg(matrices, (PlayerEntityModel<AbstractClientPlayerEntity>) contextModel, (AbstractClientPlayerEntity) entity);
-				model.render(matrices, vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(TEXTURE)), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
-			}
-		});
-		TrinketRendererRegistry.registerRenderer(BWObjects.ZEPHYR_HARNESS, new TrinketRenderer() {
-			private static final Identifier TEXTURE = Bewitchment.id("textures/entity/trinket/zephyr_harness.png");
-			private static Model model;
-
-			@Override
-			public void render(ItemStack stack, SlotReference slotReference, EntityModel<? extends LivingEntity> contextModel, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, LivingEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
-				if (model == null) {
-					model = new ZephyrHarnessModel(getPart(ZEPHYR_HARNESS_MODEL_LAYER));
-				}
-				TrinketRenderer.translateToChest(matrices, (PlayerEntityModel<AbstractClientPlayerEntity>) contextModel, (AbstractClientPlayerEntity) entity);
-				model.render(matrices, vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(TEXTURE)), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
-			}
-		});
-		ClientTickEvents.END_WORLD_TICK.register(new ClientTickEvents.EndWorldTick() {
-			private int transformationAbilityCooldown = 0;
-
-			@Override
-			public void onEndTick(ClientWorld world) {
-				PlayerEntity player = MinecraftClient.getInstance().player;
-				if (player != null) {
-					if (transformationAbilityCooldown > 0) {
-						transformationAbilityCooldown--;
-					} else if (BewitchmentClient.TRANSFORMATION_ABILITY.isPressed()) {
-						transformationAbilityCooldown = 20;
-						TransformationAbilityPacket.send();
-					}
-					if (BWComponents.BROOM_USER_COMPONENT.get(player).isPressingForward()) {
-						TogglePressingForwardPacket.send(false);
-					}
-					if (MinecraftClient.getInstance().options.forwardKey.isPressed() && player.getVehicle() instanceof BroomEntity) {
-						TogglePressingForwardPacket.send(true);
-					}
-				}
-			}
-		});
-		ClientSendMessageEvents.ALLOW_CHAT.register(message -> {
-			if (!message.startsWith("/")) {
-				PlayerEntity player = MinecraftClient.getInstance().player;
-				for (int i = 0; i < 1; i++) {
-					if (player.getWorld().getBlockEntity(player.getBlockPos().down(i)) instanceof WitchCauldronBlockEntity witchCauldron && witchCauldron.mode == WitchCauldronBlockEntity.Mode.TELEPORTATION) {
-						CauldronTeleportPacket.send(witchCauldron.getPos(), message);
-						return false;
-					}
-				}
-			}
-			return true;
-		});
+		TrinketRendererRegistry.registerRenderer(BWObjects.NAZAR, new NazarRenderer());
+		TrinketRendererRegistry.registerRenderer(BWObjects.SPECTER_BANGLE, new SpecterBangleRenderer());
+		TrinketRendererRegistry.registerRenderer(BWObjects.PRICKLY_BELT, new PricklyBeltRenderer());
+		TrinketRendererRegistry.registerRenderer(BWObjects.HELLISH_BAUBLE, new HellishBaubleRenderer());
+		TrinketRendererRegistry.registerRenderer(BWObjects.DRUID_BAND, new DruidBandRenderer());
+		TrinketRendererRegistry.registerRenderer(BWObjects.ZEPHYR_HARNESS, new ZephyrHarnessRenderer());
 	}
 
-	private static ModelPart getPart(EntityModelLayer layer) {
+	public static ModelPart getPart(EntityModelLayer layer) {
 		return MinecraftClient.getInstance().getEntityModelLoader().getModelPart(layer);
 	}
 }
