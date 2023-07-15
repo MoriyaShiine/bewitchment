@@ -14,12 +14,12 @@ import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
-import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.sound.SoundCategory;
@@ -129,11 +129,11 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 
 	private void readFromNbt(NbtCompound nbt) {
 		if (nbt.contains("Sigil")) {
-			NbtList entitiesList = nbt.getList("Entities", NbtType.STRING);
+			NbtList entitiesList = nbt.getList("Entities", NbtElement.COMPOUND_TYPE);
 			for (int i = 0; i < entitiesList.size(); i++) {
 				this.entities.add(UUID.fromString(entitiesList.getString(i)));
 			}
-			sigil = BWRegistries.SIGILS.get(new Identifier(nbt.getString("Sigil")));
+			sigil = BWRegistries.SIGIL.get(new Identifier(nbt.getString("Sigil")));
 			uses = nbt.getInt("Uses");
 			modeOnWhitelist = nbt.getBoolean("ModeOnWhitelist");
 		}
@@ -146,7 +146,7 @@ public class DragonsBloodBroomEntity extends BroomEntity {
 				entitiesList.add(NbtString.of(entity.toString()));
 			}
 			nbt.put("Entities", entitiesList);
-			nbt.putString("Sigil", BWRegistries.SIGILS.getId(sigil).toString());
+			nbt.putString("Sigil", BWRegistries.SIGIL.getId(sigil).toString());
 			nbt.putInt("Uses", uses);
 			nbt.putBoolean("ModeOnWhitelist", modeOnWhitelist);
 		}

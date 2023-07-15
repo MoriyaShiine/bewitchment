@@ -7,13 +7,13 @@ package moriyashiine.bewitchment.common.block.entity.interfaces;
 import moriyashiine.bewitchment.common.block.entity.ElderChestBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.LockableBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWTags;
-import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.util.ActionResult;
@@ -40,7 +40,7 @@ public interface Lockable {
 	void setLocked(boolean locked);
 
 	default void fromNbtLockable(NbtCompound nbt) {
-		NbtList entitiesList = nbt.getList("Entities", NbtType.STRING);
+		NbtList entitiesList = nbt.getList("Entities", NbtElement.COMPOUND_TYPE);
 		for (int i = 0; i < entitiesList.size(); i++) {
 			getEntities().add(UUID.fromString(entitiesList.getString(i)));
 		}

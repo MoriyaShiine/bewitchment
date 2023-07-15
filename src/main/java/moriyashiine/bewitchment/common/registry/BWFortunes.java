@@ -36,6 +36,6 @@ public class BWFortunes {
 	}
 
 	public static void init() {
-		FORTUNES.keySet().forEach(contract -> Registry.register(BWRegistries.FORTUNES, FORTUNES.get(contract), contract));
+		FORTUNES.keySet().forEach(contract -> Registry.register(BWRegistries.FORTUNE, FORTUNES.get(contract), contract));
 	}
 }

@@ -145,7 +145,7 @@ public class BrazierBlockEntity extends BlockEntity implements Inventory, UsesAl
 								if (target instanceof LivingEntity livingEntity) {
 									PoppetData poppetData = BewitchmentAPI.getPoppet(world, BWObjects.CURSE_POPPET, target);
 									if (!poppetData.stack().isEmpty() && poppetData.stack().hasNbt() && !poppetData.stack().getNbt().getBoolean("Cursed")) {
-										poppetData.stack().getNbt().putString("Curse", BWRegistries.CURSES.getId(blockEntity.curseRecipe.curse).toString());
+										poppetData.stack().getNbt().putString("Curse", BWRegistries.CURSE.getId(blockEntity.curseRecipe.curse).toString());
 										poppetData.stack().getNbt().putBoolean("Cursed", true);
 										TaglockItem.removeTaglock(poppetData.stack());
 										poppetData.update(world, true);

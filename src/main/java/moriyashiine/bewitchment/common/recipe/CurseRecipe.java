@@ -93,14 +93,14 @@ public class CurseRecipe implements Recipe<Inventory> {
 			if (!foundTaglock) {
 				throw new JsonParseException("Taglock not found in curse recipe");
 			}
-			return new CurseRecipe(id, ingredients, BWRegistries.CURSES.get(new Identifier(JsonHelper.getString(json, "curse"))), JsonHelper.getInt(json, "cost"));
+			return new CurseRecipe(id, ingredients, BWRegistries.CURSE.get(new Identifier(JsonHelper.getString(json, "curse"))), JsonHelper.getInt(json, "cost"));
 		}
 
 		@Override
 		public CurseRecipe read(Identifier id, PacketByteBuf buf) {
 			DefaultedList<Ingredient> defaultedList = DefaultedList.ofSize(buf.readVarInt(), Ingredient.EMPTY);
 			defaultedList.replaceAll(ignored -> Ingredient.fromPacket(buf));
-			return new CurseRecipe(id, defaultedList, BWRegistries.CURSES.get(new Identifier(buf.readString())), buf.readInt());
+			return new CurseRecipe(id, defaultedList, BWRegistries.CURSE.get(new Identifier(buf.readString())), buf.readInt());
 		}
 
 		@Override
@@ -109,7 +109,7 @@ public class CurseRecipe implements Recipe<Inventory> {
 			for (Ingredient ingredient : recipe.input) {
 				ingredient.write(buf);
 			}
-			buf.writeString(BWRegistries.CURSES.getId(recipe.curse).toString());
+			buf.writeString(BWRegistries.CURSE.getId(recipe.curse).toString());
 			buf.writeInt(recipe.cost);
 		}
 	}

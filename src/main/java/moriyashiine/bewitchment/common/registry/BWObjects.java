@@ -61,7 +61,6 @@ import java.util.List;
 import java.util.Map;
 
 import static net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings.copyOf;
-import static net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings.of;
 
 public class BWObjects {
 	private static final Map<Block, Identifier> BLOCKS = new LinkedHashMap<>();
@@ -185,8 +184,8 @@ public class BWObjects {
 	public static final Item DRAGONS_BLOOD_DOOR_ITEM = create("dragons_blood_door", new TallBlockItem(DRAGONS_BLOOD_DOOR, gen()));
 	public static final Item DRAGONS_BLOOD_SIGN_ITEM = create("dragons_blood_sign", new SignItem(gen().maxCount(16), DRAGONS_BLOOD_SIGN, DRAGONS_BLOOD_WALL_SIGN));
 	//other_plants
-	public static final Block GLOWING_BRAMBLE = create("glowing_bramble", new BrambleBlock(of().sounds(BlockSoundGroup.GRASS).strength(2, 3).noCollision().ticksRandomly().luminance(15)), true);
-	public static final Block ENDER_BRAMBLE = create("ender_bramble", new BrambleBlock(of().sounds(BlockSoundGroup.GRASS).strength(2, 3).noCollision().ticksRandomly()), true);
+	public static final Block GLOWING_BRAMBLE = create("glowing_bramble", new BrambleBlock(FabricBlockSettings.create().sounds(BlockSoundGroup.GRASS).strength(2, 3).noCollision().ticksRandomly().luminance(15)), true);
+	public static final Block ENDER_BRAMBLE = create("ender_bramble", new BrambleBlock(FabricBlockSettings.create().sounds(BlockSoundGroup.GRASS).strength(2, 3).noCollision().ticksRandomly()), true);
 	public static final Block FRUITING_BRAMBLE = create("fruiting_bramble", new BrambleBlock.Fruiting(copyOf(ENDER_BRAMBLE)), true);
 	public static final Block SCORCHED_BRAMBLE = create("scorched_bramble", new BrambleBlock(copyOf(ENDER_BRAMBLE)), true);
 	public static final Block THICK_BRAMBLE = create("thick_bramble", new BrambleBlock(copyOf(ENDER_BRAMBLE)), true);
@@ -416,9 +415,9 @@ public class BWObjects {
 		GROUP = FabricItemGroup.builder().displayName(Text.translatable("itemGroup." + Bewitchment.MOD_ID)).icon(ATHAME::getDefaultStack).entries((displayContext, entries) -> {
 			ITEMS.keySet().forEach(item -> {
 				if (item instanceof ContractItem) {
-					BWRegistries.CONTRACTS.forEach(contract -> {
+					BWRegistries.CONTRACT.forEach(contract -> {
 						ItemStack stack = new ItemStack(item);
-						stack.getOrCreateNbt().putString("Contract", BWRegistries.CONTRACTS.getId(contract).toString());
+						stack.getOrCreateNbt().putString("Contract", BWRegistries.CONTRACT.getId(contract).toString());
 						stack.getOrCreateNbt().putInt("Duration", 168000);
 						entries.add(stack);
 					});

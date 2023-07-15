@@ -35,6 +35,6 @@ public class BWContracts {
 	}
 
 	public static void init() {
-		CONTRACTS.keySet().forEach(contract -> Registry.register(BWRegistries.CONTRACTS, CONTRACTS.get(contract), contract));
+		CONTRACTS.keySet().forEach(contract -> Registry.register(BWRegistries.CONTRACT, CONTRACTS.get(contract), contract));
 	}
 }

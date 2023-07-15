@@ -7,9 +7,9 @@ package moriyashiine.bewitchment.api.component;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import moriyashiine.bewitchment.api.registry.Curse;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
-import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;
 
@@ -26,10 +26,10 @@ public class CursesComponent implements ServerTickingComponent {
 
 	@Override
 	public void readFromNbt(NbtCompound tag) {
-		NbtList cursesList = tag.getList("Curses", NbtType.COMPOUND);
+		NbtList cursesList = tag.getList("Curses", NbtElement.COMPOUND_TYPE);
 		for (int i = 0; i < cursesList.size(); i++) {
 			NbtCompound curseCompound = cursesList.getCompound(i);
-			addCurse(new Curse.Instance(BWRegistries.CURSES.get(new Identifier(curseCompound.getString("Curse"))), curseCompound.getInt("Duration")));
+			addCurse(new Curse.Instance(BWRegistries.CURSE.get(new Identifier(curseCompound.getString("Curse"))), curseCompound.getInt("Duration")));
 		}
 	}
 
@@ -85,7 +85,7 @@ public class CursesComponent implements ServerTickingComponent {
 		NbtList cursesList = new NbtList();
 		for (Curse.Instance instance : getCurses()) {
 			NbtCompound curseCompound = new NbtCompound();
-			curseCompound.putString("Curse", BWRegistries.CURSES.getId(instance.curse).toString());
+			curseCompound.putString("Curse", BWRegistries.CURSE.getId(instance.curse).toString());
 			curseCompound.putInt("Duration", instance.duration);
 			cursesList.add(curseCompound);
 		}

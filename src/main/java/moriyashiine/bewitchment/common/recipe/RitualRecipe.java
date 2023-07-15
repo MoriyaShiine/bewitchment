@@ -119,14 +119,14 @@ public class RitualRecipe implements Recipe<Inventory> {
 			if (inner.isEmpty()) {
 				throw new JsonParseException("Inner circle is empty");
 			}
-			return new RitualRecipe(id, ingredients, inner, JsonHelper.getString(json, "outer", ""), BWRegistries.RITUAL_FUNCTIONS.get(new Identifier(JsonHelper.getString(json, "ritual_function"))), JsonHelper.getInt(json, "cost"), JsonHelper.getInt(json, "running_time", 0));
+			return new RitualRecipe(id, ingredients, inner, JsonHelper.getString(json, "outer", ""), BWRegistries.RITUAL_FUNCTION.get(new Identifier(JsonHelper.getString(json, "ritual_function"))), JsonHelper.getInt(json, "cost"), JsonHelper.getInt(json, "running_time", 0));
 		}
 
 		@Override
 		public RitualRecipe read(Identifier id, PacketByteBuf buf) {
 			DefaultedList<Ingredient> defaultedList = DefaultedList.ofSize(buf.readVarInt(), Ingredient.EMPTY);
 			defaultedList.replaceAll(ignored -> Ingredient.fromPacket(buf));
-			return new RitualRecipe(id, defaultedList, buf.readString(), buf.readString(), BWRegistries.RITUAL_FUNCTIONS.get(new Identifier(buf.readString())), buf.readInt(), buf.readInt());
+			return new RitualRecipe(id, defaultedList, buf.readString(), buf.readString(), BWRegistries.RITUAL_FUNCTION.get(new Identifier(buf.readString())), buf.readInt(), buf.readInt());
 		}
 
 		@Override
@@ -137,7 +137,7 @@ public class RitualRecipe implements Recipe<Inventory> {
 			}
 			buf.writeString(recipe.inner);
 			buf.writeString(recipe.outer);
-			buf.writeString(BWRegistries.RITUAL_FUNCTIONS.getId(recipe.ritualFunction).toString());
+			buf.writeString(BWRegistries.RITUAL_FUNCTION.getId(recipe.ritualFunction).toString());
 			buf.writeInt(recipe.cost);
 			buf.writeInt(recipe.runningTime);
 		}

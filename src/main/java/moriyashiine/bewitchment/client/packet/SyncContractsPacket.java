@@ -46,7 +46,7 @@ public class SyncContractsPacket implements ClientPlayNetworking.PlayChannelHand
 						NbtList contractsList = contractsCompound.getList("Contracts", NbtElement.COMPOUND_TYPE);
 						for (int i = 0; i < contractsList.size(); i++) {
 							NbtCompound contractCompound = contractsList.getCompound(i);
-							contractsComponent.addContract(new Contract.Instance(BWRegistries.CONTRACTS.get(new Identifier(contractCompound.getString("Contract"))), contractCompound.getInt("Duration"), contractCompound.getInt("Cost")));
+							contractsComponent.addContract(new Contract.Instance(BWRegistries.CONTRACT.get(new Identifier(contractCompound.getString("Contract"))), contractCompound.getInt("Duration"), contractCompound.getInt("Cost")));
 						}
 					});
 				}

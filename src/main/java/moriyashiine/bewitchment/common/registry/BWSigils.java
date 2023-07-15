@@ -36,6 +36,6 @@ public class BWSigils {
 	}
 
 	public static void init() {
-		SIGILS.keySet().forEach(sigil -> Registry.register(BWRegistries.SIGILS, SIGILS.get(sigil), sigil));
+		SIGILS.keySet().forEach(sigil -> Registry.register(BWRegistries.SIGIL, SIGILS.get(sigil), sigil));
 	}
 }

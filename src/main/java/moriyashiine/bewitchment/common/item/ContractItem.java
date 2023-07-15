@@ -39,7 +39,7 @@ public class ContractItem extends Item {
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (!world.isClient && stack.hasNbt() && user instanceof PlayerEntity player) {
-			Contract contract = BWRegistries.CONTRACTS.get(new Identifier(stack.getOrCreateNbt().getString("Contract")));
+			Contract contract = BWRegistries.CONTRACT.get(new Identifier(stack.getOrCreateNbt().getString("Contract")));
 			if (contract != null) {
 				BWComponents.CONTRACTS_COMPONENT.get(player).addContract(new Contract.Instance(contract, stack.getNbt().getInt("Duration"), 0));
 				world.playSound(null, player.getBlockPos(), BWSoundEvents.ITEM_CONTRACT_USE, SoundCategory.PLAYERS, 1, 1);

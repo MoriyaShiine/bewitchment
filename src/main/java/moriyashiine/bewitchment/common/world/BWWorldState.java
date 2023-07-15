@@ -5,10 +5,10 @@
 package moriyashiine.bewitchment.common.world;
 
 import moriyashiine.bewitchment.common.Bewitchment;
-import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.collection.DefaultedList;
@@ -30,7 +30,7 @@ public class BWWorldState extends PersistentState {
 
 	public static BWWorldState readNbt(NbtCompound nbt) {
 		BWWorldState worldState = new BWWorldState();
-		NbtList poppetShelvesList = nbt.getList("PoppetShelves", NbtType.COMPOUND);
+		NbtList poppetShelvesList = nbt.getList("PoppetShelves", NbtElement.COMPOUND_TYPE);
 		for (int i = 0; i < poppetShelvesList.size(); i++) {
 			NbtCompound poppetShelfCompound = poppetShelvesList.getCompound(i);
 			DefaultedList<ItemStack> inventory = null;
@@ -40,24 +40,24 @@ public class BWWorldState extends PersistentState {
 			}
 			worldState.poppetShelves.put(poppetShelfCompound.getLong("Pos"), inventory);
 		}
-		NbtList witchCauldronsList = nbt.getList("WitchCauldrons", NbtType.COMPOUND);
+		NbtList witchCauldronsList = nbt.getList("WitchCauldrons", NbtElement.COMPOUND_TYPE);
 		for (int i = 0; i < witchCauldronsList.size(); i++) {
 			NbtCompound cauldronCompound = witchCauldronsList.getCompound(i);
 			if (cauldronCompound.contains("Name")) {
 				worldState.witchCauldrons.put(cauldronCompound.getLong("Pos"), cauldronCompound.getString("Name"));
 			}
 		}
-		NbtList potentialCandelabrasList = nbt.getList("PotentialCandelabras", NbtType.COMPOUND);
+		NbtList potentialCandelabrasList = nbt.getList("PotentialCandelabras", NbtElement.COMPOUND_TYPE);
 		for (int i = 0; i < potentialCandelabrasList.size(); i++) {
 			NbtCompound posCompound = potentialCandelabrasList.getCompound(i);
 			worldState.potentialCandelabras.add(posCompound.getLong("Pos"));
 		}
-		NbtList potentialSigilsList = nbt.getList("PotentialSigils", NbtType.COMPOUND);
+		NbtList potentialSigilsList = nbt.getList("PotentialSigils", NbtElement.COMPOUND_TYPE);
 		for (int i = 0; i < potentialSigilsList.size(); i++) {
 			NbtCompound posCompound = potentialSigilsList.getCompound(i);
 			worldState.potentialSigils.add(posCompound.getLong("Pos"));
 		}
-		NbtList glowingBramblesList = nbt.getList("GlowingBrambles", NbtType.COMPOUND);
+		NbtList glowingBramblesList = nbt.getList("GlowingBrambles", NbtElement.COMPOUND_TYPE);
 		for (int i = 0; i < glowingBramblesList.size(); i++) {
 			NbtCompound posCompound = glowingBramblesList.getCompound(i);
 			worldState.glowingBrambles.add(posCompound.getLong("Pos"));

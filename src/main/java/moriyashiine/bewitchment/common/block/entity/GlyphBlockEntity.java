@@ -93,7 +93,7 @@ public class GlyphBlockEntity extends BlockEntity implements SidedInventory, Use
 		}
 		inventory.clear();
 		Inventories.readNbt(nbt, inventory);
-		ritualFunction = BWRegistries.RITUAL_FUNCTIONS.get(new Identifier(nbt.getString("RitualFunction")));
+		ritualFunction = BWRegistries.RITUAL_FUNCTION.get(new Identifier(nbt.getString("RitualFunction")));
 		timer = nbt.getInt("Timer");
 		endTime = nbt.getInt("EndTime");
 		catFamiliar = nbt.getBoolean("CatFamiliar");
@@ -110,7 +110,7 @@ public class GlyphBlockEntity extends BlockEntity implements SidedInventory, Use
 		}
 		Inventories.writeNbt(nbt, inventory);
 		if (ritualFunction != null) {
-			nbt.putString("RitualFunction", BWRegistries.RITUAL_FUNCTIONS.getId(ritualFunction).toString());
+			nbt.putString("RitualFunction", BWRegistries.RITUAL_FUNCTION.getId(ritualFunction).toString());
 		}
 		nbt.putInt("Timer", timer);
 		nbt.putInt("EndTime", endTime);

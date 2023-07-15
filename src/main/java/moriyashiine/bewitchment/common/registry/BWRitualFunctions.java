@@ -52,6 +52,6 @@ public class BWRitualFunctions {
 	}
 
 	public static void init() {
-		RITUAL_FUNCTIONS.keySet().forEach(contract -> Registry.register(BWRegistries.RITUAL_FUNCTIONS, RITUAL_FUNCTIONS.get(contract), contract));
+		RITUAL_FUNCTIONS.keySet().forEach(contract -> Registry.register(BWRegistries.RITUAL_FUNCTION, RITUAL_FUNCTIONS.get(contract), contract));
 	}
 }

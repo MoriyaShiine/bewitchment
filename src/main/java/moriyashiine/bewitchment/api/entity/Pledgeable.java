@@ -6,13 +6,13 @@ package moriyashiine.bewitchment.api.entity;
 
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.registry.BWComponents;
-import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
@@ -53,7 +53,7 @@ public interface Pledgeable {
 	}
 
 	default void fromNbtPledgeable(NbtCompound tag) {
-		NbtList pledgedPlayerUUIDsList = tag.getList("PledgedPlayerUUIDs", NbtType.COMPOUND);
+		NbtList pledgedPlayerUUIDsList = tag.getList("PledgedPlayerUUIDs", NbtElement.COMPOUND_TYPE);
 		for (int i = 0; i < pledgedPlayerUUIDsList.size(); i++) {
 			getPledgedPlayerUUIDs().add(pledgedPlayerUUIDsList.getCompound(i).getUuid("UUID"));
 		}

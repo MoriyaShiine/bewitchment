@@ -324,7 +324,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 	@Override
 	public List<DemonEntity.DemonTradeOffer> getOffers() {
 		if (offers.isEmpty()) {
-			List<Contract> availableContracts = BWRegistries.CONTRACTS.stream().collect(Collectors.toList());
+			List<Contract> availableContracts = BWRegistries.CONTRACT.stream().collect(Collectors.toList());
 			for (int i = 0; i < 5; i++) {
 				Contract contract = availableContracts.get(random.nextInt(availableContracts.size()));
 				offers.add(new DemonEntity.DemonTradeOffer(contract, 72000, 2 + random.nextInt(2) * 2));

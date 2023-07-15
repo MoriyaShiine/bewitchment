@@ -23,7 +23,7 @@ public class FortuneComponent implements ServerTickingComponent {
 	@Override
 	public void readFromNbt(NbtCompound tag) {
 		if (tag.contains("Fortune")) {
-			setFortune(new Fortune.Instance(BWRegistries.FORTUNES.get(new Identifier(tag.getString("Fortune"))), tag.getInt("FortuneDuration")));
+			setFortune(new Fortune.Instance(BWRegistries.FORTUNE.get(new Identifier(tag.getString("Fortune"))), tag.getInt("FortuneDuration")));
 		}
 	}
 
@@ -31,7 +31,7 @@ public class FortuneComponent implements ServerTickingComponent {
 	@Override
 	public void writeToNbt(NbtCompound tag) {
 		if (getFortune() != null) {
-			tag.putString("Fortune", BWRegistries.FORTUNES.getId(getFortune().fortune).toString());
+			tag.putString("Fortune", BWRegistries.FORTUNE.getId(getFortune().fortune).toString());
 			tag.putInt("FortuneDuration", getFortune().duration);
 		}
 	}

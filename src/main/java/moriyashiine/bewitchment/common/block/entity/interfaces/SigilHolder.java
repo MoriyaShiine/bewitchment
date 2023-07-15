@@ -9,12 +9,12 @@ import moriyashiine.bewitchment.common.block.entity.DragonsBloodChestBlockEntity
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
-import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.util.ActionResult;
@@ -47,14 +47,14 @@ public interface SigilHolder {
 	void setModeOnWhitelist(boolean modeOnWhitelist);
 
 	default void fromNbtSigil(NbtCompound nbt) {
-		NbtList entitiesList = nbt.getList("Entities", NbtType.STRING);
+		NbtList entitiesList = nbt.getList("Entities", NbtElement.COMPOUND_TYPE);
 		for (int i = 0; i < entitiesList.size(); i++) {
 			getEntities().add(UUID.fromString(entitiesList.getString(i)));
 		}
 		if (nbt.contains("Owner")) {
 			setOwner(nbt.getUuid("Owner"));
 		}
-		setSigil(BWRegistries.SIGILS.get(new Identifier(nbt.getString("Sigil"))));
+		setSigil(BWRegistries.SIGIL.get(new Identifier(nbt.getString("Sigil"))));
 		setUses(nbt.getInt("Uses"));
 		setModeOnWhitelist(nbt.getBoolean("ModeOnWhitelist"));
 	}
@@ -69,7 +69,7 @@ public interface SigilHolder {
 			nbt.putUuid("Owner", getOwner());
 		}
 		if (getSigil() != null) {
-			nbt.putString("Sigil", BWRegistries.SIGILS.getId(getSigil()).toString());
+			nbt.putString("Sigil", BWRegistries.SIGIL.getId(getSigil()).toString());
 		}
 		nbt.putInt("Uses", getUses());
 		nbt.putBoolean("ModeOnWhitelist", getModeOnWhitelist());

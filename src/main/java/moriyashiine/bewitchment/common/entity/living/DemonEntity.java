@@ -16,7 +16,6 @@ import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWMaterials;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
-import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.PathNodeType;
@@ -176,7 +175,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 		dataTracker.set(MALE, nbt.getBoolean("Male"));
 		if (nbt.contains("Offers")) {
 			offers.clear();
-			NbtList offersList = nbt.getList("Offers", NbtType.COMPOUND);
+			NbtList offersList = nbt.getList("Offers", NbtElement.COMPOUND_TYPE);
 			for (NbtElement offerTag : offersList) {
 				offers.add(new DemonTradeOffer((NbtCompound) offerTag));
 			}
@@ -233,7 +232,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 	@Override
 	public List<DemonEntity.DemonTradeOffer> getOffers() {
 		if (offers.isEmpty()) {
-			List<Contract> availableContracts = BWRegistries.CONTRACTS.stream().collect(Collectors.toList());
+			List<Contract> availableContracts = BWRegistries.CONTRACT.stream().collect(Collectors.toList());
 			for (int i = 0; i < 3; i++) {
 				Contract contract = availableContracts.get(random.nextInt(availableContracts.size()));
 				offers.add(new DemonTradeOffer(contract, 168000, MathHelper.nextInt(random, 3, 6)));
@@ -272,7 +271,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 		private final int duration, cost;
 
 		public DemonTradeOffer(NbtCompound tag) {
-			this(BWRegistries.CONTRACTS.get(new Identifier(tag.getString("Contract"))), tag.getInt("Duration"), tag.getInt("Cost"));
+			this(BWRegistries.CONTRACT.get(new Identifier(tag.getString("Contract"))), tag.getInt("Duration"), tag.getInt("Cost"));
 		}
 
 		public DemonTradeOffer(Contract contract, int duration, int cost) {
@@ -283,7 +282,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 
 		public NbtCompound toTag() {
 			NbtCompound tag = new NbtCompound();
-			tag.putString("Contract", BWRegistries.CONTRACTS.getId(contract).toString());
+			tag.putString("Contract", BWRegistries.CONTRACT.getId(contract).toString());
 			tag.putInt("Duration", duration);
 			tag.putInt("Cost", cost);
 			return tag;
@@ -292,7 +291,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 		public static void toPacket(List<DemonTradeOffer> offers, PacketByteBuf buf) {
 			buf.writeInt(offers.size());
 			for (DemonTradeOffer offer : offers) {
-				buf.writeIdentifier(BWRegistries.CONTRACTS.getId(offer.getContract()));
+				buf.writeIdentifier(BWRegistries.CONTRACT.getId(offer.getContract()));
 				buf.writeInt(offer.duration);
 				buf.writeInt(offer.cost);
 			}
@@ -302,7 +301,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 			int count = buf.readInt();
 			List<DemonTradeOffer> offers = new ArrayList<>(count);
 			for (int i = 0; i < count; i++) {
-				offers.add(new DemonTradeOffer(BWRegistries.CONTRACTS.get(buf.readIdentifier()), buf.readInt(), buf.readInt()));
+				offers.add(new DemonTradeOffer(BWRegistries.CONTRACT.get(buf.readIdentifier()), buf.readInt(), buf.readInt()));
 			}
 			return offers;
 		}

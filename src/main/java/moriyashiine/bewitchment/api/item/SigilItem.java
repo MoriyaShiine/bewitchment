@@ -111,6 +111,6 @@ public class SigilItem extends Item {
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		tooltip.add(Text.translatable("sigil." + BWRegistries.SIGILS.getId(sigil).toString().replace(":", ".")).formatted(Formatting.GRAY));
+		tooltip.add(Text.translatable("sigil." + BWRegistries.SIGIL.getId(sigil).toString().replace(":", ".")).formatted(Formatting.GRAY));
 	}
 }

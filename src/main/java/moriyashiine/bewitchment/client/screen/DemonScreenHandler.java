@@ -112,7 +112,7 @@ public class DemonScreenHandler extends ScreenHandler {
 			DemonEntity.DemonTradeOffer offer = getOffer();
 			if (offer != null) {
 				ItemStack contract = new ItemStack(BWObjects.DEMONIC_CONTRACT);
-				contract.getOrCreateNbt().putString("Contract", BWRegistries.CONTRACTS.getId(getOffer().getContract()).toString());
+				contract.getOrCreateNbt().putString("Contract", BWRegistries.CONTRACT.getId(getOffer().getContract()).toString());
 				contract.getOrCreateNbt().putInt("Duration", getOffer().getDuration());
 				return contract;
 			}

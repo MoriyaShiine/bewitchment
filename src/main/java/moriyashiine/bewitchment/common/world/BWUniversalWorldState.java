@@ -5,8 +5,8 @@
 package moriyashiine.bewitchment.common.world;
 
 import moriyashiine.bewitchment.common.Bewitchment;
-import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Pair;
 import net.minecraft.world.PersistentState;
@@ -22,11 +22,11 @@ public class BWUniversalWorldState extends PersistentState {
 
 	public static BWUniversalWorldState readNbt(NbtCompound nbt) {
 		BWUniversalWorldState universalWorldState = new BWUniversalWorldState();
-		NbtList pledgesToRemoveList = nbt.getList("PledgesToRemove", NbtType.COMPOUND);
+		NbtList pledgesToRemoveList = nbt.getList("PledgesToRemove", NbtElement.COMPOUND_TYPE);
 		for (int i = 0; i < pledgesToRemoveList.size(); i++) {
 			universalWorldState.pledgesToRemove.add(pledgesToRemoveList.getCompound(i).getUuid("UUID"));
 		}
-		NbtList familiarsList = nbt.getList("Familiars", NbtType.COMPOUND);
+		NbtList familiarsList = nbt.getList("Familiars", NbtElement.COMPOUND_TYPE);
 		for (int i = 0; i < familiarsList.size(); i++) {
 			NbtCompound familiarCompound = familiarsList.getCompound(i);
 			universalWorldState.familiars.add(new Pair<>(familiarCompound.getUuid("Player"), familiarCompound.getCompound("Familiar")));

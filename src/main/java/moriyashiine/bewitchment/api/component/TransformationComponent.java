@@ -64,7 +64,7 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 	@Override
 	public void readFromNbt(NbtCompound tag) {
 		if (tag.contains("Transformation")) {
-			setTransformation(BWRegistries.TRANSFORMATIONS.get(new Identifier(tag.getString("Transformation"))));
+			setTransformation(BWRegistries.TRANSFORMATION.get(new Identifier(tag.getString("Transformation"))));
 		}
 		setAlternateForm(tag.getBoolean("AlternateForm"));
 	}
@@ -72,7 +72,7 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 	@SuppressWarnings({"ConstantConditions"})
 	@Override
 	public void writeToNbt(NbtCompound tag) {
-		tag.putString("Transformation", BWRegistries.TRANSFORMATIONS.getId(getTransformation()).toString());
+		tag.putString("Transformation", BWRegistries.TRANSFORMATION.getId(getTransformation()).toString());
 		tag.putBoolean("AlternateForm", isAlternateForm());
 	}
 

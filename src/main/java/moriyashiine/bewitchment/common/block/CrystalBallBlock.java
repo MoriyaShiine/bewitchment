@@ -95,7 +95,7 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 							taglockCompound.putInt("Level", owner.experienceLevel);
 							taglockCompound.put("Curses", BWComponents.CURSES_COMPONENT.get(owner).toNbtCurse());
 							taglockCompound.put("Contracts", BWComponents.CONTRACTS_COMPONENT.get(owner).toNbtContract());
-							taglockCompound.putString("Transformation", "transformation." + BWRegistries.TRANSFORMATIONS.getId(BWComponents.TRANSFORMATION_COMPONENT.get(owner).getTransformation()).toString().replace(":", "."));
+							taglockCompound.putString("Transformation", "transformation." + BWRegistries.TRANSFORMATION.getId(BWComponents.TRANSFORMATION_COMPONENT.get(owner).getTransformation()).toString().replace(":", "."));
 							BWUniversalWorldState universalWorldState = BWUniversalWorldState.get(world);
 							String familiar = "none";
 							for (int i = 0; i < universalWorldState.familiars.size(); i++) {
@@ -119,14 +119,14 @@ public class CrystalBallBlock extends Block implements Waterloggable {
 					FortuneComponent fortuneComponent = BWComponents.FORTUNE_COMPONENT.get(player);
 					if (fortuneComponent.getFortune() == null) {
 						sound = BWSoundEvents.BLOCK_CRYSTAL_BALL_FIRE;
-						Fortune fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.size()));
+						Fortune fortune = BWRegistries.FORTUNE.get(world.random.nextInt(BWRegistries.FORTUNE.size()));
 						if (BWComponents.CURSES_COMPONENT.get(player).hasCurse(BWCurses.UNLUCKY)) {
 							while (fortune.positive) {
-								fortune = BWRegistries.FORTUNES.get(world.random.nextInt(BWRegistries.FORTUNES.size()));
+								fortune = BWRegistries.FORTUNE.get(world.random.nextInt(BWRegistries.FORTUNE.size()));
 							}
 						}
 						fortuneComponent.setFortune(new Fortune.Instance(fortune, world.random.nextInt(120000)));
-						player.sendMessage(Text.translatable("fortune." + BWRegistries.FORTUNES.getId(fortune).toString().replace(":", ".")), true);
+						player.sendMessage(Text.translatable("fortune." + BWRegistries.FORTUNE.getId(fortune).toString().replace(":", ".")), true);
 
 					} else {
 						player.sendMessage(Text.translatable(Bewitchment.MOD_ID + ".message.has_fortune"), true);

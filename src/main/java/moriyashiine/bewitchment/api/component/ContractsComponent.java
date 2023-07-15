@@ -8,10 +8,10 @@ import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
-import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;
 
@@ -28,10 +28,10 @@ public class ContractsComponent implements ServerTickingComponent {
 
 	@Override
 	public void readFromNbt(NbtCompound tag) {
-		NbtList contractsList = tag.getList("Contracts", NbtType.COMPOUND);
+		NbtList contractsList = tag.getList("Contracts", NbtElement.COMPOUND_TYPE);
 		for (int i = 0; i < contractsList.size(); i++) {
 			NbtCompound contractCompound = contractsList.getCompound(i);
-			addContract(new Contract.Instance(BWRegistries.CONTRACTS.get(new Identifier(contractCompound.getString("Contract"))), contractCompound.getInt("Duration"), contractCompound.getInt("Cost")));
+			addContract(new Contract.Instance(BWRegistries.CONTRACT.get(new Identifier(contractCompound.getString("Contract"))), contractCompound.getInt("Duration"), contractCompound.getInt("Cost")));
 		}
 	}
 
@@ -95,7 +95,7 @@ public class ContractsComponent implements ServerTickingComponent {
 		NbtList contractsTag = new NbtList();
 		for (Contract.Instance instance : getContracts()) {
 			NbtCompound contractCompound = new NbtCompound();
-			contractCompound.putString("Contract", BWRegistries.CONTRACTS.getId(instance.contract).toString());
+			contractCompound.putString("Contract", BWRegistries.CONTRACT.getId(instance.contract).toString());
 			contractCompound.putInt("Duration", instance.duration);
 			contractCompound.putInt("Cost", instance.cost);
 			contractsTag.add(contractCompound);

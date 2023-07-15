@@ -37,6 +37,6 @@ public class BWCurses {
 	}
 
 	public static void init() {
-		CURSES.keySet().forEach(curse -> Registry.register(BWRegistries.CURSES, CURSES.get(curse), curse));
+		CURSES.keySet().forEach(curse -> Registry.register(BWRegistries.CURSE, CURSES.get(curse), curse));
 	}
 }

@@ -27,7 +27,7 @@ public class CurseProcessor implements IComponentProcessor {
 	@Override
 	public IVariable process(World level, String key) {
 		if (key.equals("header")) {
-			return IVariable.from(Text.translatable("curse." + BWRegistries.CURSES.getId(recipe.curse).toString().replace(":", ".")));
+			return IVariable.from(Text.translatable("curse." + BWRegistries.CURSE.getId(recipe.curse).toString().replace(":", ".")));
 		}
 		for (int i = 0; i < recipe.input.size(); i++) {
 			if (key.equals("ingredient" + i)) {

@@ -27,6 +27,6 @@ public class BWTransformations {
 	}
 
 	public static void init() {
-		TRANSFORMATIONS.keySet().forEach(contract -> Registry.register(BWRegistries.TRANSFORMATIONS, TRANSFORMATIONS.get(contract), contract));
+		TRANSFORMATIONS.keySet().forEach(contract -> Registry.register(BWRegistries.TRANSFORMATION, TRANSFORMATIONS.get(contract), contract));
 	}
 }
