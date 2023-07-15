@@ -14,6 +14,7 @@ import moriyashiine.bewitchment.common.registry.BWPledges;
 import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
@@ -27,7 +28,7 @@ import net.minecraft.world.World;
 import java.util.Map;
 
 @SuppressWarnings("ConstantConditions")
-public class CauldronTeleportPacket {
+public class CauldronTeleportPacket implements ServerPlayNetworking.PlayChannelHandler {
 	public static final Identifier ID = Bewitchment.id("cauldron_teleport");
 
 	public static void send(BlockPos cauldronPos, String message) {
@@ -37,7 +38,8 @@ public class CauldronTeleportPacket {
 		ClientPlayNetworking.send(ID, buf);
 	}
 
-	public static void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
+	@Override
+	public void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
 		BlockPos cauldronPos = buf.readBlockPos();
 		String message = buf.readString(Short.MAX_VALUE);
 		server.execute(() -> {

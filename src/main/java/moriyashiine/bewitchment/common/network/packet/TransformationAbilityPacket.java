@@ -16,6 +16,7 @@ import moriyashiine.bewitchment.common.registry.*;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,7 +29,7 @@ import net.minecraft.world.World;
 import virtuoel.pehkui.api.ScaleData;
 
 @SuppressWarnings("ConstantConditions")
-public class TransformationAbilityPacket {
+public class TransformationAbilityPacket implements ServerPlayNetworking.PlayChannelHandler {
 	public static final Identifier ID = Bewitchment.id("transformation_ability");
 
 	public static final AbilitySource VAMPIRE_FLIGHT_SOURCE = Pal.getAbilitySource(Bewitchment.id("vampire_flight"));
@@ -43,7 +44,8 @@ public class TransformationAbilityPacket {
 		ClientPlayNetworking.send(ID, buf);
 	}
 
-	public static void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
+	@Override
+	public void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
 		server.execute(() -> {
 			if (canUseAbility(player)) {
 				useAbility(player, false);

@@ -11,13 +11,14 @@ import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
-public class TogglePressingForwardPacket {
+public class TogglePressingForwardPacket implements ServerPlayNetworking.PlayChannelHandler {
 	public static final Identifier ID = Bewitchment.id("toggle_pressing_forward");
 
 	public static void send(boolean pressingForward) {
@@ -26,7 +27,8 @@ public class TogglePressingForwardPacket {
 		ClientPlayNetworking.send(ID, buf);
 	}
 
-	public static void handle(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
+	@Override
+	public void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
 		try { // attempt normal runtime of TogglePressingForward
 			boolean pressingForward = buf.readBoolean();
 			server.execute(() -> {
