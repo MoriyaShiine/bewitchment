@@ -42,7 +42,6 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -58,8 +57,6 @@ import net.minecraft.world.biome.Biome;
 
 public class Bewitchment implements ModInitializer {
 	public static final String MODID = "bewitchment";
-
-	public static ItemGroup GROUP;
 
 	@SuppressWarnings("ConstantConditions")
 	@Override

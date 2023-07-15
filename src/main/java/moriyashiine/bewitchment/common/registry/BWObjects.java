@@ -68,6 +68,8 @@ public class BWObjects {
 	private static final Map<Item, Identifier> ITEMS = new LinkedHashMap<>();
 	public static final List<Item> BOATS = new ArrayList<>();
 
+	public static ItemGroup GROUP;
+
 	//misc_no_item
 	public static final Block SALT_LINE = create("salt_line", new SaltLineBlock(copyOf(Blocks.REDSTONE_WIRE)), false);
 	public static final Block TEMPORARY_COBWEB = create("temporary_cobweb", new CobwebBlock(copyOf(Blocks.COBWEB).ticksRandomly()) {
@@ -411,7 +413,7 @@ public class BWObjects {
 	}
 
 	public static void init() {
-		Bewitchment.GROUP = FabricItemGroup.builder().displayName(Text.translatable("itemGroup." + Bewitchment.MODID)).icon(ATHAME::getDefaultStack).entries((displayContext, entries) -> {
+		GROUP = FabricItemGroup.builder().displayName(Text.translatable("itemGroup." + Bewitchment.MODID)).icon(ATHAME::getDefaultStack).entries((displayContext, entries) -> {
 			ITEMS.keySet().forEach(item -> {
 				if (item instanceof ContractItem) {
 					BWRegistries.CONTRACTS.forEach(contract -> {
@@ -426,7 +428,7 @@ public class BWObjects {
 			});
 			BOATS.forEach(entries::add);
 		}).build();
-		Registry.register(Registries.ITEM_GROUP, new Identifier(Bewitchment.MODID, Bewitchment.MODID), Bewitchment.GROUP);
+		Registry.register(Registries.ITEM_GROUP, new Identifier(Bewitchment.MODID, Bewitchment.MODID), GROUP);
 		BLOCKS.keySet().forEach(block -> Registry.register(Registries.BLOCK, BLOCKS.get(block), block));
 		ITEMS.keySet().forEach(item -> Registry.register(Registries.ITEM, ITEMS.get(item), item));
 		StrippableBlockRegistry.register(JUNIPER_LOG, STRIPPED_JUNIPER_LOG);
