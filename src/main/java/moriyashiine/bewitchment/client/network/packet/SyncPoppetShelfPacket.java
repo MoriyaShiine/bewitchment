@@ -8,6 +8,7 @@ import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
 import moriyashiine.bewitchment.common.world.BWWorldState;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
@@ -23,7 +24,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 
 @SuppressWarnings({"ConstantConditions", "Convert2Lambda"})
-public class SyncPoppetShelfPacket {
+public class SyncPoppetShelfPacket implements ClientPlayNetworking.PlayChannelHandler {
 	public static final Identifier ID = Bewitchment.id("sync_poppet_shelf");
 
 	public static void send(PlayerEntity player, BlockPos pos) {
@@ -38,7 +39,8 @@ public class SyncPoppetShelfPacket {
 		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
 	}
 
-	public static void handle(MinecraftClient client, ClientPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
+	@Override
+	public void receive(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
 		BlockPos pos = BlockPos.fromLong(buf.readLong());
 		DefaultedList<ItemStack> inventory = DefaultedList.ofSize(9, ItemStack.EMPTY);
 		NbtCompound nbt = buf.readNbt();

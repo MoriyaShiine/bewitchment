@@ -30,11 +30,9 @@ import moriyashiine.bewitchment.client.renderer.blockentity.WitchCauldronBlockEn
 import moriyashiine.bewitchment.client.renderer.entity.*;
 import moriyashiine.bewitchment.client.renderer.entity.living.*;
 import moriyashiine.bewitchment.client.screen.DemonScreen;
-import moriyashiine.bewitchment.client.screen.DemonScreenHandler;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.BWChestBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
-import moriyashiine.bewitchment.common.entity.living.DemonEntity;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.network.packet.CauldronTeleportPacket;
 import moriyashiine.bewitchment.common.network.packet.TogglePressingForwardPacket;
@@ -75,13 +73,10 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RotationAxis;
 import org.lwjgl.glfw.GLFW;
-
-import java.util.List;
 
 @SuppressWarnings({"unchecked", "ConstantConditions"})
 @Environment(EnvType.CLIENT)
@@ -113,30 +108,14 @@ public class BewitchmentClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		ClientPlayNetworking.registerGlobalReceiver(SyncContractsPacket.ID, SyncContractsPacket::handle);
-		ClientPlayNetworking.registerGlobalReceiver(SyncDemonTradesPacket.ID, (client, network, buf, sender) -> {
-			int syncId = buf.readInt();
-			List<DemonEntity.DemonTradeOffer> offers = DemonEntity.DemonTradeOffer.fromPacket(buf);
-			int traderId = buf.readInt();
-			boolean discount = buf.readBoolean();
-			client.execute(() -> {
-				if (client.player != null) {
-					ScreenHandler screenHandler = client.player.currentScreenHandler;
-					if (syncId == screenHandler.syncId && screenHandler instanceof DemonScreenHandler) {
-						((DemonScreenHandler) screenHandler).demonMerchant.setCurrentCustomer(client.player);
-						((DemonScreenHandler) screenHandler).demonMerchant.setOffersClientside(offers);
-						((DemonScreenHandler) screenHandler).demonMerchant.setDemonTraderClientside((LivingEntity) client.world.getEntityById(traderId));
-						((DemonScreenHandler) screenHandler).demonMerchant.setDiscountClientside(discount);
-					}
-				}
-			});
-		});
-		ClientPlayNetworking.registerGlobalReceiver(SyncPoppetShelfPacket.ID, SyncPoppetShelfPacket::handle);
-		ClientPlayNetworking.registerGlobalReceiver(SyncHornedSpearPacket.ID, SyncHornedSpearPacket::handle);
-		ClientPlayNetworking.registerGlobalReceiver(SpawnSmokeParticlesPacket.ID, SpawnSmokeParticlesPacket::handle);
-		ClientPlayNetworking.registerGlobalReceiver(SpawnPortalParticlesPacket.ID, SpawnPortalParticlesPacket::handle);
-		ClientPlayNetworking.registerGlobalReceiver(SpawnExplosionParticlesPacket.ID, SpawnExplosionParticlesPacket::handle);
-		ClientPlayNetworking.registerGlobalReceiver(SpawnSpecterBangleParticlesPacket.ID, SpawnSpecterBangleParticlesPacket::handle);
+		ClientPlayNetworking.registerGlobalReceiver(SyncContractsPacket.ID, new SyncContractsPacket());
+		ClientPlayNetworking.registerGlobalReceiver(SyncDemonTradesPacket.ID, new SyncDemonTradesPacket());
+		ClientPlayNetworking.registerGlobalReceiver(SyncPoppetShelfPacket.ID, new SyncPoppetShelfPacket());
+		ClientPlayNetworking.registerGlobalReceiver(SyncHornedSpearPacket.ID, new SyncHornedSpearPacket());
+		ClientPlayNetworking.registerGlobalReceiver(SpawnSmokeParticlesPacket.ID, new SpawnSmokeParticlesPacket());
+		ClientPlayNetworking.registerGlobalReceiver(SpawnPortalParticlesPacket.ID, new SpawnPortalParticlesPacket());
+		ClientPlayNetworking.registerGlobalReceiver(SpawnExplosionParticlesPacket.ID, new SpawnExplosionParticlesPacket());
+		ClientPlayNetworking.registerGlobalReceiver(SpawnSpecterBangleParticlesPacket.ID, new SpawnSpecterBangleParticlesPacket());
 		ParticleFactoryRegistry.getInstance().register(BWParticleTypes.CAULDRON_BUBBLE, CauldronBubbleParticle.Factory::new);
 		ParticleFactoryRegistry.getInstance().register(BWParticleTypes.INCENSE_SMOKE, IncenseSmokeParticle.Factory::new);
 		ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> 0xffff00, BWObjects.GOLDEN_GLYPH);
