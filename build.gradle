@@ -17,7 +17,7 @@ loom {
 repositories {
     maven {
         name "cardinal components, playerabilitylib, trinkets"
-        url "https://ladysnake.jfrog.io/artifactory/mods"
+        url "https://maven.ladysnake.org/releases"
     }
     maven {
         name "impersonate"
