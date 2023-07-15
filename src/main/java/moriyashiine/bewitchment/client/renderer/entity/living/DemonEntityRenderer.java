@@ -37,8 +37,8 @@ public class DemonEntityRenderer extends MobEntityRenderer<DemonEntity, DemonEnt
 			MALE_TEXTURES = new Identifier[variants];
 			FEMALE_TEXTURES = new Identifier[variants];
 			for (int i = 0; i < variants; i++) {
-				MALE_TEXTURES[i] = new Identifier(Bewitchment.MOD_ID, "textures/entity/living/demon/male_" + i + ".png");
-				FEMALE_TEXTURES[i] = new Identifier(Bewitchment.MOD_ID, "textures/entity/living/demon/female_" + i + ".png");
+				MALE_TEXTURES[i] = Bewitchment.id("textures/entity/living/demon/male_" + i + ".png");
+				FEMALE_TEXTURES[i] = Bewitchment.id("textures/entity/living/demon/female_" + i + ".png");
 			}
 		}
 		int variant = entity.getVariant();

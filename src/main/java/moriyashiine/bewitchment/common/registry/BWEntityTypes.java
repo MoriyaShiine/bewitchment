@@ -52,7 +52,7 @@ public class BWEntityTypes {
 	public static final EntityType<HerneEntity> HERNE = create("herne", FabricEntityTypeBuilder.createMob().spawnGroup(SpawnGroup.MONSTER).entityFactory(HerneEntity::new).defaultAttributes(HerneEntity::createAttributes).dimensions(EntityDimensions.fixed(0.8f, 2.8f)).fireImmune().build());
 
 	private static <T extends Entity> EntityType<T> create(String name, EntityType<T> type) {
-		ENTITY_TYPES.put(type, new Identifier(Bewitchment.MOD_ID, name));
+		ENTITY_TYPES.put(type, Bewitchment.id(name));
 		return type;
 	}
 

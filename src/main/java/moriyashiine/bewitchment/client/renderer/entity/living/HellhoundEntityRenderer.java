@@ -28,7 +28,7 @@ public class HellhoundEntityRenderer extends MobEntityRenderer<HellhoundEntity, 
 			int variants = entity.getVariants();
 			TEXTURES = new Identifier[variants];
 			for (int i = 0; i < variants; i++) {
-				TEXTURES[i] = new Identifier(Bewitchment.MOD_ID, "textures/entity/living/hellhound/" + i + ".png");
+				TEXTURES[i] = Bewitchment.id("textures/entity/living/hellhound/" + i + ".png");
 			}
 		}
 		return TEXTURES[entity.getVariant()];

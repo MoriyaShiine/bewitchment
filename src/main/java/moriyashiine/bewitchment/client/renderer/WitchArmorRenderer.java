@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 @Environment(EnvType.CLIENT)
 public class WitchArmorRenderer implements ArmorRenderer {
-	private static final Identifier WITCH_HAT_VARIANT_TEXTURE = new Identifier(Bewitchment.MOD_ID, "textures/entity/armor/witch_hat_variant.png");
+	private static final Identifier WITCH_HAT_VARIANT_TEXTURE = Bewitchment.id("textures/entity/armor/witch_hat_variant.png");
 	private static WitchArmorModel<LivingEntity> armorModel;
 	private static WitchArmorModel<LivingEntity> bootsModel;
 

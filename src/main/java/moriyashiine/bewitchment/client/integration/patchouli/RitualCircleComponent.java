@@ -40,9 +40,9 @@ public class RitualCircleComponent implements ICustomComponent {
 
 	@Override
 	public void onVariablesAvailable(UnaryOperator<IVariable> lookup) {
-		circles[0] = new Identifier(Bewitchment.MOD_ID, "textures/gui/patchouli/chalk/" + lookup.apply(inner).asString() + ".png");
+		circles[0] = Bewitchment.id("textures/gui/patchouli/chalk/" + lookup.apply(inner).asString() + ".png");
 		if (!lookup.apply(outer).asString().isEmpty()) {
-			circles[1] = new Identifier(Bewitchment.MOD_ID, "textures/gui/patchouli/chalk/" + lookup.apply(outer).asString() + ".png");
+			circles[1] = Bewitchment.id("textures/gui/patchouli/chalk/" + lookup.apply(outer).asString() + ".png");
 		}
 	}
 }

@@ -31,7 +31,7 @@ public class BWSigils {
 	public static final Sigil HEAVY = create("heavy", new Sigil(false, 32));
 
 	private static <T extends Sigil> T create(String name, T sigil) {
-		SIGILS.put(sigil, new Identifier(Bewitchment.MOD_ID, name));
+		SIGILS.put(sigil, Bewitchment.id(name));
 		return sigil;
 	}
 

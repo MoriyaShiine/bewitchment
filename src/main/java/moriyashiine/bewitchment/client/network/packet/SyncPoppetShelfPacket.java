@@ -24,7 +24,7 @@ import net.minecraft.util.math.BlockPos;
 
 @SuppressWarnings({"ConstantConditions", "Convert2Lambda"})
 public class SyncPoppetShelfPacket {
-	public static final Identifier ID = new Identifier(Bewitchment.MOD_ID, "sync_poppet_shelf");
+	public static final Identifier ID = Bewitchment.id("sync_poppet_shelf");
 
 	public static void send(PlayerEntity player, BlockPos pos) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());

@@ -49,7 +49,7 @@ public class BWStatusEffects {
 	public static final StatusEffect WEDNESDAY = create("wednesday", new WednesdayStatusEffect(StatusEffectCategory.BENEFICIAL, 0x00ff00));
 
 	private static <T extends StatusEffect> T create(String name, T effect) {
-		STATUS_EFFECTS.put(effect, new Identifier(Bewitchment.MOD_ID, name));
+		STATUS_EFFECTS.put(effect, Bewitchment.id(name));
 		return effect;
 	}
 

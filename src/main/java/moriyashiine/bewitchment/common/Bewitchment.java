@@ -50,6 +50,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -216,5 +217,9 @@ public class Bewitchment implements ModInitializer {
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.END_STONE_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.OBSIDIAN_WITCH_ALTAR);
 		BewitchmentAPI.registerAltarMapEntries(BWObjects.PURPUR_WITCH_ALTAR);
+	}
+
+	public static Identifier id(String value) {
+		return new Identifier(MOD_ID, value);
 	}
 }

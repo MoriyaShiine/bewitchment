@@ -30,7 +30,7 @@ public class WerewolfEntityRenderer extends MobEntityRenderer<WerewolfEntity, We
 			int variants = entity.getVariants();
 			TEXTURES = new Identifier[variants];
 			for (int i = 0; i < variants; i++) {
-				TEXTURES[i] = new Identifier(Bewitchment.MOD_ID, "textures/entity/living/werewolf/" + i + ".png");
+				TEXTURES[i] = Bewitchment.id("textures/entity/living/werewolf/" + i + ".png");
 			}
 		}
 		return TEXTURES[entity.getVariant()];

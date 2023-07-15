@@ -22,10 +22,10 @@ public class BWBoatTypes {
 	}
 
 	private static void registerBoat(String name, Item planks) {
-		Identifier boatId = new Identifier(Bewitchment.MOD_ID, name + "_boat");
+		Identifier boatId = Bewitchment.id(name + "_boat");
 		RegistryKey<TerraformBoatType> key = TerraformBoatTypeRegistry.createKey(boatId);
 		Item boat = TerraformBoatItemHelper.registerBoatItem(boatId, key, false);
-		Item chest_boat = TerraformBoatItemHelper.registerBoatItem(new Identifier(Bewitchment.MOD_ID, name + "_chest_boat"), key, true);
+		Item chest_boat = TerraformBoatItemHelper.registerBoatItem(Bewitchment.id(name + "_chest_boat"), key, true);
 		TerraformBoatType boatType = new TerraformBoatType.Builder()
 				.item(boat)
 				.chestItem(chest_boat)

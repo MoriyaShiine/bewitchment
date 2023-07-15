@@ -88,28 +88,28 @@ import java.util.List;
 public class BewitchmentClient implements ClientModInitializer {
 	public static final KeyBinding TRANSFORMATION_ABILITY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key." + Bewitchment.MOD_ID + ".transformation_ability", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "itemGroup." + Bewitchment.MOD_ID + "." + Bewitchment.MOD_ID));
 
-	public static final EntityModelLayer CONTRIBUTOR_HORNS_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "contributor_horns"), "main");
-	public static final EntityModelLayer WITCH_ARMOR_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "witch_armor"), "main");
-	public static final EntityModelLayer SPECTER_BANGLE_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "specter_bangle"), "main");
-	public static final EntityModelLayer PRICKLY_BELT_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "prickly_belt"), "main");
-	public static final EntityModelLayer DRUID_BAND_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "druid_band"), "main");
-	public static final EntityModelLayer ZEPHYR_HARNESS_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "zephyr_harness"), "main");
+	public static final EntityModelLayer CONTRIBUTOR_HORNS_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("contributor_horns"), "main");
+	public static final EntityModelLayer WITCH_ARMOR_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("witch_armor"), "main");
+	public static final EntityModelLayer SPECTER_BANGLE_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("specter_bangle"), "main");
+	public static final EntityModelLayer PRICKLY_BELT_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("prickly_belt"), "main");
+	public static final EntityModelLayer DRUID_BAND_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("druid_band"), "main");
+	public static final EntityModelLayer ZEPHYR_HARNESS_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("zephyr_harness"), "main");
 
-	public static final EntityModelLayer BROOM_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "broom"), "main");
-	public static final EntityModelLayer OWL_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "owl"), "main");
-	public static final EntityModelLayer RAVEN_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "raven"), "main");
-	public static final EntityModelLayer SNAKE_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "snake"), "main");
-	public static final EntityModelLayer TOAD_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "toad"), "main");
-	public static final EntityModelLayer GHOST_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "ghost"), "main");
-	public static final EntityModelLayer VAMPIRE_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "vampire"), "main");
-	public static final EntityModelLayer WEREWOLF_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "werewolf"), "main");
-	public static final EntityModelLayer HELLHOUND_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "hellhound"), "main");
-	public static final EntityModelLayer MALE_DEMON_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "male_demon"), "main");
-	public static final EntityModelLayer FEMALE_DEMON_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "female_demon"), "main");
-	public static final EntityModelLayer LEONARD_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "leonard"), "main");
-	public static final EntityModelLayer BAPHOMET_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "baphomet"), "main");
-	public static final EntityModelLayer LILITH_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "lilith"), "main");
-	public static final EntityModelLayer HERNE_MODEL_LAYER = new EntityModelLayer(new Identifier(Bewitchment.MOD_ID, "herne"), "main");
+	public static final EntityModelLayer BROOM_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("broom"), "main");
+	public static final EntityModelLayer OWL_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("owl"), "main");
+	public static final EntityModelLayer RAVEN_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("raven"), "main");
+	public static final EntityModelLayer SNAKE_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("snake"), "main");
+	public static final EntityModelLayer TOAD_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("toad"), "main");
+	public static final EntityModelLayer GHOST_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("ghost"), "main");
+	public static final EntityModelLayer VAMPIRE_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("vampire"), "main");
+	public static final EntityModelLayer WEREWOLF_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("werewolf"), "main");
+	public static final EntityModelLayer HELLHOUND_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("hellhound"), "main");
+	public static final EntityModelLayer MALE_DEMON_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("male_demon"), "main");
+	public static final EntityModelLayer FEMALE_DEMON_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("female_demon"), "main");
+	public static final EntityModelLayer LEONARD_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("leonard"), "main");
+	public static final EntityModelLayer BAPHOMET_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("baphomet"), "main");
+	public static final EntityModelLayer LILITH_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("lilith"), "main");
+	public static final EntityModelLayer HERNE_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("herne"), "main");
 
 	@Override
 	public void onInitializeClient() {
@@ -145,14 +145,14 @@ public class BewitchmentClient implements ClientModInitializer {
 		ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> tintIndex == 1 ? ((BedBlock) state.getBlock()).getColor().getFireworkColor() : 0xffffff, BWObjects.WHITE_COFFIN, BWObjects.ORANGE_COFFIN, BWObjects.MAGENTA_COFFIN, BWObjects.LIGHT_BLUE_COFFIN, BWObjects.YELLOW_COFFIN, BWObjects.LIME_COFFIN, BWObjects.PINK_COFFIN, BWObjects.GRAY_COFFIN, BWObjects.LIGHT_GRAY_COFFIN, BWObjects.CYAN_COFFIN, BWObjects.PURPLE_COFFIN, BWObjects.BLUE_COFFIN, BWObjects.BROWN_COFFIN, BWObjects.GREEN_COFFIN, BWObjects.RED_COFFIN, BWObjects.BLACK_COFFIN);
 		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex == 1 ? ((BedBlock) Block.getBlockFromItem(stack.getItem())).getColor().getFireworkColor() : 0xffffff, BWObjects.WHITE_COFFIN, BWObjects.ORANGE_COFFIN, BWObjects.MAGENTA_COFFIN, BWObjects.LIGHT_BLUE_COFFIN, BWObjects.YELLOW_COFFIN, BWObjects.LIME_COFFIN, BWObjects.PINK_COFFIN, BWObjects.GRAY_COFFIN, BWObjects.LIGHT_GRAY_COFFIN, BWObjects.CYAN_COFFIN, BWObjects.PURPLE_COFFIN, BWObjects.BLUE_COFFIN, BWObjects.BROWN_COFFIN, BWObjects.GREEN_COFFIN, BWObjects.RED_COFFIN, BWObjects.BLACK_COFFIN);
 		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex == 0 ? 0x7f0000 : 0xffffff, BWObjects.BOTTLE_OF_BLOOD);
-		ModelPredicateProviderRegistry.register(BWObjects.HEDGEWITCH_HAT, new Identifier(Bewitchment.MOD_ID, "variant"), (stack, world, entity, seed) -> stack.getName().getString().toLowerCase().contains("faith") ? 1 : 0);
-		ModelPredicateProviderRegistry.register(BWObjects.ALCHEMIST_HAT, new Identifier(Bewitchment.MOD_ID, "variant"), (stack, world, entity, seed) -> stack.getName().getString().toLowerCase().contains("faith") ? 1 : 0);
-		ModelPredicateProviderRegistry.register(BWObjects.BESMIRCHED_HAT, new Identifier(Bewitchment.MOD_ID, "variant"), (stack, world, entity, seed) -> stack.getName().getString().toLowerCase().contains("faith") ? 1 : 0);
-		ModelPredicateProviderRegistry.register(BWObjects.NAZAR, new Identifier(Bewitchment.MOD_ID, "variant"), (stack, world, entity, seed) -> stack.hasNbt() && stack.getNbt().getBoolean("Worn") ? 1 : 0);
-		ModelPredicateProviderRegistry.register(BWObjects.PRICKLY_BELT, new Identifier(Bewitchment.MOD_ID, "variant"), (stack, world, entity, seed) -> stack.hasNbt() && stack.getNbt().getInt("PotionUses") > 0 ? 1 : 0);
-		ModelPredicateProviderRegistry.register(BWObjects.HORNED_SPEAR, new Identifier(Bewitchment.MOD_ID, "variant"), (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1 : 0);
-		ModelPredicateProviderRegistry.register(BWObjects.TAGLOCK, new Identifier(Bewitchment.MOD_ID, "variant"), (stack, world, entity, seed) -> TaglockItem.hasTaglock(stack) ? 1 : 0);
-		ModelPredicateProviderRegistry.register(BWObjects.WAYSTONE, new Identifier(Bewitchment.MOD_ID, "variant"), (stack, world, entity, seed) -> stack.hasNbt() && stack.getOrCreateNbt().contains("LocationPos") ? 1 : 0);
+		ModelPredicateProviderRegistry.register(BWObjects.HEDGEWITCH_HAT, Bewitchment.id("variant"), (stack, world, entity, seed) -> stack.getName().getString().toLowerCase().contains("faith") ? 1 : 0);
+		ModelPredicateProviderRegistry.register(BWObjects.ALCHEMIST_HAT, Bewitchment.id("variant"), (stack, world, entity, seed) -> stack.getName().getString().toLowerCase().contains("faith") ? 1 : 0);
+		ModelPredicateProviderRegistry.register(BWObjects.BESMIRCHED_HAT, Bewitchment.id("variant"), (stack, world, entity, seed) -> stack.getName().getString().toLowerCase().contains("faith") ? 1 : 0);
+		ModelPredicateProviderRegistry.register(BWObjects.NAZAR, Bewitchment.id("variant"), (stack, world, entity, seed) -> stack.hasNbt() && stack.getNbt().getBoolean("Worn") ? 1 : 0);
+		ModelPredicateProviderRegistry.register(BWObjects.PRICKLY_BELT, Bewitchment.id("variant"), (stack, world, entity, seed) -> stack.hasNbt() && stack.getNbt().getInt("PotionUses") > 0 ? 1 : 0);
+		ModelPredicateProviderRegistry.register(BWObjects.HORNED_SPEAR, Bewitchment.id("variant"), (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1 : 0);
+		ModelPredicateProviderRegistry.register(BWObjects.TAGLOCK, Bewitchment.id("variant"), (stack, world, entity, seed) -> TaglockItem.hasTaglock(stack) ? 1 : 0);
+		ModelPredicateProviderRegistry.register(BWObjects.WAYSTONE, Bewitchment.id("variant"), (stack, world, entity, seed) -> stack.hasNbt() && stack.getOrCreateNbt().contains("LocationPos") ? 1 : 0);
 		BlockEntityRendererRegistry.register(BWBlockEntityTypes.BW_CHEST, ChestBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.register(BWBlockEntityTypes.WITCH_ALTAR, ctx -> new WitchAltarBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(BWBlockEntityTypes.WITCH_CAULDRON, ctx -> new WitchCauldronBlockEntityRenderer());
@@ -161,10 +161,10 @@ public class BewitchmentClient implements ClientModInitializer {
 		BlockEntityRendererRegistry.register(BWBlockEntityTypes.JUNIPER_CHEST, ChestBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.register(BWBlockEntityTypes.ELDER_CHEST, ChestBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.register(BWBlockEntityTypes.DRAGONS_BLOOD_CHEST, ChestBlockEntityRenderer::new);
-		TerraformBoatClientHelper.registerModelLayers(new Identifier(Bewitchment.MOD_ID, "juniper_boat"), false);
-		TerraformBoatClientHelper.registerModelLayers(new Identifier(Bewitchment.MOD_ID, "cypress_boat"), false);
-		TerraformBoatClientHelper.registerModelLayers(new Identifier(Bewitchment.MOD_ID, "elder_boat"), false);
-		TerraformBoatClientHelper.registerModelLayers(new Identifier(Bewitchment.MOD_ID, "dragons_blood_boat"), false);
+		TerraformBoatClientHelper.registerModelLayers(Bewitchment.id("juniper_boat"), false);
+		TerraformBoatClientHelper.registerModelLayers(Bewitchment.id("cypress_boat"), false);
+		TerraformBoatClientHelper.registerModelLayers(Bewitchment.id("elder_boat"), false);
+		TerraformBoatClientHelper.registerModelLayers(Bewitchment.id("dragons_blood_boat"), false);
 		EntityModelLayerRegistry.registerModelLayer(CONTRIBUTOR_HORNS_MODEL_LAYER, ContributorHornsModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(WITCH_ARMOR_MODEL_LAYER, WitchArmorModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(SPECTER_BANGLE_MODEL_LAYER, SpecterBangleModel::getTexturedModelData);
@@ -261,10 +261,10 @@ public class BewitchmentClient implements ClientModInitializer {
 		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.TRAPPED_ELDER_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BlockPos.ORIGIN, BWObjects.TRAPPED_ELDER_CHEST.getDefaultState(), BWChestBlockEntity.Type.ELDER, true), matrices, vertexConsumers, light, overlay));
 		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.DRAGONS_BLOOD_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BlockPos.ORIGIN, BWObjects.DRAGONS_BLOOD_CHEST.getDefaultState(), BWChestBlockEntity.Type.DRAGONS_BLOOD, false), matrices, vertexConsumers, light, overlay));
 		BuiltinItemRendererRegistry.INSTANCE.register(BWObjects.TRAPPED_DRAGONS_BLOOD_CHEST, (stack, mode, matrices, vertexConsumers, light, overlay) -> MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(new BWChestBlockEntity(BWBlockEntityTypes.BW_CHEST, BlockPos.ORIGIN, BWObjects.TRAPPED_DRAGONS_BLOOD_CHEST.getDefaultState(), BWChestBlockEntity.Type.DRAGONS_BLOOD, true), matrices, vertexConsumers, light, overlay));
-		ArmorRenderer.register(new WitchArmorRenderer(new Identifier(Bewitchment.MOD_ID, "textures/entity/armor/hedgewitch.png"), BWObjects.HEDGEWITCH_HAT), BWObjects.HEDGEWITCH_HOOD, BWObjects.HEDGEWITCH_HAT, BWObjects.HEDGEWITCH_ROBES, BWObjects.HEDGEWITCH_PANTS);
-		ArmorRenderer.register(new WitchArmorRenderer(new Identifier(Bewitchment.MOD_ID, "textures/entity/armor/alchemist.png"), BWObjects.ALCHEMIST_HAT), BWObjects.ALCHEMIST_HOOD, BWObjects.ALCHEMIST_HAT, BWObjects.ALCHEMIST_ROBES, BWObjects.ALCHEMIST_PANTS);
-		ArmorRenderer.register(new WitchArmorRenderer(new Identifier(Bewitchment.MOD_ID, "textures/entity/armor/besmirched.png"), BWObjects.BESMIRCHED_HAT), BWObjects.BESMIRCHED_HOOD, BWObjects.BESMIRCHED_HAT, BWObjects.BESMIRCHED_ROBES, BWObjects.BESMIRCHED_PANTS);
-		ArmorRenderer.register(new WitchArmorRenderer(new Identifier(Bewitchment.MOD_ID, "textures/entity/armor/harbinger.png"), null), BWObjects.HARBINGER);
+		ArmorRenderer.register(new WitchArmorRenderer(Bewitchment.id("textures/entity/armor/hedgewitch.png"), BWObjects.HEDGEWITCH_HAT), BWObjects.HEDGEWITCH_HOOD, BWObjects.HEDGEWITCH_HAT, BWObjects.HEDGEWITCH_ROBES, BWObjects.HEDGEWITCH_PANTS);
+		ArmorRenderer.register(new WitchArmorRenderer(Bewitchment.id("textures/entity/armor/alchemist.png"), BWObjects.ALCHEMIST_HAT), BWObjects.ALCHEMIST_HOOD, BWObjects.ALCHEMIST_HAT, BWObjects.ALCHEMIST_ROBES, BWObjects.ALCHEMIST_PANTS);
+		ArmorRenderer.register(new WitchArmorRenderer(Bewitchment.id("textures/entity/armor/besmirched.png"), BWObjects.BESMIRCHED_HAT), BWObjects.BESMIRCHED_HOOD, BWObjects.BESMIRCHED_HAT, BWObjects.BESMIRCHED_ROBES, BWObjects.BESMIRCHED_PANTS);
+		ArmorRenderer.register(new WitchArmorRenderer(Bewitchment.id("textures/entity/armor/harbinger.png"), null), BWObjects.HARBINGER);
 		TrinketRendererRegistry.registerRenderer(BWObjects.NAZAR, (stack, slotReference, contextModel, matrices, vertexConsumers, light, entity, limbAngle, limbDistance, tickDelta, animationProgress, headYaw, headPitch) -> {
 			ItemStack copy = stack.copy();
 			copy.getOrCreateNbt().putBoolean("Worn", true);
@@ -275,7 +275,7 @@ public class BewitchmentClient implements ClientModInitializer {
 			MinecraftClient.getInstance().getItemRenderer().renderItem(copy, ModelTransformationMode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, entity.getWorld(), 0);
 		});
 		TrinketRendererRegistry.registerRenderer(BWObjects.SPECTER_BANGLE, new TrinketRenderer() {
-			private static final Identifier TEXTURE = new Identifier(Bewitchment.MOD_ID, "textures/entity/trinket/specter_bangle.png");
+			private static final Identifier TEXTURE = Bewitchment.id("textures/entity/trinket/specter_bangle.png");
 			private static Model model;
 
 			@Override
@@ -288,7 +288,7 @@ public class BewitchmentClient implements ClientModInitializer {
 			}
 		});
 		TrinketRendererRegistry.registerRenderer(BWObjects.PRICKLY_BELT, new TrinketRenderer() {
-			private static final Identifier TEXTURE = new Identifier(Bewitchment.MOD_ID, "textures/entity/trinket/prickly_belt.png");
+			private static final Identifier TEXTURE = Bewitchment.id("textures/entity/trinket/prickly_belt.png");
 			private static Model model;
 
 			@Override
@@ -308,7 +308,7 @@ public class BewitchmentClient implements ClientModInitializer {
 			MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformationMode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, entity.getWorld(), 0);
 		});
 		TrinketRendererRegistry.registerRenderer(BWObjects.DRUID_BAND, new TrinketRenderer() {
-			private static final Identifier TEXTURE = new Identifier(Bewitchment.MOD_ID, "textures/entity/trinket/druid_band.png");
+			private static final Identifier TEXTURE = Bewitchment.id("textures/entity/trinket/druid_band.png");
 			private static Model model;
 
 			@Override
@@ -321,7 +321,7 @@ public class BewitchmentClient implements ClientModInitializer {
 			}
 		});
 		TrinketRendererRegistry.registerRenderer(BWObjects.ZEPHYR_HARNESS, new TrinketRenderer() {
-			private static final Identifier TEXTURE = new Identifier(Bewitchment.MOD_ID, "textures/entity/trinket/zephyr_harness.png");
+			private static final Identifier TEXTURE = Bewitchment.id("textures/entity/trinket/zephyr_harness.png");
 			private static Model model;
 
 			@Override

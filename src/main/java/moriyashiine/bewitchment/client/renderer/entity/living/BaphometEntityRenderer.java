@@ -23,7 +23,7 @@ import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class BaphometEntityRenderer extends MobEntityRenderer<BaphometEntity, BaphometEntityModel<BaphometEntity>> {
-	private static final Identifier TEXTURE = new Identifier(Bewitchment.MOD_ID, "textures/entity/living/baphomet/baphomet.png");
+	private static final Identifier TEXTURE = Bewitchment.id("textures/entity/living/baphomet/baphomet.png");
 	private static Identifier[] TEXTURES;
 
 	public BaphometEntityRenderer(EntityRendererFactory.Context context) {
@@ -35,7 +35,7 @@ public class BaphometEntityRenderer extends MobEntityRenderer<BaphometEntity, Ba
 				if (TEXTURES == null) {
 					TEXTURES = new Identifier[8];
 					for (int i = 0; i < 8; i++) {
-						TEXTURES[i] = new Identifier(Bewitchment.MOD_ID, "textures/entity/living/baphomet/flame_" + i + ".png");
+						TEXTURES[i] = Bewitchment.id("textures/entity/living/baphomet/flame_" + i + ".png");
 					}
 				}
 				VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(TEXTURES[entity.flameIndex]));

@@ -76,7 +76,7 @@ public class BWSoundEvents {
 	public static final SoundEvent ENTITY_HERNE_DEATH = create("entity.herne.death");
 
 	private static SoundEvent create(String name) {
-		Identifier id = new Identifier(Bewitchment.MOD_ID, name);
+		Identifier id = Bewitchment.id(name);
 		SoundEvent soundEvent = SoundEvent.of(id);
 		SOUND_EVENTS.put(soundEvent, id);
 		return soundEvent;

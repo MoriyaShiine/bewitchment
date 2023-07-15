@@ -85,8 +85,8 @@ public class BWWorldGenerators {
 			SpawnRestriction.register(BWEntityTypes.HELLHOUND, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HellhoundEntity::canSpawn);
 		}
 		LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
-			Identifier seeds = new Identifier(Bewitchment.MOD_ID, "inject/seeds");
-			Identifier nether_fortress = new Identifier(Bewitchment.MOD_ID, "inject/nether_fortress");
+			Identifier seeds = Bewitchment.id("inject/seeds");
+			Identifier nether_fortress = Bewitchment.id("inject/nether_fortress");
 			if (Blocks.GRASS.getLootTableId().equals(id) || Blocks.FERN.getLootTableId().equals(id) || Blocks.TALL_GRASS.getLootTableId().equals(id) || Blocks.LARGE_FERN.getLootTableId().equals(id)) {
 				tableBuilder.pool(LootPool.builder().with(LootTableEntry.builder(seeds).weight(1)).build());
 			}

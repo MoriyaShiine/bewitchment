@@ -19,7 +19,7 @@ import net.minecraft.util.Identifier;
 
 @SuppressWarnings("ConstantConditions")
 public class SyncHornedSpearPacket {
-	public static final Identifier ID = new Identifier(Bewitchment.MOD_ID, "sync_horned_spear");
+	public static final Identifier ID = Bewitchment.id("sync_horned_spear");
 
 	public static void send(PlayerEntity player, HornedSpearEntity entity) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());

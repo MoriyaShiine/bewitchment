@@ -18,7 +18,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 public class TogglePressingForwardPacket {
-	public static final Identifier ID = new Identifier(Bewitchment.MOD_ID, "toggle_pressing_forward");
+	public static final Identifier ID = Bewitchment.id("toggle_pressing_forward");
 
 	public static void send(boolean pressingForward) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());

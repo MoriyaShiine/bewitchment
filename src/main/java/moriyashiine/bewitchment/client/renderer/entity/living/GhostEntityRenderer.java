@@ -24,7 +24,7 @@ import net.minecraft.util.math.BlockPos;
 
 @Environment(EnvType.CLIENT)
 public class GhostEntityRenderer extends MobEntityRenderer<GhostEntity, GhostEntityModel<GhostEntity>> {
-	public static final Identifier EMPTY = new Identifier("minecraft", "textures/block/redstone_dust_overlay.png");
+	public static final Identifier EMPTY = new Identifier("textures/block/redstone_dust_overlay.png");
 	private static Identifier[] TEXTURES;
 
 	public GhostEntityRenderer(EntityRendererFactory.Context context) {
@@ -37,7 +37,7 @@ public class GhostEntityRenderer extends MobEntityRenderer<GhostEntity, GhostEnt
 					int variants = entity.getVariants();
 					TEXTURES = new Identifier[variants];
 					for (int i = 0; i < variants; i++) {
-						TEXTURES[i] = new Identifier(Bewitchment.MOD_ID, "textures/entity/living/ghost/" + i + ".png");
+						TEXTURES[i] = Bewitchment.id("textures/entity/living/ghost/" + i + ".png");
 					}
 				}
 				VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(TEXTURES[entity.getVariant()]));

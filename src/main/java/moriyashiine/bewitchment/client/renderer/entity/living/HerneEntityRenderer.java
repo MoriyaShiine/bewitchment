@@ -17,7 +17,7 @@ import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class HerneEntityRenderer extends MobEntityRenderer<HerneEntity, HerneEntityModel<HerneEntity>> {
-	private static final Identifier TEXTURE = new Identifier(Bewitchment.MOD_ID, "textures/entity/living/herne.png");
+	private static final Identifier TEXTURE = Bewitchment.id("textures/entity/living/herne.png");
 
 	public HerneEntityRenderer(EntityRendererFactory.Context context) {
 		super(context, new HerneEntityModel<>(context.getPart(BewitchmentClient.HERNE_MODEL_LAYER)), 0.5f);

@@ -23,7 +23,7 @@ import net.minecraft.util.Identifier;
 
 @SuppressWarnings({"ConstantConditions", "Convert2Lambda"})
 public class SyncContractsPacket {
-	public static final Identifier ID = new Identifier(Bewitchment.MOD_ID, "sync_contracts");
+	public static final Identifier ID = Bewitchment.id("sync_contracts");
 
 	public static void send(PlayerEntity player) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());

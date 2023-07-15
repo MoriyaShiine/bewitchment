@@ -19,7 +19,7 @@ import net.minecraft.util.Identifier;
 
 @SuppressWarnings("ConstantConditions")
 public class DemonScreen extends HandledScreen<DemonScreenHandler> {
-	private static final Identifier HEARTS = new Identifier("minecraft", "textures/gui/icons.png");
+	private static final Identifier HEARTS = new Identifier("textures/gui/icons.png");
 
 	public DemonScreen(DemonScreenHandler handler, PlayerInventory inventory, Text title) {
 		super(handler, inventory, title);
@@ -107,6 +107,6 @@ public class DemonScreen extends HandledScreen<DemonScreenHandler> {
 	}
 
 	private Identifier getBackground() {
-		return new Identifier(Bewitchment.MOD_ID, String.format("textures/gui/demon_trade_%d.png", handler.getOfferCount()));
+		return Bewitchment.id(String.format("textures/gui/demon_trade_%d.png", handler.getOfferCount()));
 	}
 }

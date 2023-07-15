@@ -16,7 +16,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 public class PolymorphStatusEffect extends StatusEffect {
-	public static final Identifier IMPERSONATE_IDENTIFIER = new Identifier(Bewitchment.MOD_ID, "polymorph");
+	public static final Identifier IMPERSONATE_IDENTIFIER = Bewitchment.id("polymorph");
 
 	public PolymorphStatusEffect(StatusEffectCategory category, int color) {
 		super(category, color);

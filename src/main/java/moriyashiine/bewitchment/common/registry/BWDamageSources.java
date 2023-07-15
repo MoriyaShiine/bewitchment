@@ -16,17 +16,16 @@ import net.minecraft.entity.damage.DamageType;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.DamageTypeTags;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class BWDamageSources {
-	public static final RegistryKey<DamageType> MAGIC_COPY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(Bewitchment.MOD_ID, "magic_copy"));
-	public static final RegistryKey<DamageType> WEDNESDAY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(Bewitchment.MOD_ID, "wednesday"));
-	public static final RegistryKey<DamageType> DEATH = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(Bewitchment.MOD_ID, "death"));
-	public static final RegistryKey<DamageType> VAMPIRE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(Bewitchment.MOD_ID, "vampire"));
-	public static final RegistryKey<DamageType> SUN = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(Bewitchment.MOD_ID, "sun"));
+	public static final RegistryKey<DamageType> MAGIC_COPY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Bewitchment.id("magic_copy"));
+	public static final RegistryKey<DamageType> WEDNESDAY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Bewitchment.id("wednesday"));
+	public static final RegistryKey<DamageType> DEATH = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Bewitchment.id("death"));
+	public static final RegistryKey<DamageType> VAMPIRE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Bewitchment.id("vampire"));
+	public static final RegistryKey<DamageType> SUN = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Bewitchment.id("sun"));
 
 	public static DamageSource create(World world, RegistryKey<DamageType> key, @Nullable Entity source, @Nullable Entity attacker) {
 		return new DamageSource(world.getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).entryOf(key), source, attacker);

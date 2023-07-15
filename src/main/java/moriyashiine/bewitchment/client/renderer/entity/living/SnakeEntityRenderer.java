@@ -28,7 +28,7 @@ public class SnakeEntityRenderer extends MobEntityRenderer<SnakeEntity, SnakeEnt
 			int variants = entity.getVariants();
 			TEXTURES = new Identifier[variants];
 			for (int i = 0; i < variants; i++) {
-				TEXTURES[i] = new Identifier(Bewitchment.MOD_ID, "textures/entity/living/snake/" + i + ".png");
+				TEXTURES[i] = Bewitchment.id("textures/entity/living/snake/" + i + ".png");
 			}
 		}
 		return TEXTURES[entity.getVariant()];

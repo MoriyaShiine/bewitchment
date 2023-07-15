@@ -17,7 +17,7 @@ import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class LeonardEntityRenderer extends MobEntityRenderer<LeonardEntity, LeonardEntityModel<LeonardEntity>> {
-	private static final Identifier TEXTURE = new Identifier(Bewitchment.MOD_ID, "textures/entity/living/leonard.png");
+	private static final Identifier TEXTURE = Bewitchment.id("textures/entity/living/leonard.png");
 
 	public LeonardEntityRenderer(EntityRendererFactory.Context context) {
 		super(context, new LeonardEntityModel<>(context.getPart(BewitchmentClient.LEONARD_MODEL_LAYER)), 0.5f);

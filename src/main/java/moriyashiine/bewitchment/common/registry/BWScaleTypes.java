@@ -18,7 +18,7 @@ public class BWScaleTypes {
 	public static final ScaleType MODIFY_HEIGHT_TYPE = register(ScaleRegistries.SCALE_TYPES, "modify_height", ScaleType.Builder.create().addDependentModifier(MODIFY_HEIGHT_MODIFIER).affectsDimensions().build());
 
 	private static <T> T register(Map<Identifier, T> registry, String name, T entry) {
-		return ScaleRegistries.register(registry, new Identifier(Bewitchment.MOD_ID, name), entry);
+		return ScaleRegistries.register(registry, Bewitchment.id(name), entry);
 	}
 
 	public static void init() {

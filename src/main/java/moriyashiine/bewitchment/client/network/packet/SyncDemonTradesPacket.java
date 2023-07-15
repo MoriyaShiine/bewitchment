@@ -15,7 +15,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 public class SyncDemonTradesPacket {
-	public static final Identifier ID = new Identifier(Bewitchment.MOD_ID, "sync_demon_trades");
+	public static final Identifier ID = Bewitchment.id("sync_demon_trades");
 
 	public static void send(PlayerEntity player, DemonMerchant merchant, int syncId) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());

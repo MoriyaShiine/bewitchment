@@ -19,29 +19,28 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.FireballEntity;
-import net.minecraft.util.Identifier;
 
 public class BWComponents implements EntityComponentInitializer {
-	public static final ComponentKey<ContractsComponent> CONTRACTS_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MOD_ID, "contracts"), ContractsComponent.class);
-	public static final ComponentKey<FortuneComponent> FORTUNE_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MOD_ID, "fortune"), FortuneComponent.class);
-	public static final ComponentKey<MagicComponent> MAGIC_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MOD_ID, "magic"), MagicComponent.class);
-	public static final ComponentKey<PledgeComponent> PLEDGE_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MOD_ID, "pledge"), PledgeComponent.class);
-	public static final ComponentKey<TransformationComponent> TRANSFORMATION_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MOD_ID, "transformation"), TransformationComponent.class);
-	public static final ComponentKey<BloodComponent> BLOOD_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MOD_ID, "blood"), BloodComponent.class);
-	public static final ComponentKey<CursesComponent> CURSES_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MOD_ID, "curses"), CursesComponent.class);
+	public static final ComponentKey<ContractsComponent> CONTRACTS_COMPONENT = ComponentRegistry.getOrCreate(Bewitchment.id("contracts"), ContractsComponent.class);
+	public static final ComponentKey<FortuneComponent> FORTUNE_COMPONENT = ComponentRegistry.getOrCreate(Bewitchment.id("fortune"), FortuneComponent.class);
+	public static final ComponentKey<MagicComponent> MAGIC_COMPONENT = ComponentRegistry.getOrCreate(Bewitchment.id("magic"), MagicComponent.class);
+	public static final ComponentKey<PledgeComponent> PLEDGE_COMPONENT = ComponentRegistry.getOrCreate(Bewitchment.id("pledge"), PledgeComponent.class);
+	public static final ComponentKey<TransformationComponent> TRANSFORMATION_COMPONENT = ComponentRegistry.getOrCreate(Bewitchment.id("transformation"), TransformationComponent.class);
+	public static final ComponentKey<BloodComponent> BLOOD_COMPONENT = ComponentRegistry.getOrCreate(Bewitchment.id("blood"), BloodComponent.class);
+	public static final ComponentKey<CursesComponent> CURSES_COMPONENT = ComponentRegistry.getOrCreate(Bewitchment.id("curses"), CursesComponent.class);
 
-	public static final ComponentKey<AdditionalWerewolfDataComponent> ADDITIONAL_WEREWOLF_DATA_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MOD_ID, "additional_werewolf_data"), AdditionalWerewolfDataComponent.class);
-	public static final ComponentKey<RespawnTimerComponent> RESPAWN_TIMER_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MOD_ID, "respawn_timer"), RespawnTimerComponent.class);
-	public static final ComponentKey<TeleportTimerComponent> TELEPORT_TIMER_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MOD_ID, "teleport_timer"), TeleportTimerComponent.class);
-	public static final ComponentKey<FullInvisibilityComponent> FULL_INVISIBILITY_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MOD_ID, "full_invisibility"), FullInvisibilityComponent.class);
-	public static final ComponentKey<BroomUserComponent> BROOM_USER_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MOD_ID, "broom_user"), BroomUserComponent.class);
-	public static final ComponentKey<PolymorphComponent> POLYMORPH_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MOD_ID, "polymorph"), PolymorphComponent.class);
-	public static final ComponentKey<AdditionalWaterDataComponent> ADDITIONAL_WATER_DATA_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MOD_ID, "additional_water_data"), AdditionalWaterDataComponent.class);
-	public static final ComponentKey<FamiliarComponent> FAMILIAR_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MOD_ID, "familiar"), FamiliarComponent.class);
-	public static final ComponentKey<MinionComponent> MINION_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MOD_ID, "minion"), MinionComponent.class);
-	public static final ComponentKey<FakeMobComponent> FAKE_MOB_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MOD_ID, "fake_mob"), FakeMobComponent.class);
-	public static final ComponentKey<WerewolfVillagerComponent> WEREWOLF_VILLAGER_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MOD_ID, "werewolf_villager"), WerewolfVillagerComponent.class);
-	public static final ComponentKey<CaduceusFireballComponent> CADUCEUS_FIREBALL_COMPONENT = ComponentRegistry.getOrCreate(new Identifier(Bewitchment.MOD_ID, "caduceus_fireball"), CaduceusFireballComponent.class);
+	public static final ComponentKey<AdditionalWerewolfDataComponent> ADDITIONAL_WEREWOLF_DATA_COMPONENT = ComponentRegistry.getOrCreate(Bewitchment.id("additional_werewolf_data"), AdditionalWerewolfDataComponent.class);
+	public static final ComponentKey<RespawnTimerComponent> RESPAWN_TIMER_COMPONENT = ComponentRegistry.getOrCreate(Bewitchment.id("respawn_timer"), RespawnTimerComponent.class);
+	public static final ComponentKey<TeleportTimerComponent> TELEPORT_TIMER_COMPONENT = ComponentRegistry.getOrCreate(Bewitchment.id("teleport_timer"), TeleportTimerComponent.class);
+	public static final ComponentKey<FullInvisibilityComponent> FULL_INVISIBILITY_COMPONENT = ComponentRegistry.getOrCreate(Bewitchment.id("full_invisibility"), FullInvisibilityComponent.class);
+	public static final ComponentKey<BroomUserComponent> BROOM_USER_COMPONENT = ComponentRegistry.getOrCreate(Bewitchment.id("broom_user"), BroomUserComponent.class);
+	public static final ComponentKey<PolymorphComponent> POLYMORPH_COMPONENT = ComponentRegistry.getOrCreate(Bewitchment.id("polymorph"), PolymorphComponent.class);
+	public static final ComponentKey<AdditionalWaterDataComponent> ADDITIONAL_WATER_DATA_COMPONENT = ComponentRegistry.getOrCreate(Bewitchment.id("additional_water_data"), AdditionalWaterDataComponent.class);
+	public static final ComponentKey<FamiliarComponent> FAMILIAR_COMPONENT = ComponentRegistry.getOrCreate(Bewitchment.id("familiar"), FamiliarComponent.class);
+	public static final ComponentKey<MinionComponent> MINION_COMPONENT = ComponentRegistry.getOrCreate(Bewitchment.id("minion"), MinionComponent.class);
+	public static final ComponentKey<FakeMobComponent> FAKE_MOB_COMPONENT = ComponentRegistry.getOrCreate(Bewitchment.id("fake_mob"), FakeMobComponent.class);
+	public static final ComponentKey<WerewolfVillagerComponent> WEREWOLF_VILLAGER_COMPONENT = ComponentRegistry.getOrCreate(Bewitchment.id("werewolf_villager"), WerewolfVillagerComponent.class);
+	public static final ComponentKey<CaduceusFireballComponent> CADUCEUS_FIREBALL_COMPONENT = ComponentRegistry.getOrCreate(Bewitchment.id("caduceus_fireball"), CaduceusFireballComponent.class);
 
 	@Override
 	public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
