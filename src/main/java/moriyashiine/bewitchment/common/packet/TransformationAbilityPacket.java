@@ -28,8 +28,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import virtuoel.pehkui.api.ScaleData;
 
-@SuppressWarnings("ConstantConditions")
-public class TransformationAbilityPacket implements ServerPlayNetworking.PlayChannelHandler {
+public class TransformationAbilityPacket {
 	public static final Identifier ID = Bewitchment.id("transformation_ability");
 
 	public static final AbilitySource VAMPIRE_FLIGHT_SOURCE = Pal.getAbilitySource(Bewitchment.id("vampire_flight"));
@@ -42,15 +41,6 @@ public class TransformationAbilityPacket implements ServerPlayNetworking.PlayCha
 	public static void send() {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		ClientPlayNetworking.send(ID, buf);
-	}
-
-	@Override
-	public void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
-		server.execute(() -> {
-			if (canUseAbility(player)) {
-				useAbility(player, false);
-			}
-		});
 	}
 
 	private static boolean canUseAbility(PlayerEntity player) {
@@ -103,5 +93,16 @@ public class TransformationAbilityPacket implements ServerPlayNetworking.PlayCha
 				}
 			}
 		});
+	}
+
+	public static class Receiver implements ServerPlayNetworking.PlayChannelHandler {
+		@Override
+		public void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
+			server.execute(() -> {
+				if (canUseAbility(player)) {
+					useAbility(player, false);
+				}
+			});
+		}
 	}
 }

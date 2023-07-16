@@ -7,6 +7,8 @@ package moriyashiine.bewitchment.client.packet;
 import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.projectile.HornedSpearEntity;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -18,8 +20,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
-@SuppressWarnings("ConstantConditions")
-public class SyncHornedSpearPacket implements ClientPlayNetworking.PlayChannelHandler {
+public class SyncHornedSpearPacket {
 	public static final Identifier ID = Bewitchment.id("sync_horned_spear");
 
 	public static void send(PlayerEntity player, HornedSpearEntity entity) {
@@ -29,10 +30,14 @@ public class SyncHornedSpearPacket implements ClientPlayNetworking.PlayChannelHa
 		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
 	}
 
-	@Override
-	public void receive(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
-		int entityId = buf.readInt();
-		ItemStack spear = buf.readItemStack();
-		client.execute(() -> ((HornedSpearEntity) client.world.getEntityById(entityId)).spear = spear);
+	@SuppressWarnings("ConstantConditions")
+	@Environment(EnvType.CLIENT)
+	public static class Receiver implements ClientPlayNetworking.PlayChannelHandler {
+		@Override
+		public void receive(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
+			int entityId = buf.readInt();
+			ItemStack spear = buf.readItemStack();
+			client.execute(() -> ((HornedSpearEntity) client.world.getEntityById(entityId)).spear = spear);
+		}
 	}
 }

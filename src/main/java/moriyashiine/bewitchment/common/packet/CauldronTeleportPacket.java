@@ -27,8 +27,7 @@ import net.minecraft.world.World;
 
 import java.util.Map;
 
-@SuppressWarnings("ConstantConditions")
-public class CauldronTeleportPacket implements ServerPlayNetworking.PlayChannelHandler {
+public class CauldronTeleportPacket {
 	public static final Identifier ID = Bewitchment.id("cauldron_teleport");
 
 	public static void send(BlockPos cauldronPos, String message) {
@@ -38,41 +37,44 @@ public class CauldronTeleportPacket implements ServerPlayNetworking.PlayChannelH
 		ClientPlayNetworking.send(ID, buf);
 	}
 
-	@Override
-	public void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
-		BlockPos cauldronPos = buf.readBlockPos();
-		String message = buf.readString(Short.MAX_VALUE);
-		server.execute(() -> {
-			World world = player.getWorld();
-			BlockPos closest = null;
-			BWWorldState worldState = BWWorldState.get(world);
-			for (Map.Entry<Long, String> entry : worldState.witchCauldrons.entrySet()) {
-				if (message.equals(entry.getValue())) {
-					BlockPos foundCauldronPos = BlockPos.fromLong(entry.getKey());
-					if (closest == null || cauldronPos.getSquaredDistance(player.getPos()) < closest.getSquaredDistance(player.getPos())) {
-						closest = foundCauldronPos;
-					}
-				}
-			}
-			if (closest != null) {
-				boolean hasPower = BewitchmentAPI.isPledged(player, BWPledges.LEONARD);
-				if (!hasPower) {
-					BlockPos altarPos = ((UsesAltarPower) world.getBlockEntity(cauldronPos)).getAltarPos();
-					if (altarPos != null) {
-						BlockEntity altarBE = world.getBlockEntity(altarPos);
-						if (altarBE instanceof WitchAltarBlockEntity altar && altar.drain((int) Math.sqrt(closest.getSquaredDistance(player.getPos())) / 2, false)) {
-							hasPower = true;
+	@SuppressWarnings("ConstantConditions")
+	public static class Receiver implements ServerPlayNetworking.PlayChannelHandler {
+		@Override
+		public void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
+			BlockPos cauldronPos = buf.readBlockPos();
+			String message = buf.readString(Short.MAX_VALUE);
+			server.execute(() -> {
+				World world = player.getWorld();
+				BlockPos closest = null;
+				BWWorldState worldState = BWWorldState.get(world);
+				for (Map.Entry<Long, String> entry : worldState.witchCauldrons.entrySet()) {
+					if (message.equals(entry.getValue())) {
+						BlockPos foundCauldronPos = BlockPos.fromLong(entry.getKey());
+						if (closest == null || cauldronPos.getSquaredDistance(player.getPos()) < closest.getSquaredDistance(player.getPos())) {
+							closest = foundCauldronPos;
 						}
 					}
 				}
-				if (hasPower) {
-					BWUtil.teleport(player, closest.getX() + 0.5, closest.getY() - 0.4375, closest.getZ() + 0.5, true);
+				if (closest != null) {
+					boolean hasPower = BewitchmentAPI.isPledged(player, BWPledges.LEONARD);
+					if (!hasPower) {
+						BlockPos altarPos = ((UsesAltarPower) world.getBlockEntity(cauldronPos)).getAltarPos();
+						if (altarPos != null) {
+							BlockEntity altarBE = world.getBlockEntity(altarPos);
+							if (altarBE instanceof WitchAltarBlockEntity altar && altar.drain((int) Math.sqrt(closest.getSquaredDistance(player.getPos())) / 2, false)) {
+								hasPower = true;
+							}
+						}
+					}
+					if (hasPower) {
+						BWUtil.teleport(player, closest.getX() + 0.5, closest.getY() - 0.4375, closest.getZ() + 0.5, true);
+					} else {
+						player.sendMessage(Text.translatable(Bewitchment.MOD_ID + ".message.insufficent_altar_power", message), true);
+					}
 				} else {
-					player.sendMessage(Text.translatable(Bewitchment.MOD_ID + ".message.insufficent_altar_power", message), true);
+					player.sendMessage(Text.translatable(Bewitchment.MOD_ID + ".message.invalid_cauldron", message), true);
 				}
-			} else {
-				player.sendMessage(Text.translatable(Bewitchment.MOD_ID + ".message.invalid_cauldron", message), true);
-			}
-		});
+			});
+		}
 	}
 }

@@ -63,9 +63,9 @@ public class Bewitchment implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		MidnightConfig.init(MOD_ID, BWConfig.class);
-		ServerPlayNetworking.registerGlobalReceiver(CauldronTeleportPacket.ID, new CauldronTeleportPacket());
-		ServerPlayNetworking.registerGlobalReceiver(TransformationAbilityPacket.ID, new TransformationAbilityPacket());
-		ServerPlayNetworking.registerGlobalReceiver(TogglePressingForwardPacket.ID, new TogglePressingForwardPacket());
+		ServerPlayNetworking.registerGlobalReceiver(CauldronTeleportPacket.ID, new CauldronTeleportPacket.Receiver());
+		ServerPlayNetworking.registerGlobalReceiver(TransformationAbilityPacket.ID, new TransformationAbilityPacket.Receiver());
+		ServerPlayNetworking.registerGlobalReceiver(TogglePressingForwardPacket.ID, new TogglePressingForwardPacket.Receiver());
 		CommandRegistrationCallback.EVENT.register(BWCommands::init);
 		ServerLifecycleEvents.SERVER_STOPPED.register(server -> BewitchmentAPI.fakePlayer = null);
 		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {

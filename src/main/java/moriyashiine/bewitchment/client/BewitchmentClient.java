@@ -91,14 +91,14 @@ public class BewitchmentClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		ClientPlayNetworking.registerGlobalReceiver(SyncContractsPacket.ID, new SyncContractsPacket());
-		ClientPlayNetworking.registerGlobalReceiver(SyncDemonTradesPacket.ID, new SyncDemonTradesPacket());
-		ClientPlayNetworking.registerGlobalReceiver(SyncPoppetShelfPacket.ID, new SyncPoppetShelfPacket());
-		ClientPlayNetworking.registerGlobalReceiver(SyncHornedSpearPacket.ID, new SyncHornedSpearPacket());
-		ClientPlayNetworking.registerGlobalReceiver(SpawnSmokeParticlesPacket.ID, new SpawnSmokeParticlesPacket());
-		ClientPlayNetworking.registerGlobalReceiver(SpawnPortalParticlesPacket.ID, new SpawnPortalParticlesPacket());
-		ClientPlayNetworking.registerGlobalReceiver(SpawnExplosionParticlesPacket.ID, new SpawnExplosionParticlesPacket());
-		ClientPlayNetworking.registerGlobalReceiver(SpawnSpecterBangleParticlesPacket.ID, new SpawnSpecterBangleParticlesPacket());
+		ClientPlayNetworking.registerGlobalReceiver(SyncContractsPacket.ID, new SyncContractsPacket.Receiver());
+		ClientPlayNetworking.registerGlobalReceiver(SyncDemonTradesPacket.ID, new SyncDemonTradesPacket.Receiver());
+		ClientPlayNetworking.registerGlobalReceiver(SyncPoppetShelfPacket.ID, new SyncPoppetShelfPacket.Receiver());
+		ClientPlayNetworking.registerGlobalReceiver(SyncHornedSpearPacket.ID, new SyncHornedSpearPacket.Receiver());
+		ClientPlayNetworking.registerGlobalReceiver(SpawnSmokeParticlesPacket.ID, new SpawnSmokeParticlesPacket.Receiver());
+		ClientPlayNetworking.registerGlobalReceiver(SpawnPortalParticlesPacket.ID, new SpawnPortalParticlesPacket.Receiver());
+		ClientPlayNetworking.registerGlobalReceiver(SpawnExplosionParticlesPacket.ID, new SpawnExplosionParticlesPacket.Receiver());
+		ClientPlayNetworking.registerGlobalReceiver(SpawnSpecterBangleParticlesPacket.ID, new SpawnSpecterBangleParticlesPacket.Receiver());
 		ClientTickEvents.END_WORLD_TICK.register(new TransformationAbilityEvent());
 		ClientSendMessageEvents.ALLOW_CHAT.register(new CauldronTeleportEvent());
 		ParticleFactoryRegistry.getInstance().register(BWParticleTypes.CAULDRON_BUBBLE, CauldronBubbleParticle.Factory::new);

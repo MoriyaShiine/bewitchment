@@ -8,6 +8,8 @@ import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.block.entity.PoppetShelfBlockEntity;
 import moriyashiine.bewitchment.common.world.BWWorldState;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -23,8 +25,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 
-@SuppressWarnings({"ConstantConditions", "Convert2Lambda"})
-public class SyncPoppetShelfPacket implements ClientPlayNetworking.PlayChannelHandler {
+public class SyncPoppetShelfPacket {
 	public static final Identifier ID = Bewitchment.id("sync_poppet_shelf");
 
 	public static void send(PlayerEntity player, BlockPos pos) {
@@ -39,21 +40,25 @@ public class SyncPoppetShelfPacket implements ClientPlayNetworking.PlayChannelHa
 		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
 	}
 
-	@Override
-	public void receive(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
-		BlockPos pos = BlockPos.fromLong(buf.readLong());
-		DefaultedList<ItemStack> inventory = DefaultedList.ofSize(9, ItemStack.EMPTY);
-		NbtCompound nbt = buf.readNbt();
-		if (!nbt.isEmpty()) {
-			Inventories.readNbt(nbt, inventory);
-		}
-		client.execute(new Runnable() {
-			@Override
-			public void run() {
-				if (client.world.getBlockEntity(pos) instanceof PoppetShelfBlockEntity poppetShelfBlockEntity) {
-					poppetShelfBlockEntity.clientInventory = inventory;
-				}
+	@SuppressWarnings({"ConstantConditions", "Convert2Lambda"})
+	@Environment(EnvType.CLIENT)
+	public static class Receiver implements ClientPlayNetworking.PlayChannelHandler {
+		@Override
+		public void receive(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
+			BlockPos pos = BlockPos.fromLong(buf.readLong());
+			DefaultedList<ItemStack> inventory = DefaultedList.ofSize(9, ItemStack.EMPTY);
+			NbtCompound nbt = buf.readNbt();
+			if (!nbt.isEmpty()) {
+				Inventories.readNbt(nbt, inventory);
 			}
-		});
+			client.execute(new Runnable() {
+				@Override
+				public void run() {
+					if (client.world.getBlockEntity(pos) instanceof PoppetShelfBlockEntity poppetShelfBlockEntity) {
+						poppetShelfBlockEntity.clientInventory = inventory;
+					}
+				}
+			});
+		}
 	}
 }
