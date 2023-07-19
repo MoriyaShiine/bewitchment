@@ -55,6 +55,7 @@ public abstract class InGameHudMixin {
 			}
 		});
 		if (BewitchmentAPI.isVampire(client.player, true)) {
+			hidden = true;
 			drawBlood(context, client.player, (int) (context.getScaledWindowWidth() / 2F + 82), context.getScaledWindowHeight() - 39, 10);
 			if (client.player.isSneaking() && client.player.isPartOfGame()) {
 				if (client.targetedEntity instanceof LivingEntity living && living.getType().isIn(BWTags.HAS_BLOOD)) {
