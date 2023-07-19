@@ -27,15 +27,10 @@ public class RitualCircleComponent implements ICustomComponent {
 
 	@Override
 	public void render(DrawContext graphics, IComponentRenderContext context, float pticks, int mouseX, int mouseY) {
-		graphics.getMatrices().push();
-		graphics.getMatrices().translate(x, y, -1);
-		graphics.getMatrices().scale(4, 4, 1);
 		if (circles[1] != null) {
-			graphics.drawTexture(circles[1], 0, 0, 0, 0, 16, 16, 16, 16);
+			graphics.drawTexture(circles[1], x, y, 0, 0, 64, 64, 64, 64);
 		}
-		graphics.getMatrices().translate(4, 4, 1);
-		graphics.drawTexture(circles[0], 0, 0, 4, 4, 7, 7, 16, 16);
-		graphics.getMatrices().pop();
+		graphics.drawTexture(circles[0], x + 16, y + 16, 16, 16, 28, 28, 64, 64);
 	}
 
 	@Override
