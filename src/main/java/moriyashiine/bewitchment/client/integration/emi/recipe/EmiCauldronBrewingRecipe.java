@@ -23,22 +23,20 @@ import java.util.List;
 
 @Environment(EnvType.CLIENT)
 public class EmiCauldronBrewingRecipe extends BasicEmiRecipe {
-	private final EmiIngredient input, output;
-
 	public EmiCauldronBrewingRecipe(CauldronBrewingRecipe recipe) {
 		super(BWEmiIntegration.CAULDRON_BREWING_CATEGORY, recipe.getId(), 76, 18);
-		input = EmiIngredient.of(recipe.input);
+		inputs.add(EmiIngredient.of(recipe.input));
 		List<StatusEffectInstance> effects = Collections.singletonList(new StatusEffectInstance(recipe.output, recipe.time));
 		ItemStack potion = PotionUtil.setCustomPotionEffects(new ItemStack(Items.POTION), effects);
 		potion.getOrCreateNbt().putInt("CustomPotionColor", PotionUtil.getColor(effects));
 		potion.getOrCreateNbt().putBoolean("BewitchmentBrew", true);
-		output = EmiStack.of(potion);
+		outputs.add(EmiStack.of(potion));
 	}
 
 	@Override
 	public void addWidgets(WidgetHolder widgets) {
 		widgets.addTexture(EmiTexture.EMPTY_ARROW, 26, 1);
-		widgets.addSlot(input, 0, 0);
-		widgets.addSlot(output, 58, 0).recipeContext(this);
+		widgets.addSlot(inputs.get(0), 0, 0);
+		widgets.addSlot(outputs.get(0), 58, 0).recipeContext(this);
 	}
 }

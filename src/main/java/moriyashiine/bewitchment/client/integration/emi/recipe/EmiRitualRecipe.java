@@ -19,20 +19,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.text.Text;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Environment(EnvType.CLIENT)
 public class EmiRitualRecipe extends BasicEmiRecipe {
-	private final List<EmiIngredient> input;
-	private final EmiIngredient output;
-
 	public EmiRitualRecipe(RitualRecipe recipe) {
 		super(BWEmiIntegration.RITUALS_CATGORY, recipe.getId(), 0, 18);
-		input = new ArrayList<>();
 		for (Ingredient ingredient : recipe.input) {
 			if (!ingredient.isEmpty()) {
-				input.add(EmiIngredient.of(ingredient));
+				inputs.add(EmiIngredient.of(ingredient));
 				width += 18;
 			}
 		}
@@ -46,17 +39,17 @@ public class EmiRitualRecipe extends BasicEmiRecipe {
 		if (recipe.runningTime > 0) {
 			chalk.getNbt().putInt("RunningTime", recipe.runningTime);
 		}
-		output = EmiStack.of(chalk);
+		outputs.add(EmiStack.of(chalk));
 	}
 
 	@Override
 	public void addWidgets(WidgetHolder widgets) {
 		int x = 0;
-		for (EmiIngredient emiIngredient : input) {
+		for (EmiIngredient emiIngredient : inputs) {
 			widgets.addSlot(emiIngredient, x, 0);
 			x += 18;
 		}
 		widgets.addTexture(EmiTexture.EMPTY_ARROW, x + 8, 1);
-		widgets.addSlot(output, x + 40, 0).recipeContext(this);
+		widgets.addSlot(outputs.get(0), x + 40, 0).recipeContext(this);
 	}
 }
