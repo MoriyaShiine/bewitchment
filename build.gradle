@@ -58,16 +58,16 @@ dependencies {
     mappings "net.fabricmc:yarn:${yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${loader_version}"
 
-    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
-    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
+    modApi "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
+    modApi "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
     //^ don't include because trinkets already does
-    modImplementation include("me.lucko:fabric-permissions-api:${fabric_permissions_api_version}")
-    modImplementation include("maven.modrinth:impersonate:${impersonate_version}")
-    modImplementation include("maven.modrinth:midnightlib:${midnightlib_version}")
-    modImplementation include("io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}")
-    modImplementation include("com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}")
-    modImplementation include("com.github.emilyploszaj:step-height-entity-attribute:${step_height_entity_attribute_version}")
-    modImplementation include("com.terraformersmc.terraform-api:terraform-wood-api-v1:${terraform_api_version}")
+    include modApi("me.lucko:fabric-permissions-api:${fabric_permissions_api_version}")
+    include modApi("maven.modrinth:impersonate:${impersonate_version}")
+    include modApi("maven.modrinth:midnightlib:${midnightlib_version}")
+    include modApi("io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}")
+    include modApi("com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}")
+    include modApi("com.github.emilyploszaj:step-height-entity-attribute:${step_height_entity_attribute_version}")
+    include modApi("com.terraformersmc.terraform-api:terraform-wood-api-v1:${terraform_api_version}")
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
     modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}"
