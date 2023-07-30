@@ -66,7 +66,7 @@ public abstract class InGameHudMixin {
 	}
 
 	@ModifyArg(method = "renderStatusBars", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawTexture(Lnet/minecraft/util/Identifier;IIIIII)V", ordinal = 3))
-	private Identifier nycto$vampireHideFood0(Identifier value) {
+	private Identifier bewitchment$vampireHideFood0(Identifier value) {
 		if (hidden) {
 			return EMPTY_TEXTURE;
 		}
@@ -74,7 +74,7 @@ public abstract class InGameHudMixin {
 	}
 
 	@ModifyArg(method = "renderStatusBars", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawTexture(Lnet/minecraft/util/Identifier;IIIIII)V", ordinal = 4))
-	private Identifier nycto$vampireHideFood1(Identifier value) {
+	private Identifier bewitchment$vampireHideFood1(Identifier value) {
 		if (hidden) {
 			return EMPTY_TEXTURE;
 		}
@@ -82,7 +82,7 @@ public abstract class InGameHudMixin {
 	}
 
 	@ModifyArg(method = "renderStatusBars", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawTexture(Lnet/minecraft/util/Identifier;IIIIII)V", ordinal = 5))
-	private Identifier nycto$vampireHideFood2(Identifier value) {
+	private Identifier bewitchment$vampireHideFood2(Identifier value) {
 		if (hidden) {
 			return EMPTY_TEXTURE;
 		}
@@ -90,7 +90,7 @@ public abstract class InGameHudMixin {
 	}
 
 	@Inject(method = "renderStatusBars", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;getProfiler()Lnet/minecraft/util/profiler/Profiler;", ordinal = 3, shift = At.Shift.BEFORE))
-	private void nycto$vampireShowHunger(DrawContext context, CallbackInfo ci) {
+	private void bewitchment$vampireShowHunger(DrawContext context, CallbackInfo ci) {
 		hidden = false;
 	}
 
