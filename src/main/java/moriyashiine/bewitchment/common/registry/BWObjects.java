@@ -4,7 +4,9 @@
 
 package moriyashiine.bewitchment.common.registry;
 
+import com.terraformersmc.terraform.sign.block.TerraformHangingSignBlock;
 import com.terraformersmc.terraform.sign.block.TerraformSignBlock;
+import com.terraformersmc.terraform.sign.block.TerraformWallHangingSignBlock;
 import com.terraformersmc.terraform.sign.block.TerraformWallSignBlock;
 import dev.emi.trinkets.api.TrinketItem;
 import moriyashiine.bewitchment.api.BewitchmentAPI;
@@ -49,6 +51,7 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
@@ -107,7 +110,7 @@ public class BWObjects {
 	public static final Item JUNIPER_DOOR_ITEM = create("juniper_door", new TallBlockItem(JUNIPER_DOOR, gen()));
 	public static final Block JUNIPER_CHEST = create("juniper_chest", new JuniperChestBlock(copyOf(Blocks.CHEST), () -> BWBlockEntityTypes.JUNIPER_CHEST, false), true);
 	public static final Block TRAPPED_JUNIPER_CHEST = create("trapped_juniper_chest", new JuniperChestBlock(copyOf(Blocks.CHEST), () -> BWBlockEntityTypes.JUNIPER_CHEST, true), true);
-	public static final Identifier JUNIPER_SIGN = createSign("juniper");
+	public static final Pair<Identifier, Identifier> JUNIPER_SIGN = createSign("juniper");
 	//cypress
 	public static final Block CYPRESS_LOG = create("cypress_log", new PillarBlock(copyOf(JUNIPER_LOG)), true);
 	public static final Block STRIPPED_CYPRESS_LOG = create("stripped_cypress_log", new PillarBlock(copyOf(JUNIPER_LOG)), true);
@@ -128,7 +131,7 @@ public class BWObjects {
 	public static final Item CYPRESS_DOOR_ITEM = create("cypress_door", new TallBlockItem(CYPRESS_DOOR, gen()));
 	public static final Block CYPRESS_CHEST = create("cypress_chest", new BWChestBlock(copyOf(JUNIPER_CHEST), () -> BWBlockEntityTypes.BW_CHEST, false), true);
 	public static final Block TRAPPED_CYPRESS_CHEST = create("trapped_cypress_chest", new BWChestBlock(copyOf(JUNIPER_CHEST), () -> BWBlockEntityTypes.BW_CHEST, true), true);
-	public static final Identifier CYPRESS_SIGN = createSign("cypress");
+	public static final Pair<Identifier, Identifier> CYPRESS_SIGN = createSign("cypress");
 	//elder
 	public static final Block ELDER_LOG = create("elder_log", new PillarBlock(copyOf(JUNIPER_LOG)), true);
 	public static final Block STRIPPED_ELDER_LOG = create("stripped_elder_log", new PillarBlock(copyOf(ELDER_LOG)), true);
@@ -149,7 +152,7 @@ public class BWObjects {
 	public static final Item ELDER_DOOR_ITEM = create("elder_door", new TallBlockItem(ELDER_DOOR, gen()));
 	public static final Block ELDER_CHEST = create("elder_chest", new ElderChestBlock(copyOf(JUNIPER_CHEST), () -> BWBlockEntityTypes.ELDER_CHEST, false), true);
 	public static final Block TRAPPED_ELDER_CHEST = create("trapped_elder_chest", new ElderChestBlock(copyOf(JUNIPER_CHEST), () -> BWBlockEntityTypes.ELDER_CHEST, true), true);
-	public static final Identifier ELDER_SIGN = createSign("elder");
+	public static final Pair<Identifier, Identifier> ELDER_SIGN = createSign("elder");
 	//dragons_blood
 	public static final Block DRAGONS_BLOOD_LOG = create("dragons_blood_log", new DragonsBloodLogBlock(copyOf(JUNIPER_LOG).ticksRandomly()), true);
 	public static final Block STRIPPED_DRAGONS_BLOOD_LOG = create("stripped_dragons_blood_log", new PillarBlock(copyOf(DRAGONS_BLOOD_LOG)), true);
@@ -170,7 +173,7 @@ public class BWObjects {
 	public static final Item DRAGONS_BLOOD_DOOR_ITEM = create("dragons_blood_door", new TallBlockItem(DRAGONS_BLOOD_DOOR, gen()));
 	public static final Block DRAGONS_BLOOD_CHEST = create("dragons_blood_chest", new DragonsBloodChestBlock(copyOf(JUNIPER_CHEST), () -> BWBlockEntityTypes.DRAGONS_BLOOD_CHEST, false), true);
 	public static final Block TRAPPED_DRAGONS_BLOOD_CHEST = create("trapped_dragons_blood_chest", new DragonsBloodChestBlock(copyOf(JUNIPER_CHEST), () -> BWBlockEntityTypes.DRAGONS_BLOOD_CHEST, true), true);
-	public static final Identifier DRAGONS_BLOOD_SIGN = createSign("dragons_blood");
+	public static final Pair<Identifier, Identifier> DRAGONS_BLOOD_SIGN = createSign("dragons_blood");
 	//other_plants
 	public static final Block GLOWING_BRAMBLE = create("glowing_bramble", new BrambleBlock(FabricBlockSettings.create().sounds(BlockSoundGroup.GRASS).strength(2, 3).noCollision().ticksRandomly().luminance(15)), true);
 	public static final Block ENDER_BRAMBLE = create("ender_bramble", new BrambleBlock(FabricBlockSettings.create().sounds(BlockSoundGroup.GRASS).strength(2, 3).noCollision().ticksRandomly()), true);
@@ -384,11 +387,16 @@ public class BWObjects {
 		return new Item.Settings();
 	}
 
-	private static Identifier createSign(String name) {
+	private static Pair<Identifier, Identifier> createSign(String name) {
 		TerraformSignBlock sign = create(name + "_sign", new TerraformSignBlock(Bewitchment.id("entity/signs/" + name), copyOf(Blocks.OAK_SIGN)), false);
 		Block wallSign = create(name + "_wall_sign", new TerraformWallSignBlock(sign.getTexture(), copyOf(Blocks.OAK_WALL_SIGN).drops(Bewitchment.id("blocks/" + name + "_sign"))), false);
+
+		TerraformHangingSignBlock hangingSign = create(name + "_hanging_sign", new TerraformHangingSignBlock(Bewitchment.id("entity/signs/hanging/" + name), Bewitchment.id("textures/gui/hanging_signs/" + name), copyOf(Blocks.OAK_HANGING_SIGN)), false);
+		Block wallHangingSign = create(name + "_wall_hanging_sign", new TerraformWallHangingSignBlock(hangingSign.getTexture(), hangingSign.getGuiTexture(), copyOf(Blocks.OAK_WALL_HANGING_SIGN).drops(Bewitchment.id("blocks/" + name + "_hanging_sign"))), false);
+
 		create(name + "_sign", new SignItem(gen().maxCount(16), sign, wallSign));
-		return sign.getTexture();
+		create(name + "_hanging_sign", new HangingSignItem(hangingSign, wallHangingSign, gen().maxCount(16)));
+		return new Pair<>(sign.getTexture(), hangingSign.getTexture());
 	}
 
 	private static Block[] createAltar(String name, FabricBlockSettings settings) {
