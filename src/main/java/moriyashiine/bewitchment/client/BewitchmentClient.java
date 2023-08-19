@@ -64,7 +64,7 @@ import org.lwjgl.glfw.GLFW;
 @SuppressWarnings({"unchecked", "ConstantConditions"})
 @Environment(EnvType.CLIENT)
 public class BewitchmentClient implements ClientModInitializer {
-	public static final KeyBinding TRANSFORMATION_ABILITY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key." + Bewitchment.MOD_ID + ".transformation_ability", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "itemGroup." + Bewitchment.MOD_ID + "." + Bewitchment.MOD_ID));
+	public static final KeyBinding TRANSFORMATION_ABILITY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key." + Bewitchment.MOD_ID + ".transformation_ability", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "itemGroup." + Bewitchment.MOD_ID));
 
 	public static final EntityModelLayer CONTRIBUTOR_HORNS_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("contributor_horns"), "main");
 	public static final EntityModelLayer WITCH_ARMOR_MODEL_LAYER = new EntityModelLayer(Bewitchment.id("witch_armor"), "main");
