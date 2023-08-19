@@ -19,9 +19,9 @@ public abstract class EntityMixin {
 	@Shadow
 	private World world;
 
-	@Inject(method = "remove", at = @At("TAIL"))
-	private void remove(CallbackInfo callbackInfo) {
-		if (!world.isClient && this instanceof Pledgeable pledgeable) {
+	@Inject(method = "setRemoved", at = @At("TAIL"))
+	private void bewitchment$pledge$markAsRemoved(Entity.RemovalReason reason, CallbackInfo ci) {
+		if (!world.isClient && reason.shouldDestroy() && this instanceof Pledgeable pledgeable) {
 			BWUniversalWorldState universalWorldState = BWUniversalWorldState.get(world);
 			universalWorldState.pledgesToRemove.addAll(pledgeable.getPledgedPlayerUUIDs());
 			universalWorldState.markDirty();
