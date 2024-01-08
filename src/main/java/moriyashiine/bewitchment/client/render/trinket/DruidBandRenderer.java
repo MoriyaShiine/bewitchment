@@ -5,8 +5,6 @@ import dev.emi.trinkets.api.client.TrinketRenderer;
 import moriyashiine.bewitchment.client.BewitchmentClient;
 import moriyashiine.bewitchment.client.model.equipment.trinket.DruidBandModel;
 import moriyashiine.bewitchment.common.Bewitchment;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
@@ -19,7 +17,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
-@Environment(EnvType.CLIENT)
 public class DruidBandRenderer implements TrinketRenderer {
 	private static final Identifier TEXTURE = Bewitchment.id("textures/entity/trinket/druid_band.png");
 	private static Model model;

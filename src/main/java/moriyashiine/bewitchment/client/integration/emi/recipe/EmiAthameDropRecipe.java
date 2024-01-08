@@ -11,12 +11,9 @@ import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
 import moriyashiine.bewitchment.client.integration.emi.BWEmiIntegration;
 import moriyashiine.bewitchment.common.recipe.AthameDropRecipe;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
-@Environment(EnvType.CLIENT)
 public class EmiAthameDropRecipe extends BasicEmiRecipe {
 	public EmiAthameDropRecipe(AthameDropRecipe recipe) {
 		super(BWEmiIntegration.ATHAME_DROPS_CATEGORY, recipe.getId(), 76, 18);

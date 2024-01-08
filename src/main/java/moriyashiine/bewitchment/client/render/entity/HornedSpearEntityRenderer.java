@@ -7,8 +7,6 @@ package moriyashiine.bewitchment.client.render.entity;
 import moriyashiine.bewitchment.client.model.entity.living.HerneEntityModel;
 import moriyashiine.bewitchment.client.render.entity.living.GhostEntityRenderer;
 import moriyashiine.bewitchment.common.entity.projectile.HornedSpearEntity;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -21,7 +19,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 
-@Environment(EnvType.CLIENT)
 public class HornedSpearEntityRenderer extends EntityRenderer<HornedSpearEntity> {
 	public HornedSpearEntityRenderer(EntityRendererFactory.Context context) {
 		super(context);

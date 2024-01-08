@@ -12,11 +12,8 @@ import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
 import moriyashiine.bewitchment.client.integration.emi.BWEmiIntegration;
 import moriyashiine.bewitchment.common.recipe.OilRecipe;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.recipe.Ingredient;
 
-@Environment(EnvType.CLIENT)
 public class EmiOilRecipe extends BasicEmiRecipe {
 	public EmiOilRecipe(OilRecipe recipe) {
 		super(BWEmiIntegration.OIL_CRAFTING_CATEGORY, recipe.getId(), 0, 18);

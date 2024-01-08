@@ -7,8 +7,6 @@ package moriyashiine.bewitchment.common.entity.living;
 import moriyashiine.bewitchment.common.entity.living.util.BWTameableEntity;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWSoundEvents;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -149,7 +147,6 @@ public class SnakeEntity extends BWTameableEntity {
 		}
 	}
 
-	@Environment(EnvType.CLIENT)
 	@Override
 	public void handleStatus(byte id) {
 		if (id == 4) {

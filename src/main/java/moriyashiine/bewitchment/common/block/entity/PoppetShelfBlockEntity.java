@@ -8,8 +8,6 @@ import moriyashiine.bewitchment.api.item.PoppetItem;
 import moriyashiine.bewitchment.client.packet.SyncPoppetShelfPacket;
 import moriyashiine.bewitchment.common.registry.BWBlockEntityTypes;
 import moriyashiine.bewitchment.common.world.BWWorldState;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -28,7 +26,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class PoppetShelfBlockEntity extends BlockEntity {
-	@Environment(EnvType.CLIENT)
 	public DefaultedList<ItemStack> clientInventory = DefaultedList.ofSize(9, ItemStack.EMPTY);
 
 	public PoppetShelfBlockEntity(BlockPos pos, BlockState state) {

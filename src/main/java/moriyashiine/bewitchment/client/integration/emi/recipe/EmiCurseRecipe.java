@@ -12,11 +12,8 @@ import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
 import moriyashiine.bewitchment.client.integration.emi.BWEmiIntegration;
 import moriyashiine.bewitchment.common.recipe.CurseRecipe;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.recipe.Ingredient;
 
-@Environment(EnvType.CLIENT)
 public class EmiCurseRecipe extends BasicEmiRecipe {
 	public EmiCurseRecipe(CurseRecipe recipe) {
 		super(BWEmiIntegration.CURSE_CATEGORY, recipe.getId(), 0, 18);

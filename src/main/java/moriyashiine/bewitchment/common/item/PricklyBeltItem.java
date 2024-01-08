@@ -6,8 +6,6 @@ package moriyashiine.bewitchment.common.item;
 
 import dev.emi.trinkets.api.TrinketItem;
 import moriyashiine.bewitchment.common.Bewitchment;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtil;
@@ -24,7 +22,6 @@ public class PricklyBeltItem extends TrinketItem {
 		super(settings);
 	}
 
-	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		int uses = 0;

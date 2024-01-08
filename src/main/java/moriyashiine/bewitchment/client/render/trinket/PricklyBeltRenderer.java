@@ -5,8 +5,6 @@ import dev.emi.trinkets.api.client.TrinketRenderer;
 import moriyashiine.bewitchment.client.BewitchmentClient;
 import moriyashiine.bewitchment.client.model.equipment.trinket.PricklyBeltModel;
 import moriyashiine.bewitchment.common.Bewitchment;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
@@ -19,7 +17,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
-@Environment(EnvType.CLIENT)
 public class PricklyBeltRenderer implements TrinketRenderer {
 	private static final Identifier TEXTURE = Bewitchment.id("textures/entity/trinket/prickly_belt.png");
 	private static Model model;

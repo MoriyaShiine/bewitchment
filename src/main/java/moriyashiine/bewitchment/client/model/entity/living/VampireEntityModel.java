@@ -5,15 +5,12 @@
 package moriyashiine.bewitchment.client.model.entity.living;
 
 import moriyashiine.bewitchment.common.entity.living.VampireEntity;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Arm;
 
-@Environment(EnvType.CLIENT)
 public class VampireEntityModel<T extends VampireEntity> extends BipedEntityModel<T> {
 	private final ModelPart realBody;
 	private final ModelPart robe;

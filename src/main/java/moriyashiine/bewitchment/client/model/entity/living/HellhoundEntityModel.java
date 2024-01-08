@@ -5,15 +5,12 @@
 package moriyashiine.bewitchment.client.model.entity.living;
 
 import moriyashiine.bewitchment.common.entity.living.HellhoundEntity;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 
-@Environment(EnvType.CLIENT)
 public class HellhoundEntityModel<T extends HellhoundEntity> extends EntityModel<T> {
 	private final ModelPart body;
 	private final ModelPart lForeleg;

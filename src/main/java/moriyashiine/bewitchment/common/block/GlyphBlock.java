@@ -8,8 +8,6 @@ import moriyashiine.bewitchment.api.block.WitchAltarBlock;
 import moriyashiine.bewitchment.api.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.registry.BWObjects;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -86,7 +84,6 @@ public class GlyphBlock extends HorizontalFacingBlock implements BlockEntityProv
 		return Blocks.TORCH.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
 	}
 
-	@Environment(EnvType.CLIENT)
 	@Override
 	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
 		return new ItemStack(this == BWObjects.GLYPH ? BWObjects.CHALK : this == BWObjects.GOLDEN_GLYPH ? BWObjects.GOLDEN_CHALK : this == BWObjects.FIERY_GLYPH ? BWObjects.FIERY_CHALK : BWObjects.ELDRITCH_CHALK);
@@ -121,7 +118,6 @@ public class GlyphBlock extends HorizontalFacingBlock implements BlockEntityProv
 		super.onStateReplaced(state, world, pos, newState, moved);
 	}
 
-	@Environment(EnvType.CLIENT)
 	@Override
 	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
 		ParticleType<?> particleType = null;

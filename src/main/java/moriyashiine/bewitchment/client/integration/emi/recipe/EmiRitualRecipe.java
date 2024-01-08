@@ -13,13 +13,10 @@ import moriyashiine.bewitchment.client.integration.emi.BWEmiIntegration;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.recipe.RitualRecipe;
 import moriyashiine.bewitchment.common.registry.BWObjects;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.text.Text;
 
-@Environment(EnvType.CLIENT)
 public class EmiRitualRecipe extends BasicEmiRecipe {
 	public EmiRitualRecipe(RitualRecipe recipe) {
 		super(BWEmiIntegration.RITUALS_CATGORY, recipe.getId(), 0, 18);

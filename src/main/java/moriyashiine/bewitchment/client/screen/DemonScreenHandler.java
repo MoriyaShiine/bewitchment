@@ -9,8 +9,6 @@ import moriyashiine.bewitchment.client.packet.SyncDemonTradesPacket;
 import moriyashiine.bewitchment.common.entity.DemonMerchant;
 import moriyashiine.bewitchment.common.entity.living.DemonEntity;
 import moriyashiine.bewitchment.common.registry.*;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -164,13 +162,11 @@ public class DemonScreenHandler extends ScreenHandler {
 		}
 
 		@Override
-		@Environment(EnvType.CLIENT)
 		public void setOffersClientside(List<DemonEntity.DemonTradeOffer> offers) {
 			this.offers = offers;
 		}
 
 		@Override
-		@Environment(EnvType.CLIENT)
 		public void setDemonTraderClientside(LivingEntity trader) {
 			this.trader = trader;
 		}

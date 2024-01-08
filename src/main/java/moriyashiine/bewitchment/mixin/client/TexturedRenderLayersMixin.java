@@ -5,8 +5,6 @@
 package moriyashiine.bewitchment.mixin.client;
 
 import moriyashiine.bewitchment.common.block.entity.BWChestBlockEntity;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.ChestType;
 import net.minecraft.client.render.TexturedRenderLayers;
@@ -18,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static moriyashiine.bewitchment.client.misc.SpriteIdentifiers.*;
 
-@Environment(EnvType.CLIENT)
 @Mixin(TexturedRenderLayers.class)
 public class TexturedRenderLayersMixin {
 	@Inject(method = "getChestTextureId(Lnet/minecraft/block/entity/BlockEntity;Lnet/minecraft/block/enums/ChestType;Z)Lnet/minecraft/client/util/SpriteIdentifier;", at = @At("HEAD"), cancellable = true)

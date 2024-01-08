@@ -6,12 +6,9 @@ package moriyashiine.bewitchment.client.model.entity.living;
 
 import com.google.common.collect.ImmutableList;
 import moriyashiine.bewitchment.common.entity.living.ToadEntity;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.AnimalModel;
 
-@Environment(EnvType.CLIENT)
 public class ToadEntityModel<T extends ToadEntity> extends AnimalModel<T> {
 	private final ModelPart body;
 	private final ModelPart lLeg00;

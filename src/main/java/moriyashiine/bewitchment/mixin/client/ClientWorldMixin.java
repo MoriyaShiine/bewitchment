@@ -5,8 +5,6 @@
 package moriyashiine.bewitchment.mixin.client;
 
 import moriyashiine.bewitchment.common.registry.BWStatusEffects;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
@@ -29,7 +27,6 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import java.util.function.Supplier;
 
 @SuppressWarnings("ConstantConditions")
-@Environment(EnvType.CLIENT)
 @Mixin(ClientWorld.class)
 public abstract class ClientWorldMixin extends World {
 	protected ClientWorldMixin(MutableWorldProperties properties, RegistryKey<World> registryRef, DynamicRegistryManager registryManager, RegistryEntry<DimensionType> dimensionEntry, Supplier<Profiler> profiler, boolean isClient, boolean debugWorld, long biomeAccess, int maxChainedNeighborUpdates) {

@@ -5,8 +5,6 @@
 package moriyashiine.bewitchment.api.item;
 
 import moriyashiine.bewitchment.common.item.TaglockItem;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
@@ -36,7 +34,6 @@ public class PoppetItem extends Item {
 		return false;
 	}
 
-	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		if (TaglockItem.hasTaglock(stack)) {

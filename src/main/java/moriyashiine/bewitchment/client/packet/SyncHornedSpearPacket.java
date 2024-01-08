@@ -7,8 +7,6 @@ package moriyashiine.bewitchment.client.packet;
 import io.netty.buffer.Unpooled;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.entity.projectile.HornedSpearEntity;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -31,7 +29,6 @@ public class SyncHornedSpearPacket {
 	}
 
 	@SuppressWarnings("ConstantConditions")
-	@Environment(EnvType.CLIENT)
 	public static class Receiver implements ClientPlayNetworking.PlayChannelHandler {
 		@Override
 		public void receive(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {

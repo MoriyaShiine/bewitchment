@@ -7,8 +7,6 @@ package moriyashiine.bewitchment.common.entity.projectile;
 import moriyashiine.bewitchment.common.entity.living.HerneEntity;
 import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -127,7 +125,6 @@ public class HornedSpearEntity extends PersistentProjectileEntity {
 		}
 	}
 
-	@Environment(EnvType.CLIENT)
 	@Override
 	public boolean shouldRender(double cameraX, double cameraY, double cameraZ) {
 		return true;

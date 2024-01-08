@@ -10,8 +10,6 @@ import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWProperties;
 import moriyashiine.bewitchment.common.world.BWWorldState;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -59,7 +57,6 @@ public class SigilBlock extends HorizontalFacingBlock implements BlockEntityProv
 		return super.getPlacementState(ctx).with(FACING, ctx.getHorizontalPlayerFacing()).with(BWProperties.TYPE, ctx.getWorld().random.nextInt(10));
 	}
 
-	@Environment(EnvType.CLIENT)
 	@Override
 	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
 		if (world.getBlockEntity(pos) instanceof SigilHolder sigilHolder) {

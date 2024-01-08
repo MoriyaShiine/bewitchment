@@ -11,10 +11,7 @@ import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
 import moriyashiine.bewitchment.client.integration.emi.BWEmiIntegration;
 import moriyashiine.bewitchment.common.recipe.AthameStrippingRecipe;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
-@Environment(EnvType.CLIENT)
 public class EmiAthameStrippingRecipe extends BasicEmiRecipe {
 	public EmiAthameStrippingRecipe(AthameStrippingRecipe recipe) {
 		super(BWEmiIntegration.ATHAME_STRIPPING_CATEGORY, recipe.getId(), 94, 18);

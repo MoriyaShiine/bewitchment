@@ -5,19 +5,16 @@
 package moriyashiine.bewitchment.client.particle;
 
 import moriyashiine.bewitchment.common.block.WitchCauldronBlock;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.util.math.BlockPos;
 
-@Environment(EnvType.CLIENT)
 public class CauldronBubbleParticle extends SpriteBillboardParticle {
 	public CauldronBubbleParticle(ClientWorld clientWorld, double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ) {
 		super(clientWorld, posX, posY, posZ, velocityX, velocityY, velocityZ);
 		setBoundingBoxSpacing(0.02f, 0.02f);
-		scale *= random.nextFloat() * 0.3 + 0.3;
+		scale *= random.nextFloat() * 0.3F + 0.3F;
 		this.velocityX *= 0.1;
 		this.velocityY *= 0.1;
 		this.velocityZ *= 0.1;
@@ -50,7 +47,6 @@ public class CauldronBubbleParticle extends SpriteBillboardParticle {
 		}
 	}
 
-	@Environment(EnvType.CLIENT)
 	public static class Factory implements ParticleFactory<DefaultParticleType> {
 		private final SpriteProvider spriteProvider;
 

@@ -11,8 +11,6 @@ import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
 import moriyashiine.bewitchment.client.integration.emi.BWEmiIntegration;
 import moriyashiine.bewitchment.common.recipe.CauldronBrewingRecipe;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -21,7 +19,6 @@ import net.minecraft.potion.PotionUtil;
 import java.util.Collections;
 import java.util.List;
 
-@Environment(EnvType.CLIENT)
 public class EmiCauldronBrewingRecipe extends BasicEmiRecipe {
 	public EmiCauldronBrewingRecipe(CauldronBrewingRecipe recipe) {
 		super(BWEmiIntegration.CAULDRON_BREWING_CATEGORY, recipe.getId(), 76, 18);

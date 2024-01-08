@@ -7,8 +7,6 @@ package moriyashiine.bewitchment.api.client.renderer;
 import moriyashiine.bewitchment.api.client.model.BroomEntityModel;
 import moriyashiine.bewitchment.api.entity.BroomEntity;
 import moriyashiine.bewitchment.client.BewitchmentClient;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
@@ -16,7 +14,6 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.RotationAxis;
 
-@Environment(EnvType.CLIENT)
 public abstract class BroomEntityRenderer<T extends BroomEntity> extends EntityRenderer<T> {
 	private final BroomEntityModel model;
 

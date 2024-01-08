@@ -5,8 +5,6 @@
 package moriyashiine.bewitchment.mixin.client;
 
 import moriyashiine.bewitchment.common.registry.BWComponents;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.entity.MobEntityRenderer;
@@ -18,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @SuppressWarnings("ConstantConditions")
-@Environment(EnvType.CLIENT)
 @Mixin(MobEntityRenderer.class)
 public abstract class MobEntityRendererMixin<T extends MobEntity, M extends EntityModel<T>> {
 	@Inject(method = "shouldRender(Lnet/minecraft/entity/mob/MobEntity;Lnet/minecraft/client/render/Frustum;DDD)Z", at = @At("RETURN"), cancellable = true)

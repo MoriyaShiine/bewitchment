@@ -6,8 +6,6 @@ package moriyashiine.bewitchment.client.model.entity.living;
 
 import moriyashiine.bewitchment.common.entity.living.HerneEntity;
 import moriyashiine.bewitchment.common.registry.BWObjects;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
@@ -16,7 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
 
-@Environment(EnvType.CLIENT)
 public class HerneEntityModel<T extends HerneEntity> extends BipedEntityModel<T> {
 	public static final ItemStack HORNED_SPEAR = new ItemStack(BWObjects.HORNED_SPEAR);
 

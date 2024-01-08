@@ -6,13 +6,10 @@ package moriyashiine.bewitchment.client.model.entity.living;
 
 import com.google.common.collect.ImmutableList;
 import moriyashiine.bewitchment.common.entity.living.OwlEntity;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.AnimalModel;
 import net.minecraft.util.math.MathHelper;
 
-@Environment(EnvType.CLIENT)
 public class OwlEntityModel<T extends OwlEntity> extends AnimalModel<T> {
 	private final ModelPart body;
 	private final ModelPart rFoot;

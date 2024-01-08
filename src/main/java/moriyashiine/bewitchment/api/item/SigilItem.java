@@ -10,8 +10,6 @@ import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.registry.BWEntityTypes;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DoorBlock;
@@ -108,7 +106,6 @@ public class SigilItem extends Item {
 		return BWObjects.SIGIL.getTranslationKey();
 	}
 
-	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		tooltip.add(Text.translatable("sigil." + BWRegistries.SIGIL.getId(sigil).toString().replace(":", ".")).formatted(Formatting.GRAY));

@@ -4,14 +4,11 @@ import moriyashiine.bewitchment.api.entity.BroomEntity;
 import moriyashiine.bewitchment.client.BewitchmentClient;
 import moriyashiine.bewitchment.common.packet.TogglePressingForwardPacket;
 import moriyashiine.bewitchment.common.registry.BWComponents;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
 
-@Environment(EnvType.CLIENT)
 public class TransformationAbilityEvent implements ClientTickEvents.EndWorldTick {
 	private int transformationAbilityCooldown = 0;
 

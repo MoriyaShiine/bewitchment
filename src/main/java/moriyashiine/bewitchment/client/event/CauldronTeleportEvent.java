@@ -1,13 +1,10 @@
 package moriyashiine.bewitchment.client.event;
 
 import moriyashiine.bewitchment.common.block.entity.WitchCauldronBlockEntity;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.message.v1.ClientSendMessageEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 
-@Environment(EnvType.CLIENT)
 public class CauldronTeleportEvent implements ClientSendMessageEvents.AllowChat {
 	@Override
 	public boolean allowSendChatMessage(String message) {

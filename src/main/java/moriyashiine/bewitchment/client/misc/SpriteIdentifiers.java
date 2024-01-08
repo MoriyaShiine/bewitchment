@@ -5,15 +5,12 @@
 package moriyashiine.bewitchment.client.misc;
 
 import moriyashiine.bewitchment.common.Bewitchment;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.util.Identifier;
 
 import static net.minecraft.client.render.TexturedRenderLayers.CHEST_ATLAS_TEXTURE;
 import static net.minecraft.client.texture.SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE;
 
-@Environment(EnvType.CLIENT)
 public class SpriteIdentifiers {
 	public static final SpriteIdentifier JUNIPER_CHEST = new SpriteIdentifier(CHEST_ATLAS_TEXTURE, Bewitchment.id("entity/chest/juniper"));
 	public static final SpriteIdentifier TRAPPED_JUNIPER_CHEST = new SpriteIdentifier(CHEST_ATLAS_TEXTURE, Bewitchment.id("entity/chest/trapped_juniper"));

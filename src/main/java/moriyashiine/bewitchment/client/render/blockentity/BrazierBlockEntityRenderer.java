@@ -5,8 +5,6 @@
 package moriyashiine.bewitchment.client.render.blockentity;
 
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
@@ -15,7 +13,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.RotationAxis;
 
-@Environment(EnvType.CLIENT)
 public class BrazierBlockEntityRenderer implements BlockEntityRenderer<BrazierBlockEntity> {
 	@Override
 	public void render(BrazierBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {

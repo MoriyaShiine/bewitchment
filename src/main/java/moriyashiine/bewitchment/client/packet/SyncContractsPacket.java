@@ -9,8 +9,6 @@ import moriyashiine.bewitchment.api.registry.Contract;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.registry.BWComponents;
 import moriyashiine.bewitchment.common.registry.BWRegistries;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -36,7 +34,6 @@ public class SyncContractsPacket {
 	}
 
 	@SuppressWarnings({"ConstantConditions", "Convert2Lambda"})
-	@Environment(EnvType.CLIENT)
 	public static class Receiver implements ClientPlayNetworking.PlayChannelHandler {
 		@Override
 		public void receive(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {

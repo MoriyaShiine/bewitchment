@@ -7,8 +7,6 @@ package moriyashiine.bewitchment.common.block;
 import moriyashiine.bewitchment.api.block.WitchAltarBlock;
 import moriyashiine.bewitchment.api.block.entity.UsesAltarPower;
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -108,7 +106,6 @@ public class BrazierBlock extends LanternBlock implements BlockEntityProvider {
 	}
 
 
-	@Environment(EnvType.CLIENT)
 	@Override
 	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
 		if (state.get(Properties.LIT)) {
@@ -117,7 +114,6 @@ public class BrazierBlock extends LanternBlock implements BlockEntityProvider {
 		}
 	}
 
-	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
 		if (!PotionUtil.getCustomPotionEffects(stack).isEmpty()) {

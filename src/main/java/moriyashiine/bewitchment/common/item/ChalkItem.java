@@ -4,8 +4,6 @@
 
 package moriyashiine.bewitchment.common.item;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -75,7 +73,6 @@ public class ChalkItem extends Item {
 		return glyph.getTranslationKey();
 	}
 
-	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		if (stack.hasNbt() && stack.getOrCreateNbt().contains("InnerCircle")) {

@@ -7,8 +7,6 @@ package moriyashiine.bewitchment.client.render;
 import moriyashiine.bewitchment.client.BewitchmentClient;
 import moriyashiine.bewitchment.client.model.equipment.armor.WitchArmorModel;
 import moriyashiine.bewitchment.common.Bewitchment;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -21,7 +19,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
-@Environment(EnvType.CLIENT)
 public class WitchArmorRenderer implements ArmorRenderer {
 	private static final Identifier WITCH_HAT_VARIANT_TEXTURE = Bewitchment.id("textures/entity/armor/witch_hat_variant.png");
 	private static WitchArmorModel<LivingEntity> armorModel;

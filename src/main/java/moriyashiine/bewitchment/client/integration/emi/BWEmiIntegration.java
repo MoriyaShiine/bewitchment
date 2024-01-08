@@ -15,10 +15,7 @@ import moriyashiine.bewitchment.client.integration.emi.recipe.*;
 import moriyashiine.bewitchment.common.Bewitchment;
 import moriyashiine.bewitchment.common.registry.BWObjects;
 import moriyashiine.bewitchment.common.registry.BWRecipeTypes;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
-@Environment(EnvType.CLIENT)
 public class BWEmiIntegration implements EmiPlugin {
 	private static final EmiStack ATHAME_WORKSTATION = EmiStack.of(BWObjects.ATHAME);
 	private static final EmiStack GOLDEN_CHALK_WORKSTATION = EmiStack.of(BWObjects.GOLDEN_CHALK);
