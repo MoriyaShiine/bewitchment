@@ -45,10 +45,10 @@
 	"fabricloader": "*",
 	"minecraft": "~1.20.1",
 	"java": ">=17",
-	"fabric-api": ">=0.85.0",
-	"patchouli": ">=1.20.1-80",
-	"pehkui": ">=3.7.6",
-	"trinkets": ">=3.7.0"
+	"fabric-api": "*",
+	"patchouli": "*",
+	"pehkui": "*",
+	"trinkets": "*"
   },
   "breaks": {
 	"optifabric": "*"
