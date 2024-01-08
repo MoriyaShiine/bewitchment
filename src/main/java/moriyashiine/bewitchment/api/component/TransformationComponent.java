@@ -84,7 +84,7 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 			if (obj.getEquippedStack(EquipmentSlot.HEAD).isIn(BWTags.SUN_GLASSES)) {
 				obj.removeStatusEffect(StatusEffects.NIGHT_VISION);
 			} else {
-				obj.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
+				obj.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, -1, 0, true, false));
 			}
 			if (BWComponents.RESPAWN_TIMER_COMPONENT.get(obj).getRespawnTimer() <= 0 && obj.getWorld().isDay() && !obj.getWorld().isRaining() && obj.getWorld().isSkyVisible(obj.getBlockPos()) && AllowVampireBurn.EVENT.invoker().allowBurn(obj)) {
 				obj.setOnFireFor(8);
@@ -126,7 +126,7 @@ public class TransformationComponent implements AutoSyncedComponent, ServerTicki
 				additionalWerewolfDataComponent.setForcedTransformation(false);
 			}
 			if (isAlternateForm()) {
-				obj.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
+				obj.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, -1, 0, true, false));
 				Set<ItemStack> toDrop = new HashSet<>();
 				obj.getArmorItems().forEach(stack -> {
 					if (!stack.isEmpty()) {
