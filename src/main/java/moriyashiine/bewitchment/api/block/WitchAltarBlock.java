@@ -177,10 +177,11 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 				worldState.potentialCandelabras.add(pos.asLong());
 				worldState.markDirty();
 			}
-			for (BlockPos foundPos : BWUtil.getBlockPoses(pos, BWConfig.altarDistributionRadius, currentPos -> world.getBlockEntity(currentPos) instanceof UsesAltarPower)) {
-				BlockEntity blockEntity = world.getBlockEntity(foundPos);
-				((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, pos));
-				blockEntity.markDirty();
+			for (BlockPos foundPos : BWUtil.getBlockPoses(pos, BWConfig.altarDistributionRadius)) {
+				if (world.getWorldBorder().contains(foundPos) && world.getBlockEntity(foundPos) instanceof UsesAltarPower usesAltarPower) {
+					usesAltarPower.setAltarPos(getClosestAltarPos(world, foundPos));
+					((BlockEntity) usesAltarPower).markDirty();
+				}
 			}
 		}
 	}
@@ -201,10 +202,11 @@ public class WitchAltarBlock extends HorizontalFacingBlock implements BlockEntit
 		}
 		super.onStateReplaced(state, world, pos, newState, moved);
 		if (!world.isClient && state.getBlock() != newState.getBlock()) {
-			for (BlockPos foundPos : BWUtil.getBlockPoses(pos, BWConfig.altarDistributionRadius, currentPos -> world.getBlockEntity(currentPos) instanceof UsesAltarPower)) {
-				BlockEntity blockEntity = world.getBlockEntity(foundPos);
-				((UsesAltarPower) blockEntity).setAltarPos(getClosestAltarPos(world, foundPos));
-				blockEntity.markDirty();
+			for (BlockPos foundPos : BWUtil.getBlockPoses(pos, BWConfig.altarDistributionRadius)) {
+				if (world.getBlockEntity(foundPos) instanceof UsesAltarPower usesAltarPower) {
+					usesAltarPower.setAltarPos(getClosestAltarPos(world, foundPos));
+					((BlockEntity) usesAltarPower).markDirty();
+				}
 			}
 		}
 	}

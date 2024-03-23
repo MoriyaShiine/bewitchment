@@ -21,6 +21,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.registry.tag.EntityTypeTags;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
@@ -110,7 +111,7 @@ public abstract class LivingEntityMixin extends Entity {
 					}
 					getWorld().playSound(null, getBlockPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1, 1);
 					PlayerLookup.tracking(this).forEach(trackingPlayer -> SpawnExplosionParticlesPacket.send(trackingPlayer, this));
-					if (((Object) this) instanceof PlayerEntity player) {
+					if (((Object) this) instanceof ServerPlayerEntity player) {
 						SpawnExplosionParticlesPacket.send(player, this);
 					}
 					removeStatusEffect(BWStatusEffects.VOLATILITY);

@@ -6,6 +6,7 @@ package moriyashiine.bewitchment.common.ritualfunction;
 
 import moriyashiine.bewitchment.api.registry.RitualFunction;
 import moriyashiine.bewitchment.common.misc.BWUtil;
+import net.minecraft.block.Block;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.PlantBlock;
 import net.minecraft.entity.Entity;
@@ -26,8 +27,13 @@ public class HurricaneRitualFunction extends RitualFunction {
 
 	@Override
 	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
-		for (BlockPos foundPos : BWUtil.getBlockPoses(effectivePos, catFamiliar ? 24 : 8, currentPos -> world.getBlockState(currentPos).getBlock() instanceof PlantBlock || world.getBlockState(currentPos).getBlock() instanceof LeavesBlock)) {
-			world.breakBlock(foundPos, true);
+		for (BlockPos foundPos : BWUtil.getBlockPoses(effectivePos, catFamiliar ? 24 : 8)) {
+			if (world.getWorldBorder().contains(foundPos)) {
+				Block block = world.getBlockState(foundPos).getBlock();
+				if (block instanceof PlantBlock || block instanceof LeavesBlock) {
+					world.breakBlock(foundPos, true);
+				}
+			}
 		}
 		for (Entity entity : world.getEntitiesByClass(Entity.class, new Box(effectivePos).expand(catFamiliar ? 24 : 8), Entity::isAlive)) {
 			entity.addVelocity(0, 4, 0);

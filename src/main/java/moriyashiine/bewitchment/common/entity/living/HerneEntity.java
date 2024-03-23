@@ -165,13 +165,12 @@ public class HerneEntity extends BWHostileEntity implements Pledgeable {
 		if (isAlive() && getTarget() == null && BewitchmentAPI.isWerewolf(player, true)) {
 			ItemStack stack = player.getStackInHand(hand);
 			if (stack.getItem() == BWObjects.ACONITE) {
-				boolean client = getWorld().isClient;
-				if (!client) {
+				if (player instanceof ServerPlayerEntity serverPlayer) {
 					if (!player.isCreative()) {
 						stack.decrement(1);
 					}
 					PlayerLookup.tracking(player).forEach(trackingPlayer -> SpawnSmokeParticlesPacket.send(trackingPlayer, player));
-					SpawnSmokeParticlesPacket.send(player, player);
+					SpawnSmokeParticlesPacket.send(serverPlayer, player);
 					getWorld().playSound(null, getBlockPos(), BWSoundEvents.ENTITY_GENERIC_PLING, player.getSoundCategory(), 1, 1);
 					BWComponents.TRANSFORMATION_COMPONENT.maybeGet(player).ifPresent(transformationComponent -> {
 						if (transformationComponent.isAlternateForm()) {
@@ -182,7 +181,7 @@ public class HerneEntity extends BWHostileEntity implements Pledgeable {
 						transformationComponent.getTransformation().onAdded(player);
 					});
 				}
-				return ActionResult.success(client);
+				return ActionResult.success(getWorld().isClient);
 			}
 		}
 		return super.interactMob(player, hand);

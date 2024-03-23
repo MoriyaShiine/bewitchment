@@ -36,6 +36,7 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -125,7 +126,7 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 
 	@Override
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
-		if (!getWorld().isClient && isAlive() && getTarget() == null) {
+		if (player instanceof ServerPlayerEntity serverPlayer && isAlive() && getTarget() == null) {
 			if (BWUtil.rejectTrades(this)) {
 				return ActionResult.FAIL;
 			}
@@ -133,8 +134,8 @@ public class DemonEntity extends BWHostileEntity implements DemonMerchant {
 				setCurrentCustomer(player);
 			}
 			if (!getOffers().isEmpty()) {
-				SyncContractsPacket.send(player);
-				player.openHandledScreen(new SimpleNamedScreenHandlerFactory((id, playerInventory, customer) -> new DemonScreenHandler(id, this), getDisplayName())).ifPresent(syncId -> SyncDemonTradesPacket.send(player, this, syncId));
+				SyncContractsPacket.send(serverPlayer);
+				player.openHandledScreen(new SimpleNamedScreenHandlerFactory((id, playerInventory, customer) -> new DemonScreenHandler(id, this), getDisplayName())).ifPresent(syncId -> SyncDemonTradesPacket.send(serverPlayer, this, syncId));
 			} else {
 				setCurrentCustomer(null);
 			}

@@ -184,7 +184,7 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 
 	@Override
 	protected ActionResult interactMob(PlayerEntity player, Hand hand) {
-		if (!getWorld().isClient && isAlive() && getTarget() == null && BewitchmentAPI.isPledged(player, getPledgeID())) {
+		if (player instanceof ServerPlayerEntity serverPlayer && isAlive() && getTarget() == null && BewitchmentAPI.isPledged(player, getPledgeID())) {
 			if (BWUtil.rejectTrades(this)) {
 				return ActionResult.FAIL;
 			}
@@ -192,8 +192,8 @@ public class BaphometEntity extends BWHostileEntity implements Pledgeable, Demon
 				setCurrentCustomer(player);
 			}
 			if (!getOffers().isEmpty()) {
-				SyncContractsPacket.send(player);
-				player.openHandledScreen(new SimpleNamedScreenHandlerFactory((id, playerInventory, customer) -> new BaphometScreenHandler(id, this), getDisplayName())).ifPresent(syncId -> SyncDemonTradesPacket.send(player, this, syncId));
+				SyncContractsPacket.send(serverPlayer);
+				player.openHandledScreen(new SimpleNamedScreenHandlerFactory((id, playerInventory, customer) -> new BaphometScreenHandler(id, this), getDisplayName())).ifPresent(syncId -> SyncDemonTradesPacket.send(serverPlayer, this, syncId));
 			} else {
 				setCurrentCustomer(null);
 			}

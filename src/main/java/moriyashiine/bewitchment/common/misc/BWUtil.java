@@ -21,6 +21,7 @@ import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -28,36 +29,17 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.village.TradeOfferList;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.function.Predicate;
 
 public class BWUtil {
 	public static final TradeOfferList EMPTY_TRADES = new TradeOfferList();
 
-	public static Set<BlockPos> getBlockPoses(BlockPos origin, int radius, Predicate<BlockPos> provider) {
-		Set<BlockPos> blockPoses = new HashSet<>();
-		BlockPos.Mutable mutable = new BlockPos.Mutable();
-		for (int x = -radius; x <= radius; x++) {
-			for (int y = -radius; y <= radius; y++) {
-				for (int z = -radius; z <= radius; z++) {
-					if (provider.test(mutable.set(origin.getX() + x, origin.getY() + y, origin.getZ() + z))) {
-						blockPoses.add(mutable.toImmutable());
-					}
-				}
-			}
-		}
-		return blockPoses;
+	public static Iterable<BlockPos> getBlockPoses(BlockPos origin, int radius) {
+		return BlockPos.iterateOutwards(origin, radius, radius, radius);
 	}
 
 	public static BlockPos getClosestBlockPos(BlockPos origin, int radius, Predicate<BlockPos> provider) {
-		BlockPos pos = null;
-		for (BlockPos foundPos : getBlockPoses(origin, radius, provider)) {
-			if (pos == null || foundPos.getSquaredDistance(origin) < pos.getSquaredDistance(origin)) {
-				pos = foundPos;
-			}
-		}
-		return pos;
+		return BlockPos.findClosest(origin, radius, radius, provider).orElse(null);
 	}
 
 	public static ActiveTargetGoal<LivingEntity> createGenericPledgeableTargetGoal(MobEntity entity) {
@@ -136,7 +118,7 @@ public class BWUtil {
 				entity.getWorld().playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, entity.getSoundCategory(), 1, 1);
 			}
 			PlayerLookup.tracking(entity).forEach(trackingPlayer -> SpawnPortalParticlesPacket.send(trackingPlayer, entity));
-			if (entity instanceof PlayerEntity player) {
+			if (entity instanceof ServerPlayerEntity player) {
 				SpawnPortalParticlesPacket.send(player, entity);
 			}
 		}
@@ -153,7 +135,7 @@ public class BWUtil {
 				entity.getWorld().playSound(null, entity.getBlockPos(), BWSoundEvents.ENTITY_GENERIC_TELEPORT, entity.getSoundCategory(), 1, 1);
 			}
 			PlayerLookup.tracking(entity).forEach(trackingPlayer -> SpawnPortalParticlesPacket.send(trackingPlayer, entity));
-			if (entity instanceof PlayerEntity player) {
+			if (entity instanceof ServerPlayerEntity player) {
 				SpawnPortalParticlesPacket.send(player, entity);
 			}
 		}

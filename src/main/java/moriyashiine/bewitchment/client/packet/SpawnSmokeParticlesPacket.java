@@ -13,7 +13,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -22,10 +21,10 @@ import net.minecraft.util.Identifier;
 public class SpawnSmokeParticlesPacket {
 	public static final Identifier ID = Bewitchment.id("spawn_smoke_particles");
 
-	public static void send(PlayerEntity player, Entity entity) {
+	public static void send(ServerPlayerEntity player, Entity entity) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		buf.writeInt(entity.getId());
-		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
+		ServerPlayNetworking.send(player, ID, buf);
 	}
 
 	public static class Receiver implements ClientPlayNetworking.PlayChannelHandler {

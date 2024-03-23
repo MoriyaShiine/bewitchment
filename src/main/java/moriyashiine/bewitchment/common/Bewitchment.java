@@ -12,7 +12,6 @@ import moriyashiine.bewitchment.common.block.CoffinBlock;
 import moriyashiine.bewitchment.common.block.entity.BrazierBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.GlyphBlockEntity;
 import moriyashiine.bewitchment.common.block.entity.SigilBlockEntity;
-import moriyashiine.bewitchment.common.block.entity.interfaces.SigilHolder;
 import moriyashiine.bewitchment.common.item.AthameItem;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.packet.CauldronTeleportPacket;
@@ -21,6 +20,7 @@ import moriyashiine.bewitchment.common.packet.TransformationAbilityPacket;
 import moriyashiine.bewitchment.common.recipe.AthameDropRecipe;
 import moriyashiine.bewitchment.common.recipe.IncenseRecipe;
 import moriyashiine.bewitchment.common.registry.*;
+import moriyashiine.bewitchment.common.world.BWWorldState;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
@@ -30,7 +30,6 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
@@ -173,21 +172,24 @@ public class Bewitchment implements ModInitializer {
 		});
 		EntitySleepEvents.STOP_SLEEPING.register((entity, sleepingPos) -> {
 			if (!entity.getWorld().isClient) {
-				BWUtil.getBlockPoses(entity.getBlockPos(), 12, currentPos -> entity.getWorld().getBlockEntity(currentPos) instanceof BrazierBlockEntity brazier && brazier.incenseRecipe != null).forEach(foundPos -> {
-					IncenseRecipe recipe = ((BrazierBlockEntity) entity.getWorld().getBlockEntity(foundPos)).incenseRecipe;
-					int durationMultiplier = 1;
-					BlockPos nearestSigil = BWUtil.getClosestBlockPos(entity.getBlockPos(), 16, currentPos -> entity.getWorld().getBlockEntity(currentPos) instanceof SigilBlockEntity sigil && sigil.getSigil() == BWSigils.EXTENDING);
-					if (nearestSigil != null) {
-						BlockEntity blockEntity = entity.getWorld().getBlockEntity(nearestSigil);
-						SigilHolder sigilHolder = ((SigilHolder) blockEntity);
-						if (sigilHolder.test(entity)) {
-							sigilHolder.setUses(sigilHolder.getUses() - 1);
-							blockEntity.markDirty();
-							durationMultiplier = 2;
+				BWWorldState worldState = BWWorldState.get(entity.getWorld());
+				for (BlockPos foundPos : BWUtil.getBlockPoses(entity.getBlockPos(), 12)) {
+					if (entity.getWorld().getWorldBorder().contains(foundPos) && entity.getWorld().getBlockEntity(foundPos) instanceof BrazierBlockEntity brazier && brazier.incenseRecipe != null) {
+						IncenseRecipe recipe = brazier.incenseRecipe;
+						int durationMultiplier = 1;
+						for (BlockPos sigilPos : BWUtil.getBlockPoses(foundPos, 16)) {
+							if (entity.getWorld().getWorldBorder().contains(foundPos) && worldState.potentialSigils.contains(sigilPos.asLong()) && entity.getWorld().getBlockEntity(sigilPos) instanceof SigilBlockEntity sigil && sigil.getSigil() == BWSigils.EXTENDING) {
+								if (sigil.test(entity)) {
+									sigil.setUses(sigil.getUses() - 1);
+									sigil.markDirty();
+									durationMultiplier = 2;
+									break;
+								}
+							}
 						}
+						entity.addStatusEffect(new StatusEffectInstance(recipe.effect, 24000 * durationMultiplier, recipe.amplifier, true, false));
 					}
-					entity.addStatusEffect(new StatusEffectInstance(recipe.effect, 24000 * durationMultiplier, recipe.amplifier, true, false));
-				});
+				}
 			}
 		});
 		BWScaleTypes.init();

@@ -28,7 +28,11 @@ public class MakeEntitiesWetRitualFunction extends RitualFunction {
 	public void start(ServerWorld world, BlockPos glyphPos, BlockPos effectivePos, Inventory inventory, boolean catFamiliar) {
 		int radius = catFamiliar ? 9 : 3;
 		world.getEntitiesByClass(Entity.class, new Box(effectivePos).expand(radius), Entity::isAlive).forEach(entity -> BWComponents.ADDITIONAL_WATER_DATA_COMPONENT.get(entity).setWetTimer(6000 * (catFamiliar ? 3 : 1)));
-		BWUtil.getBlockPoses(effectivePos, radius, currentPos -> world.getBlockState(currentPos).getBlock() instanceof AbstractFireBlock).forEach(foundPos -> world.setBlockState(foundPos, Blocks.AIR.getDefaultState()));
+		for (BlockPos foundPos : BWUtil.getBlockPoses(effectivePos, radius)) {
+			if (world.getWorldBorder().contains(foundPos) && world.getBlockState(foundPos).getBlock() instanceof AbstractFireBlock) {
+				world.setBlockState(foundPos, Blocks.AIR.getDefaultState());
+			}
+		}
 		super.start(world, glyphPos, effectivePos, inventory, catFamiliar);
 	}
 }

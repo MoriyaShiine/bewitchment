@@ -18,6 +18,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -66,9 +67,9 @@ public class DemonScreenHandler extends ScreenHandler {
 				if (!contractsComponent.hasContract(offer.getContract())) {
 					demonMerchant.onSell(offer);
 					demonMerchant.trade(offer);
-					if (!demonMerchant.getDemonTrader().getWorld().isClient) {
-						SyncContractsPacket.send(player);
-						SyncDemonTradesPacket.send(player, demonMerchant, syncId);
+					if (player instanceof ServerPlayerEntity serverPlayer) {
+						SyncContractsPacket.send(serverPlayer);
+						SyncDemonTradesPacket.send(serverPlayer, demonMerchant, syncId);
 						if (player.getMaxHealth() - offer.getCost(demonMerchant) <= 0) {
 							contractsComponent.getContracts().clear();
 							player.damage(BWDamageSources.create(demonMerchant.getDemonTrader().getWorld(), BWDamageSources.DEATH), Float.MAX_VALUE);

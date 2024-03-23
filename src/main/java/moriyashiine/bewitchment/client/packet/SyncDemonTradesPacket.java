@@ -15,7 +15,6 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -26,13 +25,13 @@ import java.util.List;
 public class SyncDemonTradesPacket {
 	public static final Identifier ID = Bewitchment.id("sync_demon_trades");
 
-	public static void send(PlayerEntity player, DemonMerchant merchant, int syncId) {
+	public static void send(ServerPlayerEntity player, DemonMerchant merchant, int syncId) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		buf.writeInt(syncId);
 		DemonEntity.DemonTradeOffer.toPacket(merchant.getOffers(), buf);
 		buf.writeInt(merchant.getDemonTrader().getId());
 		buf.writeBoolean(merchant.isDiscount());
-		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
+		ServerPlayNetworking.send(player, ID, buf);
 	}
 
 	public static class Receiver implements ClientPlayNetworking.PlayChannelHandler {

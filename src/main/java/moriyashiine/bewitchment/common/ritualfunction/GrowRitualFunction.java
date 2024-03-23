@@ -6,6 +6,7 @@ package moriyashiine.bewitchment.common.ritualfunction;
 
 import moriyashiine.bewitchment.api.registry.RitualFunction;
 import moriyashiine.bewitchment.common.misc.BWUtil;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Fertilizable;
 import net.minecraft.block.GrassBlock;
 import net.minecraft.entity.LivingEntity;
@@ -28,15 +29,20 @@ public class GrowRitualFunction extends RitualFunction {
 	@Override
 	public void tick(World world, BlockPos glyphPos, BlockPos effectivePos, boolean catFamiliar) {
 		int radius = catFamiliar ? 9 : 3;
-		if (!world.isClient) {
+		if (world instanceof ServerWorld serverWorld) {
 			if (world.getTime() % 20 == 0) {
 				for (PassiveEntity passiveEntity : world.getEntitiesByClass(PassiveEntity.class, new Box(effectivePos).expand(radius, 0, radius), PassiveEntity::isBaby)) {
 					if (world.random.nextFloat() < 1 / 4f) {
 						passiveEntity.growUp(world.random.nextInt(), true);
 					}
 				}
-				for (BlockPos foundPos : BWUtil.getBlockPoses(effectivePos, radius, currentPos -> !(world.getBlockState(currentPos).getBlock() instanceof GrassBlock) && world.getBlockState(currentPos).getBlock() instanceof Fertilizable fertilizable && fertilizable.isFertilizable(world, currentPos, world.getBlockState(currentPos), false) && fertilizable.canGrow(world, world.random, currentPos, world.getBlockState(currentPos)))) {
-					((Fertilizable) world.getBlockState(foundPos).getBlock()).grow((ServerWorld) world, world.random, foundPos, world.getBlockState(foundPos));
+				for (BlockPos foundPos : BWUtil.getBlockPoses(effectivePos, radius)) {
+					if (world.getWorldBorder().contains(foundPos)) {
+						BlockState state = world.getBlockState(foundPos);
+						if (!(state.getBlock() instanceof GrassBlock) && state.getBlock() instanceof Fertilizable fertilizable && fertilizable.isFertilizable(world, foundPos, state, false) && fertilizable.canGrow(world, world.random, foundPos, state)) {
+							fertilizable.grow(serverWorld, world.random, foundPos, state);
+						}
+					}
 				}
 			}
 		} else {

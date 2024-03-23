@@ -11,8 +11,8 @@ import moriyashiine.bewitchment.client.packet.SpawnSpecterBangleParticlesPacket;
 import moriyashiine.bewitchment.common.registry.BWComponents;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 
 public class SpecterBangleItem extends TrinketItem {
 	public SpecterBangleItem(Settings settings) {
@@ -21,7 +21,7 @@ public class SpecterBangleItem extends TrinketItem {
 
 	@Override
 	public void tick(ItemStack stack, SlotReference slot, LivingEntity entity) {
-		if (entity instanceof PlayerEntity player && entity.isSneaking() && BewitchmentAPI.drainMagic(player, 1, true)) {
+		if (entity instanceof ServerPlayerEntity player && entity.isSneaking() && BewitchmentAPI.drainMagic(player, 1, true)) {
 			if (entity.getRandom().nextFloat() < 1 / 40f) {
 				BewitchmentAPI.drainMagic(player, 1, false);
 			}

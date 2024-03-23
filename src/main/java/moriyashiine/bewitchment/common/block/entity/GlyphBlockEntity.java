@@ -260,10 +260,9 @@ public class GlyphBlockEntity extends BlockEntity implements SidedInventory, Use
 								player.sendMessage(Text.translatable("ritual." + recipe.getId().toString().replace(":", ".").replace("/", ".")), true);
 							}
 							for (int i = 0; i < items.size(); i++) {
-								for (PlayerEntity trackingPlayer : PlayerLookup.tracking(items.get(i))) {
-									SpawnSmokeParticlesPacket.send(trackingPlayer, items.get(i));
-								}
-								setStack(i, items.get(i).getStack().split(1));
+								ItemEntity item = items.get(i);
+								PlayerLookup.tracking(item).forEach(foundPlayer -> SpawnSmokeParticlesPacket.send(foundPlayer, item));
+								setStack(i, item.getStack().split(1));
 							}
 							effectivePos = pos;
 							ritualFunction = recipe.ritualFunction;

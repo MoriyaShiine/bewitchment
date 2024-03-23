@@ -14,7 +14,6 @@ import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
@@ -25,12 +24,12 @@ import net.minecraft.util.Identifier;
 public class SyncContractsPacket {
 	public static final Identifier ID = Bewitchment.id("sync_contracts");
 
-	public static void send(PlayerEntity player) {
+	public static void send(ServerPlayerEntity player) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		NbtCompound contracts = new NbtCompound();
 		contracts.put("Contracts", BWComponents.CONTRACTS_COMPONENT.get(player).toNbtContract());
 		buf.writeNbt(contracts);
-		ServerPlayNetworking.send((ServerPlayerEntity) player, ID, buf);
+		ServerPlayNetworking.send(player, ID, buf);
 	}
 
 	@SuppressWarnings({"ConstantConditions", "Convert2Lambda"})
