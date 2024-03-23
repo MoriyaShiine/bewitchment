@@ -50,8 +50,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @SuppressWarnings("ConstantConditions")
 public class BewitchmentAPI {
@@ -105,20 +103,25 @@ public class BewitchmentAPI {
 		if (world.isClient) {
 			return PoppetData.EMPTY;
 		}
+		ServerWorld serverWorld = (ServerWorld) world;
 		if (item.worksInShelf) {
-			for (Map.Entry<Long, DefaultedList<ItemStack>> entry : BWWorldState.get(world).poppetShelves.entrySet()) {
-				PoppetData result = getPoppetFromInventory(world, item, owner, entry.getValue());
-				if (result != PoppetData.EMPTY) {
-					BlockPos pos = BlockPos.fromLong(entry.getKey());
-					if (world.isChunkLoaded(pos) && world.getBlockEntity(pos) instanceof PoppetShelfBlockEntity poppetShelf) {
-						poppetShelf.sync();
+			for (ServerWorld foundWorld : serverWorld.getServer().getWorlds()) {
+				for (Map.Entry<Long, DefaultedList<ItemStack>> entry : BWWorldState.get(foundWorld).poppetShelves.entrySet()) {
+					PoppetData result = getPoppetFromInventory(foundWorld, item, owner, entry.getValue());
+					if (result != PoppetData.EMPTY) {
+						BlockPos pos = BlockPos.fromLong(entry.getKey());
+						if (foundWorld.isChunkLoaded(pos) && foundWorld.getBlockEntity(pos) instanceof PoppetShelfBlockEntity poppetShelf) {
+							poppetShelf.sync();
+						}
+						return new PoppetData(result.stack(), entry.getKey(), result.index());
 					}
-					return new PoppetData(result.stack(), entry.getKey(), result.index());
 				}
 			}
 		}
-		for (PlayerEntity player : ((ServerWorld) world).getPlayers()) {
-			PoppetData result = getPoppetFromInventory(world, item, owner, Stream.concat(player.getInventory().main.stream(), player.getInventory().offHand.stream()).collect(Collectors.toList()));
+		for (PlayerEntity player : serverWorld.getServer().getPlayerManager().getPlayerList()) {
+			List<ItemStack> stacks = new ArrayList<>(player.getInventory().main);
+			stacks.add(player.getOffHandStack());
+			PoppetData result = getPoppetFromInventory(player.getWorld(), item, owner, stacks);
 			if (result != PoppetData.EMPTY) {
 				return result;
 			}
