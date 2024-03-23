@@ -109,7 +109,7 @@ public class WitchAltarBlockEntity extends BlockEntity implements Inventory {
 						blockEntity.power = Math.min(blockEntity.power + blockEntity.gain, blockEntity.maxPower);
 					}
 					PlayerLookup.around((ServerWorld) world, Vec3d.of(pos), 24).forEach(player -> {
-						if (!BWComponents.CURSES_COMPONENT.get(player).hasCurse(BWCurses.APATHY) && BewitchmentAPI.fillMagic(player, 5, true) && blockEntity.drain(10, true)) {
+						if (player.isPartOfGame() && !player.isCreative() && !BWComponents.CURSES_COMPONENT.get(player).hasCurse(BWCurses.APATHY) && BewitchmentAPI.fillMagic(player, 5, true) && blockEntity.drain(10, true)) {
 							BewitchmentAPI.fillMagic(player, 5, false);
 							blockEntity.drain(10, false);
 						}
