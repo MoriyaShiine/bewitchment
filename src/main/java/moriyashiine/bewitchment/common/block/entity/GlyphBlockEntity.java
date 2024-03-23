@@ -156,6 +156,9 @@ public class GlyphBlockEntity extends BlockEntity implements SidedInventory, Use
 			}
 			if (blockEntity.ritualFunction != null) {
 				BlockPos targetPos = blockEntity.effectivePos == null ? pos : blockEntity.effectivePos;
+				if (!world.getWorldBorder().contains(targetPos)) {
+					return;
+				}
 				blockEntity.timer++;
 				if (world.isClient) {
 					world.addParticle(ParticleTypes.END_ROD, true, pos.getX() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), pos.getY() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), pos.getZ() + 0.5 + MathHelper.nextFloat(world.random, -0.2f, 0.2f), 0, 0, 0);
