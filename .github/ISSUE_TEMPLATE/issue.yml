@@ -1,8 +1,8 @@
 name: Issue
 description: File a bug report
 body:
-   - type: checkboxes
-    attributes:
+  - type: checkboxes
+   attributes:
       label: Confirmations
       options:
         - label: I can verify that I am running the mod on the latest possible Minecraft version.
