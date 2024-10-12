@@ -20,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.*;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -58,7 +59,7 @@ public class BrambleBlock extends SugarCaneBlock {
 	@Override
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
 		BlockState downState = world.getBlockState(pos.down());
-		return downState.isOf(this) || downState.isOf(Blocks.GRASS_BLOCK) || downState.isOf(Blocks.DIRT) || downState.isOf(Blocks.COARSE_DIRT) || downState.isOf(Blocks.PODZOL) || downState.isOf(Blocks.SAND) || downState.isOf(Blocks.RED_SAND);
+		return downState.isOf(this) || downState.isIn(BlockTags.DIRT) || downState.isIn(BlockTags.SAND);
 	}
 
 	@Override
