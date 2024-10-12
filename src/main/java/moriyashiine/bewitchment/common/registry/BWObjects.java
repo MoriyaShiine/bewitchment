@@ -405,7 +405,7 @@ public class BWObjects {
 		WitchAltarBlock unformed = create(name, new WitchAltarBlock(settings, null, false), true);
 		altars[0] = unformed;
 		altars[1] = create("moss_" + name, new WitchAltarBlock(settings, unformed, true), false);
-		for (int i = 0; i < DyeColor.values().length; i++) {
+		for (int i = 0; i < 16; i++) {
 			altars[i + 2] = create(DyeColor.byId(i).getName() + "_" + name, new WitchAltarBlock(settings, unformed, true), false);
 		}
 		altars[18] = create("hedgewitch_" + name, new WitchAltarBlock(settings, unformed, true), false);
