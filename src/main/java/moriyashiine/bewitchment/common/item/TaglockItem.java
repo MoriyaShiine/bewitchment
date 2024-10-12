@@ -253,7 +253,7 @@ public class TaglockItem extends Item {
 
 	public static ItemStack putTaglock(ItemStack stack, Entity entity) {
 		stack.getOrCreateNbt().putUuid("OwnerUUID", entity.getUuid());
-		stack.getOrCreateNbt().putString("OwnerName", entity.getDisplayName().getString());
+		stack.getOrCreateNbt().putString("OwnerName", entity.getName().getString());
 		stack.getOrCreateNbt().putBoolean("FromPlayer", entity instanceof PlayerEntity);
 		return stack;
 	}

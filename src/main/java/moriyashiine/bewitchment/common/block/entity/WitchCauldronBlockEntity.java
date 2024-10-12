@@ -6,6 +6,7 @@ package moriyashiine.bewitchment.common.block.entity;
 
 import moriyashiine.bewitchment.api.BewitchmentAPI;
 import moriyashiine.bewitchment.api.block.entity.UsesAltarPower;
+import moriyashiine.bewitchment.common.BWConfig;
 import moriyashiine.bewitchment.common.item.TaglockItem;
 import moriyashiine.bewitchment.common.misc.BWUtil;
 import moriyashiine.bewitchment.common.recipe.CauldronBrewingRecipe;
@@ -35,8 +36,6 @@ import net.minecraft.potion.Potions;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -50,8 +49,6 @@ import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
 public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, UsesAltarPower {
-	private static final MutableText DEFAULT_NAME = Text.translatable(BWObjects.WITCH_CAULDRON.getTranslationKey());
-
 	private Box box;
 
 	private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
@@ -264,7 +261,7 @@ public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, 
 					}
 					if (mode == Mode.BREWING) {
 						CauldronBrewingRecipe cauldronBrewingRecipe = world.getRecipeManager().listAllOfType(BWRecipeTypes.CAULDRON_BREWING_RECIPE_TYPE).stream().filter(recipe -> recipe.input.test(stack)).findFirst().orElse(null);
-						if (cauldronBrewingRecipe != null || stack.getItem() == Items.REDSTONE || stack.getItem() == Items.GLOWSTONE_DUST) {
+						if (isRecipeValid(cauldronBrewingRecipe) || stack.getItem() == Items.REDSTONE || stack.getItem() == Items.GLOWSTONE_DUST) {
 							BlockPos altarPos = getAltarPos();
 							if (altarPos != null && ((WitchAltarBlockEntity) world.getBlockEntity(altarPos)).drain(getBrewCost(), true)) {
 								setColor(PotionUtil.getColor(getPotion(null)));
@@ -377,6 +374,13 @@ public class WitchCauldronBlockEntity extends BlockEntity implements Inventory, 
 			}
 		}
 		return -1;
+	}
+
+	private boolean isRecipeValid(CauldronBrewingRecipe cauldronBrewingRecipe) {
+		if (cauldronBrewingRecipe == null) {
+			return false;
+		}
+		return BWConfig.enablePolymorph || cauldronBrewingRecipe.output != BWStatusEffects.POLYMORPH;
 	}
 
 	public enum Mode {

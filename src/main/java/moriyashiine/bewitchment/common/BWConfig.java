@@ -14,6 +14,8 @@ public class BWConfig extends MidnightConfig {
 	public static List<String> disabledPoppets = new ArrayList<>();
 	@Entry
 	public static boolean enableCurses = true;
+	@Entry
+	public static boolean enablePolymorph = true;
 
 	@Entry
 	public static int altarDistributionRadius = 24;

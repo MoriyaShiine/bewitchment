@@ -725,6 +725,7 @@
   "bewitchment.midnightconfig.title": "Bewitchment",
   "bewitchment.midnightconfig.disabledPoppets": "Disabled Poppets",
   "bewitchment.midnightconfig.enableCurses": "Enable Curses",
+  "bewitchment.midnightconfig.enablePolymorph": "Enable Polymorph",
   "bewitchment.midnightconfig.altarDistributionRadius": "Altar Distribution Radius",
   "bewitchment.midnightconfig.generateSilver": "Generate Silver",
   "bewitchment.midnightconfig.generateSalt": "Generate Salt",
