@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.5-SNAPSHOT'
+    id 'fabric-loom' version '1.7-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -71,7 +71,9 @@ dependencies {
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
     modImplementation "vazkii.patchouli:Patchouli:${patchouli_version}"
-    modImplementation "com.github.Virtuoel:Pehkui:${pehkui_version}"
+    modImplementation("com.github.Virtuoel:Pehkui:${pehkui_version}") {
+        exclude group: "net.fabricmc.fabric-api"
+    }
     modImplementation "dev.emi:trinkets:${trinkets_version}"
 
     modImplementation "dev.emi:emi-fabric:${emi_version}"
