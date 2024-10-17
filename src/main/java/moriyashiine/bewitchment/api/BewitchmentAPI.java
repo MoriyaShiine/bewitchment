@@ -263,7 +263,7 @@ public class BewitchmentAPI {
 		for (Block[] altars : altarArray) {
 			ALTAR_MAP_ENTRIES.add(new AltarMapEntry(altars[0], altars[1], Blocks.MOSS_CARPET.asItem()));
 		}
-		for (int i = 0; i < DyeColor.values().length; i++) {
+		for (int i = 0; i < 16; i++) {
 			Item carpet = switch (DyeColor.byId(i)) {
 				case WHITE -> Items.WHITE_CARPET;
 				case ORANGE -> Items.ORANGE_CARPET;
