@@ -1,3 +1,2 @@
 # NOTICE
-
-Please note that the mod is in the process of being redesigned. Issues and pull requests may be slow to fix or not fixed at all.
+This mod is on indefinite hiatus. We will come back to it (or make a new mod entirely, we're not sure) when we have the time and effort to do so!
